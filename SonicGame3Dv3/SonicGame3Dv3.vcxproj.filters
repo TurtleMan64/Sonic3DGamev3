@@ -1,0 +1,135 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Source Files\engineTester">
+      <UniqueIdentifier>{27c3dfac-46af-4c2c-84a1-492036072b6c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\renderEngine">
+      <UniqueIdentifier>{7519a51f-c3c8-4be0-943a-586e32189f95}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\toolbox">
+      <UniqueIdentifier>{5b12dcf1-ba95-45fe-a8d4-64a741f22729}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\models">
+      <UniqueIdentifier>{052e3399-986e-4d13-9141-cce6765f7b52}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\shaders">
+      <UniqueIdentifier>{7ea1fba4-55f3-43aa-be40-d34417100c6a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\textures">
+      <UniqueIdentifier>{3b980177-e604-474e-8285-17474cb6f960}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\entities">
+      <UniqueIdentifier>{568d2c54-0278-46c4-b115-d6fe749c2be3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\objLoader">
+      <UniqueIdentifier>{304e9ab6-3d2c-4234-b8cd-f75275eb90fd}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="glad.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\renderEngine\DisplayManager.cpp">
+      <Filter>Source Files\renderEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\renderEngine\Loader.cpp">
+      <Filter>Source Files\renderEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\toolbox\Input.cpp">
+      <Filter>Source Files\toolbox</Filter>
+    </ClCompile>
+    <ClCompile Include="src\engineTester\MainGameLoop.cpp">
+      <Filter>Source Files\engineTester</Filter>
+    </ClCompile>
+    <ClCompile Include="src\models\RawModel.cpp">
+      <Filter>Source Files\models</Filter>
+    </ClCompile>
+    <ClCompile Include="src\renderEngine\Renderer.cpp">
+      <Filter>Source Files\renderEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\shaders\ShaderProgram.cpp">
+      <Filter>Source Files\shaders</Filter>
+    </ClCompile>
+    <ClCompile Include="src\shaders\StaticShader.cpp">
+      <Filter>Source Files\shaders</Filter>
+    </ClCompile>
+    <ClCompile Include="src\textures\ModelTexture.cpp">
+      <Filter>Source Files\textures</Filter>
+    </ClCompile>
+    <ClCompile Include="src\models\TexturedModel.cpp">
+      <Filter>Source Files\models</Filter>
+    </ClCompile>
+    <ClCompile Include="src\entities\Entity.cpp">
+      <Filter>Source Files\entities</Filter>
+    </ClCompile>
+    <ClCompile Include="src\toolbox\vector.cpp">
+      <Filter>Source Files\toolbox</Filter>
+    </ClCompile>
+    <ClCompile Include="src\toolbox\matrix.cpp">
+      <Filter>Source Files\toolbox</Filter>
+    </ClCompile>
+    <ClCompile Include="src\entities\Camera.cpp">
+      <Filter>Source Files\entities</Filter>
+    </ClCompile>
+    <ClCompile Include="src\toolbox\maths.cpp">
+      <Filter>Source Files\toolbox</Filter>
+    </ClCompile>
+    <ClCompile Include="src\objLoader\objLoader.cpp">
+      <Filter>Source Files\objLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="src\entities\Light.cpp">
+      <Filter>Source Files\entities</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\renderEngine\renderEngine.h">
+      <Filter>Source Files\renderEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="src\toolbox\input.h">
+      <Filter>Source Files\toolbox</Filter>
+    </ClInclude>
+    <ClInclude Include="src\models\models.h">
+      <Filter>Source Files\models</Filter>
+    </ClInclude>
+    <ClInclude Include="src\shaders\shaders.h">
+      <Filter>Source Files\shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="src\textures\textures.h">
+      <Filter>Source Files\textures</Filter>
+    </ClInclude>
+    <ClInclude Include="src\toolbox\vector.h">
+      <Filter>Source Files\toolbox</Filter>
+    </ClInclude>
+    <ClInclude Include="src\toolbox\matrix.h">
+      <Filter>Source Files\toolbox</Filter>
+    </ClInclude>
+    <ClInclude Include="src\toolbox\maths.h">
+      <Filter>Source Files\toolbox</Filter>
+    </ClInclude>
+    <ClInclude Include="src\entities\entities.h">
+      <Filter>Source Files\entities</Filter>
+    </ClInclude>
+    <ClInclude Include="src\entities\camera.h">
+      <Filter>Source Files\entities</Filter>
+    </ClInclude>
+    <ClInclude Include="src\objLoader\objLoader.h">
+      <Filter>Source Files\objLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="src\entities\light.h">
+      <Filter>Source Files\entities</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

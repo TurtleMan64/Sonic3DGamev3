@@ -7,68 +7,99 @@
 #include "../toolbox/matrix.h"
 #include "../toolbox/vector.h"
 #include "../toolbox/maths.h"
+#include "../models/models.h"
 
 #include <iostream>
+#include <unordered_map>
+#include <list>
 
-const float FOV = 70;
-const float NEAR_PLANE = 0.1f;
-const float FAR_PLANE = 1000;
-
-Renderer::Renderer(ShaderProgram* shader)
+EntityRenderer::EntityRenderer(ShaderProgram* shader, Matrix4f* projectionMatrix)
 {
-	createProjectionMatrix();
 	shader->start();
-	shader->loadProjectionMatrix(&projectionMatrix);
+	shader->loadProjectionMatrix(projectionMatrix);
 	shader->stop();
+	this->shader = shader;
 }
 
-void Renderer::prepare()
+void EntityRenderer::render(std::unordered_map<TexturedModel*, std::list<Entity*>*>* entitiesMap)
 {
-	glEnable(GL_DEPTH_TEST);
-	glClearColor(1, 0, 0, 1);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	//for (auto entry : (*entitiesMap))
+	{
+		//prepareTexturedModel(entry.first);
+		//std::list<Entity*>* entityList = entry.second;
+
+		//for (auto entity : (*entityList))
+		{
+			//prepareInstance(entity);
+			//final render of an entity
+			//glDrawElements(GL_TRIANGLES, (entry.first)->getRawModel()->getVertexCount(), GL_UNSIGNED_INT, 0);
+		}
+		//unbindTexturedModel();
+	}
 }
 
-void Renderer::render(Entity* entity, ShaderProgram* shader)
+void EntityRenderer::prepareTexturedModel(TexturedModel* model)
 {
-	TexturedModel* texturedModel = entity->getModel();
-	RawModel* model = (*texturedModel).getRawModel();
-	glBindVertexArray((*model).getVaoID());
+	RawModel* rawModel = (*model).getRawModel();
+	glBindVertexArray((*rawModel).getVaoID());
 	glEnableVertexAttribArray(0);
 	glEnableVertexAttribArray(1);
 	glEnableVertexAttribArray(2);
 
-	Matrix4f transformationMatrix;
-	createTransformationMatrix(&transformationMatrix, entity->getPosition(), entity->getRotX(), entity->getRotY(), entity->getRotZ(), entity->getScale());
-	shader->loadTransformationMatrix(&transformationMatrix);
-	ModelTexture* texture = texturedModel->getTexture();
+	ModelTexture* texture = model->getTexture();
+	if (texture->getHasTransparency() != 0)
+	{
+		Master_disableCulling();
+	}
+	else
+	{
+		Master_enableCulling();
+	}
+	shader->loadFakeLighting(texture->getUsesFakeLighting());
 	shader->loadShineVariables(texture->getShineDamper(), texture->getReflectivity());
-
 	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, (*(*texturedModel).getTexture()).getID());
-	glDrawElements(GL_TRIANGLES, (*model).getVertexCount(), GL_UNSIGNED_INT, 0);
+	glBindTexture(GL_TEXTURE_2D, (*(*model).getTexture()).getID());
+}
 
+void EntityRenderer::unbindTexturedModel()
+{
 	glDisableVertexAttribArray(0);
 	glDisableVertexAttribArray(1);
 	glDisableVertexAttribArray(2);
 	glBindVertexArray(0);
 }
 
-
-void Renderer::createProjectionMatrix()
+void EntityRenderer::prepareInstance(Entity* entity)
 {
-	int displayWidth;
-	int displayHeight;
-	glfwGetWindowSize(getWindow(), &displayWidth, &displayHeight);
-	float aspectRatio = (float)displayWidth / (float)displayHeight;
-	float y_scale = (float)((1.0f / tan(toRadians(FOV / 2.0f))) * aspectRatio);
-	float x_scale = y_scale / aspectRatio;
-	float frustum_length = FAR_PLANE - NEAR_PLANE;
+	Matrix4f transformationMatrix;
+	createTransformationMatrix(&transformationMatrix, entity->getPosition(), entity->getRotX(), entity->getRotY(), entity->getRotZ(), entity->getScale());
+	shader->loadTransformationMatrix(&transformationMatrix);
+}
 
-	projectionMatrix.m00 = x_scale;
-	projectionMatrix.m11 = y_scale;
-	projectionMatrix.m22 = -((FAR_PLANE + NEAR_PLANE) / frustum_length);
-	projectionMatrix.m23 = -1;
-	projectionMatrix.m32 = -((2 * NEAR_PLANE * FAR_PLANE) / frustum_length);
-	projectionMatrix.m33 = 0;
+void EntityRenderer::renderOLD(Entity* entity, ShaderProgram* shader) //defunct
+{
+	TexturedModel* texturedModel = entity->getModel();
+	RawModel* model = (*texturedModel).getRawModel();
+	//glBindVertexArray((*model).getVaoID());
+	//glEnableVertexAttribArray(0);
+	//glEnableVertexAttribArray(1);
+	//glEnableVertexAttribArray(2);
+	//ModelTexture* texture = texturedModel->getTexture();
+	//shader->loadShineVariables(texture->getShineDamper(), texture->getReflectivity());
+	prepareTexturedModel(texturedModel);
+
+	//Matrix4f transformationMatrix;
+	//createTransformationMatrix(&transformationMatrix, entity->getPosition(), entity->getRotX(), entity->getRotY(), entity->getRotZ(), entity->getScale());
+	//shader->loadTransformationMatrix(&transformationMatrix);
+	prepareInstance(entity);
+
+	//glActiveTexture(GL_TEXTURE0);
+	//glBindTexture(GL_TEXTURE_2D, (*(*texturedModel).getTexture()).getID());
+	glDrawElements(GL_TRIANGLES, (*model).getVertexCount(), GL_UNSIGNED_INT, 0);
+
+	//glDisableVertexAttribArray(0);
+	//glDisableVertexAttribArray(1);
+	//glDisableVertexAttribArray(2);
+	//glBindVertexArray(0);
+	unbindTexturedModel();
 }

@@ -1,11 +1,14 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
-#include <vector>
+#include <list>
+#include <unordered_map>
 
 #include "../models/models.h"
 #include "../entities/entities.h"
 #include "../shaders/shaders.h"
 #include "../toolbox/matrix.h"
+#include "../entities/light.h"
+#include "../entities/camera.h"
 
 #ifndef RENDERENGINE_H
 #define RENDERENGINE_H
@@ -23,20 +26,37 @@ GLuint loadTexture(char*);
 GLuint loadTextureWORKS(char*);
 void cleanUp();
 
+//Master Rebderer
+void Master_render(Light* sun, Camera* camera);
+
+void Master_cleanUp();
+
+void Master_processEntity(Entity* entity);
+
+void Master_init();
+
+void Master_enableCulling();
+
+void Master_disableCulling();
+
 //Renderer
-class Renderer
+class EntityRenderer
 {
 private:
-	Matrix4f projectionMatrix;
+	ShaderProgram* shader;
+
+	void prepareTexturedModel(TexturedModel* model);
+
+	void unbindTexturedModel();
+
+	void prepareInstance(Entity* entity);
 
 public:
-	Renderer(ShaderProgram*);
+	EntityRenderer(ShaderProgram* shader, Matrix4f* projectionMatrix);
 
-	void prepare();
+	void renderOLD(Entity*, ShaderProgram*); //defunct
 
-	void render(Entity*, ShaderProgram*);
-
-	void createProjectionMatrix();
+	void render(std::unordered_map<TexturedModel*, std::list<Entity*>*>* entities);
 
 };
 #endif

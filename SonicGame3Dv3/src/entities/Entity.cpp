@@ -19,6 +19,11 @@ Entity::Entity(TexturedModel* model, Vector3f* position, float rotX, float rotY,
 	this->scale = scale;
 }
 
+void step()
+{
+
+}
+
 void Entity::increasePosition(float dx, float dy, float dz)
 {
 	position.x += dx;

@@ -40,7 +40,7 @@ GLuint loadTexture(char* fileName)
 	//std::fprintf(stdout, "	generated tex id #%d\n", textureID);
 
 	int width, height;
-	unsigned char* image = SOIL_load_image(fileName, &width, &height, 0, SOIL_LOAD_RGB);
+	unsigned char* image = SOIL_load_image(fileName, &width, &height, 0, SOIL_LOAD_RGBA);
 
 	if (image == 0)
 	{
@@ -61,7 +61,7 @@ GLuint loadTexture(char* fileName)
 	//glGenerateMipmap(textureID); //caused a gl error 1280
 
 	// MAKE!
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image);
 
 	SOIL_free_image_data(image);
 

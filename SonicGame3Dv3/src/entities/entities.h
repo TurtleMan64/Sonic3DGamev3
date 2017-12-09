@@ -17,6 +17,8 @@ public:
 	Entity();
 	Entity(TexturedModel*, Vector3f*, float, float, float, float);
 
+	void step();
+
 	void increasePosition(float, float, float);
 
 	void increaseRotation(float, float, float);

@@ -3,8 +3,11 @@
 
 #include <iostream>
 
-#include <string>  //for std::string
+#include <string>
+#include <unordered_map>
+#include <list>
 
+#include "main.h"
 #include "../renderEngine/renderEngine.h"
 #include "../toolbox/input.h"
 #include "../models/models.h"
@@ -18,6 +21,10 @@
 #include "../entities/light.h"
 
 int gameState = 0;
+
+std::unordered_map<Entity*, Entity*> gameEntities;
+std::list<Entity*> gameEntitiesToAdd;
+std::list<Entity*> gameEntitiesToDelete;
 
 extern int INPUT_JUMP;
 extern int INPUT_ACTION;
@@ -74,8 +81,10 @@ int main()
 {
 	createDisplay();
 
-	ShaderProgram shader("src/shaders/vertexShader.txt", "src/shaders/fragmentShader.txt");
-	Renderer renderer(&shader);
+	//ShaderProgram shader("src/shaders/vertexShader.txt", "src/shaders/fragmentShader.txt");
+	//Renderer renderer(&shader);
+
+	Master_init();
 
 	std::vector<float> verticies = {
 		-0.5f,0.5f,-0.5f,
@@ -161,17 +170,20 @@ int main()
 		1,0
 	};
 
-	RawModel model = loadObjModel("res/dragon.obj");
+	RawModel model = loadObjModel("res/fern.obj");
 
 	//RawModel model = loadToVAO(&verticies, &textureCoords, &indices);
-	ModelTexture texture(loadTexture("res/purple.png"));
+	ModelTexture texture(loadTexture("res/fern.png"));
 	texture.setShineDamper(10);
 	texture.setReflectivity(1);
+	texture.setHasTransparency(1);
+	texture.setUsesFakeLighting(1);
 
 	TexturedModel textureModel(&model, &texture);
 	Vector3f vec(0,0,-25);
 	
-	Entity entity(&textureModel, &vec, 0, 0, 0, 1);
+	Entity* myEntity = new Entity(&textureModel, &vec, 0, 0, 0, 1);
+	Main_addEntity(myEntity);
 
 	Light light;
 	light.getPosition()->x = 200;
@@ -253,30 +265,44 @@ int main()
 			std::fprintf(stdout, "########  ERROR  ########\n");
 			std::fprintf(stdout, "%d\n", err);
 		}
+
+
+		//entities managment
+		for (auto entityToAdd : gameEntitiesToAdd)
+		{
+			gameEntities.insert(std::pair<Entity*, Entity*>(entityToAdd, entityToAdd));
+		}
+		gameEntitiesToAdd.clear();
+
+		for (auto entityToDelete : gameEntitiesToDelete)
+		{
+			gameEntities.erase(entityToDelete);
+			delete entityToDelete;
+		}
+		gameEntitiesToDelete.clear();
+
+
+
 		//game logic
-
-		/*
-		Cherno
-		//glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-		//glClear(GL_COLOR_BUFFER_BIT);
-
-		//glDrawArrays(GL_TRIANGLES, 0, 3);
-		//glDrawElements(GL_TRIANGLES, 3, )
-		*/
+		for (auto e : gameEntities)
+		{
+			e.first->increaseRotation(0, 1, 0);
+		}
 
 		//if (INPUT_JUMP && !INPUT_PREVIOUS_JUMP)
 		{
 			//std::fprintf(stdout, "jump!\n");
 		}
-		entity.increasePosition(0, 0, 0);
 		cam.move();
-		entity.increaseRotation(0, 1, 0);
-		renderer.prepare();
-		shader.start();
-		shader.loadLight(&light);
-		shader.loadViewMatrix(&cam);
-		renderer.render(&entity, &shader);
-		shader.stop();
+
+
+		//render entities
+		for (auto e : gameEntities)
+		{
+			Master_processEntity(e.first);
+		}
+
+		Master_render(&light, &cam);
 
 		updateDisplay();
 
@@ -290,9 +316,9 @@ int main()
 			previousTime = seconds;
 		}
 	}
-
+	Master_cleanUp();
 	//glDeleteProgram(shaderProgram);
-	shader.cleanUp();
+	//shader.cleanUp();
 	cleanUp();
 	closeDisplay();
 	return 0;
@@ -330,3 +356,14 @@ int main()
 	//const char *name = glfwGetJoystickName(GLFW_JOYSTICK_1);
 	//std::fprintf(stdout, "joystick name: %s\n", name);
 //}
+
+//The newEntity should be created with the new keyword, as it will be deleted later
+void Main_addEntity(Entity* entityToAdd)
+{
+	gameEntitiesToAdd.push_back(entityToAdd);
+}
+
+void Main_deleteEntity(Entity* entityToDelete)
+{
+	gameEntitiesToDelete.push_back(entityToDelete);
+}

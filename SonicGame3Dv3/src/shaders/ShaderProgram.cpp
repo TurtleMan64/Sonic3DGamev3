@@ -30,7 +30,7 @@ ShaderProgram::ShaderProgram(char* vertexFile, char* fragmentFile)
 
 void ShaderProgram::start()
 {
-	glUseProgram(programID); //std::fprintf(stdout, "using shader id = %d\n", programID);
+	glUseProgram(programID);
 }
 
 void ShaderProgram::stop()
@@ -77,6 +77,17 @@ void ShaderProgram::loadShineVariables(float damper, float reflectivity)
 	loadFloat(location_reflectivity, reflectivity);
 }
 
+void ShaderProgram::loadFakeLighting(int fakeLighting)
+{
+	loadFloat(location_useFakeLighting, (float)fakeLighting);
+}
+
+void ShaderProgram::loadSkyColour(float r, float g, float b)
+{
+	Vector3f newColour(r, g, b);
+	loadVector(location_skyColour, &newColour);
+}
+
 void ShaderProgram::bindAttributes()
 {
 	bindAttribute(0, "position");
@@ -98,6 +109,8 @@ void ShaderProgram::getAllUniformLocations()
 	location_lightColour = getUniformLocation("lightColour");
 	location_shineDamper = getUniformLocation("shineDamper");
 	location_reflectivity = getUniformLocation("reflectivity");
+	location_useFakeLighting = getUniformLocation("useFakeLighting");
+	location_skyColour = getUniformLocation("skyColour");
 }
 
 int ShaderProgram::getUniformLocation(char* uniformName)
@@ -150,7 +163,6 @@ GLuint loadShader(char* fileName, int type)
 		return 0;
 	}
 
-	//std::fprintf(stdout, "%s\n", filetext.c_str());
 	unsigned int id = glCreateShader(type);
 	const char* src = filetext.c_str();
 	const int len = filetext.size();
@@ -172,6 +184,5 @@ GLuint loadShader(char* fileName, int type)
 		return 0;
 	}
 
-	//std::fprintf(stdout, "shader = %d\n", id);
 	return id;
 }

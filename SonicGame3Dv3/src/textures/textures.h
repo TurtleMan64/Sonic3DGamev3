@@ -30,5 +30,7 @@ public:
 
 	int getUsesFakeLighting();
 	void setUsesFakeLighting(int newUsesFakeLighting);
+
+	void deleteMe();
 };
 #endif

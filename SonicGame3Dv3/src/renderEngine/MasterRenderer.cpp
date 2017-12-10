@@ -30,14 +30,13 @@ const float RED = 0.5f;
 const float GREEN = 0.5f;
 const float BLUE = 0.5f;
 
-void createProjectionMatrix();
 void prepare();
 
 void Master_init()
 {
 	shader = new ShaderProgram("src/shaders/vertexShader.txt", "src/shaders/fragmentShader.txt");
 	projectionMatrix = new Matrix4f();
-	createProjectionMatrix();
+	Master_makeProjectionMatrix();
 	renderer = new EntityRenderer(shader, projectionMatrix);
 
 	//glEnable(GL_BLEND);
@@ -148,14 +147,17 @@ void Master_disableCulling()
 	glDisable(GL_CULL_FACE);
 }
 
+extern unsigned int SCR_WIDTH;
+extern unsigned int SCR_HEIGHT;
 
-void createProjectionMatrix()
+void Master_makeProjectionMatrix()
 {
 	int displayWidth;
 	int displayHeight;
 	glfwGetWindowSize(getWindow(), &displayWidth, &displayHeight);
+
 	float aspectRatio = (float)displayWidth / (float)displayHeight;
-	float y_scale = (float)((1.0f / tan(toRadians(FOV / 2.0f))) * aspectRatio);
+	float y_scale = (float)((1.0f / tan(toRadians(FOV / 2.0f))));// * aspectRatio);
 	float x_scale = y_scale / aspectRatio;
 	float frustum_length = FAR_PLANE - NEAR_PLANE;
 

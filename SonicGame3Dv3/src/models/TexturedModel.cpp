@@ -3,6 +3,10 @@
 #include "models.h"
 #include "../textures/textures.h"
 
+TexturedModel::TexturedModel()
+{
+
+}
 
 TexturedModel::TexturedModel(RawModel* model, ModelTexture* texture)
 {
@@ -20,7 +24,8 @@ ModelTexture* TexturedModel::getTexture()
 	return &texture;
 }
 
-TexturedModel::TexturedModel()
+void TexturedModel::deleteMe()
 {
-
+	rawModel.deleteMe();
+	texture.deleteMe();
 }

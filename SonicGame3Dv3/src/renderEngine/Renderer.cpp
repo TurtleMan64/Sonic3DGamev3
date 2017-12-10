@@ -78,28 +78,39 @@ void EntityRenderer::prepareInstance(Entity* entity)
 
 void EntityRenderer::renderOLD(Entity* entity, ShaderProgram* shader) //defunct
 {
-	TexturedModel* texturedModel = entity->getModel();
-	RawModel* model = (*texturedModel).getRawModel();
-	//glBindVertexArray((*model).getVaoID());
-	//glEnableVertexAttribArray(0);
-	//glEnableVertexAttribArray(1);
-	//glEnableVertexAttribArray(2);
-	//ModelTexture* texture = texturedModel->getTexture();
-	//shader->loadShineVariables(texture->getShineDamper(), texture->getReflectivity());
-	prepareTexturedModel(texturedModel);
+	if (entity->getVisible() == 0)
+	{
+		return;
+	}
 
-	//Matrix4f transformationMatrix;
-	//createTransformationMatrix(&transformationMatrix, entity->getPosition(), entity->getRotX(), entity->getRotY(), entity->getRotZ(), entity->getScale());
-	//shader->loadTransformationMatrix(&transformationMatrix);
 	prepareInstance(entity);
 
-	//glActiveTexture(GL_TEXTURE0);
-	//glBindTexture(GL_TEXTURE_2D, (*(*texturedModel).getTexture()).getID());
-	glDrawElements(GL_TRIANGLES, (*model).getVertexCount(), GL_UNSIGNED_INT, 0);
+	std::list<TexturedModel*>* models = entity->getModels();
 
-	//glDisableVertexAttribArray(0);
-	//glDisableVertexAttribArray(1);
-	//glDisableVertexAttribArray(2);
-	//glBindVertexArray(0);
-	unbindTexturedModel();
+	for (auto texturedModel : (*models))
+	{
+		RawModel* model = texturedModel->getRawModel();
+		//glBindVertexArray((*model).getVaoID());
+		//glEnableVertexAttribArray(0);
+		//glEnableVertexAttribArray(1);
+		//glEnableVertexAttribArray(2);
+		//ModelTexture* texture = texturedModel->getTexture();
+		//shader->loadShineVariables(texture->getShineDamper(), texture->getReflectivity());
+		prepareTexturedModel(texturedModel);
+
+		//Matrix4f transformationMatrix;
+		//createTransformationMatrix(&transformationMatrix, entity->getPosition(), entity->getRotX(), entity->getRotY(), entity->getRotZ(), entity->getScale());
+		//shader->loadTransformationMatrix(&transformationMatrix);
+		//prepareInstance(entity);
+
+		//glActiveTexture(GL_TEXTURE0);
+		//glBindTexture(GL_TEXTURE_2D, (*(*texturedModel).getTexture()).getID());
+		glDrawElements(GL_TRIANGLES, model->getVertexCount(), GL_UNSIGNED_INT, 0);
+
+		//glDisableVertexAttribArray(0);
+		//glDisableVertexAttribArray(1);
+		//glDisableVertexAttribArray(2);
+		//glBindVertexArray(0);
+		unbindTexturedModel();
+	}
 }

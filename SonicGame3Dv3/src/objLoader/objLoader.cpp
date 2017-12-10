@@ -105,7 +105,7 @@ RawModel loadACM(char* fileName)
 
 	file.close();
 
-	return loadToVAO(&vertices, &textures, &normals, &indices);
+	return Loader_loadToVAO(&vertices, &textures, &normals, &indices);
 }
 
 RawModel loadObjModel(char* fileName)
@@ -211,7 +211,7 @@ RawModel loadObjModel(char* fileName)
 
 	float furthest = convertDataToArrays(&vertices, &textures, &normals, &verticesArray, &texturesArray, &normalsArray);
 	//ModelData data(&verticesArray, &texturesArray, &normalsArray, &indices, furthest);
-	RawModel raaaw = loadToVAO(&verticesArray, &texturesArray, &normalsArray, &indices);
+	RawModel raaaw = Loader_loadToVAO(&verticesArray, &texturesArray, &normalsArray, &indices);
 
 	for (auto vertex : vertices)
 	{
@@ -466,7 +466,7 @@ RawModel loadObjModelOLD(char* fileName)
 	free(tArray);
 	free(nArray);
 
-	RawModel model = loadToVAO(&vectorVertex, &vectorTexture, &vectorNormal, &indices);
+	RawModel model = Loader_loadToVAO(&vectorVertex, &vectorTexture, &vectorNormal, &indices);
 
 	vertices.clear();
 	vertices.shrink_to_fit();

@@ -21,10 +21,14 @@ GLFWwindow* getWindow();
 
 
 //Loader
-RawModel loadToVAO(std::vector<float>*, std::vector<float>*, std::vector<float>*, std::vector<int>*);
-GLuint loadTexture(char*);
-GLuint loadTextureWORKS(char*);
-void cleanUp();
+RawModel Loader_loadToVAO(std::vector<float>* positions, std::vector<float>* textureCoords, std::vector<float>* normals, std::vector<int>* indices);
+GLuint Loader_loadTexture(char* filename);
+GLuint Loader_loadTextureWORKS(char* filename);
+void Loader_cleanUp();
+void Loader_deleteVAO(GLuint vaoID);
+void Loader_deleteVBO(GLuint vboID);
+void Loader_deleteTexture(GLuint texID);
+void Loader_deleteTexturedModels(std::list<TexturedModel*>* tm);
 
 //Master Rebderer
 void Master_render(Light* sun, Camera* camera);
@@ -38,6 +42,8 @@ void Master_init();
 void Master_enableCulling();
 
 void Master_disableCulling();
+
+void Master_makeProjectionMatrix();
 
 //Renderer
 class EntityRenderer

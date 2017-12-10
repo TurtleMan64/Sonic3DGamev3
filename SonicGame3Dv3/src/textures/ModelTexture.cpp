@@ -2,6 +2,7 @@
 #include <iostream>
 
 #include "textures.h"
+#include "../renderEngine/renderEngine.h"
 
 ModelTexture::ModelTexture()
 {
@@ -57,4 +58,9 @@ int ModelTexture::getUsesFakeLighting()
 void ModelTexture::setUsesFakeLighting(int newUseFakeLighting)
 {
 	this->useFakeLighting = newUseFakeLighting;
+}
+
+void ModelTexture::deleteMe()
+{
+	Loader_deleteTexture(texID);
 }

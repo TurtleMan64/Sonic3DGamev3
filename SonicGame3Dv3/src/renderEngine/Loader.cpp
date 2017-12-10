@@ -3,16 +3,18 @@
 #include <SOIL/SOIL.h>
 
 #include <vector>  //for std::vector
+#include <list>
 #include <string>  //for std::string
 #include <iostream>
+#include <cmath>
 
 #include "renderEngine.h"
 
 #include "../models/models.h"
 
-std::vector<GLuint> vaos;
-std::vector<GLuint> vbos;
-std::vector<GLuint> textures;
+std::list<GLuint> vaos;
+std::list<GLuint> vbos;
+std::list<GLuint> textures;
 
 GLuint createVAO();
 void storeDataInAttributeList(int, int, std::vector<float>*);
@@ -21,7 +23,7 @@ void bindIndiciesBuffer(std::vector<int>*);
 float* storeDataInFloatBuffer(std::vector<float>*);
 int* storeDataInIntBuffer(std::vector<int>*);
 
-RawModel loadToVAO(std::vector<float>* positions, std::vector<float>* textureCoords, std::vector<float>* normals, std::vector<int>* indicies)
+RawModel Loader_loadToVAO(std::vector<float>* positions, std::vector<float>* textureCoords, std::vector<float>* normals, std::vector<int>* indicies)
 {
 	GLuint vaoID = createVAO();
 	bindIndiciesBuffer(indicies);
@@ -32,7 +34,7 @@ RawModel loadToVAO(std::vector<float>* positions, std::vector<float>* textureCoo
 	return RawModel(vaoID, (*indicies).size());
 }
 
-GLuint loadTexture(char* fileName)
+GLuint Loader_loadTexture(char* fileName)
 {
 	GLuint textureID = 0;
 	glGenTextures(1, &textureID);
@@ -54,14 +56,27 @@ GLuint loadTexture(char* fileName)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	// ME DOEST SMOOTH OR SHARP? SHARP!
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-
-	// MIP MAP!
-	//glGenerateMipmap(textureID); //caused a gl error 1280
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
 	// MAKE!
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image);
+
+	glGenerateMipmap(GL_TEXTURE_2D);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_LOD_BIAS, 0.0f); //set to 0 if using anisotropic, around -0.4f if not
+
+	if (glfwExtensionSupported("GL_EXT_texture_filter_anisotropic"))
+	{
+		//Not sure why these aren't defined... but I've spent too much time trying to fix it.
+		const GLuint GL_TEXTURE_MAX_ANISOTROPY_EXT  = 0x84FE;
+		const GLuint GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT = 0x84FF;
+
+		float maxAnisotropyLevel;
+		glGetFloatv(GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT, &maxAnisotropyLevel);
+		float amountToUse = fmin(4.0f, maxAnisotropyLevel);
+		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, amountToUse);
+	}
 
 	SOIL_free_image_data(image);
 
@@ -71,7 +86,7 @@ GLuint loadTexture(char* fileName)
 	return textureID;
 }
 
-GLuint loadTextureWORKS(char* fileName)
+GLuint Loader_loadTextureWORKS(char* fileName)
 {
 	std::string name = "res/img_test.png";
 	GLuint tex_ID;
@@ -104,14 +119,13 @@ GLuint createVAO()
 void storeDataInAttributeList(int attributeNumber, int coordinateSize, std::vector<float>* data)
 {
 	GLuint vboID = 0;
-	glGenBuffers(1, &vboID); //std::fprintf(stdout, "glGenBuffers(1, &vboID);\n");
+	glGenBuffers(1, &vboID);
 	vbos.push_back(vboID);
-	glBindBuffer(GL_ARRAY_BUFFER, vboID); //std::fprintf(stdout, "glBindBuffer(GL_ARRAY_BUFFER, vboID);\n");
+	glBindBuffer(GL_ARRAY_BUFFER, vboID);
 
 	//float buffer
 	float* buffer = storeDataInFloatBuffer(data);
 
-	//std::fprintf(stdout, "size:  %d\n", data.size());
 	glBufferData(GL_ARRAY_BUFFER, (*data).size() * sizeof(float), (GLvoid *)buffer, GL_STATIC_DRAW); //std::fprintf(stdout, "glBufferData(GL_ARRAY_BUFFER, data.size(), (GLvoid *)buffer, GL_STATIC_DRAW);\n"); //this might not work 
 	glVertexAttribPointer(attributeNumber, coordinateSize, GL_FLOAT, GL_FALSE, 0, 0); //std::fprintf(stdout, "glVertexAttribPointer(attributeNumber, 3, GL_FLOAT, false, 0, 0);\n");
 	glBindBuffer(GL_ARRAY_BUFFER, 0); //std::fprintf(stdout, "glBindBuffer(GL_ARRAY_BUFFER, 0);\n");
@@ -121,22 +135,54 @@ void storeDataInAttributeList(int attributeNumber, int coordinateSize, std::vect
 
 void unbindVAO()
 {
-	glBindVertexArray(0); //std::fprintf(stdout, "glBindVertexArray(0);\n");
+	glBindVertexArray(0);
 }
 
-void cleanUp()
+void Loader_cleanUp()
 {
-	glDeleteVertexArrays(vaos.size(), &vaos[0]); //std::fprintf(stdout, "glDeleteVertexArrays(vaos.size(), &vaos[0]);\n");
+	for (auto vaoID : vaos)
+	{
+		glDeleteVertexArrays(1, &vaoID);
+	}
 	vaos.clear();
-	vaos.shrink_to_fit();
 
-	glDeleteBuffers(vbos.size(), &vbos[0]); //std::fprintf(stdout, "glDeleteVertexArrays(vbos.size(), &vbos[0]);\n");
+	for (auto vboID : vbos)
+	{
+		glDeleteBuffers(1, &vboID);
+	}
 	vbos.clear();
-	vbos.shrink_to_fit();
 
-	glDeleteTextures(textures.size(), &textures[0]); //std::fprintf(stdout, "glDeleteVertexArrays(vbos.size(), &vbos[0]);\n");
+	for (auto texID : textures)
+	{
+		glDeleteTextures(1, &texID);
+	}
 	textures.clear();
-	textures.shrink_to_fit();
+}
+
+void Loader_deleteVAO(GLuint vaoID)
+{
+	glDeleteVertexArrays(1, &vaoID);
+	vaos.remove(vaoID);
+}
+
+void Loader_deleteVBO(GLuint vboID)
+{
+	glDeleteBuffers(1, &vboID);
+	vbos.remove(vboID);
+}
+
+void Loader_deleteTexture(GLuint texID)
+{
+	glDeleteTextures(1, &texID);
+	textures.remove(texID);
+}
+
+void Loader_deleteTexturedModels(std::list<TexturedModel*>* tm)
+{
+	for (auto model : (*tm))
+	{
+		model->deleteMe();
+	}
 }
 
 void bindIndiciesBuffer(std::vector<int>* indicies)

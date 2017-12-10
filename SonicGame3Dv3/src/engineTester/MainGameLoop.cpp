@@ -19,6 +19,7 @@
 #include "../entities/camera.h"
 #include "../objLoader/objLoader.h"
 #include "../entities/light.h"
+#include "../entities/ring.h"
 
 int gameState = 0;
 
@@ -170,26 +171,32 @@ int main()
 		1,0
 	};
 
-	RawModel model = loadObjModel("res/EmeraldCoast.obj");
+	//RawModel model = loadObjModel("res/EmeraldCoast.obj");
 
 	//RawModel model = loadACM("res/BOB.acm");
 
 	//RawModel model = loadToVAO(&verticies, &textureCoords, &indices);
-	ModelTexture texture(loadTexture("res/purple.png"));
-	texture.setShineDamper(10);
-	texture.setReflectivity(1);
+	//ModelTexture texture(Loader_loadTexture("res/aliastest.png"));
+	//texture.setShineDamper(10);
+	//texture.setReflectivity(1);
 	//texture.setHasTransparency(1);
 	//texture.setUsesFakeLighting(1);
 
-	TexturedModel textureModel(&model, &texture);
-	Vector3f vec(0,0,0);
+	//TexturedModel textureModel(&model, &texture);
+	//Vector3f vec(0,0,0);
 	
-	Entity* myEntity = new Entity(&textureModel, &vec, 0, 0, 0, 1);
-	Main_addEntity(myEntity);
+	//Entity* myEntity = new Entity(&vec, 0, 0, 0, 1);
+
+	Ring::loadStaticModels();
+
+	Ring* myRing = new Ring(0, 50, 0);
+	myRing->setVisible(1);
+
+	Main_addEntity(myRing);
 
 	Light light;
 	light.getPosition()->x = 0;
-	light.getPosition()->y = 1000;
+	light.getPosition()->y = 100000;
 	light.getPosition()->z = 0;
 	
 
@@ -289,6 +296,7 @@ int main()
 		for (auto e : gameEntities)
 		{
 			//e.first->increaseRotation(0, 1, 0);
+			e.first->step();
 		}
 
 		//if (INPUT_JUMP && !INPUT_PREVIOUS_JUMP)
@@ -318,10 +326,13 @@ int main()
 			previousTime = seconds;
 		}
 	}
+
+	Ring::deleteStaticModels();
+
 	Master_cleanUp();
 	//glDeleteProgram(shaderProgram);
 	//shader.cleanUp();
-	cleanUp();
+	Loader_cleanUp();
 	closeDisplay();
 	return 0;
 }

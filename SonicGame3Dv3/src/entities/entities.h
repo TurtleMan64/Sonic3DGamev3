@@ -3,28 +3,29 @@
 #include "../models/models.h"
 #include "../toolbox/vector.h"
 
+#include <list>
+
 #ifndef ENTITIES_H
 #define ENTITIES_H
 class Entity
 {
-private:
-	TexturedModel model;
+protected:
 	Vector3f position;
 	float rotX, rotY, rotZ;
 	float scale;
+	int visible;
 
 public:
 	Entity();
-	Entity(TexturedModel*, Vector3f*, float, float, float, float);
+	Entity(Vector3f*, float, float, float, float);
 
-	void step();
+	virtual void step();
 
 	void increasePosition(float, float, float);
 
 	void increaseRotation(float, float, float);
 
-	TexturedModel* getModel();
-	void setModel(TexturedModel*);
+	virtual std::list<TexturedModel*>* getModels();
 
 	Vector3f* getPosition();
 	void setPosition(Vector3f*);
@@ -40,5 +41,8 @@ public:
 
 	float getScale();
 	void setScale(float);
+
+	int getVisible();
+	void setVisible(int);
 };
 #endif

@@ -18,6 +18,8 @@ public:
 	int getVaoID();
 
 	int getVertexCount();
+
+	void deleteMe();
 };
 
 class TexturedModel
@@ -34,5 +36,7 @@ public:
 	RawModel* getRawModel();
 
 	ModelTexture* getTexture();
+
+	void deleteMe();
 };
 #endif

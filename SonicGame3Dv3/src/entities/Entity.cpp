@@ -4,22 +4,34 @@
 #include "../models/models.h"
 #include "../toolbox/vector.h"
 
+#include <list>
+#include <iostream>
+
 Entity::Entity()
 {
-
+	this->position.x = 0;
+	this->position.y = 0;
+	this->position.z = 0;
+	this->rotX = 0;
+	this->rotY = 0;
+	this->rotZ = 0; 
+	this->scale = 1;
+	this->visible = 0;
 }
 
-Entity::Entity(TexturedModel* model, Vector3f* position, float rotX, float rotY, float rotZ, float scale)
+Entity::Entity(Vector3f* position, float rotX, float rotY, float rotZ, float scale)
 {
-	memcpy(&this->model, model, sizeof(TexturedModel));
-	memcpy(&this->position, position, sizeof(Vector3f));
+	this->position.x = position->x;
+	this->position.y = position->y;
+	this->position.z = position->z;
 	this->rotX = rotX;
 	this->rotY = rotY;
 	this->rotZ = rotZ;
 	this->scale = scale;
+	this->visible = 0;
 }
 
-void step()
+void Entity::step()
 {
 
 }
@@ -38,13 +50,9 @@ void Entity::increaseRotation(float dx, float dy, float dz)
 	rotZ += dz;
 }
 
-TexturedModel* Entity::getModel()
+std::list<TexturedModel*>* Entity::getModels()
 {
-	return &model;
-}
-void Entity::setModel(TexturedModel* newModel)
-{
-	memcpy(&this->model, newModel, sizeof(TexturedModel));
+	return nullptr;
 }
 
 Vector3f* Entity::getPosition()
@@ -53,7 +61,9 @@ Vector3f* Entity::getPosition()
 }
 void Entity::setPosition(Vector3f* newPos)
 {
-	memcpy(&this->position, newPos, sizeof(Vector3f));
+	this->position.x = newPos->x;
+	this->position.y = newPos->y;
+	this->position.z = newPos->z;
 }
 
 float Entity::getRotX()
@@ -90,4 +100,13 @@ float Entity::getScale()
 void Entity::setScale(float newScale)
 {
 	scale = newScale;
+}
+
+int Entity::getVisible()
+{
+	return visible;
+}
+void Entity::setVisible(int newVisible)
+{
+	visible = newVisible;
 }

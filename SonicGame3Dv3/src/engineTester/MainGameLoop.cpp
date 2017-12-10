@@ -170,25 +170,27 @@ int main()
 		1,0
 	};
 
-	RawModel model = loadObjModel("res/fern.obj");
+	RawModel model = loadObjModel("res/EmeraldCoast.obj");
+
+	//RawModel model = loadACM("res/BOB.acm");
 
 	//RawModel model = loadToVAO(&verticies, &textureCoords, &indices);
-	ModelTexture texture(loadTexture("res/fern.png"));
+	ModelTexture texture(loadTexture("res/purple.png"));
 	texture.setShineDamper(10);
 	texture.setReflectivity(1);
-	texture.setHasTransparency(1);
-	texture.setUsesFakeLighting(1);
+	//texture.setHasTransparency(1);
+	//texture.setUsesFakeLighting(1);
 
 	TexturedModel textureModel(&model, &texture);
-	Vector3f vec(0,0,-25);
+	Vector3f vec(0,0,0);
 	
 	Entity* myEntity = new Entity(&textureModel, &vec, 0, 0, 0, 1);
 	Main_addEntity(myEntity);
 
 	Light light;
-	light.getPosition()->x = 200;
-	light.getPosition()->y = 200;
-	light.getPosition()->z = 100;
+	light.getPosition()->x = 0;
+	light.getPosition()->y = 1000;
+	light.getPosition()->z = 0;
 	
 
 
@@ -286,7 +288,7 @@ int main()
 		//game logic
 		for (auto e : gameEntities)
 		{
-			e.first->increaseRotation(0, 1, 0);
+			//e.first->increaseRotation(0, 1, 0);
 		}
 
 		//if (INPUT_JUMP && !INPUT_PREVIOUS_JUMP)

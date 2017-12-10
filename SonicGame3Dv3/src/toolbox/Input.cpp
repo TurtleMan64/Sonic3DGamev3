@@ -17,6 +17,8 @@ int INPUT_PREVIOUS_ACTION2 = 0;
 
 float INPUT_X = 0;
 float INPUT_Y = 0;
+float INPUT_X2 = 0;
+float INPUT_Y2 = 0;
 
 void pollInputs()
 {
@@ -32,6 +34,8 @@ void pollInputs()
 
 	INPUT_X = 0;
 	INPUT_Y = 0;
+	INPUT_X2 = 0;
+	INPUT_Y2 = 0;
 
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 	{
@@ -57,7 +61,6 @@ void pollInputs()
 	{
 		INPUT_Y = -1;
 	}
-
 	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
 	{
 		INPUT_Y = 1;
@@ -67,9 +70,26 @@ void pollInputs()
 	{
 		INPUT_X = -1;
 	}
-
 	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
 	{
 		INPUT_X = 1;
+	}
+
+	if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)
+	{
+		INPUT_X2 = -1;
+	}
+	if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
+	{
+		INPUT_X2 = 1;
+	}
+
+	if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS)
+	{
+		INPUT_Y2 = -1;
+	}
+	if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS)
+	{
+		INPUT_Y2 = 1;
 	}
 }

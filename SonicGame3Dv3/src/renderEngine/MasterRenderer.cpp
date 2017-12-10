@@ -139,8 +139,8 @@ void Master_cleanUp()
 
 void Master_enableCulling()
 {
-	glEnable(GL_CULL_FACE);
-	glCullFace(GL_BACK);
+	//glEnable(GL_CULL_FACE);
+	//glCullFace(GL_BACK);
 }
 
 void Master_disableCulling()

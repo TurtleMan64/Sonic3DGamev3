@@ -7,15 +7,33 @@
 #include "objLoader.h"
 #include "../models/models.h"
 #include "../renderEngine/renderEngine.h"
+#include "../toolbox/vector.h"
+#include "vertex.h"
 
 
 char ** split(char *, char);
-void processVertex(char**, 
+void processVertexOLD(char**, 
 	std::vector<int>*, 
 	std::vector<Vector2f>*, 
 	std::vector<Vector3f>*, 
 	float*, 
 	float*);
+
+void processVertex(char** vertex,
+	std::vector<Vertex*>* vertices,
+	std::vector<int>* indices);
+
+void dealWithAlreadyProcessedVertex(Vertex*, 
+	int, 
+	int, 
+	std::vector<int>*, 
+	std::vector<Vertex*>*);
+
+void removeUnusedVertices(std::vector<Vertex*>* vertices);
+
+float convertDataToArrays(std::vector<Vertex*>* vertices, std::vector<Vector2f>* textures,
+	std::vector<Vector3f>* normals, std::vector<float>* verticesArray, std::vector<float>* texturesArray,
+	std::vector<float>* normalsArray);
 
 int splitLength = 0;
 
@@ -23,7 +41,280 @@ int splitLength = 0;
 int nArraySize = 0;
 int tArraySize = 0;
 
+RawModel loadACM(char* fileName)
+{
+	std::ifstream file(fileName);
+	if (!file.is_open())
+	{
+		std::fprintf(stdout, "Error: Cannot load file '%s'\n", fileName);
+		file.close();
+		RawModel temp;
+		return temp;
+	}
+
+	std::string line;
+
+	std::vector<float> vertices;
+	std::vector<float> textures;
+	std::vector<float> normals;
+	std::vector<int> indices;
+
+	int vCount = 0;
+	int tCount = 0;
+	int nCount = 0;
+	int iCount = 0;
+
+	getline(file, line);
+	vCount = std::stoi(line, nullptr, 10);
+	while (vCount > 0)
+	{
+		getline(file, line);
+		vertices.push_back(std::stof(line, nullptr));
+		vCount--;
+	}
+
+	getline(file, line);
+	getline(file, line);
+	tCount = std::stoi(line, nullptr, 10);
+	while (tCount > 0)
+	{
+		getline(file, line);
+		textures.push_back(std::stof(line, nullptr));
+		tCount--;
+	}
+
+	getline(file, line);
+	getline(file, line);
+	nCount = std::stoi(line, nullptr, 10);
+	while (nCount > 0)
+	{
+		getline(file, line);
+		normals.push_back(std::stof(line, nullptr));
+		nCount--;
+	}
+
+	getline(file, line);
+	getline(file, line);
+	iCount = std::stoi(line, nullptr, 10);
+	while (iCount > 0)
+	{
+		getline(file, line);
+		indices.push_back(std::stoi(line, nullptr, 10));
+		iCount--;
+	}
+
+	file.close();
+
+	return loadToVAO(&vertices, &textures, &normals, &indices);
+}
+
 RawModel loadObjModel(char* fileName)
+{
+	std::ifstream file(fileName);
+	if (!file.is_open())
+	{
+		std::fprintf(stdout, "Error: Cannot load file '%s'\n", fileName);
+		file.close();
+		//ModelData temp(nullptr, nullptr, nullptr, nullptr, 0);
+		RawModel temp;
+		return temp;
+	}
+
+	std::string line;
+
+	std::vector<Vertex*> vertices;
+	std::vector<Vector2f> textures;
+	std::vector<Vector3f> normals;
+	std::vector<int> indices;
+
+	int foundFaces = 0;
+
+	while (!file.eof())
+	{
+		getline(file, line);
+
+		char lineBuf[256]; //Buffer to copy line into
+		memset(lineBuf, 0, 256);
+		memcpy(lineBuf, line.c_str(), line.size());
+		char** lineSplit = split(lineBuf, ' ');
+
+		if (splitLength > 0)
+		{
+			if (foundFaces == 0)
+			{
+				if (strcmp(lineSplit[0], "v") == 0)
+				{
+					std::string p1(lineSplit[1]);
+					std::string p2(lineSplit[2]);
+					std::string p3(lineSplit[3]);
+					Vector3f vertex(std::stof(p1, nullptr), std::stof(p2, nullptr), std::stof(p3, nullptr));
+					Vertex* newVertex = new Vertex(vertices.size(), &vertex);
+					vertices.push_back(newVertex);
+					p1.clear();
+					p2.clear();
+					p3.clear();
+				}
+				else if (strcmp(lineSplit[0], "vt") == 0)
+				{
+					std::string t1(lineSplit[1]);
+					std::string t2(lineSplit[2]);
+					Vector2f texCoord(std::stof(t1, nullptr), std::stof(t2, nullptr));
+					textures.push_back(texCoord);
+					t1.clear();
+					t2.clear();
+				}
+				else if (strcmp(lineSplit[0], "vn") == 0)
+				{
+					std::string n1(lineSplit[1]);
+					std::string n2(lineSplit[2]);
+					std::string n3(lineSplit[3]);
+					Vector3f normal(std::stof(n1, nullptr), std::stof(n2, nullptr), std::stof(n3, nullptr));
+					normals.push_back(normal);
+					n1.clear();
+					n2.clear();
+					n3.clear();
+				}
+				else if (strcmp(lineSplit[0], "f") == 0)
+				{
+					foundFaces = 1;
+				}
+			}
+
+			if (foundFaces == 1)
+			{
+				//std::fprintf(stdout, "'%s'\n", lineSplit[1]);
+				if (strcmp(lineSplit[0], "f") == 0)
+				{
+					char** vertex1 = split(lineSplit[1], '/');
+					char** vertex2 = split(lineSplit[2], '/');
+					char** vertex3 = split(lineSplit[3], '/');
+
+					processVertex(vertex1, &vertices, &indices);
+					processVertex(vertex2, &vertices, &indices);
+					processVertex(vertex3, &vertices, &indices);
+
+					free(vertex1);
+					free(vertex2);
+					free(vertex3);
+				}
+			}
+		}
+		free(lineSplit);
+	}
+	file.close();
+
+	removeUnusedVertices(&vertices);
+
+	std::vector<float> verticesArray;
+	std::vector<float> texturesArray;
+	std::vector<float> normalsArray;
+
+	float furthest = convertDataToArrays(&vertices, &textures, &normals, &verticesArray, &texturesArray, &normalsArray);
+	//ModelData data(&verticesArray, &texturesArray, &normalsArray, &indices, furthest);
+	RawModel raaaw = loadToVAO(&verticesArray, &texturesArray, &normalsArray, &indices);
+
+	for (auto vertex : vertices)
+	{
+		delete vertex;
+	}
+
+	return raaaw;
+}
+
+
+void processVertex(char** vertex,
+	std::vector<Vertex*>* vertices,
+	std::vector<int>* indices)
+{
+	int index = atoi(vertex[0]) - 1;
+	int textureIndex = atoi(vertex[1]) - 1;
+	int normalIndex = atoi(vertex[2]) - 1;
+
+	Vertex* currentVertex = (*vertices)[index];
+	//Vertex* currentVertex = &((*vertices)[index]);    //bounds check
+	if (currentVertex->isSet() == 0)
+	{
+		currentVertex->setTextureIndex(textureIndex);
+		currentVertex->setNormalIndex(normalIndex);
+		indices->push_back(index);
+	}
+	else
+	{
+		dealWithAlreadyProcessedVertex(currentVertex, textureIndex, normalIndex, indices, vertices);
+	}
+}
+
+
+
+void dealWithAlreadyProcessedVertex(Vertex* previousVertex,
+	int newTextureIndex,
+	int newNormalIndex,
+	std::vector<int>* indices,
+	std::vector<Vertex*>* vertices)
+{
+	//std::fprintf(stdout, "entry prev vertex* = %d\n", previousVertex);
+	if (previousVertex->hasSameTextureAndNormal(newTextureIndex, newNormalIndex))
+	{
+		indices->push_back(previousVertex->getIndex());
+	}
+	else
+	{
+		Vertex* anotherVertex = previousVertex->getDuplicateVertex();
+		if (anotherVertex != nullptr)
+		{
+			dealWithAlreadyProcessedVertex(anotherVertex, newTextureIndex, newNormalIndex, indices, vertices);
+		}
+		else
+		{
+			Vertex* duplicateVertex = new Vertex(vertices->size(), previousVertex->getPosition());
+			duplicateVertex->setTextureIndex(newTextureIndex);
+			duplicateVertex->setNormalIndex(newNormalIndex);
+
+			previousVertex->setDuplicateVertex(duplicateVertex);
+			vertices->push_back(duplicateVertex);
+			indices->push_back(duplicateVertex->getIndex());
+
+			//old
+			//vertices->push_back(duplicateVertex);
+			//previousVertex->setDuplicateVertex(&(vertices->back()));
+			//std::fprintf(stdout, "      prev vertex* = %d\n", previousVertex);
+			//previousVertex->duplicateVertex = &(vertices->back());
+			//indices->push_back(duplicateVertex.getIndex());
+		}
+	}
+}
+
+
+float convertDataToArrays(std::vector<Vertex*>* vertices, std::vector<Vector2f>* textures,
+	std::vector<Vector3f>* normals, std::vector<float>* verticesArray, std::vector<float>* texturesArray,
+	std::vector<float>* normalsArray)
+{
+	float furthestPoint = 0;
+	for (auto currentVertex : (*vertices))//int i = 0; i < vertices->size(); i++)
+	{
+		//Vertex currentVertex = (*vertices)[i];
+		if (currentVertex->getLength() > furthestPoint)
+		{
+			furthestPoint = currentVertex->getLength();
+		}
+		Vector3f* position = currentVertex->getPosition();
+		Vector2f* textureCoord = &(*textures)[currentVertex->getTextureIndex()];
+		Vector3f* normalVector = &(*normals)[currentVertex->getNormalIndex()];
+		verticesArray->push_back(position->x);
+		verticesArray->push_back(position->y);
+		verticesArray->push_back(position->z);
+		texturesArray->push_back(textureCoord->x);
+		texturesArray->push_back(1 - textureCoord->y);
+		normalsArray->push_back(normalVector->x);
+		normalsArray->push_back(normalVector->y);
+		normalsArray->push_back(normalVector->z);
+	}
+	return furthestPoint;
+}
+
+
+
+RawModel loadObjModelOLD(char* fileName)
 {
 	std::ifstream file(fileName);
 	if (!file.is_open())
@@ -106,9 +397,9 @@ RawModel loadObjModel(char* fileName)
 					char** vertex2 = split(lineSplit[2], '/');
 					char** vertex3 = split(lineSplit[3], '/');
 
-					processVertex(vertex1, &indices, &textures, &normals, tArray, nArray);
-					processVertex(vertex2, &indices, &textures, &normals, tArray, nArray);
-					processVertex(vertex3, &indices, &textures, &normals, tArray, nArray);
+					processVertexOLD(vertex1, &indices, &textures, &normals, tArray, nArray);
+					processVertexOLD(vertex2, &indices, &textures, &normals, tArray, nArray);
+					processVertexOLD(vertex3, &indices, &textures, &normals, tArray, nArray);
 
 					free(vertex1);
 					free(vertex2);
@@ -123,9 +414,9 @@ RawModel loadObjModel(char* fileName)
 					char** vertex2 = split(lineSplit[2], '/');
 					char** vertex3 = split(lineSplit[3], '/');
 
-					processVertex(vertex1, &indices, &textures, &normals, tArray, nArray);
-					processVertex(vertex2, &indices, &textures, &normals, tArray, nArray);
-					processVertex(vertex3, &indices, &textures, &normals, tArray, nArray);
+					processVertexOLD(vertex1, &indices, &textures, &normals, tArray, nArray);
+					processVertexOLD(vertex2, &indices, &textures, &normals, tArray, nArray);
+					processVertexOLD(vertex3, &indices, &textures, &normals, tArray, nArray);
 
 					free(vertex1);
 					free(vertex2);
@@ -189,7 +480,23 @@ RawModel loadObjModel(char* fileName)
 	return model;
 }
 
-void processVertex(char** vertexData, 
+
+
+
+void removeUnusedVertices(std::vector<Vertex*>* vertices)
+{
+	for (auto vertex : (*vertices))
+	{
+		if ((*vertex).isSet() == 0)
+		{
+			(*vertex).setTextureIndex(0);
+			(*vertex).setNormalIndex(0);
+		}
+	}
+}
+
+
+void processVertexOLD(char** vertexData, 
 	std::vector<int>* indices, 
 	std::vector<Vector2f>* textures, 
 	std::vector<Vector3f>* normals, 

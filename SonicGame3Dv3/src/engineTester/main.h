@@ -6,4 +6,5 @@
 #define MAIN_H
 void Main_addEntity(Entity* entityToAdd);
 void Main_deleteEntity(Entity* entityToDelete);
+void Main_deleteAllEntites();
 #endif

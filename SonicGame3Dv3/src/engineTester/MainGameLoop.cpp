@@ -20,6 +20,7 @@
 #include "../objLoader/objLoader.h"
 #include "../entities/light.h"
 #include "../entities/ring.h"
+#include "../entities/player.h"
 
 int gameState = 0;
 
@@ -188,11 +189,17 @@ int main()
 	//Entity* myEntity = new Entity(&vec, 0, 0, 0, 1);
 
 	Ring::loadStaticModels();
+	Player::loadStaticModels();
 
 	Ring* myRing = new Ring(0, 50, 0);
 	myRing->setVisible(1);
 
+	Player* gamePlayer = new Player(50, 0, 0);
+	gamePlayer->setVisible(1);
+
+	Main_addEntity(gamePlayer);
 	Main_addEntity(myRing);
+
 
 	Light light;
 	light.getPosition()->x = 0;
@@ -299,17 +306,16 @@ int main()
 			e.first->step();
 		}
 
-		//if (INPUT_JUMP && !INPUT_PREVIOUS_JUMP)
-		{
-			//std::fprintf(stdout, "jump!\n");
-		}
 		cam.move();
 
 
 		//render entities
 		for (auto e : gameEntities)
 		{
-			Master_processEntity(e.first);
+			if (e.first->getVisible() == 1)
+			{
+				Master_processEntity(e.first);
+			}
 		}
 
 		Master_render(&light, &cam);
@@ -328,6 +334,7 @@ int main()
 	}
 
 	Ring::deleteStaticModels();
+	Player::loadStaticModels();
 
 	Master_cleanUp();
 	//glDeleteProgram(shaderProgram);
@@ -379,4 +386,13 @@ void Main_addEntity(Entity* entityToAdd)
 void Main_deleteEntity(Entity* entityToDelete)
 {
 	gameEntitiesToDelete.push_back(entityToDelete);
+}
+
+void Main_deleteAllEntites()
+{
+	for (auto entityToDelete : gameEntities)
+	{
+		delete entityToDelete.first;
+	}
+	gameEntities.clear();
 }

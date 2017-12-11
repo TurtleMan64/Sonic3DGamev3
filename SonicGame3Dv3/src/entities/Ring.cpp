@@ -10,7 +10,7 @@
 #include <list>
 #include <iostream>
 
-std::list<TexturedModel*> models;
+std::list<TexturedModel*> Ring::models;
 
 Ring::Ring()
 {
@@ -24,7 +24,6 @@ Ring::Ring(float x, float y, float z)
 	this->position.z = z;
 }
 
-//Override
 void Ring::step()
 {
 	increaseRotation(0, 1, 0);
@@ -32,30 +31,32 @@ void Ring::step()
 
 std::list<TexturedModel*>* Ring::getModels()
 {
-	return &models;
+	return &Ring::models;
 }
 
 void Ring::loadStaticModels()
 {
-	if (models.size() > 0)
+	if (Ring::models.size() > 0)
 	{
 		std::fprintf(stdout, "Ring models gone astray");
+		return;
 	}
 
-	RawModel model = loadObjModel("res/Ring/Ring.obj");
-	ModelTexture texture(Loader_loadTexture("res/Ring/Ring.png"));
-
-	TexturedModel* texturedModel = new TexturedModel(&model, &texture);
-	models.push_back(texturedModel);
+	std::list<TexturedModel*>* newModels = loadObjModel("res/Models/Ring/", "Ring.obj");
+	for (auto newModel : (*newModels))
+	{
+		Ring::models.push_back(newModel);
+	}
+	delete newModels;
 }
 
 void Ring::deleteStaticModels()
 {
-	for (auto model : models)
+	for (auto model : Ring::models)
 	{
 		model->deleteMe(); //delete opengl ids
 		delete model;
 	}
 
-	models.clear();
+	Ring::models.clear();
 }

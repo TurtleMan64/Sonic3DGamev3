@@ -1,0 +1,86 @@
+# 3ds Max Wavefront OBJ Exporter v0.97b - (c)2007 guruware
+# File Created: 13.09.2014 19:09:53
+
+newmtl Eye_Eye_png_Eye_p_000_Eye_png
+	Ns 10.0
+	Ni 0.125000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.8000 0.8000 0.8000
+	Ks 1.0000 1.0000 1.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka Eye.png
+	map_Kd Eye.png
+
+newmtl Face_FaceA_png_Fa_000_FaceA_png_001
+	Ns 10.0
+	Ni 0.125000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.8000 0.8000 0.8000
+	Ks 0.2500 0.2500 0.2500
+	Ke 0.0000 0.0000 0.0000
+	map_Ka FaceA.png
+	map_Kd FaceA.png
+
+newmtl Shoe_She_pngs_She_000_Shoe_png
+	Ns 10.0
+	Ni 0.125000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.8000 0.8000 0.8000
+	Ks 0.2500 0.2500 0.2500
+	Ke 0.0000 0.0000 0.0000
+	map_Ka Shoe.png
+	map_Kd Shoe.png
+
+newmtl Skin_Belly_png_Be_000_Belly_png_001
+	Ns 10.0
+	Ni 0.125000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.8000 0.8000 0.8000
+	Ks 0.2500 0.2500 0.2500
+	Ke 0.0000 0.0000 0.0000
+	map_Ka Belly.png
+	map_Kd Belly.png
+
+newmtl Hand_Hand_png_Han_000_Hand_png
+	Ns 10.0
+	Ni 0.125000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.8000 0.8000 0.8000
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka Hand.png
+	map_Kd Hand.png
+
+newmtl Hand_Hand_png_Han_001_Clothes_png
+	Ns 10.0
+	Ni 0.125000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.8000 0.8000 0.8000
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka Clothes.png
+	map_Kd Clothes.png

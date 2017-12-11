@@ -47,7 +47,7 @@ GLuint Loader_loadTexture(char* fileName)
 	if (image == 0)
 	{
 		const char* err = SOIL_last_result();
-		std::fprintf(stdout, "Error loading image: '%s'\n", err);
+		std::fprintf(stdout, "Error loading image '%s', because '%s'\n", fileName, err);
 		return 0;
 	}
 

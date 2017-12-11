@@ -6,16 +6,16 @@
 
 #include <list>
 
-#ifndef RING_H
-#define RING_H
-class Ring : public Entity
+#ifndef PLAYER_H
+#define PLAYER_H
+class Player : public Entity
 {
 private:
 	static std::list<TexturedModel*> models;
 
 public:
-	Ring();
-	Ring(float, float, float);
+	Player();
+	Player(float, float, float);
 
 	void step();
 

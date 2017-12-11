@@ -28,6 +28,8 @@ std::unordered_map<Entity*, Entity*> gameEntities;
 std::list<Entity*> gameEntitiesToAdd;
 std::list<Entity*> gameEntitiesToDelete;
 
+Camera* Global::gameCamera;
+
 extern int INPUT_JUMP;
 extern int INPUT_ACTION;
 extern int INPUT_ACTION2;
@@ -83,118 +85,15 @@ int main()
 {
 	createDisplay();
 
-	//ShaderProgram shader("src/shaders/vertexShader.txt", "src/shaders/fragmentShader.txt");
-	//Renderer renderer(&shader);
-
 	Master_init();
-
-	std::vector<float> verticies = {
-		-0.5f,0.5f,-0.5f,
-		-0.5f,-0.5f,-0.5f,
-		0.5f,-0.5f,-0.5f,
-		0.5f,0.5f,-0.5f,
-
-		-0.5f,0.5f,0.5f,
-		-0.5f,-0.5f,0.5f,
-		0.5f,-0.5f,0.5f,
-		0.5f,0.5f,0.5f,
-
-		0.5f,0.5f,-0.5f,
-		0.5f,-0.5f,-0.5f,
-		0.5f,-0.5f,0.5f,
-		0.5f,0.5f,0.5f,
-
-		-0.5f,0.5f,-0.5f,
-		-0.5f,-0.5f,-0.5f,
-		-0.5f,-0.5f,0.5f,
-		-0.5f,0.5f,0.5f,
-
-		-0.5f,0.5f,0.5f,
-		-0.5f,0.5f,-0.5f,
-		0.5f,0.5f,-0.5f,
-		0.5f,0.5f,0.5f,
-
-		-0.5f,-0.5f,0.5f,
-		-0.5f,-0.5f,-0.5f,
-		0.5f,-0.5f,-0.5f,
-		0.5f,-0.5f,0.5f
-	};
-
-	/*
-	std::vector<float> verticies = {
-		-0.5f, 0.5f, 0.0f,
-		-0.5f, -0.5f, 0.0f,
-		0.5f, -0.5f, 0.0f,
-		0.5f, -0.5f, 0.0f,
-		0.5f, 0.5f, 0.0f,
-		-0.5f, 0.5f, 0.0f
-	};*/
-
-	std::vector<int> indices = {
-		0,1,3,
-		3,1,2,
-		4,5,7,
-		7,5,6,
-		8,9,11,
-		11,9,10,
-		12,13,15,
-		15,13,14,
-		16,17,19,
-		19,17,18,
-		20,21,23,
-		23,21,22
-	};
-
-	std::vector<float> textureCoords = {
-		0,0,
-		0,1,
-		1,1,
-		1,0,
-		0,0,
-		0,1,
-		1,1,
-		1,0,
-		0,0,
-		0,1,
-		1,1,
-		1,0,
-		0,0,
-		0,1,
-		1,1,
-		1,0,
-		0,0,
-		0,1,
-		1,1,
-		1,0,
-		0,0,
-		0,1,
-		1,1,
-		1,0
-	};
-
-	//RawModel model = loadObjModel("res/EmeraldCoast.obj");
-
-	//RawModel model = loadACM("res/BOB.acm");
-
-	//RawModel model = loadToVAO(&verticies, &textureCoords, &indices);
-	//ModelTexture texture(Loader_loadTexture("res/aliastest.png"));
-	//texture.setShineDamper(10);
-	//texture.setReflectivity(1);
-	//texture.setHasTransparency(1);
-	//texture.setUsesFakeLighting(1);
-
-	//TexturedModel textureModel(&model, &texture);
-	//Vector3f vec(0,0,0);
-	
-	//Entity* myEntity = new Entity(&vec, 0, 0, 0, 1);
 
 	Ring::loadStaticModels();
 	Player::loadStaticModels();
 
-	Ring* myRing = new Ring(0, 50, 0);
+	Ring* myRing = new Ring(0, 0, 0);
 	myRing->setVisible(1);
 
-	Player* gamePlayer = new Player(50, 0, 0);
+	Player* gamePlayer = new Player(0, 0, -50);
 	gamePlayer->setVisible(1);
 
 	Main_addEntity(gamePlayer);
@@ -209,63 +108,14 @@ int main()
 
 
 	Camera cam;
+	Global::gameCamera = &cam;
 
-	//std::fprintf(stdout, "	generated tex id #%d\n", texture.getID());
 
 	double seconds = 0.0;
 	double previousTime = 0.0;
 	glfwSetTime(0);
 
 	int frameCount = 0;
-
-
-
-	/*
-	Cherno
-	float positions[6] = {
-		-0.5f, -0.5f, 
-		 0.0f,  0.5f, 
-		 0.5f, -0.5f
-	};
-
-
-	unsigned int buffer;
-	glGenBuffers(1, &buffer);
-	glBindBuffer(GL_ARRAY_BUFFER, buffer);
-	glBufferData(GL_ARRAY_BUFFER, 6 * sizeof(float), positions, GL_STATIC_DRAW);
-
-	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2, 0);
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	*/
-	
-	std::string vertexShader =
-		"#version 330 core\n"
-		"\n"
-		"layout(location = 0) in vec4 position;\n"
-		"out vec3 colour;\n"
-		"void main()\n"
-		"{\n"
-		"	 gl_Position = position;\n"
-		"    colour = vec3(position.x+0.5, 1.0, position.y+0.5);\n"
-		"}\n";
-
-	std::string fragmentShader =
-		"#version 330 core\n"
-		"in vec3 colour;\n"
-		"layout(location = 0) out vec4 out_Color;\n"
-		"\n"
-		"void main()\n"
-		"{\n"
-		"	 out_Color = vec4(1.0, 1.0, 0.0, 1.0);\n"
-		"    out_Color = vec4(colour, 1.0)\n;"
-		"}\n";
-		
-
-	//unsigned int shaderProgram = CreateShader(vertexShader, fragmentShader);
-	//glUseProgram(shaderProgram);
-	
-	//glEnable(GL_TEXTURE_2D);
 
 	while (gameState == 0 && displayWantsToClose() == 0)
 	{
@@ -306,7 +156,7 @@ int main()
 			e.first->step();
 		}
 
-		cam.move();
+		//cam.move();
 
 
 		//render entities

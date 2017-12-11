@@ -26,7 +26,7 @@ Ring::Ring(float x, float y, float z)
 
 void Ring::step()
 {
-	increaseRotation(0, 1, 0);
+	//increaseRotation(0, 1, 0);
 }
 
 std::list<TexturedModel*>* Ring::getModels()
@@ -42,7 +42,7 @@ void Ring::loadStaticModels()
 		return;
 	}
 
-	std::list<TexturedModel*>* newModels = loadObjModel("res/Models/Ring/", "Ring.obj");
+	std::list<TexturedModel*>* newModels = loadObjModel("res/Models/EmeraldCoast/", "EmeraldCoast.obj");
 	for (auto newModel : (*newModels))
 	{
 		Ring::models.push_back(newModel);

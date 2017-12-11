@@ -48,3 +48,21 @@ void createViewMatrix(Matrix4f* matrix, Camera* cam)
 	camPos.neg();
 	matrix->translate(&camPos);
 }
+
+
+//Returns the difference between the two angles
+//ang1 and ang2 should be in degrees
+float compareTwoAngles(float origAng1, float origAng2)
+{
+	float ang1 = (float)fmod(fmod(origAng1, 360) + 360, 360);
+	float ang2 = (float)fmod(fmod(origAng2, 360) + 360, 360);
+
+	float d = (float)fmod(fabs(ang1 - ang2), 360);
+	float r = d > 180 ? 360 - d : d;
+
+	//calculate sign
+	int sign = (ang1 - ang2 >= 0 && ang1 - ang2 <= 180) || (ang1 - ang2 <= -180 && ang1 - ang2 >= -360) ? 1 : -1;
+	r *= sign;
+
+	return r;
+}

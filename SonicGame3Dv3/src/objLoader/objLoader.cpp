@@ -41,12 +41,6 @@ float convertDataToArrays(std::vector<Vertex*>* vertices, std::vector<Vector2f>*
 int splitLengthOBJ = 0;
 int splitLengthMTL = 0;
 
-
-//int nArraySize = 0;
-//int tArraySize = 0;
-
-
-
 std::vector<ModelTexture> modelTextures;
 
 std::vector<ModelTexture> modelTexturesList;
@@ -59,7 +53,6 @@ std::list<TexturedModel*>* loadObjModel(std::string filePath, std::string fileNa
 	{
 		std::fprintf(stdout, "Error: Cannot load file '%s'\n", (filePath + fileName).c_str());
 		file.close();
-		//ModelData temp(nullptr, nullptr, nullptr, nullptr, 0);
 		return nullptr;
 	}
 
@@ -262,30 +255,38 @@ void parseMtl(std::string filePath, std::string fileName)
 				currentTransparencyValue = 1.0f;
 				currentFakeLightingValue = 1.0f;
 			}
-			else if (strcmp(lineSplit[0], "	map_Kd") == 0) //end of material found, generate it with all its attrributes
+			else if (strcmp(lineSplit[0], "\tmap_Kd") == 0) //end of material found, generate it with all its attrributes
 			{
 				std::string imageFilenameString = filePath+lineSplit[1];
 				char* fname = (char*)imageFilenameString.c_str();
 				ModelTexture newTexture(Loader_loadTexture(fname)); //generate new texture
 				newTexture.setShineDamper(currentShineDamperValue);
 				newTexture.setReflectivity(currentReflectivityValue);
-				newTexture.setHasTransparency((int)currentTransparencyValue);
-				newTexture.setUsesFakeLighting((int)currentFakeLightingValue);
+				newTexture.setHasTransparency(0);
+				newTexture.setUsesFakeLighting(0);
+				if (currentTransparencyValue > 0.5f)
+				{
+					newTexture.setHasTransparency(1);
+				}
+				if (currentFakeLightingValue < 1.0f)
+				{
+					newTexture.setUsesFakeLighting(1);
+				}
 				modelTexturesList.push_back(newTexture); //put a copy of newTexture into the list
 			}
-			else if (strcmp(lineSplit[0], "	Ns") == 0)
+			else if (strcmp(lineSplit[0], "\tNs") == 0)
 			{
 				currentShineDamperValue = std::stof(lineSplit[1]);
 			}
-			else if (strcmp(lineSplit[0], "	Ni") == 0)
+			else if (strcmp(lineSplit[0], "\tNi") == 0)
 			{
 				currentReflectivityValue = std::stof(lineSplit[1]);
 			}
-			else if (strcmp(lineSplit[0], "	Tr") == 0)
+			else if (strcmp(lineSplit[0], "\tTr") == 0)
 			{
 				currentTransparencyValue = std::stof(lineSplit[1]);
 			}
-			else if (strcmp(lineSplit[0], "	d") == 0)
+			else if (strcmp(lineSplit[0], "\td") == 0)
 			{
 				currentFakeLightingValue = std::stof(lineSplit[1]);
 			}

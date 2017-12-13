@@ -7,6 +7,8 @@
 #include <unordered_map>
 #include <list>
 
+#include <ctime>
+
 #include "main.h"
 #include "../renderEngine/renderEngine.h"
 #include "../toolbox/input.h"
@@ -132,6 +134,8 @@ int main()
 			std::fprintf(stdout, "%d\n", err);
 		}
 
+		//long double thisTime = std::time(0);
+		//std::fprintf(stdout, "time: %f time\n", thisTime);
 
 		//entities managment
 		for (auto entityToAdd : gameEntitiesToAdd)

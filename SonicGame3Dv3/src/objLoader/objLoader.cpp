@@ -5,6 +5,8 @@
 #include <vector>
 #include <list>
 
+#include <ctime>
+
 #include "objLoader.h"
 #include "../models/models.h"
 #include "../renderEngine/renderEngine.h"
@@ -66,6 +68,11 @@ std::list<TexturedModel*>* loadObjModel(std::string filePath, std::string fileNa
 	std::vector<RawModel> rawModelsList;
 
 	int foundFaces = 0;
+
+
+	clock_t t;
+	t = clock();
+	printf("Calculating...\n");
 
 	while (!file.eof())
 	{
@@ -178,6 +185,9 @@ std::list<TexturedModel*>* loadObjModel(std::string filePath, std::string fileNa
 		free(lineSplit);
 	}
 	file.close();
+
+	t = clock() - t;
+	printf("It took me %d clicks (%f seconds).\n", t, ((float)t) / CLOCKS_PER_SEC);
 
 	removeUnusedVertices(&vertices);
 

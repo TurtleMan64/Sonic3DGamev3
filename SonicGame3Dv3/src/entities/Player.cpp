@@ -64,6 +64,7 @@ void Player::loadStaticModels()
 		Player::models.push_back(newModel);
 	}
 	delete newModels;
+	Global::countDelete++;
 }
 
 void Player::deleteStaticModels()
@@ -72,6 +73,7 @@ void Player::deleteStaticModels()
 	{
 		model->deleteMe(); //delete opengl ids
 		delete model;
+		Global::countDelete++;
 	}
 
 	Player::models.clear();

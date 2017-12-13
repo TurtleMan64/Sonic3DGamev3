@@ -12,6 +12,7 @@
 #include "../renderEngine/renderEngine.h"
 #include "../toolbox/vector.h"
 #include "vertex.h"
+#include "../engineTester/main.h"
 
 void parseMtl(std::string filePath, std::string fileName);
 
@@ -72,7 +73,7 @@ std::list<TexturedModel*>* loadObjModel(std::string filePath, std::string fileNa
 
 	clock_t t;
 	t = clock();
-	printf("Calculating...\n");
+	printf("Calculating total...\n");
 
 	while (!file.eof())
 	{
@@ -99,6 +100,7 @@ std::list<TexturedModel*>* loadObjModel(std::string filePath, std::string fileNa
 					std::string p3(lineSplit[3]);
 					Vector3f vertex(std::stof(p1, nullptr), std::stof(p2, nullptr), std::stof(p3, nullptr));
 					Vertex* newVertex = new Vertex(vertices.size(), &vertex);
+					Global::countNew++;
 					vertices.push_back(newVertex);
 					p1.clear();
 					p2.clear();
@@ -187,7 +189,7 @@ std::list<TexturedModel*>* loadObjModel(std::string filePath, std::string fileNa
 	file.close();
 
 	t = clock() - t;
-	printf("It took me %d clicks (%f seconds).\n", t, ((float)t) / CLOCKS_PER_SEC);
+	printf("Total: It took me %d clicks (%f seconds).\n", t, ((float)t) / CLOCKS_PER_SEC);
 
 	removeUnusedVertices(&vertices);
 
@@ -202,16 +204,26 @@ std::list<TexturedModel*>* loadObjModel(std::string filePath, std::string fileNa
 
 	//go through rawModelsList and modelTextures to construct the final TexturedModel list
 	std::list<TexturedModel*>* tmList = new std::list<TexturedModel*>();
+	Global::countNew++;
 	for (unsigned int i = 0; i < rawModelsList.size(); i++)
 	{
 		TexturedModel* tm = new TexturedModel(&rawModelsList[i], &modelTextures[i]);
+		Global::countNew++;
 		tmList->push_back(tm);
 	}
 
 	for (auto vertex : vertices)
 	{
 		delete vertex;
+		Global::countDelete++;
 	}
+
+	line.clear();
+
+	vertices.clear();
+	textures.clear();
+	normals.clear();
+	indices.clear();
 
 	rawModelsList.clear();
 	modelTextures.clear();
@@ -237,6 +249,10 @@ void parseMtl(std::string filePath, std::string fileName)
 		file.close();
 		return;
 	}
+
+	clock_t t;
+	t = clock();
+	printf("Calculating MTL...\n");
 
 	std::string line;
 
@@ -305,6 +321,10 @@ void parseMtl(std::string filePath, std::string fileName)
 		free(lineSplit);
 	}
 	file.close();
+
+	t = clock() - t;
+	printf("MTL: It took me %d clicks (%f seconds).\n", t, ((float)t) / CLOCKS_PER_SEC);
+
 }
 
 /*
@@ -465,6 +485,7 @@ void dealWithAlreadyProcessedVertex(Vertex* previousVertex,
 		else
 		{
 			Vertex* duplicateVertex = new Vertex(vertices->size(), previousVertex->getPosition());
+			Global::countNew++;
 			duplicateVertex->setTextureIndex(newTextureIndex);
 			duplicateVertex->setNormalIndex(newNormalIndex);
 

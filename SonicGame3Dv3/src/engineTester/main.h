@@ -13,5 +13,7 @@ class Global
 {
 public:
 	static Camera* gameCamera;
+	static int countNew;
+	static int countDelete;
 };
 #endif

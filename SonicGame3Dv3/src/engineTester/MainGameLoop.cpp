@@ -40,6 +40,9 @@ extern int INPUT_PREVIOUS_JUMP;
 extern int INPUT_PREVIOUS_ACTION;
 extern int INPUT_PREVIOUS_ACTION2;
 
+int Global::countNew = 0;
+int Global::countDelete = 0;
+
 static unsigned int CompileShader(unsigned int type, const std::string& source)
 {
 	unsigned int id = glCreateShader(type);
@@ -85,6 +88,9 @@ static unsigned int CreateShader(const std::string& vertexShader, const std::str
 
 int main()
 {
+	Global::countNew = 0;
+	Global::countDelete = 0;
+
 	createDisplay();
 
 	Master_init();
@@ -93,9 +99,11 @@ int main()
 	Player::loadStaticModels();
 
 	Ring* myRing = new Ring(0, 0, 0);
+	Global::countNew++;
 	myRing->setVisible(1);
 
 	Player* gamePlayer = new Player(0, 0, -50);
+	Global::countNew++;
 	gamePlayer->setVisible(1);
 
 	Main_addEntity(gamePlayer);
@@ -148,9 +156,20 @@ int main()
 		{
 			gameEntities.erase(entityToDelete);
 			delete entityToDelete;
+			Global::countDelete++;
 		}
 		gameEntitiesToDelete.clear();
 
+
+		if (INPUT_ACTION && !INPUT_PREVIOUS_ACTION)
+		{
+			Ring::loadStaticModels();
+		}
+
+		if (INPUT_JUMP && !INPUT_PREVIOUS_JUMP)
+		{
+			Ring::deleteStaticModels();
+		}
 
 
 		//game logic
@@ -181,7 +200,8 @@ int main()
 
 		if (seconds - previousTime >= 1.0)
 		{
-			std::fprintf(stdout, "fps: %f\n", frameCount / (seconds - previousTime));
+			//std::fprintf(stdout, "fps: %f\n", frameCount / (seconds - previousTime));
+			std::fprintf(stdout, "diff: %d\n", Global::countNew - Global::countDelete);
 			frameCount = 0;
 			previousTime = seconds;
 		}
@@ -195,6 +215,7 @@ int main()
 	//shader.cleanUp();
 	Loader_cleanUp();
 	closeDisplay();
+
 	return 0;
 }
 
@@ -247,6 +268,7 @@ void Main_deleteAllEntites()
 	for (auto entityToDelete : gameEntities)
 	{
 		delete entityToDelete.first;
+		Global::countDelete++;
 	}
 	gameEntities.clear();
 }

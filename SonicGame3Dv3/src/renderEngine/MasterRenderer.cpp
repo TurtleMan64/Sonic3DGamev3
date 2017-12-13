@@ -8,6 +8,7 @@
 #include "../models/models.h"
 #include "renderEngine.h"
 #include "../toolbox/maths.h"
+#include "../engineTester/main.h"
 
 #include <iostream>
 #include <list>
@@ -35,9 +36,12 @@ void prepare();
 void Master_init()
 {
 	shader = new ShaderProgram("src/shaders/vertexShader.txt", "src/shaders/fragmentShader.txt");
+	Global::countNew++;
 	projectionMatrix = new Matrix4f();
+	Global::countNew++;
 	Master_makeProjectionMatrix();
 	renderer = new EntityRenderer(shader, projectionMatrix);
+	Global::countNew++;
 
 	//glEnable(GL_BLEND);
 	//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -132,8 +136,11 @@ void Master_cleanUp()
 {
 	shader->cleanUp();
 	delete shader;
+	Global::countDelete++;
 	delete renderer;
+	Global::countDelete++;
 	delete projectionMatrix;
+	Global::countDelete++;
 }
 
 void Master_enableCulling()

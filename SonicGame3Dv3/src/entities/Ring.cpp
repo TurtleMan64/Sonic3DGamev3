@@ -6,6 +6,7 @@
 #include "ring.h"
 #include "../renderEngine/renderEngine.h"
 #include "../objLoader/objLoader.h"
+#include "../engineTester/main.h"
 
 #include <list>
 #include <iostream>
@@ -36,6 +37,7 @@ std::list<TexturedModel*>* Ring::getModels()
 
 void Ring::loadStaticModels()
 {
+	std::fprintf(stdout, "Loading ring static models...");
 	if (Ring::models.size() > 0)
 	{
 		std::fprintf(stdout, "Ring models gone astray");
@@ -48,14 +50,17 @@ void Ring::loadStaticModels()
 		Ring::models.push_back(newModel);
 	}
 	delete newModels;
+	Global::countDelete++;
 }
 
 void Ring::deleteStaticModels()
 {
+	std::fprintf(stdout, "Deleting ring static models...");
 	for (auto model : Ring::models)
 	{
 		model->deleteMe(); //delete opengl ids
 		delete model;
+		Global::countDelete++;
 	}
 
 	Ring::models.clear();

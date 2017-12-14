@@ -13,11 +13,10 @@
 #include "../toolbox/vector.h"
 #include "vertex.h"
 #include "../engineTester/main.h"
+#include "../toolbox/split.h"
 
 void parseMtl(std::string filePath, std::string fileName);
 
-char ** splitOBJ(char *, char);
-char ** splitMTL(char *, char);
 //void processVertexOLD(char**, 
 //	std::vector<int>*, 
 //	std::vector<Vector2f>*, 
@@ -40,9 +39,6 @@ void removeUnusedVertices(std::vector<Vertex*>* vertices);
 float convertDataToArrays(std::vector<Vertex*>* vertices, std::vector<Vector2f>* textures,
 	std::vector<Vector3f>* normals, std::vector<float>* verticesArray, std::vector<float>* texturesArray,
 	std::vector<float>* normalsArray);
-
-int splitLengthOBJ = 0;
-int splitLengthMTL = 0;
 
 std::vector<ModelTexture> modelTextures;
 
@@ -82,9 +78,11 @@ std::list<TexturedModel*>* loadObjModel(std::string filePath, std::string fileNa
 		char lineBuf[256]; //Buffer to copy line into
 		memset(lineBuf, 0, 256);
 		memcpy(lineBuf, line.c_str(), line.size());
-		char** lineSplit = splitOBJ(lineBuf, ' ');
 
-		if (splitLengthOBJ > 0)
+		int splitLength = 0;
+		char** lineSplit = split(lineBuf, ' ', &splitLength);
+
+		if (splitLength > 0)
 		{
 			if (foundFaces == 0)
 			{
@@ -147,9 +145,10 @@ std::list<TexturedModel*>* loadObjModel(std::string filePath, std::string fileNa
 			{
 				if (strcmp(lineSplit[0], "f") == 0)
 				{
-					char** vertex1 = splitOBJ(lineSplit[1], '/');
-					char** vertex2 = splitOBJ(lineSplit[2], '/');
-					char** vertex3 = splitOBJ(lineSplit[3], '/');
+					int dummy = 0;
+					char** vertex1 = split(lineSplit[1], '/', &dummy);
+					char** vertex2 = split(lineSplit[2], '/', &dummy);
+					char** vertex3 = split(lineSplit[3], '/', &dummy);
 
 					processVertex(vertex1, &vertices, &indices);
 					processVertex(vertex2, &vertices, &indices);
@@ -269,9 +268,11 @@ void parseMtl(std::string filePath, std::string fileName)
 		char lineBuf[256]; //Buffer to copy line into
 		memset(lineBuf, 0, 256);
 		memcpy(lineBuf, line.c_str(), line.size());
-		char** lineSplit = splitMTL(lineBuf, ' ');
 
-		if (splitLengthMTL > 0)
+		int splitLength = 0;
+		char** lineSplit = split(lineBuf, ' ', &splitLength);
+
+		if (splitLength > 0)
 		{
 			if (strcmp(lineSplit[0], "newmtl") == 0) //new material found, add its name to array
 			{
@@ -734,119 +735,3 @@ void processVertexOLD(char** vertexData,
 	normalsArray[currentVertexPointer*3 + 2] = currentNorm.z;
 }
 */
-
-/* Parse a line and return an array of the
-individual tokens */
-char ** splitOBJ(char *line, char delim)
-{
-	/* Scan through line to find the number of tokens */
-	int numTokens = 0;
-	int index = 0;
-	int inToken = 0;
-
-	while (line[index] != 0)
-	{
-		if (line[index] != delim && inToken == 0)
-		{
-			inToken = 1;
-			numTokens += 1;
-		}
-		else if (line[index] == delim)
-		{
-			inToken = 0;
-		}
-		index += 1;
-	}
-
-	/* Get memory to store the data */
-	char ** parsedData = (char**)malloc(sizeof(char*)*(numTokens + 1));
-
-	/* Scan through line to fill parsedData
-	and set 0 characters after tokens*/
-	index = 0;
-	inToken = 0;
-	int tokenNum = 0;
-
-	while (line[index] != 0)
-	{
-		if (line[index] != delim && inToken == 0)
-		{
-			parsedData[tokenNum] = &line[index];
-			tokenNum += 1;
-			inToken = 1;
-		}
-		else if (line[index] == delim)
-		{
-			if (inToken == 1)
-			{
-				line[index] = 0;
-			}
-			inToken = 0;
-		}
-		index += 1;
-	}
-
-	parsedData[numTokens] = NULL;
-
-	splitLengthOBJ = numTokens;
-
-	return parsedData;
-}
-
-/* Parse a line and return an array of the
-individual tokens */
-char ** splitMTL(char *line, char delim)
-{
-	/* Scan through line to find the number of tokens */
-	int numTokens = 0;
-	int index = 0;
-	int inToken = 0;
-
-	while (line[index] != 0)
-	{
-		if (line[index] != delim && inToken == 0)
-		{
-			inToken = 1;
-			numTokens += 1;
-		}
-		else if (line[index] == delim)
-		{
-			inToken = 0;
-		}
-		index += 1;
-	}
-
-	/* Get memory to store the data */
-	char ** parsedData = (char**)malloc(sizeof(char*)*(numTokens + 1));
-
-	/* Scan through line to fill parsedData
-	and set 0 characters after tokens*/
-	index = 0;
-	inToken = 0;
-	int tokenNum = 0;
-
-	while (line[index] != 0)
-	{
-		if (line[index] != delim && inToken == 0)
-		{
-			parsedData[tokenNum] = &line[index];
-			tokenNum += 1;
-			inToken = 1;
-		}
-		else if (line[index] == delim)
-		{
-			if (inToken == 1)
-			{
-				line[index] = 0;
-			}
-			inToken = 0;
-		}
-		index += 1;
-	}
-
-	parsedData[numTokens] = NULL;
-
-	splitLengthMTL = numTokens;
-
-	return parsedData;
-}

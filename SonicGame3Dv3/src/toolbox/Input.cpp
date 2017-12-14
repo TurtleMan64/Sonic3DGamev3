@@ -37,6 +37,40 @@ void pollInputs()
 	INPUT_X2 = 0;
 	INPUT_Y2 = 0;
 
+
+
+
+	//int present = glfwJoystickPresent(GLFW_JOYSTICK_1);
+	//std::fprintf(stdout, "%d", present);
+	//if (present == 1)
+	//{
+	//int axesCount;
+	//const float *axes = glfwGetJoystickAxes(GLFW_JOYSTICK_1, &axesCount);
+	//std::fprintf(stdout, "axes count: %d\n", axesCount);
+
+	//for (int i = 0; i < axesCount; i++)
+	//{
+	//std::fprintf(stdout, "axis[%d]: %f\n", i, axes[i]);
+	//}
+	//std::fprintf(stdout, "\n");
+
+
+	//int buttonCount;
+	//const unsigned char *buttons = glfwGetJoystickButtons(GLFW_JOYSTICK_1, &buttonCount);
+
+	//for (int i = 0; i < 10; i++)
+	//{
+	//std::fprintf(stdout, "buttons[%d]: %d\n", i, buttons[i]);
+	//}
+	//std::fprintf(stdout, "\n");
+
+	//const char *name = glfwGetJoystickName(GLFW_JOYSTICK_1);
+	//std::fprintf(stdout, "joystick name: %s\n", name);
+	//}
+
+
+
+
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 	{
 		glfwSetWindowShouldClose(window, true);

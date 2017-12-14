@@ -161,14 +161,14 @@ int main()
 		gameEntitiesToDelete.clear();
 
 
-		if (INPUT_ACTION && !INPUT_PREVIOUS_ACTION)
+		//if (INPUT_ACTION && !INPUT_PREVIOUS_ACTION)
 		{
-			Ring::loadStaticModels();
+			//Ring::loadStaticModels();
 		}
 
-		if (INPUT_JUMP && !INPUT_PREVIOUS_JUMP)
+		//if (INPUT_JUMP && !INPUT_PREVIOUS_JUMP)
 		{
-			Ring::deleteStaticModels();
+			//Ring::deleteStaticModels();
 		}
 
 
@@ -200,9 +200,9 @@ int main()
 
 		if (seconds - previousTime >= 1.0)
 		{
-			//std::fprintf(stdout, "fps: %f\n", frameCount / (seconds - previousTime));
-			std::fprintf(stdout, "diff: %d\n", Global::countNew - Global::countDelete);
-			Loader_printInfo();
+			std::fprintf(stdout, "fps: %f\n", frameCount / (seconds - previousTime));
+			//std::fprintf(stdout, "diff: %d\n", Global::countNew - Global::countDelete);
+			//Loader_printInfo();
 			frameCount = 0;
 			previousTime = seconds;
 		}
@@ -212,46 +212,11 @@ int main()
 	Player::loadStaticModels();
 
 	Master_cleanUp();
-	//glDeleteProgram(shaderProgram);
-	//shader.cleanUp();
 	Loader_cleanUp();
 	closeDisplay();
 
 	return 0;
 }
-
-
-
-
-//joystick input example
-
-//int present = glfwJoystickPresent(GLFW_JOYSTICK_1);
-//std::fprintf(stdout, "%d", present);
-//if (present == 1)
-//{
-	//int axesCount;
-	//const float *axes = glfwGetJoystickAxes(GLFW_JOYSTICK_1, &axesCount);
-	//std::fprintf(stdout, "axes count: %d\n", axesCount);
-
-	//for (int i = 0; i < axesCount; i++)
-	//{
-		//std::fprintf(stdout, "axis[%d]: %f\n", i, axes[i]);
-	//}
-	//std::fprintf(stdout, "\n");
-
-
-	//int buttonCount;
-	//const unsigned char *buttons = glfwGetJoystickButtons(GLFW_JOYSTICK_1, &buttonCount);
-
-	//for (int i = 0; i < 10; i++)
-	//{
-		//std::fprintf(stdout, "buttons[%d]: %d\n", i, buttons[i]);
-	//}
-	//std::fprintf(stdout, "\n");
-
-	//const char *name = glfwGetJoystickName(GLFW_JOYSTICK_1);
-	//std::fprintf(stdout, "joystick name: %s\n", name);
-//}
 
 //The newEntity should be created with the new keyword, as it will be deleted later
 void Main_addEntity(Entity* entityToAdd)

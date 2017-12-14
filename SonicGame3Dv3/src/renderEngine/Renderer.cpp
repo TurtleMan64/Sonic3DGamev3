@@ -21,7 +21,8 @@ EntityRenderer::EntityRenderer(ShaderProgram* shader, Matrix4f* projectionMatrix
 	this->shader = shader;
 }
 
-void EntityRenderer::render(std::unordered_map<TexturedModel*, std::list<Entity*>*>* entitiesMap)
+//something wasnt working right, and now that each entity can have multiple textured models, cant do this
+void EntityRenderer::renderBROKE(std::unordered_map<TexturedModel*, std::list<Entity*>*>* entitiesMap)
 {
 	//for (auto entry : (*entitiesMap))
 	{
@@ -76,7 +77,7 @@ void EntityRenderer::prepareInstance(Entity* entity)
 	shader->loadTransformationMatrix(&transformationMatrix);
 }
 
-void EntityRenderer::renderOLD(Entity* entity, ShaderProgram* shader) //defunct
+void EntityRenderer::render(Entity* entity, ShaderProgram* shader)
 {
 	if (entity->getVisible() == 0)
 	{

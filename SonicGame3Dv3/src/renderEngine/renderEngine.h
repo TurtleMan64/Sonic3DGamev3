@@ -29,6 +29,7 @@ void Loader_deleteVAO(GLuint vaoID);
 void Loader_deleteVBO(GLuint vboID);
 void Loader_deleteTexture(GLuint texID);
 void Loader_deleteTexturedModels(std::list<TexturedModel*>* tm);
+void Loader_printInfo();
 
 //Master Rebderer
 void Master_render(Light* sun, Camera* camera);
@@ -60,9 +61,9 @@ private:
 public:
 	EntityRenderer(ShaderProgram* shader, Matrix4f* projectionMatrix);
 
-	void renderOLD(Entity*, ShaderProgram*); //defunct
+	void render(Entity*, ShaderProgram*);
 
-	void render(std::unordered_map<TexturedModel*, std::list<Entity*>*>* entities);
+	void renderBROKE(std::unordered_map<TexturedModel*, std::list<Entity*>*>* entities);
 
 };
 #endif

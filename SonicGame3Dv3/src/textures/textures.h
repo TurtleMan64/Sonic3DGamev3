@@ -17,7 +17,8 @@ public:
 
 	ModelTexture(GLuint texID);
 
-	int getID();
+	GLuint getID();
+	void setID(GLuint newID);
 
 	float getShineDamper();
 	void setShineDamper(float newShineDamper);

@@ -6,7 +6,7 @@
 
 ModelTexture::ModelTexture()
 {
-	//std::fprintf(stdout, "model texture being constructed wrongly\n");
+
 }
 
 ModelTexture::ModelTexture(GLuint texID)
@@ -16,12 +16,16 @@ ModelTexture::ModelTexture(GLuint texID)
 	this->reflectivity = 0;
 	this->hasTransparency = 0;
 	this->useFakeLighting = 0;
-	//std::fprintf(stdout, "correct\n");
 }
 
-int ModelTexture::getID()
+GLuint ModelTexture::getID()
 {
 	return texID;
+}
+
+void ModelTexture::setID(GLuint newID)
+{
+	this->texID = newID;
 }
 
 float ModelTexture::getShineDamper()

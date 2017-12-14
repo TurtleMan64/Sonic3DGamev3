@@ -1,5 +1,7 @@
 #include <glad/glad.h>
 
+#include <list>
+
 #include "models.h"
 #include "../renderEngine/renderEngine.h"
 
@@ -8,15 +10,25 @@ RawModel::RawModel()
 
 }
 
-RawModel::RawModel(GLuint vaoID, int vertexCount)
+RawModel::RawModel(GLuint vaoID, int vertexCount, std::list<GLuint>* vboIDs)
 {
 	this->vaoID = vaoID;
 	this->vertexCount = vertexCount;
+
+	for (auto id : (*vboIDs))
+	{
+		this->vboIDs.push_back(id);
+	}
 }
 
-int RawModel::getVaoID()
+GLuint RawModel::getVaoID()
 {
 	return vaoID;
+}
+
+void RawModel::setVaoID(GLuint newID)
+{
+	this->vaoID = newID;
 }
 
 int RawModel::getVertexCount()
@@ -24,12 +36,22 @@ int RawModel::getVertexCount()
 	return vertexCount;
 }
 
+void RawModel::setVertexCount(int newCount)
+{
+	this->vertexCount = newCount;
+}
+
+std::list<GLuint>* RawModel::getVboIDs()
+{
+	return &vboIDs;
+}
+
 void RawModel::deleteMe()
 {
 	Loader_deleteVAO(vaoID);
-	//for (int vbo : vboIDs)
-	//{
-		//MainGameLoop.gameLoader.deleteVBO(vbo);
-	//}
-	//vboIDs = null;
+	for (auto vbo : vboIDs)
+	{
+		Loader_deleteVBO(vbo);
+	}
+	vboIDs.clear();
 }

@@ -23,7 +23,7 @@ std::list<Entity*> entitiesList;
 
 Matrix4f* projectionMatrix;
 
-const float FOV = 70;
+const float FOV = 50;
 const float NEAR_PLANE = 0.1f;
 const float FAR_PLANE = 1000;
 
@@ -58,7 +58,7 @@ void Master_render(Light* sun, Camera* camera)
 	//renderer->render(&entitiesMap);
 	for (auto entry : entitiesList)
 	{
-		renderer->renderOLD(entry, shader);
+		renderer->render(entry, shader);
 	}
 	entitiesList.clear();
 

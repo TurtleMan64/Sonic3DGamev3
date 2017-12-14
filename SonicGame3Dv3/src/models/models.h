@@ -1,5 +1,7 @@
 #include <glad/glad.h>
 
+#include <list>
+
 #include "../textures/textures.h"
 
 #ifndef MODELS_H
@@ -9,17 +11,23 @@ class RawModel
 private:
 	GLuint vaoID;
 	int vertexCount;
+	std::list<GLuint> vboIDs;
 
 public:
 	RawModel();
 
-	RawModel(GLuint vaoID, int vertexCount);
+	RawModel(GLuint vaoID, int vertexCount, std::list<GLuint>* vboIDs);
 
-	int getVaoID();
+	GLuint getVaoID();
+	void setVaoID(GLuint newID);
 
+	void setVertexCount(int newCount);
 	int getVertexCount();
 
 	void deleteMe();
+
+	//for use in textured model constructor only
+	std::list<GLuint>* getVboIDs();
 };
 
 class TexturedModel

@@ -16,28 +16,39 @@ std::list<GLuint> vaos;
 std::list<GLuint> vbos;
 std::list<GLuint> textures;
 
+int vaoNumber = 0;
+int vboNumber = 0;
+int texNumber = 0;
+
 GLuint createVAO();
-void storeDataInAttributeList(int, int, std::vector<float>*);
+GLuint storeDataInAttributeList(int, int, std::vector<float>*);
 void unbindVAO();
-void bindIndiciesBuffer(std::vector<int>*);
+GLuint bindIndiciesBuffer(std::vector<int>*);
 float* storeDataInFloatBuffer(std::vector<float>*);
 int* storeDataInIntBuffer(std::vector<int>*);
 
 RawModel Loader_loadToVAO(std::vector<float>* positions, std::vector<float>* textureCoords, std::vector<float>* normals, std::vector<int>* indicies)
 {
 	GLuint vaoID = createVAO();
-	bindIndiciesBuffer(indicies);
-	storeDataInAttributeList(0, 3, positions);
-	storeDataInAttributeList(1, 2, textureCoords);
-	storeDataInAttributeList(2, 3, normals);
+	std::list<GLuint> vboIDs;
+
+	vboIDs.push_back(bindIndiciesBuffer(indicies));
+	vboIDs.push_back(storeDataInAttributeList(0, 3, positions));
+	vboIDs.push_back(storeDataInAttributeList(1, 2, textureCoords));
+	vboIDs.push_back(storeDataInAttributeList(2, 3, normals));
+
 	unbindVAO();
-	return RawModel(vaoID, (*indicies).size());
+
+	RawModel model(vaoID, (*indicies).size(), &vboIDs);
+
+	return model;
 }
 
 GLuint Loader_loadTexture(char* fileName)
 {
 	GLuint textureID = 0;
 	glGenTextures(1, &textureID);
+	texNumber++;
 	textures.push_back(textureID);
 	//std::fprintf(stdout, "	generated tex id #%d\n", textureID);
 
@@ -114,15 +125,17 @@ GLuint createVAO()
 {
 	GLuint vaoID = 0;
 	glGenVertexArrays(1, &vaoID); //std::fprintf(stdout, "glGenVertexArrays(1, &vaoID);\n");
+	vaoNumber++;
 	vaos.push_back(vaoID);
 	glBindVertexArray(vaoID); //std::fprintf(stdout, "glBindVertexArray(vaoID);\n");
 	return vaoID;
 }
 
-void storeDataInAttributeList(int attributeNumber, int coordinateSize, std::vector<float>* data)
+GLuint storeDataInAttributeList(int attributeNumber, int coordinateSize, std::vector<float>* data)
 {
 	GLuint vboID = 0;
 	glGenBuffers(1, &vboID);
+	vboNumber++;
 	vbos.push_back(vboID);
 	glBindBuffer(GL_ARRAY_BUFFER, vboID);
 
@@ -134,6 +147,8 @@ void storeDataInAttributeList(int attributeNumber, int coordinateSize, std::vect
 	glBindBuffer(GL_ARRAY_BUFFER, 0); //std::fprintf(stdout, "glBindBuffer(GL_ARRAY_BUFFER, 0);\n");
 
 	free(buffer);
+
+	return vboID;
 }
 
 void unbindVAO()
@@ -146,36 +161,45 @@ void Loader_cleanUp()
 	for (auto vaoID : vaos)
 	{
 		glDeleteVertexArrays(1, &vaoID);
+		vaoNumber--;
 	}
 	vaos.clear();
 
 	for (auto vboID : vbos)
 	{
 		glDeleteBuffers(1, &vboID);
+		vboNumber--;
 	}
 	vbos.clear();
 
 	for (auto texID : textures)
 	{
 		glDeleteTextures(1, &texID);
+		texNumber--;
 	}
 	textures.clear();
 }
 
 void Loader_deleteVAO(GLuint vaoID)
 {
+	std::fprintf(stdout, "deleting vao %d\n", vaoID);
+	vaoNumber--;
 	glDeleteVertexArrays(1, &vaoID);
 	vaos.remove(vaoID);
 }
 
 void Loader_deleteVBO(GLuint vboID)
 {
+	std::fprintf(stdout, "deleting buffer %d\n", vboID);
+	vboNumber--;
 	glDeleteBuffers(1, &vboID);
 	vbos.remove(vboID);
 }
 
 void Loader_deleteTexture(GLuint texID)
 {
+	std::fprintf(stdout, "deleting texture %d\n", texID);
+	texNumber--;
 	glDeleteTextures(1, &texID);
 	textures.remove(texID);
 }
@@ -188,17 +212,20 @@ void Loader_deleteTexturedModels(std::list<TexturedModel*>* tm)
 	}
 }
 
-void bindIndiciesBuffer(std::vector<int>* indicies)
+GLuint bindIndiciesBuffer(std::vector<int>* indicies)
 {
 	GLuint vboID = 0;
 	glGenBuffers(1, &vboID); //std::fprintf(stdout, "glGenBuffers(1, &vboID);\n");
 	vbos.push_back(vboID);
+	vboNumber++;
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vboID); //std::fprintf(stdout, "glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vboID);\n");
 
 	int* buffer = storeDataInIntBuffer(indicies);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, (*indicies).size() * sizeof(int), buffer, GL_STATIC_DRAW); //std::fprintf(stdout, "glBufferData(GL_ELEMENT_ARRAY_BUFFER, indicies.size(), buffer, GL_STATIC_DRAW);\n");
 
 	free(buffer);
+
+	return vboID;
 }
 
 float* storeDataInFloatBuffer(std::vector<float>* data)
@@ -221,4 +248,11 @@ int* storeDataInIntBuffer(std::vector<int>* data)
 	}
 
 	return buffer;
+}
+
+void Loader_printInfo()
+{
+	std::fprintf(stdout, "VAO Count = %d = %d\n", vaoNumber, vaos.size());
+	std::fprintf(stdout, "VBO Count = %d = %d\n", vboNumber, vbos.size());
+	std::fprintf(stdout, "TEX Count = %d = %d\n", texNumber, textures.size());
 }

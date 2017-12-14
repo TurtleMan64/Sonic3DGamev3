@@ -95,8 +95,8 @@ int main()
 
 	Master_init();
 
-	Ring::loadStaticModels();
-	Player::loadStaticModels();
+	//Ring::loadStaticModels();
+	//Player::loadStaticModels();
 
 	Ring* myRing = new Ring(0, 0, 0);
 	Global::countNew++;
@@ -202,6 +202,7 @@ int main()
 		{
 			//std::fprintf(stdout, "fps: %f\n", frameCount / (seconds - previousTime));
 			std::fprintf(stdout, "diff: %d\n", Global::countNew - Global::countDelete);
+			Loader_printInfo();
 			frameCount = 0;
 			previousTime = seconds;
 		}

@@ -115,3 +115,10 @@ void EntityRenderer::render(Entity* entity, ShaderProgram* shader)
 		unbindTexturedModel();
 	}
 }
+
+void EntityRenderer::updateProjectionMatrix(Matrix4f* projectionMatrix)
+{
+	this->shader->start();
+	this->shader->loadProjectionMatrix(projectionMatrix);
+	this->shader->stop();
+}

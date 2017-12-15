@@ -1,10 +1,8 @@
-#include <glad/glad.h>
-
-#include "../models/models.h"
-#include "../toolbox/vector.h"
-
 #ifndef CAMERA_H
 #define CAMERA_H
+
+#include "../toolbox/vector.h"
+
 class Camera
 {
 private:

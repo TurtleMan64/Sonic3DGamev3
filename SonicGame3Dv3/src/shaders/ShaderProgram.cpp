@@ -9,6 +9,7 @@
 #include "../toolbox/matrix.h"
 #include "../entities/camera.h"
 #include "../toolbox/maths.h"
+#include "../entities/light.h"
 #include "shaders.h"
 
 float matrixBuffer[16];

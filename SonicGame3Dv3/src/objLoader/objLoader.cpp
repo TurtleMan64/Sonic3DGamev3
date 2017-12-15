@@ -5,7 +5,7 @@
 #include <vector>
 #include <list>
 
-#include <ctime>
+//#include <ctime>
 
 #include "objLoader.h"
 #include "../models/models.h"
@@ -67,9 +67,9 @@ std::list<TexturedModel*>* loadObjModel(std::string filePath, std::string fileNa
 	int foundFaces = 0;
 
 
-	clock_t t;
-	t = clock();
-	printf("Calculating total...\n");
+	//clock_t t;
+	//t = clock();
+	//printf("Calculating total...\n");
 
 	while (!file.eof())
 	{
@@ -187,8 +187,8 @@ std::list<TexturedModel*>* loadObjModel(std::string filePath, std::string fileNa
 	}
 	file.close();
 
-	t = clock() - t;
-	printf("Total: It took me %d clicks (%f seconds).\n", t, ((float)t) / CLOCKS_PER_SEC);
+	//t = clock() - t;
+	//printf("Total: It took me %d clicks (%f seconds).\n", t, ((float)t) / CLOCKS_PER_SEC);
 
 	removeUnusedVertices(&vertices);
 
@@ -249,9 +249,9 @@ void parseMtl(std::string filePath, std::string fileName)
 		return;
 	}
 
-	clock_t t;
-	t = clock();
-	printf("Calculating MTL...\n");
+	//clock_t t;
+	//t = clock();
+	//printf("Calculating MTL...\n");
 
 	std::string line;
 
@@ -323,8 +323,8 @@ void parseMtl(std::string filePath, std::string fileName)
 	}
 	file.close();
 
-	t = clock() - t;
-	printf("MTL: It took me %d clicks (%f seconds).\n", t, ((float)t) / CLOCKS_PER_SEC);
+	//t = clock() - t;
+	//printf("MTL: It took me %d clicks (%f seconds).\n", t, ((float)t) / CLOCKS_PER_SEC);
 
 }
 

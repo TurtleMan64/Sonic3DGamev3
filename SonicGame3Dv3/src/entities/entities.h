@@ -1,12 +1,12 @@
-#include <glad/glad.h>
-
-#include "../models/models.h"
-#include "../toolbox/vector.h"
-
-#include <list>
-
 #ifndef ENTITIES_H
 #define ENTITIES_H
+
+class TexturedModel;
+
+#include <list>
+#include "../toolbox/vector.h"
+
+
 class Entity
 {
 protected:

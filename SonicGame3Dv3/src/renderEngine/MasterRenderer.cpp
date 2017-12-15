@@ -8,6 +8,7 @@
 #include "../models/models.h"
 #include "renderEngine.h"
 #include "../toolbox/maths.h"
+#include "../toolbox/matrix.h"
 #include "../engineTester/main.h"
 
 #include <iostream>
@@ -39,8 +40,8 @@ void Master_init()
 	Global::countNew++;
 	projectionMatrix = new Matrix4f();
 	Global::countNew++;
-	Master_makeProjectionMatrix();
 	renderer = new EntityRenderer(shader, projectionMatrix);
+	Master_makeProjectionMatrix();
 	Global::countNew++;
 
 	//glEnable(GL_BLEND);
@@ -174,4 +175,6 @@ void Master_makeProjectionMatrix()
 	projectionMatrix->m23 = -1;
 	projectionMatrix->m32 = -((2 * NEAR_PLANE * FAR_PLANE) / frustum_length);
 	projectionMatrix->m33 = 0;
+
+	renderer->updateProjectionMatrix(projectionMatrix);
 }

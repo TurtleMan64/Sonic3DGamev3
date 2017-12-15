@@ -1,11 +1,11 @@
-#include <math.h>
-
-#include "matrix.h"
-#include "vector.h"
-#include "../entities/camera.h"
-
 #ifndef MATHS_H
 #define MATHS_H
+
+class Matrix4f;
+class Vector3f;
+class Camera;
+
+#include <math.h>
 
 
 float toRadians(float);

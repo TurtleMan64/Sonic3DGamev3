@@ -1,17 +1,19 @@
+#ifndef RENDERENGINE_H
+#define RENDERENGINE_H
+
+class ShaderProgram;
+class Entity;
+class Matrix4f;
+class Light;
+class Camera;
+
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <list>
 #include <unordered_map>
-
 #include "../models/models.h"
-#include "../entities/entities.h"
-#include "../shaders/shaders.h"
-#include "../toolbox/matrix.h"
-#include "../entities/light.h"
-#include "../entities/camera.h"
 
-#ifndef RENDERENGINE_H
-#define RENDERENGINE_H
+
 //DisplayManager
 int createDisplay();
 void updateDisplay();
@@ -64,6 +66,8 @@ public:
 	void render(Entity*, ShaderProgram*);
 
 	void renderBROKE(std::unordered_map<TexturedModel*, std::list<Entity*>*>* entities);
+
+	void updateProjectionMatrix(Matrix4f* projectionMatrix);
 
 };
 #endif

@@ -1,27 +1,29 @@
-#ifndef RING_H
-#define RING_H
+#ifndef STAGE_H
+#define STAGE_H
 
 class TexturedModel;
 
 #include <list>
 #include "entities.h"
+#include <string>
 
 
-class Ring : public Entity
+class Stage : public Entity
 {
 private:
 	static std::list<TexturedModel*> models;
 
 public:
-	Ring();
-	Ring(float, float, float);
+	Stage();
 
 	void step();
 
 	std::list<TexturedModel*>* getModels();
 
-	static void loadStaticModels();
+	static void loadModels(char* folder, char* name);
 
-	static void deleteStaticModels();
+	static void deleteModels();
+
+	static std::string stageName;
 };
 #endif

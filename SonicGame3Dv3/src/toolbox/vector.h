@@ -1,7 +1,9 @@
-#include <math.h>
-
 #ifndef VECTOR_H
 #define VECTOR_H
+
+#include <math.h>
+
+
 class Vector3f
 {
 public:

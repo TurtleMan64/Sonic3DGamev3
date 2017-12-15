@@ -1,9 +1,8 @@
-#include <glad/glad.h>
+#ifndef MODELDATA_H
+#define MODELDATA_H
 
 #include <vector>
 
-#ifndef MODELDATA_H
-#define MODELDATA_H
 class ModelData
 {
 private:

@@ -1,9 +1,8 @@
-#include <glad/glad.h>
+#ifndef VERTEX_H
+#define VERTEX_H
 
 #include "../toolbox/vector.h"
 
-#ifndef VERTEX_H
-#define VERTEX_H
 class Vertex
 {
 public:

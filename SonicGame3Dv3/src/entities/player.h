@@ -1,17 +1,14 @@
-#include <glad/glad.h>
+#ifndef PLAYER_H
+#define PLAYER_H
 
-#include "entities.h"
-#include "../models/models.h"
-#include "../toolbox/vector.h"
-#include "../renderEngine/renderEngine.h"
-#include "../objLoader/objLoader.h"
-#include "../engineTester/main.h"
-
+class TexturedModel;
 
 #include <list>
 
-#ifndef PLAYER_H
-#define PLAYER_H
+#include "entities.h"
+#include "../toolbox/vector.h"
+
+
 class Player : public Entity
 {
 private:

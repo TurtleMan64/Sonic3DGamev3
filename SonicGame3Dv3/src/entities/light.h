@@ -1,9 +1,9 @@
-#include <glad/glad.h>
+#ifndef LIGHT_H
+#define LIGHT_H
 
 #include "../toolbox/vector.h"
 
-#ifndef LIGHT_H
-#define LIGHT_H
+
 class Light
 {
 private:

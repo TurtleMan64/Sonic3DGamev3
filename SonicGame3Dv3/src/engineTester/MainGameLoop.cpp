@@ -23,6 +23,8 @@
 #include "../entities/light.h"
 #include "../entities/ring.h"
 #include "../entities/player.h"
+#include "../entities/stage.h"
+#include "../toolbox/levelloader.h"
 
 int gameState = 0;
 
@@ -31,6 +33,8 @@ std::list<Entity*> gameEntitiesToAdd;
 std::list<Entity*> gameEntitiesToDelete;
 
 Camera* Global::gameCamera;
+Player* Global::gamePlayer;
+Stage* Global::gameStage;
 
 extern int INPUT_JUMP;
 extern int INPUT_ACTION;
@@ -102,11 +106,13 @@ int main()
 	Global::countNew++;
 	myRing->setVisible(1);
 
-	Player* gamePlayer = new Player(0, 0, -50);
+	Player* myPlayer = new Player(0, 0, -50);
 	Global::countNew++;
-	gamePlayer->setVisible(1);
+	myPlayer->setVisible(1);
 
-	Main_addEntity(gamePlayer);
+	Global::gamePlayer = myPlayer;
+
+	Main_addEntity(myPlayer);
 	Main_addEntity(myRing);
 
 
@@ -116,9 +122,13 @@ int main()
 	light.getPosition()->z = 0;
 	
 
-
+	//This camera is never deleted.
 	Camera cam;
 	Global::gameCamera = &cam;
+
+	//This stage never gets deleted.
+	Stage stage;
+	Global::gameStage = &stage;
 
 
 	double seconds = 0.0;
@@ -142,6 +152,19 @@ int main()
 			std::fprintf(stdout, "%d\n", err);
 		}
 
+
+		if (INPUT_ACTION && !INPUT_PREVIOUS_ACTION)
+		{
+			LevelLoader_loadLevel("EmeraldCoast.lvl");
+		}
+
+		if (INPUT_JUMP && !INPUT_PREVIOUS_JUMP)
+		{
+			LevelLoader_loadTitle();
+		}
+
+
+
 		//long double thisTime = std::time(0);
 		//std::fprintf(stdout, "time: %f time\n", thisTime);
 
@@ -161,35 +184,19 @@ int main()
 		gameEntitiesToDelete.clear();
 
 
-		//if (INPUT_ACTION && !INPUT_PREVIOUS_ACTION)
-		{
-			//Ring::loadStaticModels();
-		}
-
-		//if (INPUT_JUMP && !INPUT_PREVIOUS_JUMP)
-		{
-			//Ring::deleteStaticModels();
-		}
-
-
 		//game logic
 		for (auto e : gameEntities)
 		{
-			//e.first->increaseRotation(0, 1, 0);
 			e.first->step();
 		}
-
-		//cam.move();
 
 
 		//render entities
 		for (auto e : gameEntities)
 		{
-			if (e.first->getVisible() == 1)
-			{
-				Master_processEntity(e.first);
-			}
+			Master_processEntity(e.first);
 		}
+		Master_processEntity(&stage);
 
 		Master_render(&light, &cam);
 
@@ -209,7 +216,8 @@ int main()
 	}
 
 	Ring::deleteStaticModels();
-	Player::loadStaticModels();
+	Player::deleteStaticModels();
+	Stage::deleteModels();
 
 	Master_cleanUp();
 	Loader_cleanUp();
@@ -231,6 +239,23 @@ void Main_deleteEntity(Entity* entityToDelete)
 
 void Main_deleteAllEntites()
 {
+	//Make sure no entities get left behind in transition
+	for (auto entityToAdd : gameEntitiesToAdd)
+	{
+		gameEntities.insert(std::pair<Entity*, Entity*>(entityToAdd, entityToAdd));
+	}
+	gameEntitiesToAdd.clear();
+
+	for (auto entityToDelete : gameEntitiesToDelete)
+	{
+		gameEntities.erase(entityToDelete);
+		delete entityToDelete;
+		Global::countDelete++;
+	}
+	gameEntitiesToDelete.clear();
+
+
+	//Delete all the rest
 	for (auto entityToDelete : gameEntities)
 	{
 		delete entityToDelete.first;

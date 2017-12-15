@@ -1,11 +1,12 @@
+#ifndef MODELS_H
+#define MODELS_H
+
 #include <glad/glad.h>
 
 #include <list>
 
 #include "../textures/textures.h"
 
-#ifndef MODELS_H
-#define MODELS_H
 class RawModel
 {
 private:

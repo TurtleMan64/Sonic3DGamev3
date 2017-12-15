@@ -1,7 +1,9 @@
-#include <glad/glad.h>
-
 #ifndef TEXTURES_H
 #define TEXTURES_H
+
+#include <glad/glad.h>
+
+
 class ModelTexture
 {
 private:

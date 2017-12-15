@@ -1,17 +1,13 @@
-#include <glad/glad.h>
-
-#include <iostream>
-#include <fstream>
-#include <string>
-#include <math.h>
-
-#include "../toolbox/vector.h"
-#include "../toolbox/matrix.h"
-#include "../entities/camera.h"
-#include "../entities/light.h"
-
 #ifndef SHADERS_H
 #define SHADERS_H
+
+class Matrix4f;
+class Camera;
+class Light;
+class Vector3f;
+
+#include <glad/glad.h>
+
 
 class ShaderProgram
 {

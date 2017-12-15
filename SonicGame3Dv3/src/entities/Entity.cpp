@@ -16,7 +16,7 @@ Entity::Entity()
 	this->rotY = 0;
 	this->rotZ = 0; 
 	this->scale = 1;
-	this->visible = 0;
+	this->visible = 1;
 }
 
 Entity::Entity(Vector3f* position, float rotX, float rotY, float rotZ, float scale)
@@ -28,7 +28,7 @@ Entity::Entity(Vector3f* position, float rotX, float rotY, float rotZ, float sca
 	this->rotY = rotY;
 	this->rotZ = rotZ;
 	this->scale = scale;
-	this->visible = 0;
+	this->visible = 1;
 }
 
 void Entity::step()

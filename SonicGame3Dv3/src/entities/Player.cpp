@@ -1,4 +1,6 @@
-#include <glad/glad.h>
+#include <list>
+#include <iostream>
+#include <math.h>
 
 #include "entities.h"
 #include "../models/models.h"
@@ -9,10 +11,8 @@
 #include "../engineTester/main.h"
 #include "../toolbox/input.h"
 #include "../toolbox/maths.h"
+#include "camera.h"
 
-#include <list>
-#include <iostream>
-#include <math.h>
 
 std::list<TexturedModel*> Player::models;
 
@@ -54,9 +54,11 @@ void Player::loadStaticModels()
 {
 	if (Player::models.size() > 0)
 	{
-		std::fprintf(stdout, "Player models gone astray");
+		//std::fprintf(stdout, "Player models gone astray\n");
 		return;
 	}
+
+	std::fprintf(stdout, "Loading player models\n");
 
 	std::list<TexturedModel*>* newModels = loadObjModel("res/Models/Amy/", "Head.obj");
 	for (auto newModel : (*newModels))

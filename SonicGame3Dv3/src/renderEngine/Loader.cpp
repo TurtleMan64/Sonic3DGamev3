@@ -50,7 +50,7 @@ GLuint Loader_loadTexture(char* fileName)
 	glGenTextures(1, &textureID);
 	texNumber++;
 	textures.push_back(textureID);
-	//std::fprintf(stdout, "	generated tex id #%d\n", textureID);
+	//std::fprintf(stdout, "	generated tex id #%d from %s\n", textureID, fileName);
 
 	int width, height;
 	unsigned char* image = SOIL_load_image(fileName, &width, &height, 0, SOIL_LOAD_RGBA);
@@ -255,4 +255,12 @@ void Loader_printInfo()
 	std::fprintf(stdout, "VAO Count = %d = %d\n", vaoNumber, vaos.size());
 	std::fprintf(stdout, "VBO Count = %d = %d\n", vboNumber, vbos.size());
 	std::fprintf(stdout, "TEX Count = %d = %d\n", texNumber, textures.size());
+
+	if (textures.size() == 3)
+	{
+		for (GLuint i : textures)
+		{
+			std::fprintf(stdout, "	%d\n", i);
+		}
+	}
 }

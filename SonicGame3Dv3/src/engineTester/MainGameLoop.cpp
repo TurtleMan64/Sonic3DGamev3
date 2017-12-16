@@ -25,6 +25,7 @@
 #include "../entities/player.h"
 #include "../entities/stage.h"
 #include "../toolbox/levelloader.h"
+#include "../collision/collisionchecker.h"
 
 int gameState = 0;
 
@@ -47,48 +48,6 @@ extern int INPUT_PREVIOUS_ACTION2;
 int Global::countNew = 0;
 int Global::countDelete = 0;
 
-static unsigned int CompileShader(unsigned int type, const std::string& source)
-{
-	unsigned int id = glCreateShader(type);
-	const char* src = source.c_str();
-	glShaderSource(id, 1, &src, nullptr);
-	glCompileShader(id);
-
-	int result;
-	glGetShaderiv(id, GL_COMPILE_STATUS, &result);
-	if (result == GL_FALSE)
-	{
-		int length;
-		glGetShaderiv(id, GL_INFO_LOG_LENGTH, &length);
-		char* message = (char*)alloca(length * sizeof(char));
-		glGetShaderInfoLog(id, length, &length, message);
-		std::cout << "Failed to compile shader!" << std::endl;
-		std::cout << message << std::endl;
-
-		glDeleteShader(id);
-		return 0;
-	}
-
-	return id;
-}
-
-static unsigned int CreateShader(const std::string& vertexShader, const std::string& fragmentShader)
-{
-	unsigned int program = glCreateProgram();
-	unsigned int vs = CompileShader(GL_VERTEX_SHADER, vertexShader);
-	unsigned int fs = CompileShader(GL_FRAGMENT_SHADER, fragmentShader);
-
-	glAttachShader(program, vs);
-	glAttachShader(program, fs);
-	glLinkProgram(program);
-	glValidateProgram(program);
-
-	glDeleteShader(vs);
-	glDeleteShader(fs);
-
-	return program;
-}
-
 
 int main()
 {
@@ -98,6 +57,8 @@ int main()
 	createDisplay();
 
 	Master_init();
+
+	CollisionChecker::initChecker();
 
 	//Ring::loadStaticModels();
 	//Player::loadStaticModels();
@@ -208,16 +169,12 @@ int main()
 		if (seconds - previousTime >= 1.0)
 		{
 			std::fprintf(stdout, "fps: %f\n", frameCount / (seconds - previousTime));
-			//std::fprintf(stdout, "diff: %d\n", Global::countNew - Global::countDelete);
-			//Loader_printInfo();
+			std::fprintf(stdout, "diff: %d\n", Global::countNew - Global::countDelete);
+			Loader_printInfo();
 			frameCount = 0;
 			previousTime = seconds;
 		}
 	}
-
-	Ring::deleteStaticModels();
-	Player::deleteStaticModels();
-	Stage::deleteModels();
 
 	Master_cleanUp();
 	Loader_cleanUp();

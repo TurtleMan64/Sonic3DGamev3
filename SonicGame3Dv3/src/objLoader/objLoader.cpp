@@ -14,6 +14,9 @@
 #include "vertex.h"
 #include "../engineTester/main.h"
 #include "../toolbox/split.h"
+#include "../collision/collisionmodel.h"
+#include "../collision/triangle3d.h"
+#include "fakeTexture.h"
 
 void parseMtl(std::string filePath, std::string fileName);
 
@@ -735,3 +738,154 @@ void processVertexOLD(char** vertexData,
 	normalsArray[currentVertexPointer*3 + 2] = currentNorm.z;
 }
 */
+
+
+CollisionModel* loadCollisionModel(std::string filePath, std::string fileName)
+{
+	CollisionModel* collisionModel = new CollisionModel();
+	Global::countNew++;
+	std::list<FakeTexture*> fakeTextures;
+
+	char currType = 0;
+	int currSound = 0;
+	char currParticle = 0;
+
+	std::ifstream file("res/" + filePath + fileName + ".obj");
+	if (!file.is_open())
+	{
+		std::fprintf(stdout, "Error: Cannot load file '%s'\n", ("res/" + filePath + fileName + ".obj").c_str());
+		file.close();
+		return collisionModel;
+	}
+
+	std::string line;
+
+	std::vector<Vector3f> vertices;
+
+
+
+	while (!file.eof())
+	{
+		getline(file, line);
+
+		char lineBuf[256]; //Buffer to copy line into
+		memset(lineBuf, 0, 256);
+		memcpy(lineBuf, line.c_str(), line.size());
+
+		int splitLength = 0;
+		char** lineSplit = split(lineBuf, ' ', &splitLength);
+
+		if (splitLength > 0)
+		{
+			if (strcmp(lineSplit[0], "v") == 0)
+			{
+				Vector3f vertex;
+				vertex.x = std::stof(lineSplit[1]);
+				vertex.y = std::stof(lineSplit[2]);
+				vertex.z = std::stof(lineSplit[3]);
+				vertices.push_back(vertex);
+			}
+			else if (strcmp(lineSplit[0], "f") == 0)
+			{
+				int len = 0;
+				char** vertex1 = split(lineSplit[1], '/', &len);
+				char** vertex2 = split(lineSplit[2], '/', &len);
+				char** vertex3 = split(lineSplit[3], '/', &len);
+
+				Vector3f* vert1 = &vertices[std::stoi(vertex1[0]) - 1];
+				Vector3f* vert2 = &vertices[std::stoi(vertex2[0]) - 1];
+				Vector3f* vert3 = &vertices[std::stoi(vertex3[0]) - 1];
+
+				Triangle3D* tri = new Triangle3D(vert1, vert2, vert3, currType, currSound, currParticle);
+				Global::countNew++;
+
+				collisionModel->triangles.push_back(tri);
+
+				free(vertex1);
+				free(vertex2);
+				free(vertex3);
+			}
+			else if (strcmp(lineSplit[0], "usemtl") == 0)
+			{
+				currType = 0;
+				currSound = -1;
+				currParticle = 0;
+
+				for (FakeTexture* dummy : fakeTextures)
+				{
+					if (dummy->name == lineSplit[1])
+					{
+						currType = dummy->type;
+						currType = dummy->sound;
+						currType = dummy->particle;
+					}
+				}
+			}
+			else if (strcmp(lineSplit[0], "mtllib") == 0)
+			{
+				std::ifstream fileMTL("res/" + filePath + lineSplit[1]);
+				if (!fileMTL.is_open())
+				{
+					std::fprintf(stdout, "Error: Cannot load file '%s'\n", ("res/" + filePath + lineSplit[1]).c_str());
+					fileMTL.close();
+					file.close();
+					return collisionModel;
+				}
+
+				std::string lineMTL;
+
+				while (!fileMTL.eof())
+				{
+					getline(fileMTL, lineMTL);
+
+					char lineBufMTL[256]; //Buffer to copy line into
+					memset(lineBufMTL, 0, 256);
+					memcpy(lineBufMTL, lineMTL.c_str(), lineMTL.size());
+
+					int splitLengthMTL = 0;
+					char** lineSplitMTL = split(lineBufMTL, ' ', &splitLengthMTL);
+
+					if (splitLengthMTL > 0)
+					{
+						if (strcmp(lineSplitMTL[0], "newmtl") == 0)
+						{
+							FakeTexture* fktex = new FakeTexture();
+							Global::countNew++;
+							fktex->name = lineSplitMTL[1];
+							fakeTextures.push_back(fktex);
+						}
+						else if (strcmp(lineSplitMTL[0], "type") == 0 ||
+								 strcmp(lineSplitMTL[0], "\ttype") == 0)
+						{
+							fakeTextures.back()->type = (char)round(std::stof(lineSplitMTL[1]));
+						}
+						else if (strcmp(lineSplitMTL[0], "sound") == 0 ||
+								 strcmp(lineSplitMTL[0], "\tsound") == 0)
+						{
+							fakeTextures.back()->sound = (int)round(std::stof(lineSplitMTL[1]));
+						}
+						else if (strcmp(lineSplitMTL[0], "particle") == 0 ||
+								 strcmp(lineSplitMTL[0], "\tparticle") == 0)
+						{
+							fakeTextures.back()->particle = (char)round(std::stof(lineSplitMTL[1]));
+						}
+					}
+					free(lineSplitMTL);
+				}
+				fileMTL.close();
+			}
+		}
+		free(lineSplit);
+	}
+	file.close();
+
+	collisionModel->generateMinMaxValues();
+
+	for (FakeTexture* dummy : fakeTextures)
+	{
+		delete dummy;
+		Global::countDelete++;
+	}
+
+	return collisionModel;
+}

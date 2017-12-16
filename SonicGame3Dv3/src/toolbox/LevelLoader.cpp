@@ -9,6 +9,9 @@
 #include "../entities/player.h"
 #include "../toolbox/split.h"
 #include "../toolbox/input.h"
+#include "../collision/collisionchecker.h"
+#include "../collision/collisionmodel.h"
+#include "../objLoader/objLoader.h"
 
 float toFloat(char* input);
 void processLine(char** data);
@@ -20,6 +23,8 @@ void LevelLoader_loadTitle()
 	Stage::stageName = "";
 
 	freeAllStaticModels();
+
+	CollisionChecker::deleteAllCollideModels();
 
 	Main_deleteAllEntites();
 }
@@ -76,14 +81,16 @@ void LevelLoader_loadLevel(char* levelFilename)
 
 	int numChunks = stoi(numChunksLine);
 
+	//CollisionChecker::deleteAllCollideModels();
+
 	while (numChunks > 0)
 	{
 		std::string colFilename;
 		getline(file, colFilename);
 
-		//TODO:
-		//CollisionModel colModel = OBJFileLoader.loadCollisionOBJ("Models/" + colFLoc + "/", colFilename);
-		//CollisionChecker.addCollideModel(colModel);
+		//CollisionModel* colModel = loadCollisionModel("Models/" + colFLoc + "/", colFilename);
+		//CollisionChecker::addCollideModel(colModel);
+
 		numChunks--;
 	}
 
@@ -172,6 +179,7 @@ void processLine(char** dat)
 		{
 			Ring::loadStaticModels();
 			Ring* ring = new Ring(toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]));
+			Global::countNew++;
 			Main_addEntity(ring);
 			return;
 		}
@@ -180,6 +188,7 @@ void processLine(char** dat)
 		{
 			Player::loadStaticModels();
 			Player* player = new Player(toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]));
+			Global::countNew++;
 			Global::gamePlayer = player;
 			Main_addEntity(player);
 			return;

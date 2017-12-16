@@ -12,6 +12,7 @@
 #include "../toolbox/input.h"
 #include "../toolbox/maths.h"
 #include "camera.h"
+#include "../collision/collisionchecker.h"
 
 
 std::list<TexturedModel*> Player::models;
@@ -42,7 +43,15 @@ void Player::step()
 	setMovementInputs();
 	adjustCamera();
 	moveMeGround();
-	increasePosition(xVelGround, 0, zVelGround);
+	if (CollisionChecker::checkCollision(position.x, position.y, position.z, position.x+xVelGround, position.y, position.z+zVelGround))
+	{
+		xVelGround = 0;
+		zVelGround = 0;
+	}
+	else
+	{
+		increasePosition(xVelGround, 0, zVelGround);
+	}
 }
 
 std::list<TexturedModel*>* Player::getModels()
@@ -71,6 +80,7 @@ void Player::loadStaticModels()
 
 void Player::deleteStaticModels()
 {
+	std::fprintf(stdout, "Deleting player models...\n");
 	for (auto model : Player::models)
 	{
 		model->deleteMe(); //delete opengl ids

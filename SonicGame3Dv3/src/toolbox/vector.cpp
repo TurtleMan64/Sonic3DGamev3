@@ -14,6 +14,13 @@ void Vector3f::set(float newX, float newY, float newZ)
 	z = newZ;
 }
 
+void Vector3f::set(Vector3f* other)
+{
+	x = other->x;
+	y = other->y;
+	z = other->z;
+}
+
 float Vector3f::length() {
 	return (float)sqrt((x * x) + (y * y) + (z * z));
 }
@@ -28,6 +35,13 @@ void Vector3f::neg() {
 	x = -x;
 	y = -y;
 	z = -z;
+}
+
+void Vector3f::scale(float scale)
+{
+	x *= scale;
+	y *= scale;
+	z *= scale;
 }
 
 float Vector3f::dot(Vector3f* other) {

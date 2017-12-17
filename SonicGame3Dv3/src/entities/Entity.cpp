@@ -110,3 +110,18 @@ void Entity::setVisible(int newVisible)
 {
 	visible = newVisible;
 }
+
+float Entity::getX()
+{
+	return position.x;
+}
+
+float Entity::getY()
+{
+	return position.y;
+}
+
+float Entity::getZ()
+{
+	return position.z;
+}

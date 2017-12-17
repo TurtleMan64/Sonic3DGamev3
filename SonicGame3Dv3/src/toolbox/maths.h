@@ -23,4 +23,29 @@ void createViewMatrix(Matrix4f*, Camera*);
 //ang1 and ang2 should be in degrees
 float compareTwoAngles(float ang1, float ang2);
 
+int sign(float value);
+
+//result needs to be array of 3 doubles
+void rotatePoint(double result[],
+	double a, double b, double c,
+	double u, double v, double w,
+	double x, double y, double z,
+	double theta);
+
+Vector3f mapInputs3(float angle, float mag, Vector3f* VecC);
+
+Vector3f bounceVector(Vector3f* initialVelocity, Vector3f* surfaceNormal, float elasticity);
+
+/**
+* Calculate the x and z speeds relative to a plane based off
+* the previous position you are coming in from
+*
+* @param xspd the x speed that you are going at before collision
+* @param yspd the y speed that you are going at before collision
+* @param zspd the z speed that you are going at before collision
+* @param A the collision point on the triangle
+* @param normal the normal of the triangle
+*/
+Vector3f calculatePlaneSpeed(float xspd, float yspd, float zspd, Vector3f* A, Vector3f* normal);
+
 #endif

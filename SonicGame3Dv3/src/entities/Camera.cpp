@@ -10,9 +10,9 @@ extern float INPUT_Y;
 extern float INPUT_X2;
 extern float INPUT_Y2;
 
-extern int INPUT_ACTION;
-extern int INPUT_ACTION2;
-extern int INPUT_JUMP;
+extern bool INPUT_ACTION;
+extern bool INPUT_ACTION2;
+extern bool INPUT_JUMP;
 
 Camera::Camera()
 {

@@ -56,10 +56,10 @@ void LevelLoader_loadLevel(char* levelFilename)
 	}
 
 
-	std::ifstream file("res/Data/" + fname);
+	std::ifstream file("res/Levels/" + fname);
 	if (!file.is_open())
 	{
-		std::fprintf(stdout, "Error: Cannot load file '%s'\n", ("res/Data/" + fname).c_str());
+		std::fprintf(stdout, "Error: Cannot load file '%s'\n", ("res/Levels/" + fname).c_str());
 		file.close();
 		return;
 	}
@@ -81,15 +81,15 @@ void LevelLoader_loadLevel(char* levelFilename)
 
 	int numChunks = stoi(numChunksLine);
 
-	//CollisionChecker::deleteAllCollideModels();
+	CollisionChecker::deleteAllCollideModels();
 
 	while (numChunks > 0)
 	{
 		std::string colFilename;
 		getline(file, colFilename);
 
-		//CollisionModel* colModel = loadCollisionModel("Models/" + colFLoc + "/", colFilename);
-		//CollisionChecker::addCollideModel(colModel);
+		CollisionModel* colModel = loadCollisionModel("Models/" + colFLoc + "/", colFilename);
+		CollisionChecker::addCollideModel(colModel);
 
 		numChunks--;
 	}
@@ -151,7 +151,7 @@ void LevelLoader_loadLevel(char* levelFilename)
 
 		if (splitLength > 0)
 		{
-			pollInputs();
+			Input_pollInputs();
 
 			processLine(lineSplit);
 		}

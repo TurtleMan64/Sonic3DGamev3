@@ -25,12 +25,12 @@ std::list<Entity*> entitiesList;
 Matrix4f* projectionMatrix;
 
 const float FOV = 50;
-const float NEAR_PLANE = 0.1f;
-const float FAR_PLANE = 1000;
+const float NEAR_PLANE = 0.5f;
+const float FAR_PLANE = 15000;
 
-const float RED = 0.5f;
-const float GREEN = 0.5f;
-const float BLUE = 0.5f;
+const float RED = 0.9f;
+const float GREEN = 0.95f;
+const float BLUE = 1.0f;
 
 void prepare();
 

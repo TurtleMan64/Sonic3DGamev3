@@ -37,13 +37,13 @@ Camera* Global::gameCamera;
 Player* Global::gamePlayer;
 Stage* Global::gameStage;
 
-extern int INPUT_JUMP;
-extern int INPUT_ACTION;
-extern int INPUT_ACTION2;
+extern bool INPUT_JUMP;
+extern bool INPUT_ACTION;
+extern bool INPUT_ACTION2;
 
-extern int INPUT_PREVIOUS_JUMP;
-extern int INPUT_PREVIOUS_ACTION;
-extern int INPUT_PREVIOUS_ACTION2;
+extern bool INPUT_PREVIOUS_JUMP;
+extern bool INPUT_PREVIOUS_ACTION;
+extern bool INPUT_PREVIOUS_ACTION2;
 
 int Global::countNew = 0;
 int Global::countDelete = 0;
@@ -98,9 +98,11 @@ int main()
 
 	int frameCount = 0;
 
+	LevelLoader_loadLevel("EmeraldCoast.lvl");
+
 	while (gameState == 0 && displayWantsToClose() == 0)
 	{
-		pollInputs();
+		Input_pollInputs();
 		int err = glGetError();
 
 		if (err == GL_NO_ERROR)
@@ -116,12 +118,12 @@ int main()
 
 		if (INPUT_ACTION && !INPUT_PREVIOUS_ACTION)
 		{
-			LevelLoader_loadLevel("EmeraldCoast.lvl");
+			//LevelLoader_loadLevel("EmeraldCoast.lvl");
 		}
 
 		if (INPUT_JUMP && !INPUT_PREVIOUS_JUMP)
 		{
-			LevelLoader_loadTitle();
+			//LevelLoader_loadTitle();
 		}
 
 

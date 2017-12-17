@@ -1,4 +1,4 @@
-#include <math.h>
+#include <cmath>
 
 #include "matrix.h"
 #include "vector.h"
@@ -65,4 +65,141 @@ float compareTwoAngles(float origAng1, float origAng2)
 	r *= sign;
 
 	return r;
+}
+
+int sign(float value)
+{
+	if (value > 0)
+	{
+		return 1;
+	}
+	else if(value < 0)
+	{
+		return -1;
+	}
+	return 0;
+}
+
+Vector3f mapInputs3(float angle, float mag, Vector3f* VecC)
+{
+	const double M_PI = 3.14159265358979323846;
+
+	float invert = 1;
+
+	angle = fmod(angle, (float)(M_PI * 2));
+	float tempx = (float)cos(angle)*mag;
+	float tempz = (float)sin(angle)*mag;
+
+	float CDir = (float)atan2(VecC->z, VecC->x);
+	CDir += (float)(M_PI / 2);
+	float Cx = (float)cos(CDir);
+	float Cz = (float)sin(CDir);
+
+	float CDist = (float)sqrt(VecC->x*VecC->x + VecC->z*VecC->z);
+	float CPitch = (float)(M_PI / 2 + atan2(VecC->y, CDist));
+
+	double result[3] = { 0, 0, 0 }; //storage for the answer
+	rotatePoint(result, 0, 0, 0, Cx, 0, Cz, tempx, 0, tempz, CPitch);
+
+	Vector3f res = new Vector3f((float)result[0] * invert, (float)result[1] * invert, (float)result[2] * invert);
+
+	return res;
+}
+
+//Algorithm from https://sites.google.com/site/glennmurray/Home/rotation-matrices-and-formulas
+void rotatePoint(double result[],
+	double a, double b, double c,
+	double u, double v, double w,
+	double x, double y, double z,
+	double theta)
+{
+	double l = sqrt(u*u + v*v + w*w);
+
+	double l2 = l*l;
+
+	double u2 = u*u;
+	double v2 = v*v;
+	double w2 = w*w;
+	double cosT = cos(theta);
+	double oneMinusCosT = 1 - cosT;
+	double sinT = sin(theta);
+
+	result[0] = ((a*(v2 + w2) - u*(b*v + c*w - u*x - v*y - w*z)) * oneMinusCosT
+		+ l2*x*cosT
+		+ l*(-c*v + b*w - w*y + v*z)*sinT) / l2;
+
+	result[1] = ((b*(u2 + w2) - v*(a*u + c*w - u*x - v*y - w*z)) * oneMinusCosT
+		+ l2*y*cosT
+		+ l*(c*u - a*w + w*x - u*z)*sinT) / l2;
+
+	result[2] = ((c*(u2 + v2) - w*(a*u + b*v - u*x - v*y - w*z)) * oneMinusCosT
+		+ l2*z*cosT
+		+ l*(-b*u + a*v - v*x + u*y)*sinT) / l2;
+}
+
+/**
+* @param initialVelocity
+* @param surfaceNormal
+* @param elasticity Scale of the resulting vector relative to the original velocity
+*/
+Vector3f bounceVector(Vector3f* initialVelocity, Vector3f* surfaceNormal, float elasticity)
+{
+	Vector3f twoNtimesVdotN(surfaceNormal);
+	twoNtimesVdotN.scale(-2 * initialVelocity->dot(surfaceNormal));
+
+	Vector3f Vnew = (twoNtimesVdotN + initialVelocity);
+	Vnew.scale(elasticity);
+
+	return Vnew;
+}
+
+
+/**
+* Calculate the x and z speeds relative to a plane based off
+* the previous position you are coming in from
+*
+* @param xspd the x speed that you are going at before collision
+* @param yspd the y speed that you are going at before collision
+* @param zspd the z speed that you are going at before collision
+* @param A the collision point on the triangle
+* @param normal the normal of the triangle
+*/
+Vector3f calculatePlaneSpeed(float xspd, float yspd, float zspd, Vector3f* A, Vector3f* normal)
+{
+	float normY = normal->y;
+	if (normY > -0.01 && normY < 0.01)
+	{
+		normY = 0.01f;
+	}
+
+	float normX = normal->x;
+	if (normX == 0)
+	{
+		normX = 0.00001f;
+	}
+
+	float normZ = normal->z;
+	if (normZ == 0)
+	{
+		normZ = 0.00001f;
+	}
+
+	//find the relative x speed
+	float xDiff = xspd;
+	float yDiff = yspd;
+	float dist = (float)sqrt(xDiff*xDiff + yDiff*yDiff);
+	float angle1 = (float)atan2(-normY, -normX);
+	float angle2 = (float)atan2(yDiff, xDiff);
+	float actualAngle = angle2 - angle1;
+	float xLength = (float)sin(actualAngle)*dist;
+
+	//find the relative z speed
+	float zDiff = zspd;//A.z-B.z;
+	dist = (float)sqrt(zDiff*zDiff + yDiff*yDiff);
+	angle1 = (float)atan2(-normY, -normZ);
+	angle2 = (float)atan2(yDiff, zDiff);
+	actualAngle = angle2 - angle1;
+	float zLength = (float)sin(actualAngle)*dist;
+
+	return Vector3f(xLength, 0, zLength);
 }

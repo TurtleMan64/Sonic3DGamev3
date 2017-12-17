@@ -44,5 +44,11 @@ public:
 
 	int getVisible();
 	void setVisible(int);
+
+	float getX();
+
+	float getY();
+
+	float getZ();
 };
 #endif

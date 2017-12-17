@@ -4,15 +4,19 @@
 #include <iostream>
 
 #include "renderEngine.h"
+#include "../toolbox/input.h"
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void window_close_callback(GLFWwindow* window);
+void mouse_scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 
 // settings
 unsigned int SCR_WIDTH = 1280;
 unsigned int SCR_HEIGHT = 720;
 
 extern int gameState;
+
+extern float input_zoom_buffer;
 
 GLFWwindow* window;
 
@@ -46,6 +50,7 @@ int createDisplay()
 	glfwMakeContextCurrent(window);
 	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 	glfwSetWindowCloseCallback(window, window_close_callback);
+	glfwSetScrollCallback(window, mouse_scroll_callback);
 
 	// glad: load all OpenGL function pointers
 	// ---------------------------------------
@@ -76,6 +81,7 @@ int createDisplay()
 	{
 		//std::fprintf(stdout, "extensions:   %s\n", glGetStringi(GL_EXTENSIONS, i));
 	}
+
 
 	return 0;
 }
@@ -120,4 +126,10 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 void window_close_callback(GLFWwindow* window)
 {
 	gameState = 1;
+}
+
+void mouse_scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
+{
+	input_zoom_buffer = yoffset;
+	std::fprintf(stdout, "%f\n", yoffset);
 }

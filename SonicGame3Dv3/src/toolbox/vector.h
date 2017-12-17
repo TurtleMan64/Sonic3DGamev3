@@ -21,6 +21,8 @@ public:
 
 	void set(float, float, float);
 
+	void set(Vector3f*);
+
 	float length();
 
 	Vector3f normalized();
@@ -28,6 +30,8 @@ public:
 	void neg();
 
 	float dot(Vector3f*);
+
+	void scale(float scale);
 
 	Vector3f cross(Vector3f*);
 

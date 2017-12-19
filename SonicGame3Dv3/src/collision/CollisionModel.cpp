@@ -5,11 +5,14 @@
 #include "../toolbox/vector.h"
 #include "collisionmodel.h"
 #include "../engineTester/main.h"
+#include "quadtreenode.h"
 
 
 CollisionModel::CollisionModel()
 {
 	playerIsOn = false;
+	quadTreeRoot = nullptr;
+	treeMaxDepth = -1;
 }
 
 void CollisionModel::generateMinMaxValues()
@@ -35,6 +38,18 @@ void CollisionModel::generateMinMaxValues()
 		minZ = fmin(minZ, tri->minZ);
 		maxZ = fmax(maxZ, tri->maxZ);
 	}
+}
+
+bool CollisionModel::hasQuadTree()
+{
+	return (quadTreeRoot != nullptr);
+}
+
+void CollisionModel::generateQuadTree(int maxDepth)
+{
+	this->treeMaxDepth = maxDepth;
+	quadTreeRoot = new QuadTreeNode(minX, maxX, minZ, maxZ, triangles, 0, maxDepth);
+	Global::countNew++;
 }
 
 void CollisionModel::offsetModel(Vector3f* offset)
@@ -84,8 +99,9 @@ void CollisionModel::transformModel(CollisionModel* targetModel, Vector3f* trans
 
 }
 
-void CollisionModel::deleteAllTriangles()
+void CollisionModel::deleteMe()
 {
+	//Delete triangles 
 	for (Triangle3D* tri : triangles)
 	{
 		delete tri;
@@ -93,4 +109,13 @@ void CollisionModel::deleteAllTriangles()
 	}
 
 	triangles.clear();
+
+	//Delete the quad tree nodes
+	if (quadTreeRoot != nullptr)
+	{
+		quadTreeRoot->deleteMe();
+		delete quadTreeRoot;
+		Global::countDelete++;
+		quadTreeRoot = nullptr;
+	}
 }

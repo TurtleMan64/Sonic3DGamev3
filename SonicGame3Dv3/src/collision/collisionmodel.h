@@ -3,6 +3,7 @@
 
 class Vector3f;
 class Triangle3D;
+class QuadTreeNode;
 
 #include <math.h>
 #include <list>
@@ -15,6 +16,9 @@ public:
 
 	bool playerIsOn;
 
+	QuadTreeNode* quadTreeRoot;
+	int treeMaxDepth;
+
 	float maxX;
 	float minX;
 	float maxY;
@@ -25,6 +29,10 @@ public:
 	CollisionModel();
 
 	void generateMinMaxValues();
+
+	bool hasQuadTree();
+
+	void generateQuadTree(int maxDepth);
 
 	void offsetModel(Vector3f* offset);
 
@@ -39,10 +47,11 @@ public:
 	//makes a collision model be the transformed version of this collision model
 	void transformModel(CollisionModel* targetModel, Vector3f* translate);
 
-	//calls delete on every Triangle3D contained within triangles list.
+	//calls delete on every Triangle3D contained within triangles list, 
+	// and every QuadTreeNode in this quad tree. 
 	// this MUST be called before this object is deleted, or you memory leak
-	// the triangles in the lsit
-	void deleteAllTriangles();
+	// the triangles in the list and the nodes!
+	void deleteMe();
 };
 
 #endif

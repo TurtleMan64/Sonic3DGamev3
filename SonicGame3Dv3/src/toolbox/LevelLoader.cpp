@@ -81,18 +81,47 @@ void LevelLoader_loadLevel(char* levelFilename)
 
 	int numChunks = stoi(numChunksLine);
 
-	CollisionChecker::deleteAllCollideModels();
-
-	while (numChunks > 0)
+	if (stageFault == 1) //We need to load in new collision
 	{
-		std::string colFilename;
-		getline(file, colFilename);
+		CollisionChecker::deleteAllCollideModels();
 
-		CollisionModel* colModel = loadCollisionModel("Models/" + colFLoc + "/", colFilename);
-		CollisionChecker::addCollideModel(colModel);
+		while (numChunks > 0)
+		{
+			std::string line;
+			getline(file, line);
 
-		numChunks--;
+			char lineBuf[128]; //Buffer to copy line into
+			memset(lineBuf, 0, 128);
+			memcpy(lineBuf, line.c_str(), line.size());
+
+			int splitLength = 0;
+			char** lineSplit = split(lineBuf, ' ', &splitLength);
+
+
+
+			CollisionModel* colModel = loadCollisionModel("Models/" + colFLoc + "/", lineSplit[0]);
+			colModel->generateQuadTree(std::stoi(lineSplit[1]));
+			CollisionChecker::addCollideModel(colModel);
+
+			numChunks--;
+
+			free(lineSplit);
+		}
 	}
+	else //Keep the same quad tree collision
+	{
+		CollisionChecker::deleteAllCollideModelsExceptQuadTrees();
+
+		while (numChunks > 0)
+		{
+			std::string line;
+			getline(file, line);
+
+			numChunks--;
+		}
+	}
+
+
 
 	//TODO: set up sky manager
 	std::string sunColorDay;

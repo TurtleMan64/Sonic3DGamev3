@@ -54,6 +54,9 @@ public:
 	//delete's all collide models
 	static void deleteAllCollideModels();
 
+	//use this when reloading the same level - then you dont have to regenerate the quad trees
+	static void deleteAllCollideModelsExceptQuadTrees();
+
 	//static void deleteStageCollideModel();
 
 	static void deleteCollideModel(CollisionModel* cm);

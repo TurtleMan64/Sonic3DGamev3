@@ -98,7 +98,7 @@ int main()
 
 	int frameCount = 0;
 
-	LevelLoader_loadLevel("EmeraldCoast.lvl");
+	//LevelLoader_loadLevel("EmeraldCoast.lvl");
 
 	while (gameState == 0 && displayWantsToClose() == 0)
 	{
@@ -118,12 +118,12 @@ int main()
 
 		if (INPUT_ACTION && !INPUT_PREVIOUS_ACTION)
 		{
-			//LevelLoader_loadLevel("EmeraldCoast.lvl");
+			LevelLoader_loadLevel("EmeraldCoast.lvl");
 		}
 
 		if (INPUT_JUMP && !INPUT_PREVIOUS_JUMP)
 		{
-			//LevelLoader_loadTitle();
+			LevelLoader_loadTitle();
 		}
 
 
@@ -170,7 +170,7 @@ int main()
 
 		if (seconds - previousTime >= 1.0)
 		{
-			std::fprintf(stdout, "fps: %f\n", frameCount / (seconds - previousTime));
+			//std::fprintf(stdout, "fps: %f\n", frameCount / (seconds - previousTime));
 			std::fprintf(stdout, "diff: %d\n", Global::countNew - Global::countDelete);
 			Loader_printInfo();
 			frameCount = 0;

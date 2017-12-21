@@ -20,9 +20,15 @@ Vector3f* Light::getPosition()
 }
 void Light::setPosition(Vector3f* newPosition)
 {
-	colour.x = newPosition->x;
-	colour.y = newPosition->y;
-	colour.z = newPosition->z;
+	position.x = newPosition->x;
+	position.y = newPosition->y;
+	position.z = newPosition->z;
+}
+void Light::setPosition(float newX, float newY, float newZ)
+{
+	position.x = newX;
+	position.y = newY;
+	position.z = newZ;
 }
 
 Vector3f* Light::getColour()
@@ -34,4 +40,10 @@ void Light::setColour(Vector3f* newColour)
 	colour.x = newColour->x;
 	colour.y = newColour->y;
 	colour.z = newColour->z;
+}
+void Light::setColour(float newR, float newG, float newB)
+{
+	colour.x = newR;
+	colour.y = newG;
+	colour.z = newB;
 }

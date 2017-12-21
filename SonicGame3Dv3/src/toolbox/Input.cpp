@@ -5,6 +5,7 @@
 #include <cmath>
 
 #include "input.h"
+#include "../renderEngine/skymanager.h"
 
 extern GLFWwindow* window;
 
@@ -283,6 +284,15 @@ void Input_pollInputs()
 	if (glfwGetKey(window, GLFW_KEY_TAB) == GLFW_PRESS)
 	{
 		tabInput = true;
+	}
+
+	if (glfwGetKey(window, GLFW_KEY_0) == GLFW_PRESS)
+	{
+		SkyManager::increaseTimeOfDay(0.5f);
+	}
+	if (glfwGetKey(window, GLFW_KEY_9) == GLFW_PRESS)
+	{
+		SkyManager::increaseTimeOfDay(-0.5f);
 	}
 
 	if (tabInput && !tabInputPrevious)

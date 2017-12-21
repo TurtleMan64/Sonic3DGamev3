@@ -152,6 +152,8 @@ public:
 
 	static void deleteStaticModels();
 
+	void setCameraAngles(float newYaw, float newPitch);
+
 private:
 	void adjustCamera();
 

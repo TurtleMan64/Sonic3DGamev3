@@ -34,7 +34,7 @@ void Loader_deleteTexturedModels(std::list<TexturedModel*>* tm);
 void Loader_printInfo();
 
 //Master Rebderer
-void Master_render(Light* sun, Camera* camera);
+void Master_render(Camera* camera);
 
 void Master_cleanUp();
 

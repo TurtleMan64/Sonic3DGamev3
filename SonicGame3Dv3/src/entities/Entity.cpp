@@ -65,6 +65,12 @@ void Entity::setPosition(Vector3f* newPos)
 	this->position.y = newPos->y;
 	this->position.z = newPos->z;
 }
+void Entity::setPosition(float newX, float newY, float newZ)
+{
+	this->position.x = newX;
+	this->position.y = newY;
+	this->position.z = newZ;
+}
 
 float Entity::getRotX()
 {

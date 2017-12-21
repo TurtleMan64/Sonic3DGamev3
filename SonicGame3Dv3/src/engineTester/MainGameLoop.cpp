@@ -26,6 +26,8 @@
 #include "../entities/stage.h"
 #include "../toolbox/levelloader.h"
 #include "../collision/collisionchecker.h"
+#include "../entities/skysphere.h"
+#include "../renderEngine/skymanager.h"
 
 int gameState = 0;
 
@@ -36,6 +38,9 @@ std::list<Entity*> gameEntitiesToDelete;
 Camera* Global::gameCamera;
 Player* Global::gamePlayer;
 Stage* Global::gameStage;
+SkySphere* Global::gameSkySphere;
+Light* Global::gameLightSun;
+Light* Global::gameLightMoon;
 
 extern bool INPUT_JUMP;
 extern bool INPUT_ACTION;
@@ -63,25 +68,27 @@ int main()
 	//Ring::loadStaticModels();
 	//Player::loadStaticModels();
 
-	Ring* myRing = new Ring(0, 0, 0);
-	Global::countNew++;
-	myRing->setVisible(1);
+	//Ring* myRing = new Ring(0, 0, 0);
+	//Global::countNew++;
+	//myRing->setVisible(1);
 
-	Player* myPlayer = new Player(0, 0, -50);
-	Global::countNew++;
-	myPlayer->setVisible(1);
+	//Player* myPlayer = new Player(0, 0, -50);
+	//Global::countNew++;
+	//myPlayer->setVisible(1);
 
-	Global::gamePlayer = myPlayer;
+	//Global::gamePlayer = myPlayer;
 
-	Main_addEntity(myPlayer);
-	Main_addEntity(myRing);
+	//Main_addEntity(myPlayer);
+	//Main_addEntity(myRing);
 
 
-	Light light;
-	light.getPosition()->x = 0;
-	light.getPosition()->y = 100000;
-	light.getPosition()->z = 0;
-	
+	//This light never gets deleted.
+	Light lightSun;
+	Global::gameLightSun = &lightSun;
+
+	//This light never gets deleted.
+	Light lightMoon;
+	Global::gameLightMoon = &lightMoon;
 
 	//This camera is never deleted.
 	Camera cam;
@@ -90,6 +97,18 @@ int main()
 	//This stage never gets deleted.
 	Stage stage;
 	Global::gameStage = &stage;
+
+	//This sky sphere never gets deleted.
+	SkySphere skySphere;
+	Global::gameSkySphere = &skySphere;
+
+
+
+	SkyManager::initSkyManager(nullptr, nullptr);
+	SkyManager::setTimeOfDay(155.5f);
+
+	lightSun.getPosition()->y = 100000;
+	lightMoon.getPosition()->y = -100000;
 
 
 	double seconds = 0.0;
@@ -121,7 +140,7 @@ int main()
 			LevelLoader_loadLevel("EmeraldCoast.lvl");
 		}
 
-		if (INPUT_JUMP && !INPUT_PREVIOUS_JUMP)
+		if (INPUT_ACTION2 && !INPUT_PREVIOUS_ACTION2)
 		{
 			LevelLoader_loadTitle();
 		}
@@ -152,6 +171,8 @@ int main()
 		{
 			e.first->step();
 		}
+		skySphere.step();
+		SkyManager::calculateValues();
 
 
 		//render entities
@@ -160,8 +181,9 @@ int main()
 			Master_processEntity(e.first);
 		}
 		Master_processEntity(&stage);
+		Master_processEntity(&skySphere);
 
-		Master_render(&light, &cam);
+		Master_render(&cam);
 
 		updateDisplay();
 

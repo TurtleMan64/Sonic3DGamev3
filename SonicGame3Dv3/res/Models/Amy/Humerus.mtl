@@ -1,0 +1,26 @@
+# Blender MTL File: 'None'
+# Material Count: 2
+
+newmtl Hand_Hand_png_Han_001_Clothes_png
+	Ns 20
+	Ka 0.000000 0.000000 0.000000
+	Kd 0.800000 0.800000 0.800000
+	Ks 0.000000 0.000000 0.000000
+	Ke 0.000000 0.000000 0.000000
+	Ni 0.02
+	d 1.000000
+	illum 2
+	map_Kd Clothes.png
+	map_Ka Clothes.png
+
+newmtl Skin_Belly_png_Be_000_Belly_png_001
+	Ns 20
+	Ka 0.000000 0.000000 0.000000
+	Kd 0.800000 0.800000 0.800000
+	Ks 0.250000 0.250000 0.250000
+	Ke 0.000000 0.000000 0.000000
+	Ni 0.02
+	d 1.000000
+	illum 2
+	map_Kd Belly.png
+	map_Ka Belly.png

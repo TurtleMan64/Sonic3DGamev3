@@ -130,6 +130,5 @@ void window_close_callback(GLFWwindow* window)
 
 void mouse_scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
 {
-	input_zoom_buffer = yoffset;
-	std::fprintf(stdout, "%f\n", yoffset);
+	input_zoom_buffer = (float)yoffset;
 }

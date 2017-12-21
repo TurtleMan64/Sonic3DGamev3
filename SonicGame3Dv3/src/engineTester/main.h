@@ -5,7 +5,8 @@ class Entity;
 class Camera;
 class Player;
 class Stage;
-
+class SkySphere;
+class Light;
 
 void Main_addEntity(Entity* entityToAdd);
 void Main_deleteEntity(Entity* entityToDelete);
@@ -17,6 +18,9 @@ public:
 	static Camera* gameCamera;
 	static Player* gamePlayer;
 	static Stage* gameStage;
+	static SkySphere* gameSkySphere;
+	static Light* gameLightSun;
+	static Light* gameLightMoon;
 	static int countNew;
 	static int countDelete;
 };

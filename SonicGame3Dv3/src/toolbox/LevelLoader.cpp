@@ -12,6 +12,9 @@
 #include "../collision/collisionchecker.h"
 #include "../collision/collisionmodel.h"
 #include "../objLoader/objLoader.h"
+#include "../entities/skysphere.h"
+#include "../renderEngine/skymanager.h"
+#include "../entities/camera.h"
 
 float toFloat(char* input);
 void processLine(char** data);
@@ -49,6 +52,9 @@ void LevelLoader_loadLevel(char* levelFilename)
 
 	freeAllStaticModels();
 	Main_deleteAllEntites();
+
+	Global::gamePlayer = nullptr;
+	SkyManager::setCenterObject(nullptr);
 
 	if (stageFault == 1)
 	{
@@ -123,43 +129,147 @@ void LevelLoader_loadLevel(char* levelFilename)
 
 
 
-	//TODO: set up sky manager
+
 	std::string sunColorDay;
 	getline(file, sunColorDay);
+	{
+		char lineBuf[128];
+		memset(lineBuf, 0, 128);
+		memcpy(lineBuf, sunColorDay.c_str(), sunColorDay.size());
+		int splitLength = 0;
+		char** dat = split(lineBuf, ' ', &splitLength);
+
+		Vector3f newSunColour(toFloat(dat[0]), toFloat(dat[1]), toFloat(dat[2]));
+		SkyManager::setSunColorDay(&newSunColour);
+
+		free(dat);
+	}
 
 	std::string sunColorNight;
 	getline(file, sunColorNight);
+	{
+		char lineBuf[128];
+		memset(lineBuf, 0, 128);
+		memcpy(lineBuf, sunColorNight.c_str(), sunColorNight.size());
+		int splitLength = 0;
+		char** dat = split(lineBuf, ' ', &splitLength);
+
+		Vector3f newSunColour(toFloat(dat[0]), toFloat(dat[1]), toFloat(dat[2]));
+		SkyManager::setSunColorNight(&newSunColour);
+
+		free(dat);
+	}
 
 	std::string moonColorDay;
 	getline(file, moonColorDay);
+	{
+		char lineBuf[128];
+		memset(lineBuf, 0, 128);
+		memcpy(lineBuf, moonColorDay.c_str(), moonColorDay.size());
+		int splitLength = 0;
+		char** dat = split(lineBuf, ' ', &splitLength);
+
+		Vector3f newMoonColour(toFloat(dat[0]), toFloat(dat[1]), toFloat(dat[2]));
+		SkyManager::setMoonColorDay(&newMoonColour);
+
+		free(dat);
+	}
 
 	std::string moonColorNight;
 	getline(file, moonColorNight);
+	{
+		char lineBuf[128];
+		memset(lineBuf, 0, 128);
+		memcpy(lineBuf, moonColorNight.c_str(), moonColorNight.size());
+		int splitLength = 0;
+		char** dat = split(lineBuf, ' ', &splitLength);
+
+		Vector3f newMoonColour(toFloat(dat[0]), toFloat(dat[1]), toFloat(dat[2]));
+		SkyManager::setMoonColorNight(&newMoonColour);
+
+		free(dat);
+	}
 
 
+	Vector3f fogDay;
+	Vector3f fogNight;
 
 	std::string fogColorDay;
 	getline(file, fogColorDay);
+	{
+		char lineBuf[128];
+		memset(lineBuf, 0, 128);
+		memcpy(lineBuf, fogColorDay.c_str(), fogColorDay.size());
+		int splitLength = 0;
+		char** dat = split(lineBuf, ' ', &splitLength);
+
+		fogDay.set(toFloat(dat[0]), toFloat(dat[1]), toFloat(dat[2]));
+
+		free(dat);
+	}
 
 	std::string fogColorNight;
 	getline(file, fogColorNight);
+	{
+		char lineBuf[128];
+		memset(lineBuf, 0, 128);
+		memcpy(lineBuf, fogColorNight.c_str(), fogColorNight.size());
+		int splitLength = 0;
+		char** dat = split(lineBuf, ' ', &splitLength);
+
+		fogNight.set(toFloat(dat[0]), toFloat(dat[1]), toFloat(dat[2]));
+
+		free(dat);
+	}
+
+	SkyManager::setFogColours(&fogDay, &fogNight);
 
 	std::string fogVars;
 	getline(file, fogVars);
+	{
+		char lineBuf[128];
+		memset(lineBuf, 0, 128);
+		memcpy(lineBuf, fogVars.c_str(), fogVars.size());
+		int splitLength = 0;
+		char** dat = split(lineBuf, ' ', &splitLength);
 
+		SkyManager::setFogVars(toFloat(dat[0]), toFloat(dat[1]));
 
+		free(dat);
+	}
 
 	std::string timeOfDay;
 	getline(file, timeOfDay);
 	if (stageFault == 1)
 	{
-		//TODO: set time of day in sky manager
+		char lineBuf[128];
+		memset(lineBuf, 0, 128);
+		memcpy(lineBuf, timeOfDay.c_str(), timeOfDay.size());
+		int splitLength = 0;
+		char** dat = split(lineBuf, ' ', &splitLength);
+
+		SkyManager::setTimeOfDay(toFloat(dat[0]));
+
+		free(dat);
 	}
+
+	Global::gameSkySphere->setVisible(false);
 
 
 	std::string camOrientation;
 	getline(file, camOrientation);
+	{
+		char lineBuf[128];
+		memset(lineBuf, 0, 128);
+		memcpy(lineBuf, camOrientation.c_str(), camOrientation.size());
+		int splitLength = 0;
+		char** dat = split(lineBuf, ' ', &splitLength);
 
+		Global::gameCamera->setYaw(toFloat(dat[0]));
+		Global::gameCamera->setPitch(toFloat(dat[1]));
+
+		free(dat);
+	}
 
 
 
@@ -219,7 +329,17 @@ void processLine(char** dat)
 			Player* player = new Player(toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]));
 			Global::countNew++;
 			Global::gamePlayer = player;
+			SkyManager::setCenterObject(player);
+			player->setCameraAngles(Global::gameCamera->getYaw(), Global::gameCamera->getPitch());
 			Main_addEntity(player);
+			return;
+		}
+
+		case 7: //Sky Sphere
+		{
+			SkySphere::loadModels(dat[1], dat[2], dat[3]);
+			Global::gameSkySphere->setScale(toFloat(dat[4]));
+			Global::gameSkySphere->setVisible(true);
 			return;
 		}
 
@@ -242,4 +362,5 @@ void freeAllStaticModels()
 {
 	Ring::deleteStaticModels();
 	Player::deleteStaticModels();
+	SkySphere::deleteModels();
 }

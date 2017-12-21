@@ -56,7 +56,7 @@ void Player::step()
 	previousPos.set(&position);
 	count++;
 	setMovementInputs();
-	adjustCamera();
+	//adjustCamera();
 	checkSkid();
 
 	iFrame = std::max(0, iFrame-1);
@@ -407,7 +407,7 @@ void Player::step()
 	{
 		//MainGameLoop.shouldRestartLevel = true;
 		//AudioSources.play(34, getPosition());
-		return;
+		//return;
 	}
 
 	if (!inWater && inWaterPrevious)
@@ -487,7 +487,9 @@ void Player::step()
 	yDisp = 0;
 	zDisp = 0;
 
-	//animate();
+	adjustCamera();
+
+	//animate(); //idea : in animate, when jumping, center the camera at not head height. then add back in the 10 units or whatever you get from jumping
 
 	inWaterPrevious = inWater;
 	inWater = false;
@@ -502,7 +504,6 @@ void Player::loadStaticModels()
 {
 	if (Player::models.size() > 0)
 	{
-		//std::fprintf(stdout, "Player models gone astray\n");
 		return;
 	}
 
@@ -797,8 +798,8 @@ void Player::spindash(int timer)
 	float dx = (float)cos(spindashAngle)*mag;
 	float dz = -(float)sin(spindashAngle)*mag;
 
-	float xspd = xVelGround;//+dx;
-	float zspd = zVelGround;//+dz;
+	float xspd = xVelGround;
+	float zspd = zVelGround;
 	float totalSpd = (float)sqrt(xspd*xspd + zspd*zspd);
 
 	float factor = (float)std::fmin(1, 6.5f / totalSpd);
@@ -1144,4 +1145,13 @@ void Player::adjustCamera()
 	{
 		//cam.setPosition(headPos);
 	}
+}
+
+void Player::setCameraAngles(float newYaw, float newPitch)
+{
+	cameraYawTarget = newYaw;
+	cameraPitchTarget = newPitch;
+	Camera* cam = Global::gameCamera;
+	cam->setYaw(newYaw);
+	cam->setPitch(newPitch);
 }

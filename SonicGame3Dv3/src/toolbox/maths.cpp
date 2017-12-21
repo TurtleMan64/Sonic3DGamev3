@@ -82,7 +82,7 @@ int sign(float value)
 
 Vector3f mapInputs3(float angle, float mag, Vector3f* VecC)
 {
-	const double M_PI = 3.14159265358979323846;
+	//const double M_PI = 3.14159265358979323846;
 
 	float invert = 1;
 
@@ -106,7 +106,7 @@ Vector3f mapInputs3(float angle, float mag, Vector3f* VecC)
 	return res;
 }
 
-//Algorithm from https://sites.google.com/site/glennmurray/Home/rotation-matrices-and-formulas
+//Equation from https://sites.google.com/site/glennmurray/Home/rotation-matrices-and-formulas
 void rotatePoint(double result[],
 	double a, double b, double c,
 	double u, double v, double w,
@@ -202,4 +202,21 @@ Vector3f calculatePlaneSpeed(float xspd, float yspd, float zspd, Vector3f* A, Ve
 	float zLength = (float)sin(actualAngle)*dist;
 
 	return Vector3f(xLength, 0, zLength);
+}
+
+/** Returns the point on a sphere that has the given angles from the center
+* @param angH in radians
+* @param angV in radians
+* @param radius
+* @return
+*/
+Vector3f spherePositionFromAngles(float angH, float angV, float radius)
+{
+	float y = (float)(radius*sin(angV));
+	float hpt = (float)(radius*cos(angV));
+
+	float x = (float)(hpt*cos(angH));
+	float z = (float)(hpt*sin(angH));
+
+	return Vector3f(x, y, z);
 }

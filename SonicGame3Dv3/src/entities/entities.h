@@ -29,6 +29,7 @@ public:
 
 	Vector3f* getPosition();
 	void setPosition(Vector3f*);
+	void setPosition(float newX, float newY, float newZ);
 
 	float getRotX();
 	void setRotX(float);

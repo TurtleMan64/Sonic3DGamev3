@@ -7,6 +7,8 @@ class Camera;
 
 #include <math.h>
 
+#define M_PI 3.14159265358979323846
+
 
 float toRadians(float);
 
@@ -47,5 +49,13 @@ Vector3f bounceVector(Vector3f* initialVelocity, Vector3f* surfaceNormal, float 
 * @param normal the normal of the triangle
 */
 Vector3f calculatePlaneSpeed(float xspd, float yspd, float zspd, Vector3f* A, Vector3f* normal);
+
+/** Returns the point on a sphere that has the given angles from the center
+* @param angH in radians
+* @param angV in radians
+* @param radius
+* @return
+*/
+Vector3f spherePositionFromAngles(float angH, float angV, float radius);
 
 #endif

@@ -10,6 +10,7 @@
 #include "../toolbox/maths.h"
 #include "../toolbox/matrix.h"
 #include "../engineTester/main.h"
+#include "skymanager.h"
 
 #include <iostream>
 #include <list>
@@ -28,9 +29,9 @@ const float FOV = 50;
 const float NEAR_PLANE = 0.5f;
 const float FAR_PLANE = 15000;
 
-const float RED = 0.9f;
-const float GREEN = 0.95f;
-const float BLUE = 1.0f;
+float RED = 0.9f;
+float GREEN = 0.95f;
+float BLUE = 1.0f;
 
 void prepare();
 
@@ -48,12 +49,15 @@ void Master_init()
 	//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 
-void Master_render(Light* sun, Camera* camera)
+void Master_render(Camera* camera)
 {
 	prepare();
 	shader->start();
+	RED = SkyManager::getFogRed();
+	GREEN = SkyManager::getFogGreen();
+	BLUE = SkyManager::getFogBlue();
 	shader->loadSkyColour(RED, GREEN, BLUE);
-	shader->loadLight(sun);
+	shader->loadLight(Global::gameLightSun);
 	shader->loadViewMatrix(camera);
 
 	//renderer->render(&entitiesMap);

@@ -6,6 +6,8 @@
 
 #include "input.h"
 #include "../renderEngine/skymanager.h"
+#include "../engineTester/main.h"
+#include "../entities/player.h"
 
 extern GLFWwindow* window;
 
@@ -293,6 +295,13 @@ void Input_pollInputs()
 	if (glfwGetKey(window, GLFW_KEY_9) == GLFW_PRESS)
 	{
 		SkyManager::increaseTimeOfDay(-0.5f);
+	}
+	if (glfwGetKey(window, GLFW_KEY_J) == GLFW_PRESS)
+	{
+		if (Global::gamePlayer != nullptr)
+		{
+			Global::gamePlayer->goUp();
+		}
 	}
 
 	if (tabInput && !tabInputPrevious)

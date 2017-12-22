@@ -3,6 +3,8 @@
 
 class TexturedModel;
 class Triangle3D;
+class Limb;
+class Body;
 
 #include <list>
 
@@ -13,9 +15,37 @@ class Triangle3D;
 class Player : public Entity
 {
 private:
-	static std::list<TexturedModel*> models;
+	static std::list<TexturedModel*> modelBody;
+	static std::list<TexturedModel*> modelHead;
+	static std::list<TexturedModel*> modelLeftHumerus;
+	static std::list<TexturedModel*> modelLeftForearm;
+	static std::list<TexturedModel*> modelLeftHand;
+	static std::list<TexturedModel*> modelLeftThigh;
+	static std::list<TexturedModel*> modelLeftShin;
+	static std::list<TexturedModel*> modelLeftFoot;
+	static std::list<TexturedModel*> modelRightHumerus;
+	static std::list<TexturedModel*> modelRightForearm;
+	static std::list<TexturedModel*> modelRightHand;
+	static std::list<TexturedModel*> modelRightThigh;
+	static std::list<TexturedModel*> modelRightShin;
+	static std::list<TexturedModel*> modelRightFoot;
 
-	int characterID = 4;
+	Body* myBody;
+	Limb* myHead;
+	Limb* myLeftHumerus;
+	Limb* myLeftForearm;
+	Limb* myLeftHand;
+	Limb* myLeftThigh;
+	Limb* myLeftShin;
+	Limb* myLeftFoot;
+	Limb* myRightHumerus;
+	Limb* myRightForearm;
+	Limb* myRightHand;
+	Limb* myRightThigh;
+	Limb* myRightShin;
+	Limb* myRightFoot;
+
+	int characterID = 0;
 
 	float xVel = 0;
 	float yVel = 0;
@@ -81,6 +111,8 @@ private:
 	Triangle3D* triCol = nullptr;
 	Vector3f* colPos = nullptr;
 
+	float modelRunIndex = 0;
+
 	float cameraRadius = 104;
 	float cameraRadiusTarget = 104;
 	const float cameraLaziness = 3;
@@ -126,7 +158,7 @@ private:
 	float headHeight = 7;
 	bool firstPerson = false;
 
-	const float displayHeightOffset = 0.8f; //How much the model is shifted vertically when displaying
+	float displayHeightOffset = 0.8f; //How much the model is shifted vertically when displaying
 	Vector3f previousDisplayPos;
 
 	int iFrame = 0;
@@ -153,6 +185,8 @@ public:
 	static void deleteStaticModels();
 
 	void setCameraAngles(float newYaw, float newPitch);
+
+	void goUp();
 
 private:
 	void adjustCamera();
@@ -189,5 +223,17 @@ private:
 	//if lightdash cant continue, sets isLightdashing
 	//to false
 	void attemptLightdash();
+
+	void createLimbs();
+
+	void addLimbsToGame();
+
+	void removeLimbsFromGame();
+
+	void updateLimbs(int animIndex, float time);
+
+	void setLimbsVisibility(bool visible);
+
+	void animate();
 };
 #endif

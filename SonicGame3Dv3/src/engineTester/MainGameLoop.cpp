@@ -28,6 +28,7 @@
 #include "../collision/collisionchecker.h"
 #include "../entities/skysphere.h"
 #include "../renderEngine/skymanager.h"
+#include "../animation/animationresources.h"
 
 int gameState = 0;
 
@@ -64,6 +65,7 @@ int main()
 	Master_init();
 
 	CollisionChecker::initChecker();
+	AnimationResources::createAnimations();
 
 	//Ring::loadStaticModels();
 	//Player::loadStaticModels();
@@ -117,7 +119,7 @@ int main()
 
 	int frameCount = 0;
 
-	//LevelLoader_loadLevel("EmeraldCoast.lvl");
+	LevelLoader_loadLevel("EmeraldCoast.lvl");
 
 	while (gameState == 0 && displayWantsToClose() == 0)
 	{
@@ -137,12 +139,12 @@ int main()
 
 		if (INPUT_ACTION && !INPUT_PREVIOUS_ACTION)
 		{
-			LevelLoader_loadLevel("EmeraldCoast.lvl");
+			//LevelLoader_loadLevel("EmeraldCoast.lvl");
 		}
 
 		if (INPUT_ACTION2 && !INPUT_PREVIOUS_ACTION2)
 		{
-			LevelLoader_loadTitle();
+			//LevelLoader_loadTitle();
 		}
 
 

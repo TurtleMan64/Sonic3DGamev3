@@ -30,7 +30,7 @@ void Body::step()
 void Body::update(float time)
 {
 	prevTime = this->time;
-	this->time = std::fmax(time, 0);
+	this->time = (float)(std::fmax(time, 0));
 	time = this->time;
 	deltaTime = this->time - prevTime;
 	bool inRange = false;
@@ -44,7 +44,7 @@ void Body::update(float time)
 	float newZRot = 0;
 	float newScale = 0;
 
-	for (int i = 0; i < (*animations)[animationIndex].keyframes.size() - 1; i++)
+	for (unsigned int i = 0; i < (*animations)[animationIndex].keyframes.size() - 1; i++)
 	{
 		key1 = &(*animations)[animationIndex].keyframes[i];
 		key2 = &(*animations)[animationIndex].keyframes[i + 1];

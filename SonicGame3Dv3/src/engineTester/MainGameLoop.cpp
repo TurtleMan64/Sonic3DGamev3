@@ -139,12 +139,12 @@ int main()
 
 		if (INPUT_ACTION && !INPUT_PREVIOUS_ACTION)
 		{
-			//LevelLoader_loadLevel("EmeraldCoast.lvl");
+			LevelLoader_loadLevel("EmeraldCoast.lvl");
 		}
 
 		if (INPUT_ACTION2 && !INPUT_PREVIOUS_ACTION2)
 		{
-			//LevelLoader_loadTitle();
+			LevelLoader_loadTitle();
 		}
 
 
@@ -186,6 +186,7 @@ int main()
 		Master_processEntity(&skySphere);
 
 		Master_render(&cam);
+		Master_clearEntities();
 
 		updateDisplay();
 

@@ -33,6 +33,7 @@ void SkySphere::step()
 		//position.x = Global::gamePlayer->getX();
 		//position.z = Global::gamePlayer->getZ();
 	}
+	updateTransformationMatrix();
 }
 
 std::list<TexturedModel*>* SkySphere::getModels()

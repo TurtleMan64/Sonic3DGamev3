@@ -20,7 +20,7 @@
 ShaderProgram* shader;
 EntityRenderer* renderer;
 
-//std::unordered_map<TexturedModel*, std::list<Entity*>*> entitiesMap;
+std::unordered_map<TexturedModel*, std::list<Entity*>> entitiesMap;
 std::list<Entity*> entitiesList;
 
 Matrix4f* projectionMatrix;
@@ -37,7 +37,7 @@ void prepare();
 
 void Master_init()
 {
-	shader = new ShaderProgram("src/shaders/vertexShader.txt", "src/shaders/fragmentShader.txt");
+	shader = new ShaderProgram("res/Shaders/vertexShader.txt", "res/Shaders/fragmentShader.txt");
 	Global::countNew++;
 	projectionMatrix = new Matrix4f();
 	Global::countNew++;
@@ -60,74 +60,83 @@ void Master_render(Camera* camera)
 	shader->loadLight(Global::gameLightSun);
 	shader->loadViewMatrix(camera);
 
-	//renderer->render(&entitiesMap);
-	for (auto entry : entitiesList)
-	{
-		renderer->render(entry, shader);
-	}
-	entitiesList.clear();
+	renderer->renderNEW(&entitiesMap);
+	//for (Entity* entry : entitiesList)
+	//{
+		//renderer->render(entry, shader);
+	//}
 
 	shader->stop();
-	//entitiesMap.clear(); //i need to call delete on all the lists
-	//for (auto entry : entitiesMap)
-	//{
-		//entry.second->clear();
-		//delete entry.first;
-	//}
-	//entitiesMap.clear();
 }
 
 void Master_processEntity(Entity* entity)
 {
-	entitiesList.push_back(entity);
+	if (entity->getVisible() == false)
+	{
+		return;
+	}
+	//entitiesList.push_back(entity);
 
 
 	//new idea (scrap this).
 	//just have a render function in the entity class where the entity can decide to call the render function with its model if it wants to. yeah just do that. and go back to old render method here
 
+	std::list<TexturedModel*>* modellist = entity->getModels();
+	for (TexturedModel* entityModel : (*modellist))
+	{
+		//3 ways, not sure which is best
+		//try
+		//{
+			//std::list<Entity*>* list = entitiesMap.at(entityModel);
+		//}
+		//catch (const std::out_of_range& oor)
+		//{
 
-	//TexturedModel* entityModel = entity->getModel();
+		//}
 
+		//not sure if find or count is going to be faster - it doesnt specify if count stops once it finds one
+		//int count = entitiesMap.count(entityModel);
+		//if (count == 0)
+		{
+			//make new list, add to map
+			//std::list<Entity*> newList;
+			//newList.push_back(entity);
+			//entitiesMap.insert(std::pair<TexturedModel*, std::list<Entity*>>(entityModel, newList));
+		}
+		//else
+		{
+			//add to list
+			//std::list<Entity*>* list = &entitiesMap.at(entityModel);
+			//list->push_back(entity);
+		}
 
-	//3 ways, not sure which is best
-	//try
+		//std::unordered_map<TexturedModel*, std::list<Entity*>>::iterator iterator = entitiesMap.find(entityModel);
+		//if (iterator == entitiesMap.end())
+		//{
+			// not found
+		//}
+		//else
+		//{
+			// found
+			//iterator->second->push_back(entity);
+		//}
+
+		std::list<Entity*>* list = &entitiesMap[entityModel];
+		list->push_back(entity);
+	}
+}
+
+void Master_clearEntities()
+{
+	//entitiesList.clear();
+
+	//i need to call delete on all the lists
+	//for (auto entry : entitiesMap)
 	//{
-		//std::list<Entity*>* list = entitiesMap.at(entityModel);
+		//entry.second->clear();
+		//delete entry.first;
 	//}
-	//catch (const std::out_of_range& oor)
-	//{
-
-	//}
-
-	//not sure if find or count is going to be faster - it doesnt specify if count stops once it finds one
-	//int count = entitiesMap.count(entityModel);
-	//if (count == 0)
-	//{
-		//make new list, add to map
-		//std::list<Entity*>* newList = new std::list<Entity*>(16);
-		//newList->push_back(entity);
-		//entitiesMap.insert(std::pair<TexturedModel*, std::list<Entity*>*>(entityModel, newList));
-	//}
-	//else
-	//{
-		//add to list
-		//std::list<Entity*>* list = entitiesMap.at(entityModel);
-		//list->push_back(entity);
-	//}
-
-	//std::unordered_map<TexturedModel*, std::list<Entity*>*>::iterator iterator = entitiesMap.find(entityModel);
-	//if (iterator == entitiesMap.end())
-	//{
-		// not found
-	//}
-	//else
-	//{
-		// found
-		//iterator->second->push_back(entity);
-	//}
-
-	//std::list<Entity*>* list = entitiesMap[entityModel];
-	//list->push_back(entity);
+	entitiesMap.clear();
 }
 
 void prepare()
@@ -150,8 +159,8 @@ void Master_cleanUp()
 
 void Master_enableCulling()
 {
-	//glEnable(GL_CULL_FACE);
-	//glCullFace(GL_BACK);
+	glEnable(GL_CULL_FACE);
+	glCullFace(GL_BACK);
 }
 
 void Master_disableCulling()
@@ -169,7 +178,7 @@ void Master_makeProjectionMatrix()
 	glfwGetWindowSize(getWindow(), &displayWidth, &displayHeight);
 
 	float aspectRatio = (float)displayWidth / (float)displayHeight;
-	float y_scale = (float)((1.0f / tan(toRadians(FOV / 2.0f))));// * aspectRatio);
+	float y_scale = (float)((1.0f / tan(toRadians(FOV / 2.0f))));
 	float x_scale = y_scale / aspectRatio;
 	float frustum_length = FAR_PLANE - NEAR_PLANE;
 

@@ -45,7 +45,7 @@ private:
 	Limb* myRightShin;
 	Limb* myRightFoot;
 
-	int characterID = 0;
+	static int characterID;
 
 	float xVel = 0;
 	float yVel = 0;
@@ -101,7 +101,7 @@ private:
 
 
 	const float surfaceTension = 10.0f; //3, 10 after new 2nd collision ignore feature
-	const float slopeAccel = 0.08f; //how much you are influenced by the terrain's slope
+	const float slopeAccel = 0.092f; //how much you are influenced by the terrain's slope
 
 	const int wallStickTimerMax = 30; //how long you stay on a wall after you go too slow
 	int wallStickTimer = 0;
@@ -231,6 +231,8 @@ private:
 	void removeLimbsFromGame();
 
 	void updateLimbs(int animIndex, float time);
+
+	void updateLimbsMatrix();
 
 	void setLimbsVisibility(bool visible);
 

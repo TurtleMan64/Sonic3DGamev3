@@ -3,6 +3,7 @@
 #include "entities.h"
 #include "../models/models.h"
 #include "../toolbox/vector.h"
+#include "../toolbox/maths.h"
 
 #include <list>
 #include <iostream>
@@ -108,11 +109,11 @@ void Entity::setScale(float newScale)
 	scale = newScale;
 }
 
-int Entity::getVisible()
+bool Entity::getVisible()
 {
 	return visible;
 }
-void Entity::setVisible(int newVisible)
+void Entity::setVisible(bool newVisible)
 {
 	visible = newVisible;
 }
@@ -130,4 +131,14 @@ float Entity::getY()
 float Entity::getZ()
 {
 	return position.z;
+}
+
+void Entity::updateTransformationMatrix()
+{
+	createTransformationMatrix(&transformationMatrix, &position, rotX, rotY, rotZ, scale);
+}
+
+Matrix4f* Entity::getTransformationMatrix()
+{
+	return &transformationMatrix;
 }

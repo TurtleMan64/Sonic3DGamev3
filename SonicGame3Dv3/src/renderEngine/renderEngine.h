@@ -40,6 +40,8 @@ void Master_cleanUp();
 
 void Master_processEntity(Entity* entity);
 
+void Master_clearEntities();
+
 void Master_init();
 
 void Master_enableCulling();
@@ -65,7 +67,7 @@ public:
 
 	void render(Entity*, ShaderProgram*);
 
-	void renderBROKE(std::unordered_map<TexturedModel*, std::list<Entity*>*>* entities);
+	void renderNEW(std::unordered_map<TexturedModel*, std::list<Entity*>>* entities);
 
 	void updateProjectionMatrix(Matrix4f* projectionMatrix);
 

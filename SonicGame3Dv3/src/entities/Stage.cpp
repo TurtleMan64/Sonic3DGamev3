@@ -22,6 +22,7 @@ Stage::Stage()
 	this->position.x = 0;
 	this->position.y = 0;
 	this->position.z = 0;
+	updateTransformationMatrix();
 }
 
 void Stage::step()

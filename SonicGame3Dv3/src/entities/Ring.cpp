@@ -28,6 +28,7 @@ Ring::Ring(float x, float y, float z)
 void Ring::step()
 {
 	increaseRotation(0, 1, 0);
+	updateTransformationMatrix();
 }
 
 std::list<TexturedModel*>* Ring::getModels()

@@ -5,6 +5,7 @@ class TexturedModel;
 
 #include <list>
 #include "../toolbox/vector.h"
+#include "../toolbox/matrix.h"
 
 
 class Entity
@@ -13,7 +14,8 @@ protected:
 	Vector3f position;
 	float rotX, rotY, rotZ;
 	float scale;
-	int visible;
+	bool visible;
+	Matrix4f transformationMatrix;
 
 public:
 	Entity();
@@ -43,13 +45,17 @@ public:
 	float getScale();
 	void setScale(float);
 
-	int getVisible();
-	void setVisible(int);
+	bool getVisible();
+	void setVisible(bool);
 
 	float getX();
 
 	float getY();
 
 	float getZ();
+
+	Matrix4f* getTransformationMatrix();
+
+	void updateTransformationMatrix();
 };
 #endif

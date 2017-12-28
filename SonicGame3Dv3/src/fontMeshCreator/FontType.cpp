@@ -6,11 +6,13 @@
 
 #include "../renderEngine/renderEngine.h"
 
+#include "../engineTester/main.h"
 
 FontType::FontType(int textureAtlas, std::string fontFilename)
 {
 	this->textureAtlas = textureAtlas;
 	this->loader = new TextMeshCreator(fontFilename);
+	Global::countNew++;
 }
 
 int FontType::getTextureAtlas()

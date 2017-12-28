@@ -37,7 +37,7 @@ void prepare();
 
 void Master_init()
 {
-	shader = new ShaderProgram("res/Shaders/vertexShader.txt", "res/Shaders/fragmentShader.txt");
+	shader = new ShaderProgram("res/Shaders/entity/vertexShader.txt", "res/Shaders/entity/fragmentShader.txt");
 	Global::countNew++;
 	projectionMatrix = new Matrix4f();
 	Global::countNew++;

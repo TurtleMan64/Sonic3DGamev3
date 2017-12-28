@@ -1,0 +1,1248 @@
+# 3ds Max Wavefront OBJ Exporter v0.97b - (c)2007 guruware
+# File Created: 08.01.2017 20:26:39
+
+newmtl HIGHWAY01_material_29
+	Ns 30.0000
+	Ni 0.02
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.6400 0.6400 0.6400
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka st1_26.png
+	map_Kd st1_26.png
+
+newmtl HIGHWAY01_material_28
+	Ns 30.0000
+	Ni 0.02
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.6400 0.6400 0.6400
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka st1_25.png
+	map_Kd st1_25.png
+
+newmtl HIGHWAY01_material_27
+	Ns 30.0000
+	Ni 0.02
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.6400 0.6400 0.6400
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka st1_24.png
+	map_Kd st1_24.png
+
+newmtl HIGHWAY01_material_26
+	Ns 30.0000
+	Ni 0.02
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.6400 0.6400 0.6400
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka st1_21.png
+	map_Kd st1_21.png
+
+newmtl HIGHWAY01_material_69
+	Ns 30.0000
+	Ni 0.02
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.6400 0.6400 0.6400
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka st3_34.png
+	map_Kd st3_34.png
+
+newmtl HIGHWAY01_material_25
+	Ns 30.0000
+	Ni 0.02
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.6400 0.6400 0.6400
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka st1_20.png
+	map_Kd st1_20.png
+
+newmtl HIGHWAY01_material_24
+	Ns 30.0000
+	Ni 0.02
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.6400 0.6400 0.6400
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka st1_19.png
+	map_Kd st1_19.png
+
+newmtl HIGHWAY01_material_68
+	Ns 30.0000
+	Ni 0.02
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.6400 0.6400 0.6400
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka st3_28.png
+	map_Kd st3_28.png
+
+newmtl HIGHWAY01_material_67
+	Ns 30.0000
+	Ni 0.02
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.6400 0.6400 0.6400
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka st3_27.png
+	map_Kd st3_27.png
+
+newmtl HIGHWAY01_material_23
+	Ns 30.0000
+	Ni 0.02
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.6400 0.6400 0.6400
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka st1_18.png
+	map_Kd st1_18.png
+
+newmtl HIGHWAY01_material_66
+	Ns 30.0000
+	Ni 0.02
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.6400 0.6400 0.6400
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka st3_26.png
+	map_Kd st3_26.png
+
+newmtl HIGHWAY01_material_22
+	Ns 30.0000
+	Ni 0.02
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.6400 0.6400 0.6400
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka st1_17.png
+	map_Kd st1_17.png
+
+newmtl HIGHWAY01_material_65
+	Ns 30.0000
+	Ni 0.02
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.6400 0.6400 0.6400
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka st3_23.png
+	map_Kd st3_23.png
+
+newmtl HIGHWAY01_material_21
+	Ns 30.0000
+	Ni 0.02
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.6400 0.6400 0.6400
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka st1_16.png
+	map_Kd st1_16.png
+
+newmtl HIGHWAY01_material_64
+	Ns 30.0000
+	Ni 0.02
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.6400 0.6400 0.6400
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka st3_18.png
+	map_Kd st3_18.png
+
+newmtl HIGHWAY01_material_20
+	Ns 30.0000
+	Ni 0.02
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.6400 0.6400 0.6400
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka st1_15.png
+	map_Kd st1_15.png
+
+newmtl HIGHWAY01_material_63
+	Ns 30.0000
+	Ni 0.02
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.6400 0.6400 0.6400
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka st3_15.png
+	map_Kd st3_15.png
+
+newmtl HIGHWAY01_material_62
+	Ns 30.0000
+	Ni 0.02
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.6400 0.6400 0.6400
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka st3_14.png
+	map_Kd st3_14.png
+
+newmtl HIGHWAY01_material_61
+	Ns 30.0000
+	Ni 0.02
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.6400 0.6400 0.6400
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka st3_13.png
+	map_Kd st3_13.png
+
+newmtl HIGHWAY01_material_60
+	Ns 30.0000
+	Ni 0.02
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.6400 0.6400 0.6400
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka st3_11.png
+	map_Kd st3_11.png
+
+newmtl HIGHWAY01_material_80
+	Ns 30.0000
+	Ni 0.02
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.6400 0.6400 0.6400
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka st3_89.png
+	map_Kd st3_89.png
+
+newmtl HIGHWAY01_material_39
+	Ns 30.0000
+	Ni 0.02
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.6400 0.6400 0.6400
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka st1_39.png
+	map_Kd st1_39.png
+
+newmtl HIGHWAY01_material_38
+	Ns 30.0000
+	Ni 0.02
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.6400 0.6400 0.6400
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka st1_37.png
+	map_Kd st1_37.png
+
+newmtl HIGHWAY01_material_37
+	Ns 30.0000
+	Ni 0.02
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.6400 0.6400 0.6400
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka st1_36.png
+	map_Kd st1_36.png
+
+newmtl HIGHWAY01_material_36
+	Ns 30.0000
+	Ni 0.02
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.6400 0.6400 0.6400
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka st1_35.png
+	map_Kd st1_35.png
+
+newmtl HIGHWAY01_material_79
+	Ns 30.0000
+	Ni 0.02
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.6400 0.6400 0.6400
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka st3_88.png
+	map_Kd st3_88.png
+
+newmtl HIGHWAY01_material_35
+	Ns 30.0000
+	Ni 0.02
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.6400 0.6400 0.6400
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka st1_33.png
+	map_Kd st1_33.png
+
+newmtl HIGHWAY01_material_34
+	Ns 30.0000
+	Ni 0.02
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.6400 0.6400 0.6400
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka st1_32.png
+	map_Kd st1_32.png
+
+newmtl HIGHWAY01_material_78
+	Ns 30.0000
+	Ni 0.02
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.6400 0.6400 0.6400
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka st3_85.png
+	map_Kd st3_85.png
+
+newmtl HIGHWAY01_material_77
+	Ns 30.0000
+	Ni 0.02
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.6400 0.6400 0.6400
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka st3_83.png
+	map_Kd st3_83.png
+
+newmtl HIGHWAY01_material_33
+	Ns 30.0000
+	Ni 0.02
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.6400 0.6400 0.6400
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka st1_30.png
+	map_Kd st1_30.png
+
+newmtl HIGHWAY01_material_32
+	Ns 30.0000
+	Ni 0.02
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.6400 0.6400 0.6400
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka st1_29.png
+	map_Kd st1_29.png
+
+newmtl HIGHWAY01_material_76
+	Ns 30.0000
+	Ni 0.02
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.6400 0.6400 0.6400
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka st3_82.png
+	map_Kd st3_82.png
+
+newmtl HIGHWAY01_material_75
+	Ns 30.0000
+	Ni 0.02
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.6400 0.6400 0.6400
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka st3_80.png
+	map_Kd st3_80.png
+
+newmtl HIGHWAY01_material_31
+	Ns 30.0000
+	Ni 0.02
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.6400 0.6400 0.6400
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka st1_28.png
+	map_Kd st1_28.png
+
+newmtl HIGHWAY01_material_74
+	Ns 30.0000
+	Ni 0.02
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.6400 0.6400 0.6400
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka st3_77.png
+	map_Kd st3_77.png
+
+newmtl HIGHWAY01_material_30
+	Ns 30.0000
+	Ni 0.02
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.6400 0.6400 0.6400
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka st1_27.png
+	map_Kd st1_27.png
+
+newmtl HIGHWAY01_material_73
+	Ns 30.0000
+	Ni 0.02
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.6400 0.6400 0.6400
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka st3_56.png
+	map_Kd st3_56.png
+
+newmtl HIGHWAY01_material_72
+	Ns 30.0000
+	Ni 0.02
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.6400 0.6400 0.6400
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka st3_51.png
+	map_Kd st3_51.png
+
+newmtl HIGHWAY01_material_71
+	Ns 30.0000
+	Ni 0.02
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.6400 0.6400 0.6400
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka st3_49.png
+	map_Kd st3_49.png
+
+newmtl HIGHWAY01_material_70
+	Ns 30.0000
+	Ni 0.02
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.6400 0.6400 0.6400
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka st3_35.png
+	map_Kd st3_35.png
+
+newmtl HIGHWAY01_material_49
+	Ns 30.0000
+	Ni 0.02
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.6400 0.6400 0.6400
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka st2_26.png
+	map_Kd st2_26.png
+
+newmtl HIGHWAY01_material_48
+	Ns 30.0000
+	Ni 0.02
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.6400 0.6400 0.6400
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka st2_14.png
+	map_Kd st2_14.png
+
+newmtl HIGHWAY01_material_47
+	Ns 30.0000
+	Ni 0.02
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.6400 0.6400 0.6400
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka st2_12.png
+	map_Kd st2_12.png
+
+newmtl HIGHWAY01_material_46
+	Ns 30.0000
+	Ni 0.02
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.6400 0.6400 0.6400
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka st1_e1.png
+	map_Kd st1_e1.png
+
+newmtl HIGHWAY01_material_45
+	Ns 30.0000
+	Ni 0.02
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.6400 0.6400 0.6400
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka st1_48.png
+	map_Kd st1_48.png
+
+newmtl HIGHWAY01_material_44
+	Ns 30.0000
+	Ni 0.02
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.6400 0.6400 0.6400
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka st1_47.png
+	map_Kd st1_47.png
+
+newmtl HIGHWAY01_material_88
+	Ns 30.0000
+	Ni 0.02
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.6400 0.6400 0.6400
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka st3_91.png
+	map_Kd st3_91.png
+
+newmtl HIGHWAY01_material_87
+	Ns 30.0000
+	Ni 0.02
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.6400 0.6400 0.6400
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka window9.png
+	map_Kd window9.png
+
+newmtl HIGHWAY01_material_43
+	Ns 30.0000
+	Ni 0.02
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.6400 0.6400 0.6400
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka st1_45.png
+	map_Kd st1_45.png
+
+newmtl HIGHWAY01_material_86
+	Ns 30.0000
+	Ni 0.02
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.6400 0.6400 0.6400
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka window10.png
+	map_Kd window10.png
+
+newmtl HIGHWAY01_material_42
+	Ns 30.0000
+	Ni 0.02
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.6400 0.6400 0.6400
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka st1_44.png
+	map_Kd st1_44.png
+
+newmtl HIGHWAY01_material_41
+	Ns 30.0000
+	Ni 0.02
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.6400 0.6400 0.6400
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka st1_41.png
+	map_Kd st1_41.png
+
+newmtl HIGHWAY01_material_85
+	Ns 30.0000
+	Ni 0.02
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.6400 0.6400 0.6400
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka st3_97.png
+	map_Kd st3_97.png
+
+newmtl HIGHWAY01_material_40
+	Ns 30.0000
+	Ni 0.02
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.6400 0.6400 0.6400
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka st1_40.png
+	map_Kd st1_40.png
+
+newmtl HIGHWAY01_material_84
+	Ns 30.0000
+	Ni 0.02
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.6400 0.6400 0.6400
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka st3_96.png
+	map_Kd st3_96.png
+
+newmtl HIGHWAY01_material_83
+	Ns 30.0000
+	Ni 0.02
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.6400 0.6400 0.6400
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka st3_94.png
+	map_Kd st3_94.png
+
+newmtl HIGHWAY01_material_82
+	Ns 30.0000
+	Ni 0.02
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.6400 0.6400 0.6400
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka st3_90.png
+	map_Kd st3_90.png
+
+newmtl HIGHWAY01_material_81
+	Ns 30.0000
+	Ni 0.02
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.6400 0.6400 0.6400
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka st3_9.png
+	map_Kd st3_9.png
+
+newmtl HIGHWAY01_material_8
+	Ns 30.0000
+	Ni 0.02
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.6400 0.6400 0.6400
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka porttx01.png
+	map_Kd porttx01.png
+
+newmtl HIGHWAY01_material_9
+	Ns 30.0000
+	Ni 0.02
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.6400 0.6400 0.6400
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka ref_crome.png
+	map_Kd ref_crome.png
+
+newmtl HIGHWAY01_material_19
+	Ns 30.0000
+	Ni 0.02
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.6400 0.6400 0.6400
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka st1_14oda.png
+	map_Kd st1_14oda.png
+
+newmtl HIGHWAY01_material_18
+	Ns 30.0000
+	Ni 0.02
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.6400 0.6400 0.6400
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka st1_14.png
+	map_Kd st1_14.png
+
+newmtl HIGHWAY01_material_0
+	Ns 30.0000
+	Ni 0.02
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.6400 0.6400 0.6400
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka ama_hw001.png
+	map_Kd ama_hw001.png
+
+newmtl HIGHWAY01_material_1
+	Ns 30.0000
+	Ni 0.02
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.6400 0.6400 0.6400
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka ama_hw004.png
+	map_Kd ama_hw004.png
+
+newmtl HIGHWAY01_material_17
+	Ns 30.0000
+	Ni 0.02
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.6400 0.6400 0.6400
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka st1_13.png
+	map_Kd st1_13.png
+
+newmtl HIGHWAY01_material_16
+	Ns 30.0000
+	Ni 0.02
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.6400 0.6400 0.6400
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka st1_12.png
+	map_Kd st1_12.png
+
+newmtl HIGHWAY01_material_2
+	Ns 30.0000
+	Ni 0.02
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.6400 0.6400 0.6400
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka ama_hw005.png
+	map_Kd ama_hw005.png
+
+newmtl HIGHWAY01_material_59
+	Ns 30.0000
+	Ni 0.02
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.6400 0.6400 0.6400
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka st3_101.png
+	map_Kd st3_101.png
+
+newmtl HIGHWAY01_material_15
+	Ns 30.0000
+	Ni 0.02
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.6400 0.6400 0.6400
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka st1_11.png
+	map_Kd st1_11.png
+
+newmtl HIGHWAY01_material_3
+	Ns 30.0000
+	Ni 0.02
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.6400 0.6400 0.6400
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka ama_hw006.png
+	map_Kd ama_hw006.png
+
+newmtl HIGHWAY01_material_58
+	Ns 30.0000
+	Ni 0.02
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.6400 0.6400 0.6400
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka st3_100.png
+	map_Kd st3_100.png
+
+newmtl HIGHWAY01_material_14
+	Ns 30.0000
+	Ni 0.02
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.6400 0.6400 0.6400
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka s_w63.png
+	map_Kd s_w63.png
+
+newmtl HIGHWAY01_material_4
+	Ns 30.0000
+	Ni 0.02
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.6400 0.6400 0.6400
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka ama_hw007.png
+	map_Kd ama_hw007.png
+
+newmtl HIGHWAY01_material_13
+	Ns 30.0000
+	Ni 0.02
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.6400 0.6400 0.6400
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka s_w38.png
+	map_Kd s_w38.png
+
+newmtl HIGHWAY01_material_57
+	Ns 30.0000
+	Ni 0.02
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.6400 0.6400 0.6400
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka st2_9.png
+	map_Kd st2_9.png
+
+newmtl HIGHWAY01_material_5
+	Ns 30.0000
+	Ni 0.02
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.6400 0.6400 0.6400
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka ama_hw008.png
+	map_Kd ama_hw008.png
+
+newmtl HIGHWAY01_material_6
+	Ns 30.0000
+	Ni 0.02
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.6400 0.6400 0.6400
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka fentx04.png
+	map_Kd fentx04.png
+
+newmtl HIGHWAY01_material_12
+	Ns 30.0000
+	Ni 0.02
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.6400 0.6400 0.6400
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka s_w28.png
+	map_Kd s_w28.png
+
+newmtl HIGHWAY01_material_56
+	Ns 30.0000
+	Ni 0.02
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.6400 0.6400 0.6400
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka st2_5.png
+	map_Kd st2_5.png
+
+newmtl HIGHWAY01_material_55
+	Ns 30.0000
+	Ni 0.02
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.6400 0.6400 0.6400
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka st2_36.png
+	map_Kd st2_36.png
+
+newmtl HIGHWAY01_material_11
+	Ns 30.0000
+	Ni 0.02
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.6400 0.6400 0.6400
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka s_w19.png
+	map_Kd s_w19.png
+
+newmtl HIGHWAY01_material_54
+	Ns 30.0000
+	Ni 0.02
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.6400 0.6400 0.6400
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka st2_35.png
+	map_Kd st2_35.png
+
+newmtl HIGHWAY01_material_10
+	Ns 30.0000
+	Ni 0.02
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.6400 0.6400 0.6400
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka s_w18.png
+	map_Kd s_w18.png
+
+newmtl HIGHWAY01_material_53
+	Ns 30.0000
+	Ni 0.02
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.6400 0.6400 0.6400
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka st2_33.png
+	map_Kd st2_33.png
+
+newmtl HIGHWAY01_material_52
+	Ns 30.0000
+	Ni 0.02
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.6400 0.6400 0.6400
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka st2_31.png
+	map_Kd st2_31.png
+
+newmtl HIGHWAY01_material_51
+	Ns 30.0000
+	Ni 0.02
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.6400 0.6400 0.6400
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka st2_28.png
+	map_Kd st2_28.png
+
+newmtl HIGHWAY01_material_50
+	Ns 30.0000
+	Ni 0.02
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.6400 0.6400 0.6400
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka st2_27.png
+	map_Kd st2_27.png
+
+newmtl None
+	Ns 0.0000
+	Ni 0.02
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.6400 0.6400 0.6400
+	Ks 0.8000 0.8000 0.8000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka st2_27.png
+	map_Kd st2_27.png

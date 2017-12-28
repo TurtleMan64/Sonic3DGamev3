@@ -1,0 +1,5 @@
+original starting platform z position:
+-160
+
+scaled by 1.1
+

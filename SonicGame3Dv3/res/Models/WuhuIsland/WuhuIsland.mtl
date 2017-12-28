@@ -1,0 +1,186 @@
+# 3ds Max Wavefront OBJ Exporter v0.97b - (c)2007 guruware
+# File Created: 08.04.2017 22:36:14
+
+newmtl Wi_Road
+	Ns 20
+	Ni 0.0125
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.2000 0.2000 0.2000
+	Kd 0.8000 0.8000 0.8000
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka Gctrwi_Road.png
+	map_Kd Gctrwi_Road.png
+
+newmtl Wi_TanBrick
+	Ns 20
+	Ni 0.0125
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.2000 0.2000 0.2000
+	Kd 0.8000 0.8000 0.8000
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka Gctrwi_TanBrick.png
+	map_Kd Gctrwi_TanBrick.png
+
+newmtl Wi_StoneWall
+	Ns 20
+	Ni 0.0125
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.2000 0.2000 0.2000
+	Kd 0.8000 0.8000 0.8000
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka Gctrwi_StoneWall.png
+	map_Kd Gctrwi_StoneWall.png
+
+newmtl Wi_Grass
+	Ns 20
+	Ni 0.0125
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.2000 0.2000 0.2000
+	Kd 0.8000 0.8000 0.8000
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka Gctrwi_Grass.png
+	map_Kd Gctrwi_Grass.png
+
+newmtl Wi_CheckPtRoad
+	Ns 20
+	Ni 0.0125
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.2000 0.2000 0.2000
+	Kd 0.8000 0.8000 0.8000
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka Gctrwi_CheckPtRoad.png
+	map_Kd Gctrwi_CheckPtRoad.png
+
+newmtl Wi_StartLineSigns
+	Ns 20
+	Ni 0.0125
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.2000 0.2000 0.2000
+	Kd 0.8000 0.8000 0.8000
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka Gctrwi_StartLineSigns.png
+	map_Kd Gctrwi_StartLineSigns.png
+
+newmtl Wi_Roof
+	Ns 20
+	Ni 0.0125
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.2000 0.2000 0.2000
+	Kd 0.8000 0.8000 0.8000
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka Gctrwi_Roof.png
+	map_Kd Gctrwi_Roof.png
+
+newmtl Wi_StadiumFence
+	Ns 20
+	Ni 0.0125
+	d 1.0000
+	Tr 1.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.2000 0.2000 0.2000
+	Kd 0.8000 0.8000 0.8000
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka Gctrwi_StadiumFence.png
+	map_Kd Gctrwi_StadiumFence.png
+
+newmtl Wi_WallBrick
+	Ns 20
+	Ni 0.0125
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.2000 0.2000 0.2000
+	Kd 0.8000 0.8000 0.8000
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka Gctrwi_WallBrick.png
+	map_Kd Gctrwi_WallBrick.png
+
+newmtl Wi_HouseGreen
+	Ns 20
+	Ni 0.0125
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.2000 0.2000 0.2000
+	Kd 0.8000 0.8000 0.8000
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka Gctrwi_HouseGreen.png
+	map_Kd Gctrwi_HouseGreen.png
+
+newmtl mt_water
+	Ns 20
+	Ni 0.0125
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	scrollY -0.5
+	scrollX -0.5
+	illum 2
+	Ka 0.2000 0.2000 0.2000
+	Kd 0.8000 0.8000 0.8000
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka mt_water_n.png
+	map_Kd mt_water_n.png
+
+newmtl Wi_HouseBlue
+	Ns 20
+	Ni 0.0125
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.2000 0.2000 0.2000
+	Kd 0.8000 0.8000 0.8000
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka Gctrwi_HouseBlue.png
+	map_Kd Gctrwi_HouseBlue.png
+
+newmtl Wi_Sand
+	Ns 20
+	Ni 0.0125
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.2000 0.2000 0.2000
+	Kd 0.8000 0.8000 0.8000
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka Gctrwi_Sand.png
+	map_Kd Gctrwi_Sand.png

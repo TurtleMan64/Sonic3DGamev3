@@ -1,0 +1,38 @@
+# Blender MTL File: 'None'
+# Material Count: 3
+
+newmtl blue
+Ns 17.647059
+Ka 0.698039 0.698039 0.698039
+Kd 0.698039 0.698039 0.698039
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd J:\JavaWorkspace\SonicGame3Dv2\resources\res\Models\EmeraldCoast\am_sea35_32.png
+map_Ka J:\\JavaWorkspace\\SonicGame3Dv2\\resources\\res\\Models\\EmeraldCoast\\am_sea34_32.png
+
+newmtl blue_am_sea34_32.png
+Ns 17.647059
+Ka 0.698039 0.698039 0.698039
+Kd 0.698039 0.698039 0.698039
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd J:\JavaWorkspace\SonicGame3Dv2\resources\res\Models\EmeraldCoast\am_sea34_32.png
+map_Ka J:\\JavaWorkspace\\SonicGame3Dv2\\resources\\res\\Models\\EmeraldCoast\\am_sea34_32.png
+
+newmtl material_C84C8C
+Ns 17.647059
+Ka 0.698039 0.698039 0.698039
+Kd 0.698039 0.698039 0.698039
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd J:\JavaWorkspace\SonicGame3Dv2\resources\res\Models\EmeraldCoast\ref_crome.png
+map_Ka J:\\JavaWorkspace\\SonicGame3Dv2\\resources\\res\\Models\\EmeraldCoast\\ref_crome.png

@@ -1,0 +1,100 @@
+# 3ds Max Wavefront OBJ Exporter v0.97b - (c)2007 guruware
+# File Created: 22.08.2015 18:48:12
+
+newmtl Material_Dust0
+	Ns 10.0000
+	Ni 0.0
+	d 0.0000
+	Tr 1.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.5880 0.5880 0.5880
+	Kd 0.5880 0.5880 0.5880
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka 10566BC2.png
+	map_Kd 10566BC2.png
+
+newmtl Material_Dust1
+	Ns 10.0000
+	Ni 0.0
+	d 0.0000
+	Tr 1.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.5880 0.5880 0.5880
+	Kd 0.5880 0.5880 0.5880
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka 70E52516.png
+	map_Kd 70E52516.png
+
+newmtl Material_Dust2
+	Ns 10.0000
+	Ni 0.0
+	d 0.0000
+	Tr 1.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.5880 0.5880 0.5880
+	Kd 0.5880 0.5880 0.5880
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka 41509FF6.png
+	map_Kd 41509FF6.png
+
+newmtl Material_Dust3
+	Ns 10.0000
+	Ni 0.0
+	d 0.0000
+	Tr 1.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.5880 0.5880 0.5880
+	Kd 0.5880 0.5880 0.5880
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka 4457D905.png
+	map_Kd 4457D905.png
+
+newmtl Material_Dust4
+	Ns 10.0000
+	Ni 0.0
+	d 0.0000
+	Tr 1.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.5880 0.5880 0.5880
+	Kd 0.5880 0.5880 0.5880
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka F01ED66.png
+	map_Kd F01ED66.png
+	
+newmtl Material_Dust5
+	Ns 10.0000
+	Ni 0.0
+	d 0.0000
+	Tr 1.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.5880 0.5880 0.5880
+	Kd 0.5880 0.5880 0.5880
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka 53CE1FD5.png
+	map_Kd 53CE1FD5.png
+	
+newmtl Material_Dust6
+	Ns 10.0000
+	Ni 0.0
+	d 0.0000
+	Tr 1.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.5880 0.5880 0.5880
+	Kd 0.5880 0.5880 0.5880
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka 1E34306B.png
+	map_Kd 1E34306B.png

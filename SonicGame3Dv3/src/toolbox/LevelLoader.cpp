@@ -15,6 +15,7 @@
 #include "../entities/skysphere.h"
 #include "../renderEngine/skymanager.h"
 #include "../entities/camera.h"
+#include "../guis/guimanager.h"
 
 float toFloat(char* input);
 void processLine(char** data);
@@ -23,7 +24,7 @@ void freeAllStaticModels();
 void LevelLoader_loadTitle()
 {
 	Stage::deleteModels();
-	Stage::stageName = "";
+	Global::levelName = "";
 
 	freeAllStaticModels();
 
@@ -32,7 +33,7 @@ void LevelLoader_loadTitle()
 	Main_deleteAllEntites();
 }
 
-void LevelLoader_loadLevel(char* levelFilename)
+void LevelLoader_loadLevel(std::string levelFilename)
 {
 	std::string fname = levelFilename;
 
@@ -43,12 +44,12 @@ void LevelLoader_loadLevel(char* levelFilename)
 
 	int stageFault = 1;
 
-	if (Stage::stageName == fname)
+	if (Global::levelName == fname)
 	{
 		stageFault = 0;
 	}
 
-	Stage::stageName = fname;
+	Global::levelName = fname;
 
 	freeAllStaticModels();
 	Main_deleteAllEntites();
@@ -300,8 +301,15 @@ void LevelLoader_loadLevel(char* levelFilename)
 		Stage::loadModels((char*)modelFLoc.c_str(), (char*)modelFName.c_str());
 	}
 
-	//Reset timer
-	//Reset rings
+	if (Global::gamePlayer != nullptr)
+	{
+		Global::gamePlayer->setCanMove(false);
+		Global::bufferTime = 60;
+	}
+
+	Global::gameRingCount = 0;
+	GuiManager::setTimer(0, 0, 0);
+	GuiManager::stopTimer();
 }
 
 

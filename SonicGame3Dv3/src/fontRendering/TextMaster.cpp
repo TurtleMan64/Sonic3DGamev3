@@ -7,6 +7,7 @@
 #include "../fontMeshCreator/fonttype.h"
 #include "../fontMeshCreator/guitext.h"
 #include "fontrenderer.h"
+#include "../engineTester/main.h"
 
 std::unordered_map<FontType*, std::list<GUIText*>> TextMaster::texts;
 FontRenderer* TextMaster::renderer;
@@ -14,6 +15,7 @@ FontRenderer* TextMaster::renderer;
 void TextMaster::init()
 {
 	renderer = new FontRenderer();
+	Global::countNew++;
 }
 
 void TextMaster::render()
@@ -33,6 +35,7 @@ void TextMaster::loadText(GUIText* text)
 	text->setMeshInfo(vao, &vbos, data->getVertexCount());
 
 	delete data;
+	Global::countDelete++;
 
 	std::list<GUIText*>* textBatch = &texts[font];
 	textBatch->push_back(text);

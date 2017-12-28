@@ -1,0 +1,24 @@
+# Blender MTL File: 'None'
+# Material Count: 2
+
+newmtl Shoe_She_pngs_She_png
+	Ns 19.607843
+	Ka 0.000000 0.000000 0.000000
+	Kd 0.800000 0.800000 0.800000
+	Ks 0.250000 0.250000 0.250000
+	Ke 0.000000 0.000000 0.000000
+	Ni 0.02
+	d 1.000000
+	illum 2
+	map_Kd Soul.png
+
+newmtl Shoe_She_pngs_She_png_She.png
+	Ns 19.607843
+	Ka 0.000000 0.000000 0.000000
+	Kd 0.800000 0.800000 0.800000
+	Ks 0.250000 0.250000 0.250000
+	Ke 0.000000 0.000000 0.000000
+	Ni 0.02
+	d 1.000000
+	illum 2
+	map_Kd She.png

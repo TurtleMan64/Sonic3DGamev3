@@ -1,0 +1,24 @@
+# Blender MTL File: 'None'
+# Material Count: 2
+
+newmtl Material__20.009
+	Ns 5.882353
+	Ka 0.000000 0.000000 0.000000
+	Kd 0.000000 0.000000 0.000000
+	Ks 0.900000 0.900000 0.900000
+	Ke 0.000000 0.000000 0.000000
+	Ni 1.0
+	d 1.000000
+	illum 2
+	map_Kd white.png
+
+newmtl Mecha_Sonic_Legs.009
+	Ns 20.00
+	Ka 0.600000 0.600000 0.600000
+	Kd 0.600000 0.600000 0.600000
+	Ks 0.900000 0.900000 0.900000
+	Ke 0.000000 0.000000 0.000000
+	Ni 1.0
+	d 1.000000
+	illum 2
+	map_Kd mref_064s_jac.png

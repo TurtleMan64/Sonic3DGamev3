@@ -34,6 +34,9 @@ float INPUT_Y = 0;
 float INPUT_X2 = 0;
 float INPUT_Y2 = 0;
 
+int MENU_X = 0;
+int MENU_Y = 0;
+
 float INPUT_ZOOM = 0;
 float input_zoom_buffer = 0; //set in callback
 
@@ -330,9 +333,24 @@ void Input_pollInputs()
 		INPUT_ZOOM = scrollSensitivity*input_zoom_buffer;
 		input_zoom_buffer = 0;
 	}
+
+	approxXLeftPrevious = approxXLeft;
+	approxXLeft = (int)round(INPUT_X);
+	approxYLeftPrevious = approxYLeft;
+	approxYLeft = (int)round(INPUT_Y);
+
+	if (approxXLeft != 0)
+	{
+		MENU_X = approxXLeft - approxXLeftPrevious;
+	}
+
+	if(approxYLeft != 0)
+	{
+		MENU_Y = approxYLeft - approxYLeftPrevious;
+	}
 }
 
 void Input_init()
 {
-
+	//load sensitivity and button mappings from external file
 }

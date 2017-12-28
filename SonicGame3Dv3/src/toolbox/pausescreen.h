@@ -19,8 +19,6 @@ private:
 	static bool selectInputPrevious;
 	static bool backInputPrevious;
 
-	static FontType* font;
-
 	static GUIText* textCursor;
 	static GUIText* textResume;
 	static GUIText* textRestart;
@@ -49,6 +47,9 @@ private:
 	static GUIText* textManiaSonic;
 
 	static bool shouldPause;
+
+public:
+	static FontType* font;
 
 	static void init();
 

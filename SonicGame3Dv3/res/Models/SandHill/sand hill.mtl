@@ -1,0 +1,276 @@
+newmtl SANDBOARD_material_0
+Ka 1 1 1
+Kd 1 1 1
+Ks 0 0 0
+illum 1
+Map_Kd owb.png
+newmtl SANDBOARD_material_1
+Ka 1 1 1
+Kd 1 1 1
+Ks 0 0 0
+illum 1
+Map_Kd sb_clif40.png
+newmtl SANDBOARD_material_2
+Ka 1 1 1
+Kd 1 1 1
+Ks 0 0 0
+illum 1
+Map_Kd sb_clif41.png
+newmtl SANDBOARD_material_3
+Ka 1 1 1
+Kd 1 1 1
+Ks 0 0 0
+illum 1
+Map_Kd sb_clif42.png
+newmtl SANDBOARD_material_4
+Ka 1 1 1
+Kd 1 1 1
+Ks 0 0 0
+illum 1
+Map_Kd sb_ground10.png
+newmtl SANDBOARD_material_5
+Ka 1 1 1
+Kd 1 1 1
+Ks 0 0 0
+illum 1
+Map_Kd sb_ground11.png
+newmtl SANDBOARD_material_6
+Ka 1 1 1
+Kd 1 1 1
+Ks 0 0 0
+illum 1
+Map_Kd sb_ground20.png
+newmtl SANDBOARD_material_7
+Ka 1 1 1
+Kd 1 1 1
+Ks 0 0 0
+illum 1
+Map_Kd sb_ground30.png
+newmtl SANDBOARD_material_8
+Ka 1 1 1
+Kd 1 1 1
+Ks 0 0 0
+illum 1
+Map_Kd sb_ground31.png
+newmtl SANDBOARD_material_9
+Ka 1 1 1
+Kd 1 1 1
+Ks 0 0 0
+illum 1
+Map_Kd sb_ground32.png
+newmtl SANDBOARD_material_10
+Ka 1 1 1
+Kd 1 1 1
+Ks 0 0 0
+illum 1
+Map_Kd sb_ground40.png
+newmtl SANDBOARD_material_11
+Ka 1 1 1
+Kd 1 1 1
+Ks 0 0 0
+illum 1
+Map_Kd sb_ground41.png
+newmtl SANDBOARD_material_12
+Ka 1 1 1
+Kd 1 1 1
+Ks 0 0 0
+illum 1
+Map_Kd sb_valley1a.png
+newmtl SANDBOARD_material_13
+Ka 1 1 1
+Kd 1 1 1
+Ks 0 0 0
+illum 1
+Map_Kd sb_valley1b.png
+newmtl SANDBOARD_material_14
+Ka 1 1 1
+Kd 1 1 1
+Ks 0 0 0
+illum 1
+Map_Kd sb_valley2a.png
+newmtl SANDBOARD_material_15
+Ka 1 1 1
+Kd 1 1 1
+Ks 0 0 0
+illum 1
+Map_Kd sb_valley2b.png
+newmtl SANDBOARD_material_16
+Ka 1 1 1
+Kd 1 1 1
+Ks 0 0 0
+illum 1
+Map_Kd sb_valley3a.png
+newmtl SANDBOARD_material_17
+Ka 1 1 1
+Kd 1 1 1
+Ks 0 0 0
+illum 1
+Map_Kd sb_valley3b.png
+newmtl SANDBOARD_material_18
+Ka 1 1 1
+Kd 1 1 1
+Ks 0 0 0
+illum 1
+Map_Kd sb_wall06.png
+newmtl SANDBOARD_material_19
+Ka 1 1 1
+Kd 1 1 1
+Ks 0 0 0
+illum 1
+Map_Kd sb_wall09.png
+newmtl SANDBOARD_material_20
+Ka 1 1 1
+Kd 1 1 1
+Ks 0 0 0
+illum 1
+Map_Kd sb_wall11.png
+newmtl SANDBOARD_material_21
+Ka 1 1 1
+Kd 1 1 1
+Ks 0 0 0
+illum 1
+Map_Kd sb_wall12.png
+newmtl SANDBOARD_material_22
+Ka 1 1 1
+Kd 1 1 1
+Ks 0 0 0
+illum 1
+Map_Kd sb_wall13.png
+newmtl SANDBOARD_material_23
+Ka 1 1 1
+Kd 1 1 1
+Ks 0 0 0
+illum 1
+Map_Kd sb_wall14.png
+newmtl SANDBOARD_material_24
+Ka 1 1 1
+Kd 1 1 1
+Ks 0 0 0
+illum 1
+Map_Kd sb_wall16.png
+newmtl SANDBOARD_material_25
+Ka 1 1 1
+Kd 1 1 1
+Ks 0 0 0
+illum 1
+Map_Kd sb_wall18.png
+newmtl SANDBOARD_material_26
+Ka 1 1 1
+Kd 1 1 1
+Ks 0 0 0
+illum 1
+Map_Kd sb_wall37.png
+newmtl SANDBOARD_material_27
+Ka 1 1 1
+Kd 1 1 1
+Ks 0 0 0
+illum 1
+Map_Kd sb_wall38.png
+newmtl SANDBOARD_material_28
+Ka 1 1 1
+Kd 1 1 1
+Ks 0 0 0
+illum 1
+Map_Kd sb_wall40.png
+newmtl SANDBOARD_material_29
+Ka 1 1 1
+Kd 1 1 1
+Ks 0 0 0
+illum 1
+Map_Kd sb_wall42.png
+newmtl SANDBOARD_material_30
+Ka 1 1 1
+Kd 1 1 1
+Ks 0 0 0
+illum 1
+Map_Kd sb_wall44.png
+newmtl SANDBOARD_material_31
+Ka 1 1 1
+Kd 1 1 1
+Ks 0 0 0
+illum 1
+Map_Kd sb_wall45.png
+newmtl SANDBOARD_material_32
+Ka 1 1 1
+Kd 1 1 1
+Ks 0 0 0
+illum 1
+Map_Kd sb_wall47.png
+newmtl SANDBOARD_material_33
+Ka 1 1 1
+Kd 1 1 1
+Ks 0 0 0
+illum 1
+Map_Kd sb_wall48.png
+newmtl SANDBOARD_material_34
+Ka 1 1 1
+Kd 1 1 1
+Ks 0 0 0
+illum 1
+Map_Kd sb_wall50.png
+newmtl SANDBOARD_material_35
+Ka 1 1 1
+Kd 1 1 1
+Ks 0 0 0
+illum 1
+Map_Kd sb_wall51.png
+newmtl SANDBOARD_material_36
+Ka 1 1 1
+Kd 1 1 1
+Ks 0 0 0
+illum 1
+Map_Kd sb_wall52.png
+newmtl SANDBOARD_material_37
+Ka 1 1 1
+Kd 1 1 1
+Ks 0 0 0
+illum 1
+Map_Kd sb_walle.png
+newmtl SANDBOARD_material_38
+Ka 1 1 1
+Kd 1 1 1
+Ks 0 0 0
+illum 1
+Map_Kd sdmt.png
+newmtl SANDBOARD_material_39
+Ka 1 1 1
+Kd 1 1 1
+Ks 0 0 0
+illum 1
+Map_Kd sdmtb.png
+newmtl SANDBOARD_material_40
+Ka 1 1 1
+Kd 1 1 1
+Ks 0 0 0
+illum 1
+Map_Kd sdmtc.png
+newmtl SANDBOARD_material_41
+Ka 1 1 1
+Kd 1 1 1
+Ks 0 0 0
+illum 1
+Map_Kd sdmtd.png
+newmtl SANDBOARD_material_42
+Ka 1 1 1
+Kd 1 1 1
+Ks 0 0 0
+illum 1
+Map_Kd sdmtf.png
+newmtl SANDBOARD_material_43
+Ka 1 1 1
+Kd 1 1 1
+Ks 0 0 0
+illum 1
+Map_Kd sdmtg.png
+newmtl SANDBOARD_material_44
+Ka 1 1 1
+Kd 1 1 1
+Ks 0 0 0
+illum 1
+Map_Kd sdmtj.png
+newmtl SANDBOARD_material_45
+Ka 1 1 1
+Kd 1 1 1
+Ks 0 0 0
+illum 1
+Map_Kd sb_ground21.png

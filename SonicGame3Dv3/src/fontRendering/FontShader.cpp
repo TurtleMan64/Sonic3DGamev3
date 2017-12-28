@@ -9,6 +9,7 @@
 #include "../toolbox/matrix.h"
 #include "../toolbox/maths.h"
 #include "fontshader.h"
+#include "../engineTester/main.h"
 
 FontShader::FontShader(char* vertexFile, char* fragmentFile)
 {

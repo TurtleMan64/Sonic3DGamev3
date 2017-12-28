@@ -194,7 +194,7 @@ void Loader_cleanUp()
 
 void Loader_deleteVAO(GLuint vaoID)
 {
-	std::fprintf(stdout, "deleting vao %d\n", vaoID);
+	//std::fprintf(stdout, "deleting vao %d\n", vaoID);
 	vaoNumber--;
 	glDeleteVertexArrays(1, &vaoID);
 	vaos.remove(vaoID);
@@ -202,7 +202,7 @@ void Loader_deleteVAO(GLuint vaoID)
 
 void Loader_deleteVBO(GLuint vboID)
 {
-	std::fprintf(stdout, "deleting buffer %d\n", vboID);
+	//std::fprintf(stdout, "deleting buffer %d\n", vboID);
 	vboNumber--;
 	glDeleteBuffers(1, &vboID);
 	vbos.remove(vboID);
@@ -210,7 +210,7 @@ void Loader_deleteVBO(GLuint vboID)
 
 void Loader_deleteTexture(GLuint texID)
 {
-	std::fprintf(stdout, "deleting texture %d\n", texID);
+	//std::fprintf(stdout, "deleting texture %d\n", texID);
 	texNumber--;
 	glDeleteTextures(1, &texID);
 	textures.remove(texID);

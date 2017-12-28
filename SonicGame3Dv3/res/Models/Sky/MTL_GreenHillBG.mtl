@@ -1,0 +1,17 @@
+# 3ds Max Wavefront OBJ Exporter v0.97b - (c)2007 guruware
+# File Created: 28.06.2015 02:12:59
+
+newmtl Texture
+	Ns 10.0000
+	Ni 0.000
+	d 0.0000
+	Tr 1.0000
+	Tf 1.0000 1.0000 1.0000 
+	glow 0.0
+	illum 2
+	Ka 0.5880 0.5880 0.5880
+	Kd 0.5880 0.5880 0.5880
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka GreenHillBG2.png
+	map_Kd GreenHillBG2.png

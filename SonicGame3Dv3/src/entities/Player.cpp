@@ -35,7 +35,7 @@ std::list<TexturedModel*> Player::modelRightThigh;
 std::list<TexturedModel*> Player::modelRightShin;
 std::list<TexturedModel*> Player::modelRightFoot;
 
-int Player::characterID = 5;
+int Player::characterID = 0;
 
 extern bool INPUT_JUMP;
 extern bool INPUT_ACTION;
@@ -833,6 +833,11 @@ void Player::setMovementInputs()
 		moveSpeedAirCurrent = 0;
 		movementAngle = 0;
 	}
+}
+
+void Player::setCanMove(bool newMove)
+{
+	this->canMove = newMove;
 }
 
 void Player::checkSkid()

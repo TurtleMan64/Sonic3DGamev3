@@ -1,0 +1,360 @@
+# 3ds Max Wavefront OBJ Exporter v0.97b - (c)2007 guruware
+# File Created: 03.05.2017 15:47:12
+
+newmtl m10CastSS17
+	Ns 20.0000
+	Ni 0.01
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 1.0000 1.0000 1.0000
+	Kd 0.4706 0.4706 0.4706
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka CastleTree01.png
+	map_Kd CastleTree01.png
+
+newmtl m3CastSS23_t
+	Ns 20.0000
+	Ni 0.01
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 1.0000 1.0000 1.0000
+	Kd 0.4706 0.4706 0.4706
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka CastleBlock_Kiwa.png
+	map_Kd CastleBlock_Kiwa.png
+
+newmtl m18CastSS09
+	Ns 20.0000
+	Ni 0.01
+	d 0.0000
+	Tr 1.0000
+	Tf 0.0000 0.0000 0.0000 
+	illum 2
+	Ka 1.0000 1.0000 1.0000
+	Kd 0.4706 0.4706 0.4706
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka Castlepuffleaf.png
+	map_Kd Castlepuffleaf.png
+	map_d Castlepuffleaf.png
+
+newmtl m11CastSS16
+	Ns 20.0000
+	Ni 0.01
+	d 0.0000
+	Tr 1.0000
+	Tf 0.0000 0.0000 0.0000 
+	illum 2
+	Ka 1.0000 1.0000 1.0000
+	Kd 0.4706 0.4706 0.4706
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka Castletree.png
+	map_Kd Castletree.png
+	map_d Castletree.png
+
+newmtl m1CastSS25_t
+	Ns 20.0000
+	Ni 0.01
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 1.0000 1.0000 1.0000
+	Kd 0.4706 0.4706 0.4706
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka CastleBlock02.png
+	map_Kd CastleBlock02.png
+
+newmtl m12CastSS15
+	Ns 20.0000
+	Ni 0.01
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 1.0000 1.0000 1.0000
+	Kd 0.4706 0.4706 0.4706
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka CastleWoodPanel.png
+	map_Kd CastleWoodPanel.png
+
+newmtl m28CastSS00
+	Ns 20.0000
+	Ni 0.01
+	d 0.0000
+	Tr 1.0000
+	Tf 0.0000 0.0000 0.0000 
+	illum 2
+	Ka 1.0000 1.0000 1.0000
+	Kd 0.4706 0.4706 0.4706
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka Castleyellowhanataba.png
+	map_Kd Castleyellowhanataba.png
+	map_d Castleyellowhanataba.png
+
+newmtl m8CastSS19_t
+	Ns 20.0000
+	Ni 0.01
+	d 1.0000
+	Tr 0.0000
+	glow 1.0
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 1.0000 1.0000 1.0000
+	Kd 0.4706 0.4706 0.4706
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka Castlepeach.png
+	map_Kd Castlepeach.png
+
+newmtl m6CastSS20_t
+	Ns 20.0000
+	Ni 0.01
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 1.0000 1.0000 1.0000
+	Kd 0.4706 0.4706 0.4706
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka Castleiwakabe01.png
+	map_Kd Castleiwakabe01.png
+
+newmtl m7CastSS08_t
+	Ns 20.0000
+	Ni 0.01
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 1.0000 1.0000 1.0000
+	Kd 0.4706 0.4706 0.4706
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka CastleKabe00.png
+	map_Kd CastleKabe00.png
+
+newmtl m2CastSS24_t
+	Ns 20.0000
+	Ni 0.01
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 1.0000 1.0000 1.0000
+	Kd 0.4706 0.4706 0.4706
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka CastleBlock04.png
+	map_Kd CastleBlock04.png
+
+newmtl m16CastSS11
+	Ns 20.0000
+	Ni 0.2
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 1.0000 1.0000 1.0000
+	Kd 0.4706 0.4706 0.4706
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka CastleYane01.png
+	map_Kd CastleYane01.png
+
+newmtl m24CastSS04
+	Ns 20.0000
+	Ni 0.01
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 1.0000 1.0000 1.0000
+	Kd 0.4706 0.4706 0.4706
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka CastleQFGP_a.png
+	map_Kd CastleQFGP_a.png
+
+newmtl m17CastMS10
+	Ns 20.0000
+	Ni 0.1
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 1.0000 1.0000 1.0000
+	Kd 0.4706 0.4706 0.4706
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka Castlepillar.png
+	map_Kd Castlepillar.png
+
+newmtl m25CastSS03
+	Ns 20.0000
+	Ni 0.01
+	d 0.0000
+	Tr 1.0000
+	Tf 0.0000 0.0000 0.0000 
+	illum 2
+	Ka 1.0000 1.0000 1.0000
+	Kd 0.4706 0.4706 0.4706
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka Castleparplehanataba.png
+	map_Kd Castleparplehanataba.png
+	map_d Castleparplehanataba.png
+
+newmtl m0CastSS26_t
+	Ns 20.0000
+	Ni 0.01
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 1.0000 1.0000 1.0000
+	Kd 0.4706 0.4706 0.4706
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka CastleBlock00bMip.png
+	map_Kd CastleBlock00bMip.png
+
+newmtl m26CastSS02
+	Ns 20.0000
+	Ni 0.01
+	d 0.0000
+	Tr 1.0000
+	Tf 0.0000 0.0000 0.0000 
+	illum 2
+	Ka 1.0000 1.0000 1.0000
+	Kd 0.4706 0.4706 0.4706
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka Castlesaku2.png
+	map_Kd Castlesaku2.png
+	map_d Castlesaku2.png
+
+newmtl m27CastSS01
+	Ns 20.0000
+	Ni 0.01
+	d 0.0000
+	Tr 1.0000
+	Tf 0.0000 0.0000 0.0000 
+	illum 2
+	Ka 1.0000 1.0000 1.0000
+	Kd 0.4706 0.4706 0.4706
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka Castlewhitetaba.png
+	map_Kd Castlewhitetaba.png
+	map_d Castlewhitetaba.png
+
+newmtl m13CastSS14
+	Ns 20.0000
+	Ni 0.2
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 1.0000 1.0000 1.0000
+	Kd 0.4706 0.4706 0.4706
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka CastleYane01_r.png
+	map_Kd CastleYane01_r.png
+
+newmtl m5CastSS21_t
+	Ns 20.0000
+	Ni 0.01
+	d 0.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 1.0000 1.0000 1.0000
+	Kd 0.4706 0.4706 0.4706
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka CastleMiniFlag.png
+	map_Kd CastleMiniFlag.png
+
+newmtl m14CastSS13
+	Ns 20.0000
+	Ni 0.2
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 1.0000 1.0000 1.0000
+	Kd 0.4706 0.4706 0.4706
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka CastleYane00.png
+	map_Kd CastleYane00.png
+
+newmtl m22CastSS06
+	Ns 20.0000
+	Ni 0.01
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 1.0000 1.0000 1.0000
+	Kd 0.4706 0.4706 0.4706
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka CastleLawnA.png
+	map_Kd CastleLawnA.png
+
+newmtl m15CastSS12
+	Ns 20.0000
+	Ni 0.2
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 1.0000 1.0000 1.0000
+	Kd 0.4706 0.4706 0.4706
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka CastleYane00_g.png
+	map_Kd CastleYane00_g.png
+
+newmtl m9CastSS18_t
+	Ns 20.0000
+	Ni 0.01
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 1.0000 1.0000 1.0000
+	Kd 0.4706 0.4706 0.4706
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka CastleSand01.png
+	map_Kd CastleSand01.png
+
+newmtl m23CastSS05
+	Ns 20.0000
+	Ni 0.1
+	glow 1.0
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 1.0000 1.0000 1.0000
+	Kd 0.4706 0.4706 0.4706
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka CastleMado.png
+	map_Kd CastleMado.png

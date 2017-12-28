@@ -3,6 +3,8 @@
 #include "textmeshdata.h"
 #include "guitext.h"
 
+#include "../engineTester/main.h"
+
 
 double TextMeshCreator::LINE_HEIGHT = 0.03;
 
@@ -10,6 +12,7 @@ double TextMeshCreator::LINE_HEIGHT = 0.03;
 TextMeshCreator::TextMeshCreator(std::string metaFilename)
 {
 	metaData = new MetaFile(metaFilename);
+	Global::countNew++;
 }
 
 TextMeshData* TextMeshCreator::createTextMesh(GUIText* text)
@@ -99,6 +102,7 @@ TextMeshData* TextMeshCreator::createQuadVertices(GUIText* text, std::vector<Lin
 		curserX = 0;
 		curserY += LINE_HEIGHT * text->getFontSize();
 	}
+	Global::countNew++;
 	return new TextMeshData(&vertices, &textureCoords);
 }
 

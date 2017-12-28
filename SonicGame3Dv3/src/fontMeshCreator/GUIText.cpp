@@ -2,7 +2,7 @@
 #include "../renderEngine/renderEngine.h"
 #include "../fontRendering/textmaster.h"
 
-GUIText::GUIText(std::string text, float fontSize, FontType* font, Vector2f* position, float maxLineLength,
+GUIText::GUIText(std::string text, float fontSize, FontType* font, float x, float y, float maxLineLength,
 	bool centered, bool visible)
 {
 	this->colour.set(1, 1, 1);
@@ -10,7 +10,7 @@ GUIText::GUIText(std::string text, float fontSize, FontType* font, Vector2f* pos
 	this->textString.assign(text);
 	this->fontSize = fontSize;
 	this->font = font;
-	this->position.set(position);
+	this->position.set(x, y);
 	this->lineMaxSize = maxLineLength;
 	this->centerText = centered;
 	this->visible = visible;

@@ -15,8 +15,6 @@
 
 std::list<TexturedModel*> Stage::models;
 
-std::string Stage::stageName = "";
-
 Stage::Stage()
 {
 	this->position.x = 0;

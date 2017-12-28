@@ -32,9 +32,9 @@
 #include "../fontRendering/textmaster.h"
 #include "../fontMeshCreator/fonttype.h"
 #include "../fontMeshCreator/guitext.h"
+#include "../toolbox/pausescreen.h"
+#include "../guis/guimanager.h"
 
-
-int gameState = 0;
 
 std::unordered_map<Entity*, Entity*> gameEntities;
 std::list<Entity*> gameEntitiesToAdd;
@@ -57,6 +57,17 @@ extern bool INPUT_PREVIOUS_ACTION2;
 
 int Global::countNew = 0;
 int Global::countDelete = 0;
+int Global::gameState = 0;
+int Global::levelID = 0;
+int Global::bufferTime = -1;
+bool Global::shouldRestartLevel = false;
+std::string Global::levelName = "";
+int Global::gameRingCount = 0;
+
+bool Global::unlockedSonicDoll = true;
+bool Global::unlockedMechaSonic = true;
+bool Global::unlockedDage4 = true;
+bool Global::unlockedManiaSonic = true;
 
 
 int main()
@@ -70,22 +81,21 @@ int main()
 
 	TextMaster::init();
 
-	FontType font(Loader_loadTexture("res/Fonts/vipnagorgialla.png"), "res/Fonts/vipnagorgialla.fnt");
+	PauseScreen::init();
 
-	Vector2f pos(0, 0);
-	GUIText* text = new GUIText("this is a test text1", 3, &font, &pos, 1, false, true);
+	GuiManager::init();
 
-	Vector2f pos2(0, 0.1f);
-	GUIText* text2 = new GUIText("this is a test text2", 3, &font, &pos2, 1, false, true);
+	//FontType font(Loader_loadTexture("res/Fonts/vipnagorgialla.png"), "res/Fonts/vipnagorgialla.fnt");
 
-	Vector2f pos3(0, 0.2f);
-	GUIText* text3 = new GUIText("this is a test text3", 3, &font, &pos3, 1, false, true);
+	//GUIText* text = new GUIText("this is a test text1", 3, &font, 0, 0, 1, false, true);
 
-	Vector2f pos4(0, 0.3f);
-	GUIText* text4 = new GUIText("this is a test text4", 3, &font, &pos4, 1, false, true);
+	//GUIText* text2 = new GUIText("this is a test text2", 3, &font, 0, 0.1f, 1, false, true);
 
-	Vector2f pos5(0, 0.4f);
-	GUIText* text5 = new GUIText("this is a test text5", 3, &font, &pos5, 1, false, true);
+	//GUIText* text3 = new GUIText("this is a test text3", 3, &font, 0, 0.2f, 1, false, true);
+
+	//GUIText* text4 = new GUIText("this is a test text4", 3, &font, 0, 0.3f, 1, false, true);
+
+	//GUIText* text5 = new GUIText("this is a test text5", 3, &font, 0, 0.4f, 1, false, true);
 	//text->deleteMe();
 	//delete text;
 	//font.deleteMe();
@@ -145,9 +155,9 @@ int main()
 
 	int frameCount = 0;
 
-	LevelLoader_loadLevel("EmeraldCoast.lvl");
+	PauseScreen::pause();
 
-	while (gameState == 0 && displayWantsToClose() == 0)
+	while (Global::gameState != STATE_EXITING && displayWantsToClose() == 0)
 	{
 		Input_pollInputs();
 		int err = glGetError();
@@ -162,15 +172,23 @@ int main()
 			std::fprintf(stdout, "%d\n", err);
 		}
 
-
-		if (INPUT_ACTION && !INPUT_PREVIOUS_ACTION)
+		if (Global::bufferTime >= 0)
 		{
-			LevelLoader_loadLevel("EmeraldCoast.lvl");
+			Global::bufferTime -= 1;
+		}
+		if (Global::bufferTime == 0)
+		{
+			GuiManager::startTimer();
+			if (Global::gamePlayer != nullptr)
+			{
+				Global::gamePlayer->setCanMove(true);
+			}
 		}
 
-		if (INPUT_ACTION2 && !INPUT_PREVIOUS_ACTION2)
+		if (Global::shouldRestartLevel)
 		{
-			LevelLoader_loadTitle();
+			Global::shouldRestartLevel = false;
+			LevelLoader_loadLevel(Global::levelName);
 		}
 
 
@@ -193,15 +211,43 @@ int main()
 		}
 		gameEntitiesToDelete.clear();
 
+		PauseScreen::step();
 
-		//game logic
-		for (auto e : gameEntities)
+		switch (Global::gameState)
 		{
-			e.first->step();
-		}
-		skySphere.step();
-		SkyManager::calculateValues();
+			case STATE_RUNNING:
+			{
+				//game logic
+				GuiManager::increaseTimer();
+				for (auto e : gameEntities)
+				{
+					e.first->step();
+				}
+				skySphere.step();
+				break;
+			}
 
+			case STATE_PAUSED:
+			{
+				break;
+			}
+
+			case STATE_CUTSCENE:
+			{
+				//camera.sep;
+				break;
+			}
+
+			case STATE_TITLE:
+			{
+				break;
+			}
+
+			default:
+				break;
+		}
+
+		SkyManager::calculateValues();
 
 		//render entities
 		for (auto e : gameEntities)
@@ -214,6 +260,7 @@ int main()
 		Master_render(&cam);
 		Master_clearEntities();
 
+		GuiManager::refresh();
 		TextMaster::render();
 
 		updateDisplay();

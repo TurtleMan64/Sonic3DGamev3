@@ -23,7 +23,5 @@ public:
 	static void loadModels(char* folder, char* name);
 
 	static void deleteModels();
-
-	static std::string stageName;
 };
 #endif

@@ -1,0 +1,14 @@
+# Blender MTL File: 'None'
+# Material Count: 1
+
+newmtl _bobomb_battlefeildMaterial_029_359289F2_c_bmp
+	Ns 19.607843
+	Ka 0.000000 0.000000 0.000000
+	Kd 0.159400 0.159400 0.159400
+	Ks 0.000000 0.000000 0.000000
+	Ke 0.000000 0.000000 0.000000
+	Ni 0.02
+	d 1.000000
+	illum 2
+	map_Kd 359289F2_c.png
+	map_Ka 359289F2_c.png

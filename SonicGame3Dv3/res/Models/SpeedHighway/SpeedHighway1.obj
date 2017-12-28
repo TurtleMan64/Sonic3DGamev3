@@ -1,0 +1,27 @@
+# 3ds Max Wavefront OBJ Exporter v0.97b - (c)2007 guruware
+# File Created: 08.01.2017 02:00:31
+
+mtllib SpeedHighway1.mtl
+
+#
+# object SpeedHighway
+#
+
+v  279.3420 200.8023 226.8214
+v  277.7381 200.2676 231.9385
+v  279.3420 200.8023 231.9385
+# 3 vertices
+
+vn -0.3162 0.9487 -0.0000
+# 1 vertex normals
+
+vt 1.9922 -0.0039 0.0000
+vt 0.0039 0.9922 0.0000
+vt 0.0039 -0.0039 0.0000
+# 3 texture coords
+
+g SpeedHighway
+usemtl HIGHWAY01_material_82
+f 1/1/1 2/2/1 3/3/1 
+# 1 faces
+

@@ -45,8 +45,10 @@ private:
 	Limb* myRightShin;
 	Limb* myRightFoot;
 
+public:
 	static int characterID;
 
+private:
 	float xVel = 0;
 	float yVel = 0;
 	float zVel = 0;
@@ -189,6 +191,14 @@ public:
 	void setCameraAngles(float newYaw, float newPitch);
 
 	void goUp();
+
+	/** If canMove is false, then every input from the
+	* controller is ignored. It is up to whoever sets this
+	* to false to set it back to true.
+	*
+	* @param newMove
+	*/
+	void setCanMove(bool newMove);
 
 private:
 	void adjustCamera();

@@ -60,7 +60,7 @@ public:
 	* @param centered
 	*            - whether the text should be centered or not.
 	*/
-	GUIText(std::string text, float fontSize, FontType* font, Vector2f* position, float maxLineLength,
+	GUIText(std::string text, float fontSize, FontType* font, float x, float y, float maxLineLength,
 		bool centered, bool visible);
 
 

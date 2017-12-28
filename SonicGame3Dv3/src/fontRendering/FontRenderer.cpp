@@ -3,11 +3,13 @@
 #include "../fontMeshCreator/fonttype.h"
 #include "../fontMeshCreator/guitext.h"
 #include "fontshader.h"
+#include "../engineTester/main.h"
 
 
 FontRenderer::FontRenderer()
 {
 	shader = new FontShader("res/Shaders/fontRendering/fontVertex.txt", "res/Shaders/fontRendering/fontFragment.txt");
+	Global::countNew++;
 }
 
 

@@ -5,6 +5,7 @@
 
 #include "renderEngine.h"
 #include "../toolbox/input.h"
+#include "../engineTester/main.h"
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void window_close_callback(GLFWwindow* window);
@@ -13,8 +14,6 @@ void mouse_scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 // settings
 unsigned int SCR_WIDTH = 1280;
 unsigned int SCR_HEIGHT = 720;
-
-extern int gameState;
 
 extern float input_zoom_buffer;
 
@@ -125,7 +124,7 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 
 void window_close_callback(GLFWwindow* window)
 {
-	gameState = 1;
+	Global::gameState = STATE_EXITING;
 }
 
 void mouse_scroll_callback(GLFWwindow* window, double xoffset, double yoffset)

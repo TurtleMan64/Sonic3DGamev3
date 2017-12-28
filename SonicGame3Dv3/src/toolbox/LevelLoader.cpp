@@ -53,9 +53,6 @@ void LevelLoader_loadLevel(char* levelFilename)
 	freeAllStaticModels();
 	Main_deleteAllEntites();
 
-	Global::gamePlayer = nullptr;
-	SkyManager::setCenterObject(nullptr);
-
 	if (stageFault == 1)
 	{
 		Stage::deleteModels(); //Only delete stage if loading a new stage

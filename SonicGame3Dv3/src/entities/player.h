@@ -178,6 +178,8 @@ public:
 
 	void step();
 
+	bool isPlayer();
+
 	std::list<TexturedModel*>* getModels();
 
 	static void loadStaticModels();

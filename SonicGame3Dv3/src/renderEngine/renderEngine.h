@@ -24,6 +24,9 @@ GLFWwindow* getWindow();
 
 //Loader
 RawModel Loader_loadToVAO(std::vector<float>* positions, std::vector<float>* textureCoords, std::vector<float>* normals, std::vector<int>* indices);
+//for text
+//returns a std::vector<int> where the first entry is the vao and the rest are vbos
+std::vector<int> Loader_loadToVAO(std::vector<float>* positions, std::vector<float>* textureCoords);
 GLuint Loader_loadTexture(char* filename);
 GLuint Loader_loadTextureWORKS(char* filename);
 void Loader_cleanUp();

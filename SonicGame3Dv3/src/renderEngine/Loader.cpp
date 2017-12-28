@@ -44,6 +44,18 @@ RawModel Loader_loadToVAO(std::vector<float>* positions, std::vector<float>* tex
 	return model;
 }
 
+std::vector<int> Loader_loadToVAO(std::vector<float>* positions, std::vector<float>* textureCoords)
+{
+	std::vector<int> vertexObjects;
+
+	vertexObjects.push_back(createVAO());
+	vertexObjects.push_back(storeDataInAttributeList(0, 2, positions));
+	vertexObjects.push_back(storeDataInAttributeList(1, 2, textureCoords));
+	unbindVAO();
+
+	return vertexObjects;
+}
+
 GLuint Loader_loadTexture(char* fileName)
 {
 	GLuint textureID = 0;

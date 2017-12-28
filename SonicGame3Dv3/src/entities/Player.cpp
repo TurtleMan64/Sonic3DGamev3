@@ -1663,3 +1663,8 @@ void Player::goUp()
 {
 	yVel += 0.5f;
 }
+
+bool Player::isPlayer()
+{
+	return true;
+}

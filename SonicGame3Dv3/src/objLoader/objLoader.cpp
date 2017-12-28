@@ -232,6 +232,16 @@ std::list<TexturedModel*>* loadObjModel(std::string filePath, std::string fileNa
 	modelTexturesList.clear();
 	textureNamesList.clear();
 
+	vertices.shrink_to_fit();
+	textures.shrink_to_fit();
+	normals.shrink_to_fit();
+	indices.shrink_to_fit();
+
+	rawModelsList.shrink_to_fit();
+	modelTextures.shrink_to_fit();
+	modelTexturesList.shrink_to_fit();
+	textureNamesList.shrink_to_fit();
+
 	return tmList;
 }
 

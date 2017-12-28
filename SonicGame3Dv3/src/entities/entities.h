@@ -23,6 +23,8 @@ public:
 
 	virtual void step();
 
+	virtual bool isPlayer();
+
 	void increasePosition(float, float, float);
 
 	void increaseRotation(float, float, float);

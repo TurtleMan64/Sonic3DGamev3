@@ -59,6 +59,8 @@ public:
 
 	void set(float, float);
 
+	void set(Vector2f* vec);
+
 	float length();
 
 	Vector2f normalized();

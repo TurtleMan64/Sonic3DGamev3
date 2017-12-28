@@ -29,6 +29,10 @@
 #include "../entities/skysphere.h"
 #include "../renderEngine/skymanager.h"
 #include "../animation/animationresources.h"
+#include "../fontRendering/textmaster.h"
+#include "../fontMeshCreator/fonttype.h"
+#include "../fontMeshCreator/guitext.h"
+
 
 int gameState = 0;
 
@@ -63,6 +67,28 @@ int main()
 	createDisplay();
 
 	Master_init();
+
+	TextMaster::init();
+
+	FontType font(Loader_loadTexture("res/Fonts/vipnagorgialla.png"), "res/Fonts/vipnagorgialla.fnt");
+
+	Vector2f pos(0, 0);
+	GUIText* text = new GUIText("this is a test text1", 3, &font, &pos, 1, false, true);
+
+	Vector2f pos2(0, 0.1f);
+	GUIText* text2 = new GUIText("this is a test text2", 3, &font, &pos2, 1, false, true);
+
+	Vector2f pos3(0, 0.2f);
+	GUIText* text3 = new GUIText("this is a test text3", 3, &font, &pos3, 1, false, true);
+
+	Vector2f pos4(0, 0.3f);
+	GUIText* text4 = new GUIText("this is a test text4", 3, &font, &pos4, 1, false, true);
+
+	Vector2f pos5(0, 0.4f);
+	GUIText* text5 = new GUIText("this is a test text5", 3, &font, &pos5, 1, false, true);
+	//text->deleteMe();
+	//delete text;
+	//font.deleteMe();
 
 	CollisionChecker::initChecker();
 	AnimationResources::createAnimations();
@@ -188,6 +214,8 @@ int main()
 		Master_render(&cam);
 		Master_clearEntities();
 
+		TextMaster::render();
+
 		updateDisplay();
 
 		frameCount++;
@@ -205,6 +233,7 @@ int main()
 
 	Master_cleanUp();
 	Loader_cleanUp();
+	TextMaster::cleanUp();
 	closeDisplay();
 
 	return 0;
@@ -242,6 +271,11 @@ void Main_deleteAllEntites()
 	//Delete all the rest
 	for (auto entityToDelete : gameEntities)
 	{
+		if (entityToDelete.first->isPlayer())
+		{
+			Global::gamePlayer = nullptr;
+			SkyManager::setCenterObject(nullptr);
+		}
 		delete entityToDelete.first;
 		Global::countDelete++;
 	}

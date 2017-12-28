@@ -37,6 +37,11 @@ void Entity::step()
 
 }
 
+bool Entity::isPlayer()
+{
+	return false;
+}
+
 void Entity::increasePosition(float dx, float dy, float dz)
 {
 	position.x += dx;

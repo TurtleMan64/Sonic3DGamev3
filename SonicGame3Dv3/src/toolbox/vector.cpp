@@ -105,6 +105,12 @@ void Vector2f::set(float newX, float newY)
 	y = newY;
 }
 
+void Vector2f::set(Vector2f* vec)
+{
+	x = vec->x;
+	y = vec->y;
+}
+
 float Vector2f::length() {
 	return (float)sqrt((x * x) + (y * y));
 }

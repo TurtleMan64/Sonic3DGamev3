@@ -41,5 +41,7 @@ public:
 	void setBaseRotZ(float rotZ);
 
 	std::list<TexturedModel*>* getModels();
+
+	//std::string getName();
 };
 #endif

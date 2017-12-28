@@ -34,6 +34,7 @@
 #include "../fontMeshCreator/guitext.h"
 #include "../toolbox/pausescreen.h"
 #include "../guis/guimanager.h"
+#include "../entities/spring.h"
 
 
 std::unordered_map<Entity*, Entity*> gameEntities;

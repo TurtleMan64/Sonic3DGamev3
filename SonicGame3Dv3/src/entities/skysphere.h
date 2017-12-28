@@ -23,5 +23,7 @@ public:
 	static void loadModels(char* folder, char* objname, char* mtlname);
 
 	static void deleteModels();
+
+	//std::string getName();
 };
 #endif

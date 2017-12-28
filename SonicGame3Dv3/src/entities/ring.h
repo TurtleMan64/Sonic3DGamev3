@@ -23,5 +23,7 @@ public:
 	static void loadStaticModels();
 
 	static void deleteStaticModels();
+
+	//std::string getName();
 };
 #endif

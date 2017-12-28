@@ -6,6 +6,7 @@ class TexturedModel;
 #include <list>
 #include "../toolbox/vector.h"
 #include "../toolbox/matrix.h"
+#include <string>
 
 
 class Entity
@@ -56,8 +57,16 @@ public:
 
 	float getZ();
 
+	void setX(float newX);
+
+	void setY(float newY);
+
+	void setZ(float newZ);
+
 	Matrix4f* getTransformationMatrix();
 
 	void updateTransformationMatrix();
+
+	virtual std::string getName();
 };
 #endif

@@ -1673,3 +1673,79 @@ bool Player::isPlayer()
 {
 	return true;
 }
+
+void Player::setGroundSpeed(float newXspd, float newZspd)
+{
+	xVelGround = newXspd;
+	zVelGround = newZspd;
+}
+
+float Player::getxVel()
+{
+	return xVel;
+}
+
+void Player::setxVel(float xVel)
+{
+	this->xVel = xVel;
+}
+
+float Player::getyVel()
+{
+	return yVel;
+}
+
+void Player::setyVel(float yVel)
+{
+	this->yVel = yVel;
+}
+
+float Player::getzVel()
+{
+	return zVel;
+}
+
+void Player::setzVel(float zVel)
+{
+	this->zVel = zVel;
+}
+
+void Player::setxVelAir(float xVelAir)
+{
+	this->xVelAir = xVelAir;
+}
+
+float Player::getXVelAir()
+{
+	return xVelAir;
+}
+
+void Player::setzVelAir(float zVelAir)
+{
+	this->zVelAir = zVelAir;
+}
+
+float Player::getZVelAir()
+{
+	return zVelAir;
+}
+
+void Player::setHoverCount(int newCount)
+{
+	hoverCount = newCount;
+}
+
+void Player::setOnPlane(bool on)
+{
+	onPlane = on;
+}
+
+float Player::getHitboxHorizontal()
+{
+	return 6;
+}
+
+float Player::getHitboxVertical()
+{
+	return 6;
+}

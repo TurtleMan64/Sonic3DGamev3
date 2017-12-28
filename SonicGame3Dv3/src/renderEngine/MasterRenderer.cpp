@@ -62,9 +62,10 @@ void Master_render(Camera* camera)
 
 	renderer->renderNEW(&entitiesMap);
 	//for (Entity* entry : entitiesList)
-	//{
+	{
+		//std::fprintf(stdout, "rendering %s\n", entry->getName().c_str());
 		//renderer->render(entry, shader);
-	//}
+	}
 
 	shader->stop();
 }
@@ -130,12 +131,6 @@ void Master_clearEntities()
 {
 	//entitiesList.clear();
 
-	//i need to call delete on all the lists
-	//for (auto entry : entitiesMap)
-	//{
-		//entry.second->clear();
-		//delete entry.first;
-	//}
 	entitiesMap.clear();
 }
 

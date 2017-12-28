@@ -16,8 +16,10 @@
 #include "../renderEngine/skymanager.h"
 #include "../entities/camera.h"
 #include "../guis/guimanager.h"
+#include "../entities/spring.h"
 
 float toFloat(char* input);
+int toInt(char* input);
 void processLine(char** data);
 void freeAllStaticModels();
 
@@ -327,6 +329,18 @@ void processLine(char** dat)
 			Main_addEntity(ring);
 			return;
 		}
+
+		case 1: //Spring
+		{
+			Spring::loadStaticModels();
+			Spring* spring = new Spring(
+				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
+				toFloat(dat[4]), toFloat(dat[5]),                  //rotation
+				toFloat(dat[6]), toInt(dat[7]));                 //power, time
+			Global::countNew++;
+			Main_addEntity(spring);
+			return;
+		}
 		
 		case 6: //Player
 		{
@@ -361,11 +375,15 @@ float toFloat(char* input)
 	return std::stof(input);
 }
 
-
+int toInt(char* input)
+{
+	return std::stoi(input);
+}
 
 void freeAllStaticModels()
 {
 	Ring::deleteStaticModels();
 	Player::deleteStaticModels();
 	SkySphere::deleteModels();
+	Spring::deleteStaticModels();
 }

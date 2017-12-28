@@ -200,6 +200,36 @@ public:
 	*/
 	void setCanMove(bool newMove);
 
+	void setGroundSpeed(float newXspd, float newZspd);
+
+	float getxVel();
+
+	void setxVel(float xVel);
+
+	float getyVel();
+
+	void setyVel(float yVel);
+
+	float getzVel();
+
+	void setzVel(float zVel);
+
+	void setxVelAir(float xVelAir);
+
+	float getXVelAir();
+
+	void setzVelAir(float zVelAir);
+
+	float getZVelAir();
+
+	void setHoverCount(int newCount);
+
+	void setOnPlane(bool on);
+
+	float getHitboxHorizontal();
+
+	float getHitboxVertical();
+
 private:
 	void adjustCamera();
 
@@ -249,5 +279,7 @@ private:
 	void setLimbsVisibility(bool visible);
 
 	void animate();
+
+	//std::string getName();
 };
 #endif

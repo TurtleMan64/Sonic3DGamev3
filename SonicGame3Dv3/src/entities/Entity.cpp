@@ -7,6 +7,7 @@
 
 #include <list>
 #include <iostream>
+#include <string>
 
 Entity::Entity()
 {
@@ -17,7 +18,7 @@ Entity::Entity()
 	this->rotY = 0;
 	this->rotZ = 0; 
 	this->scale = 1;
-	this->visible = 1;
+	this->visible = true;
 }
 
 Entity::Entity(Vector3f* position, float rotX, float rotY, float rotZ, float scale)
@@ -29,7 +30,7 @@ Entity::Entity(Vector3f* position, float rotX, float rotY, float rotZ, float sca
 	this->rotY = rotY;
 	this->rotZ = rotZ;
 	this->scale = scale;
-	this->visible = 1;
+	this->visible = true;
 }
 
 void Entity::step()
@@ -138,6 +139,21 @@ float Entity::getZ()
 	return position.z;
 }
 
+void Entity::setX(float newX)
+{
+	position.x = newX;
+}
+
+void Entity::setY(float newY)
+{
+	position.y = newY;
+}
+
+void Entity::setZ(float newZ)
+{
+	position.z = newZ;
+}
+
 void Entity::updateTransformationMatrix()
 {
 	createTransformationMatrix(&transformationMatrix, &position, rotX, rotY, rotZ, scale);
@@ -146,4 +162,9 @@ void Entity::updateTransformationMatrix()
 Matrix4f* Entity::getTransformationMatrix()
 {
 	return &transformationMatrix;
+}
+
+std::string Entity::getName()
+{
+	return "blank entity";
 }

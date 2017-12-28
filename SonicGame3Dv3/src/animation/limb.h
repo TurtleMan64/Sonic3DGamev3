@@ -36,5 +36,7 @@ public:
 	void update(float time);
 
 	std::list<TexturedModel*>* getModels();
+
+	//std::string getName();
 };
 #endif

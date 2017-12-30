@@ -8,6 +8,10 @@
 #include "../renderEngine/skymanager.h"
 #include "../engineTester/main.h"
 #include "../entities/player.h"
+#include "../entities/ring.h"
+#include "maths.h"
+#include <random>
+#include <chrono>
 
 extern GLFWwindow* window;
 
@@ -298,6 +302,24 @@ void Input_pollInputs()
 	if (glfwGetKey(window, GLFW_KEY_9) == GLFW_PRESS)
 	{
 		SkyManager::increaseTimeOfDay(-0.5f);
+	}
+	if (glfwGetKey(window, GLFW_KEY_8) == GLFW_PRESS)
+	{
+		float spoutSpd = 3.0f;
+		float anglH = (float)(M_PI * 2 * ((rand()%1024)/1024.0));
+		double randNumber = (*Global::distribution)((*Global::generator));
+		//std::fprintf(stdout, "%f\n", randNumber);
+		float anglV = (float)(toRadians((float)(randNumber * 36.0 + 90.0)));
+
+		float yspd = (float)(spoutSpd*sin(anglV));
+		float hpt = (float)(spoutSpd*cos(anglV));
+
+		float xspd = (float)(hpt*cos(anglH));
+		float zspd = (float)(hpt*sin(anglH));
+
+		Vector3f* spawnPoint = Global::gamePlayer->getPosition();
+		Ring* newRing = new Ring(spawnPoint->x, spawnPoint->y + 10, spawnPoint->z, xspd, yspd, zspd);
+		Main_addEntity(newRing);
 	}
 	if (glfwGetKey(window, GLFW_KEY_J) == GLFW_PRESS)
 	{

@@ -9,6 +9,7 @@ class SkySphere;
 class Light;
 
 #include <string>
+#include <random>
 
 void Main_addEntity(Entity* entityToAdd);
 void Main_deleteEntity(Entity* entityToDelete);
@@ -34,6 +35,8 @@ void Main_deleteAllEntites();
 #define LVL_RR 11
 #define LVL_SHD 12
 
+#define ENTITY_RENDER_DIST 1500.0f
+
 class Global
 {
 public:
@@ -56,5 +59,8 @@ public:
 	static bool unlockedMechaSonic;
 	static bool unlockedDage4;
 	static bool unlockedManiaSonic;
+
+	static std::default_random_engine* generator;
+	static std::normal_distribution<double>* distribution;
 };
 #endif

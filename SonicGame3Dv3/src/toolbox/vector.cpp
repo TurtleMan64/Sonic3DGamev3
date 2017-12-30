@@ -25,10 +25,12 @@ float Vector3f::length() {
 	return (float)sqrt((x * x) + (y * y) + (z * z));
 }
 
-Vector3f Vector3f::normalized() {
+void Vector3f::normalize() {
 	float mag = length();
 
-	return Vector3f(x / mag, y / mag, z / mag);
+	x = x / mag;
+	y = y / mag;
+	z = z / mag;
 }
 
 void Vector3f::neg() {

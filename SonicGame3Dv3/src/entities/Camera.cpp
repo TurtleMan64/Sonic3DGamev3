@@ -4,6 +4,9 @@
 #include "../toolbox/vector.h"
 #include "camera.h"
 #include "../toolbox/input.h"
+#include "../toolbox/maths.h"
+
+#include <cmath>
 
 extern float INPUT_X;
 extern float INPUT_Y;
@@ -24,15 +27,17 @@ Camera::Camera()
 	roll = 0;
 }
 
-void Camera::move()
+void Camera::refresh()
 {
-	position.x += INPUT_X*1.5f;
-	position.z += INPUT_Y*1.5f;
+	float radius = 5;
+	Vector3f newPos(
+		position.x - (float)(cos(toRadians(yaw + 90))*(radius*(cos(toRadians(pitch))))),
+		position.y + (float)(sin(toRadians(pitch + 180))*radius),
+		position.z - (float)(sin(toRadians(yaw + 90))*(radius*(cos(toRadians(pitch))))));
 
-	position.y += INPUT_JUMP;
-
-	yaw += INPUT_X2;
-	pitch += INPUT_Y2;
+	fadePosition.x = newPos.x;
+	fadePosition.y = newPos.y;
+	fadePosition.z = newPos.z;
 }
 
 Vector3f* Camera::getPosition()
@@ -41,7 +46,9 @@ Vector3f* Camera::getPosition()
 }
 void Camera::setPosition(Vector3f* newPos)
 {
-	memcpy(&this->position, newPos, sizeof(Vector3f));
+	position.x = newPos->x;
+	position.y = newPos->y;
+	position.z = newPos->z;
 }
 
 float Camera::getPitch()

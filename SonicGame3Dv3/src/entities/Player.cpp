@@ -76,7 +76,7 @@ void Player::step()
 	previousPos.set(&position);
 	count++;
 	setMovementInputs();
-	//adjustCamera();
+	adjustCamera();
 	checkSkid();
 
 	iFrame = std::max(0, iFrame-1);
@@ -507,7 +507,7 @@ void Player::step()
 	yDisp = 0;
 	zDisp = 0;
 
-	adjustCamera();
+	//adjustCamera();
 
 	animate(); //idea : in animate, when jumping, center the camera at not head height. then add back in the 10 units or whatever you get from jumping
 
@@ -1291,7 +1291,7 @@ void Player::adjustCamera()
 	cameraRadiusTarget = fmin(cameraRadiusZoomOut, cameraRadiusTarget);
 
 	Camera* cam = Global::gameCamera;
-	Vector3f* camPos = cam->getPosition();
+	//Vector3f* camPos = cam->getPosition();
 
 	//if (!firstPerson && !MainGameLoop.freeCamera)
 	//{
@@ -1319,42 +1319,52 @@ void Player::adjustCamera()
 		position.y + currNorm.y*headHeight,
 		position.z + currNorm.z*headHeight);
 
-	Vector3f newCamPos(
+	Vector3f camPos(
 		headPos.x + (float)(cos(toRadians(cam->getYaw() + 90))*(cameraRadius*(cos(toRadians(cam->getPitch()))))),
 		headPos.y - (float)(sin(toRadians(cam->getPitch() + 180))*cameraRadius),
 		headPos.z + (float)(sin(toRadians(cam->getYaw() + 90))*(cameraRadius*(cos(toRadians(cam->getPitch()))))));
 
-	/*
-	if (CollisionChecker.checkCollision(getPosition(), headPos) == true)
-	{
-		Vector3f colPos = CollisionChecker.getCollidePosition();
 
-		Vector3f diff = Vector3f.sub(colPos, getPosition(), null);
+	if (CollisionChecker::checkCollision(position.x, position.y, position.z, headPos.x, headPos.y, headPos.z) == true)
+	{
+		Vector3f* colPos = CollisionChecker::getCollidePosition();
+
+		Vector3f diff;
+
+		diff.x = colPos->x - getX();
+		diff.y = colPos->y - getY();
+		diff.z = colPos->z - getZ();
+
 		float newHeadHeight = diff.length() - 1;
 
-		//System.out.println("headhgith = "+newHeadHeight);
-
-		headPos = new Vector3f(getPosition().getX() + currNorm.x*newHeadHeight,
-			getPosition().getY() + currNorm.y*newHeadHeight,
-			getPosition().getZ() + currNorm.z*newHeadHeight);
+		camPos.set(getX() + currNorm.x*newHeadHeight,
+			getY() + currNorm.y*newHeadHeight,
+			getZ() + currNorm.z*newHeadHeight);
 	}
-	else if (CollisionChecker.checkCollision(headPos, camPos) == true)
+	else if (CollisionChecker::checkCollision(headPos.x, headPos.y, headPos.z, camPos.x, camPos.y, camPos.z) == true)
 	{
-		//System.out.println("collision");
-		Vector3f colPos = CollisionChecker.getCollidePosition();
+		Vector3f* colPos = CollisionChecker::getCollidePosition();
 
-		Vector3f diff = Vector3f.sub(colPos, camPos, null);
-		float newRadius = (cameraRadius - 4) - diff.length();
+		Vector3f diff;
 
-		camPos = new Vector3f(
-			headPos.x + (float)(Math.cos(Math.toRadians(cam.getYaw() + 90))*(newRadius*(Math.cos(Math.toRadians(cam.getPitch()))))),
-			headPos.y - (float)(Math.sin(Math.toRadians(cam.getPitch() + 180))*newRadius),
-			headPos.z + (float)(Math.sin(Math.toRadians(cam.getYaw() + 90))*(newRadius*(Math.cos(Math.toRadians(cam.getPitch()))))));
+		diff.x = colPos->x - headPos.x;
+		diff.y = colPos->y - headPos.y;
+		diff.z = colPos->z - headPos.z;
+
+		float newRadius = diff.length() - 4;
+
+		diff.normalize();
+		diff.scale(newRadius);
+
+		camPos.set(
+			headPos.x + diff.x,
+			headPos.y + diff.y,
+			headPos.z + diff.z);
 
 	}
-	*/
+	
 
-	cam->setPosition(&newCamPos);
+	cam->setPosition(&camPos);
 
 	//if (zoomInput > 0)
 	{

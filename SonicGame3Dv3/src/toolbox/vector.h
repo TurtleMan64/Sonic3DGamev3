@@ -25,7 +25,7 @@ public:
 
 	float length();
 
-	Vector3f normalized();
+	void normalize();
 
 	void neg();
 

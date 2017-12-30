@@ -105,7 +105,6 @@ void Spring::loadStaticModels()
 {
 	if (Spring::models.size() > 0)
 	{
-		//std::fprintf(stdout, "Ring models gone astray");
 		return;
 	}
 
@@ -125,7 +124,7 @@ void Spring::deleteStaticModels()
 	std::fprintf(stdout, "Deleting spring static models...\n");
 	for (auto model : Spring::models)
 	{
-		model->deleteMe(); //delete opengl ids
+		model->deleteMe();
 		delete model;
 		Global::countDelete++;
 	}

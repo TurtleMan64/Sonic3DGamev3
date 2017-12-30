@@ -8,6 +8,7 @@
 #include <list>
 
 #include <ctime>
+#include <random>
 
 #include "main.h"
 #include "../renderEngine/renderEngine.h"
@@ -70,11 +71,16 @@ bool Global::unlockedMechaSonic = true;
 bool Global::unlockedDage4 = true;
 bool Global::unlockedManiaSonic = true;
 
+std::default_random_engine* Global::generator = new std::default_random_engine;
+std::normal_distribution<double>* Global::distribution = new std::normal_distribution<double>(0.0, 1.0);
+
 
 int main()
 {
 	Global::countNew = 0;
 	Global::countDelete = 0;
+
+	srand(0);
 
 	createDisplay();
 
@@ -219,6 +225,7 @@ int main()
 			case STATE_RUNNING:
 			{
 				//game logic
+				Global::gameCamera->refresh();
 				GuiManager::increaseTimer();
 				for (auto e : gameEntities)
 				{
@@ -235,7 +242,7 @@ int main()
 
 			case STATE_CUTSCENE:
 			{
-				//camera.sep;
+				Global::gameCamera->refresh();
 				break;
 			}
 

@@ -10,11 +10,12 @@ private:
 	float pitch;
 	float yaw;
 	float roll;
+	Vector3f fadePosition;
 
 public:
 	Camera();
 
-	void move();
+	void refresh();
 
 	Vector3f* getPosition();
 	void setPosition(Vector3f*);

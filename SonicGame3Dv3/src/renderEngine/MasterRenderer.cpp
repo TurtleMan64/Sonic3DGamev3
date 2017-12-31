@@ -25,7 +25,7 @@ std::list<Entity*> entitiesList;
 
 Matrix4f* projectionMatrix;
 
-const float FOV = 50;
+const float FOV = 50; //vertical fov
 const float NEAR_PLANE = 0.5f;
 const float FAR_PLANE = 15000;
 
@@ -44,9 +44,6 @@ void Master_init()
 	renderer = new EntityRenderer(shader, projectionMatrix);
 	Master_makeProjectionMatrix();
 	Global::countNew++;
-
-	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	Master_disableCulling();
 }

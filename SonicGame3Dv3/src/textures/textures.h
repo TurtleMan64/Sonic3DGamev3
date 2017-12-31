@@ -11,6 +11,9 @@ private:
 
 	float shineDamper;
 	float reflectivity;
+	float scrollX;
+	float scrollY;
+	float glowAmount;
 	int hasTransparency;
 	int useFakeLighting;
 
@@ -33,6 +36,16 @@ public:
 
 	int getUsesFakeLighting();
 	void setUsesFakeLighting(int newUsesFakeLighting);
+
+	float getGlowAmount();
+	void setGlowAmount(float newGlowAmount);
+
+	void setScrollX(float speedX);
+	void setScrollY(float speedY);
+
+	float getScrollX();
+	float getScrollY();
+
 
 	void deleteMe();
 };

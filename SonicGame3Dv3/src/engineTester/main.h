@@ -54,6 +54,7 @@ public:
 	static int bufferTime;
 	static bool shouldRestartLevel;
 	static int gameRingCount;
+	static int gameClock;
 
 	static bool unlockedSonicDoll;
 	static bool unlockedMechaSonic;

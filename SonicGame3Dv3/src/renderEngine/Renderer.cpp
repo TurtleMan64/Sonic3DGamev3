@@ -8,6 +8,7 @@
 #include "../toolbox/vector.h"
 #include "../toolbox/maths.h"
 #include "../models/models.h"
+#include "../engineTester/main.h"
 
 #include <iostream>
 #include <unordered_map>
@@ -23,6 +24,10 @@ EntityRenderer::EntityRenderer(ShaderProgram* shader, Matrix4f* projectionMatrix
 
 void EntityRenderer::renderNEW(std::unordered_map<TexturedModel*, std::list<Entity*>>* entitiesMap)
 {
+	clockTime = Global::gameClock / 60.0f;
+
+	//load fog vars
+
 	for (auto entry : (*entitiesMap))
 	{
 		prepareTexturedModel(entry.first);
@@ -57,6 +62,8 @@ void EntityRenderer::prepareTexturedModel(TexturedModel* model)
 	shader->loadFakeLighting(texture->getUsesFakeLighting());
 	shader->loadShineVariables(texture->getShineDamper(), texture->getReflectivity());
 	shader->loadTransparency(texture->getHasTransparency());
+	shader->loadGlowAmount(texture->getGlowAmount());
+	shader->loadTextureOffsets(clockTime*texture->getScrollX(), clockTime*texture->getScrollY());
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, (*(*model).getTexture()).getID());
 }

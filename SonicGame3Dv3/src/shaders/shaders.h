@@ -26,6 +26,9 @@ private:
 	int location_useFakeLighting;
 	int location_hasTransparency;
 	int location_skyColour;
+	int location_texOffX;
+	int location_texOffY;
+	int location_glowAmount;
 
 public:
 	ShaderProgram(char*, char*);
@@ -49,6 +52,10 @@ public:
 	void loadFakeLighting(int fakeLighting);
 
 	void loadTransparency(int transparency);
+
+	void loadGlowAmount(float glowAmount);
+
+	void loadTextureOffsets(float offX, float offY);
 
 	void loadSkyColour(float r, float g, float b);
 

@@ -16,6 +16,7 @@ ModelTexture::ModelTexture(GLuint texID)
 	this->reflectivity = 0;
 	this->hasTransparency = 0;
 	this->useFakeLighting = 0;
+	this->glowAmount = 0;
 }
 
 GLuint ModelTexture::getID()
@@ -62,6 +63,36 @@ int ModelTexture::getUsesFakeLighting()
 void ModelTexture::setUsesFakeLighting(int newUseFakeLighting)
 {
 	this->useFakeLighting = newUseFakeLighting;
+}
+
+float ModelTexture::getGlowAmount()
+{
+	return glowAmount;
+}
+
+void ModelTexture::setGlowAmount(float newGlowAmount)
+{
+	this->glowAmount = newGlowAmount;
+}
+
+void ModelTexture::setScrollX(float speedX)
+{
+	scrollX = speedX;
+}
+
+void ModelTexture::setScrollY(float speedY)
+{
+	scrollY = speedY;
+}
+
+float ModelTexture::getScrollX()
+{
+	return scrollX;
+}
+
+float ModelTexture::getScrollY()
+{
+	return scrollY;
 }
 
 void ModelTexture::deleteMe()

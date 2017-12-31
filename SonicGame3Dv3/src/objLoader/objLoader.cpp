@@ -273,6 +273,9 @@ void parseMtl(std::string filePath, std::string fileName)
 	float currentReflectivityValue = 0.0f;
 	float currentTransparencyValue = 1.0f;
 	float currentFakeLightingValue = 1.0f;
+	float currentGlowAmountValue = 0.0f;
+	float currentScrollXValue = 0.0f;
+	float currentScrollYValue = 0.0f;
 
 	while (!file.eof())
 	{
@@ -294,6 +297,9 @@ void parseMtl(std::string filePath, std::string fileName)
 				currentReflectivityValue = 0.0f;
 				currentTransparencyValue = 1.0f;
 				currentFakeLightingValue = 1.0f;
+				currentGlowAmountValue = 0.0f;
+				currentScrollXValue = 0.0f;
+				currentScrollYValue = 0.0f;
 			}
 			else if (strcmp(lineSplit[0], "\tmap_Kd") == 0) //end of material found, generate it with all its attrributes
 			{
@@ -312,6 +318,9 @@ void parseMtl(std::string filePath, std::string fileName)
 				{
 					newTexture.setUsesFakeLighting(1);
 				}
+				newTexture.setGlowAmount(currentGlowAmountValue);
+				newTexture.setScrollX(currentScrollXValue);
+				newTexture.setScrollY(currentScrollYValue);
 				modelTexturesList.push_back(newTexture); //put a copy of newTexture into the list
 			}
 			else if (strcmp(lineSplit[0], "\tNs") == 0)
@@ -329,6 +338,18 @@ void parseMtl(std::string filePath, std::string fileName)
 			else if (strcmp(lineSplit[0], "\td") == 0)
 			{
 				currentFakeLightingValue = std::stof(lineSplit[1]);
+			}
+			else if (strcmp(lineSplit[0], "\tglow") == 0)
+			{
+				currentGlowAmountValue = std::stof(lineSplit[1]);
+			}
+			else if (strcmp(lineSplit[0], "\tscrollX") == 0)
+			{
+				currentScrollXValue = std::stof(lineSplit[1]);
+			}
+			else if (strcmp(lineSplit[0], "\tscrollY") == 0)
+			{
+				currentScrollYValue = std::stof(lineSplit[1]);
 			}
 		}
 

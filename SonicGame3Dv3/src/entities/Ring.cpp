@@ -170,6 +170,8 @@ void Ring::loadStaticModels()
 	}
 	delete newModels;
 	Global::countDelete++;
+
+
 }
 
 void Ring::deleteStaticModels()

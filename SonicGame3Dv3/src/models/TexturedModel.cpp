@@ -30,6 +30,9 @@ TexturedModel::TexturedModel(RawModel* model, ModelTexture* texture)
 	this->texture.setReflectivity(texture->getReflectivity());
 	this->texture.setHasTransparency(texture->getHasTransparency());
 	this->texture.setUsesFakeLighting(texture->getUsesFakeLighting());
+	this->texture.setGlowAmount(texture->getGlowAmount());
+	this->texture.setScrollX(texture->getScrollX());
+	this->texture.setScrollY(texture->getScrollY());
 }
 
 RawModel* TexturedModel::getRawModel()

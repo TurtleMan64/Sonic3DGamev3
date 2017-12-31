@@ -1022,6 +1022,9 @@ void Player::spindash(int timer)
 	float totalSpd = (float)sqrt(xspd*xspd + zspd*zspd);
 
 	float factor = (float)std::fmin(1, 6.5f / totalSpd);
+
+	factor = (float)std::fmax(0.9f, factor);
+
 	xVelGround += dx*factor;
 	zVelGround += dz*factor;
 

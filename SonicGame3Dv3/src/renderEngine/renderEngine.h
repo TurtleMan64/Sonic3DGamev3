@@ -57,6 +57,8 @@ void Master_makeProjectionMatrix();
 class EntityRenderer
 {
 private:
+	float clockTime;
+
 	ShaderProgram* shader;
 
 	void prepareTexturedModel(TexturedModel* model);

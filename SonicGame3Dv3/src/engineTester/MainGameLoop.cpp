@@ -65,6 +65,7 @@ int Global::bufferTime = -1;
 bool Global::shouldRestartLevel = false;
 std::string Global::levelName = "";
 int Global::gameRingCount = 0;
+int Global::gameClock = 0;
 
 bool Global::unlockedSonicDoll = true;
 bool Global::unlockedMechaSonic = true;
@@ -232,6 +233,7 @@ int main()
 					e.first->step();
 				}
 				skySphere.step();
+				Global::gameClock++;
 				break;
 			}
 

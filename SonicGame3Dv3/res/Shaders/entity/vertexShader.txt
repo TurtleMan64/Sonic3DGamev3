@@ -17,6 +17,10 @@ uniform vec3 lightPosition;
 
 uniform float useFakeLighting;
 
+//for use in animation of the texture coordinates
+uniform float texOffX;
+uniform float texOffY;
+
 const float density = 0.00005;
 const float gradient = 2.0;
 
@@ -25,7 +29,9 @@ void main(void)
 	vec4 worldPosition = transformationMatrix * vec4(position, 1.0);
 	vec4 positionRelativeToCam = viewMatrix * worldPosition;
 	gl_Position = projectionMatrix * positionRelativeToCam;
-	pass_textureCoords = textureCoords;
+	
+	pass_textureCoords.x = textureCoords.x+texOffX;
+	pass_textureCoords.y = textureCoords.y+texOffY;
 	
 	vec3 editedNormal = normal;
 	if (useFakeLighting > 0.5)

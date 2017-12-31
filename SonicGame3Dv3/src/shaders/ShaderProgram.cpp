@@ -83,6 +83,11 @@ void ShaderProgram::loadFakeLighting(int fakeLighting)
 	loadFloat(location_useFakeLighting, (float)fakeLighting);
 }
 
+void ShaderProgram::loadTransparency(int transparency)
+{
+	loadFloat(location_hasTransparency, (float)transparency);
+}
+
 void ShaderProgram::loadSkyColour(float r, float g, float b)
 {
 	Vector3f newColour(r, g, b);
@@ -111,6 +116,7 @@ void ShaderProgram::getAllUniformLocations()
 	location_shineDamper = getUniformLocation("shineDamper");
 	location_reflectivity = getUniformLocation("reflectivity");
 	location_useFakeLighting = getUniformLocation("useFakeLighting");
+	location_hasTransparency = getUniformLocation("hasTransparency");
 	location_skyColour = getUniformLocation("skyColour");
 }
 

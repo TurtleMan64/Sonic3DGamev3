@@ -46,16 +46,17 @@ void EntityRenderer::prepareTexturedModel(TexturedModel* model)
 	glEnableVertexAttribArray(2);
 
 	ModelTexture* texture = model->getTexture();
-	if (texture->getHasTransparency() != 0)
+	//if (texture->getHasTransparency() != 0)
 	{
-		Master_disableCulling();
+		//Master_disableCulling();
 	}
-	else
+	//else
 	{
-		Master_enableCulling();
+		//Master_enableCulling();
 	}
 	shader->loadFakeLighting(texture->getUsesFakeLighting());
 	shader->loadShineVariables(texture->getShineDamper(), texture->getReflectivity());
+	shader->loadTransparency(texture->getHasTransparency());
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, (*(*model).getTexture()).getID());
 }

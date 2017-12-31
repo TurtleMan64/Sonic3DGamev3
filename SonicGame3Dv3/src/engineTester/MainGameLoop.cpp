@@ -262,8 +262,8 @@ int main()
 		{
 			Master_processEntity(e.first);
 		}
-		Master_processEntity(&stage);
 		Master_processEntity(&skySphere);
+		Master_processEntity(&stage);
 
 		Master_render(&cam);
 		Master_clearEntities();

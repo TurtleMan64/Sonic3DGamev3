@@ -24,6 +24,7 @@ private:
 	int location_shineDamper;
 	int location_reflectivity;
 	int location_useFakeLighting;
+	int location_hasTransparency;
 	int location_skyColour;
 
 public:
@@ -46,6 +47,8 @@ public:
 	void loadShineVariables(float damper, float reflectivity);
 
 	void loadFakeLighting(int fakeLighting);
+
+	void loadTransparency(int transparency);
 
 	void loadSkyColour(float r, float g, float b);
 

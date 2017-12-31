@@ -302,11 +302,11 @@ void parseMtl(std::string filePath, std::string fileName)
 				ModelTexture newTexture(Loader_loadTexture(fname)); //generate new texture
 				newTexture.setShineDamper(currentShineDamperValue);
 				newTexture.setReflectivity(currentReflectivityValue);
-				newTexture.setHasTransparency(0);
+				newTexture.setHasTransparency(1);
 				newTexture.setUsesFakeLighting(0);
-				if (currentTransparencyValue > 0.5f)
+				if (currentTransparencyValue > 0.0f)
 				{
-					newTexture.setHasTransparency(1);
+					newTexture.setHasTransparency(0);
 				}
 				if (currentFakeLightingValue < 1.0f)
 				{

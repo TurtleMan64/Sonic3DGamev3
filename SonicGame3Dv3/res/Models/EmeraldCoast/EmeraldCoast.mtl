@@ -485,6 +485,7 @@ newmtl material_B9567C.001
 	Ks 1.000000 1.000000 1.000000
 	Ke 0.000000 0.000000 0.000000
 	Ni 0.05
+	Tr 0
 	d 1.000000
 	illum 2
 	map_Kd m256_ext02.png

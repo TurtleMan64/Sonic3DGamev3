@@ -153,7 +153,9 @@ int main()
 	SkyManager::initSkyManager(nullptr, nullptr);
 	SkyManager::setTimeOfDay(155.5f);
 
-	lightSun.getPosition()->y = 100000;
+	lightSun.getPosition()->x = 0;
+	lightSun.getPosition()->y = 0;
+	lightSun.getPosition()->z = 0;
 	lightMoon.getPosition()->y = -100000;
 
 

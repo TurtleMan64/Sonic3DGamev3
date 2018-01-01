@@ -43,7 +43,7 @@ void main(void)
 	vec3 diffuse = max(brightness * lightColour, ambientLight * lightColour);
 	
 	vec3 unitVectorToCamera = normalize(toCameraVector);
-	vec3 lightDirection = -unitVectorToCamera;
+	vec3 lightDirection = -unitLightVector;
 	vec3 reflectedLightDirection = reflect(lightDirection, unitNormal);
 	
 	float specularFactor = dot(reflectedLightDirection, unitVectorToCamera);

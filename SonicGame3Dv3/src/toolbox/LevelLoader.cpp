@@ -17,6 +17,8 @@
 #include "../entities/camera.h"
 #include "../guis/guimanager.h"
 #include "../entities/spring.h"
+#include "../entities/dashpad.h"
+#include "../entities/teleportzone.h"
 
 float toFloat(char* input);
 int toInt(char* input);
@@ -336,9 +338,21 @@ void processLine(char** dat)
 			Spring* spring = new Spring(
 				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
 				toFloat(dat[4]), toFloat(dat[5]),                  //rotation
-				toFloat(dat[6]), toInt(dat[7]));                 //power, time
+				toFloat(dat[6]), toInt(dat[7]));                   //power, time
 			Global::countNew++;
 			Main_addEntity(spring);
+			return;
+		}
+
+		case 2: //Dashpad
+		{
+			Dashpad::loadStaticModels();
+			Dashpad* dashpad = new Dashpad(
+				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
+				toFloat(dat[4]), toFloat(dat[5]),                  //rotation
+				toFloat(dat[6]));                                  //power
+			Global::countNew++;
+			Main_addEntity(dashpad);
 			return;
 		}
 		
@@ -359,6 +373,17 @@ void processLine(char** dat)
 			SkySphere::loadModels(dat[1], dat[2], dat[3]);
 			Global::gameSkySphere->setScale(toFloat(dat[4]));
 			Global::gameSkySphere->setVisible(true);
+			return;
+		}
+
+		case 8: //Teleport Zone
+		{
+			TeleportZone* zone = new TeleportZone(
+				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]),
+				toFloat(dat[4]), toFloat(dat[5]), toFloat(dat[6]),
+				toFloat(dat[7]), toFloat(dat[8]), toFloat(dat[9]));
+			Global::countNew++;
+			Main_addEntity(zone);
 			return;
 		}
 
@@ -386,4 +411,5 @@ void freeAllStaticModels()
 	Player::deleteStaticModels();
 	SkySphere::deleteModels();
 	Spring::deleteStaticModels();
+	Dashpad::deleteStaticModels();
 }

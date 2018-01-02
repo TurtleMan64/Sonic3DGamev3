@@ -69,7 +69,7 @@ void SkyManager::calculateValues()
 {
 	timeOfDay = (float)fmod(timeOfDay + 360, 360);
 	sunAngle = (float)toRadians(timeOfDay);
-	float sunPeakAngle = 60; //70
+	float sunPeakAngle = 60;
 	float sunVangle = (float)toRadians(sunPeakAngle*sin(sunAngle));
 	float sunHangle = (float)toRadians(90 * cos(sunAngle));
 	float moonVangle = (float)toRadians(sunPeakAngle*(float)sin(sunAngle - M_PI));

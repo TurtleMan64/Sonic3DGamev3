@@ -230,6 +230,8 @@ public:
 
 	float getHitboxVertical();
 
+	void stopMoving();
+
 private:
 	void adjustCamera();
 

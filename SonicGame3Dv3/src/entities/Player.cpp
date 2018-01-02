@@ -1762,3 +1762,14 @@ float Player::getHitboxVertical()
 {
 	return 6;
 }
+
+void  Player::stopMoving()
+{
+	xVel = 0;
+	yVel = 0;
+	zVel = 0;
+	xVelAir = 0;
+	zVelAir = 0;
+	xVelGround = 0;
+	zVelGround = 0;
+}

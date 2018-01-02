@@ -420,14 +420,14 @@ void Player::step()
 	if (getY() < -5)
 	{
 		inWater = true;
-		//waterHeight = 0;
+		waterHeight = 0;
 	}
 
 	if (getY() < -100)
 	{
-		//MainGameLoop.shouldRestartLevel = true;
+		Global::shouldRestartLevel = true;
 		//AudioSources.play(34, getPosition());
-		//return;
+		return;
 	}
 
 	if (!inWater && inWaterPrevious)
@@ -1763,7 +1763,7 @@ float Player::getHitboxVertical()
 	return 6;
 }
 
-void  Player::stopMoving()
+void Player::stopMoving()
 {
 	xVel = 0;
 	yVel = 0;
@@ -1772,4 +1772,10 @@ void  Player::stopMoving()
 	zVelAir = 0;
 	xVelGround = 0;
 	zVelGround = 0;
+}
+
+void Player::setInWater(float height)
+{
+	inWater = true;
+	waterHeight = height;
 }

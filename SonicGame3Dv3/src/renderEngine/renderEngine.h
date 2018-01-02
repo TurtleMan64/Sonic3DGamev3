@@ -36,14 +36,16 @@ void Loader_deleteTexture(GLuint texID);
 void Loader_deleteTexturedModels(std::list<TexturedModel*>* tm);
 void Loader_printInfo();
 
-//Master Rebderer
+//Master Renderer
 void Master_render(Camera* camera);
 
 void Master_cleanUp();
 
 void Master_processEntity(Entity* entity);
+void Master_processTransparentEntity(Entity* entity);
 
 void Master_clearEntities();
+void Master_clearTransparentEntities();
 
 void Master_init();
 

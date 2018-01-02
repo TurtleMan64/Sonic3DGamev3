@@ -21,6 +21,7 @@ ShaderProgram* shader;
 EntityRenderer* renderer;
 
 std::unordered_map<TexturedModel*, std::list<Entity*>> entitiesMap;
+std::unordered_map<TexturedModel*, std::list<Entity*>> entitiesTransparentMap;
 std::list<Entity*> entitiesList;
 
 Matrix4f* projectionMatrix;
@@ -34,6 +35,7 @@ float GREEN = 0.95f;
 float BLUE = 1.0f;
 
 void prepare();
+void prepareTransparentRender();
 
 void Master_init()
 {
@@ -60,6 +62,9 @@ void Master_render(Camera* camera)
 	shader->loadViewMatrix(camera);
 
 	renderer->renderNEW(&entitiesMap);
+
+	prepareTransparentRender();
+	renderer->renderNEW(&entitiesTransparentMap);
 	//for (Entity* entry : entitiesList)
 	{
 		//std::fprintf(stdout, "rendering %s\n", entry->getName().c_str());
@@ -126,11 +131,31 @@ void Master_processEntity(Entity* entity)
 	}
 }
 
+void Master_processTransparentEntity(Entity* entity)
+{
+	if (entity->getVisible() == false)
+	{
+		return;
+	}
+
+	std::list<TexturedModel*>* modellist = entity->getModels();
+	for (TexturedModel* entityModel : (*modellist))
+	{
+		std::list<Entity*>* list = &entitiesTransparentMap[entityModel];
+		list->push_back(entity);
+	}
+}
+
 void Master_clearEntities()
 {
 	//entitiesList.clear();
 
 	entitiesMap.clear();
+}
+
+void Master_clearTransparentEntities()
+{
+	entitiesTransparentMap.clear();
 }
 
 void prepare()
@@ -143,7 +168,15 @@ void prepare()
 	glDepthMask(true);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glClearColor(RED, GREEN, BLUE, 1);
+}
 
+void prepareTransparentRender()
+{
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+	glEnable(GL_DEPTH_TEST);
+	glDepthMask(false);
 }
 
 void Master_cleanUp()

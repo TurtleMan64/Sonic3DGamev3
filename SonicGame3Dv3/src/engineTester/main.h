@@ -15,6 +15,10 @@ void Main_addEntity(Entity* entityToAdd);
 void Main_deleteEntity(Entity* entityToDelete);
 void Main_deleteAllEntites();
 
+void Main_addTransparentEntity(Entity* entityToAdd);
+void Main_deleteTransparentEntity(Entity* entityToDelete);
+void Main_deleteAllTransparentEntites();
+
 #define STATE_PAUSED 0
 #define STATE_RUNNING 1
 #define STATE_EXITING 2

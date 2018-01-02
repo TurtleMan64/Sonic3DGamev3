@@ -19,6 +19,8 @@
 #include "../entities/spring.h"
 #include "../entities/dashpad.h"
 #include "../entities/teleportzone.h"
+#include "../entities/EmeraldCoast/ecwaterfall.h"
+#include "../entities/EmeraldCoast/ecflatwater.h"
 
 float toFloat(char* input);
 int toInt(char* input);
@@ -35,6 +37,8 @@ void LevelLoader_loadTitle()
 	CollisionChecker::deleteAllCollideModels();
 
 	Main_deleteAllEntites();
+
+	Main_deleteAllTransparentEntites();
 }
 
 void LevelLoader_loadLevel(std::string levelFilename)
@@ -57,6 +61,7 @@ void LevelLoader_loadLevel(std::string levelFilename)
 
 	freeAllStaticModels();
 	Main_deleteAllEntites();
+	Main_deleteAllTransparentEntites();
 
 	if (stageFault == 1)
 	{
@@ -387,6 +392,26 @@ void processLine(char** dat)
 			return;
 		}
 
+		case 13: //Emerald Coast Double-Waterfall
+		{
+			EC_Waterfall::loadStaticModels();
+			EC_Waterfall* waterfall = new EC_Waterfall(
+				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
+				toFloat(dat[4]), toFloat(dat[5]));                 //rotation, scale
+			Global::countNew++;
+			Main_addTransparentEntity(waterfall);
+			return;
+		}
+
+		case 14: //Emerald Coast Flat Water
+		{
+			EC_FlatWater::loadStaticModels();
+			EC_FlatWater* waterfall = new EC_FlatWater();
+			Global::countNew++;
+			Main_addTransparentEntity(waterfall);
+			return;
+		}
+
 		default:
 		{
 			return;
@@ -412,4 +437,6 @@ void freeAllStaticModels()
 	SkySphere::deleteModels();
 	Spring::deleteStaticModels();
 	Dashpad::deleteStaticModels();
+	EC_Waterfall::deleteStaticModels();
+	EC_FlatWater::deleteStaticModels();
 }

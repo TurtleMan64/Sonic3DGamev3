@@ -42,6 +42,8 @@ std::unordered_map<Entity*, Entity*> gameEntities;
 std::list<Entity*> gameEntitiesToAdd;
 std::list<Entity*> gameEntitiesToDelete;
 
+std::unordered_map<Entity*, Entity*> gameTransparentEntities;
+
 Camera* Global::gameCamera;
 Player* Global::gamePlayer;
 Stage* Global::gameStage;
@@ -234,6 +236,10 @@ int main()
 				{
 					e.first->step();
 				}
+				for (auto e : gameTransparentEntities)
+				{
+					e.first->step();
+				}
 				skySphere.step();
 				Global::gameClock++;
 				break;
@@ -266,11 +272,16 @@ int main()
 		{
 			Master_processEntity(e.first);
 		}
+		for (auto e : gameTransparentEntities)
+		{
+			Master_processTransparentEntity(e.first);
+		}
 		Master_processEntity(&skySphere);
 		Master_processEntity(&stage);
 
 		Master_render(&cam);
 		Master_clearEntities();
+		Master_clearTransparentEntities();
 
 		GuiManager::refresh();
 		TextMaster::render();
@@ -339,4 +350,27 @@ void Main_deleteAllEntites()
 		Global::countDelete++;
 	}
 	gameEntities.clear();
+}
+
+//Transparent entities shouldn't create new transparent entities from within their step function
+void Main_addTransparentEntity(Entity* entityToAdd)
+{
+	gameTransparentEntities.insert(std::pair<Entity*, Entity*>(entityToAdd, entityToAdd));
+}
+
+void Main_deleteTransparentEntity(Entity* entityToDelete)
+{
+	gameTransparentEntities.erase(entityToDelete);
+	delete entityToDelete;
+	Global::countDelete++;
+}
+
+void Main_deleteAllTransparentEntites()
+{
+	for (auto entityToDelete : gameTransparentEntities)
+	{
+		delete entityToDelete.first;
+		Global::countDelete++;
+	}
+	gameTransparentEntities.clear();
 }

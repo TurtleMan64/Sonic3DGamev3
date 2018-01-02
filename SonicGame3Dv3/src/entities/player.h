@@ -168,7 +168,7 @@ private:
 
 	bool inWater = false;
 	bool inWaterPrevious = false;
-	const float waterHeight = 0;
+	float waterHeight = 0;
 
 	bool isGettingExternallyMoved = false;
 	float xDisp = 0;
@@ -231,6 +231,8 @@ public:
 	float getHitboxVertical();
 
 	void stopMoving();
+
+	void setInWater(float height);
 
 private:
 	void adjustCamera();

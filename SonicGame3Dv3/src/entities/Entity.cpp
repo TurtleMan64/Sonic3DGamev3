@@ -166,5 +166,5 @@ Matrix4f* Entity::getTransformationMatrix()
 
 std::string Entity::getName()
 {
-	return "blank entity";
+	return "";
 }

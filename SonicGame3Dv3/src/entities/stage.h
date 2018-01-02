@@ -24,6 +24,6 @@ public:
 
 	static void deleteModels();
 
-	//std::string getName();
+	std::string getName();
 };
 #endif

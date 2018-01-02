@@ -89,3 +89,9 @@ void EC_Waterfall::deleteStaticModels()
 
 	EC_Waterfall::models.clear();
 }
+
+
+std::string EC_Waterfall::getName()
+{
+	return "EC_Waterfall";
+}

@@ -1,20 +1,20 @@
-#ifndef ECWATERFALL_H
-#define ECWATERFALL_H
+#ifndef LOWQUALITYWATER_H
+#define LOWQUALITYWATER_H
 
 class TexturedModel;
 
 #include <list>
-#include "../entities.h"
+#include "entities.h"
+#include <string>
 
 
-class EC_Waterfall : public Entity
+class LowQualityWater : public Entity
 {
 private:
 	static std::list<TexturedModel*> models;
 
 public:
-	EC_Waterfall();
-	EC_Waterfall(float x, float y, float z, float rotY, float rotZ);
+	LowQualityWater();
 
 	void step();
 

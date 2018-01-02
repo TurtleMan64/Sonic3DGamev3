@@ -21,6 +21,7 @@
 #include "../entities/teleportzone.h"
 #include "../entities/EmeraldCoast/ecwaterfall.h"
 #include "../entities/EmeraldCoast/ecflatwater.h"
+#include "../entities/lowqualitywater.h"
 
 float toFloat(char* input);
 int toInt(char* input);
@@ -406,9 +407,18 @@ void processLine(char** dat)
 		case 14: //Emerald Coast Flat Water
 		{
 			EC_FlatWater::loadStaticModels();
-			EC_FlatWater* waterfall = new EC_FlatWater();
+			EC_FlatWater* water = new EC_FlatWater();
 			Global::countNew++;
-			Main_addTransparentEntity(waterfall);
+			Main_addTransparentEntity(water);
+			return;
+		}
+
+		case 37: //Low quality water
+		{
+			LowQualityWater::loadStaticModels();
+			LowQualityWater* water = new LowQualityWater();
+			Global::countNew++;
+			Main_addTransparentEntity(water);
 			return;
 		}
 
@@ -439,4 +449,5 @@ void freeAllStaticModels()
 	Dashpad::deleteStaticModels();
 	EC_Waterfall::deleteStaticModels();
 	EC_FlatWater::deleteStaticModels();
+	LowQualityWater::deleteStaticModels();
 }

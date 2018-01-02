@@ -52,6 +52,7 @@ void Master_init()
 
 void Master_render(Camera* camera)
 {
+	//std::fprintf(stdout, "render START -------------------------------------------------\n");
 	prepare();
 	shader->start();
 	RED = SkyManager::getFogRed();

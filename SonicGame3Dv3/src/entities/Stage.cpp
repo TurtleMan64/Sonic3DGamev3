@@ -70,3 +70,8 @@ void Stage::deleteModels()
 
 	Stage::models.clear();
 }
+
+std::string Stage::getName()
+{
+	return "stage";
+}

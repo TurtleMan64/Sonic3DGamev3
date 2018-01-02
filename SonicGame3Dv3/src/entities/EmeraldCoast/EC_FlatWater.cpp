@@ -91,3 +91,8 @@ void EC_FlatWater::deleteStaticModels()
 
 	EC_FlatWater::models.clear();
 }
+
+std::string EC_FlatWater::getName()
+{
+	return "EC_FlatWater";
+}

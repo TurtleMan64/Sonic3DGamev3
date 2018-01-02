@@ -36,6 +36,10 @@ void EntityRenderer::renderNEW(std::unordered_map<TexturedModel*, std::list<Enti
 		for (Entity* entity : (*entityList))
 		{
 			prepareInstance(entity);
+			//if (entity->getName() != "")
+			//{
+				//std::fprintf(stdout, "rendering %s\n", entity->getName().c_str());
+			//}
 			glDrawElements(GL_TRIANGLES, (entry.first)->getRawModel()->getVertexCount(), GL_UNSIGNED_INT, 0);
 		}
 		unbindTexturedModel();

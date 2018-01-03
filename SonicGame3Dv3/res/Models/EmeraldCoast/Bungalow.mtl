@@ -1,0 +1,79 @@
+# Blender MTL File: 'None'
+# Material Count: 7
+
+newmtl material_138
+Ns 19.607843
+Ka 0.600000 0.600000 0.600000
+Kd 0.600000 0.600000 0.600000
+Ks 0.900000 0.900000 0.900000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd E:\JavaWorkspace\SonicGame3Dv2\res\Models\EmeraldCoast\sea1_23.png
+
+newmtl material_139
+Ns 19.607843
+Ka 0.600000 0.600000 0.600000
+Kd 0.600000 0.600000 0.600000
+Ks 0.900000 0.900000 0.900000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd E:\JavaWorkspace\SonicGame3Dv2\res\Models\EmeraldCoast\4a3b31af.png
+
+newmtl material_140
+Ns 19.607843
+Ka 0.600000 0.600000 0.600000
+Kd 0.600000 0.600000 0.600000
+Ks 0.900000 0.900000 0.900000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd E:\JavaWorkspace\SonicGame3Dv2\res\Models\EmeraldCoast\sea1_22.png
+
+newmtl material_141
+Ns 19.607843
+Ka 0.600000 0.600000 0.600000
+Kd 0.600000 0.600000 0.600000
+Ks 0.900000 0.900000 0.900000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd E:\JavaWorkspace\SonicGame3Dv2\res\Models\EmeraldCoast\wood.png
+
+newmtl material_142
+Ns 19.607843
+Ka 0.600000 0.600000 0.600000
+Kd 0.600000 0.600000 0.600000
+Ks 0.900000 0.900000 0.900000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd E:\JavaWorkspace\SonicGame3Dv2\res\Models\EmeraldCoast\b07cc196.png
+
+newmtl material_143
+Ns 19.607843
+Ka 0.600000 0.600000 0.600000
+Kd 0.600000 0.600000 0.600000
+Ks 0.900000 0.900000 0.900000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd E:\JavaWorkspace\SonicGame3Dv2\res\Models\EmeraldCoast\wood2.png
+
+newmtl material_144
+Ns 19.607843
+Ka 0.600000 0.600000 0.600000
+Kd 0.600000 0.600000 0.600000
+Ks 0.900000 0.900000 0.900000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd E:\JavaWorkspace\SonicGame3Dv2\res\Models\EmeraldCoast\20a8a5ad.png

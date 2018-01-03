@@ -1,4 +1,4 @@
-#include <math.h>
+#include <cmath>
 #include <list>
 
 #include "triangle3d.h"
@@ -6,6 +6,7 @@
 #include "collisionmodel.h"
 #include "../engineTester/main.h"
 #include "quadtreenode.h"
+#include "../toolbox/maths.h"
 
 
 CollisionModel::CollisionModel()
@@ -90,13 +91,59 @@ void CollisionModel::transformModel(CollisionModel* targetModel, Vector3f* trans
 //makes a collision model be the transformed version of this collision model
 void CollisionModel::transformModel(CollisionModel* targetModel, Vector3f* translate, float yRot)
 {
+	float offX = translate->x;
+	float offY = translate->y;
+	float offZ = translate->z;
 
+	float angleRad = toRadians(yRot);
+	float cosAng = (float)cos(angleRad);
+	float sinAng = (float)sin(angleRad);
+
+	targetModel->deleteMe();
+
+	for (Triangle3D* tri : triangles)
+	{
+		float xDiff = tri->p1X;
+		float zDiff = tri->p1Z;
+		Vector3f newP1(offX + (xDiff*cosAng - zDiff*sinAng), offY + tri->p1Y, offZ + (zDiff*cosAng + xDiff*sinAng));
+
+		xDiff = tri->p2X;
+		zDiff = tri->p2Z;
+		Vector3f newP2(offX + (xDiff*cosAng - zDiff*sinAng), offY + tri->p2Y, offZ + (zDiff*cosAng + xDiff*sinAng));
+
+		xDiff = tri->p3X;
+		zDiff = tri->p3Z;
+		Vector3f newP3(offX + (xDiff*cosAng - zDiff*sinAng), offY + tri->p3Y, offZ + (zDiff*cosAng + xDiff*sinAng));
+
+		Triangle3D* newTri = new Triangle3D(&newP1, &newP2, &newP3, tri->type, tri->sound, tri->particle);
+
+		targetModel->triangles.push_back(newTri);
+	}
+
+	targetModel->generateMinMaxValues();
 }
 
 //makes a collision model be the transformed version of this collision model
 void CollisionModel::transformModel(CollisionModel* targetModel, Vector3f* translate)
 {
+	float offX = translate->x;
+	float offY = translate->y;
+	float offZ = translate->z;
 
+	targetModel->deleteMe();
+
+	for (Triangle3D* tri : triangles)
+	{
+		Vector3f newP1(offX + tri->p1X, offY + tri->p1Y, offZ + tri->p1Z);
+		Vector3f newP2(offX + tri->p2X, offY + tri->p2Y, offZ + tri->p2Z);
+		Vector3f newP3(offX + tri->p3X, offY + tri->p3Y, offZ + tri->p3Z);
+
+		Triangle3D* newTri = new Triangle3D(&newP1, &newP2, &newP3, tri->type, tri->sound, tri->particle);
+
+		targetModel->triangles.push_back(newTri);
+	}
+
+	targetModel->generateMinMaxValues();
 }
 
 void CollisionModel::deleteMe()

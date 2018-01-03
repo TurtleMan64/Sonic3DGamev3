@@ -8,6 +8,7 @@
 #include "../renderEngine/skymanager.h"
 #include "../engineTester/main.h"
 #include "../entities/player.h"
+#include "../entities/camera.h"
 #include "../entities/ring.h"
 #include "maths.h"
 #include <random>
@@ -271,6 +272,10 @@ void Input_pollInputs()
 	{
 		INPUT_START = true;
 	}
+	if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS)
+	{
+		INPUT_SHOULDER = true;
+	}
 
 	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
 	{
@@ -327,6 +332,15 @@ void Input_pollInputs()
 		{
 			Global::gamePlayer->goUp();
 		}
+	}
+
+	if (INPUT_SHOULDER && !INPUT_PREVIOUS_SHOULDER)
+	{
+		std::fprintf(stdout, "Time of day: %f\n", SkyManager::getTimeOfDay());
+		std::fprintf(stdout, "[%f, %f, %f]\n", Global::gamePlayer->getPosition()->x, Global::gamePlayer->getPosition()->y, Global::gamePlayer->getPosition()->z);
+		std::fprintf(stdout, "player rot = %f\n", Global::gamePlayer->getRotY());
+		std::fprintf(stdout, "cam yaw: %f,   cam pitch: %f\n", Global::gameCamera->getYaw(), Global::gameCamera->getPitch());
+		std::fprintf(stdout, "\n");
 	}
 
 	if (tabInput && !tabInputPrevious)

@@ -22,6 +22,7 @@
 #include "../entities/EmeraldCoast/ecwaterfall.h"
 #include "../entities/EmeraldCoast/ecflatwater.h"
 #include "../entities/lowqualitywater.h"
+#include "../entities/EmeraldCoast/ecchair.h"
 
 float toFloat(char* input);
 int toInt(char* input);
@@ -422,6 +423,16 @@ void processLine(char** dat)
 			return;
 		}
 
+		case 38: //Emerald Coast Chair
+		{
+			EC_Chair::loadStaticModels();
+			EC_Chair* chair = new EC_Chair(toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
+										   toFloat(dat[4]));                                  //rotation
+			Global::countNew++;
+			Main_addEntity(chair);
+			return;
+		}
+
 		default:
 		{
 			return;
@@ -450,4 +461,5 @@ void freeAllStaticModels()
 	EC_Waterfall::deleteStaticModels();
 	EC_FlatWater::deleteStaticModels();
 	LowQualityWater::deleteStaticModels();
+	EC_Chair::deleteStaticModels();
 }

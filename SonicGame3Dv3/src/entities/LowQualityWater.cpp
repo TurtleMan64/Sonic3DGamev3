@@ -16,9 +16,14 @@ std::list<TexturedModel*> LowQualityWater::models;
 
 LowQualityWater::LowQualityWater()
 {
-	this->position.x = 0;
+
+}
+
+LowQualityWater::LowQualityWater(float x, float z)
+{
+	this->position.x = x;
 	this->position.y = -1;
-	this->position.z = 0;
+	this->position.z = z;
 	this->rotX = 0;
 	this->rotY = 0;
 	this->rotZ = 0;

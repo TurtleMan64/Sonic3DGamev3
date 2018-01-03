@@ -416,7 +416,7 @@ void processLine(char** dat)
 		case 37: //Low quality water
 		{
 			LowQualityWater::loadStaticModels();
-			LowQualityWater* water = new LowQualityWater();
+			LowQualityWater* water = new LowQualityWater(toFloat(dat[1]), toFloat(dat[2]));
 			Global::countNew++;
 			Main_addTransparentEntity(water);
 			return;

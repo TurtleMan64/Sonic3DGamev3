@@ -16,6 +16,8 @@ private:
 public:
 	LowQualityWater();
 
+	LowQualityWater(float x, float z);
+
 	void step();
 
 	std::list<TexturedModel*>* getModels();

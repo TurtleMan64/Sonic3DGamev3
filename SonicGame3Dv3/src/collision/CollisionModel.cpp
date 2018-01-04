@@ -85,7 +85,51 @@ void CollisionModel::rotateModelY(float yRot, Vector3f* center)
 //makes a collision model be the transformed version of this collision model
 void CollisionModel::transformModel(CollisionModel* targetModel, Vector3f* translate, float yRot, float zRot)
 {
+	float offX = translate->x;
+	float offY = translate->y;
+	float offZ = translate->z;
 
+	float angleRad = toRadians(yRot);
+	float cosAng = (float)cos(angleRad);
+	float sinAng = (float)sin(angleRad);
+
+	float angleRadZ = toRadians(zRot);
+	float cosAngZ = (float)cos(angleRadZ);
+	float sinAngZ = (float)sin(angleRadZ);
+
+	targetModel->deleteMe();
+
+	for (Triangle3D* tri : triangles)
+	{
+		float xDiff = tri->p1X;
+		float zDiff = tri->p1Z;
+		float yDiff = tri->p1Y;
+
+		float newX = (xDiff*cosAngZ - yDiff*sinAngZ);
+		float newY = (yDiff*cosAngZ + xDiff*sinAngZ);
+		Vector3f newP1(offX + (newX*cosAng - zDiff*sinAng), offY + newY, offZ + (zDiff*cosAng + newX*sinAng));
+
+		xDiff = tri->p2X;
+		zDiff = tri->p2Z;
+		yDiff = tri->p2Y;
+		newX = (xDiff*cosAngZ - yDiff*sinAngZ);
+		newY = (yDiff*cosAngZ + xDiff*sinAngZ);
+		Vector3f newP2(offX + (newX*cosAng - zDiff*sinAng), offY + newY, offZ + (zDiff*cosAng + newX*sinAng));
+
+		xDiff = tri->p3X;
+		zDiff = tri->p3Z;
+		yDiff = tri->p3Y;
+		newX = (xDiff*cosAngZ - yDiff*sinAngZ);
+		newY = (yDiff*cosAngZ + xDiff*sinAngZ);
+		Vector3f newP3(offX + (newX*cosAng - zDiff*sinAng), offY + newY, offZ + (zDiff*cosAng + newX*sinAng));
+
+
+		Triangle3D* newTri = new Triangle3D(&newP1, &newP2, &newP3, tri->type, tri->sound, tri->particle);
+
+		targetModel->triangles.push_back(newTri);
+	}
+
+	targetModel->generateMinMaxValues();
 }
 
 //makes a collision model be the transformed version of this collision model

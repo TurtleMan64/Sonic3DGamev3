@@ -3,7 +3,7 @@
 #include "../entities.h"
 #include "../../models/models.h"
 #include "../../toolbox/vector.h"
-#include "ecchair.h"
+#include "echut.h"
 #include "../../renderEngine/renderEngine.h"
 #include "../../objLoader/objLoader.h"
 #include "../../engineTester/main.h"
@@ -17,35 +17,35 @@
 #include <iostream>
 #include <algorithm>
 
-std::list<TexturedModel*> EC_Chair::models;
-CollisionModel* EC_Chair::cmOriginal;
+std::list<TexturedModel*> EC_Hut::models;
+CollisionModel* EC_Hut::cmOriginal;
 
-EC_Chair::EC_Chair()
+EC_Hut::EC_Hut()
 {
 	
 }
 
-EC_Chair::EC_Chair(float x, float y, float z, float rotY, float rotZ)
+EC_Hut::EC_Hut(float x, float y, float z, float rotY)
 {
 	this->position.x = x;
 	this->position.y = y;
 	this->position.z = z;
 	this->rotX = 0;
 	this->rotY = rotY;
-	this->rotZ = rotZ;
+	this->rotZ = 0;
 	this->scale = 1;
 	this->visible = true;
 	updateTransformationMatrix();
 
-	collideModelOriginal = EC_Chair::cmOriginal;
-	collideModelTransformed = loadCollisionModel("Models/EmeraldCoast/", "ChairCollision");
+	collideModelOriginal = EC_Hut::cmOriginal;
+	collideModelTransformed = loadCollisionModel("Models/EmeraldCoast/", "Hut");
 
 	CollisionChecker::addCollideModel(collideModelTransformed);
 
 	updateCollisionModelWithZ();
 }
 
-void EC_Chair::step()
+void EC_Hut::step()
 {
 	if (abs(getX() - Global::gameCamera->getPosition()->x) > ENTITY_RENDER_DIST)
 	{
@@ -64,52 +64,52 @@ void EC_Chair::step()
 	}
 }
 
-std::list<TexturedModel*>* EC_Chair::getModels()
+std::list<TexturedModel*>* EC_Hut::getModels()
 {
-	return &EC_Chair::models;
+	return &EC_Hut::models;
 }
 
-void EC_Chair::loadStaticModels()
+void EC_Hut::loadStaticModels()
 {
-	if (EC_Chair::models.size() > 0)
+	if (EC_Hut::models.size() > 0)
 	{
 		return;
 	}
 
-	std::fprintf(stdout, "Loading EC_Chair static models...\n");
+	std::fprintf(stdout, "Loading EC_Hut static models...\n");
 
-	std::list<TexturedModel*>* newModels = loadObjModel("res/Models/EmeraldCoast/", "Chair.obj");
+	std::list<TexturedModel*>* newModels = loadObjModel("res/Models/EmeraldCoast/", "Hut.obj");
 	for (auto newModel : (*newModels))
 	{
-		EC_Chair::models.push_back(newModel);
+		EC_Hut::models.push_back(newModel);
 	}
 	delete newModels;
 	Global::countDelete++;
 
 
-	if (EC_Chair::cmOriginal == nullptr)
+	if (EC_Hut::cmOriginal == nullptr)
 	{
-		EC_Chair::cmOriginal = loadCollisionModel("Models/EmeraldCoast/", "ChairCollision");
+		EC_Hut::cmOriginal = loadCollisionModel("Models/EmeraldCoast/", "Hut");
 	}
 }
 
-void EC_Chair::deleteStaticModels()
+void EC_Hut::deleteStaticModels()
 {
-	std::fprintf(stdout, "Deleting EC_Chair static models...\n");
-	for (auto model : EC_Chair::models)
+	std::fprintf(stdout, "Deleting EC_Hut static models...\n");
+	for (auto model : EC_Hut::models)
 	{
 		model->deleteMe();
 		delete model;
 		Global::countDelete++;
 	}
 
-	EC_Chair::models.clear();
+	EC_Hut::models.clear();
 
-	if (EC_Chair::cmOriginal != nullptr)
+	if (EC_Hut::cmOriginal != nullptr)
 	{
-		EC_Chair::cmOriginal->deleteMe();
-		delete EC_Chair::cmOriginal;
-		EC_Chair::cmOriginal = nullptr;
+		EC_Hut::cmOriginal->deleteMe();
+		delete EC_Hut::cmOriginal;
+		EC_Hut::cmOriginal = nullptr;
 	}
 }
 

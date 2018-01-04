@@ -23,6 +23,9 @@
 #include "../entities/EmeraldCoast/ecflatwater.h"
 #include "../entities/lowqualitywater.h"
 #include "../entities/EmeraldCoast/ecchair.h"
+#include "../entities/EmeraldCoast/ecstrawroofhut.h"
+#include "../entities/EmeraldCoast/echut.h"
+#include "../entities/EmeraldCoast/ecdocksmall.h"
 
 float toFloat(char* input);
 int toInt(char* input);
@@ -427,9 +430,42 @@ void processLine(char** dat)
 		{
 			EC_Chair::loadStaticModels();
 			EC_Chair* chair = new EC_Chair(toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
-										   toFloat(dat[4]));                                  //rotation
+										   toFloat(dat[4]), toFloat(dat[5]));                 //rotation
 			Global::countNew++;
 			Main_addEntity(chair);
+			return;
+		}
+
+		case 39: //Emerald Coast Straw Roof Hut
+		{
+			EC_StrawRoofHut::loadStaticModels();
+			EC_StrawRoofHut* hut = new EC_StrawRoofHut(
+											toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
+										    toFloat(dat[4]));                                  //rotation
+			Global::countNew++;
+			Main_addEntity(hut);
+			return;
+		}
+
+		case 40: //Emerald Coast Hut
+		{
+			EC_Hut::loadStaticModels();
+			EC_Hut* hut = new EC_Hut(
+				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
+				toFloat(dat[4]));                                  //rotation
+			Global::countNew++;
+			Main_addEntity(hut);
+			return;
+		}
+		
+		case 41: //Emerald Coast Dock Small
+		{
+			EC_DockSmall::loadStaticModels();
+			EC_DockSmall* dock = new EC_DockSmall(
+				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
+				toFloat(dat[4]));                                  //rotation
+			Global::countNew++;
+			Main_addEntity(dock);
 			return;
 		}
 
@@ -462,4 +498,7 @@ void freeAllStaticModels()
 	EC_FlatWater::deleteStaticModels();
 	LowQualityWater::deleteStaticModels();
 	EC_Chair::deleteStaticModels();
+	EC_StrawRoofHut::deleteStaticModels();
+	EC_Hut::deleteStaticModels();
+	EC_DockSmall::deleteStaticModels();
 }

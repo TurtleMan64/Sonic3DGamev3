@@ -1,35 +1,46 @@
 # Blender MTL File: 'None'
-# Material Count: 3
+# Material Count: 4
 
-newmtl material_487
-	Ns 17.647059
+newmtl material_102
+	Ns 20.000000
 	Ka 0.600000 0.600000 0.600000
 	Kd 0.600000 0.600000 0.600000
 	Ks 0.900000 0.900000 0.900000
 	Ke 0.000000 0.000000 0.000000
-	Ni 0
+	Ni 0.0
 	d 1.000000
 	illum 2
-	map_Kd chair.png
+	map_Kd wood3.png
 
-newmtl material_488
-	Ns 17.647059
+newmtl material_160
+	Ns 20.000000
 	Ka 0.600000 0.600000 0.600000
 	Kd 0.600000 0.600000 0.600000
 	Ks 0.900000 0.900000 0.900000
 	Ke 0.000000 0.000000 0.000000
-	Ni 0
+	Ni 0.0
 	d 1.000000
 	illum 2
-	map_Kd b1ebf29c.png
+	map_Kd e48451ba.png
 
-newmtl material_489
-	Ns 17.647059
+newmtl material_170
+	Ns 20.000000
 	Ka 0.600000 0.600000 0.600000
 	Kd 0.600000 0.600000 0.600000
 	Ks 0.900000 0.900000 0.900000
 	Ke 0.000000 0.000000 0.000000
-	Ni 0
+	Ni 0.0
 	d 1.000000
 	illum 2
-	map_Kd 18fd1252.png
+	map_Kd 808c6e7a.png
+
+newmtl material_171
+	Ns 20.000000
+	Ka 0.600000 0.600000 0.600000
+	Kd 0.600000 0.600000 0.600000
+	Ks 0.900000 0.900000 0.900000
+	Ke 0.000000 0.000000 0.000000
+	Ni 0.0
+	d 1.000000
+	illum 2
+	map_Kd 99134d45.png

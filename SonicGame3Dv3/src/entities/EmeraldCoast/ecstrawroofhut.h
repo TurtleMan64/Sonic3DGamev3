@@ -1,5 +1,5 @@
-#ifndef ECCHAIR_H
-#define ECCHAIR_H
+#ifndef ECSTRAWROOFHUT_H
+#define ECSTRAWROOFHUT_H
 
 class TexturedModel;
 
@@ -8,15 +8,15 @@ class TexturedModel;
 #include "../collideableobject.h"
 
 
-class EC_Chair : public CollideableObject
+class EC_StrawRoofHut : public CollideableObject
 {
 private:
 	static std::list<TexturedModel*> models;
 	static CollisionModel* cmOriginal;
 
 public:
-	EC_Chair();
-	EC_Chair(float x, float y, float z, float rotY, float rotZ);
+	EC_StrawRoofHut();
+	EC_StrawRoofHut(float x, float y, float z, float rotY);
 
 	void step();
 

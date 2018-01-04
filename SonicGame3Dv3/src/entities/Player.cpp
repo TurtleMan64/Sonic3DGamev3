@@ -1340,9 +1340,9 @@ void Player::adjustCamera()
 
 		float newHeadHeight = diff.length() - 1;
 
-		camPos.set(getX() + currNorm.x*newHeadHeight,
-			getY() + currNorm.y*newHeadHeight,
-			getZ() + currNorm.z*newHeadHeight);
+		//camPos.set(getX() + currNorm.x*newHeadHeight,
+		//	getY() + currNorm.y*newHeadHeight,
+		//	getZ() + currNorm.z*newHeadHeight);
 	}
 	else if (CollisionChecker::checkCollision(headPos.x, headPos.y, headPos.z, camPos.x, camPos.y, camPos.z) == true)
 	{

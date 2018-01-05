@@ -77,7 +77,14 @@ void Dashpad::step()
 			//AudioSources.play(12, getPosition());
 
 			cooldownTimer = Dashpad::cooldownTimerMax;
+
+			Global::gamePlayer->setCanMove(false);
 		}
+	}
+
+	if (cooldownTimer == 1)
+	{
+		Global::gamePlayer->setCanMove(true);
 	}
 }
 

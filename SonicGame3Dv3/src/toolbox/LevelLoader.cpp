@@ -25,7 +25,10 @@
 #include "../entities/EmeraldCoast/ecchair.h"
 #include "../entities/EmeraldCoast/ecstrawroofhut.h"
 #include "../entities/EmeraldCoast/echut.h"
-#include "../entities/EmeraldCoast/ecdocksmall.h"
+#include "../entities/EmeraldCoast/ecraftsmall.h"
+#include "../entities/EmeraldCoast/ecpole.h"
+#include "../entities/EmeraldCoast/ecdock.h"
+#include "../entities/EmeraldCoast/ecdockcorner.h"
 
 float toFloat(char* input);
 int toInt(char* input);
@@ -458,14 +461,47 @@ void processLine(char** dat)
 			return;
 		}
 		
-		case 41: //Emerald Coast Dock Small
+		case 41: //Emerald Coast Dock
 		{
-			EC_DockSmall::loadStaticModels();
-			EC_DockSmall* dock = new EC_DockSmall(
+			EC_Dock::loadStaticModels();
+			EC_Dock* dock = new EC_Dock(
 				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
 				toFloat(dat[4]));                                  //rotation
 			Global::countNew++;
 			Main_addEntity(dock);
+			return;
+		}
+
+		case 42: //Emerald Coast Concrete Pole
+		{
+			EC_Pole::loadStaticModels();
+			EC_Pole* pole = new EC_Pole(
+				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
+				toFloat(dat[4]));                                  //rotation
+			Global::countNew++;
+			Main_addEntity(pole);
+			return;
+		}
+
+		case 43: //Emerald Coast Dock Corner
+		{
+			EC_DockCorner::loadStaticModels();
+			EC_DockCorner* dock = new EC_DockCorner(
+				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
+				toFloat(dat[4]));                                  //rotation
+			Global::countNew++;
+			Main_addEntity(dock);
+			return;
+		}
+
+		case 44: //Emerald Coast Raft Small
+		{
+			EC_RaftSmall::loadStaticModels();
+			EC_RaftSmall* raft = new EC_RaftSmall(
+				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
+				toFloat(dat[4]));                                  //rotation
+			Global::countNew++;
+			Main_addEntity(raft);
 			return;
 		}
 
@@ -500,5 +536,8 @@ void freeAllStaticModels()
 	EC_Chair::deleteStaticModels();
 	EC_StrawRoofHut::deleteStaticModels();
 	EC_Hut::deleteStaticModels();
-	EC_DockSmall::deleteStaticModels();
+	EC_RaftSmall::deleteStaticModels();
+	EC_Pole::deleteStaticModels();
+	EC_Dock::deleteStaticModels();
+	EC_DockCorner::deleteStaticModels();
 }

@@ -1,5 +1,5 @@
-#ifndef ECDOCKSMALL_H
-#define ECDOCKSMALL_H
+#ifndef ECDOCK_H
+#define ECDOCK_H
 
 class TexturedModel;
 
@@ -8,15 +8,15 @@ class TexturedModel;
 #include "../collideableobject.h"
 
 
-class EC_DockSmall : public CollideableObject
+class EC_Dock : public CollideableObject
 {
 private:
 	static std::list<TexturedModel*> models;
 	static CollisionModel* cmOriginal;
 
 public:
-	EC_DockSmall();
-	EC_DockSmall(float x, float y, float z, float rotY);
+	EC_Dock();
+	EC_Dock(float x, float y, float z, float rotY);
 
 	void step();
 

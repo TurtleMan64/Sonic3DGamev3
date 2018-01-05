@@ -3,7 +3,7 @@
 #include "../entities.h"
 #include "../../models/models.h"
 #include "../../toolbox/vector.h"
-#include "ecdocksmall.h"
+#include "ecdock.h"
 #include "../../renderEngine/renderEngine.h"
 #include "../../objLoader/objLoader.h"
 #include "../../engineTester/main.h"
@@ -17,15 +17,15 @@
 #include <iostream>
 #include <algorithm>
 
-std::list<TexturedModel*> EC_DockSmall::models;
-CollisionModel* EC_DockSmall::cmOriginal;
+std::list<TexturedModel*> EC_Dock::models;
+CollisionModel* EC_Dock::cmOriginal;
 
-EC_DockSmall::EC_DockSmall()
+EC_Dock::EC_Dock()
 {
 	
 }
 
-EC_DockSmall::EC_DockSmall(float x, float y, float z, float rotY)
+EC_Dock::EC_Dock(float x, float y, float z, float rotY)
 {
 	this->position.x = x;
 	this->position.y = y;
@@ -37,15 +37,15 @@ EC_DockSmall::EC_DockSmall(float x, float y, float z, float rotY)
 	this->visible = true;
 	updateTransformationMatrix();
 
-	collideModelOriginal = EC_DockSmall::cmOriginal;
-	collideModelTransformed = loadCollisionModel("Models/EmeraldCoast/", "SmallDock");
+	collideModelOriginal = EC_Dock::cmOriginal;
+	collideModelTransformed = loadCollisionModel("Models/EmeraldCoast/", "DockCollision");
 
 	CollisionChecker::addCollideModel(collideModelTransformed);
 
 	updateCollisionModelWithZ();
 }
 
-void EC_DockSmall::step()
+void EC_Dock::step()
 {
 	if (abs(getX() - Global::gameCamera->getPosition()->x) > ENTITY_RENDER_DIST)
 	{
@@ -64,52 +64,51 @@ void EC_DockSmall::step()
 	}
 }
 
-std::list<TexturedModel*>* EC_DockSmall::getModels()
+std::list<TexturedModel*>* EC_Dock::getModels()
 {
-	return &EC_DockSmall::models;
+	return &EC_Dock::models;
 }
 
-void EC_DockSmall::loadStaticModels()
+void EC_Dock::loadStaticModels()
 {
-	if (EC_DockSmall::models.size() > 0)
+	if (EC_Dock::models.size() > 0)
 	{
 		return;
 	}
 
-	std::fprintf(stdout, "Loading EC_DockSmall static models...\n");
+	std::fprintf(stdout, "Loading EC_Dock static models...\n");
 
-	std::list<TexturedModel*>* newModels = loadObjModel("res/Models/EmeraldCoast/", "SmallDock.obj");
+	std::list<TexturedModel*>* newModels = loadObjModel("res/Models/EmeraldCoast/", "Dock.obj");
 	for (auto newModel : (*newModels))
 	{
-		EC_DockSmall::models.push_back(newModel);
+		EC_Dock::models.push_back(newModel);
 	}
 	delete newModels;
 	Global::countDelete++;
 
 
-	if (EC_DockSmall::cmOriginal == nullptr)
+	if (EC_Dock::cmOriginal == nullptr)
 	{
-		EC_DockSmall::cmOriginal = loadCollisionModel("Models/EmeraldCoast/", "SmallDock");
+		EC_Dock::cmOriginal = loadCollisionModel("Models/EmeraldCoast/", "DockCollision");
 	}
 }
 
-void EC_DockSmall::deleteStaticModels()
+void EC_Dock::deleteStaticModels()
 {
-	std::fprintf(stdout, "Deleting EC_DockSmall static models...\n");
-	for (auto model : EC_DockSmall::models)
+	std::fprintf(stdout, "Deleting EC_Dock static models...\n");
+	for (auto model : EC_Dock::models)
 	{
 		model->deleteMe();
 		delete model;
 		Global::countDelete++;
 	}
 
-	EC_DockSmall::models.clear();
+	EC_Dock::models.clear();
 
-	if (EC_DockSmall::cmOriginal != nullptr)
+	if (EC_Dock::cmOriginal != nullptr)
 	{
-		EC_DockSmall::cmOriginal->deleteMe();
-		delete EC_DockSmall::cmOriginal;
-		EC_DockSmall::cmOriginal = nullptr;
+		EC_Dock::cmOriginal->deleteMe();
+		delete EC_Dock::cmOriginal;
+		EC_Dock::cmOriginal = nullptr;
 	}
 }
-

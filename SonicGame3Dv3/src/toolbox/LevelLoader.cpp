@@ -363,7 +363,7 @@ void processLine(char** dat)
 			Dashpad* dashpad = new Dashpad(
 				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
 				toFloat(dat[4]), toFloat(dat[5]),                  //rotation
-				toFloat(dat[6]));                                  //power
+				toFloat(dat[6]), toFloat(dat[7]));                 //power, camYaw
 			Global::countNew++;
 			Main_addEntity(dashpad);
 			return;

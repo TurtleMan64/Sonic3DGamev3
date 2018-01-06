@@ -150,17 +150,27 @@ void Player::step()
 			wallStickTimer = wallStickTimerMax;
 		}
 
-		if (wallStickTimer < 0)
-		{
-			currNorm.set(0, 1, 0);
-		}
-
 		xVel = Ax;
 		yVel = Ay;
 		zVel = Az;
 		xVelAir = 0;
 		zVelAir = 0;
 		hoverCount = hoverLimit;
+
+		if (wallStickTimer < 0)
+		{
+			//Do a small 'pop off' off the wall
+			xVelAir = xVel + currNorm.x * 1;
+			zVelAir = zVel + currNorm.z * 1;
+			yVel = yVel + currNorm.y * 1;
+			xVel = 0;
+			zVel = 0;
+			xVelGround = 0;
+			zVelGround = 0;
+			isJumping = true;
+			onPlane = false;
+			currNorm.set(0, 1, 0);
+		}
 
 		if (jumpInput && !previousJumpInput)
 		{
@@ -1391,6 +1401,22 @@ void Player::setCameraAngles(float newYaw, float newPitch)
 	Camera* cam = Global::gameCamera;
 	cam->setYaw(newYaw);
 	cam->setPitch(newPitch);
+}
+
+void Player::setCameraTargetYaw(float yaw)
+{
+	cameraYawTarget = yaw;
+
+	Camera* cam = Global::gameCamera;
+
+	float diff = compareTwoAngles(yaw, cam->getYaw());
+
+	cam->setYaw(yaw - diff);
+}
+
+void Player::setCameraTargetPitch(float pitch)
+{
+	cameraPitchTarget = pitch;
 }
 
 void Player::animate()

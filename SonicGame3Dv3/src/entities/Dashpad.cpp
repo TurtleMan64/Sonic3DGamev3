@@ -33,7 +33,7 @@ Dashpad::Dashpad()
 	this->visible = true;
 }
 
-Dashpad::Dashpad(float x, float y, float z, float rotY, float rotZ, float myPower)
+Dashpad::Dashpad(float x, float y, float z, float rotY, float rotZ, float myPower, float myCamYawTarget)
 {
 	this->position.x = x;
 	this->position.y = y;
@@ -46,6 +46,7 @@ Dashpad::Dashpad(float x, float y, float z, float rotY, float rotZ, float myPowe
 	this->cooldownTimer = 0;
 	this->scale = 1;
 	this->visible = true;
+	this->camYawTarget = myCamYawTarget;
 	updateTransformationMatrix();
 }
 
@@ -73,6 +74,7 @@ void Dashpad::step()
 			Global::gamePlayer->setzVel(0);
 			Global::gamePlayer->setGroundSpeed(xOff*power, zOff*power);
 			Global::gamePlayer->setHoverCount(0);
+			Global::gamePlayer->setCameraTargetYaw(-(camYawTarget)+90);
 
 			//AudioSources.play(12, getPosition());
 

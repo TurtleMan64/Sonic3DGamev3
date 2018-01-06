@@ -190,6 +190,10 @@ public:
 
 	void setCameraAngles(float newYaw, float newPitch);
 
+	void setCameraTargetYaw(float yaw);
+
+	void setCameraTargetPitch(float pitch);
+
 	void goUp();
 
 	/** If canMove is false, then every input from the

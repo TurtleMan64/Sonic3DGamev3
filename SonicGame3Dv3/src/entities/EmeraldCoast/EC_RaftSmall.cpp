@@ -29,6 +29,7 @@ EC_RaftSmall::EC_RaftSmall(float x, float y, float z, float rotY)
 {
 	this->position.x = x;
 	this->position.y = y;
+	this->origHeight = y;
 	this->position.z = z;
 	this->rotX = 0;
 	this->rotY = rotY;
@@ -38,11 +39,11 @@ EC_RaftSmall::EC_RaftSmall(float x, float y, float z, float rotY)
 	updateTransformationMatrix();
 
 	collideModelOriginal = EC_RaftSmall::cmOriginal;
-	collideModelTransformed = loadCollisionModel("Models/EmeraldCoast/", "RaftSmall");
+	collideModelTransformed = loadCollisionModel("Models/EmeraldCoast/", "RaftSmallCollision");
 
 	CollisionChecker::addCollideModel(collideModelTransformed);
 
-	updateCollisionModelWithZ();
+	updateCollisionModel();
 }
 
 void EC_RaftSmall::step()
@@ -60,6 +61,48 @@ void EC_RaftSmall::step()
 		else
 		{
 			setVisible(true);
+			/*
+			if (collideModelTransformed->playerIsOn)
+			{
+				setY(getY() - 0.1f);
+
+				if (getY() < origHeight - 1.5f)
+				{
+					setY(origHeight - 1.5f);
+				}
+
+				updateTransformationMatrix();
+				updateCollisionModel();
+			}
+			else
+			{
+				//float origY = getY();
+
+				setY(getY() + 0.05f);
+
+				if (getY() > origHeight)
+				{
+					setY(origHeight);
+				}
+
+				float playerY = Global::gamePlayer->getY();
+				float playerX = Global::gamePlayer->getX();
+				float playerZ = Global::gamePlayer->getZ();
+				if (playerY < getY())
+				{
+					if (playerX < getX() + 21.2 && playerX > getX() - 21.4 &&
+						playerZ < getZ() + 35 && playerZ > getZ() - 35)
+					{
+						float mid = (playerY + getY()) / 2;
+						Global::gamePlayer->setY(mid);
+						setY(mid - 0.25f);
+					}
+				}
+
+				updateTransformationMatrix();
+				updateCollisionModel();
+			}
+			*/
 		}
 	}
 }
@@ -89,7 +132,7 @@ void EC_RaftSmall::loadStaticModels()
 
 	if (EC_RaftSmall::cmOriginal == nullptr)
 	{
-		EC_RaftSmall::cmOriginal = loadCollisionModel("Models/EmeraldCoast/", "RaftSmall");
+		EC_RaftSmall::cmOriginal = loadCollisionModel("Models/EmeraldCoast/", "RaftSmallCollision");
 	}
 }
 

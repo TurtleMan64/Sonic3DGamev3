@@ -167,7 +167,7 @@ void Player::step()
 			zVel = 0;
 			xVelGround = 0;
 			zVelGround = 0;
-			isJumping = true;
+			//isJumping = true;
 			onPlane = false;
 			currNorm.set(0, 1, 0);
 		}
@@ -525,6 +525,8 @@ void Player::step()
 	inWater = false;
 
 	Global::gameSkySphere->setPosition(getX(), 0, getZ());
+
+	std::fprintf(stdout, "player speed = %f\n", sqrtf(xVelGround*xVelGround + zVelGround*zVelGround));
 }
 
 void Player::addLimbsToGame()
@@ -1040,7 +1042,7 @@ void Player::spindash(int timer)
 
 	float newSpeed = (float)sqrt(xVelGround*xVelGround + zVelGround*zVelGround);
 
-	if (newSpeed < storedSpindashSpeed)
+	if (totalSpd > 1 && newSpeed < storedSpindashSpeed)
 	{
 		xVelGround = (float)cos(spindashAngle)*storedSpindashSpeed;
 		zVelGround = -(float)sin(spindashAngle)*storedSpindashSpeed;
@@ -1804,4 +1806,10 @@ void Player::setInWater(float height)
 {
 	inWater = true;
 	waterHeight = height;
+}
+
+void Player::increaseGroundSpeed(float dx, float dz)
+{
+	xVelGround += dx;
+	zVelGround += dz;
 }

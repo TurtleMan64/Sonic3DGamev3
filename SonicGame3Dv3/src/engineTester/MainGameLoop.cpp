@@ -36,6 +36,7 @@
 #include "../toolbox/pausescreen.h"
 #include "../guis/guimanager.h"
 #include "../entities/spring.h"
+#include "../entities/EmeraldCoast/ecshark.h"
 
 
 std::unordered_map<Entity*, Entity*> gameEntities;
@@ -50,6 +51,9 @@ Stage* Global::gameStage;
 SkySphere* Global::gameSkySphere;
 Light* Global::gameLightSun;
 Light* Global::gameLightMoon;
+
+//Emerald Coast
+EC_Shark* Global::ecShark;
 
 extern bool INPUT_JUMP;
 extern bool INPUT_ACTION;

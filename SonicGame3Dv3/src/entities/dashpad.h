@@ -16,11 +16,11 @@ private:
 	float hitRadius;
 	float camYawTarget;
 	int cooldownTimer;
-	const static int cooldownTimerMax;
+	int cooldownTimerMax;
 
 public:
 	Dashpad();
-	Dashpad(float x, float y, float z, float rotY, float rotZ, float myPower, float myCamYawTarget);
+	Dashpad(float x, float y, float z, float rotY, float rotZ, float myPower, float myCamYawTarget, int time);
 
 	void step();
 

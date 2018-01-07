@@ -13,6 +13,7 @@ class EC_RaftSmall : public CollideableObject
 private:
 	static std::list<TexturedModel*> models;
 	static CollisionModel* cmOriginal;
+	float origHeight;
 
 public:
 	EC_RaftSmall();

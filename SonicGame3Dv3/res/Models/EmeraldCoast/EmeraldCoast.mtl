@@ -1175,7 +1175,8 @@ newmtl material_C1ACD0.002
 	Ks 1.000000 1.000000 1.000000
 	Ke 0.000000 0.000000 0.000000
 	Ni 0.05
-	d 0.302000
+	d 1.0
+	Tr 0
 	illum 2
 	map_Kd sea1_mado1.png
 	map_Ka sea1_mado1.png
@@ -1187,7 +1188,7 @@ newmtl material_C24B58.002
 	Ks 1.000000 1.000000 1.000000
 	Ke 0.000000 0.000000 0.000000
 	Ni 0.05
-	d 0.502000
+	d 1.0
 	illum 2
 	map_Kd m256_ext03.png
 	map_Ka m256_ext03.png

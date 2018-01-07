@@ -16,7 +16,6 @@
 #include <cmath>
 
 std::list<TexturedModel*> Dashpad::models;
-const int Dashpad::cooldownTimerMax = 30;
 
 Dashpad::Dashpad()
 {
@@ -29,11 +28,12 @@ Dashpad::Dashpad()
 	this->hitRadius = 0;
 	this->power = 0;
 	this->cooldownTimer = 0;
+	this->cooldownTimerMax = 20;
 	this->scale = 1;
 	this->visible = true;
 }
 
-Dashpad::Dashpad(float x, float y, float z, float rotY, float rotZ, float myPower, float myCamYawTarget)
+Dashpad::Dashpad(float x, float y, float z, float rotY, float rotZ, float myPower, float myCamYawTarget, int time)
 {
 	this->position.x = x;
 	this->position.y = y;
@@ -44,6 +44,7 @@ Dashpad::Dashpad(float x, float y, float z, float rotY, float rotZ, float myPowe
 	this->hitRadius = 5;
 	this->power = myPower;
 	this->cooldownTimer = 0;
+	this->cooldownTimerMax = time;
 	this->scale = 1;
 	this->visible = true;
 	this->camYawTarget = myCamYawTarget;
@@ -67,8 +68,8 @@ void Dashpad::step()
 			Global::gamePlayer->setY(getY());
 			Global::gamePlayer->setZ(getZ());
 
-			Global::gamePlayer->setxVelAir(0);
-			Global::gamePlayer->setzVelAir(0);
+			Global::gamePlayer->setxVelAir(xOff*power);
+			Global::gamePlayer->setzVelAir(zOff*power);
 			Global::gamePlayer->setyVel(0);
 			Global::gamePlayer->setxVel(0);
 			Global::gamePlayer->setzVel(0);
@@ -78,7 +79,7 @@ void Dashpad::step()
 
 			//AudioSources.play(12, getPosition());
 
-			cooldownTimer = Dashpad::cooldownTimerMax;
+			cooldownTimer = cooldownTimerMax;
 
 			Global::gamePlayer->setCanMove(false);
 		}

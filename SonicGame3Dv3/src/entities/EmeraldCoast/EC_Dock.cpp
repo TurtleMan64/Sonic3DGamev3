@@ -12,6 +12,7 @@
 #include "../camera.h"
 #include "../../collision/collisionmodel.h"
 #include "../../collision/collisionchecker.h"
+#include "ecshark.h"
 
 #include <list>
 #include <iostream>
@@ -42,7 +43,7 @@ EC_Dock::EC_Dock(float x, float y, float z, float rotY)
 
 	CollisionChecker::addCollideModel(collideModelTransformed);
 
-	updateCollisionModelWithZ();
+	updateCollisionModel();
 }
 
 void EC_Dock::step()
@@ -60,6 +61,19 @@ void EC_Dock::step()
 		else
 		{
 			setVisible(true);
+
+			float SharkX = Global::ecShark->getX();
+			float SharkY = Global::ecShark->getY();
+			float SharkZ = Global::ecShark->getZ();
+
+			if (abs(getX() - SharkX) < 45 &&
+				abs(getZ() - SharkZ) < 45 &&
+				SharkY > 2)
+			{
+				CollisionChecker::deleteCollideModel(collideModelTransformed);
+				collideModelTransformed = nullptr;
+				Main_deleteEntity(this);
+			}
 		}
 	}
 }

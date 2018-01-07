@@ -7,6 +7,7 @@ class Player;
 class Stage;
 class SkySphere;
 class Light;
+class EC_Shark;
 
 #include <string>
 #include <random>
@@ -39,7 +40,7 @@ void Main_deleteAllTransparentEntites();
 #define LVL_RR 11
 #define LVL_SHD 12
 
-#define ENTITY_RENDER_DIST 1500.0f
+#define ENTITY_RENDER_DIST 2000.0f
 
 class Global
 {
@@ -59,6 +60,9 @@ public:
 	static bool shouldRestartLevel;
 	static int gameRingCount;
 	static int gameClock;
+
+	//Emerald Coast
+	static EC_Shark* ecShark;
 
 	static bool unlockedSonicDoll;
 	static bool unlockedMechaSonic;

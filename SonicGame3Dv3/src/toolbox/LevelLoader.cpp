@@ -29,6 +29,9 @@
 #include "../entities/EmeraldCoast/ecpole.h"
 #include "../entities/EmeraldCoast/ecdock.h"
 #include "../entities/EmeraldCoast/ecdockcorner.h"
+#include "../entities/EmeraldCoast/ecraft.h"
+#include "../entities/speedramp.h"
+#include "../entities/EmeraldCoast/ecshark.h"
 
 float toFloat(char* input);
 int toInt(char* input);
@@ -363,7 +366,7 @@ void processLine(char** dat)
 			Dashpad* dashpad = new Dashpad(
 				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
 				toFloat(dat[4]), toFloat(dat[5]),                  //rotation
-				toFloat(dat[6]), toFloat(dat[7]));                 //power, camYaw
+				toFloat(dat[6]), toFloat(dat[7]), toInt(dat[8]));                 //power, camYaw, time
 			Global::countNew++;
 			Main_addEntity(dashpad);
 			return;
@@ -417,6 +420,18 @@ void processLine(char** dat)
 			EC_FlatWater* water = new EC_FlatWater();
 			Global::countNew++;
 			Main_addTransparentEntity(water);
+			return;
+		}
+
+		case 29: //Speed Ramp
+		{
+			SpeedRamp::loadStaticModels();
+			SpeedRamp* ramp = new SpeedRamp(
+				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
+				toFloat(dat[4]), toFloat(dat[5]),                  //rotation
+				toFloat(dat[6]));                                  //power
+			Global::countNew++;
+			Main_addEntity(ramp);
 			return;
 		}
 
@@ -505,6 +520,28 @@ void processLine(char** dat)
 			return;
 		}
 
+		case 45: //Emerald Coast Raft
+		{
+			EC_Raft::loadStaticModels();
+			EC_Raft* raft = new EC_Raft(
+				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
+				toFloat(dat[4]));                                  //rotation
+			Global::countNew++;
+			Main_addEntity(raft);
+			return;
+		}
+
+		case 46: //Emerald Coast Shark
+		{
+			EC_Shark::loadStaticModels();
+			EC_Shark* shark = new EC_Shark(
+				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3])); //position
+			Global::countNew++;
+			Global::ecShark = shark;
+			Main_addEntity(shark);
+			return;
+		}
+
 		default:
 		{
 			return;
@@ -540,4 +577,7 @@ void freeAllStaticModels()
 	EC_Pole::deleteStaticModels();
 	EC_Dock::deleteStaticModels();
 	EC_DockCorner::deleteStaticModels();
+	EC_Raft::deleteStaticModels();
+	SpeedRamp::deleteStaticModels();
+	EC_Shark::deleteStaticModels();
 }

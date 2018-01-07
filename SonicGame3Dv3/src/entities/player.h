@@ -194,6 +194,8 @@ public:
 
 	void setCameraTargetPitch(float pitch);
 
+	void increaseGroundSpeed(float dx, float dz);
+
 	void goUp();
 
 	/** If canMove is false, then every input from the

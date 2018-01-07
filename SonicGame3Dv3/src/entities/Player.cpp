@@ -526,7 +526,7 @@ void Player::step()
 
 	Global::gameSkySphere->setPosition(getX(), 0, getZ());
 
-	std::fprintf(stdout, "player speed = %f\n", sqrtf(xVelGround*xVelGround + zVelGround*zVelGround));
+	//std::fprintf(stdout, "player speed = %f\n", sqrtf(xVelGround*xVelGround + zVelGround*zVelGround));
 }
 
 void Player::addLimbsToGame()

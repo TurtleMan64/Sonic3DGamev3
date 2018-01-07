@@ -32,6 +32,8 @@
 #include "../entities/EmeraldCoast/ecraft.h"
 #include "../entities/speedramp.h"
 #include "../entities/EmeraldCoast/ecshark.h"
+#include "../entities/EmeraldCoast/ecpalmtree.h"
+#include "../entities/EmeraldCoast/ecumbrella.h"
 
 float toFloat(char* input);
 int toInt(char* input);
@@ -403,6 +405,18 @@ void processLine(char** dat)
 			return;
 		}
 
+		case 10: //Emerald Coast Palmtree
+		{
+			EC_Palmtree::loadStaticModels();
+			EC_Palmtree* palmtree = new EC_Palmtree(
+				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
+				toFloat(dat[4]), toFloat(dat[5]), toFloat(dat[6]), //rotation
+				toFloat(dat[7]));                                  //scale
+			Global::countNew++;
+			Main_addEntity(palmtree);
+			return;
+		}
+
 		case 13: //Emerald Coast Double-Waterfall
 		{
 			EC_Waterfall::loadStaticModels();
@@ -420,6 +434,18 @@ void processLine(char** dat)
 			EC_FlatWater* water = new EC_FlatWater();
 			Global::countNew++;
 			Main_addTransparentEntity(water);
+			return;
+		}
+		
+		case 26: //Emerald Coast Umbrella
+		{
+			EC_Umbrella::loadStaticModels();
+			EC_Umbrella* umbrella = new EC_Umbrella(
+				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
+				toFloat(dat[4]), toFloat(dat[5]), toFloat(dat[6]), //rotation
+				toFloat(dat[7]));                                  //type
+			Global::countNew++;
+			Main_addEntity(umbrella);
 			return;
 		}
 
@@ -580,4 +606,6 @@ void freeAllStaticModels()
 	EC_Raft::deleteStaticModels();
 	SpeedRamp::deleteStaticModels();
 	EC_Shark::deleteStaticModels();
+	EC_Palmtree::deleteStaticModels();
+	EC_Umbrella::deleteStaticModels();
 }

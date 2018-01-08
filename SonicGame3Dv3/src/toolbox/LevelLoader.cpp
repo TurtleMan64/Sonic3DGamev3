@@ -34,6 +34,9 @@
 #include "../entities/EmeraldCoast/ecshark.h"
 #include "../entities/EmeraldCoast/ecpalmtree.h"
 #include "../entities/EmeraldCoast/ecumbrella.h"
+#include "../toolbox/maths.h"
+#include "../entities/goalsign.h"
+#include "../entities/spikeball.h"
 
 float toFloat(char* input);
 int toInt(char* input);
@@ -373,6 +376,100 @@ void processLine(char** dat)
 			Main_addEntity(dashpad);
 			return;
 		}
+
+		case 3: //Line of Rings
+		{
+			Ring::loadStaticModels();
+			Vector3f pos1(toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]));
+			Vector3f pos2(toFloat(dat[4]), toFloat(dat[5]), toFloat(dat[6]));
+			int numRings = toInt(dat[7]);
+
+			float xDiff = pos2.x - pos1.x;
+			float yDiff = pos2.y - pos1.y;
+			float zDiff = pos2.z - pos1.z;
+
+			if (numRings > 1)
+			{
+				for (int i = 0; i < numRings; i++)
+				{
+					Ring* ring = new Ring(pos1.x + i*(xDiff / (numRings - 1)), 
+										  pos1.y + i*(yDiff / (numRings - 1)),
+										  pos1.z + i*(zDiff / (numRings - 1)));
+					Global::countNew++;
+					Main_addEntity(ring);
+				}
+			}
+			else
+			{
+				Ring* ring = new Ring(pos1.x, pos1.y, pos1.z);
+				Global::countNew++;
+				Main_addEntity(ring);
+			}
+
+			return;
+		}
+
+		case 4: //Circle of Rings
+		{
+			Ring::loadStaticModels();
+			Vector3f centerPos(toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]));
+			float ringRadius = toFloat(dat[4]);
+			int numRings = toInt(dat[5]);
+
+			if (numRings > 1)
+			{
+				float degreeSegment = 360.0f / numRings;
+				Vector3f newPoint(0, centerPos.y, 0);
+
+				for (int i = 0; i < numRings; i++)
+				{
+					newPoint.x = centerPos.x + ringRadius*cosf(toRadians(degreeSegment*i));
+					newPoint.z = centerPos.z + ringRadius*sinf(toRadians(degreeSegment*i));
+					Ring* ring = new Ring(newPoint.x, newPoint.y, newPoint.z);
+					Global::countNew++;
+					Main_addEntity(ring);
+				}
+			}
+			else
+			{
+				Ring* ring = new Ring(centerPos.x, centerPos.y, centerPos.z);
+				Global::countNew++;
+				Main_addEntity(ring);
+			}
+
+			return;
+		}
+
+		case 5: //Half Circle of Rings
+		{
+			Ring::loadStaticModels();
+			Vector3f centerPos(toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]));
+			float ringRadius = toFloat(dat[4]);
+			int numRings = toInt(dat[5]);
+
+			if (numRings > 1)
+			{
+				float degreeSegment = 180.0f / numRings;
+				Vector3f newPoint(0, centerPos.y, 0);
+
+				for (int i = 0; i < numRings; i++)
+				{
+					newPoint.x = centerPos.x + ringRadius*cosf(toRadians(degreeSegment*i));
+					newPoint.z = centerPos.z + ringRadius*sinf(toRadians(degreeSegment*i));
+					Ring* ring = new Ring(newPoint.x, newPoint.y, newPoint.z);
+					Global::countNew++;
+					Main_addEntity(ring);
+				}
+			}
+			else
+			{
+				Ring* ring = new Ring(centerPos.x, centerPos.y, centerPos.z);
+				Global::countNew++;
+				Main_addEntity(ring);
+			}
+
+			return;
+		}
 		
 		case 6: //Player
 		{
@@ -402,6 +499,15 @@ void processLine(char** dat)
 				toFloat(dat[7]), toFloat(dat[8]), toFloat(dat[9]));
 			Global::countNew++;
 			Main_addEntity(zone);
+			return;
+		}
+
+		case 9: //Goal Sign
+		{
+			GoalSign::loadStaticModels();
+			GoalSign* sign = new GoalSign(toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]));
+			Global::countNew++;
+			Main_addEntity(sign);
 			return;
 		}
 
@@ -568,6 +674,17 @@ void processLine(char** dat)
 			return;
 		}
 
+		case 47: //Spikeball
+		{
+			Spikeball::loadStaticModels();
+			Spikeball* ball = new Spikeball(
+				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
+				toFloat(dat[4]), toFloat(dat[5]));                 //radius, angVel
+			Global::countNew++;
+			Main_addEntity(ball);
+			return;
+		}
+
 		default:
 		{
 			return;
@@ -608,4 +725,6 @@ void freeAllStaticModels()
 	EC_Shark::deleteStaticModels();
 	EC_Palmtree::deleteStaticModels();
 	EC_Umbrella::deleteStaticModels();
+	GoalSign::deleteStaticModels();
+	Spikeball::deleteStaticModels();
 }

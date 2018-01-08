@@ -58,4 +58,10 @@ Vector3f calculatePlaneSpeed(float xspd, float yspd, float zspd, Vector3f* A, Ve
 */
 Vector3f spherePositionFromAngles(float angH, float angV, float radius);
 
+//returns uniform random float >= 0 and < 1
+float random();
+
+//normal distribution mean = 0, std dev = 1
+float nextGaussian();
+
 #endif

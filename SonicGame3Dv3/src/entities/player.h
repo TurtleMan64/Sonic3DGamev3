@@ -196,6 +196,8 @@ public:
 
 	void increaseGroundSpeed(float dx, float dz);
 
+	float getSpeed();
+
 	void goUp();
 
 	/** If canMove is false, then every input from the
@@ -239,6 +241,8 @@ public:
 	void stopMoving();
 
 	void setInWater(float height);
+
+	void takeDamage(Vector3f* damageSource);
 
 private:
 	void adjustCamera();

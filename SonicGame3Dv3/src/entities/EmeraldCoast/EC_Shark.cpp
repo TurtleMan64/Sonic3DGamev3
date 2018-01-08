@@ -88,10 +88,10 @@ void EC_Shark::step()
 
 		float factor = hSpd / 20;
 
-		if (factor < 6.0f)
+		if (factor < 5.25f)
 		{
-			xVel = 6.0f * cos(diffAng);
-			zVel = -6.0f * sin(diffAng);
+			xVel = 5.25f * cos(diffAng);
+			zVel = -5.25f * sin(diffAng);
 		}
 		else
 		{
@@ -131,6 +131,17 @@ void EC_Shark::step()
 			setVisible(false);
 			seeTimer = 0;
 			setPosition(initX, initY, initZ);
+		}
+
+		xDiff = Global::gamePlayer->getX() - getX();
+		yDiff = Global::gamePlayer->getY() - getY();
+		zDiff = Global::gamePlayer->getZ() - getZ();
+
+		float dist = sqrtf(xDiff*xDiff + yDiff*yDiff + zDiff*zDiff);
+
+		if (dist < 60)
+		{
+			Global::gamePlayer->takeDamage(getPosition());
 		}
 	}
 }

@@ -4,6 +4,7 @@
 #include "vector.h"
 #include "../entities/camera.h"
 #include "maths.h"
+#include "../engineTester/main.h"
 
 float toRadians(float degrees)
 {
@@ -219,4 +220,14 @@ Vector3f spherePositionFromAngles(float angH, float angV, float radius)
 	float z = (float)(hpt*sin(angH));
 
 	return Vector3f(x, y, z);
+}
+
+float random()
+{
+	return (rand()%100000)/100000.0f;
+}
+
+float nextGaussian()
+{
+	return (float)(*Global::distribution)((*Global::generator));
 }

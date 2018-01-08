@@ -19,6 +19,7 @@
 #include "../animation/limb.h"
 #include "../animation/animationresources.h"
 #include "skysphere.h"
+#include "../entities/ring.h"
 
 std::list<TexturedModel*> Player::modelBody;
 std::list<TexturedModel*> Player::modelHead;
@@ -1812,4 +1813,72 @@ void Player::increaseGroundSpeed(float dx, float dz)
 {
 	xVelGround += dx;
 	zVelGround += dz;
+}
+
+float Player::getSpeed()
+{
+	float xSpd = xVel + xVelAir + xVelGround;
+	float zSpd = zVel + zVelAir + zVelGround;
+
+	return sqrtf(xSpd*xSpd + zSpd*zSpd);
+}
+
+void Player::takeDamage(Vector3f* damageSource)
+{
+	if (iFrame == 0)
+	{
+		float xDiff = damageSource->x - getX();
+		float zDiff = damageSource->z - getZ();
+		float newDirection = atan2f(zDiff, -xDiff);
+		xVelAir = (1.5*cos(newDirection));
+		zVelAir = (-1.5*sin(newDirection));
+		xVel = 0;
+		zVel = 0;
+		xVelGround = 0;
+		zVelGround = 0;
+		onPlane = false;
+		yVel = 1.5f;
+		iFrame = 120;
+		hitTimer = 120;
+		isJumping = false;
+		isSpindashing = false;
+		isSkidding = false;
+		isBall = false;
+		isBouncing = false;
+		isStomping = false;
+		isLightdashing = false;
+		spindashReleaseTimer = 0;
+		spindashRestartDelay = 0;
+
+		int ringsToScatter = Global::gameRingCount;
+		Global::gameRingCount = 0;
+
+		if (ringsToScatter == 0)
+		{
+			//tell main game loop to restart level
+			Global::shouldRestartLevel = true;
+			//AudioSources.play(34, getPosition());
+			return;
+		}
+
+		//AudioSources.play(27, getPosition());
+		while (ringsToScatter > 0)
+		{
+			float spoutSpd = 3.5f;
+			float anglH = (float)(M_PI * 2 * random());
+			float anglV = (toRadians(nextGaussian() * 42 + 90));
+
+			float yspd = (spoutSpd*sin(anglV));
+			float hpt = (spoutSpd*cos(anglV));
+
+			float xspd = (hpt*cos(anglH));
+			float zspd = (hpt*sin(anglH));
+
+			Ring* ring = new Ring(getX(), getY()+5, getZ(), xspd, yspd, zspd);
+
+			Main_addEntity(ring);
+
+			ringsToScatter--;
+		}
+	}
 }

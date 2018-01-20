@@ -189,7 +189,7 @@ void Player::step()
 			//AudioSources.play(6, getPosition());
 		}
 
-		if (speed < 0.35)
+		if (speed < 0.45)
 		{
 			if (isBall)
 			{
@@ -208,8 +208,16 @@ void Player::step()
 			canStartSpindash = false;
 		}
 
-		if (((actionInput) || (action2Input))
-			&& canStartSpindash)
+		if (spindashRestartDelay > 0)
+		{
+			if ((actionInput && !previousActionInput) || (action2Input && !previousAction2Input))
+			{
+				bufferedSpindashInput = true;
+			}
+		}
+
+		if ((((actionInput && !previousActionInput) || (action2Input && !previousAction2Input)) && canStartSpindash) 
+		  || (bufferedSpindashInput && (actionInput || action2Input) && canStartSpindash))
 		{
 			if (!isSpindashing)
 			{
@@ -221,6 +229,7 @@ void Player::step()
 		if (!actionInput && !action2Input)
 		{
 			isSpindashing = false;
+			bufferedSpindashInput = false;
 		}
 
 		if (isSpindashing)
@@ -277,6 +286,7 @@ void Player::step()
 
 		isSpindashing = false;
 		canStartSpindash = false;
+		bufferedSpindashInput = false;
 		spindashReleaseTimer = 0;
 		spindashRestartDelay = 0;
 		spindashTimer = 0;
@@ -307,7 +317,7 @@ void Player::step()
 		triCol = CollisionChecker::getCollideTriangle();
 		colPos = CollisionChecker::getCollidePosition();
 		bool bonked = false;
-		if (onPlane == false) //Transition from ait to ground
+		if (onPlane == false) //Transition from air to ground
 		{
 			if (isBouncing)
 			{
@@ -315,11 +325,44 @@ void Player::step()
 			}
 			else
 			{
-				Vector3f speeds = calculatePlaneSpeed((float)((xVel + xVelAir + xDisp)), (float)((yVel + yDisp)), (float)(zVel + zVelAir + zDisp), colPos, &(triCol->normal));
-				xVelGround = speeds.x;
-				zVelGround = speeds.z;
-				isBall = false;
-				onPlane = true;
+				//New idea: if the wall is very steep, check if we are approaching the wall at too flat of an angle.
+				//If we are, do a small bounce off the wall sintead of sticking to it.
+
+				bool canStick = true;
+
+				//std::fprintf(stdout, "normal.y = %f\n", triCol->normal.y);
+
+				//Is the wall steep?
+				if (triCol->normal.y < 0.3) //Some arbitrary steepness constant
+				{
+					Vector3f approach(xVel + xVelAir + xDisp, yVel + yDisp, zVel + zVelAir + zDisp);
+					Vector3f wallNorm(&(triCol->normal));
+
+					approach.normalize();
+					wallNorm.normalize();
+
+					float similarity = abs(wallNorm.dot(&approach));
+
+					//std::fprintf(stdout, "similarity = %f\n", similarity);
+
+					if (similarity > 0.6) //Another arbitrary "how steep of an angle you can stick at" constant
+					{
+						canStick = false;
+					}
+				}
+
+				if (canStick)
+				{
+					Vector3f speeds = calculatePlaneSpeed((float)((xVel + xVelAir + xDisp)), (float)((yVel + yDisp)), (float)(zVel + zVelAir + zDisp), colPos, &(triCol->normal));
+					xVelGround = speeds.x;
+					zVelGround = speeds.z;
+					isBall = false;
+					onPlane = true;
+				}
+				else
+				{
+					bounceOffGround(&(triCol->normal));
+				}
 			}
 
 			if (isStomping)
@@ -1830,8 +1873,8 @@ void Player::takeDamage(Vector3f* damageSource)
 		float xDiff = damageSource->x - getX();
 		float zDiff = damageSource->z - getZ();
 		float newDirection = atan2f(zDiff, -xDiff);
-		xVelAir = (1.5*cos(newDirection));
-		zVelAir = (-1.5*sin(newDirection));
+		xVelAir = (1.5f*cos(newDirection));
+		zVelAir = (-1.5f*sin(newDirection));
 		xVel = 0;
 		zVel = 0;
 		xVelGround = 0;

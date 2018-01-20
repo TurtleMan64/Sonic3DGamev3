@@ -148,6 +148,7 @@ private:
 
 	float spindashAngle = 0;
 	bool canStartSpindash = false;
+	bool bufferedSpindashInput = false;
 
 	bool isJumping = false;
 	bool isSpindashing = false;

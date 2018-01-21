@@ -65,7 +65,7 @@ void GoalSign::step()
 				GuiManager::stopTimer();
 
 				float speed = Global::gamePlayer->getSpeed() * 2 + 3;
-				rotateSpeed = fmin(48, speed);
+				rotateSpeed = std::fmin(48.0f, speed);
 
 				if (Global::levelName == "EmeraldCoast.lvl")
 				{
@@ -107,8 +107,8 @@ void GoalSign::step()
 			}
 		}
 
-		float minDec = fmax(0.02, rotateSpeed / 100);
-		rotateSpeed = fmax(rotateSpeed - minDec, 0);
+		float minDec = std::fmax(0.02f, rotateSpeed / 100);
+		rotateSpeed = std::fmax(rotateSpeed - minDec, 0.0f);
 
 		increaseRotation(0, rotateSpeed, 0);
 		updateTransformationMatrix();

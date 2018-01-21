@@ -5,6 +5,8 @@
 #include "../entities/camera.h"
 #include "maths.h"
 #include "../engineTester/main.h"
+#include "../entities/ring.h"
+#include "../entities/player.h"
 
 float toRadians(float degrees)
 {
@@ -83,8 +85,6 @@ int sign(float value)
 
 Vector3f mapInputs3(float angle, float mag, Vector3f* VecC)
 {
-	//const double M_PI = 3.14159265358979323846;
-
 	float invert = 1;
 
 	angle = fmod(angle, (float)(M_PI * 2));
@@ -102,12 +102,103 @@ Vector3f mapInputs3(float angle, float mag, Vector3f* VecC)
 	double result[3] = { 0, 0, 0 }; //storage for the answer
 	rotatePoint(result, 0, 0, 0, Cx, 0, Cz, tempx, 0, tempz, CPitch);
 
-	Vector3f res = new Vector3f((float)result[0] * invert, (float)result[1] * invert, (float)result[2] * invert);
+	Vector3f res((float)result[0] * invert, (float)result[1] * invert, (float)result[2] * invert);
 
 	return res;
 }
 
+/**
+* Calculate the x and z speeds relative to a plane based off
+* the previous position you are coming in from
+*
+* @param xspd the x speed that you are going at before collision
+* @param yspd the y speed that you are going at before collision
+* @param zspd the z speed that you are going at before collision
+* @param A the collision point on the triangle
+* @param normal the normal of the triangle
+*/
+Vector3f calculatePlaneSpeed(float xspd, float yspd, float zspd, Vector3f* colPos, Vector3f* normal)
+{
+	//float normY = normal->y;
+	//if (normY > -0.01 && normY < 0.01)
+	{
+		//normY = 0.01f;
+	}
+
+	//float normX = normal->x;
+	//if (normX == 0)
+	{
+		//normX = 0.00001f;
+	}
+
+	//float normZ = normal->z;
+	//if (normZ == 0)
+	{
+		//normZ = 0.00001f;
+	}
+
+
+	//new
+	Vector3f A(xspd, yspd, zspd);
+	Vector3f Blue = projectOntoPlane(&A, normal);
+	//Blue is now the result of mapInputs3, now we go backwards
+
+
+
+	//Rotate normal along y axis 90 degrees
+	float CDir = (float)atan2(-normal->z, -normal->x);
+	CDir += (float)(M_PI / 2);
+	float Cx = (float)cos(CDir);
+	float Cz = (float)sin(CDir);
+
+	float CDist = (float)sqrt(normal->x*normal->x + normal->z*normal->z);
+	float CPitch = (float)(M_PI / 2 + atan2(-normal->y, CDist));
+
+
+	double result[3] = { 0, 0, 0 }; //storage for the answer
+	rotatePoint(result, 0, 0, 0, Cx, 0, Cz, Blue.x, Blue.y, Blue.z, -CPitch);
+
+	//std::fprintf(stdout, "reuslt: %f %f %f\n", (float)result[0], (float)result[1], (float)result[2]);
+
+	return Vector3f((float)result[0], (float)result[1], (float)result[2]);
+
+
+
+	//normY = -std::fabs(normY);
+	//normY = std::fmax(0.001f, normY);
+
+	//find the relative x speed
+	/*
+	float xDiff = xspd;
+	float yDiff = yspd;
+	float dist = (float)sqrt(xDiff*xDiff + yDiff*yDiff);
+	float angle1 = (float)atan2(-normY, -normX);
+	float angle2 = (float)atan2(yDiff, xDiff);
+	float actualAngle = angle2 - angle1;
+	float xLength = (float)sin(actualAngle)*dist;
+
+	//find the relative z speed
+	float zDiff = zspd;//A.z-B.z;
+	dist = (float)sqrt(zDiff*zDiff + yDiff*yDiff);
+	angle1 = (float)atan2(-normY, -normZ);
+	angle2 = (float)atan2(yDiff, zDiff);
+	actualAngle = angle2 - angle1;
+	float zLength = (float)sin(actualAngle)*dist;
+
+	std::fprintf(stdout, "wall norm: %f, %f, %f\n", normX, normY, normZ);
+	std::fprintf(stdout, "speeds: %f, %f, %f\n", xspd, yspd, zspd);
+	std::fprintf(stdout, "ouput: %f, %f\n", xLength, zLength);
+	std::fprintf(stdout, "\n");
+
+	return Vector3f(xLength, 0, zLength);
+	*/
+}
+
 //Equation from https://sites.google.com/site/glennmurray/Home/rotation-matrices-and-formulas
+//Point that axis goes through,
+//direction of axis,
+//point to rotate, 
+//angle of rotation
 void rotatePoint(double result[],
 	double a, double b, double c,
 	double u, double v, double w,
@@ -155,54 +246,16 @@ Vector3f bounceVector(Vector3f* initialVelocity, Vector3f* surfaceNormal, float 
 }
 
 
-/**
-* Calculate the x and z speeds relative to a plane based off
-* the previous position you are coming in from
-*
-* @param xspd the x speed that you are going at before collision
-* @param yspd the y speed that you are going at before collision
-* @param zspd the z speed that you are going at before collision
-* @param A the collision point on the triangle
-* @param normal the normal of the triangle
-*/
-Vector3f calculatePlaneSpeed(float xspd, float yspd, float zspd, Vector3f* A, Vector3f* normal)
+Vector3f projectOntoPlane(Vector3f* A, Vector3f* normal)
 {
-	float normY = normal->y;
-	if (normY > -0.01 && normY < 0.01)
-	{
-		normY = 0.01f;
-	}
+	Vector3f B(0, 0, 0);
+	Vector3f C(A);
+	Vector3f N(normal->x, normal->y, normal->z);
 
-	float normX = normal->x;
-	if (normX == 0)
-	{
-		normX = 0.00001f;
-	}
+	N.scale(C.dot(&N));
+	B = C - N;
 
-	float normZ = normal->z;
-	if (normZ == 0)
-	{
-		normZ = 0.00001f;
-	}
-
-	//find the relative x speed
-	float xDiff = xspd;
-	float yDiff = yspd;
-	float dist = (float)sqrt(xDiff*xDiff + yDiff*yDiff);
-	float angle1 = (float)atan2(-normY, -normX);
-	float angle2 = (float)atan2(yDiff, xDiff);
-	float actualAngle = angle2 - angle1;
-	float xLength = (float)sin(actualAngle)*dist;
-
-	//find the relative z speed
-	float zDiff = zspd;//A.z-B.z;
-	dist = (float)sqrt(zDiff*zDiff + yDiff*yDiff);
-	angle1 = (float)atan2(-normY, -normZ);
-	angle2 = (float)atan2(yDiff, zDiff);
-	actualAngle = angle2 - angle1;
-	float zLength = (float)sin(actualAngle)*dist;
-
-	return Vector3f(xLength, 0, zLength);
+	return B;
 }
 
 /** Returns the point on a sphere that has the given angles from the center

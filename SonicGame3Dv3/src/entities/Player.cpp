@@ -351,6 +351,9 @@ void Player::step()
 					}
 				}
 
+				//Not sure if I like the canStick thing or not...
+				canStick = true;
+
 				if (canStick)
 				{
 					Vector3f speeds = calculatePlaneSpeed((float)((xVel + xVelAir + xDisp)), (float)((yVel + yDisp)), (float)(zVel + zVelAir + zDisp), colPos, &(triCol->normal));

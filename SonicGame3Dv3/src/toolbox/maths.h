@@ -48,7 +48,7 @@ Vector3f bounceVector(Vector3f* initialVelocity, Vector3f* surfaceNormal, float 
 * @param A the collision point on the triangle
 * @param normal the normal of the triangle
 */
-Vector3f calculatePlaneSpeed(float xspd, float yspd, float zspd, Vector3f* A, Vector3f* normal);
+Vector3f calculatePlaneSpeed(float xspd, float yspd, float zspd, Vector3f* colPos, Vector3f* normal);
 
 /** Returns the point on a sphere that has the given angles from the center
 * @param angH in radians
@@ -57,6 +57,8 @@ Vector3f calculatePlaneSpeed(float xspd, float yspd, float zspd, Vector3f* A, Ve
 * @return
 */
 Vector3f spherePositionFromAngles(float angH, float angV, float radius);
+
+Vector3f projectOntoPlane(Vector3f* A, Vector3f* normal);
 
 //returns uniform random float >= 0 and < 1
 float random();

@@ -102,7 +102,7 @@ void Ring::step()
 		{
 			grabTimer = std::max(0, grabTimer - 1);
 
-			yVel -= 0.1f; //gravity
+			//yVel -= 0.1f; //gravity
 
 			Vector3f velVec(xVel, yVel, zVel);
 			velVec.scale(0.99f); //air friction

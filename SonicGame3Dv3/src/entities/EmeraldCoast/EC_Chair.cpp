@@ -109,6 +109,7 @@ void EC_Chair::deleteStaticModels()
 	{
 		EC_Chair::cmOriginal->deleteMe();
 		delete EC_Chair::cmOriginal;
+		Global::countDelete++;
 		EC_Chair::cmOriginal = nullptr;
 	}
 }

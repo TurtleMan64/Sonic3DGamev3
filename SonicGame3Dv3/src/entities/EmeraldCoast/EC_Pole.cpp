@@ -109,6 +109,7 @@ void EC_Pole::deleteStaticModels()
 	{
 		EC_Pole::cmOriginal->deleteMe();
 		delete EC_Pole::cmOriginal;
+		Global::countDelete++;
 		EC_Pole::cmOriginal = nullptr;
 	}
 }

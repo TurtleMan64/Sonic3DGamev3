@@ -118,6 +118,7 @@ void SpeedRamp::deleteStaticModels()
 	{
 		SpeedRamp::cmOriginal->deleteMe();
 		delete SpeedRamp::cmOriginal;
+		Global::countDelete++;
 		SpeedRamp::cmOriginal = nullptr;
 	}
 }

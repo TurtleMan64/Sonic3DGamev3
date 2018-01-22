@@ -324,6 +324,7 @@ void Input_pollInputs()
 
 		Vector3f* spawnPoint = Global::gamePlayer->getPosition();
 		Ring* newRing = new Ring(spawnPoint->x, spawnPoint->y + 10, spawnPoint->z, xspd, yspd, zspd);
+		Global::countNew++;
 		Main_addEntity(newRing);
 	}
 	if (glfwGetKey(window, GLFW_KEY_J) == GLFW_PRESS)

@@ -108,6 +108,7 @@ void MetaFile::close()
 void MetaFile::openFile(std::string filename)
 {
 	reader = new std::ifstream(filename);
+	Global::countNew++;
 	if (!reader->is_open())
 	{
 		std::fprintf(stdout, "Error: Cannot load file '%s'\n", (filename).c_str());

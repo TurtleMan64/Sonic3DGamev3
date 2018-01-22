@@ -1921,6 +1921,7 @@ void Player::takeDamage(Vector3f* damageSource)
 			float zspd = (hpt*sin(anglH));
 
 			Ring* ring = new Ring(getX(), getY()+5, getZ(), xspd, yspd, zspd);
+			Global::countNew++;
 
 			Main_addEntity(ring);
 

@@ -10,12 +10,12 @@
 
 float toRadians(float degrees)
 {
-	return (float)(degrees*0.01745329251);
+	return (degrees*0.01745329251f);
 }
 
 float toDegrees(float radians)
 {
-	return (float)(radians*57.2957795131);
+	return (radians*57.2957795131f);
 }
 
 /*
@@ -85,8 +85,6 @@ int sign(float value)
 
 Vector3f mapInputs3(float angle, float mag, Vector3f* VecC)
 {
-	float invert = 1;
-
 	angle = fmod(angle, (float)(M_PI * 2));
 	float tempx = (float)cos(angle)*mag;
 	float tempz = (float)sin(angle)*mag;
@@ -102,7 +100,7 @@ Vector3f mapInputs3(float angle, float mag, Vector3f* VecC)
 	double result[3] = { 0, 0, 0 }; //storage for the answer
 	rotatePoint(result, 0, 0, 0, Cx, 0, Cz, tempx, 0, tempz, CPitch);
 
-	Vector3f res((float)result[0] * invert, (float)result[1] * invert, (float)result[2] * invert);
+	Vector3f res((float)result[0], (float)result[1], (float)result[2]);
 
 	return res;
 }
@@ -119,31 +117,8 @@ Vector3f mapInputs3(float angle, float mag, Vector3f* VecC)
 */
 Vector3f calculatePlaneSpeed(float xspd, float yspd, float zspd, Vector3f* colPos, Vector3f* normal)
 {
-	//float normY = normal->y;
-	//if (normY > -0.01 && normY < 0.01)
-	{
-		//normY = 0.01f;
-	}
-
-	//float normX = normal->x;
-	//if (normX == 0)
-	{
-		//normX = 0.00001f;
-	}
-
-	//float normZ = normal->z;
-	//if (normZ == 0)
-	{
-		//normZ = 0.00001f;
-	}
-
-
-	//new
 	Vector3f A(xspd, yspd, zspd);
 	Vector3f Blue = projectOntoPlane(&A, normal);
-	//Blue is now the result of mapInputs3, now we go backwards
-
-
 
 	//Rotate normal along y axis 90 degrees
 	float CDir = (float)atan2(-normal->z, -normal->x);
@@ -154,11 +129,8 @@ Vector3f calculatePlaneSpeed(float xspd, float yspd, float zspd, Vector3f* colPo
 	float CDist = (float)sqrt(normal->x*normal->x + normal->z*normal->z);
 	float CPitch = (float)(M_PI / 2 + atan2(-normal->y, CDist));
 
-
 	double result[3] = { 0, 0, 0 }; //storage for the answer
 	rotatePoint(result, 0, 0, 0, Cx, 0, Cz, Blue.x, Blue.y, Blue.z, -CPitch);
-
-	//std::fprintf(stdout, "reuslt: %f %f %f\n", (float)result[0], (float)result[1], (float)result[2]);
 
 	return Vector3f((float)result[0], (float)result[1], (float)result[2]);
 

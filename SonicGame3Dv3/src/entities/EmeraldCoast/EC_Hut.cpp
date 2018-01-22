@@ -109,6 +109,7 @@ void EC_Hut::deleteStaticModels()
 	{
 		EC_Hut::cmOriginal->deleteMe();
 		delete EC_Hut::cmOriginal;
+		Global::countDelete++;
 		EC_Hut::cmOriginal = nullptr;
 	}
 }

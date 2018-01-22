@@ -125,6 +125,7 @@ void CollisionModel::transformModel(CollisionModel* targetModel, Vector3f* trans
 
 
 		Triangle3D* newTri = new Triangle3D(&newP1, &newP2, &newP3, tri->type, tri->sound, tri->particle);
+		Global::countNew++;
 
 		targetModel->triangles.push_back(newTri);
 	}
@@ -160,6 +161,7 @@ void CollisionModel::transformModel(CollisionModel* targetModel, Vector3f* trans
 		Vector3f newP3(offX + (xDiff*cosAng - zDiff*sinAng), offY + tri->p3Y, offZ + (zDiff*cosAng + xDiff*sinAng));
 
 		Triangle3D* newTri = new Triangle3D(&newP1, &newP2, &newP3, tri->type, tri->sound, tri->particle);
+		Global::countNew++;
 
 		targetModel->triangles.push_back(newTri);
 	}
@@ -183,6 +185,7 @@ void CollisionModel::transformModel(CollisionModel* targetModel, Vector3f* trans
 		Vector3f newP3(offX + tri->p3X, offY + tri->p3Y, offZ + tri->p3Z);
 
 		Triangle3D* newTri = new Triangle3D(&newP1, &newP2, &newP3, tri->type, tri->sound, tri->particle);
+		Global::countNew++;
 
 		targetModel->triangles.push_back(newTri);
 	}

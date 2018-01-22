@@ -123,6 +123,7 @@ void EC_Dock::deleteStaticModels()
 	{
 		EC_Dock::cmOriginal->deleteMe();
 		delete EC_Dock::cmOriginal;
+		Global::countDelete++;
 		EC_Dock::cmOriginal = nullptr;
 	}
 }

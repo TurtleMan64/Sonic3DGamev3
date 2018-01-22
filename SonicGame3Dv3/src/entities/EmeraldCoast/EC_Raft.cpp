@@ -148,6 +148,7 @@ void EC_Raft::deleteStaticModels()
 	{
 		EC_Raft::cmOriginal->deleteMe();
 		delete EC_Raft::cmOriginal;
+		Global::countDelete++;
 		EC_Raft::cmOriginal = nullptr;
 	}
 }

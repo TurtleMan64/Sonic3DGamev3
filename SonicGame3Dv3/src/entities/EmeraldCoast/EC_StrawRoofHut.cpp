@@ -109,6 +109,7 @@ void EC_StrawRoofHut::deleteStaticModels()
 	{
 		EC_StrawRoofHut::cmOriginal->deleteMe();
 		delete EC_StrawRoofHut::cmOriginal;
+		Global::countDelete++;
 		EC_StrawRoofHut::cmOriginal = nullptr;
 	}
 }

@@ -152,6 +152,7 @@ void EC_RaftSmall::deleteStaticModels()
 	{
 		EC_RaftSmall::cmOriginal->deleteMe();
 		delete EC_RaftSmall::cmOriginal;
+		Global::countDelete++;
 		EC_RaftSmall::cmOriginal = nullptr;
 	}
 }

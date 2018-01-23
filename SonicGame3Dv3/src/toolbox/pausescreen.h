@@ -45,6 +45,7 @@ private:
 	static GUIText* textMechaSonic;
 	static GUIText* textDage4Aquatic;
 	static GUIText* textManiaSonic;
+	static GUIText* textAmy;
 
 	static bool shouldPause;
 

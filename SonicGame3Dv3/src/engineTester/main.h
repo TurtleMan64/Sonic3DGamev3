@@ -68,6 +68,7 @@ public:
 	static bool unlockedMechaSonic;
 	static bool unlockedDage4;
 	static bool unlockedManiaSonic;
+	static bool unlockedAmy;
 
 	static std::default_random_engine* generator;
 	static std::normal_distribution<double>* distribution;

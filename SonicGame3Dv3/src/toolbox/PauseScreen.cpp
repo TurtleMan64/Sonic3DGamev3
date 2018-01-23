@@ -48,6 +48,7 @@ GUIText* PauseScreen::textDollSonic = nullptr;
 GUIText* PauseScreen::textMechaSonic = nullptr;
 GUIText* PauseScreen::textDage4Aquatic = nullptr;
 GUIText* PauseScreen::textManiaSonic = nullptr;
+GUIText* PauseScreen::textAmy = nullptr;
 
 bool PauseScreen::shouldPause = nullptr;
 
@@ -109,6 +110,7 @@ void PauseScreen::step()
 			textMechaSonic->setColour(0.6f, 0.6f, 0.6f);
 			textDage4Aquatic->setColour(0.6f, 0.6f, 0.6f);
 			textManiaSonic->setColour(0.6f, 0.6f, 0.6f);
+			textAmy->setColour(0.6f, 0.6f, 0.6f);
 			break;
 
 		case 1:
@@ -117,6 +119,7 @@ void PauseScreen::step()
 			textMechaSonic->setColour(0.6f, 0.6f, 0.6f);
 			textDage4Aquatic->setColour(0.6f, 0.6f, 0.6f);
 			textManiaSonic->setColour(0.6f, 0.6f, 0.6f);
+			textAmy->setColour(0.6f, 0.6f, 0.6f);
 			break;
 
 		case 2:
@@ -125,6 +128,7 @@ void PauseScreen::step()
 			textMechaSonic->setColour(1, 1, 1);
 			textDage4Aquatic->setColour(0.6f, 0.6f, 0.6f);
 			textManiaSonic->setColour(0.6f, 0.6f, 0.6f);
+			textAmy->setColour(0.6f, 0.6f, 0.6f);
 			break;
 
 		case 3:
@@ -133,6 +137,7 @@ void PauseScreen::step()
 			textMechaSonic->setColour(0.6f, 0.6f, 0.6f);
 			textDage4Aquatic->setColour(1, 1, 1);
 			textManiaSonic->setColour(0.6f, 0.6f, 0.6f);
+			textAmy->setColour(0.6f, 0.6f, 0.6f);
 			break;
 
 		case 4:
@@ -141,6 +146,19 @@ void PauseScreen::step()
 			textMechaSonic->setColour(0.6f, 0.6f, 0.6f);
 			textDage4Aquatic->setColour(0.6f, 0.6f, 0.6f);
 			textManiaSonic->setColour(1, 1, 1);
+			textAmy->setColour(0.6f, 0.6f, 0.6f);
+			break;
+
+		case 5:
+			textClassicSonic->setColour(0.6f, 0.6f, 0.6f);
+			textDollSonic->setColour(0.6f, 0.6f, 0.6f);
+			textMechaSonic->setColour(0.6f, 0.6f, 0.6f);
+			textDage4Aquatic->setColour(0.6f, 0.6f, 0.6f);
+			textManiaSonic->setColour(0.6f, 0.6f, 0.6f);
+			textAmy->setColour(1, 1, 1);
+			break;
+
+		default:
 			break;
 		}
 
@@ -190,11 +208,12 @@ void PauseScreen::step()
 					textMechaSonic->setVisibility(false);
 					textDage4Aquatic->setVisibility(false);
 					textManiaSonic->setVisibility(false);
+					textAmy->setVisibility(false);
 					break;
 
 				case 3:
 					menuDisplayID = CHAR_SELECT;
-					menuSelectionMAX = 4;
+					menuSelectionMAX = 5;
 					menuSelection = 0;
 					textResume->setVisibility(false);
 					textRestart->setVisibility(false);
@@ -221,6 +240,7 @@ void PauseScreen::step()
 					textMechaSonic->setVisibility(true);
 					textDage4Aquatic->setVisibility(true);
 					textManiaSonic->setVisibility(true);
+					textAmy->setVisibility(true);
 					break;
 
 				case 4:
@@ -350,6 +370,13 @@ void PauseScreen::step()
 						Player::characterID = 4;
 					}
 					break;
+
+				case 5:
+					if (Global::unlockedAmy)
+					{
+						Player::characterID = 5;
+					}
+					break;
 				}
 				break;
 
@@ -464,6 +491,8 @@ void PauseScreen::step()
 				case 3: textCursor->getPosition()->y = 0.6f; break;
 
 				case 4: textCursor->getPosition()->y = 0.7f; break;
+
+				case 5: textCursor->getPosition()->y = 0.8f; break;
 
 				default: break;
 			}
@@ -648,6 +677,13 @@ void PauseScreen::unpause()
 		Global::countDelete++;
 		textManiaSonic = nullptr;
 	}
+	if (textAmy != nullptr)
+	{
+		textAmy->deleteMe();
+		delete textAmy;
+		Global::countDelete++;
+		textAmy = nullptr;
+	}
 }
 
 void PauseScreen::pause()
@@ -684,4 +720,5 @@ void PauseScreen::pause()
 	textMechaSonic = new GUIText("Mecha Sonic", 3, font, 0.5f, 0.5f, 1.0f, false, false); Global::countNew++;
 	textDage4Aquatic = new GUIText("Dage4 Aquatic", 3, font, 0.5f, 0.6f, 1.0f, false, false); Global::countNew++;
 	textManiaSonic = new GUIText("Mania Sonic", 3, font, 0.5f, 0.7f, 1.0f, false, false); Global::countNew++;
+	textAmy = new GUIText("Amy", 3, font, 0.5f, 0.8f, 1.0f, false, false); Global::countNew++;
 }

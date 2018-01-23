@@ -82,6 +82,12 @@ void Player::step()
 
 	iFrame = std::max(0, iFrame-1);
 	hitTimer = std::max(0, hitTimer-1);
+	canMoveTimer = std::max(-1, canMoveTimer - 1);
+
+	if (canMoveTimer == 0)
+	{
+		canMove = true;
+	}
 
 	if (jumpInput)
 	{
@@ -321,7 +327,12 @@ void Player::step()
 		{
 			if (isBouncing)
 			{
-				bounceOffGround(&(triCol->normal));
+				bounceOffGround(&(triCol->normal), 0.75f);
+				isBall = true;
+				isBouncing = false;
+				isStomping = false;
+				homingAttackTimer = -1;
+				hoverCount = 0;
 			}
 			else
 			{
@@ -349,6 +360,9 @@ void Player::step()
 					{
 						canStick = false;
 					}
+
+					//Not sure if I like this...
+					canStick = false;
 				}
 
 				//Not sure if I like the canStick thing or not...
@@ -364,7 +378,20 @@ void Player::step()
 				}
 				else
 				{
-					bounceOffGround(&(triCol->normal));
+					//Vector3f speeds(xVel + xVelAir + xDisp, yVel + yDisp, zVel + zVelAir + zDisp);
+					//Vector3f newSPeeds = projectOntoPlane(&speeds, &(triCol->normal));
+					//xVelAir = speeds.x;
+					//yVel = speeds.y;
+					//zVelAir = speeds.z;
+					
+					bounceOffGround(&(triCol->normal), 0.6f);
+					canMoveTimer = 8;
+					canMove = false;
+					isBall = true;
+					bonked = true;
+
+					setPosition(colPos);
+					increasePosition(triCol->normal.x * 1.5f, triCol->normal.y * 1.5f, triCol->normal.z * 1.5f);
 				}
 			}
 
@@ -689,6 +716,60 @@ void Player::createLimbs()
 	{
 		displayHeightOffset = 0;
 		myBody = new Body(&modelBody); Global::countNew++;
+		myHead = new Limb(&modelHead,					0,    1.3f,  0,       myBody, nullptr); Global::countNew++;
+		myLeftHumerus = new Limb(&modelLeftHumerus,		0,    0.9f, -0.9f,    myBody, nullptr); Global::countNew++;
+		myLeftForearm = new Limb(&modelLeftForearm,		1.3f, 0, 0,  nullptr, myLeftHumerus); Global::countNew++;
+		myLeftHand = new Limb(&modelLeftHand,			1.3f, 0, 0,  nullptr, myLeftForearm); Global::countNew++;
+		myLeftThigh = new Limb(&modelLeftThigh,			0,   -0.9f, -0.3f,    myBody, nullptr); Global::countNew++;
+		myLeftShin = new Limb(&modelLeftShin,			1.1f, 0, 0,  nullptr, myLeftThigh); Global::countNew++;
+		myLeftFoot = new Limb(&modelLeftFoot,			1.1f, 0, 0,  nullptr, myLeftShin); Global::countNew++;
+		myRightHumerus = new Limb(&modelRightHumerus,	0,    0.9f,  0.9f,    myBody, nullptr); Global::countNew++;
+		myRightForearm = new Limb(&modelRightForearm,	1.3f, 0, 0,  nullptr, myRightHumerus); Global::countNew++;
+		myRightHand = new Limb(&modelRightHand,			1.3f, 0, 0,  nullptr, myRightForearm); Global::countNew++;
+		myRightThigh = new Limb(&modelRightThigh,		0,    -0.9f, 0.3f,    myBody, nullptr); Global::countNew++;
+		myRightShin = new Limb(&modelRightShin,			1.1f, 0, 0,  nullptr, myRightThigh); Global::countNew++;
+		myRightFoot = new Limb(&modelRightFoot,			1.1f, 0, 0,  nullptr, myRightShin); Global::countNew++;
+	}
+	else if (Player::characterID == 1) //Sonic Doll
+	{
+		displayHeightOffset = -0.525f;
+		myBody = new Body(&modelBody); Global::countNew++;
+		myHead = new Limb(&modelHead,                   0.7f,  1.4f,  0,       myBody, nullptr); Global::countNew++;
+		myLeftHumerus = new Limb(&modelLeftHumerus,	    0,     0.9f, -0.9f,    myBody, nullptr); Global::countNew++;
+		myLeftForearm = new Limb(&modelLeftForearm,	    0.92f, 0, 0,  nullptr, myLeftHumerus); Global::countNew++;
+		myLeftHand = new Limb(&modelLeftHand,           0.62f, 0, 0,  nullptr, myLeftForearm); Global::countNew++;
+		myLeftThigh = new Limb(&modelLeftThigh,	        0,    -0.9f, -0.3f,    myBody, nullptr); Global::countNew++;
+		myLeftShin = new Limb(&modelLeftShin,           1.07f, 0, 0,  nullptr, myLeftThigh); Global::countNew++;
+		myLeftFoot = new Limb(&modelLeftFoot,           1.23f, 0, 0,  nullptr, myLeftShin); Global::countNew++;
+		myRightHumerus = new Limb(&modelRightHumerus,   0,     0.9f,  0.9f,    myBody, nullptr); Global::countNew++;
+		myRightForearm = new Limb(&modelRightForearm,   0.92f, 0, 0,  nullptr, myRightHumerus); Global::countNew++;
+		myRightHand = new Limb(&modelRightHand,	        0.62f, 0, 0,  nullptr, myRightForearm); Global::countNew++;
+		myRightThigh = new Limb(&modelRightThigh,       0,    -0.9f,  0.3f,    myBody, nullptr); Global::countNew++;
+		myRightShin = new Limb(&modelRightShin,	        1.07f, 0, 0,  nullptr, myRightThigh); Global::countNew++;
+		myRightFoot = new Limb(&modelRightFoot,	        1.23f, 0, 0,  nullptr, myRightShin); Global::countNew++;
+	}
+	else if (Player::characterID == 2) //Mecha Sonic
+	{
+		displayHeightOffset = 0.8f;
+		myBody = new Body(&modelBody); Global::countNew++;
+		myHead = new Limb(&modelHead,                 0.0f,  1.15f, 0, myBody, nullptr); Global::countNew++;
+		myLeftHumerus = new Limb(&modelLeftHumerus,   0,     0.9f, -0.9f, myBody, nullptr); Global::countNew++;
+		myLeftForearm = new Limb(&modelLeftForearm,   1.5f,  0, 0, nullptr, myLeftHumerus); Global::countNew++;
+		myLeftHand = new Limb(&modelLeftHand,         1.9f,  0, 0, nullptr, myLeftForearm); Global::countNew++;
+		myLeftThigh = new Limb(&modelLeftThigh,       0,    -0.9f, -0.3f, myBody, nullptr); Global::countNew++;
+		myLeftShin = new Limb(&modelLeftShin,         1.47f, 0, 0, nullptr, myLeftThigh); Global::countNew++;
+		myLeftFoot = new Limb(&modelLeftFoot,         1.21f, 0, 0, nullptr, myLeftShin); Global::countNew++;
+		myRightHumerus = new Limb(&modelRightHumerus, 0,     0.9f, 0.9f, myBody, nullptr); Global::countNew++;
+		myRightForearm = new Limb(&modelRightForearm, 1.5f, 0, 0, nullptr, myRightHumerus); Global::countNew++;
+		myRightHand = new Limb(&modelRightHand,       1.9f,  0, 0, nullptr, myRightForearm); Global::countNew++;
+		myRightThigh = new Limb(&modelRightThigh,     0,    -0.9f, 0.3f, myBody, nullptr); Global::countNew++;
+		myRightShin = new Limb(&modelRightShin,       1.47f, 0, 0, nullptr, myRightThigh); Global::countNew++;
+		myRightFoot = new Limb(&modelRightFoot,       1.21f, 0, 0, nullptr, myRightShin); Global::countNew++;
+	}
+	else if (Player::characterID == 3) //Dage 4 Aquatic
+	{
+		displayHeightOffset = 0;
+		myBody = new Body(&modelBody); Global::countNew++;
 		myHead = new Limb(&modelHead, 0, 1.3f, 0, myBody, nullptr); Global::countNew++;
 		myLeftHumerus = new Limb(&modelLeftHumerus, 0, 0.9f, -0.9f, myBody, nullptr); Global::countNew++;
 		myLeftForearm = new Limb(&modelLeftForearm, 1.3f, 0, 0, nullptr, myLeftHumerus); Global::countNew++;
@@ -701,6 +782,24 @@ void Player::createLimbs()
 		myRightHand = new Limb(&modelRightHand, 1.3f, 0, 0, nullptr, myRightForearm); Global::countNew++;
 		myRightThigh = new Limb(&modelRightThigh, 0, -0.9f, 0.3f, myBody, nullptr); Global::countNew++;
 		myRightShin = new Limb(&modelRightShin, 1.1f, 0, 0, nullptr, myRightThigh); Global::countNew++;
+		myRightFoot = new Limb(&modelRightFoot, 1.1f, 0, 0, nullptr, myRightShin); Global::countNew++;
+	}
+	else if (Player::characterID == 4) //Mania Sonic
+	{
+		displayHeightOffset = -0.25f;
+		myBody = new Body(&modelBody); Global::countNew++;
+		myHead = new Limb(&modelHead, 0.3f, 1.2f, 0, myBody, nullptr); Global::countNew++;
+		myLeftHumerus = new Limb(&modelLeftHumerus, 0, 0.9f, -0.9f, myBody, nullptr); Global::countNew++;
+		myLeftForearm = new Limb(&modelLeftForearm, 1.3f, 0, 0, nullptr, myLeftHumerus); Global::countNew++;
+		myLeftHand = new Limb(&modelLeftHand, 1.3f, 0, 0, nullptr, myLeftForearm); Global::countNew++;
+		myLeftThigh = new Limb(&modelLeftThigh, 0, -0.9f, -0.3f, myBody, nullptr); Global::countNew++;
+		myLeftShin = new Limb(&modelLeftShin, 1.3f, 0, 0, nullptr, myLeftThigh); Global::countNew++;
+		myLeftFoot = new Limb(&modelLeftFoot, 1.1f, 0, 0, nullptr, myLeftShin); Global::countNew++;
+		myRightHumerus = new Limb(&modelRightHumerus, 0, 0.9f, 0.9f, myBody, nullptr); Global::countNew++;
+		myRightForearm = new Limb(&modelRightForearm, 1.3f, 0, 0, nullptr, myRightHumerus); Global::countNew++;
+		myRightHand = new Limb(&modelRightHand, 1.3f, 0, 0, nullptr, myRightForearm); Global::countNew++;
+		myRightThigh = new Limb(&modelRightThigh, 0, -0.9f, 0.3f, myBody, nullptr); Global::countNew++;
+		myRightShin = new Limb(&modelRightShin, 1.3f, 0, 0, nullptr, myRightThigh); Global::countNew++;
 		myRightFoot = new Limb(&modelRightFoot, 1.1f, 0, 0, nullptr, myRightShin); Global::countNew++;
 	}
 	else if (Player::characterID == 5) //Amy
@@ -765,6 +864,74 @@ void Player::loadStaticModels()
 		if (Player::modelRightThigh.size() == 0) { loadModelsHelper(loadObjModel("res/Models/Sonic/", "Thigh.obj"), &Player::modelRightThigh); }
 		if (Player::modelRightShin.size() == 0) { loadModelsHelper(loadObjModel("res/Models/Sonic/", "Shin.obj"), &Player::modelRightShin); }
 		if (Player::modelRightFoot.size() == 0) { loadModelsHelper(loadObjModel("res/Models/Sonic/", "Foot.obj"), &Player::modelRightFoot); }
+	}
+	if (Player::characterID == 1) //Doll Sonic
+	{
+		if (Player::modelBody.size() == 0) { loadModelsHelper(loadObjModel("res/Models/SonicDoll/", "Body.obj"), &Player::modelBody); }
+		if (Player::modelHead.size() == 0) { loadModelsHelper(loadObjModel("res/Models/SonicDoll/", "Head.obj"), &Player::modelHead); }
+		if (Player::modelLeftHumerus.size() == 0) { loadModelsHelper(loadObjModel("res/Models/SonicDoll/", "Humerus.obj"), &Player::modelLeftHumerus); }
+		if (Player::modelLeftForearm.size() == 0) { loadModelsHelper(loadObjModel("res/Models/SonicDoll/", "Forearm.obj"), &Player::modelLeftForearm); }
+		if (Player::modelLeftHand.size() == 0) { loadModelsHelper(loadObjModel("res/Models/SonicDoll/", "HandL.obj"), &Player::modelLeftHand); }
+		if (Player::modelLeftThigh.size() == 0) { loadModelsHelper(loadObjModel("res/Models/SonicDoll/", "Thigh.obj"), &Player::modelLeftThigh); }
+		if (Player::modelLeftShin.size() == 0) { loadModelsHelper(loadObjModel("res/Models/SonicDoll/", "Shin.obj"), &Player::modelLeftShin); }
+		if (Player::modelLeftFoot.size() == 0) { loadModelsHelper(loadObjModel("res/Models/SonicDoll/", "FootL.obj"), &Player::modelLeftFoot); }
+		if (Player::modelRightHumerus.size() == 0) { loadModelsHelper(loadObjModel("res/Models/SonicDoll/", "Humerus.obj"), &Player::modelRightHumerus); }
+		if (Player::modelRightForearm.size() == 0) { loadModelsHelper(loadObjModel("res/Models/SonicDoll/", "Forearm.obj"), &Player::modelRightForearm); }
+		if (Player::modelRightHand.size() == 0) { loadModelsHelper(loadObjModel("res/Models/SonicDoll/", "HandR.obj"), &Player::modelRightHand); }
+		if (Player::modelRightThigh.size() == 0) { loadModelsHelper(loadObjModel("res/Models/SonicDoll/", "Thigh.obj"), &Player::modelRightThigh); }
+		if (Player::modelRightShin.size() == 0) { loadModelsHelper(loadObjModel("res/Models/SonicDoll/", "Shin.obj"), &Player::modelRightShin); }
+		if (Player::modelRightFoot.size() == 0) { loadModelsHelper(loadObjModel("res/Models/SonicDoll/", "FootR.obj"), &Player::modelRightFoot); }
+	}
+	if (Player::characterID == 2) //Mecha Sonic
+	{
+		if (Player::modelBody.size() == 0) { loadModelsHelper(loadObjModel("res/Models/SilverSonic/", "Body.obj"), &Player::modelBody); }
+		if (Player::modelHead.size() == 0) { loadModelsHelper(loadObjModel("res/Models/SilverSonic/", "Head.obj"), &Player::modelHead); }
+		if (Player::modelLeftHumerus.size() == 0) { loadModelsHelper(loadObjModel("res/Models/SilverSonic/", "Humerus.obj"), &Player::modelLeftHumerus); }
+		if (Player::modelLeftForearm.size() == 0) { loadModelsHelper(loadObjModel("res/Models/SilverSonic/", "ForearmL.obj"), &Player::modelLeftForearm); }
+		if (Player::modelLeftHand.size() == 0) { loadModelsHelper(loadObjModel("res/Models/SilverSonic/", "HandL.obj"), &Player::modelLeftHand); }
+		if (Player::modelLeftThigh.size() == 0) { loadModelsHelper(loadObjModel("res/Models/SilverSonic/", "Thigh.obj"), &Player::modelLeftThigh); }
+		if (Player::modelLeftShin.size() == 0) { loadModelsHelper(loadObjModel("res/Models/SilverSonic/", "ShinL.obj"), &Player::modelLeftShin); }
+		if (Player::modelLeftFoot.size() == 0) { loadModelsHelper(loadObjModel("res/Models/SilverSonic/", "FootL.obj"), &Player::modelLeftFoot); }
+		if (Player::modelRightHumerus.size() == 0) { loadModelsHelper(loadObjModel("res/Models/SilverSonic/", "Humerus.obj"), &Player::modelRightHumerus); }
+		if (Player::modelRightForearm.size() == 0) { loadModelsHelper(loadObjModel("res/Models/SilverSonic/", "ForearmR.obj"), &Player::modelRightForearm); }
+		if (Player::modelRightHand.size() == 0) { loadModelsHelper(loadObjModel("res/Models/SilverSonic/", "HandR.obj"), &Player::modelRightHand); }
+		if (Player::modelRightThigh.size() == 0) { loadModelsHelper(loadObjModel("res/Models/SilverSonic/", "Thigh.obj"), &Player::modelRightThigh); }
+		if (Player::modelRightShin.size() == 0) { loadModelsHelper(loadObjModel("res/Models/SilverSonic/", "ShinR.obj"), &Player::modelRightShin); }
+		if (Player::modelRightFoot.size() == 0) { loadModelsHelper(loadObjModel("res/Models/SilverSonic/", "FootR.obj"), &Player::modelRightFoot); }
+	}
+	else if(Player::characterID == 3) //Dage 4 Aquatic
+	{
+		if (Player::modelBody.size() == 0) { loadModelsHelper(loadObjModel("res/Models/Dage4Aquatic/", "Body.obj"), &Player::modelBody); }
+		if (Player::modelHead.size() == 0) { loadModelsHelper(loadObjModel("res/Models/Dage4Aquatic/", "Head.obj"), &Player::modelHead); }
+		if (Player::modelLeftHumerus.size() == 0) { loadModelsHelper(loadObjModel("res/Models/Dage4Aquatic/", "Humerus.obj"), &Player::modelLeftHumerus); }
+		if (Player::modelLeftForearm.size() == 0) { loadModelsHelper(loadObjModel("res/Models/Dage4Aquatic/", "Forearm.obj"), &Player::modelLeftForearm); }
+		if (Player::modelLeftHand.size() == 0) { loadModelsHelper(loadObjModel("res/Models/Dage4Aquatic/", "LeftHand.obj"), &Player::modelLeftHand); }
+		if (Player::modelLeftThigh.size() == 0) { loadModelsHelper(loadObjModel("res/Models/Dage4Aquatic/", "Thigh.obj"), &Player::modelLeftThigh); }
+		if (Player::modelLeftShin.size() == 0) { loadModelsHelper(loadObjModel("res/Models/Dage4Aquatic/", "Shin.obj"), &Player::modelLeftShin); }
+		if (Player::modelLeftFoot.size() == 0) { loadModelsHelper(loadObjModel("res/Models/Dage4Aquatic/", "Foot.obj"), &Player::modelLeftFoot); }
+		if (Player::modelRightHumerus.size() == 0) { loadModelsHelper(loadObjModel("res/Models/Dage4Aquatic/", "Humerus.obj"), &Player::modelRightHumerus); }
+		if (Player::modelRightForearm.size() == 0) { loadModelsHelper(loadObjModel("res/Models/Dage4Aquatic/", "Forearm.obj"), &Player::modelRightForearm); }
+		if (Player::modelRightHand.size() == 0) { loadModelsHelper(loadObjModel("res/Models/Dage4Aquatic/", "RightHand.obj"), &Player::modelRightHand); }
+		if (Player::modelRightThigh.size() == 0) { loadModelsHelper(loadObjModel("res/Models/Dage4Aquatic/", "Thigh.obj"), &Player::modelRightThigh); }
+		if (Player::modelRightShin.size() == 0) { loadModelsHelper(loadObjModel("res/Models/Dage4Aquatic/", "Shin.obj"), &Player::modelRightShin); }
+		if (Player::modelRightFoot.size() == 0) { loadModelsHelper(loadObjModel("res/Models/Dage4Aquatic/", "Foot.obj"), &Player::modelRightFoot); }
+	}
+	else if (Player::characterID == 4) //Mania Sonic
+	{
+		if (Player::modelBody.size() == 0) { loadModelsHelper(loadObjModel("res/Models/SonicMania/", "Body.obj"), &Player::modelBody); }
+		if (Player::modelHead.size() == 0) { loadModelsHelper(loadObjModel("res/Models/SonicMania/", "Head.obj"), &Player::modelHead); }
+		if (Player::modelLeftHumerus.size() == 0) { loadModelsHelper(loadObjModel("res/Models/SonicMania/", "Humerus.obj"), &Player::modelLeftHumerus); }
+		if (Player::modelLeftForearm.size() == 0) { loadModelsHelper(loadObjModel("res/Models/SonicMania/", "Forearm.obj"), &Player::modelLeftForearm); }
+		if (Player::modelLeftHand.size() == 0) { loadModelsHelper(loadObjModel("res/Models/SonicMania/", "HandLeft.obj"), &Player::modelLeftHand); }
+		if (Player::modelLeftThigh.size() == 0) { loadModelsHelper(loadObjModel("res/Models/SonicMania/", "Thigh.obj"), &Player::modelLeftThigh); }
+		if (Player::modelLeftShin.size() == 0) { loadModelsHelper(loadObjModel("res/Models/SonicMania/", "Shin.obj"), &Player::modelLeftShin); }
+		if (Player::modelLeftFoot.size() == 0) { loadModelsHelper(loadObjModel("res/Models/SonicMania/", "ShoeLeft.obj"), &Player::modelLeftFoot); }
+		if (Player::modelRightHumerus.size() == 0) { loadModelsHelper(loadObjModel("res/Models/SonicMania/", "Humerus.obj"), &Player::modelRightHumerus); }
+		if (Player::modelRightForearm.size() == 0) { loadModelsHelper(loadObjModel("res/Models/SonicMania/", "Forearm.obj"), &Player::modelRightForearm); }
+		if (Player::modelRightHand.size() == 0) { loadModelsHelper(loadObjModel("res/Models/SonicMania/", "HandRight.obj"), &Player::modelRightHand); }
+		if (Player::modelRightThigh.size() == 0) { loadModelsHelper(loadObjModel("res/Models/SonicMania/", "Thigh.obj"), &Player::modelRightThigh); }
+		if (Player::modelRightShin.size() == 0) { loadModelsHelper(loadObjModel("res/Models/SonicMania/", "Shin.obj"), &Player::modelRightShin); }
+		if (Player::modelRightFoot.size() == 0) { loadModelsHelper(loadObjModel("res/Models/SonicMania/", "ShoeRight.obj"), &Player::modelRightFoot); }
 	}
 	else if (Player::characterID == 5) //Amy
 	{
@@ -1257,11 +1424,10 @@ void Player::initiateStomp()
 	//stompSource = AudioSources.play(32, getPosition());
 }
 
-void Player::bounceOffGround(Vector3f* surfaceNormal)
+void Player::bounceOffGround(Vector3f* surfaceNormal, float b)
 {
 	Vector3f V = Vector3f(xVelAir, yVel, zVelAir);
 	Vector3f N = Vector3f(surfaceNormal);
-	float b = 0.75f;
 
 	Vector3f Vnew = bounceVector(&V, &N, b);
 
@@ -1272,11 +1438,11 @@ void Player::bounceOffGround(Vector3f* surfaceNormal)
 	xVel = 0;
 	zVel = 0;
 
-	isBall = true;
-	isBouncing = false;
-	isStomping = false;
-	homingAttackTimer = -1;
-	hoverCount = 0;
+	//isBall = true;
+	//isBouncing = false;
+	//isStomping = false;
+	//homingAttackTimer = -1;
+	//hoverCount = 0;
 	//AudioSources.play(26, getPosition());
 }
 

@@ -73,6 +73,10 @@ public:
 	static void setMoonColorNight(Vector3f* newSunColor);
 
 	static void setFogVars(float newDensity, float newGradient);
+
+	static float getFogGradient();
+
+	static float getFogDensity();
 };
 
 #endif

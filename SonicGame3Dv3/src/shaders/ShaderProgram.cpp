@@ -105,6 +105,16 @@ void ShaderProgram::loadSkyColour(float r, float g, float b)
 	loadVector(location_skyColour, &newColour);
 }
 
+void ShaderProgram::loadFogDensity(float density)
+{
+	loadFloat(location_fogDensity, density);
+}
+
+void ShaderProgram::loadFogGradient(float gradient)
+{
+	loadFloat(location_fogGradient, gradient);
+}
+
 void ShaderProgram::bindAttributes()
 {
 	bindAttribute(0, "position");
@@ -132,6 +142,8 @@ void ShaderProgram::getAllUniformLocations()
 	location_texOffX = getUniformLocation("texOffX");
 	location_texOffY = getUniformLocation("texOffY");
 	location_skyColour = getUniformLocation("skyColour");
+	location_fogDensity = getUniformLocation("fogDensity");
+	location_fogGradient = getUniformLocation("fogGradient");
 }
 
 int ShaderProgram::getUniformLocation(char* uniformName)

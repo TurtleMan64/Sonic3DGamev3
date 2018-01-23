@@ -29,6 +29,8 @@ private:
 	int location_texOffX;
 	int location_texOffY;
 	int location_glowAmount;
+	int location_fogDensity;
+	int location_fogGradient;
 
 public:
 	ShaderProgram(char*, char*);
@@ -58,6 +60,10 @@ public:
 	void loadTextureOffsets(float offX, float offY);
 
 	void loadSkyColour(float r, float g, float b);
+
+	void loadFogDensity(float density);
+
+	void loadFogGradient(float gradient);
 
 protected:
 	void bindAttributes();

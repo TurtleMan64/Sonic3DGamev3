@@ -77,6 +77,7 @@ bool Global::unlockedSonicDoll = true;
 bool Global::unlockedMechaSonic = true;
 bool Global::unlockedDage4 = true;
 bool Global::unlockedManiaSonic = true;
+bool Global::unlockedAmy = true;
 
 std::default_random_engine* Global::generator = new std::default_random_engine;
 std::normal_distribution<double>* Global::distribution = new std::normal_distribution<double>(0.0, 1.0);

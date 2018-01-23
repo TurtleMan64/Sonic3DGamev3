@@ -9,6 +9,7 @@
 #include "../toolbox/maths.h"
 #include "../models/models.h"
 #include "../engineTester/main.h"
+#include "skymanager.h"
 
 #include <iostream>
 #include <unordered_map>
@@ -26,7 +27,8 @@ void EntityRenderer::renderNEW(std::unordered_map<TexturedModel*, std::list<Enti
 {
 	clockTime = Global::gameClock / 60.0f;
 
-	//load fog vars
+	shader->loadFogGradient(SkyManager::getFogGradient());
+	shader->loadFogDensity(SkyManager::getFogDensity());
 
 	for (auto entry : (*entitiesMap))
 	{

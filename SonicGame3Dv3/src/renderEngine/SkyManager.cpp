@@ -215,3 +215,13 @@ void SkyManager::setFogVars(float newDensity, float newGradient)
 	SkyManager::fogDensity = newDensity;
 	SkyManager::fogGradient = newGradient;
 }
+
+float SkyManager::getFogGradient()
+{
+	return SkyManager::fogGradient;
+}
+
+float SkyManager::getFogDensity()
+{
+	return SkyManager::fogDensity;
+}

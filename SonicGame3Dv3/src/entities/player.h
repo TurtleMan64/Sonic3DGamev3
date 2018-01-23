@@ -145,6 +145,7 @@ private:
 	float movementAngle = 0;
 
 	bool canMove = true;
+	int canMoveTimer = -1;
 
 	float spindashAngle = 0;
 	bool canStartSpindash = false;
@@ -274,7 +275,7 @@ private:
 
 	void initiateStomp();
 
-	void bounceOffGround(Vector3f* surfaceNormal);
+	void bounceOffGround(Vector3f* surfaceNormal, float b);
 
 	//attempt to continue a lightdash
 	//if lightdash cant continue, sets isLightdashing

@@ -31,65 +31,62 @@ void Limb::update(float time)
 	Keyframe* key2 = nullptr;
 
 
-	float angleX, angleY, angleZ;
+	float angleX, angleY, angleZ, angleS;
 	if (body != nullptr)
 	{
-		angleX = (float)toRadians(body->getRotX());
-		angleY = (float)toRadians(body->getRotY());
-		angleZ = (float)toRadians(body->getRotZ());
+		angleX = toRadians(body->getRotX());
+		angleY = toRadians(body->getRotY());
+		angleZ = toRadians(body->getRotZ());
+		angleS = toRadians(body->getRotSpin());
 	}
 	else
 	{
-		angleX = (float)toRadians(limb->getRotX());
-		angleY = (float)toRadians(limb->getRotY());
-		angleZ = (float)toRadians(limb->getRotZ());
+		angleX = toRadians(limb->getRotX());
+		angleY = toRadians(limb->getRotY());
+		angleZ = toRadians(limb->getRotZ());
+		angleS = toRadians(limb->getRotSpin());
 	}
 
 
 	float newX = pivotX, newY = pivotY, newZ = pivotZ;
-
-	//float newX = (float)(pivotZ*Math.sin(angleY) + pivotX*Math.cos(angleY));
-	//float newZ = (float)(pivotZ*Math.cos(angleY) - pivotX*Math.sin(angleY));
-	//System.out.println("before:  x = "+newX+"     y = "+newY+"     angleZ = "+Math.toDegrees(angleZ));
-
-
-	//rotation around x axis
-	//newY = (float) (pivotY * Math.cos(angleX) - pivotZ * Math.sin(angleX));
-	//newZ = (float) (pivotY * Math.sin(angleX) + pivotZ * Math.cos(angleX));
 
 	float newPivotX = newX;
 	float newPivotY = newY;
 	float newPivotZ = newZ;
 
 	//rotation around z axis
-	newX = (float)(newPivotX * cos(angleZ) - newPivotY * sin(angleZ));
-	newY = (float)(newPivotX * sin(angleZ) + newPivotY * cos(angleZ));
-	//newY = (float)(pivotY*Math.cos(angleZ) - pivotX*Math.sin(angleZ));
-
-	//System.out.println("after:  x = "+newX+"     y = "+newY+"     angleZ = "+Math.toDegrees(angleZ));
-	//System.out.println("radius = "+(float)Math.sqrt(Math.pow(newX, 2)+Math.pow(newY, 2)));
-	//System.out.println();
-
+	newX =  (newPivotX * cosf(angleS) - newPivotY * sinf(angleS));
+	newY = -(newPivotY * cosf(angleS) + newPivotX * sinf(angleS));
 	newPivotX = newX;
 	newPivotY = newY;
 	newPivotZ = newZ;
 
+
+	//rotation around x axis: this one might not be right
+	newZ =  (newPivotZ * cosf(angleX) - newPivotY * sinf(angleX));
+	newY = -(newPivotY * cosf(angleX) + newPivotZ * sinf(angleX));
+	newPivotX = newX;
+	newPivotY = newY;
+	newPivotZ = newZ;
+
+
+	//rotation around z axis
+	newX = (newPivotX * cosf(angleZ) - newPivotY * sinf(angleZ));
+	newY = (newPivotX * sinf(angleZ) + newPivotY * cosf(angleZ));
+	newPivotX = newX;
+	newPivotY = newY;
+	newPivotZ = newZ;
+
+
 	//rotation around y axis
-	newX = (float)(newPivotX * cos(angleY) + newPivotZ * sin(angleY));
-	newZ = (float)(newPivotZ * cos(angleY) - newPivotX * sin(angleY));
+	newX = (newPivotX * cosf(angleY) + newPivotZ * sinf(angleY));
+	newZ = (newPivotZ * cosf(angleY) - newPivotX * sinf(angleY));
 
-	/*
-	Matrix4f rotationMat = Maths.createTransformationMatrix(new Vector3f(0,0,0), 0, angleY, angleZ, 0);
-	Vector4f position = new Vector4f(newX, newY, newZ, 1);
 
-	position = Maths.multiplyByMat(position, rotationMat);
-	newX = position.x;
-	newY = position.y;
-	newZ = position.z;
-	*/
 	float newXRot = 0;
 	float newYRot = 0;
 	float newZRot = 0;
+	float newSRot = 0;
 	float newScale = 0;
 
 	for (unsigned int i = 0; i < (*animations)[animationIndex].keyframes.size() - 1; i++)
@@ -120,6 +117,7 @@ void Limb::update(float time)
 		newXRot = key1->xRot + ratio*(key2->xRot - key1->xRot);
 		newYRot = key1->yRot + ratio*(key2->yRot - key1->yRot);
 		newZRot = key1->zRot + ratio*(key2->zRot - key1->zRot);
+		newSRot = key1->sRot + ratio*(key2->sRot - key1->sRot);
 		newScale = key1->scale + ratio*(key2->scale - key1->scale);
 	}
 	else
@@ -127,6 +125,7 @@ void Limb::update(float time)
 		newXRot = key2->xRot;
 		newYRot = key2->yRot;
 		newZRot = key2->zRot;
+		newSRot = key2->sRot;
 		newScale = key2->scale;
 	}
 
@@ -135,9 +134,10 @@ void Limb::update(float time)
 		position.x = (body->getX() + newX);
 		position.y = (body->getY() + newY);
 		position.z = (body->getZ() + newZ);
-		setRotX(body->getRotX() + newXRot);
+		setRotX(body->getRotX() + newXRot); //twist
 		setRotY(body->getRotY() + newYRot);
-		setRotZ(body->getRotZ() + newZRot);//pitch
+		setRotZ(body->getRotZ() + newZRot);
+		setRotSpin(body->getRotSpin() + newSRot); //spin
 		//super.setScale(newScale);
 	}
 	else
@@ -145,9 +145,10 @@ void Limb::update(float time)
 		position.x = (limb->getX() + newX);
 		position.y = (limb->getY() + newY);
 		position.z = (limb->getZ() + newZ);
-		setRotX(limb->getRotX() + newXRot);
+		setRotX(limb->getRotX() + newXRot); //twist
 		setRotY(limb->getRotY() + newYRot);
-		setRotZ(limb->getRotZ() + newZRot);//pitch
+		setRotZ(limb->getRotZ() + newZRot);
+		setRotSpin(limb->getRotSpin() + newSRot); //spin
 		//super.setScale(newScale);
 	}
 }

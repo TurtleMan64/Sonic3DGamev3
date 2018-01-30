@@ -15,6 +15,7 @@ Body::Body(std::list<TexturedModel*>* models)
 	baseRotY = 0;
 	baseRotZ = 0;
 	baseRotX = 0;
+	baseRotS = 0;
 	animationIndex = 0;
 	time = 0;
 	prevTime = 0;
@@ -42,6 +43,7 @@ void Body::update(float time)
 	float newXRot = 0;
 	float newYRot = 0;
 	float newZRot = 0;
+	float newSRot = 0;
 	float newScale = 0;
 
 	for (unsigned int i = 0; i < (*animations)[animationIndex].keyframes.size() - 1; i++)
@@ -76,6 +78,7 @@ void Body::update(float time)
 		newXRot = key1->xRot + ratio*(key2->xRot - key1->xRot);
 		newYRot = key1->yRot + ratio*(key2->yRot - key1->yRot);
 		newZRot = key1->zRot + ratio*(key2->zRot - key1->zRot);
+		newSRot = key1->sRot + ratio*(key2->sRot - key1->sRot);
 		newScale = key1->scale + ratio*(key2->scale - key1->scale);
 	}
 	else
@@ -86,37 +89,85 @@ void Body::update(float time)
 		newXRot = key2->xRot;
 		newYRot = key2->yRot;
 		newZRot = key2->zRot;
+		newSRot = key2->sRot;
 		newScale = key2->scale;
 	}
+	
 	float newXOffset = newX;
+	float newYOffset = newY;
 	float newZOffset = newZ;
-	float angleY = (float)toRadians(baseRotY + newYRot);
 
-	newX = (float)(newXOffset * cos(angleY) + newZOffset * sin(angleY));
-	newZ = (float)(newZOffset * cos(angleY) - newXOffset * sin(angleY));
+	float angleX = toRadians(baseRotX + newXRot);
+	float angleY = toRadians(baseRotY + newYRot);
+	float angleZ = toRadians(baseRotZ + newZRot);
+	float angleS = toRadians(baseRotS + newSRot);
+
+
+	//rotation around z axis
+	newX =  (newXOffset * cosf(angleS) - newYOffset * sinf(angleS));
+	newY = -(newYOffset * cosf(angleS) + newXOffset * sinf(angleS));
+	newXOffset = newX;
+	newYOffset = newY;
+	newZOffset = newZ;
+
+
+	//rotation around x axis: this one might not be right
+	newZ =  (newZOffset * cosf(angleX) - newYOffset * sinf(angleX));
+	newY = -(newYOffset * cosf(angleX) + newZOffset * sinf(angleX));
+	newXOffset = newX;
+	newYOffset = newY;
+	newZOffset = newZ;
+
+
+	//rotation around z axis
+	newX = (newXOffset * cosf(angleZ) - newYOffset * sinf(angleZ));
+	newY = (newXOffset * sinf(angleZ) + newYOffset * cosf(angleZ));
+	newXOffset = newX;
+	newYOffset = newY;
+	newZOffset = newZ;
+
+
+	//rotation around y axis
+	newX = (newXOffset * cosf(angleY) + newZOffset * sinf(angleY));
+	newZ = (newZOffset * cosf(angleY) - newXOffset * sinf(angleY));
+
 
 	position.x = (baseX + newX);
 	position.y = (baseY + newY);
 	position.z = (baseZ + newZ);
-	setRotX(newXRot);
+	setRotX(baseRotX + newXRot);
 	setRotY(baseRotY + newYRot);
 	setRotZ(baseRotZ + newZRot);
+	setRotSpin(baseRotS + newSRot);
 	//setScale(newScale);
 }
 
-void Body::setBaseOrientation(Vector3f* basePosition, float rotY, float rotZ)
+void Body::setBaseOrientation(Vector3f* basePosition, float rotX, float rotY, float rotZ, float rotS)
 {
 	baseX = basePosition->x;
 	baseY = basePosition->y;
 	baseZ = basePosition->z;
+	baseRotX = rotX;
 	baseRotY = rotY;
 	baseRotZ = rotZ;
+	baseRotS = rotS;
 }
 
-void Body::setBaseRotZ(float rotZ)
+void Body::setBaseOrientation(float baseX, float baseY, float baseZ, float rotX, float rotY, float rotZ, float rotS)
 {
+	this->baseX = baseX;
+	this->baseY = baseY;
+	this->baseZ = baseZ;
+	baseRotX = rotX;
+	baseRotY = rotY;
 	baseRotZ = rotZ;
+	baseRotS = rotS;
 }
+
+//void Body::setBaseRotZ(float rotZ)
+//{
+	//baseRotZ = rotZ;
+//}
 
 std::list<TexturedModel*>* Body::getModels()
 {

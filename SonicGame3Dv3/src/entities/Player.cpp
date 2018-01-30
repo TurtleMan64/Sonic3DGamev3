@@ -131,9 +131,9 @@ void Player::step()
 
 	float inputX = xVelGround;
 	float inputY = zVelGround;
-	float mag = (float)sqrt(inputX*inputX + inputY*inputY);
+	float mag = sqrtf(inputX*inputX + inputY*inputY);
 
-	float inputDir = (float)(atan2(inputY, inputX));
+	float inputDir = (atan2f(inputY, inputX));
 	Vector3f negNorm;
 	negNorm.set(-currNorm.x, -currNorm.y, -currNorm.z);
 	Vector3f mapped = mapInputs3(inputDir, mag, &negNorm);
@@ -147,8 +147,8 @@ void Player::step()
 		isBouncing = false;
 		isStomping = false;
 		homingAttackTimer = -1;
-		float speed = (float)sqrt(xVelGround*xVelGround + zVelGround*zVelGround);
-		if (currNorm.y <= 0 && speed < 1)
+		float speed = sqrtf(xVelGround*xVelGround + zVelGround*zVelGround);
+		if (currNorm.y <= 0.3f && speed < 1) //Arbitrary constants
 		{
 			wallStickTimer--;
 		}
@@ -167,9 +167,9 @@ void Player::step()
 		if (wallStickTimer < 0)
 		{
 			//Do a small 'pop off' off the wall
-			xVelAir = xVel + currNorm.x * 1;
-			zVelAir = zVel + currNorm.z * 1;
-			yVel = yVel + currNorm.y * 1;
+			xVelAir = xVel + currNorm.x * 1.5f;
+			zVelAir = zVel + currNorm.z * 1.5f;
+			yVel = yVel + currNorm.y * 1.5f;
 			xVel = 0;
 			zVel = 0;
 			xVelGround = 0;
@@ -195,7 +195,7 @@ void Player::step()
 			//AudioSources.play(6, getPosition());
 		}
 
-		if (speed < 0.45)
+		if (speed < 0.45f)
 		{
 			if (isBall)
 			{
@@ -716,109 +716,109 @@ void Player::createLimbs()
 	{
 		displayHeightOffset = 0;
 		myBody = new Body(&modelBody); Global::countNew++;
-		myHead = new Limb(&modelHead,					0,    1.3f,  0,       myBody, nullptr); Global::countNew++;
-		myLeftHumerus = new Limb(&modelLeftHumerus,		0,    0.9f, -0.9f,    myBody, nullptr); Global::countNew++;
-		myLeftForearm = new Limb(&modelLeftForearm,		1.3f, 0, 0,  nullptr, myLeftHumerus); Global::countNew++;
-		myLeftHand = new Limb(&modelLeftHand,			1.3f, 0, 0,  nullptr, myLeftForearm); Global::countNew++;
-		myLeftThigh = new Limb(&modelLeftThigh,			0,   -0.9f, -0.3f,    myBody, nullptr); Global::countNew++;
-		myLeftShin = new Limb(&modelLeftShin,			1.1f, 0, 0,  nullptr, myLeftThigh); Global::countNew++;
-		myLeftFoot = new Limb(&modelLeftFoot,			1.1f, 0, 0,  nullptr, myLeftShin); Global::countNew++;
-		myRightHumerus = new Limb(&modelRightHumerus,	0,    0.9f,  0.9f,    myBody, nullptr); Global::countNew++;
-		myRightForearm = new Limb(&modelRightForearm,	1.3f, 0, 0,  nullptr, myRightHumerus); Global::countNew++;
-		myRightHand = new Limb(&modelRightHand,			1.3f, 0, 0,  nullptr, myRightForearm); Global::countNew++;
-		myRightThigh = new Limb(&modelRightThigh,		0,    -0.9f, 0.3f,    myBody, nullptr); Global::countNew++;
-		myRightShin = new Limb(&modelRightShin,			1.1f, 0, 0,  nullptr, myRightThigh); Global::countNew++;
-		myRightFoot = new Limb(&modelRightFoot,			1.1f, 0, 0,  nullptr, myRightShin); Global::countNew++;
+		myHead = new Limb(&modelHead, 1.3f, 0, 0, myBody, nullptr); Global::countNew++;
+		myLeftHumerus = new Limb(&modelLeftHumerus, 0.9f, 0, -0.9f, myBody, nullptr); Global::countNew++;
+		myLeftForearm = new Limb(&modelLeftForearm, 0, -1.3f, 0, nullptr, myLeftHumerus); Global::countNew++;
+		myLeftHand = new Limb(&modelLeftHand, 0, -1.3f, 0, nullptr, myLeftForearm); Global::countNew++;
+		myLeftThigh = new Limb(&modelLeftThigh, -0.9f, 0, -0.3f, myBody, nullptr); Global::countNew++;
+		myLeftShin = new Limb(&modelLeftShin, 0, -1.1f, 0, nullptr, myLeftThigh); Global::countNew++;
+		myLeftFoot = new Limb(&modelLeftFoot, 0, -1.1f, 0, nullptr, myLeftShin); Global::countNew++;
+		myRightHumerus = new Limb(&modelRightHumerus, 0.9f, 0, 0.9f, myBody, nullptr); Global::countNew++;
+		myRightForearm = new Limb(&modelRightForearm, 0, -1.3f, 0, nullptr, myRightHumerus); Global::countNew++;
+		myRightHand = new Limb(&modelRightHand, 0, -1.3f, 0, nullptr, myRightForearm); Global::countNew++;
+		myRightThigh = new Limb(&modelRightThigh, -0.9f, 0, 0.3f, myBody, nullptr); Global::countNew++;
+		myRightShin = new Limb(&modelRightShin, 0, -1.1f, 0, nullptr, myRightThigh); Global::countNew++;
+		myRightFoot = new Limb(&modelRightFoot, 0, -1.1f, 0, nullptr, myRightShin); Global::countNew++;
 	}
 	else if (Player::characterID == 1) //Sonic Doll
 	{
 		displayHeightOffset = -0.525f;
 		myBody = new Body(&modelBody); Global::countNew++;
-		myHead = new Limb(&modelHead,                   0.7f,  1.4f,  0,       myBody, nullptr); Global::countNew++;
-		myLeftHumerus = new Limb(&modelLeftHumerus,	    0,     0.9f, -0.9f,    myBody, nullptr); Global::countNew++;
-		myLeftForearm = new Limb(&modelLeftForearm,	    0.92f, 0, 0,  nullptr, myLeftHumerus); Global::countNew++;
-		myLeftHand = new Limb(&modelLeftHand,           0.62f, 0, 0,  nullptr, myLeftForearm); Global::countNew++;
-		myLeftThigh = new Limb(&modelLeftThigh,	        0,    -0.9f, -0.3f,    myBody, nullptr); Global::countNew++;
-		myLeftShin = new Limb(&modelLeftShin,           1.07f, 0, 0,  nullptr, myLeftThigh); Global::countNew++;
-		myLeftFoot = new Limb(&modelLeftFoot,           1.23f, 0, 0,  nullptr, myLeftShin); Global::countNew++;
-		myRightHumerus = new Limb(&modelRightHumerus,   0,     0.9f,  0.9f,    myBody, nullptr); Global::countNew++;
-		myRightForearm = new Limb(&modelRightForearm,   0.92f, 0, 0,  nullptr, myRightHumerus); Global::countNew++;
-		myRightHand = new Limb(&modelRightHand,	        0.62f, 0, 0,  nullptr, myRightForearm); Global::countNew++;
-		myRightThigh = new Limb(&modelRightThigh,       0,    -0.9f,  0.3f,    myBody, nullptr); Global::countNew++;
-		myRightShin = new Limb(&modelRightShin,	        1.07f, 0, 0,  nullptr, myRightThigh); Global::countNew++;
-		myRightFoot = new Limb(&modelRightFoot,	        1.23f, 0, 0,  nullptr, myRightShin); Global::countNew++;
+		myHead = new Limb(&modelHead, 1.4f, -0.7f, 0, myBody, nullptr); Global::countNew++;
+		myLeftHumerus = new Limb(&modelLeftHumerus, 0.9f, 0, -0.9f, myBody, nullptr); Global::countNew++;
+		myLeftForearm = new Limb(&modelLeftForearm, 0, -0.92f, 0, nullptr, myLeftHumerus); Global::countNew++;
+		myLeftHand = new Limb(&modelLeftHand, 0, -0.62f, 0, nullptr, myLeftForearm); Global::countNew++;
+		myLeftThigh = new Limb(&modelLeftThigh, -0.9f, 0, -0.3f, myBody, nullptr); Global::countNew++;
+		myLeftShin = new Limb(&modelLeftShin, 0, -1.07f, 0, nullptr, myLeftThigh); Global::countNew++;
+		myLeftFoot = new Limb(&modelLeftFoot, 0, -1.23f, 0, nullptr, myLeftShin); Global::countNew++;
+		myRightHumerus = new Limb(&modelRightHumerus, 0.9f, 0, 0.9f, myBody, nullptr); Global::countNew++;
+		myRightForearm = new Limb(&modelRightForearm, 0, -0.92f, 0, nullptr, myRightHumerus); Global::countNew++;
+		myRightHand = new Limb(&modelRightHand, 0, -0.62f, 0, nullptr, myRightForearm); Global::countNew++;
+		myRightThigh = new Limb(&modelRightThigh, -0.9f, 0, 0.3f, myBody, nullptr); Global::countNew++;
+		myRightShin = new Limb(&modelRightShin, 0, -1.07f, 0, nullptr, myRightThigh); Global::countNew++;
+		myRightFoot = new Limb(&modelRightFoot, 0, -1.23f, 0, nullptr, myRightShin); Global::countNew++;
 	}
 	else if (Player::characterID == 2) //Mecha Sonic
 	{
 		displayHeightOffset = 0.8f;
-		myBody = new Body(&modelBody); Global::countNew++;
-		myHead = new Limb(&modelHead,                 0.0f,  1.15f, 0, myBody, nullptr); Global::countNew++;
-		myLeftHumerus = new Limb(&modelLeftHumerus,   0,     0.9f, -0.9f, myBody, nullptr); Global::countNew++;
-		myLeftForearm = new Limb(&modelLeftForearm,   1.5f,  0, 0, nullptr, myLeftHumerus); Global::countNew++;
-		myLeftHand = new Limb(&modelLeftHand,         1.9f,  0, 0, nullptr, myLeftForearm); Global::countNew++;
-		myLeftThigh = new Limb(&modelLeftThigh,       0,    -0.9f, -0.3f, myBody, nullptr); Global::countNew++;
-		myLeftShin = new Limb(&modelLeftShin,         1.47f, 0, 0, nullptr, myLeftThigh); Global::countNew++;
-		myLeftFoot = new Limb(&modelLeftFoot,         1.21f, 0, 0, nullptr, myLeftShin); Global::countNew++;
-		myRightHumerus = new Limb(&modelRightHumerus, 0,     0.9f, 0.9f, myBody, nullptr); Global::countNew++;
-		myRightForearm = new Limb(&modelRightForearm, 1.5f, 0, 0, nullptr, myRightHumerus); Global::countNew++;
-		myRightHand = new Limb(&modelRightHand,       1.9f,  0, 0, nullptr, myRightForearm); Global::countNew++;
-		myRightThigh = new Limb(&modelRightThigh,     0,    -0.9f, 0.3f, myBody, nullptr); Global::countNew++;
-		myRightShin = new Limb(&modelRightShin,       1.47f, 0, 0, nullptr, myRightThigh); Global::countNew++;
-		myRightFoot = new Limb(&modelRightFoot,       1.21f, 0, 0, nullptr, myRightShin); Global::countNew++;
+		myBody =         new Body(&modelBody); Global::countNew++;
+		myHead =         new Limb(&modelHead,         1.15f,  0,      0,     myBody,   nullptr);        Global::countNew++;
+		myLeftHumerus =  new Limb(&modelLeftHumerus,  0.9f,   0,     -0.9f,  myBody,   nullptr);        Global::countNew++;
+		myLeftForearm =  new Limb(&modelLeftForearm,  0,     -1.5f,   0,     nullptr,  myLeftHumerus);  Global::countNew++;
+		myLeftHand =     new Limb(&modelLeftHand,     0,     -1.9f,   0,     nullptr,  myLeftForearm);  Global::countNew++;
+		myLeftThigh =    new Limb(&modelLeftThigh,   -0.9f,   0,     -0.3f,  myBody,   nullptr);        Global::countNew++;
+		myLeftShin =     new Limb(&modelLeftShin,     0,     -1.47f,  0,     nullptr,  myLeftThigh);    Global::countNew++;
+		myLeftFoot =     new Limb(&modelLeftFoot,     0,     -1.21f,  0,     nullptr,  myLeftShin);     Global::countNew++;
+		myRightHumerus = new Limb(&modelRightHumerus, 0.9f,   0,      0.9f,  myBody,   nullptr);        Global::countNew++;
+		myRightForearm = new Limb(&modelRightForearm, 0,     -1.5f,   0,     nullptr,  myRightHumerus); Global::countNew++;
+		myRightHand =    new Limb(&modelRightHand,    0,     -1.9f,   0,     nullptr,  myRightForearm); Global::countNew++;
+		myRightThigh =   new Limb(&modelRightThigh,  -0.9f,   0,      0.3f,  myBody,   nullptr);        Global::countNew++;
+		myRightShin =    new Limb(&modelRightShin,    0,     -1.47f,  0,     nullptr,  myRightThigh);   Global::countNew++;
+		myRightFoot =    new Limb(&modelRightFoot,    0,     -1.21f,  0,     nullptr,  myRightShin);    Global::countNew++;
 	}
 	else if (Player::characterID == 3) //Dage 4 Aquatic
 	{
 		displayHeightOffset = 0;
-		myBody = new Body(&modelBody); Global::countNew++;
-		myHead = new Limb(&modelHead, 0, 1.3f, 0, myBody, nullptr); Global::countNew++;
-		myLeftHumerus = new Limb(&modelLeftHumerus, 0, 0.9f, -0.9f, myBody, nullptr); Global::countNew++;
-		myLeftForearm = new Limb(&modelLeftForearm, 1.3f, 0, 0, nullptr, myLeftHumerus); Global::countNew++;
-		myLeftHand = new Limb(&modelLeftHand, 1.3f, 0, 0, nullptr, myLeftForearm); Global::countNew++;
-		myLeftThigh = new Limb(&modelLeftThigh, 0, -0.9f, -0.3f, myBody, nullptr); Global::countNew++;
-		myLeftShin = new Limb(&modelLeftShin, 1.1f, 0, 0, nullptr, myLeftThigh); Global::countNew++;
-		myLeftFoot = new Limb(&modelLeftFoot, 1.1f, 0, 0, nullptr, myLeftShin); Global::countNew++;
-		myRightHumerus = new Limb(&modelRightHumerus, 0, 0.9f, 0.9f, myBody, nullptr); Global::countNew++;
-		myRightForearm = new Limb(&modelRightForearm, 1.3f, 0, 0, nullptr, myRightHumerus); Global::countNew++;
-		myRightHand = new Limb(&modelRightHand, 1.3f, 0, 0, nullptr, myRightForearm); Global::countNew++;
-		myRightThigh = new Limb(&modelRightThigh, 0, -0.9f, 0.3f, myBody, nullptr); Global::countNew++;
-		myRightShin = new Limb(&modelRightShin, 1.1f, 0, 0, nullptr, myRightThigh); Global::countNew++;
-		myRightFoot = new Limb(&modelRightFoot, 1.1f, 0, 0, nullptr, myRightShin); Global::countNew++;
+		myBody =         new Body(&modelBody); Global::countNew++;
+		myHead =         new Limb(&modelHead,         1.3f,   0,      0,     myBody,   nullptr);        Global::countNew++;
+		myLeftHumerus =  new Limb(&modelLeftHumerus,  0.9f,   0,     -0.9f,  myBody,   nullptr);        Global::countNew++;
+		myLeftForearm =  new Limb(&modelLeftForearm,  0,     -1.3f,   0,     nullptr,  myLeftHumerus);  Global::countNew++;
+		myLeftHand =     new Limb(&modelLeftHand,     0,     -1.3f,   0,     nullptr,  myLeftForearm);  Global::countNew++;
+		myLeftThigh =    new Limb(&modelLeftThigh,   -0.9f,   0,     -0.3f,  myBody,   nullptr);        Global::countNew++;
+		myLeftShin =     new Limb(&modelLeftShin,     0,     -1.1f,   0,     nullptr,  myLeftThigh);    Global::countNew++;
+		myLeftFoot =     new Limb(&modelLeftFoot,     0,     -1.1f,   0,     nullptr,  myLeftShin);     Global::countNew++;
+		myRightHumerus = new Limb(&modelRightHumerus, 0.9f,   0,      0.9f,  myBody,   nullptr);        Global::countNew++;
+		myRightForearm = new Limb(&modelRightForearm, 0,     -1.3f,   0,     nullptr,  myRightHumerus); Global::countNew++;
+		myRightHand =    new Limb(&modelRightHand,    0,     -1.3f,   0,     nullptr,  myRightForearm); Global::countNew++;
+		myRightThigh =   new Limb(&modelRightThigh,  -0.9f,   0,      0.3f,  myBody,   nullptr);        Global::countNew++;
+		myRightShin =    new Limb(&modelRightShin,    0,     -1.1f,   0,     nullptr,  myRightThigh);   Global::countNew++;
+		myRightFoot =    new Limb(&modelRightFoot,    0,     -1.1f,   0,     nullptr,  myRightShin);    Global::countNew++;
 	}
 	else if (Player::characterID == 4) //Mania Sonic
 	{
 		displayHeightOffset = -0.25f;
-		myBody = new Body(&modelBody); Global::countNew++;
-		myHead = new Limb(&modelHead, 0.3f, 1.2f, 0, myBody, nullptr); Global::countNew++;
-		myLeftHumerus = new Limb(&modelLeftHumerus, 0, 0.9f, -0.9f, myBody, nullptr); Global::countNew++;
-		myLeftForearm = new Limb(&modelLeftForearm, 1.3f, 0, 0, nullptr, myLeftHumerus); Global::countNew++;
-		myLeftHand = new Limb(&modelLeftHand, 1.3f, 0, 0, nullptr, myLeftForearm); Global::countNew++;
-		myLeftThigh = new Limb(&modelLeftThigh, 0, -0.9f, -0.3f, myBody, nullptr); Global::countNew++;
-		myLeftShin = new Limb(&modelLeftShin, 1.3f, 0, 0, nullptr, myLeftThigh); Global::countNew++;
-		myLeftFoot = new Limb(&modelLeftFoot, 1.1f, 0, 0, nullptr, myLeftShin); Global::countNew++;
-		myRightHumerus = new Limb(&modelRightHumerus, 0, 0.9f, 0.9f, myBody, nullptr); Global::countNew++;
-		myRightForearm = new Limb(&modelRightForearm, 1.3f, 0, 0, nullptr, myRightHumerus); Global::countNew++;
-		myRightHand = new Limb(&modelRightHand, 1.3f, 0, 0, nullptr, myRightForearm); Global::countNew++;
-		myRightThigh = new Limb(&modelRightThigh, 0, -0.9f, 0.3f, myBody, nullptr); Global::countNew++;
-		myRightShin = new Limb(&modelRightShin, 1.3f, 0, 0, nullptr, myRightThigh); Global::countNew++;
-		myRightFoot = new Limb(&modelRightFoot, 1.1f, 0, 0, nullptr, myRightShin); Global::countNew++;
+		myBody =         new Body(&modelBody);
+		myHead =         new Limb(&modelHead,         1.2f,  -0.3f,   0,     myBody,   nullptr);        Global::countNew++;
+		myLeftHumerus =  new Limb(&modelLeftHumerus,  0.9f,	  0,     -0.9f,  myBody,   nullptr);        Global::countNew++;
+		myLeftForearm =  new Limb(&modelLeftForearm,  0,     -1.3f,   0,     nullptr,  myLeftHumerus);  Global::countNew++;
+		myLeftHand =     new Limb(&modelLeftHand,     0,	 -1.3f,   0,     nullptr,  myLeftForearm);  Global::countNew++;
+		myLeftThigh =    new Limb(&modelLeftThigh,   -0.9f,   0,     -0.3f,  myBody,   nullptr);        Global::countNew++;
+		myLeftShin =     new Limb(&modelLeftShin,     0,	 -1.3f,   0,     nullptr,  myLeftThigh);    Global::countNew++;
+		myLeftFoot =     new Limb(&modelLeftFoot,     0,	 -1.1f,   0,     nullptr,  myLeftShin);     Global::countNew++;
+		myRightHumerus = new Limb(&modelRightHumerus, 0.9f,   0,      0.9f,  myBody,   nullptr);        Global::countNew++;
+		myRightForearm = new Limb(&modelRightForearm, 0,	 -1.3f,   0,     nullptr,  myRightHumerus); Global::countNew++;
+		myRightHand =    new Limb(&modelRightHand,    0,	 -1.3f,   0,     nullptr,  myRightForearm); Global::countNew++;
+		myRightThigh =   new Limb(&modelRightThigh,  -0.9f,   0,      0.3f,  myBody,   nullptr);        Global::countNew++;
+		myRightShin =    new Limb(&modelRightShin,    0,	 -1.3f,   0,     nullptr,  myRightThigh);   Global::countNew++;
+		myRightFoot =    new Limb(&modelRightFoot,    0,	 -1.1f,   0,     nullptr,  myRightShin);    Global::countNew++;
 	}
 	else if (Player::characterID == 5) //Amy
 	{
 		displayHeightOffset = -0.8f;
-		myBody = new Body(&modelBody); Global::countNew++;
-		myHead = new Limb(&modelHead, 0, 1.4f, 0, myBody, nullptr); Global::countNew++;
-		myLeftHumerus = new Limb(&modelLeftHumerus, 0, 1.1f, -0.9f, myBody, nullptr); Global::countNew++;
-		myLeftForearm = new Limb(&modelLeftForearm, 1.3f, 0, 0, nullptr, myLeftHumerus); Global::countNew++;
-		myLeftHand = new Limb(&modelLeftHand, 1.3f, 0, 0, nullptr, myLeftForearm); Global::countNew++;
-		myLeftThigh = new Limb(&modelLeftThigh, 0, -0.9f, -0.3f, myBody, nullptr); Global::countNew++;
-		myLeftShin = new Limb(&modelLeftShin, 1.1f, 0, 0, nullptr, myLeftThigh); Global::countNew++;
-		myLeftFoot = new Limb(&modelLeftFoot, 1.1f, 0, 0, nullptr, myLeftShin); Global::countNew++;
-		myRightHumerus = new Limb(&modelRightHumerus, 0, 1.1f, 0.9f, myBody, nullptr); Global::countNew++;
-		myRightForearm = new Limb(&modelRightForearm, 1.3f, 0, 0, nullptr, myRightHumerus); Global::countNew++;
-		myRightHand = new Limb(&modelRightHand, 1.3f, 0, 0, nullptr, myRightForearm); Global::countNew++;
-		myRightThigh = new Limb(&modelRightThigh, 0, -0.9f, 0.3f, myBody, nullptr); Global::countNew++;
-		myRightShin = new Limb(&modelRightShin, 1.1f, 0, 0, nullptr, myRightThigh); Global::countNew++;
-		myRightFoot = new Limb(&modelRightFoot, 1.1f, 0, 0, nullptr, myRightShin); Global::countNew++;
+		myBody =         new Body(&modelBody); Global::countNew++;
+		myHead =         new Limb(&modelHead,         1.4f,   0,      0,    myBody,  nullptr);        Global::countNew++;
+		myLeftHumerus =  new Limb(&modelLeftHumerus,  1.1f,   0,     -0.9f, myBody,  nullptr);        Global::countNew++;
+		myLeftForearm =  new Limb(&modelLeftForearm,  0,     -1.3f,   0,    nullptr, myLeftHumerus);  Global::countNew++;
+		myLeftHand =     new Limb(&modelLeftHand,     0,     -1.3f,   0,    nullptr, myLeftForearm);  Global::countNew++;
+		myLeftThigh =    new Limb(&modelLeftThigh,   -0.9f,   0,     -0.3f, myBody,  nullptr);        Global::countNew++;
+		myLeftShin =     new Limb(&modelLeftShin,     0,     -1.1f,   0,    nullptr, myLeftThigh);    Global::countNew++;
+		myLeftFoot =     new Limb(&modelLeftFoot,     0,     -1.1f,   0,    nullptr, myLeftShin);     Global::countNew++;
+		myRightHumerus = new Limb(&modelRightHumerus, 1.1f,   0,      0.9f, myBody,  nullptr);        Global::countNew++;
+		myRightForearm = new Limb(&modelRightForearm, 0,     -1.3f,   0,    nullptr, myRightHumerus); Global::countNew++;
+		myRightHand =    new Limb(&modelRightHand,    0,     -1.3f,   0,    nullptr, myRightForearm); Global::countNew++;
+		myRightThigh =   new Limb(&modelRightThigh,  -0.9f,   0,      0.3f, myBody,  nullptr);        Global::countNew++;
+		myRightShin =    new Limb(&modelRightShin,    0,     -1.1f,   0,    nullptr, myRightThigh);   Global::countNew++;
+		myRightFoot =    new Limb(&modelRightFoot,    0,     -1.1f,   0,    nullptr, myRightShin);    Global::countNew++;
 	}
 
 	AnimationResources::assignAnimationsHuman(myBody, myHead,
@@ -1638,17 +1638,30 @@ void Player::animate()
 {
 	float xrel = xVelGround + xVelAir;
 	float zrel = zVelGround + zVelAir;
-	float ang = (float)atan2(zrel, xrel);
+	float ang = atan2f(zrel, xrel);
 	Vector3f normOpp(currNorm);
 	normOpp.neg();
 	Vector3f ans = mapInputs3(ang, 10, &normOpp);
-	float yrot = (float)toDegrees(atan2(-ans.z, ans.x));
-	float dist = (float)(sqrt(ans.x*ans.x + ans.z*ans.z));
-	float zrot = (float)toDegrees(atan2(ans.y, dist));
+	float yrot = toDegrees(atan2f(-ans.z, ans.x));
+	float dist = sqrtf(ans.x*ans.x + ans.z*ans.z);
+	float zrot = toDegrees(atan2f(ans.y, dist));
 
-	Vector3f displayPos(getX(), getY() + displayHeightOffset, getZ());
+	float twistAngle = toDegrees(atan2f(-zVelGround - zVelAir, xVelGround + xVelAir));
+	float nX = currNorm.x;
+	float nY = currNorm.y;
+	float nZ = currNorm.z;
+	float normHLength = sqrtf(nX*nX + nZ*nZ);
+	float pitchAngle = toDegrees(atan2f(nY, normHLength));
+	float yawAngle = toDegrees(atan2f(-nZ, nX));
+	float diff = compareTwoAngles(twistAngle, yawAngle);
+
+	Vector3f displayPos(
+		getX() + nX*displayHeightOffset,
+		getY() + nY*displayHeightOffset,
+		getZ() + nZ*displayHeightOffset);
 
 	Vector3f dspOff(0, 0, 0);
+
 	if (onPlane)
 	{
 		if (isBouncing ||
@@ -1663,14 +1676,17 @@ void Player::animate()
 			dspOff.set(-currNorm.x * 1, -currNorm.y * 1, -currNorm.z * 1);
 		}
 	}
+
 	float dspX = getX() + dspOff.x;
 	float dspY = getY() + dspOff.y;
 	float dspZ = getZ() + dspOff.z;
 
 	Vector3f displayPosPrev(previousPos);
-	displayPosPrev.y += displayHeightOffset;
+	displayPosPrev.x += nX*displayHeightOffset + dspOff.x;
+	displayPosPrev.y += nY*displayHeightOffset + dspOff.y;
+	displayPosPrev.z += nZ*displayHeightOffset + dspOff.z;
 
-	float mySpeed = (float)sqrt(xrel*xrel + zrel*zrel);
+	float mySpeed = sqrtf(xrel*xrel + zrel*zrel);
 
 
 	setLimbsVisibility(true);
@@ -1692,20 +1708,20 @@ void Player::animate()
 
 	if (mySpeed > 0.01)
 	{
-		if (myBody != nullptr) myBody->setBaseOrientation(&displayPos, yrot, zrot);
+		if (myBody != nullptr) myBody->setBaseOrientation(&displayPos, diff, yawAngle, pitchAngle, 0);
 		//if (maniaSonic != null)
 		{
-			//maniaSonic.setOrientation(dspX, dspY, dspZ, yrot, zrot);
+			//maniaSonic.setOrientation(dspX, dspY, dspZ, diff, yawAngle, pitchAngle, 0);
 		}
 		setRotY(yrot);
 		setRotZ(zrot);
 	}
 	else
 	{
-		if (myBody != nullptr) myBody->setBaseOrientation(&displayPos, getRotY(), getRotZ());
+		if (myBody != nullptr) myBody->setBaseOrientation(&displayPos, 0, getRotY(), 90, 0);
 		//if (maniaSonic != null)
 		{
-			//maniaSonic.setOrientation(dspX, dspY, dspZ, getRotY(), getRotZ());
+			//maniaSonic.setOrientation(dspX, dspY, dspZ, 0, getRotY(), 90, 0);
 		}
 	}
 
@@ -1733,7 +1749,7 @@ void Player::animate()
 			}
 		}
 		else if ((modelRunIndex < 10 && modelRunIndex + modelIncreaseVal >= 10 ||
-			modelRunIndex < 20 && modelRunIndex + modelIncreaseVal >= 20))
+			      modelRunIndex < 20 && modelRunIndex + modelIncreaseVal >= 20))
 		{
 			//spawnFootsetpParticles();
 			if (getY() > -0.5f)
@@ -1761,9 +1777,9 @@ void Player::animate()
 
 	if (isStomping)
 	{
-		float h = (float)sqrt(xVelAir*xVelAir + zVelAir*zVelAir);
-		float zr = (float)(toDegrees(atan2(yVel, h)));
-		if (myBody != nullptr) myBody->setBaseOrientation(&displayPos, getRotY(), zr + 90);
+		float h = sqrtf(xVelAir*xVelAir + zVelAir*zVelAir);
+		float zr = (toDegrees(atan2f(yVel, h)));
+		if (myBody != nullptr) myBody->setBaseOrientation(&displayPos, 0, twistAngle, pitchAngle, zr + 90);
 		//if (maniaSonic != null) { maniaSonic.setVisibility(false); }
 
 		float height = 2;
@@ -1777,10 +1793,10 @@ void Player::animate()
 	}
 	else if (isBouncing)
 	{
-		if (myBody != nullptr) myBody->setBaseOrientation(&displayPos, getRotY(), getRotZ() - count * 60);
+		if (myBody != nullptr) myBody->setBaseOrientation(&displayPos, 0, twistAngle, pitchAngle, -count * 60);
 		//if (maniaSonic != null)
 		//{
-			//maniaSonic.setOrientation(dspX, dspY, dspZ, getRotY(), getRotZ() - count * 60);
+			//maniaSonic.setOrientation(dspX, dspY, dspZ, 0, twistAngle, pitchAngle, -count*60);
 			//maniaSonic.animate(12, 0);
 			//setLimbsVisibility(false);
 		//}
@@ -1795,10 +1811,10 @@ void Player::animate()
 	}
 	else if (isJumping)
 	{
-		if (myBody != nullptr) myBody->setBaseOrientation(&displayPos, getRotY(), getRotZ() - count * 35);
+		if (myBody != nullptr) myBody->setBaseOrientation(&displayPos, 0, twistAngle, pitchAngle, -count * 35);
 		//if (maniaSonic != null)
 		//{
-			//maniaSonic.setOrientation(dspX, dspY, dspZ, getRotY(), getRotZ() - count * 35);
+			//maniaSonic.setOrientation(dspX, dspY, dspZ, 0, twistAngle, pitchAngle, -count*35);
 			//maniaSonic.animate(12, 0);
 			//setLimbsVisibility(false);
 		//}
@@ -1806,10 +1822,10 @@ void Player::animate()
 	}
 	else if (isBall)
 	{
-		if (myBody != nullptr) myBody->setBaseOrientation(&displayPos, getRotY(), getRotZ() - count * 70);
+		if (myBody != nullptr) myBody->setBaseOrientation(dspX, dspY, dspZ, diff, yawAngle, pitchAngle, -count * 70);
 		//if (maniaSonic != null)
 		//{
-			//maniaSonic.setOrientation(dspX, dspY, dspZ, getRotY(), getRotZ() - count * 70);
+			//maniaSonic.setOrientation(dspX, dspY, dspZ, diff, yawAngle, pitchAngle, -count*70);
 			//maniaSonic.animate(12, 0);
 			//setLimbsVisibility(false);
 		//}
@@ -1824,17 +1840,20 @@ void Player::animate()
 	}
 	else if (isSpindashing)
 	{
-		setRotY((float)toDegrees(spindashAngle));
+		float twistAngleNew = toDegrees(spindashAngle);
+		float diffNew = compareTwoAngles(twistAngleNew, yawAngle);
+
+		setRotY(toDegrees(spindashAngle));
 		float zrotoff = -(spindashTimer*spindashTimer*0.8f);
 		if (spindashTimer >= spindashTimerMax)
 		{
 			zrotoff = -(count * 50);
 		}
-		if (myBody != nullptr) myBody->setBaseOrientation(&displayPos, getRotY(), getRotZ() + zrotoff);
+		if (myBody != nullptr) myBody->setBaseOrientation(dspX, dspY, dspZ, diffNew, yawAngle, pitchAngle, zrotoff);
 		updateLimbs(12, 0);
 		//if (maniaSonic != null)
 		//{
-			//maniaSonic.setOrientation(dspX, dspY, dspZ, getRotY(), getRotZ() + zrotoff);
+			//maniaSonic.setOrientation(dspX, dspY, dspZ, diffNew, yawAngle, pitchAngle, zrotoff);
 			//setLimbsVisibility(false);
 			//maniaSonic.animate(12, 0);
 		//}
@@ -1843,11 +1862,11 @@ void Player::animate()
 	{
 		float zrotoff = (spindashReleaseTimer*spindashReleaseTimer*0.8f);
 																		  //zrotoff = -count*40; //different look, might look better?
-		if (myBody != nullptr) myBody->setBaseOrientation(&displayPos, getRotY(), getRotZ() + zrotoff);
+		if (myBody != nullptr) myBody->setBaseOrientation(dspX, dspY, dspZ, diff, yawAngle, pitchAngle, zrotoff);
 		updateLimbs(12, 0);
 		//if (maniaSonic != null)
 		//{
-			//maniaSonic.setOrientation(dspX, dspY, dspZ, getRotY(), getRotZ() + zrotoff);
+			//maniaSonic.setOrientation(dspX, dspY, dspZ, diff, yawAngle, pitchAngle, zrotoff);
 			//setLimbsVisibility(false);
 			//maniaSonic.animate(12, 0);
 		//}
@@ -1861,23 +1880,23 @@ void Player::animate()
 	else if (isSkidding)
 	{
 		//if (maniaSonic != null) { maniaSonic.setVisibility(false); }
-		if (myBody != nullptr) myBody->setBaseOrientation(&displayPos, getRotY(), getRotZ());
+		if (myBody != nullptr) myBody->setBaseOrientation(&displayPos, diff, yawAngle, pitchAngle, 0);
 		updateLimbs(8, 0);
 	}
 	else if (hitTimer > 0)
 	{
-		if (myBody != nullptr) myBody->setBaseOrientation(&displayPos, getRotY(), getRotZ());
+		if (myBody != nullptr) myBody->setBaseOrientation(&displayPos, diff, yawAngle, pitchAngle, 0);
 		//if (maniaSonic != null) { maniaSonic.setVisibility(false); }
 		updateLimbs(11, 0);
 	}
 	else
 	{
-		if (myBody != nullptr) myBody->setBaseOrientation(&displayPos, getRotY(), getRotZ());
+		if (myBody != nullptr) myBody->setBaseOrientation(&displayPos, diff, yawAngle, pitchAngle, 0);
 		float time = 10 * modelRunIndex * 0.5f;
 		updateLimbs(1, time);
 		//if (maniaSonic != null)
 		//{
-			//maniaSonic.setOrientation(dspX, dspY, dspZ, getRotY(), getRotZ());
+			//maniaSonic.setOrientation(dspX, dspY, dspZ, diff, yawAngle, pitchAngle, 0);
 			//setLimbsVisibility(false);
 
 			//if (mySpeed < 3.9f)

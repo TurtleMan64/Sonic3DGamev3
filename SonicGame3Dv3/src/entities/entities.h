@@ -13,7 +13,7 @@ class Entity
 {
 protected:
 	Vector3f position;
-	float rotX, rotY, rotZ;
+	float rotX, rotY, rotZ, rotSpin;
 	float scale;
 	bool visible;
 	Matrix4f transformationMatrix;
@@ -44,6 +44,9 @@ public:
 
 	float getRotZ();
 	void setRotZ(float);
+
+	float getRotSpin();
+	void setRotSpin(float);
 
 	float getScale();
 	void setScale(float);

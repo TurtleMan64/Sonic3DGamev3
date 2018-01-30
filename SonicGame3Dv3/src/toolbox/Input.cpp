@@ -300,6 +300,14 @@ void Input_pollInputs()
 		tabInput = true;
 	}
 
+	if (glfwGetKey(window, GLFW_KEY_4) == GLFW_PRESS)
+	{
+		Global::gameCamera->setRoll(Global::gameCamera->getRoll() + 4.0f);
+	}
+	if (glfwGetKey(window, GLFW_KEY_5) == GLFW_PRESS)
+	{
+		Global::gameCamera->setRoll(Global::gameCamera->getRoll() - 4.0f);
+	}
 	if (glfwGetKey(window, GLFW_KEY_0) == GLFW_PRESS)
 	{
 		SkyManager::increaseTimeOfDay(0.5f);
@@ -334,6 +342,7 @@ void Input_pollInputs()
 			Global::gamePlayer->goUp();
 		}
 	}
+
 
 	if (INPUT_SHOULDER && !INPUT_PREVIOUS_SHOULDER)
 	{

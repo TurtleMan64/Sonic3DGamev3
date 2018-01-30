@@ -89,6 +89,9 @@ void Spring::step()
 	{
 		Global::gamePlayer->setCanMove(true);
 	}
+
+	increaseRotation(1, 0, 0);
+	updateTransformationMatrix();
 }
 
 float Spring::getSpringPower()

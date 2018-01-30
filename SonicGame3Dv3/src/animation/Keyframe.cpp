@@ -1,7 +1,7 @@
 #include "keyframe.h"
 
 Keyframe::Keyframe(float time, float x, float y, float z,
-	float xRot, float yRot, float zRot, float scale)
+	float xRot, float yRot, float zRot, float sRot, float scale)
 {
 	this->time = time;
 	this->x = x;
@@ -10,5 +10,6 @@ Keyframe::Keyframe(float time, float x, float y, float z,
 	this->xRot = xRot;
 	this->yRot = yRot;
 	this->zRot = zRot;
+	this->sRot = sRot;
 	this->scale = scale;
 }

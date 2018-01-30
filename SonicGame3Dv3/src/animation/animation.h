@@ -13,8 +13,8 @@ public:
 	Animation();
 
 	void addKeyframe(float time, float x, float y, float z,
-			float xRot, float yRot, float zRot, float scale);
+			float xRot, float yRot, float zRot, float sRot, float scale);
 
-	void addKeyframe(float time, float xRot, float yRot, float zRot, float scale);
+	void addKeyframe(float time, float xRot, float yRot, float zRot, float sRot, float scale);
 };
 #endif

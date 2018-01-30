@@ -38,6 +38,7 @@ Spikeball::Spikeball(float x, float y, float z, float radius, float angVel)
 
 void Spikeball::step()
 {
+	/*
 	increaseRotation(0, angVel, 0);
 
 	setX(centerX + radius*cosf(toRadians(getRotY())));
@@ -51,6 +52,14 @@ void Spikeball::step()
 	{
 		Global::gamePlayer->takeDamage(getPosition());
 	}
+	*/
+
+	setX(Global::gamePlayer->getX());
+	setY(Global::gamePlayer->getY());
+	setZ(Global::gamePlayer->getZ());
+	setRotX(Global::gamePlayer->getRotX());
+	setRotY(Global::gamePlayer->getRotY());
+	setRotZ(Global::gamePlayer->getRotZ());
 
 	updateTransformationMatrix();
 }
@@ -70,7 +79,7 @@ void Spikeball::loadStaticModels()
 
 	std::fprintf(stdout, "Loading Spikeball static models...\n");
 
-	std::list<TexturedModel*>* newModels = loadObjModel("res/Models/Spikeball/", "Spikeball.obj");
+	std::list<TexturedModel*>* newModels = loadObjModel("res/Models/TotemTest/", "totem.obj"); //loadObjModel("res/Models/Spikeball/", "Spikeball.obj");
 	for (auto newModel : (*newModels))
 	{
 		Spikeball::models.push_back(newModel);

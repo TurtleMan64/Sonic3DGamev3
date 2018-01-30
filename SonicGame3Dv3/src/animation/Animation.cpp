@@ -8,9 +8,9 @@ Animation::Animation()
 }
 
 void Animation::addKeyframe(float time, float x, float y, float z,
-	float xRot, float yRot, float zRot, float scale)
+	float xRot, float yRot, float zRot, float sRot, float scale)
 {
-	Keyframe key(time, x, y, z, xRot, yRot, zRot, scale);
+	Keyframe key(time, x, y, z, xRot, yRot, zRot, sRot, scale);
 
 	if (keyframes.size() == 0)
 	{
@@ -53,7 +53,7 @@ void Animation::addKeyframe(float time, float x, float y, float z,
 	}
 }
 
-void Animation::addKeyframe(float time, float xRot, float yRot, float zRot, float scale)
+void Animation::addKeyframe(float time, float xRot, float yRot, float zRot, float sRot, float scale)
 {
-	this->addKeyframe(time, 0, 0, 0, xRot, yRot, zRot, scale);
+	this->addKeyframe(time, 0, 0, 0, xRot, yRot, zRot, sRot, scale);
 }

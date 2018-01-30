@@ -422,6 +422,7 @@ void PauseScreen::step()
 				textMechaSonic->setVisibility(false);
 				textDage4Aquatic->setVisibility(false);
 				textManiaSonic->setVisibility(false);
+				textAmy->setVisibility(false);
 			}
 		}
 

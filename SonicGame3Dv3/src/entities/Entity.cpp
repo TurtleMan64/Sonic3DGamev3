@@ -17,6 +17,7 @@ Entity::Entity()
 	this->rotX = 0;
 	this->rotY = 0;
 	this->rotZ = 0; 
+	this->rotSpin = 0;
 	this->scale = 1;
 	this->visible = true;
 }
@@ -29,6 +30,7 @@ Entity::Entity(Vector3f* position, float rotX, float rotY, float rotZ, float sca
 	this->rotX = rotX;
 	this->rotY = rotY;
 	this->rotZ = rotZ;
+	this->rotSpin = 0;
 	this->scale = scale;
 	this->visible = true;
 }
@@ -106,6 +108,15 @@ void Entity::setRotZ(float newRotZ)
 	rotZ = newRotZ;
 }
 
+float Entity::getRotSpin()
+{
+	return rotSpin;
+}
+void Entity::setRotSpin(float newRotSpin)
+{
+	rotSpin = newRotSpin;
+}
+
 float Entity::getScale()
 {
 	return scale;
@@ -156,7 +167,7 @@ void Entity::setZ(float newZ)
 
 void Entity::updateTransformationMatrix()
 {
-	createTransformationMatrix(&transformationMatrix, &position, rotX, rotY, rotZ, scale);
+	createTransformationMatrix(&transformationMatrix, &position, rotX, rotY, rotZ, rotSpin, scale);
 }
 
 Matrix4f* Entity::getTransformationMatrix()

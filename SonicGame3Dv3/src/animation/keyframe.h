@@ -14,9 +14,10 @@ public:
 	float xRot;
 	float yRot;
 	float zRot;
+	float sRot;
 	float scale;
 
 	Keyframe(float time, float x, float y, float z,
-		float xRot, float yRot, float zRot, float scale);
+		float xRot, float yRot, float zRot, float sRot, float scale);
 };
 #endif

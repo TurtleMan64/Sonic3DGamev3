@@ -92,6 +92,8 @@ int main()
 
 	createDisplay();
 
+	Input_init();
+
 	Master_init();
 
 	TextMaster::init();

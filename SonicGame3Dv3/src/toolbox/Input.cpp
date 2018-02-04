@@ -3,6 +3,8 @@
 
 #include <iostream>
 #include <cmath>
+#include <fstream>
+#include <string>
 
 #include "input.h"
 #include "../renderEngine/skymanager.h"
@@ -11,6 +13,7 @@
 #include "../entities/camera.h"
 #include "../entities/ring.h"
 #include "maths.h"
+#include "../toolbox/split.h"
 #include <random>
 #include <chrono>
 
@@ -84,6 +87,8 @@ float triggerSensitivity = 2;
 
 float scrollSensitivity = 10.0f;
 
+int CONTROLLER_ID = 0;
+
 int BUTTON_A = 0;
 int BUTTON_X = 1;
 int BUTTON_B = 2;
@@ -143,18 +148,6 @@ void Input_pollInputs()
 	INPUT_SPECIAL = false;
 	INPUT_START = false;
 
-	//previousPressedA = pressedA;
-	//previousPressedB = pressedB;
-	//previousPressedX = pressedX;
-	//previousPressedY = pressedY;
-	//previousPressedStart = pressedStart;
-
-	//pressedA = false;
-	//pressedB = false;
-	//pressedX = false;
-	//pressedY = false;
-	//pressedStart = false;
-
 
 	INPUT_X = 0;
 	INPUT_Y = 0;
@@ -165,29 +158,20 @@ void Input_pollInputs()
 
 
 
-	int present = glfwJoystickPresent(GLFW_JOYSTICK_1);
+	int present = glfwJoystickPresent(CONTROLLER_ID);
 	if (present == 1)
 	{
 		int axesCount;
-		const float *axes = glfwGetJoystickAxes(GLFW_JOYSTICK_1, &axesCount);
-		//std::fprintf(stdout, "axes count: %d\n", axesCount);
+		const float *axes = glfwGetJoystickAxes(CONTROLLER_ID, &axesCount);
 
-		//for (int i = 0; i < axesCount; i++)
-		{
-			//std::fprintf(stdout, "axis[%d]: %f\n", i, axes[i]);
-		}
+		INPUT_X = axes[STICK_LX] * STICK_LX_SCALE;
+		INPUT_Y = axes[STICK_LY] * STICK_LY_SCALE;
 
-		//std::fprintf(stdout, "axis[7]: %f\n", axes[7]);
+		INPUT_X2 = axes[STICK_RX] * STICK_RX_SCALE;
+		INPUT_Y2 = axes[STICK_RY] * STICK_RY_SCALE;
 
-
-		if (STICK_LX < axesCount) { INPUT_X = axes[STICK_LX] * STICK_LX_SCALE; }
-		if (STICK_LY < axesCount) { INPUT_Y = axes[STICK_LY] * STICK_LY_SCALE; }
-
-		if (STICK_RX < axesCount) { INPUT_X2 = axes[STICK_RX] * STICK_RX_SCALE; }
-		if (STICK_RY < axesCount) { INPUT_Y2 = axes[STICK_RY] * STICK_RY_SCALE; }
-
-		if (abs(INPUT_X) < STICK_LXDEADZONE) { INPUT_X = 0; }
-		if (abs(INPUT_Y) < STICK_LYDEADZONE) { INPUT_Y = 0; }
+		if (abs(INPUT_X)  < STICK_LXDEADZONE) { INPUT_X  = 0; }
+		if (abs(INPUT_Y)  < STICK_LYDEADZONE) { INPUT_Y  = 0; }
 		if (abs(INPUT_X2) < STICK_RXDEADZONE) { INPUT_X2 = 0; }
 		if (abs(INPUT_Y2) < STICK_RYDEADZONE) { INPUT_Y2 = 0; }
 
@@ -198,36 +182,25 @@ void Input_pollInputs()
 		float triggerLValue = 0;
 		float triggerRValue = 0;
 
-		if (TRIGGER_L < axesCount)
-		{
-			float rawValue = (axes[TRIGGER_L] - LT_NEUTRAL) / LT_RANGE;
-			if (rawValue >= TRIGGER_DEADZONE) { triggerLValue = rawValue; }
-		}
-
-		if (TRIGGER_R < axesCount)
-		{
-			float rawValue = (axes[TRIGGER_R] - RT_NEUTRAL) / RT_RANGE;
-			if (rawValue >= TRIGGER_DEADZONE) { triggerRValue = rawValue; }
-		}
+		
+		float rawValue = (axes[TRIGGER_L] - LT_NEUTRAL) / LT_RANGE;
+		if (rawValue >= TRIGGER_DEADZONE) { triggerLValue = rawValue; }
+		
+		rawValue = (axes[TRIGGER_R] - RT_NEUTRAL) / RT_RANGE;
+		if (rawValue >= TRIGGER_DEADZONE) { triggerRValue = rawValue; }
+		
 
 		INPUT_X2 += triggerSensitivity * (triggerLValue - triggerRValue);
 
-		//std::fprintf(stdout, "\n");
-
 
 		int buttonCount;
-		const unsigned char *buttons = glfwGetJoystickButtons(GLFW_JOYSTICK_1, &buttonCount);
+		const unsigned char *buttons = glfwGetJoystickButtons(CONTROLLER_ID, &buttonCount);
 
-		//for (int i = 0; i < 10; i++)
-		{
-			//std::fprintf(stdout, "buttons[%d]: %d\n", i, buttons[i]);
-		}
-		//std::fprintf(stdout, "\n");
-		if (BUTTON_A < buttonCount) { INPUT_JUMP = buttons[BUTTON_A]; }
-		if (BUTTON_B < buttonCount) { INPUT_ACTION = buttons[BUTTON_B]; }
-		if (BUTTON_X < buttonCount) { INPUT_ACTION2 = buttons[BUTTON_X]; }
-		if (BUTTON_Y < buttonCount) { INPUT_SPECIAL = buttons[BUTTON_Y]; }
-		if (BUTTON_START < buttonCount) { INPUT_START = buttons[BUTTON_START]; }
+		INPUT_JUMP    = buttons[BUTTON_A];
+		INPUT_ACTION  = buttons[BUTTON_B];
+		INPUT_ACTION2 = buttons[BUTTON_X];
+		INPUT_SPECIAL = buttons[BUTTON_Y];
+		INPUT_START   = buttons[BUTTON_START];
 
 		//const char *name = glfwGetJoystickName(GLFW_JOYSTICK_1);
 		//std::fprintf(stdout, "joystick name: %s\n", name);
@@ -236,7 +209,7 @@ void Input_pollInputs()
 
 	double xpos, ypos;
 	glfwGetCursorPos(window, &xpos, &ypos);
-	//std::fprintf(stdout, "%f %f\n", xpos, ypos);
+
 	if (freeMouse == false)
 	{
 		INPUT_X2 += (float)(mouseSensitivityX*(xpos - mousePreviousX));
@@ -399,4 +372,198 @@ void Input_pollInputs()
 void Input_init()
 {
 	//load sensitivity and button mappings from external file
+
+	std::ifstream file("Settings/CameraSensitivity.ini");
+	if (!file.is_open())
+	{
+		std::fprintf(stdout, "Error: Cannot load file 'Settings/CameraSensitivity.ini'\n");
+		file.close();
+	}
+	else
+	{
+		std::string line;
+
+		while (!file.eof())
+		{
+			getline(file, line);
+
+			char lineBuf[512]; //Buffer to copy line into
+			memset(lineBuf, 0, 512);
+			memcpy(lineBuf, line.c_str(), line.size());
+
+			int splitLength = 0;
+			char** lineSplit = split(lineBuf, ' ', &splitLength);
+
+			if (splitLength == 2)
+			{
+				if (strcmp(lineSplit[0], "Mouse_X") == 0)
+				{
+					mouseSensitivityX = std::stof(lineSplit[1], nullptr);
+				}
+				else if (strcmp(lineSplit[0], "Mouse_Y") == 0)
+				{
+					mouseSensitivityY = std::stof(lineSplit[1], nullptr);
+				}
+				else if (strcmp(lineSplit[0], "Stick_X") == 0)
+				{
+					stickSensitivityX = std::stof(lineSplit[1], nullptr);
+				}
+				else if (strcmp(lineSplit[0], "Stick_Y") == 0)
+				{
+					stickSensitivityY = std::stof(lineSplit[1], nullptr);
+				}
+				else if (strcmp(lineSplit[0], "Triggers") == 0)
+				{
+					triggerSensitivity = std::stof(lineSplit[1], nullptr);
+				}
+			}
+
+			free(lineSplit);
+		}
+		file.close();
+	}
+
+
+	std::ifstream file2("Settings/ControllerConfig.ini");
+	if (!file2.is_open())
+	{
+		std::fprintf(stdout, "Error: Cannot load file 'Settings/ControllerConfig.ini'\n");
+		file2.close();
+	}
+	else
+	{
+		std::string line;
+
+		while (!file2.eof())
+		{
+			getline(file2, line);
+
+			char lineBuf[512]; //Buffer to copy line into
+			memset(lineBuf, 0, 512);
+			memcpy(lineBuf, line.c_str(), line.size());
+
+			int splitLength = 0;
+			char** lineSplit = split(lineBuf, ' ', &splitLength);
+
+			if (splitLength == 2)
+			{
+				if (strcmp(lineSplit[0], "A") == 0)
+				{
+					BUTTON_A = std::stoi(lineSplit[1], nullptr, 10);
+				}
+				else if (strcmp(lineSplit[0], "B") == 0)
+				{
+					BUTTON_B = std::stoi(lineSplit[1], nullptr, 10);
+				}
+				else if (strcmp(lineSplit[0], "X") == 0)
+				{
+					BUTTON_X = std::stoi(lineSplit[1], nullptr, 10);
+				}
+				else if (strcmp(lineSplit[0], "Y") == 0)
+				{
+					BUTTON_Y = std::stoi(lineSplit[1], nullptr, 10);
+				}
+				else if (strcmp(lineSplit[0], "Start") == 0)
+				{
+					BUTTON_START = std::stoi(lineSplit[1], nullptr, 10);
+				}
+				else if (strcmp(lineSplit[0], "Controller_ID") == 0)
+				{
+					int raw = std::stoi(lineSplit[1], nullptr, 10);
+					switch (raw)
+					{
+						case 0:  CONTROLLER_ID = GLFW_JOYSTICK_1;  break;
+						case 1:  CONTROLLER_ID = GLFW_JOYSTICK_2;  break;
+						case 2:  CONTROLLER_ID = GLFW_JOYSTICK_3;  break;
+						case 3:  CONTROLLER_ID = GLFW_JOYSTICK_4;  break;
+						case 4:  CONTROLLER_ID = GLFW_JOYSTICK_5;  break;
+						case 5:  CONTROLLER_ID = GLFW_JOYSTICK_6;  break;
+						case 6:  CONTROLLER_ID = GLFW_JOYSTICK_7;  break;
+						case 7:  CONTROLLER_ID = GLFW_JOYSTICK_8;  break;
+						case 8:  CONTROLLER_ID = GLFW_JOYSTICK_9;  break;
+						case 9:  CONTROLLER_ID = GLFW_JOYSTICK_10; break;
+						case 10: CONTROLLER_ID = GLFW_JOYSTICK_11; break;
+						case 11: CONTROLLER_ID = GLFW_JOYSTICK_12; break;
+						case 12: CONTROLLER_ID = GLFW_JOYSTICK_13; break;
+						case 13: CONTROLLER_ID = GLFW_JOYSTICK_14; break;
+						case 14: CONTROLLER_ID = GLFW_JOYSTICK_15; break;
+						case 15: CONTROLLER_ID = GLFW_JOYSTICK_16; break;
+						default: CONTROLLER_ID = GLFW_JOYSTICK_1;  break;
+					}
+				}
+			}
+			else if(splitLength == 4)
+			{
+				if (strcmp(lineSplit[0], "Stick_LX") == 0)
+				{
+					STICK_LX         = std::stoi(lineSplit[1], nullptr, 10);
+					STICK_LXDEADZONE = std::stof(lineSplit[2], nullptr);
+					STICK_LX_SCALE   = std::stof(lineSplit[3], nullptr);
+				}
+				else if (strcmp(lineSplit[0], "Stick_LY") == 0)
+				{
+					STICK_LY         = std::stoi(lineSplit[1], nullptr, 10);
+					STICK_LYDEADZONE = std::stof(lineSplit[2], nullptr);
+					STICK_LY_SCALE   = std::stof(lineSplit[3], nullptr);
+				}
+				else if (strcmp(lineSplit[0], "Stick_RX") == 0)
+				{
+					STICK_RX         = std::stoi(lineSplit[1], nullptr, 10);
+					STICK_RXDEADZONE = std::stof(lineSplit[2], nullptr);
+					STICK_RX_SCALE   = std::stof(lineSplit[3], nullptr);
+				}
+				else if (strcmp(lineSplit[0], "Stick_RY") == 0)
+				{
+					STICK_RY         = std::stoi(lineSplit[1], nullptr, 10);
+					STICK_RYDEADZONE = std::stof(lineSplit[2], nullptr);
+					STICK_RY_SCALE   = std::stof(lineSplit[3], nullptr);
+				}
+			}
+			else if (splitLength == 5)
+			{
+				if (strcmp(lineSplit[0], "Trigger_L") == 0)
+				{
+					TRIGGER_L        = std::stoi(lineSplit[1], nullptr, 10);
+					LT_NEUTRAL       = std::stof(lineSplit[2], nullptr);
+					LT_MAX           = std::stof(lineSplit[3], nullptr);
+					TRIGGER_DEADZONE = std::stof(lineSplit[4], nullptr);
+					LT_RANGE = LT_MAX - LT_NEUTRAL;
+				}
+				else if (strcmp(lineSplit[0], "Trigger_R") == 0)
+				{
+					TRIGGER_R        = std::stoi(lineSplit[1], nullptr, 10);
+					RT_NEUTRAL       = std::stof(lineSplit[2], nullptr);
+					RT_MAX           = std::stof(lineSplit[3], nullptr);
+					TRIGGER_DEADZONE = std::stof(lineSplit[4], nullptr);
+					RT_RANGE = RT_MAX - RT_NEUTRAL;
+				}
+			}
+
+			free(lineSplit);
+		}
+		file2.close();
+	}
+
+	glfwPollEvents();
+
+	int present = glfwJoystickPresent(CONTROLLER_ID);
+	if (present == 1)
+	{
+		int axesCount;
+		const float *axes = glfwGetJoystickAxes(CONTROLLER_ID, &axesCount);
+		STICK_LX  = std::min(STICK_LX,  axesCount - 1);
+		STICK_LY  = std::min(STICK_LY,  axesCount - 1);
+		STICK_RX  = std::min(STICK_RX,  axesCount - 1);
+		STICK_RY  = std::min(STICK_RY,  axesCount - 1);
+		TRIGGER_L = std::min(TRIGGER_L, axesCount - 1);
+		TRIGGER_R = std::min(TRIGGER_R, axesCount - 1);
+
+		int buttonCount;
+		const unsigned char *buttons = glfwGetJoystickButtons(CONTROLLER_ID, &buttonCount);
+		BUTTON_A     = std::min(BUTTON_A,     buttonCount - 1);
+		BUTTON_B     = std::min(BUTTON_B,     buttonCount - 1);
+		BUTTON_X     = std::min(BUTTON_X,     buttonCount - 1);
+		BUTTON_Y     = std::min(BUTTON_Y,     buttonCount - 1);
+		BUTTON_START = std::min(BUTTON_START, buttonCount - 1);
+	}
 }

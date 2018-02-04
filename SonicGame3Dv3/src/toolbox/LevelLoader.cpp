@@ -37,6 +37,7 @@
 #include "../toolbox/maths.h"
 #include "../entities/goalsign.h"
 #include "../entities/spikeball.h"
+#include "../entities/maniasonicmodel.h"
 
 float toFloat(char* input);
 int toInt(char* input);
@@ -727,4 +728,5 @@ void freeAllStaticModels()
 	EC_Umbrella::deleteStaticModels();
 	GoalSign::deleteStaticModels();
 	Spikeball::deleteStaticModels();
+	ManiaSonicModel::deleteStaticModels();
 }

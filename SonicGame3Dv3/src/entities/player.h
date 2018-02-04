@@ -5,6 +5,7 @@ class TexturedModel;
 class Triangle3D;
 class Limb;
 class Body;
+class ManiaSonicModel;
 
 #include <list>
 
@@ -44,6 +45,8 @@ private:
 	Limb* myRightThigh;
 	Limb* myRightShin;
 	Limb* myRightFoot;
+
+	static ManiaSonicModel* maniaSonic;
 
 public:
 	static int characterID;

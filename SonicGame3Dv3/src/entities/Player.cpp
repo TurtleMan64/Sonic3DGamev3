@@ -20,6 +20,7 @@
 #include "../animation/animationresources.h"
 #include "skysphere.h"
 #include "../entities/ring.h"
+#include "maniasonicmodel.h"
 
 std::list<TexturedModel*> Player::modelBody;
 std::list<TexturedModel*> Player::modelHead;
@@ -35,6 +36,8 @@ std::list<TexturedModel*> Player::modelRightHand;
 std::list<TexturedModel*> Player::modelRightThigh;
 std::list<TexturedModel*> Player::modelRightShin;
 std::list<TexturedModel*> Player::modelRightFoot;
+
+ManiaSonicModel* Player::maniaSonic;
 
 int Player::characterID = 0;
 
@@ -69,6 +72,7 @@ Player::Player(float x, float y, float z)
 	currNorm.y = 1;
 	currNorm.z = 0;
 	setVisible(false); //Our limbs are what will be visible
+	Player::maniaSonic = nullptr;
 	createLimbs();
 }
 
@@ -786,6 +790,10 @@ void Player::createLimbs()
 	}
 	else if (Player::characterID == 4) //Mania Sonic
 	{
+		Player::maniaSonic = new ManiaSonicModel();
+		Global::countNew++;
+		Main_addEntity(Player::maniaSonic);
+
 		displayHeightOffset = -0.25f;
 		myBody =         new Body(&modelBody);
 		myHead =         new Limb(&modelHead,         1.2f,  -0.3f,   0,     myBody,   nullptr);        Global::countNew++;
@@ -918,6 +926,8 @@ void Player::loadStaticModels()
 	}
 	else if (Player::characterID == 4) //Mania Sonic
 	{
+		ManiaSonicModel::loadStaticModels();
+
 		if (Player::modelBody.size() == 0) { loadModelsHelper(loadObjModel("res/Models/SonicMania/", "Body.obj"), &Player::modelBody); }
 		if (Player::modelHead.size() == 0) { loadModelsHelper(loadObjModel("res/Models/SonicMania/", "Head.obj"), &Player::modelHead); }
 		if (Player::modelLeftHumerus.size() == 0) { loadModelsHelper(loadObjModel("res/Models/SonicMania/", "Humerus.obj"), &Player::modelLeftHumerus); }
@@ -1690,28 +1700,28 @@ void Player::animate()
 
 
 	setLimbsVisibility(true);
-	//if (maniaSonic != null) { maniaSonic.setVisibility(true); }
+	if (Player::maniaSonic != nullptr) { Player::maniaSonic->setVisible(true); }
 
 	if (firstPerson)
 	{
 		setLimbsVisibility(false);
-		//if (maniaSonic != null) { maniaSonic.setVisibility(false); }
+		if (Player::maniaSonic != nullptr) { Player::maniaSonic->setVisible(false); }
 	}
 	else
 	{
 		if (iFrame % 4 == 2 || iFrame % 4 == 3)
 		{
 			setLimbsVisibility(false);
-			//if (maniaSonic != null) { maniaSonic.setVisibility(false); }
+			if (Player::maniaSonic != nullptr) { Player::maniaSonic->setVisible(false); }
 		}
 	}
 
 	if (mySpeed > 0.01)
 	{
 		if (myBody != nullptr) myBody->setBaseOrientation(&displayPos, diff, yawAngle, pitchAngle, 0);
-		//if (maniaSonic != null)
+		if (Player::maniaSonic != nullptr)
 		{
-			//maniaSonic.setOrientation(dspX, dspY, dspZ, diff, yawAngle, pitchAngle, 0);
+			Player::maniaSonic->setOrientation(dspX, dspY, dspZ, diff, yawAngle, pitchAngle, 0);
 		}
 		setRotY(yrot);
 		setRotZ(zrot);
@@ -1719,9 +1729,9 @@ void Player::animate()
 	else
 	{
 		if (myBody != nullptr) myBody->setBaseOrientation(&displayPos, 0, getRotY(), 90, 0);
-		//if (maniaSonic != null)
+		if (Player::maniaSonic != nullptr)
 		{
-			//maniaSonic.setOrientation(dspX, dspY, dspZ, 0, getRotY(), 90, 0);
+			Player::maniaSonic->setOrientation(dspX, dspY, dspZ, 0, getRotY(), 90, 0);
 		}
 	}
 
@@ -1780,7 +1790,7 @@ void Player::animate()
 		float h = sqrtf(xVelAir*xVelAir + zVelAir*zVelAir);
 		float zr = (toDegrees(atan2f(yVel, h)));
 		if (myBody != nullptr) myBody->setBaseOrientation(&displayPos, 0, twistAngle, pitchAngle, zr + 90);
-		//if (maniaSonic != null) { maniaSonic.setVisibility(false); }
+		if (Player::maniaSonic != nullptr) { Player::maniaSonic->setVisible(false); }
 
 		float height = 2;
 		Vector3f offset(currNorm.x*height, currNorm.y*height, currNorm.z*height);
@@ -1794,12 +1804,12 @@ void Player::animate()
 	else if (isBouncing)
 	{
 		if (myBody != nullptr) myBody->setBaseOrientation(&displayPos, 0, twistAngle, pitchAngle, -count * 60);
-		//if (maniaSonic != null)
-		//{
-			//maniaSonic.setOrientation(dspX, dspY, dspZ, 0, twistAngle, pitchAngle, -count*60);
-			//maniaSonic.animate(12, 0);
-			//setLimbsVisibility(false);
-		//}
+		if (Player::maniaSonic != nullptr)
+		{
+			Player::maniaSonic->setOrientation(dspX, dspY, dspZ, 0, twistAngle, pitchAngle, -count*60);
+			Player::maniaSonic->animate(12, 0);
+			setLimbsVisibility(false);
+		}
 		float height = 2;
 		Vector3f offset(currNorm.x*height, currNorm.y*height, currNorm.z*height);
 		Vector3f prevPos(previousDisplayPos);
@@ -1812,23 +1822,23 @@ void Player::animate()
 	else if (isJumping)
 	{
 		if (myBody != nullptr) myBody->setBaseOrientation(&displayPos, 0, twistAngle, pitchAngle, -count * 35);
-		//if (maniaSonic != null)
-		//{
-			//maniaSonic.setOrientation(dspX, dspY, dspZ, 0, twistAngle, pitchAngle, -count*35);
-			//maniaSonic.animate(12, 0);
-			//setLimbsVisibility(false);
-		//}
+		if (Player::maniaSonic != nullptr)
+		{
+			Player::maniaSonic->setOrientation(dspX, dspY, dspZ, 0, twistAngle, pitchAngle, -count*35);
+			Player::maniaSonic->animate(12, 0);
+			setLimbsVisibility(false);
+		}
 		updateLimbs(12, 0);
 	}
 	else if (isBall)
 	{
 		if (myBody != nullptr) myBody->setBaseOrientation(dspX, dspY, dspZ, diff, yawAngle, pitchAngle, -count * 70);
-		//if (maniaSonic != null)
-		//{
-			//maniaSonic.setOrientation(dspX, dspY, dspZ, diff, yawAngle, pitchAngle, -count*70);
-			//maniaSonic.animate(12, 0);
-			//setLimbsVisibility(false);
-		//}
+		if (Player::maniaSonic != nullptr)
+		{
+			Player::maniaSonic->setOrientation(dspX, dspY, dspZ, diff, yawAngle, pitchAngle, -count*70);
+			Player::maniaSonic->animate(12, 0);
+			setLimbsVisibility(false);
+		}
 		float height = 2;
 		Vector3f offset(currNorm.x*height, currNorm.y*height, currNorm.z*height);
 		Vector3f prevPos(previousDisplayPos);
@@ -1851,12 +1861,12 @@ void Player::animate()
 		}
 		if (myBody != nullptr) myBody->setBaseOrientation(dspX, dspY, dspZ, diffNew, yawAngle, pitchAngle, zrotoff);
 		updateLimbs(12, 0);
-		//if (maniaSonic != null)
-		//{
-			//maniaSonic.setOrientation(dspX, dspY, dspZ, diffNew, yawAngle, pitchAngle, zrotoff);
-			//setLimbsVisibility(false);
-			//maniaSonic.animate(12, 0);
-		//}
+		if (Player::maniaSonic != nullptr)
+		{
+			Player::maniaSonic->setOrientation(dspX, dspY, dspZ, diffNew, yawAngle, pitchAngle, zrotoff);
+			setLimbsVisibility(false);
+			Player::maniaSonic->animate(12, 0);
+		}
 	}
 	else if (spindashReleaseTimer > 0)
 	{
@@ -1864,29 +1874,29 @@ void Player::animate()
 																		  //zrotoff = -count*40; //different look, might look better?
 		if (myBody != nullptr) myBody->setBaseOrientation(dspX, dspY, dspZ, diff, yawAngle, pitchAngle, zrotoff);
 		updateLimbs(12, 0);
-		//if (maniaSonic != null)
-		//{
-			//maniaSonic.setOrientation(dspX, dspY, dspZ, diff, yawAngle, pitchAngle, zrotoff);
-			//setLimbsVisibility(false);
-			//maniaSonic.animate(12, 0);
-		//}
+		if (Player::maniaSonic != nullptr)
+		{
+			Player::maniaSonic->setOrientation(dspX, dspY, dspZ, diff, yawAngle, pitchAngle, zrotoff);
+			setLimbsVisibility(false);
+			Player::maniaSonic->animate(12, 0);
+		}
 	}
 	else if (onPlane && mySpeed < 0.01)
 	{
-		//if (maniaSonic != null) { maniaSonic.setVisibility(false); }
+		if (Player::maniaSonic != nullptr) { Player::maniaSonic->setVisible(false); }
 		float time = (float)fmod((count * 1.0f), 100);
 		updateLimbs(0, time);
 	}
 	else if (isSkidding)
 	{
-		//if (maniaSonic != null) { maniaSonic.setVisibility(false); }
+		if (Player::maniaSonic != nullptr) { Player::maniaSonic->setVisible(false); }
 		if (myBody != nullptr) myBody->setBaseOrientation(&displayPos, diff, yawAngle, pitchAngle, 0);
 		updateLimbs(8, 0);
 	}
 	else if (hitTimer > 0)
 	{
 		if (myBody != nullptr) myBody->setBaseOrientation(&displayPos, diff, yawAngle, pitchAngle, 0);
-		//if (maniaSonic != null) { maniaSonic.setVisibility(false); }
+		if (Player::maniaSonic != nullptr) { Player::maniaSonic->setVisible(false); }
 		updateLimbs(11, 0);
 	}
 	else
@@ -1894,20 +1904,20 @@ void Player::animate()
 		if (myBody != nullptr) myBody->setBaseOrientation(&displayPos, diff, yawAngle, pitchAngle, 0);
 		float time = 10 * modelRunIndex * 0.5f;
 		updateLimbs(1, time);
-		//if (maniaSonic != null)
-		//{
-			//maniaSonic.setOrientation(dspX, dspY, dspZ, diff, yawAngle, pitchAngle, 0);
-			//setLimbsVisibility(false);
+		if (Player::maniaSonic != nullptr)
+		{
+			Player::maniaSonic->setOrientation(dspX, dspY, dspZ, diff, yawAngle, pitchAngle, 0);
+			setLimbsVisibility(false);
 
-			//if (mySpeed < 3.9f)
-			//{
-				//maniaSonic.animate(15, time);
-			//}
-			//else
-			//{
-				//maniaSonic.animate(1, time);
-			//}
-		//}
+			if (mySpeed < 3.9f)
+			{
+				Player::maniaSonic->animate(15, time);
+			}
+			else
+			{
+				Player::maniaSonic->animate(1, time);
+			}
+		}
 	}
 	
 	//switch (MainGameLoop.levelID)

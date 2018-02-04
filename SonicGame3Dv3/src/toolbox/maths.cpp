@@ -49,14 +49,14 @@ void createViewMatrix(Matrix4f* matrix, Camera* cam)
 {
 	matrix->setIdentity();
 
+	//vec.set(0, 0, 1);
+	//matrix->rotate(toRadians(cam->getRoll()), &vec);
+
 	Vector3f vec(1, 0, 0);
 	matrix->rotate(toRadians(cam->getPitch()), &vec);
 
 	vec.set(0, 1, 0);
 	matrix->rotate(toRadians(cam->getYaw()), &vec);
-
-	vec.set(0, 0, 1);
-	matrix->rotate(toRadians(cam->getRoll()), &vec);
 
 	Vector3f camPos(cam->getPosition());
 	camPos.neg();

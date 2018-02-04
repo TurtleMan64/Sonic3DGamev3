@@ -1,0 +1,30 @@
+# Blender MTL File: 'None'
+# Material Count: 1
+
+newmtl Skin_Belly_png_Be_000_Belly_png_001
+	Ns 20
+	Ka 0.000000 0.000000 0.000000
+	Kd 0.800000 0.800000 0.800000
+	Ks 0.250000 0.250000 0.250000
+	Ke 0.000000 0.000000 0.000000
+	Ni 0.02
+	d 1.000000
+	illum 2
+	map_Kd Belly.png
+	map_Ka Belly.png
+
+	
+newmtl Shoe_She_pngs_She_000_Shoe_png
+	Ns 10.0
+	Ni 0.125000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.8000 0.8000 0.8000
+	Ks 0.2500 0.2500 0.2500
+	Ke 0.0000 0.0000 0.0000
+	map_Ka Shoe.png
+	map_Kd Shoe.png
+	

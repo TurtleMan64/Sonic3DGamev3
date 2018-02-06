@@ -419,7 +419,58 @@ void Player::step()
 				zVelGround = 0;
 
 				bonked = true;
+
 				currNorm.set(0, 1, 0);
+
+
+				/*
+				Vector3f currDisp(xVel + xDisp, yVel + yDisp, zVel + zDisp);
+
+				Vector3f newDisp = projectOntoPlane(&currDisp, &(triCol->normal));
+
+				CollisionChecker::setCheckPlayer();
+				if (CollisionChecker::checkCollision(getX(), getY(), getZ(), getX() + newDisp.x, getY() + newDisp.y, getZ() + newDisp.z))
+				{
+					setPosition(CollisionChecker::getCollidePosition());
+					increasePosition(CollisionChecker::getCollideTriangle()->normal.x, CollisionChecker::getCollideTriangle()->normal.y, CollisionChecker::getCollideTriangle()->normal.z);
+				}
+				else
+				{
+					increasePosition(newDisp.x, newDisp.y, newDisp.z);
+
+					CollisionChecker::setCheckPlayer();
+					bool checkPassed = CollisionChecker::checkCollision(getX(), getY(), getZ(), getX() - currNorm.x*surfaceTension, getY() - currNorm.y*surfaceTension, getZ() - currNorm.z*surfaceTension);
+					if (checkPassed)
+					{
+						float dotProduct = currNorm.dot(&(CollisionChecker::getCollideTriangle()->normal));
+						if (dotProduct < 0.6) //It's a wall, pretend the collision check didn't see it
+						{
+							checkPassed = false;
+						}
+					}
+
+					if (checkPassed)
+					{
+						setPosition(CollisionChecker::getCollidePosition());
+						increasePosition(CollisionChecker::getCollideTriangle()->normal.x, CollisionChecker::getCollideTriangle()->normal.y, CollisionChecker::getCollideTriangle()->normal.z);
+					}
+					else
+					{
+						CollisionChecker::falseAlarm();
+						airTimer++;
+
+						xVelGround = 0;
+						zVelGround = 0;
+						xVelAir = xVel + xDisp;
+						zVelAir = zVel + zDisp;
+						yVel += yDisp;
+						xVel = 0;
+						zVel = 0;
+
+						onPlane = false;
+					}
+				}
+				*/
 			}
 			onPlane = true;
 		}

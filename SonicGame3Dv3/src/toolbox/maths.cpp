@@ -229,6 +229,7 @@ Vector3f bounceVector(Vector3f* initialVelocity, Vector3f* surfaceNormal, float 
 }
 
 
+//Projects vector A to be parallel to vector normal
 Vector3f projectOntoPlane(Vector3f* A, Vector3f* normal)
 {
 	Vector3f B(0, 0, 0);

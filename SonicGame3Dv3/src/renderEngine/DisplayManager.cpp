@@ -28,6 +28,8 @@ unsigned int F_HZ = 60;
 
 unsigned int AA_SAMPLES = 4;
 
+extern float HFOV;
+
 bool useFullscreeen = false;
 
 extern float input_zoom_buffer;
@@ -35,6 +37,7 @@ extern float input_zoom_buffer;
 GLFWwindow* window;
 
 void loadDisplaySettings();
+void loadGraphicsSettings();
 
 int createDisplay()
 {
@@ -46,6 +49,7 @@ int createDisplay()
 	//glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
 	loadDisplaySettings();
+	loadGraphicsSettings();
 
 	#ifdef __APPLE__
 	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); // uncomment this statement to fix compilation on OS X
@@ -230,6 +234,59 @@ void loadDisplaySettings()
 				else if (strcmp(lineSplit[0], "F_RefreshRate") == 0)
 				{
 					F_HZ = std::stoi(lineSplit[1], nullptr, 10);
+				}
+				else if (strcmp(lineSplit[0], "Anti-Aliasing_Samples") == 0)
+				{
+					AA_SAMPLES = std::stoi(lineSplit[1], nullptr, 10);
+				}
+			}
+			free(lineSplit);
+		}
+		file.close();
+	}
+}
+
+void loadGraphicsSettings()
+{
+	std::ifstream file("Settings/GraphicsSettings.ini");
+	if (!file.is_open())
+	{
+		std::fprintf(stdout, "Error: Cannot load file 'Settings/GraphicsSettings.ini'\n");
+		file.close();
+	}
+	else
+	{
+		std::string line;
+
+		while (!file.eof())
+		{
+			getline(file, line);
+
+			char lineBuf[512]; //Buffer to copy line into
+			memset(lineBuf, 0, 512);
+			memcpy(lineBuf, line.c_str(), line.size());
+
+			int splitLength = 0;
+			char** lineSplit = split(lineBuf, ' ', &splitLength);
+
+			if (splitLength == 2)
+			{
+				if (strcmp(lineSplit[0], "HQ_Water") == 0)
+				{
+					if (strcmp(lineSplit[1], "on") == 0)
+					{
+						Global::useHighQualityWater = true;
+						fprintf(stdout, "%d\n", Global::useHighQualityWater);
+					}
+					else
+					{
+						Global::useHighQualityWater = false;
+						fprintf(stdout, "%d\n", Global::useHighQualityWater);
+					}
+				}
+				else if (strcmp(lineSplit[0], "FOV") == 0)
+				{
+					HFOV = std::stof(lineSplit[1], nullptr);
 				}
 				else if (strcmp(lineSplit[0], "Anti-Aliasing_Samples") == 0)
 				{

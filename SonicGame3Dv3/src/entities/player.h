@@ -171,6 +171,8 @@ private:
 	int iFrame = 0;
 	int hitTimer = 0;
 
+	int deadTimer = -1;
+
 	bool inWater = false;
 	bool inWaterPrevious = false;
 	float waterHeight = 0;
@@ -248,6 +250,12 @@ public:
 	void setInWater(float height);
 
 	void takeDamage(Vector3f* damageSource);
+
+	void rebound(Vector3f* source);
+
+	bool isVulnerable();
+
+	void die();
 
 private:
 	void adjustCamera();

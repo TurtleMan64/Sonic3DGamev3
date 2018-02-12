@@ -71,5 +71,9 @@ public:
 	void updateTransformationMatrix();
 
 	virtual std::string getName();
+
+	virtual bool canLightdashOn();
+
+	virtual bool canHomingAttackOn();
 };
 #endif

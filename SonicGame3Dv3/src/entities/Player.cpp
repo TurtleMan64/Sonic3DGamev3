@@ -88,6 +88,12 @@ void Player::step()
 	hitTimer = std::max(0, hitTimer-1);
 	canMoveTimer = std::max(-1, canMoveTimer - 1);
 
+	if (deadTimer == 0)
+	{
+		Global::shouldRestartLevel = true;
+	}
+	deadTimer = std::max(-1, deadTimer - 1);
+
 	if (canMoveTimer == 0)
 	{
 		canMove = true;
@@ -564,9 +570,10 @@ void Player::step()
 
 	if (getY() < -100)
 	{
-		Global::shouldRestartLevel = true;
+		//Global::shouldRestartLevel = true;
 		//AudioSources.play(34, getPosition());
-		return;
+		//return;
+		die();
 	}
 
 	if (!inWater && inWaterPrevious)
@@ -1100,7 +1107,7 @@ void Player::setMovementInputs()
 	moveSpeedAirCurrent = moveAccelerationAir*inputMag;
 	movementAngle = (float)toDegrees(atan2(movementInputY, movementInputX));
 
-	if (canMove == false || hitTimer > 0)
+	if (canMove == false || hitTimer > 0 || deadTimer >= 0)
 	{
 		jumpInput = false;
 		actionInput = false;
@@ -1344,7 +1351,7 @@ void Player::homingAttack()
 		angle = getRotY();
 	}
 
-	if (characterID == 2)
+	//if (characterID == 2)
 	{
 		bool targetNearest = false;
 		float closestMatchingAngle = 360;
@@ -1361,18 +1368,16 @@ void Player::homingAttack()
 		float myX = position.x;
 		float myZ = position.z;
 		float myY = position.y;
-		/*
-		for (Entity e : MainGameLoop.gameEntities)
+
+		extern std::unordered_map<Entity*, Entity*> gameEntities;
+
+		for (auto e : gameEntities)
 		{
-			if (e instanceof Motobug ||
-				e instanceof ItemCapsule ||
-				e instanceof RhinoTank ||
-				e instanceof Spinner ||
-				e instanceof Spring)
+			if (e.first->canHomingAttackOn())
 			{
-				float xDiff = e.getX() - myX;
-				float zDiff = e.getZ() - myZ;
-				float yDiff = myY - e.getY();
+				float xDiff = e.first->getX() - myX;
+				float zDiff = e.first->getZ() - myZ;
+				float yDiff = myY - e.first->getY();
 				float thisDist = xDiff*xDiff + zDiff*zDiff + yDiff*yDiff;
 
 				if (targetNearest)
@@ -1380,7 +1385,7 @@ void Player::homingAttack()
 					if (yDiff > -6 && thisDist < dist)
 					{
 						dist = thisDist;
-						closest = e;
+						closest = e.first;
 					}
 				}
 				else
@@ -1388,32 +1393,32 @@ void Player::homingAttack()
 					if (thisDist < dist)
 					{
 						//calculate angle to this target
-						float toTargetAngle = (float)Math.toDegrees(Math.atan2(zDiff, -xDiff)) + 180;
+						float toTargetAngle = toDegrees(atan2f(zDiff, -xDiff)) + 180;
 						//calculate difference in angles
-						float angleDiff = Math.abs(compareTwoAngles(stickAngle, toTargetAngle));
+						float angleDiff = abs(compareTwoAngles(stickAngle, toTargetAngle));
 
 						if (angleDiff < 60)
 						{
 							if (yDiff > -6 && angleDiff < closestMatchingAngle)
 							{
 								closestMatchingAngle = angleDiff;
-								closest = e;
+								closest = e.first;
 							}
 						}
 					}
 				}
 			}
-		}*/
+		}
 
 		if (closest != nullptr)
 		{
-			/*
-			float xDiff = -(myX - closest.getX());
-			float zDiff = -(myZ - closest.getZ());
-			float yDiff = -(myY - closest.getY());
+			
+			float xDiff = -(myX - closest->getX());
+			float zDiff = -(myZ - closest->getZ());
+			float yDiff = -(myY - closest->getY());
 
-			Vector3f unitDir = new Vector3f(xDiff, yDiff + 3.5f, zDiff);
-			unitDir = unitDir.normalise(unitDir);
+			Vector3f unitDir(xDiff, yDiff + 3.5f, zDiff);
+			unitDir.normalize();
 			homingPower = 6.7f;
 
 			unitDir.x *= homingPower;
@@ -1421,20 +1426,20 @@ void Player::homingAttack()
 			unitDir.z *= homingPower;
 
 			xVelAir = unitDir.x;
-			yVel = unitDir.y;
+			yVel    = unitDir.y;
 			zVelAir = unitDir.z;
-			*/
+			
 		}
 		else
 		{
-			xVelAir = (float)cos(toRadians(angle))*homingPower;
+			xVelAir =  (float)cos(toRadians(angle))*homingPower;
 			zVelAir = -(float)sin(toRadians(angle))*homingPower;
 		}
 	}
-	else
+	//else
 	{
-		xVelAir = (float)cos(toRadians(angle))*homingPower;
-		zVelAir = -(float)sin(toRadians(angle))*homingPower;
+		//xVelAir = (float)cos(toRadians(angle))*homingPower;
+		//zVelAir = -(float)sin(toRadians(angle))*homingPower;
 	}
 
 	homingAttackTimer = homingAttackTimerMax;
@@ -1511,29 +1516,32 @@ void Player::bounceOffGround(Vector3f* surfaceNormal, float b)
 //if lightdash cant continue, sets isLightdashing
 //to false
 void Player::attemptLightdash()
-{/*
-	if (MainGameLoop.gameClock % 2 != 0)
+{
+	if (Global::gameClock % 2 != 0)
 	{
 		return;
 	}
 	//find nearest ring
-	Ring closest = null;
+	Entity* closest = nullptr;
 	float dist = 2000; //distance squared
 	float myX = getX();
 	float myZ = getZ();
 	float myY = getY();
-	for (Entity e : MainGameLoop.gameEntities)
+
+	extern std::unordered_map<Entity*, Entity*> gameEntities;
+
+	for (auto e : gameEntities)
 	{
-		if (e instanceof Ring)
+		if (e.first->canLightdashOn())
 		{
-			float xDiff = e.getX() - myX;
-			float zDiff = e.getZ() - myZ;
-			float yDiff = e.getY() - myY;
+			float xDiff = e.first->getX() - myX;
+			float zDiff = e.first->getZ() - myZ;
+			float yDiff = e.first->getY() - myY;
 			float newDist = xDiff*xDiff + zDiff*zDiff + yDiff*yDiff;
 			if (newDist < dist)
 			{
 				dist = newDist;
-				closest = (Ring)e;
+				closest = e.first;
 			}
 		}
 	}
@@ -1548,125 +1556,162 @@ void Player::attemptLightdash()
 
 		xVel = 0;
 		zVel = 0;
-		relativeXVel = 0;
-		relativeZVel = 0;
+		xVelGround = 0;
+		zVelGround = 0;
 
 		//set xVelAir and zVelAir to the direction to the ring
-		Vector3f diff = new Vector3f(closest.getX() - myX, closest.getY() - myY, closest.getZ() - myZ);
-		diff = diff.normalise(null);
+		Vector3f diff(closest->getX() - myX, closest->getY() - myY, closest->getZ() - myZ);
+		diff.normalize();
 
 		xVelAir = diff.x * 5;
 		zVelAir = diff.z * 5;
 		yVel = diff.y * 5;
 
 		//move to ring location
-		setX(closest.getX());
-		setY(closest.getY());
-		setZ(closest.getZ());
+		setX(closest->getX());
+		setY(closest->getY());
+		setZ(closest->getZ());
 	}
 	else
 	{
 		//doesnt pass threshold?
 		isLightdashing = false;
-	}*/
+	}
 }
 
 void Player::adjustCamera()
 {
-	cameraRadius += (cameraRadiusTarget - cameraRadius) / 20;
-
-	cameraRadiusTarget += zoomInput;
-	cameraRadiusTarget = fmax(cameraRadiusZoom, cameraRadiusTarget);
-	cameraRadiusTarget = fmin(cameraRadiusZoomOut, cameraRadiusTarget);
-
-	Camera* cam = Global::gameCamera;
-	//Vector3f* camPos = cam->getPosition();
-
-	//if (!firstPerson && !MainGameLoop.freeCamera)
-	//{
-		//float xDiff = camPos->x - position.x;
-		//float zDiff = camPos->z - position.z;
-		//float angleRad = (float)toRadians(getRotY());
-		//float newZ = (float)(-(zDiff)*cos(angleRad) - (xDiff)*sin(angleRad));
-		//float newX = (float)((xDiff)*Math.cos(angleRad) - (zDiff)*Math.sin(angleRad));
-
-		//cameraYawTarget -= (newZ / 65);
-	//}
-
-
-	cameraPitchTarget += cameraInputY;
-	cameraYawTarget   += cameraInputX;
-
-
-	cam->setYaw(cam->getYaw() + (cameraYawTarget - cam->getYaw()) / cameraLaziness);
-	cam->setPitch(cam->getPitch() + (cameraPitchTarget - cam->getPitch()) / cameraLaziness);
-
-
-
-	Vector3f headPos(
-		position.x + currNorm.x*headHeight,
-		position.y + currNorm.y*headHeight,
-		position.z + currNorm.z*headHeight);
-
-	Vector3f camPos(
-		headPos.x + (float)(cos(toRadians(cam->getYaw() + 90))*(cameraRadius*(cos(toRadians(cam->getPitch()))))),
-		headPos.y - (float)(sin(toRadians(cam->getPitch() + 180))*cameraRadius),
-		headPos.z + (float)(sin(toRadians(cam->getYaw() + 90))*(cameraRadius*(cos(toRadians(cam->getPitch()))))));
-
-
-	if (CollisionChecker::checkCollision(position.x, position.y, position.z, headPos.x, headPos.y, headPos.z) == true)
+	if (deadTimer == -1)
 	{
-		Vector3f* colPos = CollisionChecker::getCollidePosition();
+		cameraRadius += (cameraRadiusTarget - cameraRadius) / 20;
 
-		Vector3f diff;
+		cameraRadiusTarget += zoomInput;
+		cameraRadiusTarget = fmax(cameraRadiusZoom, cameraRadiusTarget);
+		cameraRadiusTarget = fmin(cameraRadiusZoomOut, cameraRadiusTarget);
 
-		diff.x = colPos->x - getX();
-		diff.y = colPos->y - getY();
-		diff.z = colPos->z - getZ();
+		Camera* cam = Global::gameCamera;
+		//Vector3f* camPos = cam->getPosition();
 
-		float newHeadHeight = diff.length() - 1;
+		//if (!firstPerson && !MainGameLoop.freeCamera)
+		//{
+			//float xDiff = camPos->x - position.x;
+			//float zDiff = camPos->z - position.z;
+			//float angleRad = (float)toRadians(getRotY());
+			//float newZ = (float)(-(zDiff)*cos(angleRad) - (xDiff)*sin(angleRad));
+			//float newX = (float)((xDiff)*Math.cos(angleRad) - (zDiff)*Math.sin(angleRad));
 
-		//camPos.set(getX() + currNorm.x*newHeadHeight,
-		//	getY() + currNorm.y*newHeadHeight,
-		//	getZ() + currNorm.z*newHeadHeight);
+			//cameraYawTarget -= (newZ / 65);
+		//}
+
+
+		cameraPitchTarget += cameraInputY;
+		cameraYawTarget += cameraInputX;
+
+
+		cam->setYaw(cam->getYaw() + (cameraYawTarget - cam->getYaw()) / cameraLaziness);
+		cam->setPitch(cam->getPitch() + (cameraPitchTarget - cam->getPitch()) / cameraLaziness);
+
+
+
+		Vector3f headPos(
+			position.x + currNorm.x*headHeight,
+			position.y + currNorm.y*headHeight,
+			position.z + currNorm.z*headHeight);
+
+		Vector3f camPos(
+			headPos.x + (float)(cos(toRadians(cam->getYaw() + 90))*(cameraRadius*(cos(toRadians(cam->getPitch()))))),
+			headPos.y - (float)(sin(toRadians(cam->getPitch() + 180))*cameraRadius),
+			headPos.z + (float)(sin(toRadians(cam->getYaw() + 90))*(cameraRadius*(cos(toRadians(cam->getPitch()))))));
+
+
+		if (CollisionChecker::checkCollision(position.x, position.y, position.z, headPos.x, headPos.y, headPos.z) == true)
+		{
+			Vector3f* colPos = CollisionChecker::getCollidePosition();
+
+			Vector3f diff;
+
+			diff.x = colPos->x - getX();
+			diff.y = colPos->y - getY();
+			diff.z = colPos->z - getZ();
+
+			float newHeadHeight = diff.length() - 1;
+
+			//camPos.set(getX() + currNorm.x*newHeadHeight,
+			//	getY() + currNorm.y*newHeadHeight,
+			//	getZ() + currNorm.z*newHeadHeight);
+		}
+		else if (CollisionChecker::checkCollision(headPos.x, headPos.y, headPos.z, camPos.x, camPos.y, camPos.z) == true)
+		{
+			Vector3f* colPos = CollisionChecker::getCollidePosition();
+
+			Vector3f diff;
+
+			diff.x = colPos->x - headPos.x;
+			diff.y = colPos->y - headPos.y;
+			diff.z = colPos->z - headPos.z;
+
+			float newRadius = diff.length() - 4;
+
+			diff.normalize();
+			diff.scale(newRadius);
+
+			camPos.set(
+				headPos.x + diff.x,
+				headPos.y + diff.y,
+				headPos.z + diff.z);
+
+		}
+
+
+		cam->setPosition(&camPos);
+
+		//if (zoomInput > 0)
+		{
+			//firstPerson = true;
+		}
+		//else if (zoomInput < 0)
+		{
+			//firstPerson = false;
+		}
+
+		//if (firstPerson == true)
+		{
+			//cam.setPosition(headPos);
+		}
+		/*
+		Vector3f normOpp(currNorm);
+		normOpp.neg();
+
+		Vector3f newCamPos = mapCamera(toRadians(cameraYawTarget+90), 0, cameraRadius, &normOpp);
+
+		float newYaw = atan2f(newCamPos.z, newCamPos.x);
+		float newPitch = atan2f(newCamPos.y, sqrtf(newCamPos.x*newCamPos.x + newCamPos.z*newCamPos.z));
+
+		newCamPos.set(
+			headPos.x + newCamPos.x,
+			headPos.y + newCamPos.y,
+			headPos.z + newCamPos.z);
+
+		cam->setPosition(&newCamPos);
+
+		cam->setYaw(toDegrees(newYaw)-90);
+		cam->setPitch(toDegrees(newPitch));
+		*/
 	}
-	else if (CollisionChecker::checkCollision(headPos.x, headPos.y, headPos.z, camPos.x, camPos.y, camPos.z) == true)
+	else
 	{
-		Vector3f* colPos = CollisionChecker::getCollidePosition();
+		Camera* cam = Global::gameCamera;
 
-		Vector3f diff;
+		float xDiff = (cam->getPosition()->getX() - getX());
+		float yDiff = (cam->getPosition()->getY() - getY());
+		float zDiff = (cam->getPosition()->getZ() - getZ());
 
-		diff.x = colPos->x - headPos.x;
-		diff.y = colPos->y - headPos.y;
-		diff.z = colPos->z - headPos.z;
 
-		float newRadius = diff.length() - 4;
+		float newYaw = atan2f(zDiff, xDiff);
+		float newPitch = atan2f(yDiff, sqrtf(xDiff*xDiff + zDiff*zDiff));
 
-		diff.normalize();
-		diff.scale(newRadius);
-
-		camPos.set(
-			headPos.x + diff.x,
-			headPos.y + diff.y,
-			headPos.z + diff.z);
-
-	}
-	
-
-	cam->setPosition(&camPos);
-
-	//if (zoomInput > 0)
-	{
-		//firstPerson = true;
-	}
-	//else if (zoomInput < 0)
-	{
-		//firstPerson = false;
-	}
-
-	//if (firstPerson == true)
-	{
-		//cam.setPosition(headPos);
+		cam->setYaw(toDegrees(newYaw)-90);
+		cam->setPitch(toDegrees(newPitch));
 	}
 }
 
@@ -2148,9 +2193,10 @@ void Player::takeDamage(Vector3f* damageSource)
 		if (ringsToScatter == 0)
 		{
 			//tell main game loop to restart level
-			Global::shouldRestartLevel = true;
+			//Global::shouldRestartLevel = true;
 			//AudioSources.play(34, getPosition());
-			return;
+			//return;
+			die();
 		}
 
 		//AudioSources.play(27, getPosition());
@@ -2173,5 +2219,65 @@ void Player::takeDamage(Vector3f* damageSource)
 
 			ringsToScatter--;
 		}
+	}
+}
+
+void Player::rebound(Vector3f* source)
+{
+	if (onPlane == false)
+	{
+		if (characterID == 2) //Mecha Sonic
+		{
+			yVel = 2.1f;
+			xVelAir = 0;
+			zVelAir = 0;
+			setX(source->x);
+			setZ(source->z);
+			setY(source->y + 3.5f);
+			homingAttackTimer = -1;
+			hoverCount = hoverLimit / 2;
+		}
+		else
+		{
+			if (yVel >= 0) //no rebound
+			{
+				yVel += 1;
+			}
+			else if (jumpInput) //rebound
+			{
+				yVel = 0.2f + yVel*-1;
+				if (yVel < 2)
+				{
+					yVel = 2;
+				}
+			}
+			else //rebound
+			{
+				yVel = yVel*-1;
+				if (yVel > 1)
+				{
+					yVel = 1;
+				}
+			}
+			homingAttackTimer = -1;
+		}
+	}
+}
+
+bool Player::isVulnerable()
+{
+	return !(homingAttackTimer > 0 ||
+		isBouncing ||
+		isJumping ||
+		isBall ||
+		isSpindashing ||
+		isStomping);
+}
+
+void Player::die()
+{
+	if (deadTimer == -1)
+	{
+		deadTimer = 180;
 	}
 }

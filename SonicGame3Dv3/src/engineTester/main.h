@@ -61,6 +61,9 @@ public:
 	static int gameRingCount;
 	static int gameClock;
 
+	//Graphics settings
+	static bool useHighQualityWater;
+
 	//Emerald Coast
 	static EC_Shark* ecShark;
 

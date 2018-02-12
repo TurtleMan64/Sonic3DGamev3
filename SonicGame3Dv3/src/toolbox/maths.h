@@ -34,7 +34,12 @@ void rotatePoint(double result[],
 	double x, double y, double z,
 	double theta);
 
+//angle in radians
 Vector3f mapInputs3(float angle, float mag, Vector3f* VecC);
+
+//in radians
+Vector3f mapCamera(float yaw, float pitch, float mag, Vector3f* VecC);
+
 
 Vector3f bounceVector(Vector3f* initialVelocity, Vector3f* surfaceNormal, float elasticity);
 

@@ -94,22 +94,59 @@ int sign(float value)
 	return 0;
 }
 
+//angle in radians
 Vector3f mapInputs3(float angle, float mag, Vector3f* VecC)
 {
 	angle = fmod(angle, (float)(M_PI * 2));
-	float tempx = (float)cos(angle)*mag;
-	float tempz = (float)sin(angle)*mag;
+	float tempx = cosf(angle)*mag;
+	float tempz = sinf(angle)*mag;
 
-	float CDir = (float)atan2(VecC->z, VecC->x);
+	float CDir = atan2f(VecC->z, VecC->x);
 	CDir += (float)(M_PI / 2);
-	float Cx = (float)cos(CDir);
-	float Cz = (float)sin(CDir);
+	float Cx = cosf(CDir);
+	float Cz = sinf(CDir);
 
-	float CDist = (float)sqrt(VecC->x*VecC->x + VecC->z*VecC->z);
+	float CDist = sqrtf(VecC->x*VecC->x + VecC->z*VecC->z);
 	float CPitch = (float)(M_PI / 2 + atan2(VecC->y, CDist));
 
 	double result[3] = { 0, 0, 0 }; //storage for the answer
 	rotatePoint(result, 0, 0, 0, Cx, 0, Cz, tempx, 0, tempz, CPitch);
+
+	Vector3f res((float)result[0], (float)result[1], (float)result[2]);
+
+	return res;
+}
+
+//angle in radians
+Vector3f mapCamera(float yaw, float pitch, float mag, Vector3f* VecC)
+{
+	yaw = fmod(yaw, (float)(M_PI * 2));
+	float tempx = cosf(yaw)*mag;
+	float tempz = sinf(yaw)*mag;
+	float tempy = 0;
+
+	float rotAxisX = cosf(yaw + (float)(M_PI / 2.0f));
+	float rotAxisZ = sinf(yaw + (float)(M_PI / 2.0f));
+
+	pitch = fmod(pitch, (float)(M_PI * 2));
+
+	double result2[3] = { 0, 0, 0 };
+	rotatePoint(result2, 0, 0, 0, rotAxisX, 0, rotAxisZ, tempx, tempy, tempz, pitch);
+	tempx = (float)result2[0];
+	tempy = (float)result2[1];
+	tempz = (float)result2[2];
+
+
+	float CDir = atan2f(VecC->z, VecC->x);
+	CDir += (float)(M_PI / 2);
+	float Cx = cosf(CDir);
+	float Cz = sinf(CDir);
+
+	float CDist = sqrtf(VecC->x*VecC->x + VecC->z*VecC->z);
+	float CPitch = (float)(M_PI / 2 + atan2f(VecC->y, CDist));
+
+	double result[3] = { 0, 0, 0 }; //storage for the answer
+	rotatePoint(result, 0, 0, 0, Cx, 0, Cz, tempx, tempy, tempz, CPitch);
 
 	Vector3f res((float)result[0], (float)result[1], (float)result[2]);
 

@@ -38,6 +38,7 @@
 #include "../entities/goalsign.h"
 #include "../entities/spikeball.h"
 #include "../entities/maniasonicmodel.h"
+#include "../entities/spinner.h"
 
 float toFloat(char* input);
 int toInt(char* input);
@@ -556,6 +557,15 @@ void processLine(char** dat)
 			return;
 		}
 
+		case 28: //Spinner
+		{
+			Spinner::loadStaticModels();
+			Spinner* spinner = new Spinner(toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]));
+			Global::countNew++;
+			Main_addEntity(spinner);
+			return;
+		}
+
 		case 29: //Speed Ramp
 		{
 			SpeedRamp::loadStaticModels();
@@ -570,6 +580,13 @@ void processLine(char** dat)
 
 		case 37: //Low quality water
 		{
+			fprintf(stdout, "%d\n", Global::useHighQualityWater);
+
+			if (Global::useHighQualityWater == true)
+			{
+				return;
+			}
+
 			LowQualityWater::loadStaticModels();
 			LowQualityWater* water = new LowQualityWater(toFloat(dat[1]), toFloat(dat[2]));
 			Global::countNew++;
@@ -729,4 +746,5 @@ void freeAllStaticModels()
 	GoalSign::deleteStaticModels();
 	Spikeball::deleteStaticModels();
 	ManiaSonicModel::deleteStaticModels();
+	Spinner::deleteStaticModels();
 }

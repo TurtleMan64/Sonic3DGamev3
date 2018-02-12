@@ -179,3 +179,13 @@ std::string Entity::getName()
 {
 	return "";
 }
+
+bool Entity::canLightdashOn()
+{
+	return false;
+}
+
+bool Entity::canHomingAttackOn()
+{
+	return false;
+}

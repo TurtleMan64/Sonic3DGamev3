@@ -26,7 +26,7 @@ std::list<Entity*> entitiesList;
 
 Matrix4f* projectionMatrix;
 
-const float FOV = 50; //vertical fov
+float HFOV = 85; //horizontal fov
 const float NEAR_PLANE = 0.5f;
 const float FAR_PLANE = 15000;
 
@@ -212,8 +212,18 @@ void Master_makeProjectionMatrix()
 	glfwGetWindowSize(getWindow(), &displayWidth, &displayHeight);
 
 	float aspectRatio = (float)displayWidth / (float)displayHeight;
-	float y_scale = (float)((1.0f / tan(toRadians(FOV / 2.0f))));
-	float x_scale = y_scale / aspectRatio;
+
+
+	//FOV = 50;
+	//float y_scale = (float)((1.0f / tan(toRadians(VFOV / 2.0f))));
+	//float x_scale = y_scale / aspectRatio;
+
+
+	//FOV = 88.88888;
+	float x_scale = (float)((1.0f / tan(toRadians(HFOV / 2.0f))));
+	float y_scale = x_scale * aspectRatio;
+
+
 	float frustum_length = FAR_PLANE - NEAR_PLANE;
 
 	projectionMatrix->m00 = x_scale;

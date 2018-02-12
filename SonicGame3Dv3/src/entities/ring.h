@@ -35,5 +35,7 @@ public:
 	static void deleteStaticModels();
 
 	//std::string getName();
+
+	bool Ring::canLightdashOn();
 };
 #endif

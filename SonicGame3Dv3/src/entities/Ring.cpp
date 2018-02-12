@@ -186,3 +186,8 @@ void Ring::deleteStaticModels()
 
 	Ring::models.clear();
 }
+
+bool Ring::canLightdashOn()
+{
+	return true;
+}

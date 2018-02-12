@@ -52,6 +52,8 @@ SkySphere* Global::gameSkySphere;
 Light* Global::gameLightSun;
 Light* Global::gameLightMoon;
 
+bool Global::useHighQualityWater = true;
+
 //Emerald Coast
 EC_Shark* Global::ecShark;
 

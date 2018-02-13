@@ -28,5 +28,7 @@ public:
 
 	float getRoll();
 	void setRoll(float);
+
+	void invertPitch();
 };
 #endif

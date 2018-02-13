@@ -39,7 +39,7 @@ std::list<TexturedModel*> Player::modelRightFoot;
 
 ManiaSonicModel* Player::maniaSonic;
 
-int Player::characterID = 0;
+int Player::characterID = 6;
 
 extern bool INPUT_JUMP;
 extern bool INPUT_ACTION;
@@ -886,6 +886,24 @@ void Player::createLimbs()
 		myRightShin =    new Limb(&modelRightShin,    0,     -1.1f,   0,    nullptr, myRightThigh);   Global::countNew++;
 		myRightFoot =    new Limb(&modelRightFoot,    0,     -1.1f,   0,    nullptr, myRightShin);    Global::countNew++;
 	}
+	else if (Player::characterID == 6) //WanamaDage
+	{
+		displayHeightOffset = 7.7f;
+		myBody =         new Body(&modelBody); Global::countNew++;
+		myHead =         new Limb(&modelHead,         4.835f,  0.715f,  0.0f,  myBody,  nullptr);        Global::countNew++;
+		myLeftHumerus =  new Limb(&modelLeftHumerus,  3.963f,  0.28f,  -2.73f,  myBody,  nullptr);        Global::countNew++;
+		myLeftForearm =  new Limb(&modelLeftForearm,  0,      -3.7f,    0,     nullptr, myLeftHumerus);  Global::countNew++;
+		myLeftHand =     new Limb(&modelLeftHand,     0,      -4.18f,    0,     nullptr, myLeftForearm);  Global::countNew++;
+		myLeftThigh =    new Limb(&modelLeftThigh,   -3.893f,  0.42f,  -1.92f,  myBody,  nullptr);        Global::countNew++;
+		myLeftShin =     new Limb(&modelLeftShin,     0,      -4.42f,    0,     nullptr, myLeftThigh);    Global::countNew++;
+		myLeftFoot =     new Limb(&modelLeftFoot,     0,      -3.75f,    0,     nullptr, myLeftShin);     Global::countNew++;
+		myRightHumerus = new Limb(&modelRightHumerus, 3.963f,  0.28f,   2.73f,  myBody,  nullptr);        Global::countNew++;
+		myRightForearm = new Limb(&modelRightForearm, 0,      -3.7f,    0,     nullptr, myRightHumerus); Global::countNew++;
+		myRightHand =    new Limb(&modelRightHand,    0,      -4.18f,    0,     nullptr, myRightForearm); Global::countNew++;
+		myRightThigh =   new Limb(&modelRightThigh,  -3.893f,  0.42f,   1.92f,  myBody,  nullptr);        Global::countNew++;
+		myRightShin =    new Limb(&modelRightShin,    0,      -4.42f,    0,     nullptr, myRightThigh);   Global::countNew++;
+		myRightFoot =    new Limb(&modelRightFoot,    0,      -3.75f,    0,     nullptr, myRightShin);    Global::countNew++;
+	}
 
 	AnimationResources::assignAnimationsHuman(myBody, myHead,
 		myLeftHumerus, myLeftForearm, myLeftHand,
@@ -1018,6 +1036,23 @@ void Player::loadStaticModels()
 		if (Player::modelRightShin.size() == 0) { loadModelsHelper(loadObjModel("res/Models/Amy/", "Shin.obj"), &Player::modelRightShin); }
 		if (Player::modelRightFoot.size() == 0) { loadModelsHelper(loadObjModel("res/Models/Amy/", "Foot.obj"), &Player::modelRightFoot); }
 	}
+	else if (Player::characterID == 6) //WanamaDage
+	{
+		if (Player::modelBody.size() == 0) {         loadModelsHelper(loadObjModel("res/Models/WanamaDageLimbs/", "Body.obj"), &Player::modelBody); }
+		if (Player::modelHead.size() == 0) {         loadModelsHelper(loadObjModel("res/Models/WanamaDageLimbs/", "Head.obj"), &Player::modelHead); }
+		if (Player::modelLeftHumerus.size() == 0) {  loadModelsHelper(loadObjModel("res/Models/WanamaDageLimbs/", "HumerusLeft.obj"), &Player::modelLeftHumerus); }
+		if (Player::modelLeftForearm.size() == 0) {  loadModelsHelper(loadObjModel("res/Models/WanamaDageLimbs/", "ForearmLeft.obj"), &Player::modelLeftForearm); }
+		if (Player::modelLeftHand.size() == 0) {     loadModelsHelper(loadObjModel("res/Models/WanamaDageLimbs/", "HandLeft.obj"), &Player::modelLeftHand); }
+		if (Player::modelLeftThigh.size() == 0) {    loadModelsHelper(loadObjModel("res/Models/WanamaDageLimbs/", "ThighLeft.obj"), &Player::modelLeftThigh); }
+		if (Player::modelLeftShin.size() == 0) {     loadModelsHelper(loadObjModel("res/Models/WanamaDageLimbs/", "ShinLeft.obj"), &Player::modelLeftShin); }
+		if (Player::modelLeftFoot.size() == 0) {     loadModelsHelper(loadObjModel("res/Models/WanamaDageLimbs/", "Shoe.obj"), &Player::modelLeftFoot); }
+		if (Player::modelRightHumerus.size() == 0) { loadModelsHelper(loadObjModel("res/Models/WanamaDageLimbs/", "HumerusRight.obj"), &Player::modelRightHumerus); }
+		if (Player::modelRightForearm.size() == 0) { loadModelsHelper(loadObjModel("res/Models/WanamaDageLimbs/", "ForearmRight.obj"), &Player::modelRightForearm); }
+		if (Player::modelRightHand.size() == 0) {    loadModelsHelper(loadObjModel("res/Models/WanamaDageLimbs/", "HandRight.obj"), &Player::modelRightHand); }
+		if (Player::modelRightThigh.size() == 0) {   loadModelsHelper(loadObjModel("res/Models/WanamaDageLimbs/", "ThighRight.obj"), &Player::modelRightThigh); }
+		if (Player::modelRightShin.size() == 0) {    loadModelsHelper(loadObjModel("res/Models/WanamaDageLimbs/", "ShinRight.obj"), &Player::modelRightShin); }
+		if (Player::modelRightFoot.size() == 0) {    loadModelsHelper(loadObjModel("res/Models/WanamaDageLimbs/", "Shoe.obj"), &Player::modelRightFoot); }
+	}
 }
 
 void Player::deleteStaticModels()
@@ -1057,7 +1092,7 @@ void Player::moveMeGround()
 	float currSpeed = (float)sqrt((xVelGround*xVelGround) + (zVelGround*zVelGround));
 	float currDir = (float)toDegrees(atan2(zVelGround, xVelGround));
 
-	if (moveSpeedCurrent > 0.01 && currSpeed > 0.5)
+	if (moveSpeedCurrent > 0.01f && currSpeed > 0.5f)
 	{
 		float worldSpaceMovementAngle = cam->getYaw() + movementAngle;
 		float diff = compareTwoAngles(worldSpaceMovementAngle, currDir);
@@ -1073,8 +1108,8 @@ void Player::moveMeGround()
 		}
 		else
 		{
-			xVelGround = (float)(currSpeed*cos(toRadians(newAngle)));
-			zVelGround = (float)(currSpeed*sin(toRadians(newAngle)));
+			xVelGround = (currSpeed*cosf(toRadians(newAngle)));
+			zVelGround = (currSpeed*sinf(toRadians(newAngle)));
 		}
 	}
 }
@@ -1102,10 +1137,10 @@ void Player::setMovementInputs()
 
 	zoomInput = INPUT_ZOOM;
 
-	float inputMag = (float)sqrt(movementInputX*movementInputX + movementInputY*movementInputY);
+	float inputMag = sqrtf(movementInputX*movementInputX + movementInputY*movementInputY);
 	moveSpeedCurrent = moveAcceleration*inputMag;
 	moveSpeedAirCurrent = moveAccelerationAir*inputMag;
-	movementAngle = (float)toDegrees(atan2(movementInputY, movementInputX));
+	movementAngle = toDegrees(atan2f(movementInputY, movementInputX));
 
 	if (canMove == false || hitTimer > 0 || deadTimer >= 0)
 	{

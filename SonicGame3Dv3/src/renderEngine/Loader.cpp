@@ -6,6 +6,7 @@
 #include <list>
 #include <string>  //for std::string
 #include <iostream>
+#include <fstream>
 #include <cmath>
 
 #include "renderEngine.h"
@@ -44,6 +45,7 @@ RawModel Loader_loadToVAO(std::vector<float>* positions, std::vector<float>* tex
 	return model;
 }
 
+//for text
 std::vector<int> Loader_loadToVAO(std::vector<float>* positions, std::vector<float>* textureCoords)
 {
 	std::vector<int> vertexObjects;
@@ -54,6 +56,19 @@ std::vector<int> Loader_loadToVAO(std::vector<float>* positions, std::vector<flo
 	unbindVAO();
 
 	return vertexObjects;
+}
+
+//for water
+RawModel Loader_loadToVAO(std::vector<float>* positions, int dimensions)
+{
+	GLuint vaoID = createVAO();
+	std::list<GLuint> vboIDs;
+
+	vboIDs.push_back(storeDataInAttributeList(0, dimensions, positions));
+
+	unbindVAO();
+
+	return RawModel(vaoID, positions->size() / dimensions, &vboIDs);
 }
 
 GLuint Loader_loadTexture(char* fileName)
@@ -275,4 +290,52 @@ void Loader_printInfo()
 			std::fprintf(stdout, "	%d\n", i);
 		}
 	}
+}
+
+GLuint Loader_loadShader(char* file, int shaderType)
+{
+	std::ifstream sourceFile;
+	sourceFile.open(file);
+	std::string filetext;
+
+	if (sourceFile.is_open())
+	{
+		while (!sourceFile.eof())
+		{
+			std::string line;
+			getline(sourceFile, line);
+			filetext.append(line + "\n");
+		}
+
+		sourceFile.close();
+	}
+	else
+	{
+		std::fprintf(stdout, "Error: Could not find shader file '%s'\n", file);
+		sourceFile.close();
+		return 0;
+	}
+
+	unsigned int id = glCreateShader(shaderType);
+	const char* src = filetext.c_str();
+	const int len = filetext.size();
+	glShaderSource(id, 1, &src, nullptr);
+	glCompileShader(id);
+
+	int result;
+	glGetShaderiv(id, GL_COMPILE_STATUS, &result);
+	if (result == GL_FALSE)
+	{
+		int length;
+		glGetShaderiv(id, GL_INFO_LOG_LENGTH, &length);
+		char* message = (char*)alloca(length * sizeof(char));
+		glGetShaderInfoLog(id, length, &length, message);
+		std::cout << "Failed to compile shader!" << std::endl;
+		std::cout << message << std::endl;
+
+		glDeleteShader(id);
+		return 0;
+	}
+
+	return id;
 }

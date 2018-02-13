@@ -37,6 +37,10 @@
 #include "../guis/guimanager.h"
 #include "../entities/spring.h"
 #include "../entities/EmeraldCoast/ecshark.h"
+#include "../water/waterframebuffers.h"
+#include "../water/watershader.h"
+#include "../water/waterrenderer.h"
+#include "../water/watertile.h"
 
 
 std::unordered_map<Entity*, Entity*> gameEntities;
@@ -52,7 +56,15 @@ SkySphere* Global::gameSkySphere;
 Light* Global::gameLightSun;
 Light* Global::gameLightMoon;
 
+WaterRenderer* Global::gameWaterRenderer = nullptr;
+WaterFrameBuffers* Global::gameWaterFBOs = nullptr;
+std::list<WaterTile*>* Global::gameWaterTiles = nullptr;
+
 bool Global::useHighQualityWater = true;
+unsigned Global::HQWaterReflectionWidth = 1280;
+unsigned Global::HQWaterReflectionHeight = 720;
+unsigned Global::HQWaterRefractionWidth = 1280;
+unsigned Global::HQWaterRefractionHeight = 720;
 
 //Emerald Coast
 EC_Shark* Global::ecShark;
@@ -168,6 +180,21 @@ int main()
 	lightSun.getPosition()->y = 0;
 	lightSun.getPosition()->z = 0;
 	lightMoon.getPosition()->y = -100000;
+
+	if (Global::useHighQualityWater)
+	{
+		Global::gameWaterFBOs = new WaterFrameBuffers; Global::countNew++;
+		WaterShader* waterShader = new WaterShader; Global::countNew++;
+		Global::gameWaterRenderer = new WaterRenderer(waterShader, Master_getProjectionMatrix(), Global::gameWaterFBOs); Global::countNew++;
+		Global::gameWaterTiles = new std::list<WaterTile*>; Global::countNew++;
+		for (int r = -18; r < 18; r++) //-16 , 16
+		{
+			for (int c = -18; c < 18; c++) //-16  16
+			{
+				Global::gameWaterTiles->push_back(new WaterTile(r * 1000.0f, c * 1000.0f, 0.0f)); Global::countNew++;
+			}
+		}
+	}
 
 
 	double seconds = 0.0;
@@ -288,7 +315,56 @@ int main()
 		Master_processEntity(&skySphere);
 		Master_processEntity(&stage);
 
-		Master_render(&cam);
+
+		if (Global::useHighQualityWater)
+		{
+			glEnable(GL_CLIP_DISTANCE0);
+			bool aboveWater = (cam.getPosition()->y > 0);
+
+			//reflection render
+			Global::gameWaterFBOs->bindReflectionFrameBuffer();
+			float distance = 2 * (cam.getPosition()->y);
+			if (aboveWater)
+			{
+				cam.getPosition()->y -= distance;
+				cam.invertPitch();
+				Master_render(&cam, 0, 1, 0, 0.3f);
+				cam.getPosition()->y += distance;
+				cam.invertPitch();
+			}
+			else
+			{
+				cam.getPosition()->y -= distance;
+				cam.invertPitch();
+				Master_render(&cam, 0, -1, 0, 0.3f);
+				cam.getPosition()->y += distance;
+				cam.invertPitch();
+			}
+			Global::gameWaterFBOs->unbindCurrentFrameBuffer();
+
+			//refraction render
+			Global::gameWaterFBOs->bindRefractionFrameBuffer();
+			if (aboveWater)
+			{
+				Master_render(&cam, 0, -1, 0, 0.3f);
+			}
+			else
+			{
+				Master_render(&cam, 0, 1, 0, 0.3f);
+			}
+			Global::gameWaterFBOs->unbindCurrentFrameBuffer();
+
+			glDisable(GL_CLIP_DISTANCE0);
+		}
+
+
+		Master_render(&cam, 0, 1, 0, 1000);
+
+		if (Global::useHighQualityWater)
+		{
+			Global::gameWaterRenderer->render(Global::gameWaterTiles, &cam, &lightSun);
+		}
+
 		Master_clearEntities();
 		Master_clearTransparentEntities();
 

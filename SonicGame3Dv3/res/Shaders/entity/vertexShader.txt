@@ -24,11 +24,15 @@ uniform float texOffY;
 uniform float fogDensity;
 uniform float fogGradient;
 
+uniform vec4 clipPlane;
+
 void main(void)
 {
 	vec4 worldPosition = transformationMatrix * vec4(position, 1.0);
 	vec4 positionRelativeToCam = viewMatrix * worldPosition;
 	gl_Position = projectionMatrix * positionRelativeToCam;
+	
+	gl_ClipDistance[0] = dot(worldPosition, clipPlane);
 	
 	pass_textureCoords.x = textureCoords.x+texOffX;
 	pass_textureCoords.y = textureCoords.y+texOffY;

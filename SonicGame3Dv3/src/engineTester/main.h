@@ -8,9 +8,13 @@ class Stage;
 class SkySphere;
 class Light;
 class EC_Shark;
+class WaterRenderer;
+class WaterFrameBuffers;
+class WaterTile;
 
 #include <string>
 #include <random>
+#include <list>
 
 void Main_addEntity(Entity* entityToAdd);
 void Main_deleteEntity(Entity* entityToDelete);
@@ -60,9 +64,16 @@ public:
 	static bool shouldRestartLevel;
 	static int gameRingCount;
 	static int gameClock;
+	static WaterRenderer* gameWaterRenderer;
+	static WaterFrameBuffers* gameWaterFBOs;
+	static std::list<WaterTile*>* gameWaterTiles;
 
 	//Graphics settings
 	static bool useHighQualityWater;
+	static unsigned HQWaterReflectionWidth;
+	static unsigned HQWaterReflectionHeight;
+	static unsigned HQWaterRefractionWidth;
+	static unsigned HQWaterRefractionHeight;
 
 	//Emerald Coast
 	static EC_Shark* ecShark;

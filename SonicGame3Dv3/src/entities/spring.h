@@ -32,5 +32,7 @@ public:
 	static void deleteStaticModels();
 
 	std::string getName();
+
+	bool canHomingAttackOn();
 };
 #endif

@@ -284,6 +284,22 @@ void loadGraphicsSettings()
 						fprintf(stdout, "%d\n", Global::useHighQualityWater);
 					}
 				}
+				else if (strcmp(lineSplit[0], "HQ_Water_Reflection_Width") == 0)
+				{
+					Global::HQWaterReflectionWidth = (unsigned)std::stoi(lineSplit[1], nullptr, 10);
+				}
+				else if (strcmp(lineSplit[0], "HQ_Water_Reflection_Height") == 0)
+				{
+					Global::HQWaterReflectionHeight = (unsigned)std::stoi(lineSplit[1], nullptr, 10);
+				}
+				else if (strcmp(lineSplit[0], "HQ_Water_Refraction_Width") == 0)
+				{
+					Global::HQWaterRefractionWidth = (unsigned)std::stoi(lineSplit[1], nullptr, 10);
+				}
+				else if (strcmp(lineSplit[0], "HQ_Water_Refraction_Height") == 0)
+				{
+					Global::HQWaterRefractionHeight = (unsigned)std::stoi(lineSplit[1], nullptr, 10);
+				}
 				else if (strcmp(lineSplit[0], "FOV") == 0)
 				{
 					HFOV = std::stof(lineSplit[1], nullptr);

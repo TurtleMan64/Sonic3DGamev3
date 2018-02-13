@@ -10,16 +10,15 @@
 #include "../entities/camera.h"
 #include "../toolbox/maths.h"
 #include "../entities/light.h"
+#include "../renderEngine/renderEngine.h"
 #include "shaders.h"
 
 float matrixBuffer[16];
 
-GLuint loadShader(char*, int);
-
 ShaderProgram::ShaderProgram(char* vertexFile, char* fragmentFile)
 {
-	vertexShaderID = loadShader(vertexFile, GL_VERTEX_SHADER);
-	fragmentShaderID = loadShader(fragmentFile, GL_FRAGMENT_SHADER);
+	vertexShaderID = Loader_loadShader(vertexFile, GL_VERTEX_SHADER);
+	fragmentShaderID = Loader_loadShader(fragmentFile, GL_FRAGMENT_SHADER);
 	programID = glCreateProgram();
 	glAttachShader(programID, vertexShaderID);
 	glAttachShader(programID, fragmentShaderID);
@@ -144,6 +143,7 @@ void ShaderProgram::getAllUniformLocations()
 	location_skyColour = getUniformLocation("skyColour");
 	location_fogDensity = getUniformLocation("fogDensity");
 	location_fogGradient = getUniformLocation("fogGradient");
+	location_clipPlane = getUniformLocation("clipPlane");
 }
 
 int ShaderProgram::getUniformLocation(char* uniformName)
@@ -172,50 +172,7 @@ void ShaderProgram::loadMatrix(int location, Matrix4f* matrix)
 	glUniformMatrix4fv(location, 1, GL_FALSE, matrixBuffer);
 }
 
-GLuint loadShader(char* fileName, int type)
+void ShaderProgram::loadClipPlane(float clipX, float clipY, float clipZ, float clipW)
 {
-	std::ifstream sourceFile;
-	sourceFile.open(fileName);
-	std::string filetext;
-
-	if (sourceFile.is_open())
-	{
-		while (!sourceFile.eof())
-		{
-			std::string line;
-			getline(sourceFile, line);
-			filetext.append(line + "\n");
-		}
-
-		sourceFile.close();
-	}
-	else
-	{
-		std::fprintf(stdout, "Error: Could not find shader file '%s'\n", fileName);
-		sourceFile.close();
-		return 0;
-	}
-
-	unsigned int id = glCreateShader(type);
-	const char* src = filetext.c_str();
-	const int len = filetext.size();
-	glShaderSource(id, 1, &src, nullptr);
-	glCompileShader(id);
-
-	int result;
-	glGetShaderiv(id, GL_COMPILE_STATUS, &result);
-	if (result == GL_FALSE)
-	{
-		int length;
-		glGetShaderiv(id, GL_INFO_LOG_LENGTH, &length);
-		char* message = (char*)alloca(length * sizeof(char));
-		glGetShaderInfoLog(id, length, &length, message);
-		std::cout << "Failed to compile shader!" << std::endl;
-		std::cout << message << std::endl;
-
-		glDeleteShader(id);
-		return 0;
-	}
-
-	return id;
+	glUniform4f(location_clipPlane, clipX, clipY, clipZ, clipW);
 }

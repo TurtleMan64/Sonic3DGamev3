@@ -11,6 +11,7 @@
 #include "../toolbox/matrix.h"
 #include "../engineTester/main.h"
 #include "skymanager.h"
+#include "../water/waterrenderer.h"
 
 #include <iostream>
 #include <list>
@@ -50,11 +51,12 @@ void Master_init()
 	Master_disableCulling();
 }
 
-void Master_render(Camera* camera)
+void Master_render(Camera* camera, float clipX, float clipY, float clipZ, float clipW)
 {
 	//std::fprintf(stdout, "render START -------------------------------------------------\n");
 	prepare();
 	shader->start();
+	shader->loadClipPlane(clipX, clipY, clipZ, clipW);
 	RED = SkyManager::getFogRed();
 	GREEN = SkyManager::getFogGreen();
 	BLUE = SkyManager::getFogBlue();
@@ -234,4 +236,14 @@ void Master_makeProjectionMatrix()
 	projectionMatrix->m33 = 0;
 
 	renderer->updateProjectionMatrix(projectionMatrix);
+
+	if (Global::useHighQualityWater && Global::gameWaterRenderer != nullptr)
+	{
+		Global::gameWaterRenderer->updateProjectionMatrix(projectionMatrix);
+	}
+}
+
+Matrix4f* Master_getProjectionMatrix()
+{
+	return projectionMatrix;
 }

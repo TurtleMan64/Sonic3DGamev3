@@ -31,6 +31,7 @@ private:
 	int location_glowAmount;
 	int location_fogDensity;
 	int location_fogGradient;
+	int location_clipPlane;
 
 public:
 	ShaderProgram(char*, char*);
@@ -64,6 +65,8 @@ public:
 	void loadFogDensity(float density);
 
 	void loadFogGradient(float gradient);
+
+	void loadClipPlane(float clipX, float clipY, float clipZ, float clipW);
 
 protected:
 	void bindAttributes();

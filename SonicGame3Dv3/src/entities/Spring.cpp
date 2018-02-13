@@ -139,3 +139,8 @@ std::string Spring::getName()
 {
 	return "spring";
 }
+
+bool Spring::canHomingAttackOn()
+{
+	return true;
+}

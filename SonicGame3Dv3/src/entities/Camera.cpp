@@ -77,3 +77,8 @@ void Camera::setRoll(float newRoll)
 {
 	roll = newRoll;
 }
+
+void Camera::invertPitch()
+{
+	pitch = -pitch;
+}

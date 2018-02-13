@@ -120,7 +120,7 @@ void EC_Shark::step()
 		float spd = sqrtf(xVel*xVel + zVel*zVel);
 		float newRotZ = atan2f(yVel, spd);
 
-		setRotY(toDegrees(diffAng));
+		setRotY(toDegrees(diffAng));//+5*cosf(seeTimer/10.0f));
 		setRotZ(toDegrees(newRotZ));
 
 		increasePosition(xVel, yVel, zVel);

@@ -7,6 +7,7 @@ class Camera
 {
 private:
 	Vector3f position;
+	Vector3f prevPos;
 	float pitch;
 	float yaw;
 	float roll;
@@ -30,5 +31,7 @@ public:
 	void setRoll(float);
 
 	void invertPitch();
+
+	Vector3f calcVelocity();
 };
 #endif

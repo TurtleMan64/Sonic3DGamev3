@@ -580,8 +580,6 @@ void processLine(char** dat)
 
 		case 37: //Low quality water
 		{
-			fprintf(stdout, "%d\n", Global::useHighQualityWater);
-
 			if (Global::useHighQualityWater == true)
 			{
 				return;

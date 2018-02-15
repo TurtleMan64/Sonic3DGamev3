@@ -20,8 +20,11 @@ extern bool INPUT_JUMP;
 Camera::Camera()
 {
 	position.x = 0;
-	position.y = 0;
+	position.y = 20;
 	position.z = 0;
+	prevPos.x = 0;
+	prevPos.y = 20;
+	prevPos.z = 0;
 	pitch = 0;
 	yaw = 0;
 	roll = 0;
@@ -31,13 +34,24 @@ void Camera::refresh()
 {
 	float radius = 5;
 	Vector3f newPos(
-		position.x - (float)(cos(toRadians(yaw + 90))*(radius*(cos(toRadians(pitch))))),
-		position.y + (float)(sin(toRadians(pitch + 180))*radius),
-		position.z - (float)(sin(toRadians(yaw + 90))*(radius*(cos(toRadians(pitch))))));
+		position.x - cosf(toRadians(yaw + 90))*(radius*(cosf(toRadians(pitch)))),
+		position.y + sinf(toRadians(pitch + 180))*radius,
+		position.z - sinf(toRadians(yaw + 90))*(radius*(cosf(toRadians(pitch)))));
 
 	fadePosition.x = newPos.x;
 	fadePosition.y = newPos.y;
 	fadePosition.z = newPos.z;
+}
+
+Vector3f Camera::calcVelocity()
+{
+	Vector3f diff(getPosition());
+
+	diff = diff-prevPos;
+
+	prevPos.set(getPosition());
+
+	return diff;
 }
 
 Vector3f* Camera::getPosition()

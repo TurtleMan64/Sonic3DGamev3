@@ -1,3 +1,7 @@
+#ifdef _WIN32
+#define _CRT_SECURE_NO_DEPRECATE
+#endif
+
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
@@ -41,6 +45,12 @@
 #include "../water/watershader.h"
 #include "../water/waterrenderer.h"
 #include "../water/watertile.h"
+#include "../audio/audiomaster.h"
+#include "../audio/audioplayer.h"
+
+#include <windows.h>
+#include <tchar.h>
+
 
 
 std::unordered_map<Entity*, Entity*> gameEntities;
@@ -96,7 +106,6 @@ bool Global::unlockedAmy = true;
 std::default_random_engine* Global::generator = new std::default_random_engine;
 std::normal_distribution<double>* Global::distribution = new std::normal_distribution<double>(0.0, 1.0);
 
-
 int main()
 {
 	Global::countNew = 0;
@@ -116,40 +125,10 @@ int main()
 
 	GuiManager::init();
 
-	//FontType font(Loader_loadTexture("res/Fonts/vipnagorgialla.png"), "res/Fonts/vipnagorgialla.fnt");
-
-	//GUIText* text = new GUIText("this is a test text1", 3, &font, 0, 0, 1, false, true);
-
-	//GUIText* text2 = new GUIText("this is a test text2", 3, &font, 0, 0.1f, 1, false, true);
-
-	//GUIText* text3 = new GUIText("this is a test text3", 3, &font, 0, 0.2f, 1, false, true);
-
-	//GUIText* text4 = new GUIText("this is a test text4", 3, &font, 0, 0.3f, 1, false, true);
-
-	//GUIText* text5 = new GUIText("this is a test text5", 3, &font, 0, 0.4f, 1, false, true);
-	//text->deleteMe();
-	//delete text;
-	//font.deleteMe();
+	AudioMaster::init();
 
 	CollisionChecker::initChecker();
 	AnimationResources::createAnimations();
-
-	//Ring::loadStaticModels();
-	//Player::loadStaticModels();
-
-	//Ring* myRing = new Ring(0, 0, 0);
-	//Global::countNew++;
-	//myRing->setVisible(1);
-
-	//Player* myPlayer = new Player(0, 0, -50);
-	//Global::countNew++;
-	//myPlayer->setVisible(1);
-
-	//Global::gamePlayer = myPlayer;
-
-	//Main_addEntity(myPlayer);
-	//Main_addEntity(myRing);
-
 
 	//This light never gets deleted.
 	Light lightSun;
@@ -180,6 +159,39 @@ int main()
 	lightSun.getPosition()->y = 0;
 	lightSun.getPosition()->z = 0;
 	lightMoon.getPosition()->y = -100000;
+
+
+
+	DWORD dwError, dwPriClass;
+
+	if (!SetPriorityClass(GetCurrentProcess(), ABOVE_NORMAL_PRIORITY_CLASS))
+	{
+		dwError = GetLastError();
+		_tprintf(TEXT("Failed to enter above normal mode (%d)\n"), dwError);
+	}
+
+	// Display priority class
+
+	dwPriClass = GetPriorityClass(GetCurrentProcess());
+
+	_tprintf(TEXT("Current priority class is 0x%x\n"), dwPriClass);
+
+
+	DWORD dwThreadPri;
+
+	if (!SetThreadPriority(GetCurrentThread(), THREAD_PRIORITY_ABOVE_NORMAL))
+	{
+		dwError = GetLastError();
+		 _tprintf(TEXT("Failed to enter above normal mode (%d)\n"), dwError);
+	}
+
+	// Display thread priority
+
+	dwThreadPri = GetThreadPriority(GetCurrentThread());
+
+	_tprintf(TEXT("Current thread priority is 0x%x\n"), dwThreadPri);
+
+
 
 	if (Global::useHighQualityWater)
 	{
@@ -357,6 +369,8 @@ int main()
 			glDisable(GL_CLIP_DISTANCE0);
 		}
 
+		AudioMaster::updateListenerData(cam.getPosition(), &cam.calcVelocity(), cam.getYaw(), cam.getPitch());
+
 
 		Master_render(&cam, 0, 1, 0, 1000);
 
@@ -378,7 +392,7 @@ int main()
 
 		if (seconds - previousTime >= 1.0)
 		{
-			//std::fprintf(stdout, "fps: %f\n", frameCount / (seconds - previousTime));
+			std::fprintf(stdout, "fps: %f\n", frameCount / (seconds - previousTime));
 			//std::fprintf(stdout, "diff: %d\n", Global::countNew - Global::countDelete);
 			//Loader_printInfo();
 			frameCount = 0;
@@ -389,6 +403,11 @@ int main()
 	Master_cleanUp();
 	Loader_cleanUp();
 	TextMaster::cleanUp();
+	AudioMaster::cleanUp();
+	if (Global::gameWaterFBOs != nullptr)
+	{
+		Global::gameWaterFBOs->cleanUp();
+	}
 	closeDisplay();
 
 	return 0;

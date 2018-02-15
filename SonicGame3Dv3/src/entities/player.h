@@ -6,6 +6,7 @@ class Triangle3D;
 class Limb;
 class Body;
 class ManiaSonicModel;
+class Source;
 
 #include <list>
 
@@ -181,6 +182,8 @@ private:
 	float xDisp = 0;
 	float yDisp = 0;
 	float zDisp = 0;
+
+	Source* stompSource = nullptr;
 
 public:
 	Player(float, float, float);

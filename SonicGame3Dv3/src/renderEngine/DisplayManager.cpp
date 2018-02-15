@@ -276,12 +276,10 @@ void loadGraphicsSettings()
 					if (strcmp(lineSplit[1], "on") == 0)
 					{
 						Global::useHighQualityWater = true;
-						fprintf(stdout, "%d\n", Global::useHighQualityWater);
 					}
 					else
 					{
 						Global::useHighQualityWater = false;
-						fprintf(stdout, "%d\n", Global::useHighQualityWater);
 					}
 				}
 				else if (strcmp(lineSplit[0], "HQ_Water_Reflection_Width") == 0)

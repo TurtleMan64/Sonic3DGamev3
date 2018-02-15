@@ -21,6 +21,8 @@
 #include "skysphere.h"
 #include "../entities/ring.h"
 #include "maniasonicmodel.h"
+#include "../audio/audioplayer.h"
+#include "../audio/source.h"
 
 std::list<TexturedModel*> Player::modelBody;
 std::list<TexturedModel*> Player::modelHead;
@@ -202,7 +204,7 @@ void Player::step()
 			isJumping = true;
 			onPlane = false;
 
-			//AudioSources.play(6, getPosition());
+			AudioPlayer::play(12, getPosition());
 		}
 
 		if (speed < 0.45f)
@@ -253,7 +255,7 @@ void Player::step()
 			spindashTimer = std::min(spindashTimer + 1, spindashTimerMax);
 			if (spindashTimer == 1)
 			{
-				//AudioSources.play(7, getPosition());
+				AudioPlayer::play(14, getPosition());
 			}
 			isSpindashing = true;
 			calcSpindashAngle();
@@ -407,11 +409,11 @@ void Player::step()
 
 			if (isStomping)
 			{
-				//if (stompSource != null)
+				if (stompSource != nullptr)
 				{
-					//stompSource.stop();
+					stompSource->stop();
 				}
-				//AudioSources.play(33, getPosition());
+				AudioPlayer::play(17, getPosition());
 
 				//createStompParticles();
 			}
@@ -570,15 +572,12 @@ void Player::step()
 
 	if (getY() < -100)
 	{
-		//Global::shouldRestartLevel = true;
-		//AudioSources.play(34, getPosition());
-		//return;
 		die();
 	}
 
 	if (!inWater && inWaterPrevious)
 	{
-		//AudioSources.play(30, getPosition());
+		AudioPlayer::play(5, getPosition());
 		//new Particle(ParticleResources.textureSplash, new Vector3f(getX(), waterHeight + 5, getZ()), new Vector3f(0, 0, 0), 0, 30, 0, 10, 0);
 		yVel += 0.4f;
 		/*
@@ -603,7 +602,7 @@ void Player::step()
 	//underwater friction
 	if (inWater && !inWaterPrevious)
 	{
-		//AudioSources.play(30, getPosition());
+		AudioPlayer::play(5, getPosition());
 		//new Particle(ParticleResources.textureSplash, new Vector3f(getX(), waterHeight + 5, getZ()), new Vector3f(0, 0, 0), 0, 30, 0, 10, 0);
 		/*
 		float totXVel = xVel + xVelAir;
@@ -891,18 +890,18 @@ void Player::createLimbs()
 		displayHeightOffset = 7.7f;
 		myBody =         new Body(&modelBody); Global::countNew++;
 		myHead =         new Limb(&modelHead,         4.835f,  0.715f,  0.0f,  myBody,  nullptr);        Global::countNew++;
-		myLeftHumerus =  new Limb(&modelLeftHumerus,  3.963f,  0.28f,  -2.73f,  myBody,  nullptr);        Global::countNew++;
+		myLeftHumerus =  new Limb(&modelLeftHumerus,  3.963f,  0.28f,  -2.73f, myBody,  nullptr);        Global::countNew++;
 		myLeftForearm =  new Limb(&modelLeftForearm,  0,      -3.7f,    0,     nullptr, myLeftHumerus);  Global::countNew++;
-		myLeftHand =     new Limb(&modelLeftHand,     0,      -4.18f,    0,     nullptr, myLeftForearm);  Global::countNew++;
-		myLeftThigh =    new Limb(&modelLeftThigh,   -3.893f,  0.42f,  -1.92f,  myBody,  nullptr);        Global::countNew++;
-		myLeftShin =     new Limb(&modelLeftShin,     0,      -4.42f,    0,     nullptr, myLeftThigh);    Global::countNew++;
-		myLeftFoot =     new Limb(&modelLeftFoot,     0,      -3.75f,    0,     nullptr, myLeftShin);     Global::countNew++;
-		myRightHumerus = new Limb(&modelRightHumerus, 3.963f,  0.28f,   2.73f,  myBody,  nullptr);        Global::countNew++;
+		myLeftHand =     new Limb(&modelLeftHand,     0,      -4.18f,   0,     nullptr, myLeftForearm);  Global::countNew++;
+		myLeftThigh =    new Limb(&modelLeftThigh,   -3.893f,  0.42f,  -1.92f, myBody,  nullptr);        Global::countNew++;
+		myLeftShin =     new Limb(&modelLeftShin,     0,      -4.42f,   0,     nullptr, myLeftThigh);    Global::countNew++;
+		myLeftFoot =     new Limb(&modelLeftFoot,     0,      -3.75f,   0,     nullptr, myLeftShin);     Global::countNew++;
+		myRightHumerus = new Limb(&modelRightHumerus, 3.963f,  0.28f,   2.73f, myBody,  nullptr);        Global::countNew++;
 		myRightForearm = new Limb(&modelRightForearm, 0,      -3.7f,    0,     nullptr, myRightHumerus); Global::countNew++;
-		myRightHand =    new Limb(&modelRightHand,    0,      -4.18f,    0,     nullptr, myRightForearm); Global::countNew++;
-		myRightThigh =   new Limb(&modelRightThigh,  -3.893f,  0.42f,   1.92f,  myBody,  nullptr);        Global::countNew++;
-		myRightShin =    new Limb(&modelRightShin,    0,      -4.42f,    0,     nullptr, myRightThigh);   Global::countNew++;
-		myRightFoot =    new Limb(&modelRightFoot,    0,      -3.75f,    0,     nullptr, myRightShin);    Global::countNew++;
+		myRightHand =    new Limb(&modelRightHand,    0,      -4.18f,   0,     nullptr, myRightForearm); Global::countNew++;
+		myRightThigh =   new Limb(&modelRightThigh,  -3.893f,  0.42f,   1.92f, myBody,  nullptr);        Global::countNew++;
+		myRightShin =    new Limb(&modelRightShin,    0,      -4.42f,   0,     nullptr, myRightThigh);   Global::countNew++;
+		myRightFoot =    new Limb(&modelRightFoot,    0,      -3.75f,   0,     nullptr, myRightShin);    Global::countNew++;
 	}
 
 	AnimationResources::assignAnimationsHuman(myBody, myHead,
@@ -1058,20 +1057,20 @@ void Player::loadStaticModels()
 void Player::deleteStaticModels()
 {
 	std::fprintf(stdout, "Deleting player models...\n");
-	for (auto model : Player::modelBody) { model->deleteMe(); delete model; Global::countDelete++; } Player::modelBody.clear();
-	for (auto model : Player::modelHead) { model->deleteMe(); delete model; Global::countDelete++; } Player::modelHead.clear();
-	for (auto model : Player::modelLeftHumerus) { model->deleteMe(); delete model; Global::countDelete++; } Player::modelLeftHumerus.clear();
-	for (auto model : Player::modelLeftForearm) { model->deleteMe(); delete model; Global::countDelete++; } Player::modelLeftForearm.clear();
-	for (auto model : Player::modelLeftHand) { model->deleteMe(); delete model; Global::countDelete++; } Player::modelLeftHand.clear();
-	for (auto model : Player::modelLeftThigh) { model->deleteMe(); delete model; Global::countDelete++; } Player::modelLeftThigh.clear();
-	for (auto model : Player::modelLeftShin) { model->deleteMe(); delete model; Global::countDelete++; } Player::modelLeftShin.clear();
-	for (auto model : Player::modelLeftFoot) { model->deleteMe(); delete model; Global::countDelete++; } Player::modelLeftFoot.clear();
+	for (auto model : Player::modelBody) {         model->deleteMe(); delete model; Global::countDelete++; } Player::modelBody.clear();
+	for (auto model : Player::modelHead) {         model->deleteMe(); delete model; Global::countDelete++; } Player::modelHead.clear();
+	for (auto model : Player::modelLeftHumerus) {  model->deleteMe(); delete model; Global::countDelete++; } Player::modelLeftHumerus.clear();
+	for (auto model : Player::modelLeftForearm) {  model->deleteMe(); delete model; Global::countDelete++; } Player::modelLeftForearm.clear();
+	for (auto model : Player::modelLeftHand) {     model->deleteMe(); delete model; Global::countDelete++; } Player::modelLeftHand.clear();
+	for (auto model : Player::modelLeftThigh) {    model->deleteMe(); delete model; Global::countDelete++; } Player::modelLeftThigh.clear();
+	for (auto model : Player::modelLeftShin) {     model->deleteMe(); delete model; Global::countDelete++; } Player::modelLeftShin.clear();
+	for (auto model : Player::modelLeftFoot) {     model->deleteMe(); delete model; Global::countDelete++; } Player::modelLeftFoot.clear();
 	for (auto model : Player::modelRightHumerus) { model->deleteMe(); delete model; Global::countDelete++; } Player::modelRightHumerus.clear();
 	for (auto model : Player::modelRightForearm) { model->deleteMe(); delete model; Global::countDelete++; } Player::modelRightForearm.clear();
-	for (auto model : Player::modelRightHand) { model->deleteMe(); delete model; Global::countDelete++; } Player::modelRightHand.clear();
-	for (auto model : Player::modelRightThigh) { model->deleteMe(); delete model; Global::countDelete++; } Player::modelRightThigh.clear();
-	for (auto model : Player::modelRightShin) { model->deleteMe(); delete model; Global::countDelete++; } Player::modelRightShin.clear();
-	for (auto model : Player::modelRightFoot) { model->deleteMe(); delete model; Global::countDelete++; } Player::modelRightFoot.clear();
+	for (auto model : Player::modelRightHand) {    model->deleteMe(); delete model; Global::countDelete++; } Player::modelRightHand.clear();
+	for (auto model : Player::modelRightThigh) {   model->deleteMe(); delete model; Global::countDelete++; } Player::modelRightThigh.clear();
+	for (auto model : Player::modelRightShin) {    model->deleteMe(); delete model; Global::countDelete++; } Player::modelRightShin.clear();
+	for (auto model : Player::modelRightFoot) {    model->deleteMe(); delete model; Global::countDelete++; } Player::modelRightFoot.clear();
 }
 
 void Player::moveMeGround()
@@ -1199,7 +1198,7 @@ void Player::checkSkid()
 				float currSpeed = xVel*xVel + zVel*zVel;
 				if (!prevSkid && onPlane && currSpeed > 2)
 				{
-					//AudioSources.play(9, getPosition());
+					AudioPlayer::play(13, getPosition());
 				}
 			}
 		}
@@ -1366,7 +1365,7 @@ void Player::spindash(int timer)
 	}
 
 	isBall = true;
-	//AudioSources.play(8, getPosition());
+	AudioPlayer::play(15, getPosition());
 	storedSpindashSpeed = 0;
 }
 
@@ -1482,7 +1481,7 @@ void Player::homingAttack()
 	isJumping = true;
 	isBouncing = false;
 	isStomping = false;
-	//AudioSources.play(25, getPosition());
+	AudioPlayer::play(11, getPosition());
 }
 
 void Player::initiateBounce()
@@ -1522,7 +1521,7 @@ void Player::initiateStomp()
 	isJumping = false;
 	isBall = false;
 
-	//stompSource = AudioSources.play(32, getPosition());
+	stompSource = AudioPlayer::play(16, getPosition());
 }
 
 void Player::bounceOffGround(Vector3f* surfaceNormal, float b)
@@ -1544,7 +1543,7 @@ void Player::bounceOffGround(Vector3f* surfaceNormal, float b)
 	//isStomping = false;
 	//homingAttackTimer = -1;
 	//hoverCount = 0;
-	//AudioSources.play(26, getPosition());
+	AudioPlayer::play(8, getPosition());
 }
 
 //attempt to continue a lightdash
@@ -2227,14 +2226,12 @@ void Player::takeDamage(Vector3f* damageSource)
 
 		if (ringsToScatter == 0)
 		{
-			//tell main game loop to restart level
-			//Global::shouldRestartLevel = true;
-			//AudioSources.play(34, getPosition());
-			//return;
 			die();
 		}
-
-		//AudioSources.play(27, getPosition());
+		else
+		{
+			AudioPlayer::play(10, getPosition());
+		}
 		while (ringsToScatter > 0)
 		{
 			float spoutSpd = 3.5f;
@@ -2313,6 +2310,7 @@ void Player::die()
 {
 	if (deadTimer == -1)
 	{
+		AudioPlayer::play(9, getPosition());
 		deadTimer = 180;
 	}
 }

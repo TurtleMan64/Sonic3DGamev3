@@ -59,12 +59,12 @@ std::list<Entity*> gameEntitiesToDelete;
 
 std::unordered_map<Entity*, Entity*> gameTransparentEntities;
 
-Camera* Global::gameCamera;
-Player* Global::gamePlayer;
-Stage* Global::gameStage;
-SkySphere* Global::gameSkySphere;
-Light* Global::gameLightSun;
-Light* Global::gameLightMoon;
+Camera* Global::gameCamera = nullptr;
+Player* Global::gamePlayer = nullptr;
+Stage* Global::gameStage = nullptr;
+SkySphere* Global::gameSkySphere = nullptr;
+Light* Global::gameLightSun = nullptr;
+Light* Global::gameLightMoon = nullptr;
 
 WaterRenderer* Global::gameWaterRenderer = nullptr;
 WaterFrameBuffers* Global::gameWaterFBOs = nullptr;
@@ -77,7 +77,10 @@ unsigned Global::HQWaterRefractionWidth = 1280;
 unsigned Global::HQWaterRefractionHeight = 720;
 
 //Emerald Coast
-EC_Shark* Global::ecShark;
+EC_Shark* Global::ecShark = nullptr;
+
+//Test
+//Spring* Global::gameSpring = nullptr;
 
 extern bool INPUT_JUMP;
 extern bool INPUT_ACTION;
@@ -106,8 +109,12 @@ bool Global::unlockedAmy = true;
 std::default_random_engine* Global::generator = new std::default_random_engine;
 std::normal_distribution<double>* Global::distribution = new std::normal_distribution<double>(0.0, 1.0);
 
+void increaseProcessPriority();
+
 int main()
 {
+	increaseProcessPriority();
+
 	Global::countNew = 0;
 	Global::countDelete = 0;
 
@@ -151,47 +158,13 @@ int main()
 	Global::gameSkySphere = &skySphere;
 
 
-
 	SkyManager::initSkyManager(nullptr, nullptr);
-	SkyManager::setTimeOfDay(155.5f);
+	SkyManager::setTimeOfDay(26.0f);
 
 	lightSun.getPosition()->x = 0;
 	lightSun.getPosition()->y = 0;
 	lightSun.getPosition()->z = 0;
 	lightMoon.getPosition()->y = -100000;
-
-
-
-	DWORD dwError, dwPriClass;
-
-	if (!SetPriorityClass(GetCurrentProcess(), ABOVE_NORMAL_PRIORITY_CLASS))
-	{
-		dwError = GetLastError();
-		_tprintf(TEXT("Failed to enter above normal mode (%d)\n"), dwError);
-	}
-
-	// Display priority class
-
-	dwPriClass = GetPriorityClass(GetCurrentProcess());
-
-	_tprintf(TEXT("Current priority class is 0x%x\n"), dwPriClass);
-
-
-	DWORD dwThreadPri;
-
-	if (!SetThreadPriority(GetCurrentThread(), THREAD_PRIORITY_ABOVE_NORMAL))
-	{
-		dwError = GetLastError();
-		 _tprintf(TEXT("Failed to enter above normal mode (%d)\n"), dwError);
-	}
-
-	// Display thread priority
-
-	dwThreadPri = GetThreadPriority(GetCurrentThread());
-
-	_tprintf(TEXT("Current thread priority is 0x%x\n"), dwThreadPri);
-
-
 
 	if (Global::useHighQualityWater)
 	{
@@ -477,4 +450,37 @@ void Main_deleteAllTransparentEntites()
 		Global::countDelete++;
 	}
 	gameTransparentEntities.clear();
+}
+
+void increaseProcessPriority()
+{
+	DWORD dwError;//, dwPriClass;
+
+	if (!SetPriorityClass(GetCurrentProcess(), ABOVE_NORMAL_PRIORITY_CLASS))
+	{
+		dwError = GetLastError();
+		_tprintf(TEXT("Failed to enter above normal mode (%d)\n"), dwError);
+	}
+
+	// Display priority class
+
+	//dwPriClass = GetPriorityClass(GetCurrentProcess());
+
+	//_tprintf(TEXT("Current priority class is 0x%x\n"), dwPriClass);
+
+
+	//DWORD dwThreadPri;
+
+	if (!SetThreadPriority(GetCurrentThread(), THREAD_PRIORITY_ABOVE_NORMAL))
+	{
+		dwError = GetLastError();
+		_tprintf(TEXT("Failed to enter above normal mode (%d)\n"), dwError);
+	}
+
+	// Display thread priority
+
+	//dwThreadPri = GetThreadPriority(GetCurrentThread());
+
+	//_tprintf(TEXT("Current thread priority is 0x%x\n"), dwThreadPri);
+
 }

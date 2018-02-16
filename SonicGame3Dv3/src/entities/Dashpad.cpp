@@ -9,6 +9,7 @@
 #include "../engineTester/main.h"
 #include "../entities/player.h"
 #include "../toolbox/maths.h"
+#include "../audio/audioplayer.h"
 
 #include <list>
 #include <iostream>
@@ -57,12 +58,12 @@ void Dashpad::step()
 
 	if (Global::gamePlayer->getX() > getX() - hitRadius - Global::gamePlayer->getHitboxHorizontal() && Global::gamePlayer->getX() < getX() + hitRadius + Global::gamePlayer->getHitboxHorizontal() &&
 		Global::gamePlayer->getZ() > getZ() - hitRadius - Global::gamePlayer->getHitboxHorizontal() && Global::gamePlayer->getZ() < getZ() + hitRadius + Global::gamePlayer->getHitboxHorizontal() &&
-		Global::gamePlayer->getY() > getY() - hitRadius - Global::gamePlayer->getHitboxVertical() && Global::gamePlayer->getY() < getY() + hitRadius)
+		Global::gamePlayer->getY() > getY() - hitRadius - Global::gamePlayer->getHitboxVertical()   && Global::gamePlayer->getY() < getY() + hitRadius)
 	{
 		if (cooldownTimer == 0)
 		{
-			float xOff = (float)(cos(toRadians(getRotY()))*cos(toRadians(getRotZ())));
-			float zOff = (float)(-sin(toRadians(getRotY()))*cos(toRadians(getRotZ())));
+			float xOff =  cosf(toRadians(getRotY()))*cosf(toRadians(getRotZ()));
+			float zOff = -sinf(toRadians(getRotY()))*cosf(toRadians(getRotZ()));
 
 			Global::gamePlayer->setX(getX());
 			Global::gamePlayer->setY(getY());
@@ -77,7 +78,7 @@ void Dashpad::step()
 			Global::gamePlayer->setHoverCount(0);
 			Global::gamePlayer->setCameraTargetYaw(-(camYawTarget)+90);
 
-			//AudioSources.play(12, getPosition());
+			AudioPlayer::play(1, getPosition());
 
 			cooldownTimer = cooldownTimerMax;
 

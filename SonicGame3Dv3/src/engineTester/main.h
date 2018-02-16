@@ -11,6 +11,7 @@ class EC_Shark;
 class WaterRenderer;
 class WaterFrameBuffers;
 class WaterTile;
+class Spring;
 
 #include <string>
 #include <random>
@@ -77,6 +78,9 @@ public:
 
 	//Emerald Coast
 	static EC_Shark* ecShark;
+
+	//Test
+	//static Spring* gameSpring;
 
 	static bool unlockedSonicDoll;
 	static bool unlockedMechaSonic;

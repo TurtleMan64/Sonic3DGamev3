@@ -13,6 +13,7 @@
 #include "../collision/triangle3d.h"
 #include "../toolbox/maths.h"
 #include "../guis/guimanager.h"
+#include "../audio/audioplayer.h"
 
 #include <list>
 #include <iostream>
@@ -60,7 +61,7 @@ void GoalSign::step()
 		{
 			if (rotateSpeed == 0)
 			{
-				//AudioSources.play(29, getPosition());
+				AudioPlayer::play(2, getPosition());
 
 				GuiManager::stopTimer();
 
@@ -75,7 +76,7 @@ void GoalSign::step()
 						if (Global::unlockedSonicDoll == false)
 						{
 							Global::unlockedSonicDoll = true;
-							//AudioSources.play(35, getPosition());
+							AudioPlayer::play(7, getPosition());
 							//MainGameLoop.saveSaveFile();
 						}
 					}
@@ -87,7 +88,7 @@ void GoalSign::step()
 						if (Global::unlockedMechaSonic == false)
 						{
 							Global::unlockedMechaSonic = true;
-							//AudioSources.play(35, getPosition());
+							AudioPlayer::play(7, getPosition());
 							//MainGameLoop.saveSaveFile();
 						}
 					}
@@ -99,7 +100,7 @@ void GoalSign::step()
 						if (Global::unlockedDage4 == false)
 						{
 							Global::unlockedDage4 = true;
-							//AudioSources.play(35, getPosition());
+							AudioPlayer::play(7, getPosition());
 							//MainGameLoop.saveSaveFile();
 						}
 					}

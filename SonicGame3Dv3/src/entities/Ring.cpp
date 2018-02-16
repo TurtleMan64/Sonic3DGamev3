@@ -12,6 +12,7 @@
 #include "../collision/collisionchecker.h"
 #include "../collision/triangle3d.h"
 #include "../toolbox/maths.h"
+#include "../audio/audioplayer.h"
 
 #include <list>
 #include <iostream>
@@ -76,9 +77,9 @@ void Ring::step()
 		if (grabTimer == 0 &&
 			Global::gamePlayer->getX() > getX() - hitboxH - Global::gamePlayer->getHitboxHorizontal() && Global::gamePlayer->getX() < getX() + hitboxH + Global::gamePlayer->getHitboxHorizontal() &&
 			Global::gamePlayer->getZ() > getZ() - hitboxH - Global::gamePlayer->getHitboxHorizontal() && Global::gamePlayer->getZ() < getZ() + hitboxH + Global::gamePlayer->getHitboxHorizontal() &&
-			Global::gamePlayer->getY() > getY() - hitboxV - Global::gamePlayer->getHitboxVertical() && Global::gamePlayer->getY() < getY() + hitboxV)
+			Global::gamePlayer->getY() > getY() - hitboxV - Global::gamePlayer->getHitboxVertical()   && Global::gamePlayer->getY() < getY() + hitboxV)
 		{
-			//AudioSources.play(11, getPosition());
+			AudioPlayer::play(4, getPosition());
 			/*
 			for (int i = 0; i < 10; i++)
 			{
@@ -116,7 +117,7 @@ void Ring::step()
 				increasePosition(0, 5.0f, 0);
 
 				Vector3f normal = CollisionChecker::getCollideTriangle()->normal;
-				float speed = (float)sqrt(xVel*xVel + yVel*yVel + zVel*zVel);
+				float speed = sqrtf(xVel*xVel + yVel*yVel + zVel*zVel);
 
 				if (speed > 0.5f)
 				{
@@ -157,7 +158,6 @@ void Ring::loadStaticModels()
 {
 	if (Ring::models.size() > 0)
 	{
-		//std::fprintf(stdout, "Ring models gone astray");
 		return;
 	}
 

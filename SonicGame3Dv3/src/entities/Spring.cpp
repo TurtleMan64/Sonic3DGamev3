@@ -9,6 +9,7 @@
 #include "../engineTester/main.h"
 #include "../entities/player.h"
 #include "../toolbox/maths.h"
+#include "../audio/audioplayer.h"
 
 #include <list>
 #include <iostream>
@@ -56,13 +57,13 @@ void Spring::step()
 
 	if (Global::gamePlayer->getX() > getX() - springRadius - Global::gamePlayer->getHitboxHorizontal() && Global::gamePlayer->getX() < getX() + springRadius + Global::gamePlayer->getHitboxHorizontal() &&
 		Global::gamePlayer->getZ() > getZ() - springRadius - Global::gamePlayer->getHitboxHorizontal() && Global::gamePlayer->getZ() < getZ() + springRadius + Global::gamePlayer->getHitboxHorizontal() &&
-		Global::gamePlayer->getY() > getY() - springRadius - Global::gamePlayer->getHitboxVertical() && Global::gamePlayer->getY() < getY() + springRadius)
+		Global::gamePlayer->getY() > getY() - springRadius - Global::gamePlayer->getHitboxVertical()   && Global::gamePlayer->getY() < getY() + springRadius)
 	{
 		if (cooldownTimer == 0)
 		{
-			float xOff = (float)(cos(toRadians(getRotY()))*cos(toRadians(getRotZ())));
-			float zOff = (float)(-sin(toRadians(getRotY()))*cos(toRadians(getRotZ())));
-			float yOff = (float)(sin(toRadians(getRotZ())));
+			float xOff =  cosf(toRadians(getRotY()))*cosf(toRadians(getRotZ()));
+			float zOff = -sinf(toRadians(getRotY()))*cosf(toRadians(getRotZ()));
+			float yOff =  sinf(toRadians(getRotZ()));
 
 			Global::gamePlayer->setX(getX() + xOff * 2);
 			Global::gamePlayer->setY(getY() + yOff * 2);
@@ -79,7 +80,7 @@ void Spring::step()
 
 			Global::gamePlayer->setCanMove(false);
 
-			//AudioSources.play(10, getPosition(), 1 + (springPower*0.008f));
+			AudioPlayer::play(6, getPosition(), 1 + (springPower*0.008f));
 
 			cooldownTimer = cooldownTimerMax;
 		}

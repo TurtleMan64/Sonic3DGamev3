@@ -39,6 +39,7 @@
 #include "../entities/spikeball.h"
 #include "../entities/maniasonicmodel.h"
 #include "../entities/spinner.h"
+#include "../entities/EmeraldCoast/ecdolphin.h"
 
 float toFloat(char* input);
 int toInt(char* input);
@@ -333,6 +334,10 @@ void LevelLoader_loadLevel(std::string levelFilename)
 		Global::gamePlayer->setCanMove(false);
 		Global::bufferTime = 60;
 	}
+
+	//Test
+	//Global::gameSpring = new Spring(0, 0, 0, 0, 0, 1, 60);
+	//Main_addEntity(Global::gameSpring);
 
 	Global::gameRingCount = 0;
 	GuiManager::setTimer(0, 0, 0);
@@ -701,6 +706,19 @@ void processLine(char** dat)
 			return;
 		}
 
+		case 48: //Emerald Coast Dolphin
+		{
+			EC_Dolphin::loadStaticModels();
+			EC_Dolphin* dolphin = new EC_Dolphin(
+				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
+				toFloat(dat[4]), //rotY
+				toFloat(dat[5]), toFloat(dat[6]), toFloat(dat[7]), //trigger position
+				toFloat(dat[8])); //trigger radius
+			Global::countNew++;
+			Main_addEntity(dolphin);
+			return;
+		}
+
 		default:
 		{
 			return;
@@ -745,4 +763,5 @@ void freeAllStaticModels()
 	Spikeball::deleteStaticModels();
 	ManiaSonicModel::deleteStaticModels();
 	Spinner::deleteStaticModels();
+	EC_Dolphin::deleteStaticModels();
 }

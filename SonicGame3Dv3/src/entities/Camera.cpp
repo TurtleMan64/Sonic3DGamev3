@@ -96,3 +96,8 @@ void Camera::invertPitch()
 {
 	pitch = -pitch;
 }
+
+Vector3f* Camera::getFadePosition()
+{
+	return &fadePosition;
+}

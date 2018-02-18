@@ -40,6 +40,8 @@
 #include "../entities/maniasonicmodel.h"
 #include "../entities/spinner.h"
 #include "../entities/EmeraldCoast/ecdolphin.h"
+#include "../particles/particleresources.h"
+#include "../particles/particle.h"
 
 float toFloat(char* input);
 int toInt(char* input);
@@ -335,13 +337,12 @@ void LevelLoader_loadLevel(std::string levelFilename)
 		Global::bufferTime = 60;
 	}
 
-	//Test
-	//Global::gameSpring = new Spring(0, 0, 0, 0, 0, 1, 60);
-	//Main_addEntity(Global::gameSpring);
-
 	Global::gameRingCount = 0;
 	GuiManager::setTimer(0, 0, 0);
 	GuiManager::stopTimer();
+
+	Vector3f partVel(0, 0, 0);
+	new Particle(ParticleResources::textureBlackFade, Global::gameCamera->getFadePosition(), &partVel, 0, 60, 0, 400, 0, true);
 }
 
 

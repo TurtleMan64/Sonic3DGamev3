@@ -25,6 +25,8 @@ public:
 
 	float length();
 
+	float lengthSquared();
+
 	void normalize();
 
 	void neg();

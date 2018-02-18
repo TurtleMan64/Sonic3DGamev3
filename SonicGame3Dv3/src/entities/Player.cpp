@@ -23,6 +23,8 @@
 #include "maniasonicmodel.h"
 #include "../audio/audioplayer.h"
 #include "../audio/source.h"
+#include "../particles/particle.h"
+#include "../particles/particleresources.h"
 
 std::list<TexturedModel*> Player::modelBody;
 std::list<TexturedModel*> Player::modelHead;
@@ -578,7 +580,7 @@ void Player::step()
 	if (!inWater && inWaterPrevious)
 	{
 		AudioPlayer::play(5, getPosition());
-		//new Particle(ParticleResources.textureSplash, new Vector3f(getX(), waterHeight + 5, getZ()), new Vector3f(0, 0, 0), 0, 30, 0, 10, 0);
+		new Particle(ParticleResources::textureSplash, &Vector3f(getX(), waterHeight + 5, getZ()), &Vector3f(0, 0, 0), 0, 30, 0, 10, 0);
 		yVel += 0.4f;
 		/*
 		float totXVel = xVel + xVelAir;
@@ -2050,28 +2052,35 @@ void Player::animate()
 		}
 	}
 	
-	//switch (MainGameLoop.levelID)
-	//{
-	//case MainGameLoop.levelIDs.SHD:
-		//float radius2 = MainGameLoop.snowRadius * 2;
-		//float radius = MainGameLoop.snowRadius;
-		//float basex = getX() - radius;
-		//float basey = getY();
-		//float basez = getZ() - radius;
-		//int density = MainGameLoop.snowDensity;
-		//for (int i = 0; i < density; i++)
-		//{
-			//new Particle(ParticleResources.textureSnowball,
-				//new Vector3f(basex + radius2*(float)Math.random(),
-					//basey + radius*(float)Math.random(),
-					//basez + radius2*(float)Math.random()),
-				//new Vector3f(0.25f*7.5f, -0.4f*7.5f, 0.15f*7.5f), 0, 80, 0, (float)Math.random() + 0.75f, -0.02f);//original y vel = -0.5
-		//}
-		//break;
+	float snowRadius = 50;
+	int snowDensity = 5;
 
-	//default:
-		//break;
-	//}
+	switch (Global::levelID)
+	{
+		case LVL_SHD:
+		{
+			float radius2 = snowRadius * 2;
+			float radius = snowRadius;
+			float basex = getX() - radius;
+			float basey = getY();
+			float basez = getZ() - radius;
+			int density = snowDensity;
+			for (int i = 0; i < density; i++)
+			{
+				new Particle(ParticleResources::textureSnowball,
+					&Vector3f(basex + radius2*random(),
+						basey + radius*random(),
+						basez + radius2*random()),
+					&Vector3f(0.25f*7.5f, -0.4f*7.5f, 0.15f*7.5f), 0, 80, 0, random() + 0.75f, -0.02f);
+			}
+			break;
+		}
+
+		default:
+		{
+			break;
+		}
+	}
 
 	previousDisplayPos.set(&displayPos);
 	updateLimbsMatrix();

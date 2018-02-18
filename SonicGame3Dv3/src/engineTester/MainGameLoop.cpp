@@ -47,6 +47,8 @@
 #include "../water/watertile.h"
 #include "../audio/audiomaster.h"
 #include "../audio/audioplayer.h"
+#include "../particles/particlemaster.h"
+#include "../particles/particleresources.h"
 
 #include <windows.h>
 #include <tchar.h>
@@ -134,6 +136,8 @@ int main()
 
 	AudioMaster::init();
 
+	ParticleResources::loadParticles();
+
 	CollisionChecker::initChecker();
 	AnimationResources::createAnimations();
 
@@ -159,7 +163,8 @@ int main()
 
 
 	SkyManager::initSkyManager(nullptr, nullptr);
-	SkyManager::setTimeOfDay(26.0f);
+	SkyManager::setTimeOfDay(155.0f);
+	cam.setYaw(180);
 
 	lightSun.getPosition()->x = 0;
 	lightSun.getPosition()->y = 0;
@@ -172,14 +177,16 @@ int main()
 		WaterShader* waterShader = new WaterShader; Global::countNew++;
 		Global::gameWaterRenderer = new WaterRenderer(waterShader, Master_getProjectionMatrix(), Global::gameWaterFBOs); Global::countNew++;
 		Global::gameWaterTiles = new std::list<WaterTile*>; Global::countNew++;
-		for (int r = -18; r < 18; r++) //-16 , 16
+		for (int r = -9; r < 9; r++) //-18 , 18
 		{
-			for (int c = -18; c < 18; c++) //-16  16
+			for (int c = -9; c < 9; c++) //-18  18
 			{
-				Global::gameWaterTiles->push_back(new WaterTile(r * 1000.0f, c * 1000.0f, 0.0f)); Global::countNew++;
+				Global::gameWaterTiles->push_back(new WaterTile(r * 2000.0f, c * 2000.0f, 0.0f)); Global::countNew++;
 			}
 		}
 	}
+
+	ParticleMaster::init(Master_getProjectionMatrix());
 
 
 	double seconds = 0.0;
@@ -252,6 +259,7 @@ int main()
 			{
 				//game logic
 				Global::gameCamera->refresh();
+				ParticleMaster::update(Global::gameCamera);
 				GuiManager::increaseTimer();
 				for (auto e : gameEntities)
 				{
@@ -288,7 +296,7 @@ int main()
 
 		SkyManager::calculateValues();
 
-		//render entities
+		//prepare entities to render
 		for (auto e : gameEntities)
 		{
 			Master_processEntity(e.first);
@@ -314,6 +322,7 @@ int main()
 				cam.getPosition()->y -= distance;
 				cam.invertPitch();
 				Master_render(&cam, 0, 1, 0, 0.3f);
+				ParticleMaster::renderParticles(&cam, SkyManager::getOverallBrightness(), 1);
 				cam.getPosition()->y += distance;
 				cam.invertPitch();
 			}
@@ -322,6 +331,7 @@ int main()
 				cam.getPosition()->y -= distance;
 				cam.invertPitch();
 				Master_render(&cam, 0, -1, 0, 0.3f);
+				ParticleMaster::renderParticles(&cam, SkyManager::getOverallBrightness(), -1);
 				cam.getPosition()->y += distance;
 				cam.invertPitch();
 			}
@@ -332,10 +342,12 @@ int main()
 			if (aboveWater)
 			{
 				Master_render(&cam, 0, -1, 0, 0.3f);
+				ParticleMaster::renderParticles(&cam, SkyManager::getOverallBrightness(), -1);
 			}
 			else
 			{
 				Master_render(&cam, 0, 1, 0, 0.3f);
+				ParticleMaster::renderParticles(&cam, SkyManager::getOverallBrightness(), 1);
 			}
 			Global::gameWaterFBOs->unbindCurrentFrameBuffer();
 
@@ -352,6 +364,8 @@ int main()
 			Global::gameWaterRenderer->render(Global::gameWaterTiles, &cam, &lightSun);
 		}
 
+		ParticleMaster::renderParticles(&cam, SkyManager::getOverallBrightness(), 0);
+
 		Master_clearEntities();
 		Master_clearTransparentEntities();
 
@@ -365,7 +379,7 @@ int main()
 
 		if (seconds - previousTime >= 1.0)
 		{
-			std::fprintf(stdout, "fps: %f\n", frameCount / (seconds - previousTime));
+			//std::fprintf(stdout, "fps: %f\n", frameCount / (seconds - previousTime));
 			//std::fprintf(stdout, "diff: %d\n", Global::countNew - Global::countDelete);
 			//Loader_printInfo();
 			frameCount = 0;

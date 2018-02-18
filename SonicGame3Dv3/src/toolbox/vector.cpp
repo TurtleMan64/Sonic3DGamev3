@@ -21,8 +21,14 @@ void Vector3f::set(Vector3f* other)
 	z = other->z;
 }
 
-float Vector3f::length() {
+float Vector3f::length()
+{
 	return (float)sqrt((x * x) + (y * y) + (z * z));
+}
+
+float Vector3f::lengthSquared()
+{
+	return (x * x) + (y * y) + (z * z);
 }
 
 void Vector3f::normalize() {

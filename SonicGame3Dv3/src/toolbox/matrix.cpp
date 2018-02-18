@@ -5,22 +5,23 @@
 
 Matrix4f::Matrix4f()
 {
-	this->m00 = 0;
-	this->m01 = 0;
-	this->m02 = 0;
-	this->m03 = 0;
-	this->m10 = 0;
-	this->m11 = 0;
-	this->m12 = 0;
-	this->m13 = 0;
-	this->m20 = 0;
-	this->m21 = 0;
-	this->m22 = 0;
-	this->m23 = 0;
-	this->m30 = 0;
-	this->m31 = 0;
-	this->m32 = 0;
-	this->m33 = 0;
+	//this->m00 = 0;
+	//this->m01 = 0;
+	//this->m02 = 0;
+	//this->m03 = 0;
+	//this->m10 = 0;
+	//this->m11 = 0;
+	//this->m12 = 0;
+	//this->m13 = 0;
+	//this->m20 = 0;
+	//this->m21 = 0;
+	//this->m22 = 0;
+	//this->m23 = 0;
+	//this->m30 = 0;
+	//this->m31 = 0;
+	//this->m32 = 0;
+	//this->m33 = 0;
+	setIdentity();
 }
 
 Matrix4f::Matrix4f(Matrix4f* base)

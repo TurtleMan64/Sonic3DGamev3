@@ -37,6 +37,33 @@
     <Filter Include="Source Files\objLoader">
       <UniqueIdentifier>{304e9ab6-3d2c-4234-b8cd-f75275eb90fd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\animation">
+      <UniqueIdentifier>{b79cf733-080a-485e-a893-a8252fc58b51}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\audio">
+      <UniqueIdentifier>{d62f7be1-d6c7-4694-aa74-034bf5c9c2c3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\collision">
+      <UniqueIdentifier>{0c20ca3c-a889-4d34-a857-a969469c4f55}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\fontMeshCreator">
+      <UniqueIdentifier>{30f7f372-c4cd-4360-a4dd-9feeecf0fbe5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\entities\EmeraldCoast">
+      <UniqueIdentifier>{9873b3cc-a29c-44c9-bb80-2028f0ff98ed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\fontRendering">
+      <UniqueIdentifier>{c7b4a2fc-b2bd-4380-9431-9682873782dc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\guis">
+      <UniqueIdentifier>{386ab441-7971-411a-90b6-7ccdc18c4fbc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\particles">
+      <UniqueIdentifier>{4196b9a2-f862-408f-a5a1-39ca161b266d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\water">
+      <UniqueIdentifier>{ad5a0cc3-45d2-4a59-b55f-33f13f3d36e2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="glad.c">
@@ -72,17 +99,11 @@
     <ClCompile Include="src\models\TexturedModel.cpp">
       <Filter>Source Files\models</Filter>
     </ClCompile>
-    <ClCompile Include="src\entities\Entity.cpp">
-      <Filter>Source Files\entities</Filter>
-    </ClCompile>
     <ClCompile Include="src\toolbox\vector.cpp">
       <Filter>Source Files\toolbox</Filter>
     </ClCompile>
     <ClCompile Include="src\toolbox\matrix.cpp">
       <Filter>Source Files\toolbox</Filter>
-    </ClCompile>
-    <ClCompile Include="src\entities\Camera.cpp">
-      <Filter>Source Files\entities</Filter>
     </ClCompile>
     <ClCompile Include="src\toolbox\maths.cpp">
       <Filter>Source Files\toolbox</Filter>
@@ -90,8 +111,227 @@
     <ClCompile Include="src\objLoader\objLoader.cpp">
       <Filter>Source Files\objLoader</Filter>
     </ClCompile>
+    <ClCompile Include="src\animation\Animation.cpp">
+      <Filter>Source Files\animation</Filter>
+    </ClCompile>
+    <ClCompile Include="src\animation\AnimationResources.cpp">
+      <Filter>Source Files\animation</Filter>
+    </ClCompile>
+    <ClCompile Include="src\animation\Body.cpp">
+      <Filter>Source Files\animation</Filter>
+    </ClCompile>
+    <ClCompile Include="src\animation\Keyframe.cpp">
+      <Filter>Source Files\animation</Filter>
+    </ClCompile>
+    <ClCompile Include="src\animation\Limb.cpp">
+      <Filter>Source Files\animation</Filter>
+    </ClCompile>
+    <ClCompile Include="src\audio\AudioMaster.cpp">
+      <Filter>Source Files\audio</Filter>
+    </ClCompile>
+    <ClCompile Include="src\audio\AudioPlayer.cpp">
+      <Filter>Source Files\audio</Filter>
+    </ClCompile>
+    <ClCompile Include="src\audio\Source.cpp">
+      <Filter>Source Files\audio</Filter>
+    </ClCompile>
+    <ClCompile Include="src\collision\CollisionChecker.cpp">
+      <Filter>Source Files\collision</Filter>
+    </ClCompile>
+    <ClCompile Include="src\collision\CollisionModel.cpp">
+      <Filter>Source Files\collision</Filter>
+    </ClCompile>
+    <ClCompile Include="src\collision\QuadTreeNode.cpp">
+      <Filter>Source Files\collision</Filter>
+    </ClCompile>
+    <ClCompile Include="src\collision\Triangle3D.cpp">
+      <Filter>Source Files\collision</Filter>
+    </ClCompile>
+    <ClCompile Include="src\entities\EmeraldCoast\EC_Chair.cpp">
+      <Filter>Source Files\entities\EmeraldCoast</Filter>
+    </ClCompile>
+    <ClCompile Include="src\entities\EmeraldCoast\EC_Dock.cpp">
+      <Filter>Source Files\entities\EmeraldCoast</Filter>
+    </ClCompile>
+    <ClCompile Include="src\entities\EmeraldCoast\EC_DockCorner.cpp">
+      <Filter>Source Files\entities\EmeraldCoast</Filter>
+    </ClCompile>
+    <ClCompile Include="src\entities\EmeraldCoast\EC_Dolphin.cpp">
+      <Filter>Source Files\entities\EmeraldCoast</Filter>
+    </ClCompile>
+    <ClCompile Include="src\entities\EmeraldCoast\EC_FlatWater.cpp">
+      <Filter>Source Files\entities\EmeraldCoast</Filter>
+    </ClCompile>
+    <ClCompile Include="src\entities\EmeraldCoast\EC_Hut.cpp">
+      <Filter>Source Files\entities\EmeraldCoast</Filter>
+    </ClCompile>
+    <ClCompile Include="src\entities\EmeraldCoast\EC_Palmtree.cpp">
+      <Filter>Source Files\entities\EmeraldCoast</Filter>
+    </ClCompile>
+    <ClCompile Include="src\entities\EmeraldCoast\EC_Pole.cpp">
+      <Filter>Source Files\entities\EmeraldCoast</Filter>
+    </ClCompile>
+    <ClCompile Include="src\entities\EmeraldCoast\EC_Raft.cpp">
+      <Filter>Source Files\entities\EmeraldCoast</Filter>
+    </ClCompile>
+    <ClCompile Include="src\entities\EmeraldCoast\EC_RaftSmall.cpp">
+      <Filter>Source Files\entities\EmeraldCoast</Filter>
+    </ClCompile>
+    <ClCompile Include="src\entities\EmeraldCoast\EC_Shark.cpp">
+      <Filter>Source Files\entities\EmeraldCoast</Filter>
+    </ClCompile>
+    <ClCompile Include="src\entities\EmeraldCoast\EC_StrawRoofHut.cpp">
+      <Filter>Source Files\entities\EmeraldCoast</Filter>
+    </ClCompile>
+    <ClCompile Include="src\entities\EmeraldCoast\EC_Umbrella.cpp">
+      <Filter>Source Files\entities\EmeraldCoast</Filter>
+    </ClCompile>
+    <ClCompile Include="src\entities\EmeraldCoast\EC_Waterfall.cpp">
+      <Filter>Source Files\entities\EmeraldCoast</Filter>
+    </ClCompile>
+    <ClCompile Include="src\entities\Camera.cpp">
+      <Filter>Source Files\entities</Filter>
+    </ClCompile>
+    <ClCompile Include="src\entities\CollideableObject.cpp">
+      <Filter>Source Files\entities</Filter>
+    </ClCompile>
+    <ClCompile Include="src\entities\Dashpad.cpp">
+      <Filter>Source Files\entities</Filter>
+    </ClCompile>
+    <ClCompile Include="src\entities\Entity.cpp">
+      <Filter>Source Files\entities</Filter>
+    </ClCompile>
+    <ClCompile Include="src\entities\GoalSign.cpp">
+      <Filter>Source Files\entities</Filter>
+    </ClCompile>
     <ClCompile Include="src\entities\Light.cpp">
       <Filter>Source Files\entities</Filter>
+    </ClCompile>
+    <ClCompile Include="src\entities\LowQualityWater.cpp">
+      <Filter>Source Files\entities</Filter>
+    </ClCompile>
+    <ClCompile Include="src\entities\ManiaSonicModel.cpp">
+      <Filter>Source Files\entities</Filter>
+    </ClCompile>
+    <ClCompile Include="src\entities\Player.cpp">
+      <Filter>Source Files\entities</Filter>
+    </ClCompile>
+    <ClCompile Include="src\entities\Ring.cpp">
+      <Filter>Source Files\entities</Filter>
+    </ClCompile>
+    <ClCompile Include="src\entities\SkySphere.cpp">
+      <Filter>Source Files\entities</Filter>
+    </ClCompile>
+    <ClCompile Include="src\entities\SpeedRamp.cpp">
+      <Filter>Source Files\entities</Filter>
+    </ClCompile>
+    <ClCompile Include="src\entities\Spikeball.cpp">
+      <Filter>Source Files\entities</Filter>
+    </ClCompile>
+    <ClCompile Include="src\entities\Spinner.cpp">
+      <Filter>Source Files\entities</Filter>
+    </ClCompile>
+    <ClCompile Include="src\entities\Spring.cpp">
+      <Filter>Source Files\entities</Filter>
+    </ClCompile>
+    <ClCompile Include="src\entities\Stage.cpp">
+      <Filter>Source Files\entities</Filter>
+    </ClCompile>
+    <ClCompile Include="src\entities\TeleportZone.cpp">
+      <Filter>Source Files\entities</Filter>
+    </ClCompile>
+    <ClCompile Include="src\fontMeshCreator\Character.cpp">
+      <Filter>Source Files\fontMeshCreator</Filter>
+    </ClCompile>
+    <ClCompile Include="src\fontMeshCreator\FontType.cpp">
+      <Filter>Source Files\fontMeshCreator</Filter>
+    </ClCompile>
+    <ClCompile Include="src\fontMeshCreator\GUIText.cpp">
+      <Filter>Source Files\fontMeshCreator</Filter>
+    </ClCompile>
+    <ClCompile Include="src\fontMeshCreator\Line.cpp">
+      <Filter>Source Files\fontMeshCreator</Filter>
+    </ClCompile>
+    <ClCompile Include="src\fontMeshCreator\MetaFile.cpp">
+      <Filter>Source Files\fontMeshCreator</Filter>
+    </ClCompile>
+    <ClCompile Include="src\fontMeshCreator\TextMeshCreator.cpp">
+      <Filter>Source Files\fontMeshCreator</Filter>
+    </ClCompile>
+    <ClCompile Include="src\fontMeshCreator\TextMeshData.cpp">
+      <Filter>Source Files\fontMeshCreator</Filter>
+    </ClCompile>
+    <ClCompile Include="src\fontMeshCreator\Word.cpp">
+      <Filter>Source Files\fontMeshCreator</Filter>
+    </ClCompile>
+    <ClCompile Include="src\fontRendering\FontRenderer.cpp">
+      <Filter>Source Files\fontRendering</Filter>
+    </ClCompile>
+    <ClCompile Include="src\fontRendering\FontShader.cpp">
+      <Filter>Source Files\fontRendering</Filter>
+    </ClCompile>
+    <ClCompile Include="src\fontRendering\TextMaster.cpp">
+      <Filter>Source Files\fontRendering</Filter>
+    </ClCompile>
+    <ClCompile Include="src\guis\GuiManager.cpp">
+      <Filter>Source Files\guis</Filter>
+    </ClCompile>
+    <ClCompile Include="src\objLoader\FakeTexture.cpp">
+      <Filter>Source Files\objLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="src\objLoader\ModelData.cpp">
+      <Filter>Source Files\objLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="src\objLoader\Vertex.cpp">
+      <Filter>Source Files\objLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="src\particles\InsertionSort.cpp">
+      <Filter>Source Files\particles</Filter>
+    </ClCompile>
+    <ClCompile Include="src\particles\Particle.cpp">
+      <Filter>Source Files\particles</Filter>
+    </ClCompile>
+    <ClCompile Include="src\particles\ParticleMaster.cpp">
+      <Filter>Source Files\particles</Filter>
+    </ClCompile>
+    <ClCompile Include="src\particles\ParticleRenderer.cpp">
+      <Filter>Source Files\particles</Filter>
+    </ClCompile>
+    <ClCompile Include="src\particles\ParticleResources.cpp">
+      <Filter>Source Files\particles</Filter>
+    </ClCompile>
+    <ClCompile Include="src\particles\ParticleShader.cpp">
+      <Filter>Source Files\particles</Filter>
+    </ClCompile>
+    <ClCompile Include="src\particles\ParticleTexture.cpp">
+      <Filter>Source Files\particles</Filter>
+    </ClCompile>
+    <ClCompile Include="src\renderEngine\MasterRenderer.cpp">
+      <Filter>Source Files\renderEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\renderEngine\SkyManager.cpp">
+      <Filter>Source Files\renderEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\toolbox\LevelLoader.cpp">
+      <Filter>Source Files\toolbox</Filter>
+    </ClCompile>
+    <ClCompile Include="src\toolbox\PauseScreen.cpp">
+      <Filter>Source Files\toolbox</Filter>
+    </ClCompile>
+    <ClCompile Include="src\toolbox\Split.cpp">
+      <Filter>Source Files\toolbox</Filter>
+    </ClCompile>
+    <ClCompile Include="src\water\WaterFrameBuffers.cpp">
+      <Filter>Source Files\water</Filter>
+    </ClCompile>
+    <ClCompile Include="src\water\WaterRenderer.cpp">
+      <Filter>Source Files\water</Filter>
+    </ClCompile>
+    <ClCompile Include="src\water\WaterShader.cpp">
+      <Filter>Source Files\water</Filter>
+    </ClCompile>
+    <ClCompile Include="src\water\WaterTile.cpp">
+      <Filter>Source Files\water</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -119,17 +359,230 @@
     <ClInclude Include="src\toolbox\maths.h">
       <Filter>Source Files\toolbox</Filter>
     </ClInclude>
-    <ClInclude Include="src\entities\entities.h">
-      <Filter>Source Files\entities</Filter>
+    <ClInclude Include="src\objLoader\objLoader.h">
+      <Filter>Source Files\objLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="src\animation\animation.h">
+      <Filter>Source Files\animation</Filter>
+    </ClInclude>
+    <ClInclude Include="src\animation\animationresources.h">
+      <Filter>Source Files\animation</Filter>
+    </ClInclude>
+    <ClInclude Include="src\animation\body.h">
+      <Filter>Source Files\animation</Filter>
+    </ClInclude>
+    <ClInclude Include="src\animation\keyframe.h">
+      <Filter>Source Files\animation</Filter>
+    </ClInclude>
+    <ClInclude Include="src\animation\limb.h">
+      <Filter>Source Files\animation</Filter>
+    </ClInclude>
+    <ClInclude Include="src\audio\audiomaster.h">
+      <Filter>Source Files\audio</Filter>
+    </ClInclude>
+    <ClInclude Include="src\audio\audioplayer.h">
+      <Filter>Source Files\audio</Filter>
+    </ClInclude>
+    <ClInclude Include="src\audio\source.h">
+      <Filter>Source Files\audio</Filter>
+    </ClInclude>
+    <ClInclude Include="src\collision\collisionchecker.h">
+      <Filter>Source Files\collision</Filter>
+    </ClInclude>
+    <ClInclude Include="src\collision\collisionmodel.h">
+      <Filter>Source Files\collision</Filter>
+    </ClInclude>
+    <ClInclude Include="src\collision\quadtreenode.h">
+      <Filter>Source Files\collision</Filter>
+    </ClInclude>
+    <ClInclude Include="src\collision\triangle3d.h">
+      <Filter>Source Files\collision</Filter>
+    </ClInclude>
+    <ClInclude Include="src\engineTester\main.h">
+      <Filter>Source Files\engineTester</Filter>
+    </ClInclude>
+    <ClInclude Include="src\entities\EmeraldCoast\ecchair.h">
+      <Filter>Source Files\entities\EmeraldCoast</Filter>
+    </ClInclude>
+    <ClInclude Include="src\entities\EmeraldCoast\ecdock.h">
+      <Filter>Source Files\entities\EmeraldCoast</Filter>
+    </ClInclude>
+    <ClInclude Include="src\entities\EmeraldCoast\ecdockcorner.h">
+      <Filter>Source Files\entities\EmeraldCoast</Filter>
+    </ClInclude>
+    <ClInclude Include="src\entities\EmeraldCoast\ecdolphin.h">
+      <Filter>Source Files\entities\EmeraldCoast</Filter>
+    </ClInclude>
+    <ClInclude Include="src\entities\EmeraldCoast\ecflatwater.h">
+      <Filter>Source Files\entities\EmeraldCoast</Filter>
+    </ClInclude>
+    <ClInclude Include="src\entities\EmeraldCoast\echut.h">
+      <Filter>Source Files\entities\EmeraldCoast</Filter>
+    </ClInclude>
+    <ClInclude Include="src\entities\EmeraldCoast\ecpalmtree.h">
+      <Filter>Source Files\entities\EmeraldCoast</Filter>
+    </ClInclude>
+    <ClInclude Include="src\entities\EmeraldCoast\ecpole.h">
+      <Filter>Source Files\entities\EmeraldCoast</Filter>
+    </ClInclude>
+    <ClInclude Include="src\entities\EmeraldCoast\ecraft.h">
+      <Filter>Source Files\entities\EmeraldCoast</Filter>
+    </ClInclude>
+    <ClInclude Include="src\entities\EmeraldCoast\ecraftsmall.h">
+      <Filter>Source Files\entities\EmeraldCoast</Filter>
+    </ClInclude>
+    <ClInclude Include="src\entities\EmeraldCoast\ecshark.h">
+      <Filter>Source Files\entities\EmeraldCoast</Filter>
+    </ClInclude>
+    <ClInclude Include="src\entities\EmeraldCoast\ecstrawroofhut.h">
+      <Filter>Source Files\entities\EmeraldCoast</Filter>
+    </ClInclude>
+    <ClInclude Include="src\entities\EmeraldCoast\ecumbrella.h">
+      <Filter>Source Files\entities\EmeraldCoast</Filter>
+    </ClInclude>
+    <ClInclude Include="src\entities\EmeraldCoast\ecwaterfall.h">
+      <Filter>Source Files\entities\EmeraldCoast</Filter>
     </ClInclude>
     <ClInclude Include="src\entities\camera.h">
       <Filter>Source Files\entities</Filter>
     </ClInclude>
-    <ClInclude Include="src\objLoader\objLoader.h">
-      <Filter>Source Files\objLoader</Filter>
+    <ClInclude Include="src\entities\collideableobject.h">
+      <Filter>Source Files\entities</Filter>
+    </ClInclude>
+    <ClInclude Include="src\entities\dashpad.h">
+      <Filter>Source Files\entities</Filter>
+    </ClInclude>
+    <ClInclude Include="src\entities\entities.h">
+      <Filter>Source Files\entities</Filter>
+    </ClInclude>
+    <ClInclude Include="src\entities\goalsign.h">
+      <Filter>Source Files\entities</Filter>
     </ClInclude>
     <ClInclude Include="src\entities\light.h">
       <Filter>Source Files\entities</Filter>
+    </ClInclude>
+    <ClInclude Include="src\entities\lowqualitywater.h">
+      <Filter>Source Files\entities</Filter>
+    </ClInclude>
+    <ClInclude Include="src\entities\maniasonicmodel.h">
+      <Filter>Source Files\entities</Filter>
+    </ClInclude>
+    <ClInclude Include="src\entities\player.h">
+      <Filter>Source Files\entities</Filter>
+    </ClInclude>
+    <ClInclude Include="src\entities\ring.h">
+      <Filter>Source Files\entities</Filter>
+    </ClInclude>
+    <ClInclude Include="src\entities\skysphere.h">
+      <Filter>Source Files\entities</Filter>
+    </ClInclude>
+    <ClInclude Include="src\entities\speedramp.h">
+      <Filter>Source Files\entities</Filter>
+    </ClInclude>
+    <ClInclude Include="src\entities\spikeball.h">
+      <Filter>Source Files\entities</Filter>
+    </ClInclude>
+    <ClInclude Include="src\entities\spinner.h">
+      <Filter>Source Files\entities</Filter>
+    </ClInclude>
+    <ClInclude Include="src\entities\spring.h">
+      <Filter>Source Files\entities</Filter>
+    </ClInclude>
+    <ClInclude Include="src\entities\stage.h">
+      <Filter>Source Files\entities</Filter>
+    </ClInclude>
+    <ClInclude Include="src\entities\teleportzone.h">
+      <Filter>Source Files\entities</Filter>
+    </ClInclude>
+    <ClInclude Include="src\fontMeshCreator\character.h">
+      <Filter>Source Files\fontMeshCreator</Filter>
+    </ClInclude>
+    <ClInclude Include="src\fontMeshCreator\fonttype.h">
+      <Filter>Source Files\fontMeshCreator</Filter>
+    </ClInclude>
+    <ClInclude Include="src\fontMeshCreator\guitext.h">
+      <Filter>Source Files\fontMeshCreator</Filter>
+    </ClInclude>
+    <ClInclude Include="src\fontMeshCreator\line.h">
+      <Filter>Source Files\fontMeshCreator</Filter>
+    </ClInclude>
+    <ClInclude Include="src\fontMeshCreator\metafile.h">
+      <Filter>Source Files\fontMeshCreator</Filter>
+    </ClInclude>
+    <ClInclude Include="src\fontMeshCreator\textmeshcreator.h">
+      <Filter>Source Files\fontMeshCreator</Filter>
+    </ClInclude>
+    <ClInclude Include="src\fontMeshCreator\textmeshdata.h">
+      <Filter>Source Files\fontMeshCreator</Filter>
+    </ClInclude>
+    <ClInclude Include="src\fontMeshCreator\word.h">
+      <Filter>Source Files\fontMeshCreator</Filter>
+    </ClInclude>
+    <ClInclude Include="src\fontRendering\fontrenderer.h">
+      <Filter>Source Files\fontRendering</Filter>
+    </ClInclude>
+    <ClInclude Include="src\fontRendering\fontshader.h">
+      <Filter>Source Files\fontRendering</Filter>
+    </ClInclude>
+    <ClInclude Include="src\fontRendering\textmaster.h">
+      <Filter>Source Files\fontRendering</Filter>
+    </ClInclude>
+    <ClInclude Include="src\guis\guimanager.h">
+      <Filter>Source Files\guis</Filter>
+    </ClInclude>
+    <ClInclude Include="src\objLoader\fakeTexture.h">
+      <Filter>Source Files\objLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="src\objLoader\modeldata.h">
+      <Filter>Source Files\objLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="src\objLoader\vertex.h">
+      <Filter>Source Files\objLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="src\particles\insertionsort.h">
+      <Filter>Source Files\particles</Filter>
+    </ClInclude>
+    <ClInclude Include="src\particles\particle.h">
+      <Filter>Source Files\particles</Filter>
+    </ClInclude>
+    <ClInclude Include="src\particles\particlemaster.h">
+      <Filter>Source Files\particles</Filter>
+    </ClInclude>
+    <ClInclude Include="src\particles\particlerenderer.h">
+      <Filter>Source Files\particles</Filter>
+    </ClInclude>
+    <ClInclude Include="src\particles\particleresources.h">
+      <Filter>Source Files\particles</Filter>
+    </ClInclude>
+    <ClInclude Include="src\particles\particleshader.h">
+      <Filter>Source Files\particles</Filter>
+    </ClInclude>
+    <ClInclude Include="src\particles\particletexture.h">
+      <Filter>Source Files\particles</Filter>
+    </ClInclude>
+    <ClInclude Include="src\renderEngine\skymanager.h">
+      <Filter>Source Files\renderEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="src\toolbox\levelloader.h">
+      <Filter>Source Files\toolbox</Filter>
+    </ClInclude>
+    <ClInclude Include="src\toolbox\pausescreen.h">
+      <Filter>Source Files\toolbox</Filter>
+    </ClInclude>
+    <ClInclude Include="src\toolbox\split.h">
+      <Filter>Source Files\toolbox</Filter>
+    </ClInclude>
+    <ClInclude Include="src\water\waterframebuffers.h">
+      <Filter>Source Files\water</Filter>
+    </ClInclude>
+    <ClInclude Include="src\water\waterrenderer.h">
+      <Filter>Source Files\water</Filter>
+    </ClInclude>
+    <ClInclude Include="src\water\watershader.h">
+      <Filter>Source Files\water</Filter>
+    </ClInclude>
+    <ClInclude Include="src\water\watertile.h">
+      <Filter>Source Files\water</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

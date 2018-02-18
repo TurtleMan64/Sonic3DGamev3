@@ -87,7 +87,7 @@ void EntityRenderer::prepareInstance(Entity* entity)
 	shader->loadTransformationMatrix(entity->getTransformationMatrix());
 }
 
-void EntityRenderer::render(Entity* entity, ShaderProgram* shader)
+void EntityRenderer::render(Entity* entity)
 {
 	if (entity->getVisible() == false)
 	{

@@ -84,11 +84,11 @@ void GuiManager::increaseTimer()
 	}
 }
 
-void GuiManager::setTimer(int minutes, int seconds, int centiseconds)
+void GuiManager::setTimer(int newMinutes, int newSeconds, int newCentiseconds)
 {
-	GuiManager::minutes = minutes;
-	GuiManager::seconds = seconds;
-	GuiManager::centiseconds = centiseconds;
+	GuiManager::minutes = newMinutes;
+	GuiManager::seconds = newSeconds;
+	GuiManager::centiseconds = newCentiseconds;
 }
 
 void GuiManager::startTimer()

@@ -44,14 +44,14 @@ int Vertex::hasSameTextureAndNormal(int textureIndexOther, int normalIndexOther)
 	return 0;
 }
 
-void Vertex::setTextureIndex(int textureIndex)
+void Vertex::setTextureIndex(int newTextureIndex)
 {
-	this->textureIndex = textureIndex;
+	textureIndex = newTextureIndex;
 }
 
-void Vertex::setNormalIndex(int normalIndex)
+void Vertex::setNormalIndex(int newNormalIndex)
 {
-	this->normalIndex = normalIndex;
+	normalIndex = newNormalIndex;
 }
 
 Vector3f* Vertex::getPosition()

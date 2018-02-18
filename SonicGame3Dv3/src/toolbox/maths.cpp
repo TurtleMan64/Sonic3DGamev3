@@ -163,7 +163,7 @@ Vector3f mapCamera(float yaw, float pitch, float mag, Vector3f* VecC)
 * @param A the collision point on the triangle
 * @param normal the normal of the triangle
 */
-Vector3f calculatePlaneSpeed(float xspd, float yspd, float zspd, Vector3f* colPos, Vector3f* normal)
+Vector3f calculatePlaneSpeed(float xspd, float yspd, float zspd, Vector3f* normal)
 {
 	Vector3f A(xspd, yspd, zspd);
 	Vector3f Blue = projectOntoPlane(&A, normal);
@@ -298,7 +298,7 @@ Vector3f spherePositionFromAngles(float angH, float angV, float radius)
 
 float random()
 {
-	return (rand()%100000)/100000.0f;
+	return (rand() % RAND_MAX) / ((float)(RAND_MAX));
 }
 
 float nextGaussian()

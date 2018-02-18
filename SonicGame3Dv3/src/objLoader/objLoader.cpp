@@ -178,7 +178,7 @@ std::list<TexturedModel*>* loadObjModel(std::string filePath, std::string fileNa
 					std::vector<float> texturesArray;
 					std::vector<float> normalsArray;
 
-					float furthest = convertDataToArrays(&vertices, &textures, &normals, &verticesArray, &texturesArray, &normalsArray);
+					convertDataToArrays(&vertices, &textures, &normals, &verticesArray, &texturesArray, &normalsArray);
 					RawModel newRaw = Loader_loadToVAO(&verticesArray, &texturesArray, &normalsArray, &indices);
 
 					rawModelsList.push_back(newRaw); //put a copy of the model into rawModelsList
@@ -199,7 +199,7 @@ std::list<TexturedModel*>* loadObjModel(std::string filePath, std::string fileNa
 	std::vector<float> texturesArray;
 	std::vector<float> normalsArray;
 
-	float furthest = convertDataToArrays(&vertices, &textures, &normals, &verticesArray, &texturesArray, &normalsArray);
+	convertDataToArrays(&vertices, &textures, &normals, &verticesArray, &texturesArray, &normalsArray);
 	RawModel newRaw = Loader_loadToVAO(&verticesArray, &texturesArray, &normalsArray, &indices);
 
 	rawModelsList.push_back(newRaw); //put a copy of the final model into rawModelsList
@@ -486,7 +486,7 @@ std::list<TexturedModel*>* loadObjModelWithMTL(std::string filePath, std::string
 					std::vector<float> texturesArray;
 					std::vector<float> normalsArray;
 
-					float furthest = convertDataToArrays(&vertices, &textures, &normals, &verticesArray, &texturesArray, &normalsArray);
+					convertDataToArrays(&vertices, &textures, &normals, &verticesArray, &texturesArray, &normalsArray);
 					RawModel newRaw = Loader_loadToVAO(&verticesArray, &texturesArray, &normalsArray, &indices);
 
 					rawModelsList.push_back(newRaw); //put a copy of the model into rawModelsList
@@ -504,7 +504,7 @@ std::list<TexturedModel*>* loadObjModelWithMTL(std::string filePath, std::string
 	std::vector<float> texturesArray;
 	std::vector<float> normalsArray;
 
-	float furthest = convertDataToArrays(&vertices, &textures, &normals, &verticesArray, &texturesArray, &normalsArray);
+	convertDataToArrays(&vertices, &textures, &normals, &verticesArray, &texturesArray, &normalsArray);
 	RawModel newRaw = Loader_loadToVAO(&verticesArray, &texturesArray, &normalsArray, &indices);
 
 	rawModelsList.push_back(newRaw); //put a copy of the final model into rawModelsList
@@ -1025,7 +1025,7 @@ CollisionModel* loadCollisionModel(std::string filePath, std::string fileName)
 					if (dummy->name == lineSplit[1])
 					{
 						currType = dummy->type;
-						currType = dummy->sound;
+						currType = (char)dummy->sound;
 						currType = dummy->particle;
 					}
 				}

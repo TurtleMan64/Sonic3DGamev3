@@ -550,7 +550,7 @@ void Input_init()
 	if (present == 1)
 	{
 		int axesCount;
-		const float *axes = glfwGetJoystickAxes(CONTROLLER_ID, &axesCount);
+		glfwGetJoystickAxes(CONTROLLER_ID, &axesCount);
 		STICK_LX  = std::min(STICK_LX,  axesCount - 1);
 		STICK_LY  = std::min(STICK_LY,  axesCount - 1);
 		STICK_RX  = std::min(STICK_RX,  axesCount - 1);
@@ -559,7 +559,7 @@ void Input_init()
 		TRIGGER_R = std::min(TRIGGER_R, axesCount - 1);
 
 		int buttonCount;
-		const unsigned char *buttons = glfwGetJoystickButtons(CONTROLLER_ID, &buttonCount);
+		glfwGetJoystickButtons(CONTROLLER_ID, &buttonCount);
 		BUTTON_A     = std::min(BUTTON_A,     buttonCount - 1);
 		BUTTON_B     = std::min(BUTTON_B,     buttonCount - 1);
 		BUTTON_X     = std::min(BUTTON_X,     buttonCount - 1);

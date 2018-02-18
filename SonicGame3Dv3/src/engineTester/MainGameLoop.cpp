@@ -81,8 +81,6 @@ unsigned Global::HQWaterRefractionHeight = 720;
 //Emerald Coast
 EC_Shark* Global::ecShark = nullptr;
 
-//Test
-//Spring* Global::gameSpring = nullptr;
 
 extern bool INPUT_JUMP;
 extern bool INPUT_ACTION;
@@ -200,7 +198,7 @@ int main()
 	while (Global::gameState != STATE_EXITING && displayWantsToClose() == 0)
 	{
 		Input_pollInputs();
-		int err = glGetError();
+		GLenum err = glGetError();
 
 		if (err == GL_NO_ERROR)
 		{
@@ -354,7 +352,13 @@ int main()
 			glDisable(GL_CLIP_DISTANCE0);
 		}
 
-		AudioMaster::updateListenerData(cam.getPosition(), &cam.calcVelocity(), cam.getYaw(), cam.getPitch());
+		Vector3f camVel = cam.calcVelocity();
+		if (Global::gamePlayer != nullptr)
+		{
+			Vector3f newVel = Global::gamePlayer->getOverallVel();
+			camVel.set(&newVel);
+		}
+		AudioMaster::updateListenerData(cam.getPosition(), &camVel, cam.getYaw(), cam.getPitch());
 
 
 		Master_render(&cam, 0, 1, 0, 1000);
@@ -473,7 +477,7 @@ void increaseProcessPriority()
 	if (!SetPriorityClass(GetCurrentProcess(), ABOVE_NORMAL_PRIORITY_CLASS))
 	{
 		dwError = GetLastError();
-		_tprintf(TEXT("Failed to enter above normal mode (%d)\n"), dwError);
+		_tprintf(TEXT("Failed to enter above normal mode (%d)\n"), (int)dwError);
 	}
 
 	// Display priority class
@@ -488,7 +492,7 @@ void increaseProcessPriority()
 	if (!SetThreadPriority(GetCurrentThread(), THREAD_PRIORITY_ABOVE_NORMAL))
 	{
 		dwError = GetLastError();
-		_tprintf(TEXT("Failed to enter above normal mode (%d)\n"), dwError);
+		_tprintf(TEXT("Failed to enter above normal mode (%d)\n"), (int)dwError);
 	}
 
 	// Display thread priority

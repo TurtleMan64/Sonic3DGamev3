@@ -77,7 +77,7 @@ private:
 public:
 	EntityRenderer(ShaderProgram* shader, Matrix4f* projectionMatrix);
 
-	void render(Entity*, ShaderProgram*);
+	void render(Entity*);
 
 	void renderNEW(std::unordered_map<TexturedModel*, std::list<Entity*>>* entities);
 

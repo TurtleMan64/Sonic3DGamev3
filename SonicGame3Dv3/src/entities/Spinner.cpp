@@ -98,8 +98,8 @@ void Spinner::die()
 	Main_deleteEntity(this);
 	Main_deleteEntity(blades);
 
-	float height = 10.0f;
-	float spread = 20.0f;
+	//float height = 10.0f;
+	//float spread = 20.0f;
 
 	for (int i = 7; i != 0; i--)
 	{

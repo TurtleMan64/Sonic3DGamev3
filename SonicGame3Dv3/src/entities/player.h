@@ -112,7 +112,7 @@ private:
 	const int wallStickTimerMax = 30; //how long you stay on a wall after you go too slow
 	int wallStickTimer = 0;
 
-	float count = 0;
+	float animCount = 0;
 
 	Triangle3D* triCol = nullptr;
 	Vector3f* colPos = nullptr;
@@ -260,6 +260,8 @@ public:
 
 	void die();
 
+	Vector3f getOverallVel();
+
 private:
 	void adjustCamera();
 
@@ -310,6 +312,12 @@ private:
 
 	void animate();
 
-	//std::string getName();
+	void createSpindashTrails(Vector3f* initPos, Vector3f* endPos, int count, int life);
+
+	void newSpindashTrail(Vector3f* position, int life, int colourID);
+
+	void newSpindashTrail(Vector3f* position, float xVel, float yVel, float zVel, float gravity, int life, float size, int colourID);
+
+	void createSompParticles();
 };
 #endif

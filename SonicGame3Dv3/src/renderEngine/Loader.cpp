@@ -129,7 +129,7 @@ GLuint Loader_loadTexture(char* fileName)
 
 GLuint Loader_loadTextureWORKS(char* fileName)
 {
-	std::string name = "res/img_test.png";
+	std::string name = fileName;
 	GLuint tex_ID;
 	tex_ID = SOIL_load_OGL_texture(
 		name.c_str(),

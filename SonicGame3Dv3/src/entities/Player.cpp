@@ -43,7 +43,7 @@ std::list<TexturedModel*> Player::modelRightFoot;
 
 ManiaSonicModel* Player::maniaSonic;
 
-int Player::characterID = 4;
+int Player::characterID = 6;
 
 extern bool INPUT_JUMP;
 extern bool INPUT_ACTION;
@@ -83,7 +83,7 @@ Player::Player(float x, float y, float z)
 void Player::step()
 {
 	previousPos.set(&position);
-	count++;
+	animCount++;
 	setMovementInputs();
 	adjustCamera();
 	checkSkid();
@@ -384,7 +384,7 @@ void Player::step()
 
 				if (canStick)
 				{
-					Vector3f speeds = calculatePlaneSpeed((float)((xVel + xVelAir + xDisp)), (float)((yVel + yDisp)), (float)(zVel + zVelAir + zDisp), colPos, &(triCol->normal));
+					Vector3f speeds = calculatePlaneSpeed((float)((xVel + xVelAir + xDisp)), (float)((yVel + yDisp)), (float)(zVel + zVelAir + zDisp), &(triCol->normal));
 					xVelGround = speeds.x;
 					zVelGround = speeds.z;
 					isBall = false;
@@ -580,50 +580,63 @@ void Player::step()
 	if (!inWater && inWaterPrevious)
 	{
 		AudioPlayer::play(5, getPosition());
-		new Particle(ParticleResources::textureSplash, &Vector3f(getX(), waterHeight + 5, getZ()), &Vector3f(0, 0, 0), 0, 30, 0, 10, 0);
+		Vector3f pos(getX(), waterHeight + 5, getZ());
+		Vector3f vel(0, 0, 0);
+		new Particle(ParticleResources::textureSplash, &pos, &vel, 0, 30, 0, 10, 0);
 		yVel += 0.4f;
-		/*
+		
 		float totXVel = xVel + xVelAir;
 		float totZVel = zVel + zVelAir;
-		int numBubbles = ((int)Math.abs(yVel * 8)) + 18;
+		int numBubbles = ((int)abs(yVel * 8)) + 18;
 		for (int i = 0; i < numBubbles; i++)
 		{
-			float xOff = (float)(7 * (Math.random() - 0.5));
-			float zOff = (float)(7 * (Math.random() - 0.5));
-			new Particle(
-				ParticleResources.textureBubble,
-				new Vector3f(getX() + xOff, waterHeight + 2, getZ() + zOff),
-				new Vector3f((float)(Math.random() - 0.5f + totXVel*0.4f),
-				(float)(Math.random()*0.3 + 0.2f + yVel*0.3),
-					(float)(Math.random() - 0.5f + totZVel*0.4f)),
-				0.05f, 60, 0, 4, 0);
+			float xOff = (7 * (random() - 0.5f));
+			float zOff = (7 * (random() - 0.5f));
+
+			Vector3f bubPos(
+				getX() + xOff,
+				waterHeight + 2,
+				getZ() + zOff);
+
+			Vector3f bubVel(
+				random() - 0.5f + totXVel*0.4f,
+				random()*0.3f + 0.2f + yVel*0.3f,
+				random() - 0.5f + totZVel*0.4f);
+
+			new Particle(ParticleResources::textureBubble, &bubPos, &bubVel, 0.05f, 60, 0, 4, 0);
 		}
-		*/
 	}
 
 	//underwater friction
 	if (inWater && !inWaterPrevious)
 	{
 		AudioPlayer::play(5, getPosition());
-		//new Particle(ParticleResources.textureSplash, new Vector3f(getX(), waterHeight + 5, getZ()), new Vector3f(0, 0, 0), 0, 30, 0, 10, 0);
-		/*
+		Vector3f pos(getX(), waterHeight + 5, getZ());
+		Vector3f vel(0, 0, 0);
+		new Particle(ParticleResources::textureSplash, &pos, &vel, 0, 30, 0, 10, 0);
+
 		float totXVel = xVel + xVelAir;
 		float totZVel = zVel + zVelAir;
-		int numBubbles = ((int)Math.abs(yVel * 8)) + 18;
+		int numBubbles = ((int)abs(yVel * 8)) + 18;
 		for (int i = 0; i < numBubbles; i++)
 		{
-			float xOff = (float)(7 * (Math.random() - 0.5));
-			float zOff = (float)(7 * (Math.random() - 0.5));
-			new Particle(
-				ParticleResources.textureBubble,
-				new Vector3f(getX() + xOff, waterHeight + 2, getZ() + zOff),
-				new Vector3f((float)(Math.random() - 0.5f + totXVel*0.4f),
-				(float)(Math.random()*0.3 + 0.2f - yVel*0.3),
-					(float)(Math.random() - 0.5f + totZVel*0.4f)),
-				0.05f, 60, 0, 4, 0);
+			float xOff = (7 * (random() - 0.5f));
+			float zOff = (7 * (random() - 0.5f));
+
+			Vector3f bubPos(
+				getX() + xOff,
+				waterHeight + 2,
+				getZ() + zOff);
+
+			Vector3f bubVel(
+				random() - 0.5f + totXVel*0.4f,
+				random()*0.3f + 0.2f - yVel*0.3f,
+				random() - 0.5f + totZVel*0.4f);
+
+			new Particle(ParticleResources::textureBubble, &bubPos, &bubVel, 0.05f, 60, 0, 4, 0);
 		}
-		*/
-		yVel = (float)fmax(yVel, -1);
+
+		yVel = fmaxf(yVel, -1);
 		xVelGround *= 0.75f;
 		zVelGround *= 0.75f;
 		xVelAir *= 0.75f;
@@ -702,23 +715,23 @@ void Player::removeLimbsFromGame()
 	Main_deleteEntity(myRightFoot); myRightFoot = nullptr;
 }
 
-void Player::setLimbsVisibility(bool visible)
+void Player::setLimbsVisibility(bool newVisible)
 {
 	if (myBody == nullptr) return;
-	myBody->setVisible(visible);
-	myHead->setVisible(visible);
-	myLeftHumerus->setVisible(visible);
-	myLeftForearm->setVisible(visible);
-	myLeftHand->setVisible(visible);
-	myLeftThigh->setVisible(visible);
-	myLeftShin->setVisible(visible);
-	myLeftFoot->setVisible(visible);
-	myRightHumerus->setVisible(visible);
-	myRightForearm->setVisible(visible);
-	myRightHand->setVisible(visible);
-	myRightThigh->setVisible(visible);
-	myRightShin->setVisible(visible);
-	myRightFoot->setVisible(visible);
+	myBody->setVisible(newVisible);
+	myHead->setVisible(newVisible);
+	myLeftHumerus->setVisible(newVisible);
+	myLeftForearm->setVisible(newVisible);
+	myLeftHand->setVisible(newVisible);
+	myLeftThigh->setVisible(newVisible);
+	myLeftShin->setVisible(newVisible);
+	myLeftFoot->setVisible(newVisible);
+	myRightHumerus->setVisible(newVisible);
+	myRightForearm->setVisible(newVisible);
+	myRightHand->setVisible(newVisible);
+	myRightThigh->setVisible(newVisible);
+	myRightShin->setVisible(newVisible);
+	myRightFoot->setVisible(newVisible);
 }
 
 void Player::updateLimbs(int animIndex, float time)
@@ -1330,14 +1343,14 @@ void Player::applyFriction(float frictionToApply)
 void Player::calcSpindashAngle()
 {
 	Camera* cam = Global::gameCamera;
-	float inputMag = (float)sqrt(movementInputX*movementInputX + movementInputY*movementInputY);
+	float inputMag = sqrtf(movementInputX*movementInputX + movementInputY*movementInputY);
 	if (inputMag >= 0.3)
 	{
-		spindashAngle = (float)((toRadians(-cam->getYaw() - movementAngle)));
+		spindashAngle = ((toRadians(-cam->getYaw() - movementAngle)));
 	}
 	else
 	{
-		spindashAngle = (float)((toRadians(getRotY())));
+		spindashAngle = ((toRadians(getRotY())));
 	}
 }
 
@@ -1662,15 +1675,15 @@ void Player::adjustCamera()
 
 		if (CollisionChecker::checkCollision(position.x, position.y, position.z, headPos.x, headPos.y, headPos.z) == true)
 		{
-			Vector3f* colPos = CollisionChecker::getCollidePosition();
+			Vector3f* posCol = CollisionChecker::getCollidePosition();
 
 			Vector3f diff;
 
-			diff.x = colPos->x - getX();
-			diff.y = colPos->y - getY();
-			diff.z = colPos->z - getZ();
+			diff.x = posCol->x - getX();
+			diff.y = posCol->y - getY();
+			diff.z = posCol->z - getZ();
 
-			float newHeadHeight = diff.length() - 1;
+			//float newHeadHeight = diff.length() - 1;
 
 			//camPos.set(getX() + currNorm.x*newHeadHeight,
 			//	getY() + currNorm.y*newHeadHeight,
@@ -1678,13 +1691,13 @@ void Player::adjustCamera()
 		}
 		else if (CollisionChecker::checkCollision(headPos.x, headPos.y, headPos.z, camPos.x, camPos.y, camPos.z) == true)
 		{
-			Vector3f* colPos = CollisionChecker::getCollidePosition();
+			Vector3f* posCol = CollisionChecker::getCollidePosition();
 
 			Vector3f diff;
 
-			diff.x = colPos->x - headPos.x;
-			diff.y = colPos->y - headPos.y;
-			diff.z = colPos->z - headPos.z;
+			diff.x = posCol->x - headPos.x;
+			diff.y = posCol->y - headPos.y;
+			diff.z = posCol->z - headPos.z;
 
 			float newRadius = diff.length() - 4;
 
@@ -1914,7 +1927,7 @@ void Player::animate()
 		prevPos = prevPos + offset;
 		Vector3f newPos(displayPos);
 		newPos = newPos + offset;
-		//createSpindashTrails(prevPos, newPos, 5, 20);
+		createSpindashTrails(&prevPos, &newPos, 5, 20);
 	}
 
 	if (isStomping)
@@ -1930,15 +1943,15 @@ void Player::animate()
 		prevPos = prevPos + offset;
 		Vector3f newPos(displayPos);
 		newPos = newPos + offset;
-		//createSpindashTrails(prevPos, newPos, 5, 20);
+		createSpindashTrails(&prevPos, &newPos, 5, 20);
 		updateLimbs(3, 100);
 	}
 	else if (isBouncing)
 	{
-		if (myBody != nullptr) myBody->setBaseOrientation(&displayPos, 0, twistAngle, pitchAngle, -count * 60);
+		if (myBody != nullptr) myBody->setBaseOrientation(&displayPos, 0, twistAngle, pitchAngle, -animCount * 60);
 		if (Player::maniaSonic != nullptr)
 		{
-			Player::maniaSonic->setOrientation(dspX, dspY, dspZ, 0, twistAngle, pitchAngle, -count*60);
+			Player::maniaSonic->setOrientation(dspX, dspY, dspZ, 0, twistAngle, pitchAngle, -animCount*60);
 			Player::maniaSonic->animate(12, 0);
 			setLimbsVisibility(false);
 		}
@@ -1948,15 +1961,15 @@ void Player::animate()
 		prevPos = prevPos + offset;
 		Vector3f newPos(displayPos);
 		newPos = newPos + offset;
-		//createSpindashTrails(prevPos, newPos, 5, 20);
+		createSpindashTrails(&prevPos, &newPos, 5, 20);
 		updateLimbs(12, 0);
 	}
 	else if (isJumping)
 	{
-		if (myBody != nullptr) myBody->setBaseOrientation(&displayPos, 0, twistAngle, pitchAngle, -count * 35);
+		if (myBody != nullptr) myBody->setBaseOrientation(&displayPos, 0, twistAngle, pitchAngle, -animCount * 35);
 		if (Player::maniaSonic != nullptr)
 		{
-			Player::maniaSonic->setOrientation(dspX, dspY, dspZ, 0, twistAngle, pitchAngle, -count*35);
+			Player::maniaSonic->setOrientation(dspX, dspY, dspZ, 0, twistAngle, pitchAngle, -animCount*35);
 			Player::maniaSonic->animate(12, 0);
 			setLimbsVisibility(false);
 		}
@@ -1964,10 +1977,10 @@ void Player::animate()
 	}
 	else if (isBall)
 	{
-		if (myBody != nullptr) myBody->setBaseOrientation(dspX, dspY, dspZ, diff, yawAngle, pitchAngle, -count * 70);
+		if (myBody != nullptr) myBody->setBaseOrientation(dspX, dspY, dspZ, diff, yawAngle, pitchAngle, -animCount * 70);
 		if (Player::maniaSonic != nullptr)
 		{
-			Player::maniaSonic->setOrientation(dspX, dspY, dspZ, diff, yawAngle, pitchAngle, -count*70);
+			Player::maniaSonic->setOrientation(dspX, dspY, dspZ, diff, yawAngle, pitchAngle, -animCount*70);
 			Player::maniaSonic->animate(12, 0);
 			setLimbsVisibility(false);
 		}
@@ -1977,7 +1990,7 @@ void Player::animate()
 		prevPos = prevPos + offset;
 		Vector3f newPos(displayPos);
 		newPos = newPos + offset;
-		//createSpindashTrails(prevPos, newPos, 5, 20);
+		createSpindashTrails(&prevPos, &newPos, 5, 20);
 		updateLimbs(12, 0);
 	}
 	else if (isSpindashing)
@@ -1989,7 +2002,7 @@ void Player::animate()
 		float zrotoff = -(spindashTimer*spindashTimer*0.8f);
 		if (spindashTimer >= spindashTimerMax)
 		{
-			zrotoff = -(count * 50);
+			zrotoff = -(animCount * 50);
 		}
 		if (myBody != nullptr) myBody->setBaseOrientation(dspX, dspY, dspZ, diffNew, yawAngle, pitchAngle, zrotoff);
 		updateLimbs(12, 0);
@@ -2016,7 +2029,7 @@ void Player::animate()
 	else if (onPlane && mySpeed < 0.01)
 	{
 		if (Player::maniaSonic != nullptr) { Player::maniaSonic->setVisible(false); }
-		float time = (float)fmod((count * 1.0f), 100);
+		float time = (float)fmod((animCount * 1.0f), 100);
 		updateLimbs(0, time);
 	}
 	else if (isSkidding)
@@ -2067,11 +2080,14 @@ void Player::animate()
 			int density = snowDensity;
 			for (int i = 0; i < density; i++)
 			{
-				new Particle(ParticleResources::textureSnowball,
-					&Vector3f(basex + radius2*random(),
-						basey + radius*random(),
-						basez + radius2*random()),
-					&Vector3f(0.25f*7.5f, -0.4f*7.5f, 0.15f*7.5f), 0, 80, 0, random() + 0.75f, -0.02f);
+				Vector3f pos(basex + radius2*random(),
+							 basey + radius*random(),
+							 basez + radius2*random());
+
+				Vector3f vel(0.25f*7.5f, -0.4f*7.5f, 0.15f*7.5f);
+
+				new Particle(ParticleResources::textureSnowball, &pos, &vel, 
+					0, 80, 0, random() + 0.75f, -0.02f);
 			}
 			break;
 		}
@@ -2084,6 +2100,92 @@ void Player::animate()
 
 	previousDisplayPos.set(&displayPos);
 	updateLimbsMatrix();
+}
+
+void Player::createSpindashTrails(Vector3f* initPos, Vector3f* endPos, int count, int life)
+{
+	Vector3f diff(endPos);
+	diff.x -= initPos->x;
+	diff.y -= initPos->y;
+	diff.z -= initPos->z;
+
+	diff.scale(1.0f / (count));
+
+	for (int i = 0; i < count; i++)
+	{
+		Vector3f offset(&diff);
+		offset.scale((float)i);
+		offset.x += initPos->x;
+		offset.y += initPos->y;
+		offset.z += initPos->z;
+
+		newSpindashTrail(&offset, life, characterID);
+	}
+}
+
+void Player::newSpindashTrail(Vector3f* trailPos, int life, int colourID)
+{
+	newSpindashTrail(trailPos, 0, 0, 0, 0, life, 10, colourID);
+}
+
+void Player::newSpindashTrail(Vector3f* trailPos, float trailXVel, float trailYVel, float trailZVel, float trailGravity, int life, float size, int colourID)
+{
+	Vector3f spd(trailXVel, trailYVel, trailZVel);
+	switch (colourID)
+	{
+		case 0:
+			new Particle(ParticleResources::textureLightBlueTrail,
+				trailPos, &spd,
+				trailGravity, life, 0, size, -(size / life));
+			break;
+
+		case 1:
+			new Particle(ParticleResources::textureBlueTrail,
+				trailPos, &spd,
+				trailGravity, life, 0, size, -(size / life));
+			break;
+
+		case 2:
+			new Particle(ParticleResources::textureBlackTrail,
+				trailPos, &spd,
+				trailGravity, life, 0, size, -(size / life));
+			break;
+
+		case 3:
+			new Particle(ParticleResources::textureGrayTrail,
+				trailPos, &spd,
+				trailGravity, life, 0, size, -(size / life));
+			break;
+
+		case 4:
+			new Particle(ParticleResources::textureLightBlueTrail,
+				trailPos, &spd,
+				trailGravity, life, 0, size, -(size / life));
+			break;
+
+		default:
+			break;
+	}
+}
+
+void Player::createSompParticles()
+{
+	float totXVel = xVel + xVelAir;
+	float totZVel = zVel + zVelAir;
+	int numBubbles = ((int)abs(yVel * 10)) + 18;
+	for (int i = 0; i < numBubbles; i++)
+	{
+		float xOff = (18 * (random() - 0.5f));
+		float zOff = (18 * (random() - 0.5f));
+
+		Vector3f pos(getX() + xOff, getY() + 2, getZ() + zOff);
+
+		newSpindashTrail(&pos, 
+			(random() - 0.5f) * 3 + totXVel*0.8f,
+			(random()*1.2f + 0.5f),
+			(random() - 0.5f) * 3 + totZVel*0.8f,
+			0.08f, 25, 14, characterID);
+	}
 }
 
 void Player::goUp()
@@ -2107,9 +2209,9 @@ float Player::getxVel()
 	return xVel;
 }
 
-void Player::setxVel(float xVel)
+void Player::setxVel(float newXVel)
 {
-	this->xVel = xVel;
+	xVel = newXVel;
 }
 
 float Player::getyVel()
@@ -2117,9 +2219,9 @@ float Player::getyVel()
 	return yVel;
 }
 
-void Player::setyVel(float yVel)
+void Player::setyVel(float newYVel)
 {
-	this->yVel = yVel;
+	yVel = newYVel;
 }
 
 float Player::getzVel()
@@ -2127,14 +2229,14 @@ float Player::getzVel()
 	return zVel;
 }
 
-void Player::setzVel(float zVel)
+void Player::setzVel(float newZVel)
 {
-	this->zVel = zVel;
+	zVel = newZVel;
 }
 
-void Player::setxVelAir(float xVelAir)
+void Player::setxVelAir(float newXVelAir)
 {
-	this->xVelAir = xVelAir;
+	xVelAir = newXVelAir;
 }
 
 float Player::getXVelAir()
@@ -2142,9 +2244,9 @@ float Player::getXVelAir()
 	return xVelAir;
 }
 
-void Player::setzVelAir(float zVelAir)
+void Player::setzVelAir(float newZVelAir)
 {
-	this->zVelAir = zVelAir;
+	zVelAir = newZVelAir;
 }
 
 float Player::getZVelAir()
@@ -2322,4 +2424,9 @@ void Player::die()
 		AudioPlayer::play(9, getPosition());
 		deadTimer = 180;
 	}
+}
+
+Vector3f Player::getOverallVel()
+{
+	return Vector3f(xVel, yVel, zVel);
 }

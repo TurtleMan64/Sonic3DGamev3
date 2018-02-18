@@ -1,6 +1,8 @@
 #ifndef SOURCE_H
 #define SOURCE_H
 
+#include <AL/al.h>
+
 class Source
 {
 private:
@@ -32,8 +34,8 @@ public:
 
 	void setPosition(float x, float y, float z);
 
-	int getSourceID();
+	ALuint getSourceID();
 
-	int getLastPlayedBufferID();
+	ALuint getLastPlayedBufferID();
 };
 #endif

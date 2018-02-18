@@ -50,7 +50,8 @@ void ParticleShader::loadTextureCoordInfo(Vector2f* offset1, Vector2f* offset2, 
 {
 	load2DVector(location_texOffset1, offset1);
 	load2DVector(location_texOffset2, offset2);
-	load2DVector(location_texCoordInfo, &Vector2f(numRows, blend));
+	Vector2f info(numRows, blend);
+	load2DVector(location_texCoordInfo, &info);
 }
 
 void ParticleShader::loadBrightness(float brightness)

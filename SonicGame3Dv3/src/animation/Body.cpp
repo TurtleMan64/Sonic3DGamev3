@@ -28,12 +28,12 @@ void Body::step()
 
 }
 
-void Body::update(float time)
+void Body::update(float newTime)
 {
-	prevTime = this->time;
-	this->time = (float)(std::fmax(time, 0));
-	time = this->time;
-	deltaTime = this->time - prevTime;
+	prevTime = time;
+	time = fmaxf(newTime, 0);
+	newTime = time;
+	deltaTime = time - prevTime;
 	bool inRange = false;
 	Keyframe* key1 = nullptr;
 	Keyframe* key2 = nullptr;
@@ -51,7 +51,7 @@ void Body::update(float time)
 		key1 = &(*animations)[animationIndex].keyframes[i];
 		key2 = &(*animations)[animationIndex].keyframes[i + 1];
 
-		if (time >= key1->time && time <= key2->time)
+		if (newTime >= key1->time && newTime <= key2->time)
 		{
 			inRange = true;
 			break;
@@ -65,10 +65,10 @@ void Body::update(float time)
 		//and add a certain ratio of the difference between
 		//key2 and key1 to key1 for the interpolated value
 		//float ratio = (time-key1.time)/(key2.time-key1.time);
-		float t = (time - key1->time) / (key2->time - key1->time);
+		float t = (newTime - key1->time) / (key2->time - key1->time);
 
 		//sinusoidal interpolation
-		t = 1 - ((float)(cos(M_PI*t) + 1)*0.5f);
+		t = 1 - (((float)cos(M_PI*t) + 1)*0.5f);
 
 		float ratio = t;
 
@@ -142,26 +142,26 @@ void Body::update(float time)
 	//setScale(newScale);
 }
 
-void Body::setBaseOrientation(Vector3f* basePosition, float rotX, float rotY, float rotZ, float rotS)
+void Body::setBaseOrientation(Vector3f* basePosition, float newBRotX, float newBRotY, float newBRotZ, float newBRotS)
 {
 	baseX = basePosition->x;
 	baseY = basePosition->y;
 	baseZ = basePosition->z;
-	baseRotX = rotX;
-	baseRotY = rotY;
-	baseRotZ = rotZ;
-	baseRotS = rotS;
+	baseRotX = newBRotX;
+	baseRotY = newBRotY;
+	baseRotZ = newBRotZ;
+	baseRotS = newBRotS;
 }
 
-void Body::setBaseOrientation(float baseX, float baseY, float baseZ, float rotX, float rotY, float rotZ, float rotS)
+void Body::setBaseOrientation(float newBaseX, float newBaseY, float newBaseZ, float newRotX, float newRotY, float newRotZ, float newRotS)
 {
-	this->baseX = baseX;
-	this->baseY = baseY;
-	this->baseZ = baseZ;
-	baseRotX = rotX;
-	baseRotY = rotY;
-	baseRotZ = rotZ;
-	baseRotS = rotS;
+	baseX = newBaseX;
+	baseY = newBaseY;
+	baseZ = newBaseZ;
+	baseRotX = newRotX;
+	baseRotY = newRotY;
+	baseRotZ = newRotZ;
+	baseRotS = newRotS;
 }
 
 //void Body::setBaseRotZ(float rotZ)

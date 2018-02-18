@@ -79,7 +79,30 @@ void CollisionModel::offsetModel(Vector3f* offset)
 
 void CollisionModel::rotateModelY(float yRot, Vector3f* center)
 {
+	float angleRad = toRadians(yRot);
+	float cosAng = cosf(angleRad);
+	float sinAng = sinf(angleRad);
+	for (Triangle3D* tri : triangles)
+	{
+		float xDiff = tri->p1X - center->x;
+		float zDiff = tri->p1Z - center->z;
+		tri->p1X = center->x + ((xDiff)*cosAng - (zDiff)*sinAng);
+		tri->p1Z = center->z - (-(zDiff)*cosAng - (xDiff)*sinAng);
 
+		xDiff = tri->p2X - center->x;
+		zDiff = tri->p2Z - center->z;
+		tri->p2X = center->x + ((xDiff)*cosAng - (zDiff)*sinAng);
+		tri->p2Z = center->z - (-(zDiff)*cosAng - (xDiff)*sinAng);
+
+		xDiff = tri->p3X - center->x;
+		zDiff = tri->p3Z - center->z;
+		tri->p3X = center->x + ((xDiff)*cosAng - (zDiff)*sinAng);
+		tri->p3Z = center->z - (-(zDiff)*cosAng - (xDiff)*sinAng);
+
+		tri->generateValues();
+	}
+
+	generateMinMaxValues();
 }
 
 //makes a collision model be the transformed version of this collision model

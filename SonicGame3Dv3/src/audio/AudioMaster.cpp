@@ -53,31 +53,16 @@ void AudioMaster::updateListenerData(Vector3f* pos, Vector3f* vel, float camYaw,
 	float zOff = -sinf(toRadians(camYaw + 90))*((cosf(toRadians(camPitch))));
 	Vector3f at(xOff, yOff, zOff);
 	at.normalize();
-	//at.scale(30);
-
-	//float xOff3 =  -cosf(toRadians(camYaw + 90))*(30*(cosf(toRadians(camPitch))));
-	//float yOff3 =   sinf(toRadians(camPitch + 180)) * 30;
-	//float zOff3 =  -sinf(toRadians(camYaw + 90))*(30*(cosf(toRadians(camPitch))));
 
 	float xOff2 = -cosf(toRadians(camYaw + 90))*((cosf(toRadians(camPitch + 90))));
 	float yOff2 =  sinf(toRadians(camPitch + 90 + 180));
 	float zOff2 = -sinf(toRadians(camYaw + 90))*((cosf(toRadians(camPitch + 90))));
 	Vector3f up(xOff2, yOff2, zOff2);
 	up.normalize();
-	//up.scale(30);
 
 	ALfloat listenerPos[] = { pos->x, pos->y, pos->z };
-	ALfloat listenerVel[] = { 0.0f, 0.0f, 0.0f };
+	ALfloat listenerVel[] = { vel->x/3.0f, vel->y/3.0f, vel->z/3.0f };
 	ALfloat listenerOri[] = { at.x, at.y, at.z, up.x, up.y, up.z };
-
-
-	//Test
-	//if (Global::gameSpring != nullptr)
-	{
-		//Global::gameSpring->setPosition(pos->x+ at.x, pos->y+ at.y, pos->z+ at.z);
-		//Global::gameSpring->setRotY(-camYaw + 90);
-		//Global::gameSpring->setRotZ(-camPitch);
-	}
 
 	alListenerfv(AL_POSITION,    listenerPos);
 	alListenerfv(AL_VELOCITY,    listenerVel);

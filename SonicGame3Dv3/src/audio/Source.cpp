@@ -1,4 +1,4 @@
-#include <AL\al.h>
+#include <AL/al.h>
 
 #include "source.h"
 
@@ -9,7 +9,7 @@ Source::Source(float rolloff, float referencedist, float max)
 	alSourcef(sourceID, AL_REFERENCE_DISTANCE, referencedist);
 	alSourcef(sourceID, AL_MAX_DISTANCE, max);
 
-	bufferID = -1;
+	bufferID = (ALuint)-1;
 }
 
 void Source::play(ALuint buffer)
@@ -79,12 +79,12 @@ void Source::setPosition(float x, float y, float z)
 	//alSource3f(sourceID, AL_POSITION, x, y, z);
 }
 
-int Source::getSourceID()
+ALuint Source::getSourceID()
 {
 	return sourceID;
 }
 
-int Source::getLastPlayedBufferID()
+ALuint Source::getLastPlayedBufferID()
 {
 	return bufferID;
 }

@@ -33,5 +33,7 @@ public:
 	void invertPitch();
 
 	Vector3f calcVelocity();
+
+	Vector3f* getFadePosition();
 };
 #endif

@@ -91,12 +91,17 @@ void Player::step()
 	iFrame = std::max(0, iFrame-1);
 	hitTimer = std::max(0, hitTimer-1);
 	canMoveTimer = std::max(-1, canMoveTimer - 1);
+	deadTimer = std::max(-1, deadTimer - 1);
 
-	if (deadTimer == 1)
+	if (deadTimer == 59)
+	{
+		Vector3f partVel(0, 0, 0);
+		new Particle(ParticleResources::textureBlackFadeOut, Global::gameCamera->getFadePosition(), &partVel, 0, 66, 0, 400, 0, true);
+	}
+	else if (deadTimer == 0)
 	{
 		Global::shouldRestartLevel = true;
 	}
-	deadTimer = std::max(-1, deadTimer - 1);
 
 	if (canMoveTimer == 0)
 	{
@@ -582,7 +587,7 @@ void Player::step()
 		AudioPlayer::play(5, getPosition());
 		Vector3f pos(getX(), waterHeight + 5, getZ());
 		Vector3f vel(0, 0, 0);
-		new Particle(ParticleResources::textureSplash, &pos, &vel, 0, 30, 0, 10, 0);
+		new Particle(ParticleResources::textureSplash, &pos, &vel, 0, 30, 0, 10, 0, false);
 		yVel += 0.4f;
 		
 		float totXVel = xVel + xVelAir;
@@ -603,7 +608,7 @@ void Player::step()
 				random()*0.3f + 0.2f + yVel*0.3f,
 				random() - 0.5f + totZVel*0.4f);
 
-			new Particle(ParticleResources::textureBubble, &bubPos, &bubVel, 0.05f, 60, 0, 4, 0);
+			new Particle(ParticleResources::textureBubble, &bubPos, &bubVel, 0.05f, 60, 0, 4, 0, false);
 		}
 	}
 
@@ -613,7 +618,7 @@ void Player::step()
 		AudioPlayer::play(5, getPosition());
 		Vector3f pos(getX(), waterHeight + 5, getZ());
 		Vector3f vel(0, 0, 0);
-		new Particle(ParticleResources::textureSplash, &pos, &vel, 0, 30, 0, 10, 0);
+		new Particle(ParticleResources::textureSplash, &pos, &vel, 0, 30, 0, 10, 0, false);
 
 		float totXVel = xVel + xVelAir;
 		float totZVel = zVel + zVelAir;
@@ -633,7 +638,7 @@ void Player::step()
 				random()*0.3f + 0.2f - yVel*0.3f,
 				random() - 0.5f + totZVel*0.4f);
 
-			new Particle(ParticleResources::textureBubble, &bubPos, &bubVel, 0.05f, 60, 0, 4, 0);
+			new Particle(ParticleResources::textureBubble, &bubPos, &bubVel, 0.05f, 60, 0, 4, 0, false);
 		}
 
 		yVel = fmaxf(yVel, -1);
@@ -2097,7 +2102,7 @@ void Player::animate()
 				Vector3f vel(0.25f*7.5f, -0.4f*7.5f, 0.15f*7.5f);
 
 				new Particle(ParticleResources::textureSnowball, &pos, &vel, 
-					0, 80, 0, random() + 0.75f, -0.02f);
+					0, 80, 0, random() + 0.75f, -0.02f, false);
 			}
 			break;
 		}
@@ -2146,43 +2151,43 @@ void Player::newSpindashTrail(Vector3f* trailPos, float trailXVel, float trailYV
 		case 0:
 			new Particle(ParticleResources::textureLightBlueTrail,
 				trailPos, &spd,
-				trailGravity, life, 0, size, -(size / life));
+				trailGravity, life, 0, size, -(size / life), false);
 			break;
 
 		case 1:
 			new Particle(ParticleResources::textureBlueTrail,
 				trailPos, &spd,
-				trailGravity, life, 0, size, -(size / life));
+				trailGravity, life, 0, size, -(size / life), false);
 			break;
 
 		case 2:
 			new Particle(ParticleResources::textureBlackTrail,
 				trailPos, &spd,
-				trailGravity, life, 0, size, -(size / life));
+				trailGravity, life, 0, size, -(size / life), false);
 			break;
 
 		case 3:
 			new Particle(ParticleResources::textureGrayTrail,
 				trailPos, &spd,
-				trailGravity, life, 0, size, -(size / life));
+				trailGravity, life, 0, size, -(size / life), false);
 			break;
 
 		case 4:
 			new Particle(ParticleResources::textureLightBlueTrail,
 				trailPos, &spd,
-				trailGravity, life, 0, size, -(size / life));
+				trailGravity, life, 0, size, -(size / life), false);
 			break;
 
 		case 5:
 			new Particle(ParticleResources::texturePinkTrail,
 				trailPos, &spd,
-				trailGravity, life, 0, size, -(size / life));
+				trailGravity, life, 0, size, -(size / life), false);
 			break;
 
 		case 6:
 			new Particle(ParticleResources::textureDarkGreenTrail,
 				trailPos, &spd,
-				trailGravity, life, 0, size, -(size / life));
+				trailGravity, life, 0, size, -(size / life), false);
 			break;
 
 		default:

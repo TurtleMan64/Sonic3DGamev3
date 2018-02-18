@@ -28,6 +28,7 @@ public:
 	static ParticleTexture* textureExplosion1;
 	static ParticleTexture* textureExplosion2;
 	static ParticleTexture* textureBlackFade;
+	static ParticleTexture* textureBlackFadeOut;
 	static ParticleTexture* textureTear1;
 	static ParticleTexture* textureTear2;
 

@@ -4,6 +4,32 @@
 #include "../toolbox/vector.h"
 #include "particlemaster.h"
 
+Particle::Particle(ParticleTexture* texture, Vector3f* position, Vector3f* velocity, float gravityEffect,
+	int lifeLength, float rotation, float scale, float scaleChange, bool posIsRef)
+{
+	this->texture = texture;
+	if (posIsRef)
+	{
+		this->positionRef = position;
+	}
+	else
+	{
+		this->positionRef = &this->position;
+	}
+	this->position.x = position->x;
+	this->position.y = position->y;
+	this->position.z = position->z;
+	this->velocity.x = velocity->x;
+	this->velocity.y = velocity->y;
+	this->velocity.z = velocity->z;
+	this->gravityEffect = gravityEffect;
+	this->lifeLength = lifeLength;
+	this->rotation = rotation;
+	this->scale = scale;
+	this->scaleChange = scaleChange;
+	ParticleMaster::addParticle(this);
+}
+
 void Particle::updateTextureCoordInfo()
 {
 	float lifeFactor = elapsedTime / (float)(lifeLength);
@@ -24,20 +50,6 @@ void Particle::setTextureOffset(Vector2f* offset, int index)
 	offset->y = (float)row / texture->getNumberOfRows();
 }
 
-Particle::Particle(ParticleTexture* texture, Vector3f* position, Vector3f* velocity, float gravityEffect,
-	int lifeLength, float rotation, float scale, float scaleChange)
-{
-	this->texture = texture;
-	this->position = position;
-	this->velocity = velocity;
-	this->gravityEffect = gravityEffect;
-	this->lifeLength = lifeLength;
-	this->rotation = rotation;
-	this->scale = scale;
-	this->scaleChange = scaleChange;
-	ParticleMaster::addParticle(this);
-}
-
 float Particle::getDistance()
 {
 	return distance;
@@ -50,7 +62,7 @@ ParticleTexture* Particle::getTexture()
 
 Vector3f* Particle::getPosition()
 {
-	return &position;
+	return positionRef;
 }
 
 float Particle::getRotation()

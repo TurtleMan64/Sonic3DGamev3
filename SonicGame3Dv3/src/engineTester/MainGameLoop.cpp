@@ -256,8 +256,6 @@ int main()
 			case STATE_RUNNING:
 			{
 				//game logic
-				Global::gameCamera->refresh();
-				ParticleMaster::update(Global::gameCamera);
 				GuiManager::increaseTimer();
 				for (auto e : gameEntities)
 				{
@@ -268,6 +266,8 @@ int main()
 					e.first->step();
 				}
 				skySphere.step();
+				Global::gameCamera->refresh();
+				ParticleMaster::update(Global::gameCamera);
 				Global::gameClock++;
 				break;
 			}

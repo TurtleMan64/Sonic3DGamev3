@@ -10,6 +10,7 @@ class Particle
 {
 private:
 	Vector3f position;
+	Vector3f* positionRef;
 	Vector3f velocity;
 	float gravityEffect;
 	int lifeLength;
@@ -29,7 +30,7 @@ private:
 
 public:
 	Particle(ParticleTexture* texture, Vector3f* position, Vector3f* velocity, float gravityEffect,
-		int lifeLength, float rotation, float scale, float scaleChange);
+		int lifeLength, float rotation, float scale, float scaleChange, bool posIsRef);
 
 	float getDistance();
 

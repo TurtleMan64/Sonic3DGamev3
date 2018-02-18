@@ -43,7 +43,7 @@ std::list<TexturedModel*> Player::modelRightFoot;
 
 ManiaSonicModel* Player::maniaSonic;
 
-int Player::characterID = 6;
+int Player::characterID = 4;
 
 extern bool INPUT_JUMP;
 extern bool INPUT_ACTION;
@@ -2052,8 +2052,8 @@ void Player::animate()
 		}
 	}
 	
-	float snowRadius = 50;
-	int snowDensity = 5;
+	float snowRadius = 110;
+	int snowDensity = 15;
 
 	switch (Global::levelID)
 	{

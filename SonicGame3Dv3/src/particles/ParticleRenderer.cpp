@@ -73,20 +73,9 @@ void ParticleRenderer::render(std::unordered_map<ParticleTexture*, std::list<Par
 				shader->loadOpacity(texture.first->getOpacity());
 				shader->loadGlow(texture.first->getGlow());
 
-				//fprintf(stdout, "texID  %d\n", texture.first->getTextureID());
-				//fprintf(stdout, "opa    %f\n", texture.first->getOpacity());
-				//fprintf(stdout, "glow   %f\n", texture.first->getGlow());
-
 				std::list<Particle*>* texturesList = &texture.second;
 				for (Particle* particle : (*texturesList))
 				{
-					//fprintf(stdout, "pos  %f %f %f\n", particle->getPosition()->x, particle->getPosition()->y, particle->getPosition()->z);
-					//fprintf(stdout, "rot  %f\n", particle->getRotation());
-					//fprintf(stdout, "sca  %f\n", particle->getScale());
-					//fprintf(stdout, "tex1 %f %f\n", particle->getTexOffset1()->getX(), particle->getTexOffset1()->getY());
-					//fprintf(stdout, "tex2 %f %f\n", particle->getTexOffset2()->getX(), particle->getTexOffset2()->getY());
-					//fprintf(stdout, "rows %f\n", (float)texture.first->getNumberOfRows());
-					//fprintf(stdout, "ble  %f\n\n", particle->getBlend());
 					updateModelViewMatrix(particle->getPosition(), particle->getRotation(), particle->getScale(), &viewMatrix);
 					shader->loadTextureCoordInfo(particle->getTexOffset1(), particle->getTexOffset2(), (float)texture.first->getNumberOfRows(), particle->getBlend());
 					glDrawArrays(GL_TRIANGLE_STRIP, 0, quad->getVertexCount());
@@ -130,7 +119,6 @@ void ParticleRenderer::cleanUp()
 void ParticleRenderer::updateModelViewMatrix(Vector3f* position, float rotation, float scale, Matrix4f* viewMatrix)
 {
 	Matrix4f modelMatrix;
-	modelMatrix.setIdentity();
 	modelMatrix.translate(position);
 	modelMatrix.m00 = viewMatrix->m00;
 	modelMatrix.m01 = viewMatrix->m10;

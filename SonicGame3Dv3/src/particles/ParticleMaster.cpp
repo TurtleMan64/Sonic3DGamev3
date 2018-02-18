@@ -55,7 +55,7 @@ void ParticleMaster::update(Camera* cam)
 
 		if (deletedEntry == false)
 		{
-			InsertionSort::sortHighToLow(list); //Maybe remove this for debug?
+			//InsertionSort::sortHighToLow(list); //Maybe remove this for debug?
 			mapIt++;
 		}
 	}

@@ -43,7 +43,7 @@ std::list<TexturedModel*> Player::modelRightFoot;
 
 ManiaSonicModel* Player::maniaSonic;
 
-int Player::characterID = 6;
+int Player::characterID = 4;
 
 extern bool INPUT_JUMP;
 extern bool INPUT_ACTION;

@@ -16,6 +16,8 @@ ParticleTexture* ParticleResources::textureLightBlueTrail = nullptr;
 ParticleTexture* ParticleResources::textureBlueTrail = nullptr;
 ParticleTexture* ParticleResources::textureBlackTrail = nullptr;
 ParticleTexture* ParticleResources::textureGrayTrail = nullptr;
+ParticleTexture* ParticleResources::texturePinkTrail = nullptr;
+ParticleTexture* ParticleResources::textureDarkGreenTrail = nullptr;
 ParticleTexture* ParticleResources::textureSplash = nullptr;
 ParticleTexture* ParticleResources::textureBubble = nullptr;
 ParticleTexture* ParticleResources::textureExplosion1 = nullptr;
@@ -38,6 +40,8 @@ void ParticleResources::loadParticles()
 	textureBlueTrail      = new ParticleTexture(Loader_loadTexture("res/Models/Particle/SpTrailBlue.png"), 1, 0.1f, 1);
 	textureBlackTrail     = new ParticleTexture(Loader_loadTexture("res/Models/Particle/SpTrailBlack.png"), 1, 0.1f, 1);
 	textureGrayTrail      = new ParticleTexture(Loader_loadTexture("res/Models/Particle/SpTrailGray.png"), 1, 0.1f, 1);
+	texturePinkTrail      = new ParticleTexture(Loader_loadTexture("res/Models/Particle/SpTrailPink.png"), 1, 0.1f, 1);
+	textureDarkGreenTrail = new ParticleTexture(Loader_loadTexture("res/Models/Particle/SpTrailDarkGreen.png"), 1, 0.1f, 1);
 	textureDust           = new ParticleTexture(Loader_loadTexture("res/Models/Particle/DustAtlas.png"), 4, 0.2f, 0);
 	textureSplash         = new ParticleTexture(Loader_loadTexture("res/Models/Particle/SplashAtlas.png"), 4, 0.6f, 0);
 	textureBubble         = new ParticleTexture(Loader_loadTexture("res/Models/Particle/BubbleInverseAtlas.png"), 4, 0.6f, 0);

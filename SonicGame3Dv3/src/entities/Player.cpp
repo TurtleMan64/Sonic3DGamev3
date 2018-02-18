@@ -417,7 +417,7 @@ void Player::step()
 				}
 				AudioPlayer::play(17, getPosition());
 
-				//createStompParticles();
+				createStompParticles();
 			}
 		}
 		else //check if you can smoothly transition from previous triangle to this triangle
@@ -1922,6 +1922,7 @@ void Player::animate()
 	if (homingAttackTimer > 0)
 	{
 		float height = 2;
+		if (characterID == 6) height = -5;
 		Vector3f offset(currNorm.x*height, currNorm.y*height, currNorm.z*height);
 		Vector3f prevPos(previousDisplayPos);
 		prevPos = prevPos + offset;
@@ -1938,6 +1939,7 @@ void Player::animate()
 		if (Player::maniaSonic != nullptr) { Player::maniaSonic->setVisible(false); }
 
 		float height = 2;
+		if (characterID == 6) height = -5;
 		Vector3f offset(currNorm.x*height, currNorm.y*height, currNorm.z*height);
 		Vector3f prevPos(previousDisplayPos);
 		prevPos = prevPos + offset;
@@ -1956,6 +1958,7 @@ void Player::animate()
 			setLimbsVisibility(false);
 		}
 		float height = 2;
+		if (characterID == 6) height = -5;
 		Vector3f offset(currNorm.x*height, currNorm.y*height, currNorm.z*height);
 		Vector3f prevPos(previousDisplayPos);
 		prevPos = prevPos + offset;
@@ -1985,6 +1988,7 @@ void Player::animate()
 			setLimbsVisibility(false);
 		}
 		float height = 2;
+		if (characterID == 6) height = -5;
 		Vector3f offset(currNorm.x*height, currNorm.y*height, currNorm.z*height);
 		Vector3f prevPos(previousDisplayPos);
 		prevPos = prevPos + offset;
@@ -2026,7 +2030,7 @@ void Player::animate()
 			Player::maniaSonic->animate(12, 0);
 		}
 	}
-	else if (onPlane && mySpeed < 0.01)
+	else if (onPlane && mySpeed < 0.01f)
 	{
 		if (Player::maniaSonic != nullptr) { Player::maniaSonic->setVisible(false); }
 		float time = (float)fmod((animCount * 1.0f), 100);
@@ -2163,12 +2167,24 @@ void Player::newSpindashTrail(Vector3f* trailPos, float trailXVel, float trailYV
 				trailGravity, life, 0, size, -(size / life));
 			break;
 
+		case 5:
+			new Particle(ParticleResources::texturePinkTrail,
+				trailPos, &spd,
+				trailGravity, life, 0, size, -(size / life));
+			break;
+
+		case 6:
+			new Particle(ParticleResources::textureDarkGreenTrail,
+				trailPos, &spd,
+				trailGravity, life, 0, size, -(size / life));
+			break;
+
 		default:
 			break;
 	}
 }
 
-void Player::createSompParticles()
+void Player::createStompParticles()
 {
 	float totXVel = xVel + xVelAir;
 	float totZVel = zVel + zVelAir;

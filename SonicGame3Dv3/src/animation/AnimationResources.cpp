@@ -22,20 +22,20 @@ std::vector<Animation> AnimationResources::animsHumanRightFoot;
 void AnimationResources::createAnimations()
 {
 	unsigned int animCount = 18;
-	while (animsHumanBody.size() < animCount) { Animation filler; animsHumanBody.push_back(filler); }
-	while (animsHumanHead.size() < animCount) { Animation filler; animsHumanHead.push_back(filler); }
-	while (animsHumanLeftHumerus.size() < animCount) { Animation filler; animsHumanLeftHumerus.push_back(filler); }
-	while (animsHumanLeftForearm.size() < animCount) { Animation filler; animsHumanLeftForearm.push_back(filler); }
-	while (animsHumanLeftHand.size() < animCount) { Animation filler; animsHumanLeftHand.push_back(filler); }
+	while (animsHumanBody.size()         < animCount) { Animation filler; animsHumanBody.push_back(filler); }
+	while (animsHumanHead.size()         < animCount) { Animation filler; animsHumanHead.push_back(filler); }
+	while (animsHumanLeftHumerus.size()  < animCount) { Animation filler; animsHumanLeftHumerus.push_back(filler); }
+	while (animsHumanLeftForearm.size()  < animCount) { Animation filler; animsHumanLeftForearm.push_back(filler); }
+	while (animsHumanLeftHand.size()     < animCount) { Animation filler; animsHumanLeftHand.push_back(filler); }
 	while (animsHumanRightHumerus.size() < animCount) { Animation filler; animsHumanRightHumerus.push_back(filler); }
 	while (animsHumanRightForearm.size() < animCount) { Animation filler; animsHumanRightForearm.push_back(filler); }
-	while (animsHumanRightHand.size() < animCount) { Animation filler; animsHumanRightHand.push_back(filler); }
-	while (animsHumanLeftThigh.size() < animCount) { Animation filler; animsHumanLeftThigh.push_back(filler); }
-	while (animsHumanLeftShin.size() < animCount) { Animation filler; animsHumanLeftShin.push_back(filler); }
-	while (animsHumanLeftFoot.size() < animCount) { Animation filler; animsHumanLeftFoot.push_back(filler); }
-	while (animsHumanRightThigh.size() < animCount) { Animation filler; animsHumanRightThigh.push_back(filler); }
-	while (animsHumanRightShin.size() < animCount) { Animation filler; animsHumanRightShin.push_back(filler); }
-	while (animsHumanRightFoot.size() < animCount) { Animation filler; animsHumanRightFoot.push_back(filler); }
+	while (animsHumanRightHand.size()    < animCount) { Animation filler; animsHumanRightHand.push_back(filler); }
+	while (animsHumanLeftThigh.size()    < animCount) { Animation filler; animsHumanLeftThigh.push_back(filler); }
+	while (animsHumanLeftShin.size()     < animCount) { Animation filler; animsHumanLeftShin.push_back(filler); }
+	while (animsHumanLeftFoot.size()     < animCount) { Animation filler; animsHumanLeftFoot.push_back(filler); }
+	while (animsHumanRightThigh.size()   < animCount) { Animation filler; animsHumanRightThigh.push_back(filler); }
+	while (animsHumanRightShin.size()    < animCount) { Animation filler; animsHumanRightShin.push_back(filler); }
+	while (animsHumanRightFoot.size()    < animCount) { Animation filler; animsHumanRightFoot.push_back(filler); }
 
 	//stand animation
 	animsHumanBody[0].addKeyframe(0.0f, 3.35f, -0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f);

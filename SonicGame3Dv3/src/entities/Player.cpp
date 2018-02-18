@@ -92,7 +92,7 @@ void Player::step()
 	hitTimer = std::max(0, hitTimer-1);
 	canMoveTimer = std::max(-1, canMoveTimer - 1);
 
-	if (deadTimer == 0)
+	if (deadTimer == 1)
 	{
 		Global::shouldRestartLevel = true;
 	}
@@ -1931,7 +1931,13 @@ void Player::animate()
 		createSpindashTrails(&prevPos, &newPos, 5, 20);
 	}
 
-	if (isStomping)
+	if (deadTimer >= 0)
+	{
+		if (Player::maniaSonic != nullptr) { Player::maniaSonic->setVisible(false); }
+		if (myBody != nullptr) myBody->setBaseOrientation(&displayPos, diff, yawAngle, pitchAngle, 0);
+		updateLimbs(15, 25);
+	}
+	else if (isStomping)
 	{
 		float h = sqrtf(xVelAir*xVelAir + zVelAir*zVelAir);
 		float zr = (toDegrees(atan2f(yVel, h)));

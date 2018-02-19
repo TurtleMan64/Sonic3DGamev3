@@ -31,6 +31,7 @@ Particle::Particle(ParticleTexture* texture, Vector3f* position, Vector3f* veloc
 	if (Global::renderParticles)
 	{
 		ParticleMaster::addParticle(this);
+		Global::countNew++;
 	}
 	else
 	{

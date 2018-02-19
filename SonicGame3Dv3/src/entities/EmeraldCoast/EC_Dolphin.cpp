@@ -11,6 +11,8 @@
 #include "../../toolbox/maths.h"
 #include "../camera.h"
 #include "../../audio/audioplayer.h"
+#include "../../particles/particle.h"
+#include "../../particles/particleresources.h"
 
 #include <list>
 #include <iostream>
@@ -84,6 +86,9 @@ void EC_Dolphin::step()
 			if (inWaterPrevious)
 			{
 				AudioPlayer::play(5, getPosition());
+				Vector3f pos(getX(), 5, getZ());
+				Vector3f vel(0, 0, 0);
+				new Particle(ParticleResources::textureSplash, &pos, &vel, 0, 30, 0, 10, 0, false);
 			}
 
 			inWaterPrevious = false;
@@ -99,6 +104,9 @@ void EC_Dolphin::step()
 			if (!inWaterPrevious)
 			{
 				AudioPlayer::play(5, getPosition());
+				Vector3f pos(getX(), 5, getZ());
+				Vector3f vel(0, 0, 0);
+				new Particle(ParticleResources::textureSplash, &pos, &vel, 0, 30, 0, 10, 0, false);
 			}
 
 			inWaterPrevious = true;

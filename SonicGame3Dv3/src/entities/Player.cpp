@@ -1418,7 +1418,7 @@ void Player::homingAttack()
 		}
 
 		Entity* closest = nullptr;
-		float dist = 12000; //Homing attack range. Distance squared
+		float dist = 16000; //Homing attack range. Distance squared
 		float myX = position.x;
 		float myZ = position.z;
 		float myY = position.y;
@@ -1621,10 +1621,35 @@ void Player::attemptLightdash()
 		zVelAir = diff.z * 5;
 		yVel = diff.y * 5;
 
+
+		Vector3f diffNew;
+		diffNew.x = closest->getX() - previousLightdashPosition.x;
+		diffNew.y = closest->getY() - previousLightdashPosition.y;
+		diffNew.z = closest->getZ() - previousLightdashPosition.z;
+
+		Vector3f vel(0, 0.0f, 0);
+
+		int count = 0;
+		while (count < 20)
+		{
+			Vector3f pos;
+			pos.x = previousLightdashPosition.x + ((diffNew.x*count) / 20.0f);
+			pos.y = previousLightdashPosition.y + ((diffNew.y*count) / 20.0f);
+			pos.z = previousLightdashPosition.z + ((diffNew.z*count) / 20.0f);
+
+			new Particle(ParticleResources::textureOrangeTrail, &pos, &vel,
+				0, 70, 0, 12, -(12.0f / 70.0f), false);
+			count++;
+		}
+
+
+
 		//move to ring location
 		setX(closest->getX());
 		setY(closest->getY());
 		setZ(closest->getZ());
+
+		previousLightdashPosition.set(closest->getPosition());
 	}
 	else
 	{
@@ -1897,6 +1922,7 @@ void Player::animate()
 	}
 
 	//footsteps
+	/*
 	if (onPlane)
 	{
 		if (isBall ||
@@ -1922,7 +1948,7 @@ void Player::animate()
 			}
 		}
 	}
-
+	*/
 
 	if (homingAttackTimer > 0)
 	{
@@ -2044,7 +2070,7 @@ void Player::animate()
 	else if (onPlane && mySpeed < 0.01f)
 	{
 		if (Player::maniaSonic != nullptr) { Player::maniaSonic->setVisible(false); }
-		float time = (float)fmod((animCount * 1.0f), 100);
+		float time = fmodf((animCount * 1.0f), 100);
 		updateLimbs(0, time);
 	}
 	else if (isSkidding)

@@ -13,6 +13,8 @@
 #include "../collision/triangle3d.h"
 #include "../toolbox/maths.h"
 #include "../audio/audioplayer.h"
+#include "../particles/particle.h"
+#include "../particles/particleresources.h"
 
 #include <list>
 #include <iostream>
@@ -80,18 +82,19 @@ void Ring::step()
 			Global::gamePlayer->getY() > getY() - hitboxV - Global::gamePlayer->getHitboxVertical()   && Global::gamePlayer->getY() < getY() + hitboxV)
 		{
 			AudioPlayer::play(4, getPosition());
-			/*
+			
 			for (int i = 0; i < 10; i++)
 			{
-				new Particle(ParticleResources.textureSparkleYellow,
-					new Vector3f(getX() + (float)Math.random() * 8 - 4,
-						getY() + (float)Math.random() * 8 - 4,
-						getZ() + (float)Math.random() * 8 - 4),
-					new Vector3f(0, 0.4f, 0),
-					0.025f, 30, 0, 7, -(7f / 30f));
+				Vector3f pos(
+					getX() + random() * 8 - 4,
+					getY() + random() * 8 - 4,
+					getZ() + random() * 8 - 4);
 
+				Vector3f vel(0, 0.4f, 0);
 
-			}*/
+				new Particle(ParticleResources::textureSparkleYellow, &pos, &vel,
+					0.025f, 30, 0, 7, -(7.0f / 30.0f), false);
+			}
 
 			Global::gameRingCount++;
 

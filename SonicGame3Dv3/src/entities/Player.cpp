@@ -1922,6 +1922,7 @@ void Player::animate()
 	}
 
 	//footsteps
+	/*
 	if (onPlane)
 	{
 		if (isBall ||
@@ -1947,7 +1948,7 @@ void Player::animate()
 			}
 		}
 	}
-
+	*/
 
 	if (homingAttackTimer > 0)
 	{
@@ -2069,7 +2070,7 @@ void Player::animate()
 	else if (onPlane && mySpeed < 0.01f)
 	{
 		if (Player::maniaSonic != nullptr) { Player::maniaSonic->setVisible(false); }
-		float time = (float)fmod((animCount * 1.0f), 100);
+		float time = fmodf((animCount * 1.0f), 100);
 		updateLimbs(0, time);
 	}
 	else if (isSkidding)

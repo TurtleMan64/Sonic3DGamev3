@@ -42,6 +42,7 @@
 #include "../entities/EmeraldCoast/ecdolphin.h"
 #include "../particles/particleresources.h"
 #include "../particles/particle.h"
+#include "../entities/killbox.h"
 
 float toFloat(char* input);
 int toInt(char* input);
@@ -581,6 +582,16 @@ void processLine(char** dat)
 				toFloat(dat[6]));                                  //power
 			Global::countNew++;
 			Main_addEntity(ramp);
+			return;
+		}
+
+		case 34: //Kill Box
+		{
+			KillBox* killbox = new KillBox(
+				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]),  //corner 1
+				toFloat(dat[4]), toFloat(dat[5]), toFloat(dat[6])); //corner 2
+			Global::countNew++;
+			Main_addEntity(killbox);
 			return;
 		}
 

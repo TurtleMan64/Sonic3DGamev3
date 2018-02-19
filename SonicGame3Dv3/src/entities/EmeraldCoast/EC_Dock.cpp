@@ -13,6 +13,7 @@
 #include "../../collision/collisionmodel.h"
 #include "../../collision/collisionchecker.h"
 #include "ecshark.h"
+#include "../../audio/audioplayer.h"
 
 #include <list>
 #include <iostream>
@@ -73,6 +74,7 @@ void EC_Dock::step()
 				CollisionChecker::deleteCollideModel(collideModelTransformed);
 				collideModelTransformed = nullptr;
 				Main_deleteEntity(this);
+				AudioPlayer::play(19, getPosition());
 			}
 		}
 	}

@@ -22,6 +22,8 @@ private:
 
 	int seeTimer;
 
+	bool inWaterPrevious;
+
 public:
 	EC_Shark();
 	EC_Shark(float x, float y, float z);

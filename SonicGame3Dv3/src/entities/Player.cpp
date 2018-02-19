@@ -167,7 +167,7 @@ void Player::step()
 		isStomping = false;
 		homingAttackTimer = -1;
 		float speed = sqrtf(xVelGround*xVelGround + zVelGround*zVelGround);
-		if (currNorm.y <= 0.3f && speed < 1) //Arbitrary constants
+		if (currNorm.y <= 0.3f && speed < 2) //Arbitrary constants
 		{
 			wallStickTimer--;
 		}
@@ -385,7 +385,7 @@ void Player::step()
 				}
 
 				//Not sure if I like the canStick thing or not...
-				canStick = true;
+				//canStick = true;
 
 				if (canStick)
 				{

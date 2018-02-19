@@ -5,6 +5,7 @@
 #include <cmath>
 #include <fstream>
 #include <string>
+#include <algorithm>
 
 #include "input.h"
 #include "../renderEngine/skymanager.h"

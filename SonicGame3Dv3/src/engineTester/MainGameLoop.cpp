@@ -54,7 +54,6 @@
 #include <tchar.h>
 
 
-
 std::unordered_map<Entity*, Entity*> gameEntities;
 std::list<Entity*> gameEntitiesToAdd;
 std::list<Entity*> gameEntitiesToDelete;

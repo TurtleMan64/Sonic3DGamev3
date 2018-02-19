@@ -77,6 +77,8 @@ unsigned Global::HQWaterReflectionHeight = 720;
 unsigned Global::HQWaterRefractionWidth = 1280;
 unsigned Global::HQWaterRefractionHeight = 720;
 
+bool Global::renderParticles = true;
+
 //Emerald Coast
 EC_Shark* Global::ecShark = nullptr;
 
@@ -133,7 +135,10 @@ int main()
 
 	AudioMaster::init();
 
-	ParticleResources::loadParticles();
+	if (Global::renderParticles)
+	{
+		ParticleResources::loadParticles();
+	}
 
 	CollisionChecker::initChecker();
 	AnimationResources::createAnimations();
@@ -266,7 +271,10 @@ int main()
 				}
 				skySphere.step();
 				Global::gameCamera->refresh();
-				ParticleMaster::update(Global::gameCamera);
+				if (Global::renderParticles)
+				{
+					ParticleMaster::update(Global::gameCamera);
+				}
 				Global::gameClock++;
 				break;
 			}
@@ -319,7 +327,10 @@ int main()
 				cam.getPosition()->y -= distance;
 				cam.invertPitch();
 				Master_render(&cam, 0, 1, 0, 0.3f);
-				ParticleMaster::renderParticles(&cam, SkyManager::getOverallBrightness(), 1);
+				if (Global::renderParticles)
+				{
+					ParticleMaster::renderParticles(&cam, SkyManager::getOverallBrightness(), 1);
+				}
 				cam.getPosition()->y += distance;
 				cam.invertPitch();
 			}
@@ -328,7 +339,10 @@ int main()
 				cam.getPosition()->y -= distance;
 				cam.invertPitch();
 				Master_render(&cam, 0, -1, 0, 0.3f);
-				ParticleMaster::renderParticles(&cam, SkyManager::getOverallBrightness(), -1);
+				if (Global::renderParticles)
+				{
+					ParticleMaster::renderParticles(&cam, SkyManager::getOverallBrightness(), -1);
+				}
 				cam.getPosition()->y += distance;
 				cam.invertPitch();
 			}
@@ -339,12 +353,18 @@ int main()
 			if (aboveWater)
 			{
 				Master_render(&cam, 0, -1, 0, 0.3f);
-				ParticleMaster::renderParticles(&cam, SkyManager::getOverallBrightness(), -1);
+				if (Global::renderParticles)
+				{
+					ParticleMaster::renderParticles(&cam, SkyManager::getOverallBrightness(), -1);
+				}
 			}
 			else
 			{
 				Master_render(&cam, 0, 1, 0, 0.3f);
-				ParticleMaster::renderParticles(&cam, SkyManager::getOverallBrightness(), 1);
+				if (Global::renderParticles)
+				{
+					ParticleMaster::renderParticles(&cam, SkyManager::getOverallBrightness(), 1);
+				}
 			}
 			Global::gameWaterFBOs->unbindCurrentFrameBuffer();
 
@@ -366,8 +386,10 @@ int main()
 		{
 			Global::gameWaterRenderer->render(Global::gameWaterTiles, &cam, &lightSun);
 		}
-
-		ParticleMaster::renderParticles(&cam, SkyManager::getOverallBrightness(), 0);
+		if (Global::renderParticles)
+		{
+			ParticleMaster::renderParticles(&cam, SkyManager::getOverallBrightness(), 0);
+		}
 
 		Master_clearEntities();
 		Master_clearTransparentEntities();

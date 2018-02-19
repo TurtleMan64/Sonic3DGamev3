@@ -3,6 +3,7 @@
 #include "../entities/camera.h"
 #include "../toolbox/vector.h"
 #include "particlemaster.h"
+#include "../engineTester/main.h"
 
 Particle::Particle(ParticleTexture* texture, Vector3f* position, Vector3f* velocity, float gravityEffect,
 	int lifeLength, float rotation, float scale, float scaleChange, bool posIsRef)
@@ -27,7 +28,14 @@ Particle::Particle(ParticleTexture* texture, Vector3f* position, Vector3f* veloc
 	this->rotation = rotation;
 	this->scale = scale;
 	this->scaleChange = scaleChange;
-	ParticleMaster::addParticle(this);
+	if (Global::renderParticles)
+	{
+		ParticleMaster::addParticle(this);
+	}
+	else
+	{
+		delete this;
+	}
 }
 
 void Particle::updateTextureCoordInfo()

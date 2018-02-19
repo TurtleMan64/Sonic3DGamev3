@@ -346,7 +346,7 @@ void Player::step()
 		{
 			if (isBouncing)
 			{
-				bounceOffGround(&(triCol->normal), 0.75f);
+				bounceOffGround(&(triCol->normal), 0.75f, 8);
 				isBall = true;
 				isBouncing = false;
 				isStomping = false;
@@ -403,7 +403,7 @@ void Player::step()
 					//yVel = speeds.y;
 					//zVelAir = speeds.z;
 					
-					bounceOffGround(&(triCol->normal), 0.6f);
+					bounceOffGround(&(triCol->normal), 0.6f, 18);
 					canMoveTimer = 8;
 					canMove = false;
 					isBall = true;
@@ -1544,7 +1544,7 @@ void Player::initiateStomp()
 	stompSource = AudioPlayer::play(16, getPosition());
 }
 
-void Player::bounceOffGround(Vector3f* surfaceNormal, float b)
+void Player::bounceOffGround(Vector3f* surfaceNormal, float b, int s)
 {
 	Vector3f V = Vector3f(xVelAir, yVel, zVelAir);
 	Vector3f N = Vector3f(surfaceNormal);
@@ -1563,7 +1563,7 @@ void Player::bounceOffGround(Vector3f* surfaceNormal, float b)
 	//isStomping = false;
 	//homingAttackTimer = -1;
 	//hoverCount = 0;
-	AudioPlayer::play(8, getPosition());
+	AudioPlayer::play(s, getPosition());
 }
 
 //attempt to continue a lightdash

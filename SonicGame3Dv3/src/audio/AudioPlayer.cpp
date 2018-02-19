@@ -35,6 +35,7 @@ void AudioPlayer::loadSoundEffects()
 	AudioPlayer::buffers.push_back(AudioMaster::loadWAV("res/Audio/Sonic/SpindashRelease.wav"));   //15
 	AudioPlayer::buffers.push_back(AudioMaster::loadWAV("res/Audio/Sonic/StompInit.wav"));         //16
 	AudioPlayer::buffers.push_back(AudioMaster::loadWAV("res/Audio/Sonic/StompLand.wav"));         //17
+	AudioPlayer::buffers.push_back(AudioMaster::loadWAV("res/Audio/Sonic/CantStick.wav"));         //18
 }
 
 void AudioPlayer::deleteSources()

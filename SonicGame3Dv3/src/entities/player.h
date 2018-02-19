@@ -291,7 +291,7 @@ private:
 
 	void initiateStomp();
 
-	void bounceOffGround(Vector3f* surfaceNormal, float b);
+	void bounceOffGround(Vector3f* surfaceNormal, float b, int s);
 
 	//attempt to continue a lightdash
 	//if lightdash cant continue, sets isLightdashing

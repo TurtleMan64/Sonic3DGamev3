@@ -11,6 +11,9 @@
 #include "../toolbox/maths.h"
 #include "../animation/body.h"
 #include "../entities/camera.h"
+#include "../audio/audioplayer.h"
+#include "../particles/particleresources.h"
+#include "../particles/particle.h"
 
 #include <list>
 #include <iostream>
@@ -93,32 +96,36 @@ void Spinner::step()
 
 void Spinner::die()
 {
-	//AudioSources.play(28, getPosition());
+	AudioPlayer::play(3, getPosition());
 
 	Main_deleteEntity(this);
 	Main_deleteEntity(blades);
 
-	//float height = 10.0f;
-	//float spread = 20.0f;
+	float height = 10.0f;
+	float spread = 20.0f;
 
 	for (int i = 7; i != 0; i--)
 	{
-		/*
-		new Particle(ParticleResources.textureExplosion1,
-			new Vector3f(getX() + spread*(float)(Math.random() - 0.5),
-				getY() + spread*(float)(Math.random() - 0.5) + height,
-				getZ() + spread*(float)(Math.random() - 0.5)), new Vector3f(0, 0, 0),
-			0, 45, 0, 3 * (float)Math.random() + 6, 0);
-			*/
+		Vector3f pos(
+			getX() + spread*(random() - 0.5f),
+			getY() + spread*(random() - 0.5f) + height,
+			getZ() + spread*(random() - 0.5f));
+
+		Vector3f vel(0, 0, 0);
+
+		new Particle(ParticleResources::textureExplosion1, &pos, &vel,
+			0, 45, 0, 3 * random() + 6, 0, false);
 	}
 
-	/*
-	new Particle(ParticleResources.textureExplosion2,
-		new Vector3f(getX(),
-			getY() + height,
-			getZ()), new Vector3f(0, 0, 0),
-		0, 55, 0, 20, 0);
-		*/
+	Vector3f pos(
+		getX(),
+		getY() + height,
+		getZ());
+
+	Vector3f vel(0, 0, 0);
+	
+	new Particle(ParticleResources::textureExplosion2, &pos, &vel,
+		0, 55, 0, 20, 0, false);
 }
 
 std::list<TexturedModel*>* Spinner::getModels()

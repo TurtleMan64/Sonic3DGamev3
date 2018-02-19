@@ -18,6 +18,7 @@ ParticleTexture* ParticleResources::textureBlackTrail = nullptr;
 ParticleTexture* ParticleResources::textureGrayTrail = nullptr;
 ParticleTexture* ParticleResources::texturePinkTrail = nullptr;
 ParticleTexture* ParticleResources::textureDarkGreenTrail = nullptr;
+ParticleTexture* ParticleResources::textureOrangeTrail = nullptr;
 ParticleTexture* ParticleResources::textureSplash = nullptr;
 ParticleTexture* ParticleResources::textureBubble = nullptr;
 ParticleTexture* ParticleResources::textureExplosion1 = nullptr;
@@ -43,6 +44,7 @@ void ParticleResources::loadParticles()
 	textureGrayTrail      = new ParticleTexture(Loader_loadTexture("res/Models/Particle/SpTrailGray.png"), 1, 0.1f, 1);
 	texturePinkTrail      = new ParticleTexture(Loader_loadTexture("res/Models/Particle/SpTrailPink.png"), 1, 0.1f, 1);
 	textureDarkGreenTrail = new ParticleTexture(Loader_loadTexture("res/Models/Particle/SpTrailDarkGreen.png"), 1, 0.1f, 1);
+	textureOrangeTrail    = new ParticleTexture(Loader_loadTexture("res/Models/Particle/SpTrailOrange.png"), 1, 0.3f, 1);
 	textureDust           = new ParticleTexture(Loader_loadTexture("res/Models/Particle/DustAtlas.png"), 4, 0.2f, 0);
 	textureSplash         = new ParticleTexture(Loader_loadTexture("res/Models/Particle/SplashAtlas.png"), 4, 0.6f, 0);
 	textureBubble         = new ParticleTexture(Loader_loadTexture("res/Models/Particle/BubbleInverseAtlas.png"), 4, 0.6f, 0);
@@ -52,5 +54,5 @@ void ParticleResources::loadParticles()
 	textureBlackFadeOut   = new ParticleTexture(Loader_loadTexture("res/Models/Particle/BlackFadeOutAtlas.png"), 2, 1.0f, 0);
 	textureTear1          = new ParticleTexture(Loader_loadTexture("res/Models/Particle/Tear1.png"), 1, 1.0f, 0);
 	textureTear2          = new ParticleTexture(Loader_loadTexture("res/Models/Particle/Tear2.png"), 1, 1.0f, 0);
-	Global::countNew += 20;
+	Global::countNew += 24;
 }

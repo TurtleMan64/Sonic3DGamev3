@@ -1621,10 +1621,35 @@ void Player::attemptLightdash()
 		zVelAir = diff.z * 5;
 		yVel = diff.y * 5;
 
+
+		Vector3f diffNew;
+		diffNew.x = closest->getX() - previousLightdashPosition.x;
+		diffNew.y = closest->getY() - previousLightdashPosition.y;
+		diffNew.z = closest->getZ() - previousLightdashPosition.z;
+
+		Vector3f vel(0, 0.0f, 0);
+
+		int count = 0;
+		while (count < 20)
+		{
+			Vector3f pos;
+			pos.x = previousLightdashPosition.x + ((diffNew.x*count) / 20.0f);
+			pos.y = previousLightdashPosition.y + ((diffNew.y*count) / 20.0f);
+			pos.z = previousLightdashPosition.z + ((diffNew.z*count) / 20.0f);
+
+			new Particle(ParticleResources::textureOrangeTrail, &pos, &vel,
+				0, 70, 0, 12, -(12.0f / 70.0f), false);
+			count++;
+		}
+
+
+
 		//move to ring location
 		setX(closest->getX());
 		setY(closest->getY());
 		setZ(closest->getZ());
+
+		previousLightdashPosition.set(closest->getPosition());
 	}
 	else
 	{

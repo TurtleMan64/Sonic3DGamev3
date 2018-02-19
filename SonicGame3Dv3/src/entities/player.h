@@ -185,6 +185,8 @@ private:
 
 	Source* stompSource = nullptr;
 
+	Vector3f previousLightdashPosition;
+
 public:
 	Player(float, float, float);
 

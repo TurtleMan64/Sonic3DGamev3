@@ -1418,7 +1418,7 @@ void Player::homingAttack()
 		}
 
 		Entity* closest = nullptr;
-		float dist = 12000; //Homing attack range. Distance squared
+		float dist = 16000; //Homing attack range. Distance squared
 		float myX = position.x;
 		float myZ = position.z;
 		float myY = position.y;

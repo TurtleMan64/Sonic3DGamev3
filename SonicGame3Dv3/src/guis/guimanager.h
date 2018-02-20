@@ -17,6 +17,14 @@ private:
 
 	static GUIText* textRings;
 
+	static GUIText* textHorVel;
+	static GUIText* textVerVel;
+	static GUIText* textTotalVel;
+
+	static float horVel;
+	static float verVel;
+	static float totalVel;
+
 public:
 	static FontType* fontVip;
 

@@ -333,6 +333,9 @@
     <ClCompile Include="src\water\WaterTile.cpp">
       <Filter>Source Files\water</Filter>
     </ClCompile>
+    <ClCompile Include="src\entities\KillBox.cpp">
+      <Filter>Source Files\entities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\renderEngine\renderEngine.h">
@@ -583,6 +586,9 @@
     </ClInclude>
     <ClInclude Include="src\water\watertile.h">
       <Filter>Source Files\water</Filter>
+    </ClInclude>
+    <ClInclude Include="src\entities\killbox.h">
+      <Filter>Source Files\entities</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

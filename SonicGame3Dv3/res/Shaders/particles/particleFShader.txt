@@ -27,9 +27,6 @@ void main(void)
 		out_colour = vec4(out_colour.rgb*brightness, out_colour.a*opacity);
 	}
 	
-	//out_colour = vec4(1.0,1.0,1.0,1.0);
-	
-	
 	//if(glow > 0.5)
 	//{
 		//out_colour = out_colour*((1.0)/(max(out_colour.b, max(out_colour.r, out_colour.g))));

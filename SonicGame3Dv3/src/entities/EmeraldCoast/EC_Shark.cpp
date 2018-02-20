@@ -10,6 +10,9 @@
 #include "../../entities/player.h"
 #include "../../toolbox/maths.h"
 #include "../camera.h"
+#include "../../audio/audioplayer.h"
+#include "../../particles/particle.h"
+#include "../../particles/particleresources.h"
 
 #include <list>
 #include <iostream>
@@ -25,21 +28,22 @@ EC_Shark::EC_Shark()
 
 EC_Shark::EC_Shark(float x, float y, float z)
 {
-	this->position.x = x;
-	this->position.y = y;
-	this->position.z = z;
+	position.x = x;
+	position.y = y;
+	position.z = z;
 	initX = x;
 	initY = y;
 	initZ = z;
 	xVel = 0;
 	yVel = 0;
 	zVel = 0;
-	this->rotX = 0;
-	this->rotY = 0;
-	this->rotZ = 0;
-	this->scale = 1;
-	this->visible = false;
+	rotX = 0;
+	rotY = 0;
+	rotZ = 0;
+	scale = 1;
+	visible = false;
 	seeTimer = 0;
+	inWaterPrevious = true;
 	updateTransformationMatrix();
 }
 
@@ -102,10 +106,30 @@ void EC_Shark::step()
 		if (yDiff > 0)
 		{
 			yVel += 0.5f;
+
+			if (inWaterPrevious == false)
+			{
+				AudioPlayer::play(5, getPosition());
+				Vector3f pos(getX(), 25, getZ());
+				Vector3f vel(0, 0, 0);
+				new Particle(ParticleResources::textureSplash, &pos, &vel, 0, 40, 0, 40, 0, false);
+			}
+
+			inWaterPrevious = true;
 		}
 		else
 		{
 			yVel -= 0.5f;
+
+			if (inWaterPrevious == true)
+			{
+				AudioPlayer::play(5, getPosition());
+				Vector3f pos(getX(), 25, getZ());
+				Vector3f vel(0, 0, 0);
+				new Particle(ParticleResources::textureSplash, &pos, &vel, 0, 40, 0, 40, 0, false);
+			}
+
+			inWaterPrevious = false;
 		}
 
 		if (yVel > 10)

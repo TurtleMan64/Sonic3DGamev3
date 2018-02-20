@@ -76,6 +76,8 @@ public:
 	static unsigned HQWaterRefractionWidth;
 	static unsigned HQWaterRefractionHeight;
 
+	static bool renderParticles;
+
 	//Emerald Coast
 	static EC_Shark* ecShark;
 

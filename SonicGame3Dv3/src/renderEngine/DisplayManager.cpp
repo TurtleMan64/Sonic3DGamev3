@@ -239,10 +239,6 @@ void loadDisplaySettings()
 				{
 					F_HZ = std::stoi(lineSplit[1], nullptr, 10);
 				}
-				else if (strcmp(lineSplit[0], "Anti-Aliasing_Samples") == 0)
-				{
-					AA_SAMPLES = std::stoi(lineSplit[1], nullptr, 10);
-				}
 			}
 			free(lineSplit);
 		}
@@ -309,6 +305,17 @@ void loadGraphicsSettings()
 				else if (strcmp(lineSplit[0], "Anti-Aliasing_Samples") == 0)
 				{
 					AA_SAMPLES = std::stoi(lineSplit[1], nullptr, 10);
+				}
+				else if (strcmp(lineSplit[0], "Render_Particles") == 0)
+				{
+					if (strcmp(lineSplit[1], "on") == 0)
+					{
+						Global::renderParticles = true;
+					}
+					else
+					{
+						Global::renderParticles = false;
+					}
 				}
 			}
 			free(lineSplit);

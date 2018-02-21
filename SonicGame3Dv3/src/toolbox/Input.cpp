@@ -221,8 +221,8 @@ void Input_pollInputs()
 		INPUT_X2 = axes[STICK_RX] * STICK_RX_SCALE;
 		INPUT_Y2 = axes[STICK_RY] * STICK_RY_SCALE;
 
-		if (abs(INPUT_X) < STICK_LXDEADZONE) { INPUT_X = 0; }
-		if (abs(INPUT_Y) < STICK_LYDEADZONE) { INPUT_Y = 0; }
+		if (abs(INPUT_X)  < STICK_LXDEADZONE) { INPUT_X  = 0; }
+		if (abs(INPUT_Y)  < STICK_LYDEADZONE) { INPUT_Y  = 0; }
 		if (abs(INPUT_X2) < STICK_RXDEADZONE) { INPUT_X2 = 0; }
 		if (abs(INPUT_Y2) < STICK_RYDEADZONE) { INPUT_Y2 = 0; }
 
@@ -425,7 +425,7 @@ void Input_pollInputs()
 		}
 	}
 
-	float mag = (float)sqrt(INPUT_X*INPUT_X + INPUT_Y * INPUT_Y);
+	float mag = (float)sqrt(INPUT_X*INPUT_X + INPUT_Y*INPUT_Y);
 	if (mag > 1)
 	{
 		INPUT_X = INPUT_X / mag;
@@ -434,7 +434,7 @@ void Input_pollInputs()
 
 	if (input_zoom_buffer != 0)
 	{
-		INPUT_ZOOM = scrollSensitivity * input_zoom_buffer;
+		INPUT_ZOOM = scrollSensitivity*input_zoom_buffer;
 		input_zoom_buffer = 0;
 	}
 
@@ -568,23 +568,23 @@ void Input_init()
 					int raw = std::stoi(lineSplit[1], nullptr, 10);
 					switch (raw)
 					{
-					case 0:  CONTROLLER_ID = GLFW_JOYSTICK_1;  break;
-					case 1:  CONTROLLER_ID = GLFW_JOYSTICK_2;  break;
-					case 2:  CONTROLLER_ID = GLFW_JOYSTICK_3;  break;
-					case 3:  CONTROLLER_ID = GLFW_JOYSTICK_4;  break;
-					case 4:  CONTROLLER_ID = GLFW_JOYSTICK_5;  break;
-					case 5:  CONTROLLER_ID = GLFW_JOYSTICK_6;  break;
-					case 6:  CONTROLLER_ID = GLFW_JOYSTICK_7;  break;
-					case 7:  CONTROLLER_ID = GLFW_JOYSTICK_8;  break;
-					case 8:  CONTROLLER_ID = GLFW_JOYSTICK_9;  break;
-					case 9:  CONTROLLER_ID = GLFW_JOYSTICK_10; break;
-					case 10: CONTROLLER_ID = GLFW_JOYSTICK_11; break;
-					case 11: CONTROLLER_ID = GLFW_JOYSTICK_12; break;
-					case 12: CONTROLLER_ID = GLFW_JOYSTICK_13; break;
-					case 13: CONTROLLER_ID = GLFW_JOYSTICK_14; break;
-					case 14: CONTROLLER_ID = GLFW_JOYSTICK_15; break;
-					case 15: CONTROLLER_ID = GLFW_JOYSTICK_16; break;
-					default: CONTROLLER_ID = GLFW_JOYSTICK_1;  break;
+						case 0:  CONTROLLER_ID = GLFW_JOYSTICK_1;  break;
+						case 1:  CONTROLLER_ID = GLFW_JOYSTICK_2;  break;
+						case 2:  CONTROLLER_ID = GLFW_JOYSTICK_3;  break;
+						case 3:  CONTROLLER_ID = GLFW_JOYSTICK_4;  break;
+						case 4:  CONTROLLER_ID = GLFW_JOYSTICK_5;  break;
+						case 5:  CONTROLLER_ID = GLFW_JOYSTICK_6;  break;
+						case 6:  CONTROLLER_ID = GLFW_JOYSTICK_7;  break;
+						case 7:  CONTROLLER_ID = GLFW_JOYSTICK_8;  break;
+						case 8:  CONTROLLER_ID = GLFW_JOYSTICK_9;  break;
+						case 9:  CONTROLLER_ID = GLFW_JOYSTICK_10; break;
+						case 10: CONTROLLER_ID = GLFW_JOYSTICK_11; break;
+						case 11: CONTROLLER_ID = GLFW_JOYSTICK_12; break;
+						case 12: CONTROLLER_ID = GLFW_JOYSTICK_13; break;
+						case 13: CONTROLLER_ID = GLFW_JOYSTICK_14; break;
+						case 14: CONTROLLER_ID = GLFW_JOYSTICK_15; break;
+						case 15: CONTROLLER_ID = GLFW_JOYSTICK_16; break;
+						default: CONTROLLER_ID = GLFW_JOYSTICK_1;  break;
 					}
 				}
 			}

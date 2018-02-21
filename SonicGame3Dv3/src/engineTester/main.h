@@ -30,6 +30,7 @@ void Main_deleteAllTransparentEntites();
 #define STATE_EXITING 2
 #define STATE_CUTSCENE 3
 #define STATE_TITLE 4
+#define STATE_DEBUG 5
 
 #define LVL_EC 0
 #define LVL_SH 1
@@ -68,6 +69,11 @@ public:
 	static WaterRenderer* gameWaterRenderer;
 	static WaterFrameBuffers* gameWaterFBOs;
 	static std::list<WaterTile*>* gameWaterTiles;
+
+	//Debug display
+	static bool debugDisplay;
+	static bool frozen;
+	static bool step;
 
 	//Graphics settings
 	static bool useHighQualityWater;

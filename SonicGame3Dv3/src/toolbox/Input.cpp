@@ -29,6 +29,9 @@ bool INPUT_SHOULDER = false;
 bool INPUT_SELECT = false;
 bool INPUT_SPECIAL = false;
 bool INPUT_START = false;
+bool INPUT_GRAVE = false;
+bool INPUT_SEMICOLON = false;
+bool INPUT_APOSTROPHE = false;
 
 bool INPUT_PREVIOUS_JUMP = false;
 bool INPUT_PREVIOUS_ACTION = false;
@@ -37,6 +40,25 @@ bool INPUT_PREVIOUS_SHOULDER = false;
 bool INPUT_PREVIOUS_SELECT = false;
 bool INPUT_PREVIOUS_SPECIAL = false;
 bool INPUT_PREVIOUS_START = false;
+bool INPUT_PREVIOUS_GRAVE = false;
+bool INPUT_PREVIOUS_SEMICOLON = false;
+bool INPUT_PREVIOUS_APOSTROPHE = false;
+
+bool DEBUG_JUMP = false;
+bool DEBUG_ACTION = false;
+bool DEBUG_ACTION2 = false;
+bool DEBUG_SHOULDER = false;
+bool DEBUG_SELECT = false;
+bool DEBUG_SPECIAL = false;
+bool DEBUG_START = false;
+
+bool DEBUG_PREVIOUS_JUMP = false;
+bool DEBUG_PREVIOUS_ACTION = false;
+bool DEBUG_PREVIOUS_ACTION2 = false;
+bool DEBUG_PREVIOUS_SHOULDER = false;
+bool DEBUG_PREVIOUS_SELECT = false;
+bool DEBUG_PREVIOUS_SPECIAL = false;
+bool DEBUG_PREVIOUS_START = false;
 
 float INPUT_X = 0;
 float INPUT_Y = 0;
@@ -133,21 +155,49 @@ void Input_pollInputs()
 	tabInputPrevious = tabInput;
 	tabInput = false;
 
-	INPUT_PREVIOUS_JUMP = INPUT_JUMP;
-	INPUT_PREVIOUS_ACTION = INPUT_ACTION;
-	INPUT_PREVIOUS_ACTION2 = INPUT_ACTION2;
-	INPUT_PREVIOUS_SHOULDER = INPUT_SHOULDER;
-	INPUT_PREVIOUS_SELECT = INPUT_SELECT;
-	INPUT_PREVIOUS_SPECIAL = INPUT_SPECIAL;
-	INPUT_PREVIOUS_START = INPUT_START;
+	if (Global::gameState != STATE_DEBUG)
+	{
+		INPUT_PREVIOUS_JUMP = INPUT_JUMP;
+		INPUT_PREVIOUS_ACTION = INPUT_ACTION;
+		INPUT_PREVIOUS_ACTION2 = INPUT_ACTION2;
+		INPUT_PREVIOUS_SELECT = INPUT_SELECT;
+		INPUT_PREVIOUS_SHOULDER = INPUT_SHOULDER;
+		INPUT_PREVIOUS_SPECIAL = INPUT_SPECIAL;
+		INPUT_PREVIOUS_START = INPUT_START;
 
-	INPUT_JUMP = false;
-	INPUT_ACTION = false;
-	INPUT_ACTION2 = false;
-	INPUT_SHOULDER = false;
-	INPUT_SELECT = false;
-	INPUT_SPECIAL = false;
-	INPUT_START = false;
+		INPUT_JUMP = false;
+		INPUT_ACTION = false;
+		INPUT_ACTION2 = false;
+		INPUT_SHOULDER = false;
+		INPUT_SELECT = false;
+		INPUT_SPECIAL = false;
+		INPUT_START = false;
+	}
+
+	DEBUG_PREVIOUS_JUMP = DEBUG_JUMP;
+	DEBUG_PREVIOUS_ACTION = DEBUG_ACTION;
+	DEBUG_PREVIOUS_ACTION2 = DEBUG_ACTION2;
+	DEBUG_PREVIOUS_SHOULDER = DEBUG_SHOULDER;
+	DEBUG_PREVIOUS_SELECT = DEBUG_SELECT;
+	DEBUG_PREVIOUS_SPECIAL = DEBUG_SPECIAL;
+	DEBUG_PREVIOUS_START = DEBUG_START;
+
+	DEBUG_JUMP = false;
+	DEBUG_ACTION = false;
+	DEBUG_ACTION2 = false;
+	DEBUG_SHOULDER = false;
+	DEBUG_SELECT = false;
+	DEBUG_SPECIAL = false;
+	DEBUG_START = false;
+
+	//Keys used for debug/frozen
+	INPUT_PREVIOUS_GRAVE = INPUT_GRAVE;
+	INPUT_PREVIOUS_SEMICOLON = INPUT_SEMICOLON;
+	INPUT_PREVIOUS_APOSTROPHE = INPUT_APOSTROPHE;
+
+	INPUT_GRAVE = false;
+	INPUT_SEMICOLON = false;
+	INPUT_APOSTROPHE = false;
 
 
 	INPUT_X = 0;
@@ -171,8 +221,8 @@ void Input_pollInputs()
 		INPUT_X2 = axes[STICK_RX] * STICK_RX_SCALE;
 		INPUT_Y2 = axes[STICK_RY] * STICK_RY_SCALE;
 
-		if (abs(INPUT_X)  < STICK_LXDEADZONE) { INPUT_X  = 0; }
-		if (abs(INPUT_Y)  < STICK_LYDEADZONE) { INPUT_Y  = 0; }
+		if (abs(INPUT_X) < STICK_LXDEADZONE) { INPUT_X = 0; }
+		if (abs(INPUT_Y) < STICK_LYDEADZONE) { INPUT_Y = 0; }
 		if (abs(INPUT_X2) < STICK_RXDEADZONE) { INPUT_X2 = 0; }
 		if (abs(INPUT_Y2) < STICK_RYDEADZONE) { INPUT_Y2 = 0; }
 
@@ -183,13 +233,13 @@ void Input_pollInputs()
 		float triggerLValue = 0;
 		float triggerRValue = 0;
 
-		
+
 		float rawValue = (axes[TRIGGER_L] - LT_NEUTRAL) / LT_RANGE;
 		if (rawValue >= TRIGGER_DEADZONE) { triggerLValue = rawValue; }
-		
+
 		rawValue = (axes[TRIGGER_R] - RT_NEUTRAL) / RT_RANGE;
 		if (rawValue >= TRIGGER_DEADZONE) { triggerRValue = rawValue; }
-		
+
 
 		INPUT_X2 += triggerSensitivity * (triggerLValue - triggerRValue);
 
@@ -197,16 +247,16 @@ void Input_pollInputs()
 		int buttonCount;
 		const unsigned char *buttons = glfwGetJoystickButtons(CONTROLLER_ID, &buttonCount);
 
-		INPUT_JUMP    = buttons[BUTTON_A];
-		INPUT_ACTION  = buttons[BUTTON_B];
-		INPUT_ACTION2 = buttons[BUTTON_X];
-		INPUT_SPECIAL = buttons[BUTTON_Y];
-		INPUT_START   = buttons[BUTTON_START];
+		DEBUG_JUMP = buttons[BUTTON_A];
+		DEBUG_ACTION = buttons[BUTTON_B];
+		DEBUG_ACTION2 = buttons[BUTTON_X];
+		DEBUG_SPECIAL = buttons[BUTTON_Y];
+		DEBUG_START = buttons[BUTTON_START];
 
 		//const char *name = glfwGetJoystickName(GLFW_JOYSTICK_1);
 		//std::fprintf(stdout, "joystick name: %s\n", name);
 	}
-	
+
 
 	double xpos, ypos;
 	glfwGetCursorPos(window, &xpos, &ypos);
@@ -228,27 +278,27 @@ void Input_pollInputs()
 	}
 	if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS)
 	{
-		INPUT_JUMP = true;
+		DEBUG_JUMP = true;
 	}
 	if (glfwGetKey(window, GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS)
 	{
-		INPUT_ACTION = true;
+		DEBUG_ACTION = true;
 	}
 	if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS)
 	{
-		INPUT_ACTION2 = true;
+		DEBUG_ACTION2 = true;
 	}
 	if (glfwGetKey(window, GLFW_KEY_F) == GLFW_PRESS)
 	{
-		INPUT_SPECIAL = true;
+		DEBUG_SPECIAL = true;
 	}
 	if (glfwGetKey(window, GLFW_KEY_ENTER) == GLFW_PRESS)
 	{
-		INPUT_START = true;
+		DEBUG_START = true;
 	}
 	if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS)
 	{
-		INPUT_SHOULDER = true;
+		DEBUG_SHOULDER = true;
 	}
 
 	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
@@ -293,7 +343,7 @@ void Input_pollInputs()
 	if (glfwGetKey(window, GLFW_KEY_8) == GLFW_PRESS)
 	{
 		float spoutSpd = 3.0f;
-		float anglH = (float)(M_PI * 2 * ((rand()%1024)/1024.0));
+		float anglH = (float)(M_PI * 2 * ((rand() % 1024) / 1024.0));
 		double randNumber = (*Global::distribution)((*Global::generator));
 		//std::fprintf(stdout, "%f\n", randNumber);
 		float anglV = (float)(toRadians((float)(randNumber * 36.0 + 90.0)));
@@ -315,6 +365,40 @@ void Input_pollInputs()
 		{
 			Global::gamePlayer->goUp();
 		}
+	}
+
+	// Debug
+	if (glfwGetKey(window, GLFW_KEY_GRAVE_ACCENT) == GLFW_PRESS)
+	{
+		if (!INPUT_PREVIOUS_GRAVE && Global::debugDisplay == false)
+		{
+			Global::debugDisplay = true;
+		}
+		else if (!INPUT_PREVIOUS_GRAVE)
+		{
+			Global::debugDisplay = false;
+		}
+		INPUT_GRAVE = true;
+	}
+	if (glfwGetKey(window, GLFW_KEY_SEMICOLON) == GLFW_PRESS)
+	{
+		if (!INPUT_PREVIOUS_SEMICOLON && Global::debugDisplay && Global::frozen == false)
+		{
+			Global::frozen = true;
+		}
+		else if (!INPUT_PREVIOUS_SEMICOLON && Global::debugDisplay)
+		{
+			Global::frozen = false;
+		}
+		INPUT_SEMICOLON = true;
+	}
+	if (glfwGetKey(window, GLFW_KEY_APOSTROPHE) == GLFW_PRESS)
+	{
+		if (!INPUT_PREVIOUS_APOSTROPHE && Global::debugDisplay && Global::frozen)
+		{
+			Global::step = true;
+		}
+		INPUT_APOSTROPHE = true;
 	}
 
 
@@ -341,7 +425,7 @@ void Input_pollInputs()
 		}
 	}
 
-	float mag = (float)sqrt(INPUT_X*INPUT_X + INPUT_Y*INPUT_Y);
+	float mag = (float)sqrt(INPUT_X*INPUT_X + INPUT_Y * INPUT_Y);
 	if (mag > 1)
 	{
 		INPUT_X = INPUT_X / mag;
@@ -350,7 +434,7 @@ void Input_pollInputs()
 
 	if (input_zoom_buffer != 0)
 	{
-		INPUT_ZOOM = scrollSensitivity*input_zoom_buffer;
+		INPUT_ZOOM = scrollSensitivity * input_zoom_buffer;
 		input_zoom_buffer = 0;
 	}
 
@@ -364,9 +448,20 @@ void Input_pollInputs()
 		MENU_X = approxXLeft - approxXLeftPrevious;
 	}
 
-	if(approxYLeft != 0)
+	if (approxYLeft != 0)
 	{
 		MENU_Y = approxYLeft - approxYLeftPrevious;
+	}
+
+	if (Global::gameState != STATE_DEBUG)
+	{
+		INPUT_JUMP = DEBUG_JUMP;
+		INPUT_ACTION = DEBUG_ACTION;
+		INPUT_ACTION2 = DEBUG_ACTION2;
+		INPUT_SHOULDER = DEBUG_SHOULDER;
+		INPUT_SELECT = DEBUG_SELECT;
+		INPUT_SPECIAL = DEBUG_SPECIAL;
+		INPUT_START = DEBUG_START;
 	}
 }
 
@@ -473,68 +568,68 @@ void Input_init()
 					int raw = std::stoi(lineSplit[1], nullptr, 10);
 					switch (raw)
 					{
-						case 0:  CONTROLLER_ID = GLFW_JOYSTICK_1;  break;
-						case 1:  CONTROLLER_ID = GLFW_JOYSTICK_2;  break;
-						case 2:  CONTROLLER_ID = GLFW_JOYSTICK_3;  break;
-						case 3:  CONTROLLER_ID = GLFW_JOYSTICK_4;  break;
-						case 4:  CONTROLLER_ID = GLFW_JOYSTICK_5;  break;
-						case 5:  CONTROLLER_ID = GLFW_JOYSTICK_6;  break;
-						case 6:  CONTROLLER_ID = GLFW_JOYSTICK_7;  break;
-						case 7:  CONTROLLER_ID = GLFW_JOYSTICK_8;  break;
-						case 8:  CONTROLLER_ID = GLFW_JOYSTICK_9;  break;
-						case 9:  CONTROLLER_ID = GLFW_JOYSTICK_10; break;
-						case 10: CONTROLLER_ID = GLFW_JOYSTICK_11; break;
-						case 11: CONTROLLER_ID = GLFW_JOYSTICK_12; break;
-						case 12: CONTROLLER_ID = GLFW_JOYSTICK_13; break;
-						case 13: CONTROLLER_ID = GLFW_JOYSTICK_14; break;
-						case 14: CONTROLLER_ID = GLFW_JOYSTICK_15; break;
-						case 15: CONTROLLER_ID = GLFW_JOYSTICK_16; break;
-						default: CONTROLLER_ID = GLFW_JOYSTICK_1;  break;
+					case 0:  CONTROLLER_ID = GLFW_JOYSTICK_1;  break;
+					case 1:  CONTROLLER_ID = GLFW_JOYSTICK_2;  break;
+					case 2:  CONTROLLER_ID = GLFW_JOYSTICK_3;  break;
+					case 3:  CONTROLLER_ID = GLFW_JOYSTICK_4;  break;
+					case 4:  CONTROLLER_ID = GLFW_JOYSTICK_5;  break;
+					case 5:  CONTROLLER_ID = GLFW_JOYSTICK_6;  break;
+					case 6:  CONTROLLER_ID = GLFW_JOYSTICK_7;  break;
+					case 7:  CONTROLLER_ID = GLFW_JOYSTICK_8;  break;
+					case 8:  CONTROLLER_ID = GLFW_JOYSTICK_9;  break;
+					case 9:  CONTROLLER_ID = GLFW_JOYSTICK_10; break;
+					case 10: CONTROLLER_ID = GLFW_JOYSTICK_11; break;
+					case 11: CONTROLLER_ID = GLFW_JOYSTICK_12; break;
+					case 12: CONTROLLER_ID = GLFW_JOYSTICK_13; break;
+					case 13: CONTROLLER_ID = GLFW_JOYSTICK_14; break;
+					case 14: CONTROLLER_ID = GLFW_JOYSTICK_15; break;
+					case 15: CONTROLLER_ID = GLFW_JOYSTICK_16; break;
+					default: CONTROLLER_ID = GLFW_JOYSTICK_1;  break;
 					}
 				}
 			}
-			else if(splitLength == 4)
+			else if (splitLength == 4)
 			{
 				if (strcmp(lineSplit[0], "Stick_LX") == 0)
 				{
-					STICK_LX         = std::stoi(lineSplit[1], nullptr, 10);
+					STICK_LX = std::stoi(lineSplit[1], nullptr, 10);
 					STICK_LXDEADZONE = std::stof(lineSplit[2], nullptr);
-					STICK_LX_SCALE   = std::stof(lineSplit[3], nullptr);
+					STICK_LX_SCALE = std::stof(lineSplit[3], nullptr);
 				}
 				else if (strcmp(lineSplit[0], "Stick_LY") == 0)
 				{
-					STICK_LY         = std::stoi(lineSplit[1], nullptr, 10);
+					STICK_LY = std::stoi(lineSplit[1], nullptr, 10);
 					STICK_LYDEADZONE = std::stof(lineSplit[2], nullptr);
-					STICK_LY_SCALE   = std::stof(lineSplit[3], nullptr);
+					STICK_LY_SCALE = std::stof(lineSplit[3], nullptr);
 				}
 				else if (strcmp(lineSplit[0], "Stick_RX") == 0)
 				{
-					STICK_RX         = std::stoi(lineSplit[1], nullptr, 10);
+					STICK_RX = std::stoi(lineSplit[1], nullptr, 10);
 					STICK_RXDEADZONE = std::stof(lineSplit[2], nullptr);
-					STICK_RX_SCALE   = std::stof(lineSplit[3], nullptr);
+					STICK_RX_SCALE = std::stof(lineSplit[3], nullptr);
 				}
 				else if (strcmp(lineSplit[0], "Stick_RY") == 0)
 				{
-					STICK_RY         = std::stoi(lineSplit[1], nullptr, 10);
+					STICK_RY = std::stoi(lineSplit[1], nullptr, 10);
 					STICK_RYDEADZONE = std::stof(lineSplit[2], nullptr);
-					STICK_RY_SCALE   = std::stof(lineSplit[3], nullptr);
+					STICK_RY_SCALE = std::stof(lineSplit[3], nullptr);
 				}
 			}
 			else if (splitLength == 5)
 			{
 				if (strcmp(lineSplit[0], "Trigger_L") == 0)
 				{
-					TRIGGER_L        = std::stoi(lineSplit[1], nullptr, 10);
-					LT_NEUTRAL       = std::stof(lineSplit[2], nullptr);
-					LT_MAX           = std::stof(lineSplit[3], nullptr);
+					TRIGGER_L = std::stoi(lineSplit[1], nullptr, 10);
+					LT_NEUTRAL = std::stof(lineSplit[2], nullptr);
+					LT_MAX = std::stof(lineSplit[3], nullptr);
 					TRIGGER_DEADZONE = std::stof(lineSplit[4], nullptr);
 					LT_RANGE = LT_MAX - LT_NEUTRAL;
 				}
 				else if (strcmp(lineSplit[0], "Trigger_R") == 0)
 				{
-					TRIGGER_R        = std::stoi(lineSplit[1], nullptr, 10);
-					RT_NEUTRAL       = std::stof(lineSplit[2], nullptr);
-					RT_MAX           = std::stof(lineSplit[3], nullptr);
+					TRIGGER_R = std::stoi(lineSplit[1], nullptr, 10);
+					RT_NEUTRAL = std::stof(lineSplit[2], nullptr);
+					RT_MAX = std::stof(lineSplit[3], nullptr);
 					TRIGGER_DEADZONE = std::stof(lineSplit[4], nullptr);
 					RT_RANGE = RT_MAX - RT_NEUTRAL;
 				}
@@ -552,19 +647,19 @@ void Input_init()
 	{
 		int axesCount;
 		glfwGetJoystickAxes(CONTROLLER_ID, &axesCount);
-		STICK_LX  = std::min(STICK_LX,  axesCount - 1);
-		STICK_LY  = std::min(STICK_LY,  axesCount - 1);
-		STICK_RX  = std::min(STICK_RX,  axesCount - 1);
-		STICK_RY  = std::min(STICK_RY,  axesCount - 1);
+		STICK_LX = std::min(STICK_LX, axesCount - 1);
+		STICK_LY = std::min(STICK_LY, axesCount - 1);
+		STICK_RX = std::min(STICK_RX, axesCount - 1);
+		STICK_RY = std::min(STICK_RY, axesCount - 1);
 		TRIGGER_L = std::min(TRIGGER_L, axesCount - 1);
 		TRIGGER_R = std::min(TRIGGER_R, axesCount - 1);
 
 		int buttonCount;
 		glfwGetJoystickButtons(CONTROLLER_ID, &buttonCount);
-		BUTTON_A     = std::min(BUTTON_A,     buttonCount - 1);
-		BUTTON_B     = std::min(BUTTON_B,     buttonCount - 1);
-		BUTTON_X     = std::min(BUTTON_X,     buttonCount - 1);
-		BUTTON_Y     = std::min(BUTTON_Y,     buttonCount - 1);
+		BUTTON_A = std::min(BUTTON_A, buttonCount - 1);
+		BUTTON_B = std::min(BUTTON_B, buttonCount - 1);
+		BUTTON_X = std::min(BUTTON_X, buttonCount - 1);
+		BUTTON_Y = std::min(BUTTON_Y, buttonCount - 1);
 		BUTTON_START = std::min(BUTTON_START, buttonCount - 1);
 	}
 }

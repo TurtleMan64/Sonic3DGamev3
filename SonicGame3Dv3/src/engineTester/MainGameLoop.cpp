@@ -71,6 +71,10 @@ WaterRenderer* Global::gameWaterRenderer = nullptr;
 WaterFrameBuffers* Global::gameWaterFBOs = nullptr;
 std::list<WaterTile*>* Global::gameWaterTiles = nullptr;
 
+bool Global::debugDisplay = false;
+bool Global::frozen = false;
+bool Global::step = false;
+
 bool Global::useHighQualityWater = true;
 unsigned Global::HQWaterReflectionWidth = 1280;
 unsigned Global::HQWaterReflectionHeight = 720;
@@ -276,6 +280,11 @@ int main()
 					ParticleMaster::update(Global::gameCamera);
 				}
 				Global::gameClock++;
+
+				if (Global::debugDisplay && Global::frozen)
+				{
+					Global::gameState = STATE_DEBUG;
+				}
 				break;
 			}
 
@@ -292,6 +301,22 @@ int main()
 
 			case STATE_TITLE:
 			{
+				break;
+			}
+
+			case STATE_DEBUG:
+			{
+				Input_pollInputs();
+				if (Global::step)
+				{
+					Global::gameState = STATE_RUNNING;
+					Global::step = false;
+				}
+				
+				if (Global::debugDisplay == false || Global::frozen == false)
+				{
+					Global::gameState = STATE_RUNNING;
+				}
 				break;
 			}
 

@@ -244,6 +244,8 @@ public:
 
 	void setHoverCount(int newCount);
 
+	int getHoverCount();
+
 	void setOnPlane(bool on);
 
 	float getHitboxHorizontal();
@@ -263,6 +265,8 @@ public:
 	void die();
 
 	Vector3f getOverallVel();
+
+	float Player::getSpindashSpeed();
 
 private:
 	void adjustCamera();

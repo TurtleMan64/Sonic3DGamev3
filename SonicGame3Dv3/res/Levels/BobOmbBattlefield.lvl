@@ -13,6 +13,6 @@ Collision 5
 111
 379.24 8.5
 6 30.36 188.6 1055.24
-7 Sky SkySphereModel MTL_BOB 8
+7 Sky SkySphereModel MTL_BOB 8 0
 9 -149 665.85 -626
 33 -89.726 266.345 267.365 0

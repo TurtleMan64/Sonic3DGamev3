@@ -12,7 +12,7 @@ RainbowRoad 8
 0.00005 2.0
 63.0
 -1 18
-7 Sky SkySphereModel MTL_Transparent 8
+7 Sky SkySphereModel MTL_Transparent 8 0
 6 10.289412 1527.0704 22.29604
 9 -47.05705 1524.2089 -17.622564
 9 -7.6377883 1524.2089 -19.382788

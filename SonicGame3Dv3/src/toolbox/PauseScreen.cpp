@@ -42,6 +42,7 @@ GUIText* PauseScreen::textMetalHarbor = nullptr;
 GUIText* PauseScreen::textBOB = nullptr;
 GUIText* PauseScreen::textRainbowRoad = nullptr;
 GUIText* PauseScreen::textSnowhead = nullptr;
+GUIText* PauseScreen::textTwinklePark = nullptr;
 
 GUIText* PauseScreen::textClassicSonic = nullptr;
 GUIText* PauseScreen::textDollSonic = nullptr;
@@ -181,7 +182,7 @@ void PauseScreen::step()
 
 				case 2:
 					menuDisplayID = LEVEL_SELECT;
-					menuSelectionMAX = 12;
+					menuSelectionMAX = 13;
 					menuSelection = 0;
 					textResume->setVisibility(false);
 					textRestart->setVisibility(false);
@@ -202,6 +203,7 @@ void PauseScreen::step()
 					textBOB->setVisibility(true);
 					textRainbowRoad->setVisibility(true);
 					textSnowhead->setVisibility(true);
+					textTwinklePark->setVisibility(true);
 
 					textClassicSonic->setVisibility(false);
 					textDollSonic->setVisibility(false);
@@ -234,6 +236,7 @@ void PauseScreen::step()
 					textBOB->setVisibility(false);
 					textRainbowRoad->setVisibility(false);
 					textSnowhead->setVisibility(false);
+					textTwinklePark->setVisibility(false);
 
 					textClassicSonic->setVisibility(true);
 					textDollSonic->setVisibility(true);
@@ -263,7 +266,7 @@ void PauseScreen::step()
 
 				case 1:
 					Global::levelID = LVL_SH;
-					LevelLoader_loadLevel("TwinkleCircuit.lvl");
+					LevelLoader_loadLevel("SpeedHighway.lvl");
 					unpause();
 					break;
 
@@ -333,6 +336,11 @@ void PauseScreen::step()
 					unpause();
 					break;
 
+				case 13:
+					Global::levelID = LVL_TP;
+					LevelLoader_loadLevel("TwinklePark.lvl");
+					unpause();
+					break;
 				}
 				break;
 
@@ -416,6 +424,7 @@ void PauseScreen::step()
 				textBOB->setVisibility(false);
 				textRainbowRoad->setVisibility(false);
 				textSnowhead->setVisibility(false);
+				textTwinklePark->setVisibility(false);
 
 				textClassicSonic->setVisibility(false);
 				textDollSonic->setVisibility(false);
@@ -447,7 +456,7 @@ void PauseScreen::step()
 
 		case LEVEL_SELECT:
 		{
-			float spacing = 1 / 13.0f;
+			float spacing = 1 / 14.0f;
 			switch (menuSelection)
 			{
 				case 0: textCursor->getPosition()->y = 0.0f; break;
@@ -475,6 +484,8 @@ void PauseScreen::step()
 				case 11: textCursor->getPosition()->y = spacing * 11; break;
 
 				case 12: textCursor->getPosition()->y = spacing * 12; break;
+
+				case 13: textCursor->getPosition()->y = spacing * 13; break;
 
 				default: break;
 			}
@@ -642,6 +653,13 @@ void PauseScreen::unpause()
 		Global::countDelete++;
 		textSnowhead = nullptr;
 	}
+	if (textTwinklePark != nullptr)
+	{
+		textTwinklePark->deleteMe();
+		delete textTwinklePark;
+		Global::countDelete++;
+		textTwinklePark = nullptr;
+	}
 
 	if (textClassicSonic != nullptr)
 	{
@@ -700,7 +718,7 @@ void PauseScreen::pause()
 	textCharSelect = new GUIText("Character Select", 3, font, 0.5f, 0.6f, 1.0f, false, true); Global::countNew++;
 	textQuit = new GUIText("Quit Game", 3, font, 0.5f, 0.7f, 1.0f, false, true); Global::countNew++;
 
-	float spacing = 1 / 13.0f;
+	float spacing = 1 / 14.0f;
 
 	textEmeraldCoast = new GUIText("Emerald Coast", 3, font, 0.5f, 0.0f, 1.0f, false, false); Global::countNew++;
 	textSpeedHighway = new GUIText("Speed Highway", 3, font, 0.5f, spacing, 1.0f, false, false); Global::countNew++;
@@ -715,6 +733,7 @@ void PauseScreen::pause()
 	textBOB = new GUIText("Bob-omb Btlfld", 3, font, 0.5f, spacing * 10, 1.0f, false, false); Global::countNew++;
 	textRainbowRoad = new GUIText("Rainbow Road", 3, font, 0.5f, spacing * 11, 1.0f, false, false); Global::countNew++;
 	textSnowhead = new GUIText("Snowhead", 3, font, 0.5f, spacing * 12, 1.0f, false, false); Global::countNew++;
+	textTwinklePark = new GUIText("Twinkle Park", 3, font, 0.5f, spacing * 13, 1.0f, false, false); Global::countNew++;
 
 	textClassicSonic = new GUIText("Classic Sonic", 3, font, 0.5f, 0.3f, 1.0f, false, false); Global::countNew++;
 	textDollSonic = new GUIText("Sonic Doll", 3, font, 0.5f, 0.4f, 1.0f, false, false); Global::countNew++;

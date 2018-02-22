@@ -181,7 +181,7 @@ int main()
 		Global::gameWaterTiles = new std::list<WaterTile*>; Global::countNew++;
 		for (int r = -9; r < 9; r++) //-18 , 18
 		{
-			for (int c = -9; c < 9; c++) //-18  18
+			for (int c = -12; c < 12; c++) //-18  18
 			{
 				Global::gameWaterTiles->push_back(new WaterTile(r * 2000.0f, c * 2000.0f, 0.0f)); Global::countNew++;
 			}
@@ -223,7 +223,7 @@ int main()
 			GuiManager::startTimer();
 			if (Global::gamePlayer != nullptr)
 			{
-				Global::gamePlayer->setCanMove(true);
+				Global::gamePlayer->setCanMoveTimer(0);
 			}
 		}
 
@@ -405,8 +405,8 @@ int main()
 		if (seconds - previousTime >= 1.0)
 		{
 			//std::fprintf(stdout, "fps: %f\n", frameCount / (seconds - previousTime));
-			std::fprintf(stdout, "diff: %d\n", Global::countNew - Global::countDelete);
-			Loader_printInfo();
+			//std::fprintf(stdout, "diff: %d\n", Global::countNew - Global::countDelete);
+			//Loader_printInfo();
 			frameCount = 0;
 			previousTime = seconds;
 		}

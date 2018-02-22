@@ -259,7 +259,6 @@ void Input_pollInputs()
 	{
 		INPUT_Y = 1;
 	}
-
 	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
 	{
 		INPUT_X = -1;

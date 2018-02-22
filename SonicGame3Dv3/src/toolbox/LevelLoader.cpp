@@ -43,6 +43,8 @@
 #include "../particles/particleresources.h"
 #include "../particles/particle.h"
 #include "../entities/killbox.h"
+#include "../entities/TwinklePark/tpflatwater.h"
+#include "../entities/TwinklePark/tpfloatingpad.h"
 
 float toFloat(char* input);
 int toInt(char* input);
@@ -334,7 +336,7 @@ void LevelLoader_loadLevel(std::string levelFilename)
 
 	if (Global::gamePlayer != nullptr)
 	{
-		Global::gamePlayer->setCanMove(false);
+		Global::gamePlayer->setCanMoveTimer(65);
 		Global::bufferTime = 60;
 	}
 
@@ -496,6 +498,7 @@ void processLine(char** dat)
 		{
 			SkySphere::loadModels(dat[1], dat[2], dat[3]);
 			Global::gameSkySphere->setScale(toFloat(dat[4]));
+			Global::gameSkySphere->setFollowsY((bool)toInt(dat[5]));
 			Global::gameSkySphere->setVisible(true);
 			return;
 		}
@@ -503,9 +506,9 @@ void processLine(char** dat)
 		case 8: //Teleport Zone
 		{
 			TeleportZone* zone = new TeleportZone(
-				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]),
-				toFloat(dat[4]), toFloat(dat[5]), toFloat(dat[6]),
-				toFloat(dat[7]), toFloat(dat[8]), toFloat(dat[9]));
+				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
+				toFloat(dat[4]), toFloat(dat[5]), toFloat(dat[6]), //target pos
+				toFloat(dat[7]), toFloat(dat[8]), toFloat(dat[9])); //new yaw, new pitch, size (radius*2)
 			Global::countNew++;
 			Main_addEntity(zone);
 			return;
@@ -731,6 +734,26 @@ void processLine(char** dat)
 			return;
 		}
 
+		case 49: //Twinkle Park water
+		{
+			TP_FlatWater::loadStaticModels();
+			TP_FlatWater* water = new TP_FlatWater();
+			Global::countNew++;
+			Main_addTransparentEntity(water);
+			return;
+		}
+
+		case 50: //Twinkle Park floating pad
+		{
+			TP_FloatingPad::loadStaticModels();
+			TP_FloatingPad* pad = new TP_FloatingPad(
+				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
+				toFloat(dat[4])); //rotY
+			Global::countNew++;
+			Main_addEntity(pad);
+			return;
+		}
+
 		default:
 		{
 			return;
@@ -776,4 +799,6 @@ void freeAllStaticModels()
 	ManiaSonicModel::deleteStaticModels();
 	Spinner::deleteStaticModels();
 	EC_Dolphin::deleteStaticModels();
+	TP_FlatWater::deleteStaticModels();
+	TP_FloatingPad::deleteStaticModels();
 }

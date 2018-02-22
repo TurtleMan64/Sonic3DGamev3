@@ -39,6 +39,7 @@ private:
 	static GUIText* textBOB;
 	static GUIText* textRainbowRoad;
 	static GUIText* textSnowhead;
+	static GUIText* textTwinklePark;
 
 	static GUIText* textClassicSonic;
 	static GUIText* textDollSonic;

@@ -82,13 +82,8 @@ void Dashpad::step()
 
 			cooldownTimer = cooldownTimerMax;
 
-			Global::gamePlayer->setCanMove(false);
+			Global::gamePlayer->setCanMoveTimer(cooldownTimerMax);
 		}
-	}
-
-	if (cooldownTimer == 1)
-	{
-		Global::gamePlayer->setCanMove(true);
 	}
 }
 

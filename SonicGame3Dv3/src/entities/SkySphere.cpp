@@ -19,9 +19,10 @@ std::list<TexturedModel*> SkySphere::models;
 
 SkySphere::SkySphere()
 {
-	this->position.x = 0;
-	this->position.y = 0;
-	this->position.z = 0;
+	position.x = 0;
+	position.y = 0;
+	position.z = 0;
+	followsY = false;
 }
 
 void SkySphere::step()
@@ -34,6 +35,16 @@ void SkySphere::step()
 		//position.z = Global::gamePlayer->getZ();
 	}
 	updateTransformationMatrix();
+}
+
+void SkySphere::setFollowsY(bool newFollowsY)
+{
+	followsY = newFollowsY;
+}
+
+bool SkySphere::getFollowsY()
+{
+	return followsY;
 }
 
 std::list<TexturedModel*>* SkySphere::getModels()

@@ -1,5 +1,6 @@
 # Blender v2.78 (sub 0) OBJ File: ''
 # www.blender.org
+mtllib MTL_Nebula.mtl
 
 v -0.000200 1000.237610 0.000263
 v 0.000000 850.888489 -525.730896

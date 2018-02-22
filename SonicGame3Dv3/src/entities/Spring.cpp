@@ -78,17 +78,12 @@ void Spring::step()
 			Global::gamePlayer->setGroundSpeed(0, 0);
 			Global::gamePlayer->setHoverCount(0);
 
-			Global::gamePlayer->setCanMove(false);
+			Global::gamePlayer->setCanMoveTimer(cooldownTimerMax);
 
 			AudioPlayer::play(6, getPosition(), 1 + (springPower*0.008f));
 
 			cooldownTimer = cooldownTimerMax;
 		}
-	}
-
-	if (cooldownTimer == 1)
-	{
-		Global::gamePlayer->setCanMove(true);
 	}
 
 	increaseRotation(1, 0, 0);

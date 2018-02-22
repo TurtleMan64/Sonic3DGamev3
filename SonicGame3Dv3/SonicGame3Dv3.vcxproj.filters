@@ -64,6 +64,9 @@
     <Filter Include="Source Files\water">
       <UniqueIdentifier>{ad5a0cc3-45d2-4a59-b55f-33f13f3d36e2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\entities\TwinklePark">
+      <UniqueIdentifier>{ad4f7dcd-1533-4742-b517-7888a105b797}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="glad.c">
@@ -336,6 +339,12 @@
     <ClCompile Include="src\entities\KillBox.cpp">
       <Filter>Source Files\entities</Filter>
     </ClCompile>
+    <ClCompile Include="src\entities\TwinklePark\TP_FlatWater.cpp">
+      <Filter>Source Files\entities\TwinklePark</Filter>
+    </ClCompile>
+    <ClCompile Include="src\entities\TwinklePark\TP_FloatingPad.cpp">
+      <Filter>Source Files\entities\TwinklePark</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\renderEngine\renderEngine.h">
@@ -589,6 +598,12 @@
     </ClInclude>
     <ClInclude Include="src\entities\killbox.h">
       <Filter>Source Files\entities</Filter>
+    </ClInclude>
+    <ClInclude Include="src\entities\TwinklePark\tpflatwater.h">
+      <Filter>Source Files\entities\TwinklePark</Filter>
+    </ClInclude>
+    <ClInclude Include="src\entities\TwinklePark\tpfloatingpad.h">
+      <Filter>Source Files\entities\TwinklePark</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

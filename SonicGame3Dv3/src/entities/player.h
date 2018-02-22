@@ -148,7 +148,7 @@ private:
 	float cameraInputY = 0;
 	float movementAngle = 0;
 
-	bool canMove = true;
+	//bool canMove = true;
 	int canMoveTimer = -1;
 
 	float spindashAngle = 0;
@@ -212,13 +212,7 @@ public:
 
 	void goUp();
 
-	/** If canMove is false, then every input from the
-	* controller is ignored. It is up to whoever sets this
-	* to false to set it back to true.
-	*
-	* @param newMove
-	*/
-	void setCanMove(bool newMove);
+	void setCanMoveTimer(int newMoveTimer);
 
 	void setGroundSpeed(float newXspd, float newZspd);
 

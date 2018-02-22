@@ -90,7 +90,7 @@ void Player::step()
 
 	iFrame = std::max(0, iFrame-1);
 	hitTimer = std::max(0, hitTimer-1);
-	canMoveTimer = std::max(-1, canMoveTimer - 1);
+	canMoveTimer = std::max(0, canMoveTimer - 1);
 	deadTimer = std::max(-1, deadTimer - 1);
 
 	if (deadTimer == 59)
@@ -101,11 +101,6 @@ void Player::step()
 	else if (deadTimer == 0)
 	{
 		Global::shouldRestartLevel = true;
-	}
-
-	if (canMoveTimer == 0)
-	{
-		canMove = true;
 	}
 
 	if (jumpInput)
@@ -405,7 +400,6 @@ void Player::step()
 					
 					bounceOffGround(&(triCol->normal), 0.6f, 18);
 					canMoveTimer = 8;
-					canMove = false;
 					isBall = true;
 					bonked = true;
 
@@ -679,7 +673,12 @@ void Player::step()
 	inWaterPrevious = inWater;
 	inWater = false;
 
-	Global::gameSkySphere->setPosition(getX(), 0, getZ());
+	float skyYVal = 0;
+	if (Global::gameSkySphere->getFollowsY())
+	{
+		skyYVal = getY();
+	}
+	Global::gameSkySphere->setPosition(getX(), skyYVal, getZ());
 
 	//std::fprintf(stdout, "player speed = %f\n", sqrtf(xVelGround*xVelGround + zVelGround*zVelGround));
 }
@@ -1161,7 +1160,7 @@ void Player::setMovementInputs()
 	moveSpeedAirCurrent = moveAccelerationAir*inputMag;
 	movementAngle = toDegrees(atan2f(movementInputY, movementInputX));
 
-	if (canMove == false || hitTimer > 0 || deadTimer >= 0)
+	if (canMoveTimer != 0 || hitTimer > 0 || deadTimer >= 0)
 	{
 		jumpInput = false;
 		actionInput = false;
@@ -1183,9 +1182,9 @@ void Player::setMovementInputs()
 	}
 }
 
-void Player::setCanMove(bool newMove)
+void Player::setCanMoveTimer(int newMoveTimer)
 {
-	this->canMove = newMove;
+	canMoveTimer = newMoveTimer;
 }
 
 void Player::checkSkid()
@@ -1196,7 +1195,7 @@ void Player::checkSkid()
 	{
 		float degAngle = movementAngle;
 
-		degAngle = (float)fmod(-degAngle - cameraYawTarget, 360);
+		degAngle = fmodf(-degAngle - cameraYawTarget, 360);
 
 		if (degAngle < 0)
 		{
@@ -1227,7 +1226,7 @@ void Player::checkSkid()
 
 void Player::applyFrictionAir()
 {
-	float mag = (float)sqrt((xVelGround*xVelGround) + (zVelGround*zVelGround));
+	float mag = sqrtf((xVelGround*xVelGround) + (zVelGround*zVelGround));
 	if (mag != 0)
 	{
 		int before = sign(zVelGround);
@@ -1246,7 +1245,7 @@ void Player::applyFrictionAir()
 		}
 	}
 
-	mag = (float)sqrt((xVelAir*xVelAir) + (zVelAir*zVelAir));
+	mag = sqrtf((xVelAir*xVelAir) + (zVelAir*zVelAir));
 	if (mag != 0)
 	{
 		int before = sign(zVelAir);
@@ -1269,11 +1268,11 @@ void Player::applyFrictionAir()
 void Player::moveMeAir()
 {
 	Camera* cam = Global::gameCamera;
-	xVelAir += (float)(moveSpeedAirCurrent*cos(toRadians(cam->getYaw() + movementAngle)));
-	zVelAir += (float)(moveSpeedAirCurrent*sin(toRadians(cam->getYaw() + movementAngle)));
+	xVelAir += (moveSpeedAirCurrent*cosf(toRadians(cam->getYaw() + movementAngle)));
+	zVelAir += (moveSpeedAirCurrent*sinf(toRadians(cam->getYaw() + movementAngle)));
 
-	float currSpeed = (float)sqrt((xVelAir*xVelAir) + (zVelAir*zVelAir));
-	float currDir = (float)toDegrees(atan2(zVelAir, xVelAir));
+	float currSpeed = sqrtf((xVelAir*xVelAir) + (zVelAir*zVelAir));
+	float currDir = toDegrees(atan2f(zVelAir, xVelAir));
 
 	if (moveSpeedAirCurrent > 0.01 && currSpeed > 0.5)
 	{
@@ -1284,8 +1283,8 @@ void Player::moveMeAir()
 
 		float newAngle = currDir + newDiff;
 
-		xVelAir = (float)(currSpeed*cos(toRadians(newAngle)));
-		zVelAir = (float)(currSpeed*sin(toRadians(newAngle)));
+		xVelAir = (currSpeed*cosf(toRadians(newAngle)));
+		zVelAir = (currSpeed*sinf(toRadians(newAngle)));
 
 		float factor = 1 - (abs(diff) / 900);
 		xVelAir *= factor;
@@ -1295,7 +1294,7 @@ void Player::moveMeAir()
 
 void Player::limitMovementSpeedAir()
 {
-	float myspeed = (float)sqrt(xVelAir*xVelAir + zVelAir*zVelAir);
+	float myspeed = sqrtf(xVelAir*xVelAir + zVelAir*zVelAir);
 	if (myspeed > airSpeedLimit)
 	{
 		xVelAir = (xVelAir*((myspeed - slowDownAirRate) / (myspeed)));
@@ -1310,7 +1309,7 @@ void Player::limitMovementSpeed(float limit)
 		limit = limit*0.1f;
 	}
 
-	float myspeed = (float)sqrt(xVelGround*xVelGround + zVelGround*zVelGround);
+	float myspeed = sqrtf(xVelGround*xVelGround + zVelGround*zVelGround);
 	if (myspeed > limit)
 	{
 		xVelGround = xVelGround*((myspeed - slowDownRate) / (myspeed));
@@ -1325,7 +1324,7 @@ void Player::applyFriction(float frictionToApply)
 		frictionToApply *= 0.11f;
 	}
 
-	float mag = (float)sqrt((xVelGround*xVelGround) + (zVelGround*zVelGround));
+	float mag = sqrtf((xVelGround*xVelGround) + (zVelGround*zVelGround));
 	if (mag != 0)
 	{
 		int before = sign(zVelGround);
@@ -1362,26 +1361,26 @@ void Player::calcSpindashAngle()
 void Player::spindash(int timer)
 {
 	float mag = spindashPower*timer;
-	float dx = (float)cos(spindashAngle)*mag;
-	float dz = -(float)sin(spindashAngle)*mag;
+	float dx = cosf(spindashAngle)*mag;
+	float dz = -sinf(spindashAngle)*mag;
 
 	float xspd = xVelGround;
 	float zspd = zVelGround;
-	float totalSpd = (float)sqrt(xspd*xspd + zspd*zspd);
+	float totalSpd = sqrtf(xspd*xspd + zspd*zspd);
 
-	float factor = (float)std::fmin(1, 6.5f / totalSpd);
+	float factor = std::fminf(1, 6.5f / totalSpd);
 
-	factor = (float)std::fmax(0.9f, factor);
+	factor = std::fmaxf(0.85f, factor);
 
 	xVelGround += dx*factor;
 	zVelGround += dz*factor;
 
-	float newSpeed = (float)sqrt(xVelGround*xVelGround + zVelGround*zVelGround);
+	float newSpeed = sqrtf(xVelGround*xVelGround + zVelGround*zVelGround);
 
 	if (totalSpd > 1 && newSpeed < storedSpindashSpeed)
 	{
-		xVelGround = (float)cos(spindashAngle)*storedSpindashSpeed;
-		zVelGround = -(float)sin(spindashAngle)*storedSpindashSpeed;
+		xVelGround = cosf(spindashAngle)*storedSpindashSpeed;
+		zVelGround = -sinf(spindashAngle)*storedSpindashSpeed;
 	}
 
 	isBall = true;
@@ -1486,8 +1485,8 @@ void Player::homingAttack()
 		}
 		else
 		{
-			xVelAir =  (float)cos(toRadians(angle))*homingPower;
-			zVelAir = -(float)sin(toRadians(angle))*homingPower;
+			xVelAir =  cosf(toRadians(angle))*homingPower;
+			zVelAir = -sinf(toRadians(angle))*homingPower;
 		}
 	}
 	//else
@@ -2422,7 +2421,8 @@ void Player::rebound(Vector3f* source)
 {
 	if (onPlane == false)
 	{
-		if (characterID == 2) //Mecha Sonic
+		if (true)
+		//if (characterID == 2) //Mecha Sonic
 		{
 			yVel = 2.1f;
 			xVelAir = 0;

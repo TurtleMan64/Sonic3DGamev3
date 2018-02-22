@@ -44,6 +44,7 @@ void Main_deleteAllTransparentEntites();
 #define LVL_BOB 10
 #define LVL_RR 11
 #define LVL_SHD 12
+#define LVL_TP 13
 
 #define ENTITY_RENDER_DIST 2000.0f
 

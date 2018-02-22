@@ -1,11 +1,19 @@
 #include "guimanager.h"
 
+#include "../engineTester/main.h"
+#include "../entities/player.h"
 #include "../fontMeshCreator/guitext.h"
 #include "../fontMeshCreator/fonttype.h"
 #include "../engineTester/main.h"
 #include "../toolbox/pausescreen.h"
 
+#include <cmath>
 #include <string>
+
+extern bool INPUT_JUMP;
+extern bool INPUT_ACTION;
+extern bool INPUT_ACTION2;
+extern bool INPUT_SPECIAL;
 
 GUIText* GuiManager::textTimer = nullptr;
 
@@ -16,7 +24,26 @@ int GuiManager::minutes = 0;
 
 GUIText* GuiManager::textRings = nullptr;
 
+GUIText* GuiManager::textHorVel = nullptr;
+GUIText* GuiManager::textVerVel = nullptr;
+GUIText* GuiManager::textTotalVel = nullptr;
+GUIText* GuiManager::textHoverCount = nullptr;
+GUIText* GuiManager::textStoredSpindashSpeed = nullptr;
+
+GUIText* GuiManager::textA = nullptr;
+GUIText* GuiManager::textB = nullptr;
+GUIText* GuiManager::textX = nullptr;
+GUIText* GuiManager::textY = nullptr;
+
 FontType* GuiManager::fontVip = nullptr;
+
+float GuiManager::horVel = 0;
+float GuiManager::verVel = 0;
+float GuiManager::totalVel = 0;
+int hoverCount = 0;
+float GuiManager::storedSpindashSpeed = 0;
+
+
 
 void GuiManager::init()
 {
@@ -24,6 +51,28 @@ void GuiManager::init()
 	textTimer = new GUIText("0", 1, fontVip, 0.01f, 0.01f, 1, false, false);
 	Global::countNew++;
 	textRings = new GUIText("0", 1, fontVip, 0.01f, 0.01f, 1, false, false);
+	Global::countNew++;
+
+	//Player debug text
+	textHorVel = new GUIText("Hor Vel:" + std::to_string(horVel), 1, fontVip, 0.01f, 0.70f, 1, false, Global::debugDisplay);
+	Global::countNew++;
+	textVerVel = new GUIText("Ver Vel:" + std::to_string(verVel), 1, fontVip, 0.01f, 0.75f, 1, false, Global::debugDisplay);
+	Global::countNew++;
+	textTotalVel = new GUIText("Total Vel:" + std::to_string(horVel), 1, fontVip, 0.01f, 0.80f, 1, false, Global::debugDisplay);
+	Global::countNew++;
+	textHoverCount = new GUIText("Hover Count:" + std::to_string(hoverCount), 1, fontVip, 0.01f, 0.85f, 1, false, Global::debugDisplay);
+	Global::countNew++;
+	textStoredSpindashSpeed = new GUIText("SSS:" + std::to_string(storedSpindashSpeed), 1, fontVip, 0.01f, 0.90f, 1, false, Global::debugDisplay);
+	Global::countNew++;
+
+	//Input text
+	textA = new GUIText("A", 1, fontVip, 0.80f, 0.95f, 1, false, Global::debugDisplay);
+	Global::countNew++;
+	textB = new GUIText("B", 1, fontVip, 0.85f, 0.95f, 1, false, Global::debugDisplay);
+	Global::countNew++;
+	textX = new GUIText("X", 1, fontVip, 0.90f, 0.95f, 1, false, Global::debugDisplay);
+	Global::countNew++;
+	textY = new GUIText("Y", 1, fontVip, 0.95f, 0.95f, 1, false, Global::debugDisplay);
 	Global::countNew++;
 }
 
@@ -59,6 +108,105 @@ void GuiManager::refresh()
 	Global::countDelete++;
 	textRings = nullptr;
 	textRings = new GUIText(std::to_string(Global::gameRingCount), 1.5f, fontVip, 0.01f, 0.06f, 1, false, true);
+	Global::countNew++;
+
+	//Check if player exists before trying to get values.
+	if (Global::gamePlayer != nullptr)
+	{
+		float xVel = Global::gamePlayer->getxVel() + Global::gamePlayer->getXVelAir();
+		float zVel = Global::gamePlayer->getzVel() + Global::gamePlayer->getZVelAir();
+
+		horVel = sqrtf(xVel * xVel + zVel * zVel);
+
+		verVel = Global::gamePlayer->getyVel();
+
+		totalVel = sqrtf(xVel * xVel + verVel * verVel + zVel * zVel);
+
+		hoverCount = Global::gamePlayer->getHoverCount();
+
+		storedSpindashSpeed = Global::gamePlayer->getSpindashSpeed();
+	}
+
+	//Display debug text is debugDisplay is true.
+	textHorVel->deleteMe();
+	delete textHorVel;
+	Global::countDelete++;
+	textHorVel = nullptr;
+	textHorVel = new GUIText("Hor Vel:" + std::to_string(horVel), 1.0f, fontVip, 0.01f, 0.70f, 1, false, Global::debugDisplay);
+	Global::countNew++;
+
+	textVerVel->deleteMe();
+	delete textVerVel;
+	Global::countDelete++;
+	textVerVel = nullptr;
+	textVerVel = new GUIText("Ver Vel:" + std::to_string(verVel), 1.0f, fontVip, 0.01f, 0.75f, 1, false, Global::debugDisplay);
+	Global::countNew++;
+
+	textTotalVel->deleteMe();
+	delete textTotalVel;
+	Global::countDelete++;
+	textTotalVel = nullptr;
+	textTotalVel = new GUIText("Total Vel:" + std::to_string(totalVel), 1.0f, fontVip, 0.01f, 0.80f, 1, false, Global::debugDisplay);
+	Global::countNew++;
+
+	textHoverCount->deleteMe();
+	delete textHoverCount;
+	Global::countDelete++;
+	textHoverCount = nullptr;
+	textHoverCount = new GUIText("Hover Count:" + std::to_string(hoverCount), 1.0f, fontVip, 0.01f, 0.85f, 1, false, Global::debugDisplay);
+	Global::countNew++;
+
+	textStoredSpindashSpeed->deleteMe();
+	delete textStoredSpindashSpeed;
+	Global::countDelete++;
+	textStoredSpindashSpeed = nullptr;
+	textStoredSpindashSpeed = new GUIText("SSS:" + std::to_string(storedSpindashSpeed), 1.0f, fontVip, 0.01f, 0.90f, 1, false, Global::debugDisplay);
+	Global::countNew++;
+
+	//Input display
+	textA->deleteMe();
+	delete textA;
+	Global::countDelete++;
+	textA = nullptr;
+	textA = new GUIText("A", 1, fontVip, 0.80f, 0.95f, 1, false, Global::debugDisplay);
+	if (!INPUT_JUMP) 
+	{
+		textA->setColour(0.6f, 0.6f, 0.6f);
+	}
+	Global::countNew++;
+
+	textB->deleteMe();
+	delete textB;
+	Global::countDelete++;
+	textB = nullptr;
+	textB = new GUIText("B", 1, fontVip, 0.85f, 0.95f, 1, false, Global::debugDisplay);
+	if (!INPUT_ACTION)
+	{
+		textB->setColour(0.6f, 0.6f, 0.6f);
+	}
+
+	Global::countNew++;
+	textX->deleteMe();
+	delete textX;
+	Global::countDelete++;
+	textX = nullptr;
+	textX = new GUIText("X", 1, fontVip, 0.90f, 0.95f, 1, false, Global::debugDisplay);
+	if (!INPUT_ACTION2)
+	{
+		textX->setColour(0.6f, 0.6f, 0.6f);
+	}
+	Global::countNew++;
+
+	Global::countNew++;
+	textY->deleteMe();
+	delete textY;
+	Global::countDelete++;
+	textY = nullptr;
+	textY = new GUIText("Y", 1, fontVip, 0.95f, 0.95f, 1, false, Global::debugDisplay);
+	if (!INPUT_SPECIAL)
+	{
+		textY->setColour(0.6f, 0.6f, 0.6f);
+	}
 	Global::countNew++;
 }
 
@@ -115,3 +263,4 @@ float GuiManager::getTotalTimer()
 {
 	return minutes * 60 + seconds + centiseconds / 60.0f;
 }
+

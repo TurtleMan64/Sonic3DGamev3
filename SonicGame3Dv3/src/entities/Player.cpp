@@ -1388,6 +1388,11 @@ void Player::spindash(int timer)
 	storedSpindashSpeed = 0;
 }
 
+float Player::getSpindashSpeed()
+{
+	return storedSpindashSpeed;
+}
+
 void Player::homingAttack()
 {
 	Camera* cam = Global::gameCamera;
@@ -2309,6 +2314,11 @@ float Player::getZVelAir()
 void Player::setHoverCount(int newCount)
 {
 	hoverCount = newCount;
+}
+
+int Player::getHoverCount()
+{
+	return hoverCount;
 }
 
 void Player::setOnPlane(bool on)

@@ -17,6 +17,23 @@ private:
 
 	static GUIText* textRings;
 
+	static GUIText* textHorVel;
+	static GUIText* textVerVel;
+	static GUIText* textTotalVel;
+	static GUIText* textHoverCount;
+	static GUIText* textStoredSpindashSpeed;
+
+	static GUIText* textA;
+	static GUIText* textB;
+	static GUIText* textX;
+	static GUIText* textY;
+
+	static float horVel;
+	static float verVel;
+	static float totalVel;
+	static int hoverCouunt;
+	static float storedSpindashSpeed;
+
 public:
 	static FontType* fontVip;
 

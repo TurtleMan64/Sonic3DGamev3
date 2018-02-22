@@ -216,6 +216,10 @@ public:
 
 	void setGroundSpeed(float newXspd, float newZspd);
 
+	float getXVelGround();
+
+	float getZVelGround();
+
 	float getxVel();
 
 	void setxVel(float xVel);

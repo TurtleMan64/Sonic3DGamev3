@@ -2494,6 +2494,16 @@ Vector3f Player::getOverallVel()
 	return Vector3f(xVel, yVel, zVel);
 }
 
+float Player::getXVelGround()
+{
+	return xVelGround;
+}
+
+float Player::getZVelGround()
+{
+	return zVelGround;
+}
+
 void Player::debugAdjustCamera()
 {
 	cameraInputX = INPUT_X2;

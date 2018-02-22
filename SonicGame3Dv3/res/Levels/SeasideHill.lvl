@@ -1,0 +1,28 @@
+SeasideHill
+SeasideHillEdit2
+SeasideHill
+9
+Chunk1 6
+Chunk2 6
+Chunk3 6
+Chunk4 6
+Chunk5 6
+Chunk6 6
+Chunk7 6
+Chunk8 6
+Chunk9 6
+1.0 1.0 1.0
+0.0 0.0 0.0
+0.0 0.0 0.0
+0.3 0.3 0.45
+0.1922 0.3961 0.9059
+0.05 0.05 0.075
+0.00005 2.0
+63.0
+180 18
+6 0 60 2600
+9 -1533 37 2676
+7 Sky SkySphereModel MTL_SeasideHill 8 0
+0 0 0 0
+0 20 40 0
+0 20 80 0

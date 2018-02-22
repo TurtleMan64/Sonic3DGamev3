@@ -110,104 +110,119 @@ void GuiManager::refresh()
 	textRings = new GUIText(std::to_string(Global::gameRingCount), 1.5f, fontVip, 0.01f, 0.06f, 1, false, true);
 	Global::countNew++;
 
-	//Check if player exists before trying to get values.
-	if (Global::gamePlayer != nullptr)
+	if (Global::debugDisplay)
 	{
-		float xVel = Global::gamePlayer->getxVel() + Global::gamePlayer->getXVelAir();
-		float zVel = Global::gamePlayer->getzVel() + Global::gamePlayer->getZVelAir();
+		//Check if player exists before trying to get values.
+		if (Global::gamePlayer != nullptr)
+		{
+			float xVel = Global::gamePlayer->getxVel() + Global::gamePlayer->getXVelAir();
+			float zVel = Global::gamePlayer->getzVel() + Global::gamePlayer->getZVelAir();
 
-		horVel = sqrtf(xVel * xVel + zVel * zVel);
+			horVel = sqrtf(xVel * xVel + zVel * zVel);
 
-		verVel = Global::gamePlayer->getyVel();
+			verVel = Global::gamePlayer->getyVel();
 
-		totalVel = sqrtf(xVel * xVel + verVel * verVel + zVel * zVel);
+			totalVel = sqrtf(xVel * xVel + verVel * verVel + zVel * zVel);
 
-		hoverCount = Global::gamePlayer->getHoverCount();
+			hoverCount = Global::gamePlayer->getHoverCount();
 
-		storedSpindashSpeed = Global::gamePlayer->getSpindashSpeed();
+			storedSpindashSpeed = Global::gamePlayer->getSpindashSpeed();
+		}
+
+		//Display debug text is debugDisplay is true.
+		textHorVel->deleteMe();
+		delete textHorVel;
+		Global::countDelete++;
+		textHorVel = nullptr;
+		textHorVel = new GUIText("Hor Vel:" + std::to_string(horVel), 1.0f, fontVip, 0.01f, 0.70f, 1, false, Global::debugDisplay);
+		Global::countNew++;
+
+		textVerVel->deleteMe();
+		delete textVerVel;
+		Global::countDelete++;
+		textVerVel = nullptr;
+		textVerVel = new GUIText("Ver Vel:" + std::to_string(verVel), 1.0f, fontVip, 0.01f, 0.75f, 1, false, Global::debugDisplay);
+		Global::countNew++;
+
+		textTotalVel->deleteMe();
+		delete textTotalVel;
+		Global::countDelete++;
+		textTotalVel = nullptr;
+		textTotalVel = new GUIText("Total Vel:" + std::to_string(totalVel), 1.0f, fontVip, 0.01f, 0.80f, 1, false, Global::debugDisplay);
+		Global::countNew++;
+
+		textHoverCount->deleteMe();
+		delete textHoverCount;
+		Global::countDelete++;
+		textHoverCount = nullptr;
+		textHoverCount = new GUIText("Hover Count:" + std::to_string(hoverCount), 1.0f, fontVip, 0.01f, 0.85f, 1, false, Global::debugDisplay);
+		Global::countNew++;
+
+		textStoredSpindashSpeed->deleteMe();
+		delete textStoredSpindashSpeed;
+		Global::countDelete++;
+		textStoredSpindashSpeed = nullptr;
+		textStoredSpindashSpeed = new GUIText("SSS:" + std::to_string(storedSpindashSpeed), 1.0f, fontVip, 0.01f, 0.90f, 1, false, Global::debugDisplay);
+		Global::countNew++;
+
+		//Input display
+		textA->deleteMe();
+		delete textA;
+		Global::countDelete++;
+		textA = nullptr;
+		textA = new GUIText("A", 1, fontVip, 0.80f, 0.95f, 1, false, Global::debugDisplay);
+		Global::countNew++;
+		if (!INPUT_JUMP)
+		{
+			textA->setColour(0.2f, 0.2f, 0.2f);
+		}
+
+		textB->deleteMe();
+		delete textB;
+		Global::countDelete++;
+		textB = nullptr;
+		textB = new GUIText("B", 1, fontVip, 0.85f, 0.95f, 1, false, Global::debugDisplay);
+		Global::countNew++;
+		if (!INPUT_ACTION)
+		{
+			textB->setColour(0.2f, 0.2f, 0.2f);
+		}
+
+		textX->deleteMe();
+		delete textX;
+		Global::countDelete++;
+		textX = nullptr;
+		textX = new GUIText("X", 1, fontVip, 0.90f, 0.95f, 1, false, Global::debugDisplay);
+		Global::countNew++;
+		if (!INPUT_ACTION2)
+		{
+			textX->setColour(0.2f, 0.2f, 0.2f);
+		}
+
+		textY->deleteMe();
+		delete textY;
+		Global::countDelete++;
+		textY = nullptr;
+		textY = new GUIText("Y", 1, fontVip, 0.95f, 0.95f, 1, false, Global::debugDisplay);
+		Global::countNew++;
+		if (!INPUT_SPECIAL)
+		{
+			textY->setColour(0.2f, 0.2f, 0.2f);
+		}
 	}
-
-	//Display debug text is debugDisplay is true.
-	textHorVel->deleteMe();
-	delete textHorVel;
-	Global::countDelete++;
-	textHorVel = nullptr;
-	textHorVel = new GUIText("Hor Vel:" + std::to_string(horVel), 1.0f, fontVip, 0.01f, 0.70f, 1, false, Global::debugDisplay);
-	Global::countNew++;
-
-	textVerVel->deleteMe();
-	delete textVerVel;
-	Global::countDelete++;
-	textVerVel = nullptr;
-	textVerVel = new GUIText("Ver Vel:" + std::to_string(verVel), 1.0f, fontVip, 0.01f, 0.75f, 1, false, Global::debugDisplay);
-	Global::countNew++;
-
-	textTotalVel->deleteMe();
-	delete textTotalVel;
-	Global::countDelete++;
-	textTotalVel = nullptr;
-	textTotalVel = new GUIText("Total Vel:" + std::to_string(totalVel), 1.0f, fontVip, 0.01f, 0.80f, 1, false, Global::debugDisplay);
-	Global::countNew++;
-
-	textHoverCount->deleteMe();
-	delete textHoverCount;
-	Global::countDelete++;
-	textHoverCount = nullptr;
-	textHoverCount = new GUIText("Hover Count:" + std::to_string(hoverCount), 1.0f, fontVip, 0.01f, 0.85f, 1, false, Global::debugDisplay);
-	Global::countNew++;
-
-	textStoredSpindashSpeed->deleteMe();
-	delete textStoredSpindashSpeed;
-	Global::countDelete++;
-	textStoredSpindashSpeed = nullptr;
-	textStoredSpindashSpeed = new GUIText("SSS:" + std::to_string(storedSpindashSpeed), 1.0f, fontVip, 0.01f, 0.90f, 1, false, Global::debugDisplay);
-	Global::countNew++;
-
-	//Input display
-	textA->deleteMe();
-	delete textA;
-	Global::countDelete++;
-	textA = nullptr;
-	textA = new GUIText("A", 1, fontVip, 0.80f, 0.95f, 1, false, Global::debugDisplay);
-	if (!INPUT_JUMP) 
+	else
 	{
-		textA->setColour(0.6f, 0.6f, 0.6f);
-	}
-	Global::countNew++;
+		textHorVel->setVisibility(false);
+		textVerVel->setVisibility(false);
+		textTotalVel->setVisibility(false);
+		textHoverCount->setVisibility(false);
+		textStoredSpindashSpeed->setVisibility(false);
 
-	textB->deleteMe();
-	delete textB;
-	Global::countDelete++;
-	textB = nullptr;
-	textB = new GUIText("B", 1, fontVip, 0.85f, 0.95f, 1, false, Global::debugDisplay);
-	if (!INPUT_ACTION)
-	{
-		textB->setColour(0.6f, 0.6f, 0.6f);
+		textA->setVisibility(false);
+		textB->setVisibility(false);
+		textX->setVisibility(false);
+		textY->setVisibility(false);
 	}
-
-	Global::countNew++;
-	textX->deleteMe();
-	delete textX;
-	Global::countDelete++;
-	textX = nullptr;
-	textX = new GUIText("X", 1, fontVip, 0.90f, 0.95f, 1, false, Global::debugDisplay);
-	if (!INPUT_ACTION2)
-	{
-		textX->setColour(0.6f, 0.6f, 0.6f);
-	}
-	Global::countNew++;
-
-	Global::countNew++;
-	textY->deleteMe();
-	delete textY;
-	Global::countDelete++;
-	textY = nullptr;
-	textY = new GUIText("Y", 1, fontVip, 0.95f, 0.95f, 1, false, Global::debugDisplay);
-	if (!INPUT_SPECIAL)
-	{
-		textY->setColour(0.6f, 0.6f, 0.6f);
-	}
-	Global::countNew++;
 }
 
 void GuiManager::increaseTimer()

@@ -400,14 +400,28 @@ void Input_pollInputs()
 		INPUT_APOSTROPHE = true;
 	}
 
+	if (Global::gameState != STATE_DEBUG)
+	{
+		INPUT_JUMP = DEBUG_JUMP;
+		INPUT_ACTION = DEBUG_ACTION;
+		INPUT_ACTION2 = DEBUG_ACTION2;
+		INPUT_SHOULDER = DEBUG_SHOULDER;
+		INPUT_SELECT = DEBUG_SELECT;
+		INPUT_SPECIAL = DEBUG_SPECIAL;
+		INPUT_START = DEBUG_START;
+	}
+
 
 	if (INPUT_SHOULDER && !INPUT_PREVIOUS_SHOULDER)
 	{
-		std::fprintf(stdout, "Time of day: %f\n", SkyManager::getTimeOfDay());
-		std::fprintf(stdout, "[%f, %f, %f]\n", Global::gamePlayer->getPosition()->x, Global::gamePlayer->getPosition()->y, Global::gamePlayer->getPosition()->z);
-		std::fprintf(stdout, "player rot = %f\n", Global::gamePlayer->getRotY());
-		std::fprintf(stdout, "cam yaw: %f,   cam pitch: %f\n", Global::gameCamera->getYaw(), Global::gameCamera->getPitch());
-		std::fprintf(stdout, "\n");
+		if (Global::gamePlayer != nullptr)
+		{
+			std::fprintf(stdout, "Time of day: %f\n", SkyManager::getTimeOfDay());
+			std::fprintf(stdout, "[%f, %f, %f]\n", Global::gamePlayer->getPosition()->x, Global::gamePlayer->getPosition()->y, Global::gamePlayer->getPosition()->z);
+			std::fprintf(stdout, "player rot = %f\n", Global::gamePlayer->getRotY());
+			std::fprintf(stdout, "cam yaw: %f,   cam pitch: %f\n", Global::gameCamera->getYaw(), Global::gameCamera->getPitch());
+			std::fprintf(stdout, "\n");
+		}
 	}
 
 	if (tabInput && !tabInputPrevious)
@@ -450,17 +464,6 @@ void Input_pollInputs()
 	if (approxYLeft != 0)
 	{
 		MENU_Y = approxYLeft - approxYLeftPrevious;
-	}
-
-	if (Global::gameState != STATE_DEBUG)
-	{
-		INPUT_JUMP = DEBUG_JUMP;
-		INPUT_ACTION = DEBUG_ACTION;
-		INPUT_ACTION2 = DEBUG_ACTION2;
-		INPUT_SHOULDER = DEBUG_SHOULDER;
-		INPUT_SELECT = DEBUG_SELECT;
-		INPUT_SPECIAL = DEBUG_SPECIAL;
-		INPUT_START = DEBUG_START;
 	}
 }
 

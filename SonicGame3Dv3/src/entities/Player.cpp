@@ -2361,8 +2361,8 @@ void Player::increaseGroundSpeed(float dx, float dz)
 
 float Player::getSpeed()
 {
-	float xSpd = xVel + xVelAir + xVelGround;
-	float zSpd = zVel + zVelAir + zVelGround;
+	float xSpd = xVelAir + xVelGround;
+	float zSpd = zVelAir + zVelGround;
 
 	return sqrtf(xSpd*xSpd + zSpd*zSpd);
 }
@@ -2492,4 +2492,73 @@ void Player::die()
 Vector3f Player::getOverallVel()
 {
 	return Vector3f(xVel, yVel, zVel);
+}
+
+void Player::debugAdjustCamera()
+{
+	cameraInputX = INPUT_X2;
+	cameraInputY = INPUT_Y2;
+
+	zoomInput = INPUT_ZOOM;
+
+
+
+
+	cameraRadius += (cameraRadiusTarget - cameraRadius) / 20;
+
+	cameraRadiusTarget += zoomInput;
+	cameraRadiusTarget = fmax(cameraRadiusZoom, cameraRadiusTarget);
+	cameraRadiusTarget = fmin(cameraRadiusZoomOut, cameraRadiusTarget);
+
+	Camera* cam = Global::gameCamera;
+
+	cameraPitchTarget += cameraInputY;
+	cameraYawTarget += cameraInputX;
+
+	cam->setYaw(cam->getYaw() + (cameraYawTarget - cam->getYaw()) / cameraLaziness);
+	cam->setPitch(cam->getPitch() + (cameraPitchTarget - cam->getPitch()) / cameraLaziness);
+
+	Vector3f headPos(
+		position.x + currNorm.x*headHeight,
+		position.y + currNorm.y*headHeight,
+		position.z + currNorm.z*headHeight);
+
+	Vector3f camPos(
+		headPos.x + (cosf(toRadians(cam->getYaw() + 90))*(cameraRadius*(cosf(toRadians(cam->getPitch()))))),
+		headPos.y - (sinf(toRadians(cam->getPitch() + 180))*cameraRadius),
+		headPos.z + (sinf(toRadians(cam->getYaw() + 90))*(cameraRadius*(cosf(toRadians(cam->getPitch()))))));
+
+
+	if (CollisionChecker::checkCollision(position.x, position.y, position.z, headPos.x, headPos.y, headPos.z) == true)
+	{
+		Vector3f* posCol = CollisionChecker::getCollidePosition();
+
+		Vector3f diff;
+
+		diff.x = posCol->x - getX();
+		diff.y = posCol->y - getY();
+		diff.z = posCol->z - getZ();
+	}
+	else if (CollisionChecker::checkCollision(headPos.x, headPos.y, headPos.z, camPos.x, camPos.y, camPos.z) == true)
+	{
+		Vector3f* posCol = CollisionChecker::getCollidePosition();
+
+		Vector3f diff;
+
+		diff.x = posCol->x - headPos.x;
+		diff.y = posCol->y - headPos.y;
+		diff.z = posCol->z - headPos.z;
+
+		float newRadius = diff.length() - 4;
+
+		diff.normalize();
+		diff.scale(newRadius);
+
+		camPos.set(
+			headPos.x + diff.x,
+			headPos.y + diff.y,
+			headPos.z + diff.z);
+	}
+
+	cam->setPosition(&camPos);
 }

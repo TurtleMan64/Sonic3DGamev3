@@ -260,7 +260,9 @@ public:
 
 	Vector3f getOverallVel();
 
-	float Player::getSpindashSpeed();
+	float getSpindashSpeed();
+
+	void debugAdjustCamera();
 
 private:
 	void adjustCamera();

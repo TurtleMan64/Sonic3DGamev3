@@ -306,6 +306,11 @@ int main()
 
 			case STATE_DEBUG:
 			{
+				if (Global::gamePlayer != nullptr)
+				{
+					Global::gamePlayer->debugAdjustCamera();
+				}
+
 				Input_pollInputs();
 				if (Global::step)
 				{

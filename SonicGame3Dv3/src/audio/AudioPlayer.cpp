@@ -10,7 +10,7 @@
 
 
 float AudioPlayer::soundLevel = 0.1f;
-float AudioPlayer::soundLevelBG = 0.2f;
+float AudioPlayer::soundLevelBG = 0.15f;
 std::vector<Source*> AudioPlayer::sources;
 std::vector<ALuint> AudioPlayer::buffersSE;
 std::vector<ALuint> AudioPlayer::buffersBGM;

@@ -134,8 +134,8 @@ void Player::step()
 
 	if (isBall)
 	{
-		xVelGround += currNorm.x*slopeAccel*1.25f;
-		zVelGround += currNorm.z*slopeAccel*1.25f;
+		xVelGround += currNorm.x*slopeAccel*ballSlopeAccelFactor;
+		zVelGround += currNorm.z*slopeAccel*ballSlopeAccelFactor;
 	}
 	else
 	{
@@ -162,7 +162,7 @@ void Player::step()
 		isStomping = false;
 		homingAttackTimer = -1;
 		float speed = sqrtf(xVelGround*xVelGround + zVelGround*zVelGround);
-		if (currNorm.y <= 0.3f && speed < 2) //Arbitrary constants
+		if (currNorm.y <= wallThreshold && speed < wallSpeedStickThreshold) //Arbitrary constants
 		{
 			wallStickTimer--;
 		}
@@ -209,7 +209,7 @@ void Player::step()
 			AudioPlayer::play(12, getPosition());
 		}
 
-		if (speed < 0.45f)
+		if (speed < autoUnrollThreshold)
 		{
 			if (isBall)
 			{
@@ -341,7 +341,7 @@ void Player::step()
 		{
 			if (isBouncing)
 			{
-				bounceOffGround(&(triCol->normal), 0.75f, 8);
+				bounceOffGround(&(triCol->normal), bounceFactor, 8);
 				isBall = true;
 				isBouncing = false;
 				isStomping = false;
@@ -358,7 +358,7 @@ void Player::step()
 				//std::fprintf(stdout, "normal.y = %f\n", triCol->normal.y);
 
 				//Is the wall steep?
-				if (triCol->normal.y < 0.3) //Some arbitrary steepness constant
+				if (triCol->normal.y < wallThreshold) //Some arbitrary steepness constant
 				{
 					Vector3f approach(xVel + xVelAir + xDisp, yVel + yDisp, zVel + zVelAir + zDisp);
 					Vector3f wallNorm(&(triCol->normal));
@@ -366,13 +366,13 @@ void Player::step()
 					approach.normalize();
 					wallNorm.normalize();
 
-					float similarity = abs(wallNorm.dot(&approach));
+					//float similarity = abs(wallNorm.dot(&approach));
 
 					//std::fprintf(stdout, "similarity = %f\n", similarity);
 
-					if (similarity > 0.6) //Another arbitrary "how steep of an angle you can stick at" constant
+					//if (similarity > smoothTransitionThreshold) //Another arbitrary "how steep of an angle you can stick at" constant
 					{
-						canStick = false;
+						//canStick = false;
 					}
 
 					//Not sure if I like this...
@@ -398,7 +398,7 @@ void Player::step()
 					//yVel = speeds.y;
 					//zVelAir = speeds.z;
 					
-					bounceOffGround(&(triCol->normal), 0.6f, 18);
+					bounceOffGround(&(triCol->normal), cantStickBounceFactor, 18);
 					canMoveTimer = 8;
 					isBall = true;
 					bonked = true;
@@ -422,7 +422,7 @@ void Player::step()
 		else //check if you can smoothly transition from previous triangle to this triangle
 		{
 			float dotProduct = currNorm.dot(&(triCol->normal));
-			if (dotProduct < 0.6)
+			if (dotProduct < smoothTransitionThreshold)
 			{
 				xVelGround = 0;
 				zVelGround = 0;
@@ -509,7 +509,7 @@ void Player::step()
 		if (checkPassed)
 		{
 			float dotProduct = currNorm.dot(&(CollisionChecker::getCollideTriangle()->normal));
-			if (dotProduct < 0.6) //It's a wall, pretend the collision check didn't see it
+			if (dotProduct < smoothTransitionThreshold) //It's a wall, pretend the collision check didn't see it
 			{
 				checkPassed = false;
 			}
@@ -524,7 +524,7 @@ void Player::step()
 			bool bonked = false;
 			//check if you can smoothly transition from previous triangle to this triangle
 			float dotProduct = currNorm.dot(&(CollisionChecker::getCollideTriangle()->normal));
-			if (dotProduct < 0.6)
+			if (dotProduct < smoothTransitionThreshold)
 			{
 				xVelGround = 0;
 				zVelGround = 0;
@@ -582,7 +582,7 @@ void Player::step()
 		Vector3f pos(getX(), waterHeight + 5, getZ());
 		Vector3f vel(0, 0, 0);
 		new Particle(ParticleResources::textureSplash, &pos, &vel, 0, 30, 0, 10, 0, false);
-		yVel += 0.4f;
+		yVel += waterExitBoost;
 		
 		float totXVel = xVel + xVelAir;
 		float totZVel = zVel + zVelAir;
@@ -635,20 +635,20 @@ void Player::step()
 			new Particle(ParticleResources::textureBubble, &bubPos, &bubVel, 0.05f, 60, 0, 4, 0, false);
 		}
 
-		yVel = fmaxf(yVel, -1);
-		xVelGround *= 0.75f;
-		zVelGround *= 0.75f;
-		xVelAir *= 0.75f;
-		zVelAir *= 0.75f;
+		yVel = fmaxf(yVel, waterEntryMaxYVel);
+		xVelGround *= waterEntrySlowdown;
+		zVelGround *= waterEntrySlowdown;
+		xVelAir *= waterEntrySlowdown;
+		zVelAir *= waterEntrySlowdown;
 	}
 
 	if (inWater)
 	{
 
-		xVelGround *= 0.987f;
-		zVelGround *= 0.987f;
-		xVelAir *= 0.987f;
-		zVelAir *= 0.987f;
+		xVelGround *= waterDeceleration;
+		zVelGround *= waterDeceleration;
+		xVelAir *= waterDeceleration;
+		zVelAir *= waterDeceleration;
 	}
 
 	if (specialInput && !previousSpecialInput && !isLightdashing)

@@ -71,7 +71,7 @@ private:
 	bool onPlane = false;
 	bool onPlanePrevious = false;
 	const float gravity = 0.08f;
-	const float hoverAccel = 0.04f;
+	const float hoverAccel = 0.04f; //How much yVel you gain each frame from hovering
 	const float jumpPower = 1.7f;
 
 	const int hoverLimit = 60;
@@ -88,7 +88,7 @@ private:
 	const float normalSpeedLimit = 4.0f;
 	const float airSpeedLimit = 2.5f;
 
-	const float slowDownRate = 0.06f; //how fast you slowdown every frame when youre going faster than max speed 
+	const float slowDownRate = 0.06f; //How fast you slowdown every frame when youre going faster than max speed 
 	const float slowDownAirRate = 0.025f;
 
 	const float spindashPower = 0.15f;
@@ -106,13 +106,25 @@ private:
 	const int homingAttackTimerMax = 10;
 
 
-	const float surfaceTension = 10.0f; //3, 10 after new 2nd collision ignore feature
-	const float slopeAccel = 0.092f; //how much you are influenced by the terrain's slope
+	const float surfaceTension = 10.0f; //Increase to make sonic not fly off slopes when going fast
+	const float slopeAccel = 0.092f; //How much you are influenced by the terrain's slope
 
-	const int wallStickTimerMax = 30; //how long you stay on a wall after you go too slow
+	const int wallStickTimerMax = 30; //How long you stay on a wall after you go too slow
 	int wallStickTimer = 0;
 
 	float animCount = 0;
+
+	const float ballSlopeAccelFactor = 1.25f; //Additional accel on slopes from being in ball
+	const float wallThreshold = 0.3f; //How steep a slope must be to be considered a wall
+	const float wallSpeedStickThreshold = 2.0f; //How fast you must be going to keep sticking on a wall
+	const float autoUnrollThreshold = 0.45f; //Automatically unrolls from ball form when under this speed
+	const float bounceFactor = 0.75f; //Speed you retain from a bounce
+	const float cantStickBounceFactor = 0.6f; //Speed you retain from not sticking to a wall
+	const float smoothTransitionThreshold = 0.6f; //How similar 2 triangles must be to run between them
+	const float waterExitBoost = 0.4f; //When you jump out of water, get this boost
+	const float waterEntryMaxYVel = -1.0f; //When you enter water, yVel cant be less than this
+	const float waterEntrySlowdown = 0.75f; //When you enter water, slowdown horizontal speed
+	const float waterDeceleration = 0.987f; //When in water, speed gets multiplied by this every frame
 
 	Triangle3D* triCol = nullptr;
 	Vector3f* colPos = nullptr;

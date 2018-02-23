@@ -12,7 +12,9 @@
 #include "../collision/collisionchecker.h"
 #include "../collision/triangle3d.h"
 #include "../toolbox/maths.h"
+#include "../audio/audioplayer.h"
 
+#include <AL/al.h>
 #include <list>
 #include <iostream>
 #include <algorithm>
@@ -25,13 +27,14 @@ TeleportZone::TeleportZone()
 
 TeleportZone::TeleportZone(float x, float y, float z,
 						   float xTarget, float yTarget, float zTarget,
-						   float newYaw, float newPitch, float size)
+						   float newYaw, float newPitch, float size, ALuint newBGM)
 {
-	this->position.x = x;
-	this->position.y = y;
-	this->position.z = z;
-	this->scale = size;
-	this->visible = false;
+	position.x = x;
+	position.y = y;
+	position.z = z;
+	scale = size;
+	visible = false;
+	bgmToPlay = newBGM;
 	teleportLocation.set(xTarget, yTarget, zTarget);
 	camYawTarget = newYaw;
 	camPitchTarget = newPitch;
@@ -48,5 +51,10 @@ void TeleportZone::step()
 		Global::gamePlayer->setPosition(&teleportLocation);
 		Global::gamePlayer->setCameraAngles(camYawTarget, camPitchTarget);
 		Global::gamePlayer->stopMoving();
+
+		if ((int)bgmToPlay != -1)
+		{
+			AudioPlayer::playBGM(bgmToPlay);
+		}
 	}
 }

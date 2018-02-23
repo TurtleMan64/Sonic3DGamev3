@@ -13,14 +13,19 @@ private:
 	static float soundLevel;
 	static float soundLevelBG;
 	static std::vector<Source*> sources;
-	static std::vector<ALuint> buffers;
+	static std::vector<ALuint> buffersSE;
+	static std::vector<ALuint> buffersBGM;
 
 public:
 	static void loadSoundEffects();
 
+	static void loadBGM(char* fileName);
+
 	static void deleteSources();
 
-	static void deleteBuffers();
+	static void deleteBuffersSE();
+
+	static void deleteBuffersBGM();
 
 	static void createSources();
 

@@ -9,6 +9,12 @@ Source::Source(float rolloff, float referencedist, float max)
 	alSourcef(sourceID, AL_REFERENCE_DISTANCE, referencedist);
 	alSourcef(sourceID, AL_MAX_DISTANCE, max);
 
+	//Background music shouldn't pan in 3D space
+	if (rolloff == 0)
+	{
+		alSourcei(sourceID, AL_SOURCE_RELATIVE, AL_TRUE);
+	}
+
 	bufferID = (ALuint)-1;
 }
 

@@ -73,6 +73,14 @@ ALuint AudioMaster::loadWAV(char* fileName)
 {
 	FILE* fp = nullptr;
 	fp = fopen(fileName, "rb");
+
+	if (fp == NULL)
+	{
+		fprintf(stdout, "Error when trying to open '%s'\n", fileName);
+		fclose(fp);
+		return (ALuint)-1;
+	}
+
 	char type[4];
 	DWORD size, chunkSize;
 	short formatType, channels;
@@ -197,7 +205,7 @@ ALuint AudioMaster::loadWAV(char* fileName)
 void AudioMaster::cleanUp()
 {
 	AudioPlayer::deleteSources();
-	AudioPlayer::deleteBuffers();
+	AudioPlayer::deleteBuffersSE();
 
 	alcMakeContextCurrent(nullptr);
 	alcDestroyContext(AudioMaster::context);

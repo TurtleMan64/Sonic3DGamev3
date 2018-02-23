@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <fstream>
+#include <AL/al.h>
 
 #include "levelloader.h"
 #include "../engineTester/main.h"
@@ -45,6 +46,7 @@
 #include "../entities/killbox.h"
 #include "../entities/TwinklePark/tpflatwater.h"
 #include "../entities/TwinklePark/tpfloatingpad.h"
+#include "../audio/audioplayer.h"
 
 float toFloat(char* input);
 int toInt(char* input);
@@ -99,6 +101,12 @@ void LevelLoader_loadLevel(std::string levelFilename)
 		std::fprintf(stdout, "Error: Cannot load file '%s'\n", ("res/Levels/" + fname).c_str());
 		file.close();
 		return;
+	}
+
+	//Delete existing bgm if loading a new stage
+	if (stageFault == 1)
+	{
+		AudioPlayer::deleteBuffersBGM();
 	}
 
 
@@ -157,9 +165,6 @@ void LevelLoader_loadLevel(std::string levelFilename)
 			numChunks--;
 		}
 	}
-
-
-
 
 	std::string sunColorDay;
 	getline(file, sunColorDay);
@@ -304,6 +309,31 @@ void LevelLoader_loadLevel(std::string levelFilename)
 
 
 
+
+	//Read in BGM
+
+	std::string numBGMLine;
+	getline(file, numBGMLine);
+
+	int numBGM = stoi(numBGMLine);
+
+	while (numBGM > 0)
+	{
+		std::string line;
+		getline(file, line);
+
+		char* bgmFileName = (char*)line.c_str();
+
+		if (stageFault == 1)
+		{
+			AudioPlayer::loadBGM(bgmFileName);
+		}
+
+		numBGM--;
+	}
+
+
+
 	//Now read through all the objects defined in the file
 
 	std::string line;
@@ -346,6 +376,8 @@ void LevelLoader_loadLevel(std::string levelFilename)
 
 	Vector3f partVel(0, 0, 0);
 	new Particle(ParticleResources::textureBlackFade, Global::gameCamera->getFadePosition(), &partVel, 0, 60, 0, 400, 0, true);
+
+	AudioPlayer::playBGM(0);
 }
 
 
@@ -508,7 +540,8 @@ void processLine(char** dat)
 			TeleportZone* zone = new TeleportZone(
 				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
 				toFloat(dat[4]), toFloat(dat[5]), toFloat(dat[6]), //target pos
-				toFloat(dat[7]), toFloat(dat[8]), toFloat(dat[9])); //new yaw, new pitch, size (radius*2)
+				toFloat(dat[7]), toFloat(dat[8]), toFloat(dat[9]), //new yaw, new pitch, size (radius*2)
+				(ALuint)toInt(dat[10]));                           //new music to play
 			Global::countNew++;
 			Main_addEntity(zone);
 			return;

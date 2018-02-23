@@ -42,6 +42,7 @@ void AudioMaster::init()
 		return;
 	}
 
+	AudioPlayer::loadSettings();
 	AudioPlayer::createSources();
 	AudioPlayer::loadSoundEffects();
 }

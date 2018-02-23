@@ -1,16 +1,18 @@
 #include <AL/al.h>
 #include <vector>
+#include <fstream>
 
 #include "audioplayer.h"
 #include "audiomaster.h"
 #include "source.h"
 #include "../engineTester/main.h"
 #include "../toolbox/vector.h"
+#include "../toolbox/split.h"
 
 
 
-float AudioPlayer::soundLevel = 0.1f;
-float AudioPlayer::soundLevelBG = 0.15f;
+float AudioPlayer::soundLevelSE = 0.5f;
+float AudioPlayer::soundLevelBGM = 0.4f;
 std::vector<Source*> AudioPlayer::sources;
 std::vector<ALuint> AudioPlayer::buffersSE;
 std::vector<ALuint> AudioPlayer::buffersBGM;
@@ -124,7 +126,7 @@ Source* AudioPlayer::play(int buffer, Vector3f* pos, float pitch, bool loop, flo
 		Source* src = AudioPlayer::sources[i];
 		if (!src->isPlaying())
 		{
-			src->setVolume(soundLevel);
+			src->setVolume(soundLevelSE);
 			src->setLooping(loop);
 			src->setPosition(pos->x, pos->y, pos->z);
 			src->setPitch(pitch);
@@ -150,7 +152,7 @@ Source* AudioPlayer::playBGM(int buffer)
 	if (!src->isPlaying() || src->getLastPlayedBufferID() != AudioPlayer::buffersBGM[buffer])
 	{
 		src->setLooping(true);
-		src->setVolume(AudioPlayer::soundLevelBG);
+		src->setVolume(AudioPlayer::soundLevelBGM);
 		src->play(AudioPlayer::buffersBGM[buffer]);
 	}
 
@@ -160,4 +162,47 @@ Source* AudioPlayer::playBGM(int buffer)
 Source* AudioPlayer::getSource(int i)
 {
 	return AudioPlayer::sources[i];
+}
+
+void AudioPlayer::loadSettings()
+{
+	std::ifstream file("Settings/AudioSettings.ini");
+	if (!file.is_open())
+	{
+		std::fprintf(stdout, "Error: Cannot load file 'Settings/AudioSettings.ini'\n");
+		file.close();
+	}
+	else
+	{
+		std::string line;
+
+		while (!file.eof())
+		{
+			getline(file, line);
+
+			char lineBuf[512]; //Buffer to copy line into
+			memset(lineBuf, 0, 512);
+			memcpy(lineBuf, line.c_str(), line.size());
+
+			int splitLength = 0;
+			char** lineSplit = split(lineBuf, ' ', &splitLength);
+
+			if (splitLength == 2)
+			{
+				if (strcmp(lineSplit[0], "SFX_Volume ") == 0)
+				{
+					AudioPlayer::soundLevelSE = std::stof(lineSplit[1], nullptr);
+					AudioPlayer::soundLevelSE = fmaxf(0.0f, fminf(AudioPlayer::soundLevelSE, 1.0f));
+				}
+				else if (strcmp(lineSplit[0], "Music_Volume ") == 0)
+				{
+					AudioPlayer::soundLevelBGM = std::stof(lineSplit[1], nullptr);
+					AudioPlayer::soundLevelBGM = fmaxf(0.0f, fminf(AudioPlayer::soundLevelBGM, 1.0f));
+				}
+			}
+
+			free(lineSplit);
+		}
+		file.close();
+	}
 }

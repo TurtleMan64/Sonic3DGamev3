@@ -10,13 +10,15 @@ class Vector3f;
 class AudioPlayer
 {
 private:
-	static float soundLevel;
-	static float soundLevelBG;
+	static float soundLevelSE;
+	static float soundLevelBGM;
 	static std::vector<Source*> sources;
 	static std::vector<ALuint> buffersSE;
 	static std::vector<ALuint> buffersBGM;
 
 public:
+	static void loadSettings();
+
 	static void loadSoundEffects();
 
 	static void loadBGM(char* fileName);

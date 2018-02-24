@@ -47,6 +47,8 @@
 #include "../entities/TwinklePark/tpflatwater.h"
 #include "../entities/TwinklePark/tpfloatingpad.h"
 #include "../audio/audioplayer.h"
+#include "../entities/EmeraldCoast/ecsinkingplatform.h"
+#include "../entities/TwinklePark/tpspinningfloor.h"
 
 float toFloat(char* input);
 int toInt(char* input);
@@ -568,6 +570,16 @@ void processLine(char** dat)
 			return;
 		}
 
+		case 12: //Emerald Coast Sinking Platform
+		{
+			EC_SinkingPlatform::loadStaticModels();
+			EC_SinkingPlatform* plat = new EC_SinkingPlatform(
+				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3])); //position
+			Global::countNew++;
+			Main_addEntity(plat);
+			return;
+		}
+
 		case 13: //Emerald Coast Double-Waterfall
 		{
 			EC_Waterfall::loadStaticModels();
@@ -787,6 +799,16 @@ void processLine(char** dat)
 			return;
 		}
 
+		case 51: //Twinkle Park spinning platform
+		{
+			TP_SpinningFloor::loadStaticModels();
+			TP_SpinningFloor* plat = new TP_SpinningFloor(
+				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3])); //position
+			Global::countNew++;
+			Main_addEntity(plat);
+			return;
+		}
+
 		default:
 		{
 			return;
@@ -834,4 +856,6 @@ void freeAllStaticModels()
 	EC_Dolphin::deleteStaticModels();
 	TP_FlatWater::deleteStaticModels();
 	TP_FloatingPad::deleteStaticModels();
+	EC_SinkingPlatform::deleteStaticModels();
+	TP_SpinningFloor::deleteStaticModels();
 }

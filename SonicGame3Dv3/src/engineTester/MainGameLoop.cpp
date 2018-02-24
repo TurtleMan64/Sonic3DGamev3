@@ -225,10 +225,6 @@ int main()
 		if (Global::bufferTime == 0)
 		{
 			GuiManager::startTimer();
-			if (Global::gamePlayer != nullptr)
-			{
-				Global::gamePlayer->setCanMoveTimer(0);
-			}
 		}
 
 		if (Global::shouldRestartLevel)

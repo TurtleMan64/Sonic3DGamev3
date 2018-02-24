@@ -345,6 +345,12 @@
     <ClCompile Include="src\entities\TwinklePark\TP_FloatingPad.cpp">
       <Filter>Source Files\entities\TwinklePark</Filter>
     </ClCompile>
+    <ClCompile Include="src\entities\EmeraldCoast\EC_SinkingPlatform.cpp">
+      <Filter>Source Files\entities\EmeraldCoast</Filter>
+    </ClCompile>
+    <ClCompile Include="src\entities\TwinklePark\TP_SpinningFloor.cpp">
+      <Filter>Source Files\entities\TwinklePark</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\renderEngine\renderEngine.h">
@@ -603,6 +609,12 @@
       <Filter>Source Files\entities\TwinklePark</Filter>
     </ClInclude>
     <ClInclude Include="src\entities\TwinklePark\tpfloatingpad.h">
+      <Filter>Source Files\entities\TwinklePark</Filter>
+    </ClInclude>
+    <ClInclude Include="src\entities\EmeraldCoast\ecsinkingplatform.h">
+      <Filter>Source Files\entities\EmeraldCoast</Filter>
+    </ClInclude>
+    <ClInclude Include="src\entities\TwinklePark\tpspinningfloor.h">
       <Filter>Source Files\entities\TwinklePark</Filter>
     </ClInclude>
   </ItemGroup>

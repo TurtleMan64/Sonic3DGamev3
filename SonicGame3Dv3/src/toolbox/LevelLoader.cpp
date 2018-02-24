@@ -368,7 +368,7 @@ void LevelLoader_loadLevel(std::string levelFilename)
 
 	if (Global::gamePlayer != nullptr)
 	{
-		Global::gamePlayer->setCanMoveTimer(65);
+		Global::gamePlayer->setCanMoveTimer(60);
 		Global::bufferTime = 60;
 	}
 

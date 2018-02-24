@@ -429,8 +429,32 @@ void Player::step()
 
 				bonked = true;
 
-				currNorm.set(0, 1, 0);
+				//currNorm.set(0, 1, 0);
 
+				Vector3f currDisp(xVel + xDisp, yVel + yDisp, zVel + zDisp);
+
+				Vector3f parToWall = projectOntoPlane(&currDisp, &(triCol->normal));
+
+				float sameness = parToWall.length();
+
+				//fprintf(stdout, "Length = %f\n", parToWall.length());
+
+				//Vector3f parToGround = projectOntoPlane(&parToWall, &currNorm);
+
+				Vector3f newGroundSpeeds = calculatePlaneSpeed(parToWall.x, parToWall.y, parToWall.z, &currNorm);
+
+				//fprintf(stdout, "newGroundSpeeds.y = %f\n", newGroundSpeeds.y);
+
+				if (sameness > 0.2f)
+				{
+					xVelGround = newGroundSpeeds.x;
+					zVelGround = newGroundSpeeds.z;
+					canMoveTimer = 8;
+				}
+				else
+				{
+					currNorm.set(0, 1, 0);
+				}
 
 				/*
 				Vector3f currDisp(xVel + xDisp, yVel + yDisp, zVel + zDisp);
@@ -484,7 +508,7 @@ void Player::step()
 			onPlane = true;
 		}
 
-		if (!bonked)
+		if (bonked == false)
 		{
 			setPosition(colPos);
 			currNorm.set(&(triCol->normal));

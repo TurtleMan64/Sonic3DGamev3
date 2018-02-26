@@ -337,5 +337,7 @@ private:
 	void newSpindashTrail(Vector3f* position, float xVel, float yVel, float zVel, float gravity, int life, float size, int colourID);
 
 	void createStompParticles();
+
+	void popOffWall();
 };
 #endif

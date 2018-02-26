@@ -180,17 +180,7 @@ void Player::step()
 
 		if (wallStickTimer < 0)
 		{
-			//Do a small 'pop off' off the wall
-			xVelAir = xVel + currNorm.x * 1.5f;
-			zVelAir = zVel + currNorm.z * 1.5f;
-			yVel = yVel + currNorm.y * 1.5f;
-			xVel = 0;
-			zVel = 0;
-			xVelGround = 0;
-			zVelGround = 0;
-			//isJumping = true;
-			onPlane = false;
-			currNorm.set(0, 1, 0);
+			popOffWall();
 		}
 
 		if (jumpInput && !previousJumpInput)
@@ -1142,6 +1132,10 @@ void Player::moveMeGround()
 		float newDiff = diff / 8;
 
 		float newAngle = currDir + newDiff;
+
+		if (fabs(diff) > 30 && currNorm.y <= wallThreshold) {
+			popOffWall();
+		}
 
 		if (fabs(diff) > 120)
 		{
@@ -2595,4 +2589,18 @@ void Player::debugAdjustCamera()
 	}
 
 	cam->setPosition(&camPos);
+}
+
+void Player::popOffWall() {
+	//Do a small 'pop off' off the wall
+	xVelAir = xVel + currNorm.x * 1.5f;
+	zVelAir = zVel + currNorm.z * 1.5f;
+	yVel = yVel + currNorm.y * 1.5f;
+	xVel = 0;
+	zVel = 0;
+	xVelGround = 0;
+	zVelGround = 0;
+	//isJumping = true;
+	onPlane = false;
+	currNorm.set(0, 1, 0);
 }

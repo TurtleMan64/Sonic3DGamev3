@@ -1,6 +1,7 @@
 #include <AL/al.h>
 
 #include "source.h"
+#include "../engineTester/main.h"
 
 Source::Source(float rolloff, float referencedist, float max)
 {
@@ -21,7 +22,8 @@ Source::Source(float rolloff, float referencedist, float max)
 void Source::play(ALuint buffer)
 {
 	stop();
-	alSourcei(sourceID, AL_BUFFER, buffer);
+	//alGetError();
+	alSourcei(sourceID, AL_BUFFER, buffer); Global::checkErrorAL("source play");
 	bufferID = buffer;
 	continuePlaying();
 }
@@ -39,25 +41,31 @@ void Source::pause()
 
 void Source::continuePlaying()
 {
-	alSourcePlay(sourceID);
+	//alGetError();
+	alSourcePlay(sourceID); Global::checkErrorAL("source continue playing");
 }
 
 void Source::stop()
 {
-	alSourceStop(sourceID);
+	//if (this->isPlaying())
+	{
+		//This generates an AL_INVALID_OPERATION sometimes and I have no idea why.
+		//Supposedly can only generate this error due to "There is no current context."
+		//alGetError();
+		alSourceStop(sourceID); Global::checkErrorAL("source stop");
+	}
 }
 
 void Source::setVelocity(float x, float y, float z)
 {
-	//alSource3f(sourceID, AL_VELOCITY, x, y, z);
-
 	ALfloat sourceVel[] = { x, y, z };
 	alSourcefv(sourceID, AL_VELOCITY, sourceVel);
 }
 
 void Source::setLooping(bool loop)
 {
-	alSourcei(sourceID, AL_LOOPING, loop ? AL_TRUE : AL_FALSE);
+	//alGetError();
+	alSourcei(sourceID, AL_LOOPING, loop ? AL_TRUE : AL_FALSE); Global::checkErrorAL("source setLooping");
 }
 
 bool Source::isPlaying()
@@ -81,8 +89,6 @@ void Source::setPosition(float x, float y, float z)
 {
 	ALfloat sourcePos[] = { x, y, z };
 	alSourcefv(sourceID, AL_POSITION, sourcePos);
-
-	//alSource3f(sourceID, AL_POSITION, x, y, z);
 }
 
 ALuint Source::getSourceID()

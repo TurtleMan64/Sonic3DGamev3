@@ -27,14 +27,16 @@ TeleportZone::TeleportZone()
 
 TeleportZone::TeleportZone(float x, float y, float z,
 						   float xTarget, float yTarget, float zTarget,
-						   float newYaw, float newPitch, float size, ALuint newBGM)
+						   float newYaw, float newPitch, float size, 
+						   int newBGMIntro, int newBGMLoop)
 {
 	position.x = x;
 	position.y = y;
 	position.z = z;
 	scale = size;
 	visible = false;
-	bgmToPlay = newBGM;
+	bgmIntroToPlay = newBGMIntro;
+	bgmLoopToPlay = newBGMLoop;
 	teleportLocation.set(xTarget, yTarget, zTarget);
 	camYawTarget = newYaw;
 	camPitchTarget = newPitch;
@@ -52,9 +54,13 @@ void TeleportZone::step()
 		Global::gamePlayer->setCameraAngles(camYawTarget, camPitchTarget);
 		Global::gamePlayer->stopMoving();
 
-		if ((int)bgmToPlay != -1)
+		if (bgmIntroToPlay != -1 && bgmLoopToPlay != -1)
 		{
-			AudioPlayer::playBGM(bgmToPlay);
+			AudioPlayer::playBGMWithIntro(bgmIntroToPlay, bgmLoopToPlay);
+		}
+		else if (bgmIntroToPlay == -1 && bgmLoopToPlay != -1)
+		{
+			AudioPlayer::playBGM(bgmLoopToPlay);
 		}
 	}
 }

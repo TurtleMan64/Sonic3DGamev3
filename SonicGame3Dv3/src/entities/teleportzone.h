@@ -14,13 +14,15 @@ private:
 
 	Vector3f teleportLocation;
 
-	ALuint bgmToPlay;
+	int bgmIntroToPlay;
+	int bgmLoopToPlay;
 
 public:
 	TeleportZone();
 	TeleportZone(float x, float y, float z, 
 				 float xTarget, float yTarget, float zTarget, 
-				 float newYaw, float newPitch, float size, ALuint newBGM);
+				 float newYaw, float newPitch, float size, 
+			     int newBGMIntro, int newBGMLoop);
 
 	void step();
 };

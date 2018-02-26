@@ -67,6 +67,9 @@
     <Filter Include="Source Files\entities\TwinklePark">
       <UniqueIdentifier>{ad4f7dcd-1533-4742-b517-7888a105b797}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\entities\FireField">
+      <UniqueIdentifier>{43e99aa0-ee2f-4240-9a9c-faadbc4b960b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="glad.c">
@@ -351,6 +354,9 @@
     <ClCompile Include="src\entities\TwinklePark\TP_SpinningFloor.cpp">
       <Filter>Source Files\entities\TwinklePark</Filter>
     </ClCompile>
+    <ClCompile Include="src\entities\FireField\FF_HealPads.cpp">
+      <Filter>Source Files\entities\FireField</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\renderEngine\renderEngine.h">
@@ -616,6 +622,9 @@
     </ClInclude>
     <ClInclude Include="src\entities\TwinklePark\tpspinningfloor.h">
       <Filter>Source Files\entities\TwinklePark</Filter>
+    </ClInclude>
+    <ClInclude Include="src\entities\FireField\ffhealpads.h">
+      <Filter>Source Files\entities\FireField</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

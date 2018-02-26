@@ -15,6 +15,9 @@ private:
 	static std::vector<Source*> sources;
 	static std::vector<ALuint> buffersSE;
 	static std::vector<ALuint> buffersBGM;
+	static int bgmTimer;
+	static ALuint bgmIntro;
+	static ALuint bgmLoop;
 
 public:
 	static void loadSettings();
@@ -43,8 +46,15 @@ public:
 	//with everything
 	static Source* play(int buffer, Vector3f* pos, float pitch, bool loop, float xVel, float yVel, float zVel);
 
-	static Source* playBGM(int buffer);
+	static Source* AudioPlayer::playBGMWithIntro(int bufferIntro, int bufferLoop);
+
+	static Source* AudioPlayer::playBGM(int bufferLoop);
 
 	static Source* getSource(int i);
+
+	//Needs to be called to set the looping buffer to loop
+	static void refreshBGM();
+
+	static void stopBGM();
 };
 #endif

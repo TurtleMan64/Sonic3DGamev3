@@ -429,22 +429,46 @@ void Player::step()
 
 				//fprintf(stdout, "Length = %f\n", parToWall.length());
 
-				//Vector3f parToGround = projectOntoPlane(&parToWall, &currNorm);
+				Vector3f parToGround = projectOntoPlane(&parToWall, &currNorm);
 
 				Vector3f newGroundSpeeds = calculatePlaneSpeed(parToWall.x, parToWall.y, parToWall.z, &currNorm);
 
 				//fprintf(stdout, "newGroundSpeeds.y = %f\n", newGroundSpeeds.y);
 
-				if (sameness > 0.2f)
+				//if (CollisionChecker::checkCollision(getX(), getY(), getZ(), getX() + parToGround.x, getY() + parToGround.y, getZ() + parToGround.z) == false)
 				{
-					xVelGround = newGroundSpeeds.x;
-					zVelGround = newGroundSpeeds.z;
-					canMoveTimer = 8;
+					//increasePosition(parToGround.x, parToGround.y, parToGround.z);
+				}
+
+				if (isBall || isSpindashing)
+				{
+					//bounce off the wall instead of sliding along it
+					float reflectFactor = fmaxf(0, fminf(sameness, 1.0f));
+
+					Vector3f bounceV = bounceVector(&currDisp, &(triCol->normal), reflectFactor);
+					Vector3f bounceGroundSpeeds = calculatePlaneSpeed(bounceV.x, bounceV.y, bounceV.z, &currNorm);
+					xVelGround = bounceGroundSpeeds.x;
+					zVelGround = bounceGroundSpeeds.z;
+					canMoveTimer = 3;
 				}
 				else
 				{
-					currNorm.set(0, 1, 0);
+					//slide along the wall
+					if (sameness > 0.2f)
+					{
+						xVelGround = newGroundSpeeds.x;
+						zVelGround = newGroundSpeeds.z;
+						canMoveTimer = 3;
+						setPosition(colPos);
+						increasePosition(triCol->normal.x * 1.0f, triCol->normal.y * 1.0f, triCol->normal.z * 1.0f);
+					}
+					else
+					{
+						currNorm.set(0, 1, 0);
+					}
 				}
+
+
 
 				/*
 				Vector3f currDisp(xVel + xDisp, yVel + yDisp, zVel + zDisp);
@@ -1133,11 +1157,12 @@ void Player::moveMeGround()
 
 		float newAngle = currDir + newDiff;
 
-		if (fabs(diff) > 30 && currNorm.y <= wallThreshold) {
+		if (fabsf(diff) > 30.0f && currNorm.y <= wallThreshold)
+    {
 			popOffWall();
 		}
 
-		if (fabs(diff) > 120)
+		if (fabsf(diff) > 120.0f)
 		{
 			xVelGround *= 0.97f;
 			zVelGround *= 0.97f;
@@ -2591,7 +2616,8 @@ void Player::debugAdjustCamera()
 	cam->setPosition(&camPos);
 }
 
-void Player::popOffWall() {
+void Player::popOffWall()
+{
 	//Do a small 'pop off' off the wall
 	xVelAir = xVel + currNorm.x * 1.5f;
 	zVelAir = zVel + currNorm.z * 1.5f;
@@ -2603,4 +2629,16 @@ void Player::popOffWall() {
 	//isJumping = true;
 	onPlane = false;
 	currNorm.set(0, 1, 0);
+}
+
+void Player::boostMe(float amount)
+{
+	float rad = sqrtf(xVelGround*xVelGround + zVelGround*zVelGround);
+	if (rad > 1)
+	{
+		float ang = atan2f(-zVelGround, xVelGround);
+		rad += amount;
+		xVelGround =  rad*cosf(ang);
+		zVelGround =  -rad*sinf(ang);
+	}
 }

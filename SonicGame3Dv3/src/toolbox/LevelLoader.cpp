@@ -49,6 +49,8 @@
 #include "../audio/audioplayer.h"
 #include "../entities/EmeraldCoast/ecsinkingplatform.h"
 #include "../entities/TwinklePark/tpspinningfloor.h"
+#include "../entities/FireField/ffhealpads.h"
+#include "../audio/source.h"
 
 float toFloat(char* input);
 int toInt(char* input);
@@ -108,6 +110,7 @@ void LevelLoader_loadLevel(std::string levelFilename)
 	//Delete existing bgm if loading a new stage
 	if (stageFault == 1)
 	{
+		AudioPlayer::stopBGM();
 		AudioPlayer::deleteBuffersBGM();
 	}
 
@@ -314,6 +317,12 @@ void LevelLoader_loadLevel(std::string levelFilename)
 
 	//Read in BGM
 
+	std::string bgmHasLoopLine;
+	getline(file, bgmHasLoopLine);
+
+	int bgmHasLoop = stoi(bgmHasLoopLine);
+
+
 	std::string numBGMLine;
 	getline(file, numBGMLine);
 
@@ -378,8 +387,16 @@ void LevelLoader_loadLevel(std::string levelFilename)
 
 	Vector3f partVel(0, 0, 0);
 	new Particle(ParticleResources::textureBlackFade, Global::gameCamera->getFadePosition(), &partVel, 0, 60, 0, 400, 0, true);
-
-	AudioPlayer::playBGM(0);
+	
+	if (bgmHasLoop != 0)
+	{
+		//By default, first 2 buffers are the intro and loop, respectively
+		AudioPlayer::playBGMWithIntro(0, 1);
+	}
+	else
+	{
+		AudioPlayer::playBGM(0);
+	}
 }
 
 
@@ -543,7 +560,7 @@ void processLine(char** dat)
 				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
 				toFloat(dat[4]), toFloat(dat[5]), toFloat(dat[6]), //target pos
 				toFloat(dat[7]), toFloat(dat[8]), toFloat(dat[9]), //new yaw, new pitch, size (radius*2)
-				(ALuint)toInt(dat[10]));                           //new music to play
+				(ALuint)toInt(dat[10]), (ALuint)toInt(dat[11]));   //new music to play intro and loop
 			Global::countNew++;
 			Main_addEntity(zone);
 			return;
@@ -809,6 +826,15 @@ void processLine(char** dat)
 			return;
 		}
 
+		case 52: //Fire field heal pad
+		{
+			FF_HealPads::loadStaticModels();
+			FF_HealPads* plat = new FF_HealPads();
+			Global::countNew++;
+			Main_addEntity(plat);
+			return;
+		}
+
 		default:
 		{
 			return;
@@ -858,4 +884,5 @@ void freeAllStaticModels()
 	TP_FloatingPad::deleteStaticModels();
 	EC_SinkingPlatform::deleteStaticModels();
 	TP_SpinningFloor::deleteStaticModels();
+	FF_HealPads::deleteStaticModels();
 }

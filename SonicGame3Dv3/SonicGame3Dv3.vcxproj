@@ -52,6 +52,7 @@
     <ClCompile Include="src\entities\EmeraldCoast\EC_Umbrella.cpp" />
     <ClCompile Include="src\entities\EmeraldCoast\EC_Waterfall.cpp" />
     <ClCompile Include="src\entities\Entity.cpp" />
+    <ClCompile Include="src\entities\FireField\FF_HealPads.cpp" />
     <ClCompile Include="src\entities\GoalSign.cpp" />
     <ClCompile Include="src\entities\KillBox.cpp" />
     <ClCompile Include="src\entities\Light.cpp" />
@@ -147,6 +148,7 @@
     <ClInclude Include="src\entities\EmeraldCoast\ecumbrella.h" />
     <ClInclude Include="src\entities\EmeraldCoast\ecwaterfall.h" />
     <ClInclude Include="src\entities\entities.h" />
+    <ClInclude Include="src\entities\FireField\ffhealpads.h" />
     <ClInclude Include="src\entities\goalsign.h" />
     <ClInclude Include="src\entities\killbox.h" />
     <ClInclude Include="src\entities\light.h" />

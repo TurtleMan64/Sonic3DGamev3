@@ -280,6 +280,8 @@ public:
 
 	void debugAdjustCamera();
 
+	void boostMe(float amount);
+
 private:
 	void adjustCamera();
 

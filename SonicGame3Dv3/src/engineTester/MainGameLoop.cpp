@@ -206,16 +206,19 @@ int main()
 	while (Global::gameState != STATE_EXITING && displayWantsToClose() == 0)
 	{
 		Input_pollInputs();
-		GLenum err = glGetError();
 
-		if (err == GL_NO_ERROR)
+		GLenum err = glGetError();
+		if (err != GL_NO_ERROR)
 		{
-			//std::fprintf(stdout, "NO ERROR\n");
-		}
-		else
-		{
-			std::fprintf(stdout, "########  ERROR  ########\n");
+			std::fprintf(stdout, "########  GL ERROR  ########\n");
 			std::fprintf(stdout, "%d\n", err);
+		}
+
+		ALenum erral = alGetError();
+		if (erral != AL_NO_ERROR)
+		{
+			std::fprintf(stdout, "########  AL ERROR  ########\n");
+			std::fprintf(stdout, "%d\n", erral);
 		}
 
 		if (Global::bufferTime >= 0)
@@ -425,6 +428,8 @@ int main()
 
 		updateDisplay();
 
+		AudioPlayer::refreshBGM();
+
 		frameCount++;
 		seconds = glfwGetTime();
 
@@ -548,4 +553,14 @@ void increaseProcessPriority()
 
 	//_tprintf(TEXT("Current thread priority is 0x%x\n"), dwThreadPri);
 
+}
+
+void Global::checkErrorAL(char* description)
+{
+	//ALenum erral = alGetError();
+	//if (erral != AL_NO_ERROR)
+	{
+		//fprintf(stdout, "########  AL ERROR  ########\n");
+		//fprintf(stdout, "%s     %d\n", description, erral);
+	}
 }

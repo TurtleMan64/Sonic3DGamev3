@@ -1,5 +1,5 @@
 	# Blender MTL File: 'None'
-	# Material Count: 33
+	# Material Count: 26
 
 newmtl gxmat1
 	Ns 20.0
@@ -54,7 +54,7 @@ newmtl gxmat107
 	Ni 0.02
 	d 1.000000
 	illum 2
-	map_Kd 130.png
+	map_Kd 130edit.png
 
 newmtl gxmat109
 	Ns 20.0
@@ -131,7 +131,7 @@ newmtl gxmat139
 	Ni 0.02
 	d 1.000000
 	illum 2
-	map_Kd 25.png
+	map_Kd 25edit.png
 
 newmtl gxmat141
 	Ns 20.0
@@ -188,52 +188,6 @@ newmtl gxmat21
 	illum 2
 	map_Kd 103.png
 
-newmtl gxmat213
-	Ns 20.0
-	Ka 1.000000 1.000000 1.000000
-	Kd 0.640000 0.640000 0.640000
-	Ks 0.500000 0.500000 0.500000
-	Ke 0.000000 0.000000 0.000000
-	Ni 0.02
-	d 1.000000
-	glow 1.0
-	illum 2
-	map_Kd 5.png
-
-newmtl gxmat215
-	Ns 20.0
-	Ka 1.000000 1.000000 1.000000
-	Kd 0.640000 0.640000 0.640000
-	Ks 0.500000 0.500000 0.500000
-	Ke 0.000000 0.000000 0.000000
-	Ni 0.02
-	glow 1.0
-	d 1.000000
-	illum 2
-	map_Kd 4.png
-
-newmtl gxmat219
-	Ns 20.0
-	Ka 1.000000 1.000000 1.000000
-	Kd 0.640000 0.640000 0.640000
-	Ks 0.500000 0.500000 0.500000
-	Ke 0.000000 0.000000 0.000000
-	Ni 0.02
-	d 1.000000
-	illum 2
-	map_Kd 10.png
-
-newmtl gxmat220
-	Ns 20.0
-	Ka 1.000000 1.000000 1.000000
-	Kd 0.640000 0.640000 0.640000
-	Ks 0.500000 0.500000 0.500000
-	Ke 0.000000 0.000000 0.000000
-	Ni 0.02
-	d 1.000000
-	illum 2
-	map_Kd 11.png
-
 newmtl gxmat245
 	Ns 20.0
 	Ka 1.000000 1.000000 1.000000
@@ -241,10 +195,10 @@ newmtl gxmat245
 	Ks 0.500000 0.500000 0.500000
 	Ke 0.000000 0.000000 0.000000
 	Ni 0.02
+	d 1.000000
 	glow 1.0
 	scrollX 0.2
 	scrollY 0.2
-	d 1.000000
 	illum 2
 	map_Kd 24.png
 
@@ -302,39 +256,6 @@ newmtl gxmat295
 	d 1.000000
 	illum 2
 	map_Kd 108.png
-
-newmtl gxmat312
-	Ns 20.0
-	Ka 1.000000 1.000000 1.000000
-	Kd 0.640000 0.640000 0.640000
-	Ks 0.500000 0.500000 0.500000
-	Ke 0.000000 0.000000 0.000000
-	Ni 0.02
-	d 1.000000
-	illum 2
-	map_Kd 128.png
-
-newmtl gxmat314
-	Ns 20.0
-	Ka 1.000000 1.000000 1.000000
-	Kd 0.640000 0.640000 0.640000
-	Ks 0.500000 0.500000 0.500000
-	Ke 0.000000 0.000000 0.000000
-	Ni 0.02
-	d 1.000000
-	illum 2
-	map_Kd 127.png
-
-newmtl gxmat315
-	Ns 20.0
-	Ka 1.000000 1.000000 1.000000
-	Kd 0.640000 0.640000 0.640000
-	Ks 0.500000 0.500000 0.500000
-	Ke 0.000000 0.000000 0.000000
-	Ni 0.02
-	d 1.000000
-	illum 2
-	map_Kd 125.png
 
 newmtl gxmat34
 	Ns 20.0

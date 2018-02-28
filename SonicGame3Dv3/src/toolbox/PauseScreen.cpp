@@ -43,6 +43,7 @@ GUIText* PauseScreen::textBOB = nullptr;
 GUIText* PauseScreen::textRainbowRoad = nullptr;
 GUIText* PauseScreen::textSnowhead = nullptr;
 GUIText* PauseScreen::textTwinklePark = nullptr;
+GUIText* PauseScreen::textFireField = nullptr;
 
 GUIText* PauseScreen::textClassicSonic = nullptr;
 GUIText* PauseScreen::textDollSonic = nullptr;
@@ -182,7 +183,7 @@ void PauseScreen::step()
 
 				case 2:
 					menuDisplayID = LEVEL_SELECT;
-					menuSelectionMAX = 13;
+					menuSelectionMAX = 14;
 					menuSelection = 0;
 					textResume->setVisibility(false);
 					textRestart->setVisibility(false);
@@ -204,6 +205,7 @@ void PauseScreen::step()
 					textRainbowRoad->setVisibility(true);
 					textSnowhead->setVisibility(true);
 					textTwinklePark->setVisibility(true);
+					textFireField->setVisibility(true);
 
 					textClassicSonic->setVisibility(false);
 					textDollSonic->setVisibility(false);
@@ -237,6 +239,7 @@ void PauseScreen::step()
 					textRainbowRoad->setVisibility(false);
 					textSnowhead->setVisibility(false);
 					textTwinklePark->setVisibility(false);
+					textFireField->setVisibility(false);
 
 					textClassicSonic->setVisibility(true);
 					textDollSonic->setVisibility(true);
@@ -266,7 +269,7 @@ void PauseScreen::step()
 
 				case 1:
 					Global::levelID = LVL_SH;
-					LevelLoader_loadLevel("FireField.lvl");
+					LevelLoader_loadLevel("SpeedHighway.lvl");
 					unpause();
 					break;
 
@@ -339,6 +342,12 @@ void PauseScreen::step()
 				case 13:
 					Global::levelID = LVL_TP;
 					LevelLoader_loadLevel("TwinklePark.lvl");
+					unpause();
+					break;
+
+				case 14:
+					Global::levelID = LVL_FF;
+					LevelLoader_loadLevel("FireField.lvl");
 					unpause();
 					break;
 				}
@@ -425,6 +434,7 @@ void PauseScreen::step()
 				textRainbowRoad->setVisibility(false);
 				textSnowhead->setVisibility(false);
 				textTwinklePark->setVisibility(false);
+				textFireField->setVisibility(false);
 
 				textClassicSonic->setVisibility(false);
 				textDollSonic->setVisibility(false);
@@ -456,7 +466,7 @@ void PauseScreen::step()
 
 		case LEVEL_SELECT:
 		{
-			float spacing = 1 / 14.0f;
+			float spacing = 1 / 15.0f;
 			switch (menuSelection)
 			{
 				case 0: textCursor->getPosition()->y = 0.0f; break;
@@ -486,6 +496,8 @@ void PauseScreen::step()
 				case 12: textCursor->getPosition()->y = spacing * 12; break;
 
 				case 13: textCursor->getPosition()->y = spacing * 13; break;
+
+				case 14: textCursor->getPosition()->y = spacing * 14; break;
 
 				default: break;
 			}
@@ -660,6 +672,13 @@ void PauseScreen::unpause()
 		Global::countDelete++;
 		textTwinklePark = nullptr;
 	}
+	if (textFireField != nullptr)
+	{
+		textFireField->deleteMe();
+		delete textFireField;
+		Global::countDelete++;
+		textFireField = nullptr;
+	}
 
 	if (textClassicSonic != nullptr)
 	{
@@ -718,7 +737,7 @@ void PauseScreen::pause()
 	textCharSelect = new GUIText("Character Select", 3, font, 0.5f, 0.6f, 1.0f, false, true); Global::countNew++;
 	textQuit = new GUIText("Quit Game", 3, font, 0.5f, 0.7f, 1.0f, false, true); Global::countNew++;
 
-	float spacing = 1 / 14.0f;
+	float spacing = 1 / 15.0f;
 
 	textEmeraldCoast = new GUIText("Emerald Coast", 3, font, 0.5f, 0.0f, 1.0f, false, false); Global::countNew++;
 	textSpeedHighway = new GUIText("Speed Highway", 3, font, 0.5f, spacing, 1.0f, false, false); Global::countNew++;
@@ -734,6 +753,7 @@ void PauseScreen::pause()
 	textRainbowRoad = new GUIText("Rainbow Road", 3, font, 0.5f, spacing * 11, 1.0f, false, false); Global::countNew++;
 	textSnowhead = new GUIText("Snowhead", 3, font, 0.5f, spacing * 12, 1.0f, false, false); Global::countNew++;
 	textTwinklePark = new GUIText("Twinkle Park", 3, font, 0.5f, spacing * 13, 1.0f, false, false); Global::countNew++;
+	textFireField = new GUIText("Fire Field", 3, font, 0.5f, spacing * 14, 1.0f, false, false); Global::countNew++;
 
 	textClassicSonic = new GUIText("Classic Sonic", 3, font, 0.5f, 0.3f, 1.0f, false, false); Global::countNew++;
 	textDollSonic = new GUIText("Sonic Doll", 3, font, 0.5f, 0.4f, 1.0f, false, false); Global::countNew++;

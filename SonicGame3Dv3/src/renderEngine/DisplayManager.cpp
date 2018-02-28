@@ -59,16 +59,17 @@ int createDisplay()
 
 	glfwWindowHint(GLFW_SAMPLES, AA_SAMPLES);
 
-	unsigned int screenWidth = SCR_WIDTH;
-	unsigned int screenHeight = SCR_HEIGHT;
-
 	if (useFullscreeen)
 	{
 		monitor = glfwGetPrimaryMonitor();
 
-		screenWidth = F_WIDTH;
-		screenHeight = F_HEIGHT;
+		SCR_WIDTH = F_WIDTH;
+		SCR_HEIGHT = F_HEIGHT;
 	}
+
+	unsigned int screenWidth = SCR_WIDTH;
+	unsigned int screenHeight = SCR_HEIGHT;
+
 
 	//int count;
 	//const GLFWvidmode* modes = glfwGetVideoModes(monitor, &count);
@@ -122,6 +123,7 @@ int createDisplay()
 		//std::fprintf(stdout, "extensions:   %s\n", glGetStringi(GL_EXTENSIONS, i));
 	}
 
+	//Master_makeProjectionMatrix();
 
 	return 0;
 }

@@ -12,6 +12,7 @@
 #include "../engineTester/main.h"
 #include "skymanager.h"
 #include "../water/waterrenderer.h"
+#include "../particles/particlemaster.h"
 
 #include <iostream>
 #include <list>
@@ -236,6 +237,11 @@ void Master_makeProjectionMatrix()
 	projectionMatrix->m33 = 0;
 
 	renderer->updateProjectionMatrix(projectionMatrix);
+
+	if (Global::renderParticles)
+	{
+		ParticleMaster::updateProjectionMatrix(projectionMatrix);
+	}
 
 	if (Global::useHighQualityWater && Global::gameWaterRenderer != nullptr)
 	{

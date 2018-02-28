@@ -95,5 +95,8 @@ void ParticleMaster::addParticle(Particle* particle)
 
 void ParticleMaster::updateProjectionMatrix(Matrix4f* projectionMatrix)
 {
-	ParticleMaster::renderer->updateProjectionMatrix(projectionMatrix);
+	if (ParticleMaster::renderer != nullptr)
+	{
+		ParticleMaster::renderer->updateProjectionMatrix(projectionMatrix);
+	}
 }

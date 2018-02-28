@@ -175,6 +175,8 @@ private:
 	bool isStomping = false;
 	bool isLightdashing = false;
 
+	bool justBounced = false; //Are we in the air after doing a bounce?
+
 	float headHeight = 7;
 	bool firstPerson = false;
 

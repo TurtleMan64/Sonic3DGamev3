@@ -557,10 +557,10 @@ void increaseProcessPriority()
 
 void Global::checkErrorAL(char* description)
 {
-	//ALenum erral = alGetError();
-	//if (erral != AL_NO_ERROR)
+	ALenum erral = alGetError();
+	if (erral != AL_NO_ERROR)
 	{
-		//fprintf(stdout, "########  AL ERROR  ########\n");
-		//fprintf(stdout, "%s     %d\n", description, erral);
+		fprintf(stdout, "########  AL ERROR  ########\n");
+		fprintf(stdout, "%s     %d\n", description, erral);
 	}
 }

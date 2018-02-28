@@ -160,6 +160,7 @@ void Player::step()
 		isJumping = false;
 		isBouncing = false;
 		isStomping = false;
+		justBounced = false;
 		homingAttackTimer = -1;
 		float speed = sqrtf(xVelGround*xVelGround + zVelGround*zVelGround);
 		if (currNorm.y <= wallThreshold && speed < wallSpeedStickThreshold) //Arbitrary constants
@@ -388,7 +389,26 @@ void Player::step()
 					//yVel = speeds.y;
 					//zVelAir = speeds.z;
 					
-					bounceOffGround(&(triCol->normal), cantStickBounceFactor, 18);
+					if (justBounced == true)
+					{
+						//Superbounce
+						Vector3f speeds(xVelAir, yVel, zVelAir);
+						Vector3f newSPeeds = projectOntoPlane(&speeds, &(triCol->normal));
+
+						newSPeeds.normalize();
+						newSPeeds.scale(speeds.length());
+
+						xVelAir = newSPeeds.x/2;
+						yVel    = newSPeeds.y;
+						zVelAir = newSPeeds.z/2;
+
+						justBounced = false;
+					}
+					else
+					{
+						bounceOffGround(&(triCol->normal), cantStickBounceFactor, 18);
+					}
+
 					canMoveTimer = 8;
 					isBall = true;
 					bonked = true;
@@ -1136,17 +1156,17 @@ void Player::moveMeGround()
 
 	if (isBall == false)
 	{
-		xVelGround += (float)(moveSpeedCurrent*cos(toRadians(cam->getYaw() + movementAngle)));
-		zVelGround += (float)(moveSpeedCurrent*sin(toRadians(cam->getYaw() + movementAngle)));
+		xVelGround += moveSpeedCurrent*cosf(toRadians(cam->getYaw() + movementAngle));
+		zVelGround += moveSpeedCurrent*sinf(toRadians(cam->getYaw() + movementAngle));
 	}
 	else
 	{
-		xVelGround += (float)(moveSpeedCurrent*cos(toRadians(cam->getYaw() + movementAngle)))*0.8f;
-		zVelGround += (float)(moveSpeedCurrent*sin(toRadians(cam->getYaw() + movementAngle)))*0.8f;
+		xVelGround += moveSpeedCurrent*cosf(toRadians(cam->getYaw() + movementAngle))*0.8f;
+		zVelGround += moveSpeedCurrent*sinf(toRadians(cam->getYaw() + movementAngle))*0.8f;
 	}
 
-	float currSpeed = (float)sqrt((xVelGround*xVelGround) + (zVelGround*zVelGround));
-	float currDir = (float)toDegrees(atan2(zVelGround, xVelGround));
+	float currSpeed = sqrtf((xVelGround*xVelGround) + (zVelGround*zVelGround));
+	float currDir = toDegrees(atan2f(zVelGround, xVelGround));
 
 	if (moveSpeedCurrent > 0.01f && currSpeed > 0.5f)
 	{
@@ -1157,8 +1177,10 @@ void Player::moveMeGround()
 
 		float newAngle = currDir + newDiff;
 
-		if (fabsf(diff) > 30.0f && currNorm.y <= wallThreshold)
-    {
+		if (currNorm.y <= wallThreshold && (
+			(fabsf(diff) > 45.0f && currSpeed < 5.0f) ||
+			(fabsf(diff) > 75.0f && currSpeed < 12.0f)))
+		{
 			popOffWall();
 		}
 
@@ -1169,8 +1191,8 @@ void Player::moveMeGround()
 		}
 		else
 		{
-			xVelGround = (currSpeed*cosf(toRadians(newAngle)));
-			zVelGround = (currSpeed*sinf(toRadians(newAngle)));
+			xVelGround = currSpeed*cosf(toRadians(newAngle));
+			zVelGround = currSpeed*sinf(toRadians(newAngle));
 		}
 	}
 }
@@ -1234,7 +1256,7 @@ void Player::checkSkid()
 {
 	bool prevSkid = isSkidding;
 	isSkidding = false;
-	if (currNorm.y > 0.8)
+	if (currNorm.y > 0.8f)
 	{
 		float degAngle = movementAngle;
 
@@ -1317,7 +1339,7 @@ void Player::moveMeAir()
 	float currSpeed = sqrtf((xVelAir*xVelAir) + (zVelAir*zVelAir));
 	float currDir = toDegrees(atan2f(zVelAir, xVelAir));
 
-	if (moveSpeedAirCurrent > 0.01 && currSpeed > 0.5)
+	if (moveSpeedAirCurrent > 0.01f && currSpeed > 0.5f)
 	{
 		float worldSpaceMovementAngle = cam->getYaw() + movementAngle;
 		float diff = compareTwoAngles(worldSpaceMovementAngle, currDir);
@@ -1447,7 +1469,7 @@ void Player::homingAttack()
 	homingPower = std::max(currSpeed, homingPower);
 
 	float angle = -cam->getYaw() - movementAngle;
-	if (moveSpeedCurrent < 0.05)
+	if (moveSpeedCurrent < 0.05f)
 	{
 		angle = getRotY();
 	}
@@ -1458,7 +1480,7 @@ void Player::homingAttack()
 		float closestMatchingAngle = 360;
 		float stickAngle = -cam->getYaw() - movementAngle;
 
-		if (moveSpeedCurrent < 0.05)
+		if (moveSpeedCurrent < 0.05f)
 		{
 			angle = getRotY();
 			targetNearest = true;
@@ -1568,6 +1590,7 @@ void Player::initiateBounce()
 	isStomping = false;
 	isJumping = false;
 	isBall = false;
+	justBounced = true;
 }
 
 void Player::initiateStomp()
@@ -2616,9 +2639,9 @@ void Player::debugAdjustCamera()
 	cam->setPosition(&camPos);
 }
 
+//Do a small 'pop off' off the wall
 void Player::popOffWall()
 {
-	//Do a small 'pop off' off the wall
 	xVelAir = xVel + currNorm.x * 1.5f;
 	zVelAir = zVel + currNorm.z * 1.5f;
 	yVel = yVel + currNorm.y * 1.5f;
@@ -2626,7 +2649,6 @@ void Player::popOffWall()
 	zVel = 0;
 	xVelGround = 0;
 	zVelGround = 0;
-	//isJumping = true;
 	onPlane = false;
 	currNorm.set(0, 1, 0);
 }

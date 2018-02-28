@@ -581,7 +581,7 @@ void processLine(char** dat)
 			EC_Palmtree* palmtree = new EC_Palmtree(
 				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
 				toFloat(dat[4]), toFloat(dat[5]), toFloat(dat[6]), //rotation
-				toFloat(dat[7]));                                  //scale
+				toFloat(dat[7]), 0);                               //scale, kind
 			Global::countNew++;
 			Main_addEntity(palmtree);
 			return;

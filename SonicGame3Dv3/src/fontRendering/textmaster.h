@@ -4,6 +4,7 @@
 class FontType;
 class GUIText;
 class FontRenderer;
+class Matrix4f;
 
 #include <list>
 

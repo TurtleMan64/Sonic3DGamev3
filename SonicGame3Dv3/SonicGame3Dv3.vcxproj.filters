@@ -357,6 +357,9 @@
     <ClCompile Include="src\entities\FireField\FF_HealPads.cpp">
       <Filter>Source Files\entities\FireField</Filter>
     </ClCompile>
+    <ClCompile Include="src\entities\EmeraldCoast\EC_StageTransparent.cpp">
+      <Filter>Source Files\entities\EmeraldCoast</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\renderEngine\renderEngine.h">
@@ -625,6 +628,9 @@
     </ClInclude>
     <ClInclude Include="src\entities\FireField\ffhealpads.h">
       <Filter>Source Files\entities\FireField</Filter>
+    </ClInclude>
+    <ClInclude Include="src\entities\EmeraldCoast\ecstagetransparent.h">
+      <Filter>Source Files\entities\EmeraldCoast</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

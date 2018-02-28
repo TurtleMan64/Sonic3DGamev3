@@ -1,0 +1,16 @@
+# Blender MTL File: 'None'
+# Material Count: 2
+
+newmtl material_B9567C
+	Ns 20
+	Ni 0.02
+	d 1.000000
+	Tr 0
+	map_Kd m256_ext02.png
+
+newmtl material_C1ACD0
+	Ns 20
+	Ni 0.02
+	Tr 0
+	d 1.000000
+	map_Kd sea1_mado1.png

@@ -51,6 +51,7 @@
 #include "../entities/TwinklePark/tpspinningfloor.h"
 #include "../entities/FireField/ffhealpads.h"
 #include "../audio/source.h"
+#include "../entities/EmeraldCoast/ecstagetransparent.h"
 
 float toFloat(char* input);
 int toInt(char* input);
@@ -835,6 +836,15 @@ void processLine(char** dat)
 			return;
 		}
 
+		case 53: //Emerald Coast Transparent
+		{
+			EC_StageTransparent::loadStaticModels();
+			EC_StageTransparent* trans = new EC_StageTransparent();
+			Global::countNew++;
+			Main_addTransparentEntity(trans);
+			return;
+		}
+
 		default:
 		{
 			return;
@@ -885,4 +895,5 @@ void freeAllStaticModels()
 	EC_SinkingPlatform::deleteStaticModels();
 	TP_SpinningFloor::deleteStaticModels();
 	FF_HealPads::deleteStaticModels();
+	EC_StageTransparent::deleteStaticModels();
 }

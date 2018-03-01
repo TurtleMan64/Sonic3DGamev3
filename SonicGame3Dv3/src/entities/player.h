@@ -284,6 +284,8 @@ public:
 
 	void boostMe(float amount);
 
+	void setDisplacement(float x, float y, float z);
+
 private:
 	void adjustCamera();
 

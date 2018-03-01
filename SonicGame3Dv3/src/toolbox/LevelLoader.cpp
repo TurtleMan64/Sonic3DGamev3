@@ -404,6 +404,11 @@ void LevelLoader_loadLevel(std::string levelFilename)
 
 void processLine(char** dat)
 {
+	if (dat[0][0] == '#')
+	{
+		return;
+	}
+
 	int id = std::stoi(dat[0]);
 
 	switch (id)
@@ -435,7 +440,7 @@ void processLine(char** dat)
 			Dashpad* dashpad = new Dashpad(
 				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
 				toFloat(dat[4]), toFloat(dat[5]),                  //rotation
-				toFloat(dat[6]), toFloat(dat[7]), toInt(dat[8]));                 //power, camYaw, time
+				toFloat(dat[6]), toFloat(dat[7]), toInt(dat[8]));  //power, camYaw, time
 			Global::countNew++;
 			Main_addEntity(dashpad);
 			return;
@@ -562,7 +567,7 @@ void processLine(char** dat)
 				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
 				toFloat(dat[4]), toFloat(dat[5]), toFloat(dat[6]), //target pos
 				toFloat(dat[7]), toFloat(dat[8]), toFloat(dat[9]), //new yaw, new pitch, size (radius*2)
-				(ALuint)toInt(dat[10]), (ALuint)toInt(dat[11]));   //new music to play intro and loop
+				toInt(dat[10]), toInt(dat[11]));                   //new music to play intro and loop
 			Global::countNew++;
 			Main_addEntity(zone);
 			return;

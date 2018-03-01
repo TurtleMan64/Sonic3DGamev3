@@ -187,9 +187,9 @@ void Player::step()
 		if (jumpInput && !previousJumpInput)
 		{
 			increasePosition(currNorm.x * 2, currNorm.y * 2, currNorm.z * 2);
-			xVelAir = xVel + currNorm.x*jumpPower;
-			zVelAir = zVel + currNorm.z*jumpPower;
-			yVel = yVel + currNorm.y*jumpPower;
+			xVelAir = xVel + currNorm.x*jumpPower + xDisp;
+			zVelAir = zVel + currNorm.z*jumpPower + zDisp;
+			yVel = yVel + currNorm.y*jumpPower + yDisp;
 			xVel = 0;
 			zVel = 0;
 			xVelGround = 0;
@@ -2664,4 +2664,12 @@ void Player::boostMe(float amount)
 		xVelGround =  rad*cosf(ang);
 		zVelGround =  -rad*sinf(ang);
 	}
+}
+
+void Player::setDisplacement(float xDsp, float yDsp, float zDsp)
+{
+	xDisp = xDsp;
+	yDisp = yDsp;
+	zDisp = zDsp;
+	isGettingExternallyMoved = true;
 }

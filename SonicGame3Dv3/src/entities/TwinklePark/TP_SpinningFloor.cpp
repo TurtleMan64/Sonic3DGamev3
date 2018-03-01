@@ -76,8 +76,10 @@ void TP_SpinningFloor::step()
 				float offX = newX - dx;
 				float offZ = newZ - dz;
 
-				Global::gamePlayer->setX(Global::gamePlayer->getX() + offX);
-				Global::gamePlayer->setZ(Global::gamePlayer->getZ() + offZ);
+				//Global::gamePlayer->setX(Global::gamePlayer->getX() + offX);
+				//Global::gamePlayer->setZ(Global::gamePlayer->getZ() + offZ);
+
+				Global::gamePlayer->setDisplacement(offX, 0, offZ);
 			}
 
 			//updateCollisionModel();

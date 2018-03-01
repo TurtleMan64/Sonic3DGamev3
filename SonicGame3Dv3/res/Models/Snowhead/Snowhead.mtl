@@ -1,5 +1,5 @@
 	# Blender MTL File: 'None'
-	# Material Count: 101
+	# Material Count: 99
 
 newmtl Shape.000
 	Ns 17.647059
@@ -121,18 +121,6 @@ newmtl Shape.010
 	d 1.000000
 	illum 2
 	map_Kd 5B551ED0_c.png
-
-newmtl Shape.010_194E92C8_c.png
-	Ns 17.647059
-	Ka 1.000000 1.000000 1.000000
-	Kd 0.462500 0.462500 0.646875
-	Ks 0.000000 0.000000 0.000000
-	Ke 0.000000 0.000000 0.000000
-	Ni 0.02
-	d 1.000000
-	Tr 0
-	illum 2
-	map_Kd 194E92C8_c.png
 
 newmtl Shape.010_2875B986_c.png
 	Ns 17.647059
@@ -1041,18 +1029,6 @@ newmtl Shape.217
 	d 1.000000
 	illum 2
 	map_Kd 2EC54A96_c.png
-
-newmtl Shape.225
-	Ns 17.647059
-	Ka 1.000000 1.000000 1.000000
-	Kd 0.796875 0.796875 0.796875
-	Ks 0.000000 0.000000 0.000000
-	Ke 0.000000 0.000000 0.000000
-	Ni 0.02
-	d 1.000000
-	Tr 0
-	illum 2
-	map_Kd 26C7F727_c.png
 
 newmtl Shape.230
 	Ns 17.647059

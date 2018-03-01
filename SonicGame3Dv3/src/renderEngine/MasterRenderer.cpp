@@ -23,8 +23,8 @@ ShaderProgram* shader;
 EntityRenderer* renderer;
 
 std::unordered_map<TexturedModel*, std::list<Entity*>> entitiesMap;
+std::unordered_map<TexturedModel*, std::list<Entity*>> entitiesMapPass2;
 std::unordered_map<TexturedModel*, std::list<Entity*>> entitiesTransparentMap;
-std::list<Entity*> entitiesList;
 
 Matrix4f* projectionMatrix;
 
@@ -54,7 +54,6 @@ void Master_init()
 
 void Master_render(Camera* camera, float clipX, float clipY, float clipZ, float clipW)
 {
-	//std::fprintf(stdout, "render START -------------------------------------------------\n");
 	prepare();
 	shader->start();
 	shader->loadClipPlane(clipX, clipY, clipZ, clipW);
@@ -66,14 +65,10 @@ void Master_render(Camera* camera, float clipX, float clipY, float clipZ, float 
 	shader->loadViewMatrix(camera);
 
 	renderer->renderNEW(&entitiesMap);
+	renderer->renderNEW(&entitiesMapPass2);
 
 	prepareTransparentRender();
 	renderer->renderNEW(&entitiesTransparentMap);
-	//for (Entity* entry : entitiesList)
-	{
-		//std::fprintf(stdout, "rendering %s\n", entry->getName().c_str());
-		//renderer->render(entry, shader);
-	}
 
 	shader->stop();
 }
@@ -135,6 +130,21 @@ void Master_processEntity(Entity* entity)
 	}
 }
 
+void Master_processEntityPass2(Entity* entity)
+{
+	if (entity->getVisible() == false)
+	{
+		return;
+	}
+
+	std::list<TexturedModel*>* modellist = entity->getModels();
+	for (TexturedModel* entityModel : (*modellist))
+	{
+		std::list<Entity*>* list = &entitiesMapPass2[entityModel];
+		list->push_back(entity);
+	}
+}
+
 void Master_processTransparentEntity(Entity* entity)
 {
 	if (entity->getVisible() == false)
@@ -152,9 +162,12 @@ void Master_processTransparentEntity(Entity* entity)
 
 void Master_clearEntities()
 {
-	//entitiesList.clear();
-
 	entitiesMap.clear();
+}
+
+void Master_clearEntitiesPass2()
+{
+	entitiesMapPass2.clear();
 }
 
 void Master_clearTransparentEntities()

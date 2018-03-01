@@ -52,6 +52,7 @@
 #include "../entities/FireField/ffhealpads.h"
 #include "../audio/source.h"
 #include "../entities/EmeraldCoast/ecstagetransparent.h"
+#include "../entities/Snowhead/shdstagetransparent.h"
 
 float toFloat(char* input);
 int toInt(char* input);
@@ -841,7 +842,16 @@ void processLine(char** dat)
 			EC_StageTransparent::loadStaticModels();
 			EC_StageTransparent* trans = new EC_StageTransparent();
 			Global::countNew++;
-			Main_addTransparentEntity(trans);
+			Main_addEntityPass2(trans);
+			return;
+		}
+
+		case 54: //Snowhead Transparent
+		{
+			SHD_StageTransparent::loadStaticModels();
+			SHD_StageTransparent* trans = new SHD_StageTransparent();
+			Global::countNew++;
+			Main_addEntityPass2(trans);
 			return;
 		}
 
@@ -896,4 +906,5 @@ void freeAllStaticModels()
 	TP_SpinningFloor::deleteStaticModels();
 	FF_HealPads::deleteStaticModels();
 	EC_StageTransparent::deleteStaticModels();
+	SHD_StageTransparent::deleteStaticModels();
 }

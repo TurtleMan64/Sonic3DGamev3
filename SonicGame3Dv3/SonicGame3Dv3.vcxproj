@@ -62,6 +62,7 @@
     <ClCompile Include="src\entities\Player.cpp" />
     <ClCompile Include="src\entities\Ring.cpp" />
     <ClCompile Include="src\entities\SkySphere.cpp" />
+    <ClCompile Include="src\entities\Snowhead\SHD_StageTransparent.cpp" />
     <ClCompile Include="src\entities\SpeedRamp.cpp" />
     <ClCompile Include="src\entities\Spikeball.cpp" />
     <ClCompile Include="src\entities\Spinner.cpp" />
@@ -159,6 +160,7 @@
     <ClInclude Include="src\entities\player.h" />
     <ClInclude Include="src\entities\ring.h" />
     <ClInclude Include="src\entities\skysphere.h" />
+    <ClInclude Include="src\entities\Snowhead\shdstagetransparent.h" />
     <ClInclude Include="src\entities\speedramp.h" />
     <ClInclude Include="src\entities\spikeball.h" />
     <ClInclude Include="src\entities\spinner.h" />

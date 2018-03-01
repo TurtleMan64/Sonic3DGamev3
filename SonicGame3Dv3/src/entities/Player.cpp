@@ -1570,6 +1570,7 @@ void Player::homingAttack()
 	isJumping = true;
 	isBouncing = false;
 	isStomping = false;
+	justBounced = false;
 	AudioPlayer::play(11, getPosition());
 }
 

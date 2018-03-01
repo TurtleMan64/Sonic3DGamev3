@@ -21,6 +21,10 @@ void Main_addEntity(Entity* entityToAdd);
 void Main_deleteEntity(Entity* entityToDelete);
 void Main_deleteAllEntites();
 
+void Main_addEntityPass2(Entity* entityToAdd);
+void Main_deleteEntityPass2(Entity* entityToDelete);
+void Main_deleteAllEntitesPass2();
+
 void Main_addTransparentEntity(Entity* entityToAdd);
 void Main_deleteTransparentEntity(Entity* entityToDelete);
 void Main_deleteAllTransparentEntites();

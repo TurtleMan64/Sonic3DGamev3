@@ -58,6 +58,8 @@ std::unordered_map<Entity*, Entity*> gameEntities;
 std::list<Entity*> gameEntitiesToAdd;
 std::list<Entity*> gameEntitiesToDelete;
 
+std::unordered_map<Entity*, Entity*> gameEntitiesPass2;
+
 std::unordered_map<Entity*, Entity*> gameTransparentEntities;
 
 Camera* Global::gameCamera = nullptr;
@@ -268,6 +270,10 @@ int main()
 				{
 					e.first->step();
 				}
+				for (auto e : gameEntitiesPass2)
+				{
+					e.first->step();
+				}
 				for (auto e : gameTransparentEntities)
 				{
 					e.first->step();
@@ -334,6 +340,10 @@ int main()
 		for (auto e : gameEntities)
 		{
 			Master_processEntity(e.first);
+		}
+		for (auto e : gameEntitiesPass2)
+		{
+			Master_processEntityPass2(e.first);
 		}
 		for (auto e : gameTransparentEntities)
 		{
@@ -421,6 +431,7 @@ int main()
 		}
 
 		Master_clearEntities();
+		Master_clearEntitiesPass2();
 		Master_clearTransparentEntities();
 
 		GuiManager::refresh();
@@ -497,6 +508,29 @@ void Main_deleteAllEntites()
 		Global::countDelete++;
 	}
 	gameEntities.clear();
+}
+
+//Entities in pass2 shouldn't create new pass2 entities from within their step function
+void Main_addEntityPass2(Entity* entityToAdd)
+{
+	gameEntitiesPass2.insert(std::pair<Entity*, Entity*>(entityToAdd, entityToAdd));
+}
+
+void Main_deleteEntityPass2(Entity* entityToDelete)
+{
+	gameEntitiesPass2.erase(entityToDelete);
+	delete entityToDelete;
+	Global::countDelete++;
+}
+
+void Main_deleteAllEntitesPass2()
+{
+	for (auto entityToDelete : gameEntitiesPass2)
+	{
+		delete entityToDelete.first;
+		Global::countDelete++;
+	}
+	gameEntitiesPass2.clear();
 }
 
 //Transparent entities shouldn't create new transparent entities from within their step function

@@ -12,5 +12,5 @@ newmtl material_C1ACD0
 	Ns 20
 	Ni 0.02
 	Tr 0
-	d 1.000000
+	d 0.000000
 	map_Kd sea1_mado1.png

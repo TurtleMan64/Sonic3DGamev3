@@ -70,6 +70,9 @@
     <Filter Include="Source Files\entities\FireField">
       <UniqueIdentifier>{43e99aa0-ee2f-4240-9a9c-faadbc4b960b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\entities\Snowhead">
+      <UniqueIdentifier>{ec92e2ab-cba1-4d83-a0ce-58e8fa5fbf49}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="glad.c">
@@ -360,6 +363,9 @@
     <ClCompile Include="src\entities\EmeraldCoast\EC_StageTransparent.cpp">
       <Filter>Source Files\entities\EmeraldCoast</Filter>
     </ClCompile>
+    <ClCompile Include="src\entities\Snowhead\SHD_StageTransparent.cpp">
+      <Filter>Source Files\entities\Snowhead</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\renderEngine\renderEngine.h">
@@ -631,6 +637,9 @@
     </ClInclude>
     <ClInclude Include="src\entities\EmeraldCoast\ecstagetransparent.h">
       <Filter>Source Files\entities\EmeraldCoast</Filter>
+    </ClInclude>
+    <ClInclude Include="src\entities\Snowhead\shdstagetransparent.h">
+      <Filter>Source Files\entities\Snowhead</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

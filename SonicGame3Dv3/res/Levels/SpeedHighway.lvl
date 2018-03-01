@@ -2,7 +2,7 @@ SpeedHighway
 SpeedHighway
 SpeedHighway
 1
-SpeedHighway 8
+Collision 8
 0.8 0.85 1.0
 0.0 0.0 0.0
 0.0 0.0 0.0
@@ -14,6 +14,8 @@ SpeedHighway 8
 90 18
 0
 0
+
+# Start of objects
 6 -911 5486 7
 0 6749 705 10340
 9 13043 1120 12926
@@ -26,7 +28,7 @@ SpeedHighway 8
 
 
 
--1 generated objects
+# Generated objects
 4 7185.668 3124.34 1425.298  13.0 4
 28 5742.394 3513.148 5563.11
 3 6004.6226 2866.208 5922.1045 6037.926 2866.208 5872.1953 4

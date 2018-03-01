@@ -19,6 +19,8 @@ res/Audio/BGM/twnklpk1_intro.wav
 res/Audio/BGM/twnklpk1_loop.wav
 res/Audio/BGM/twnklpk2_intro.wav
 res/Audio/BGM/twnklpk2_loop.wav
+
+# Objects
 6 -2000 8751 -1042    original: -2000 8751 -1042       part 2 warp: -187 265 -21100 
 
 7 Sky SkySphereModel4Repeat MTL_Nebula 14 1

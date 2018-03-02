@@ -70,7 +70,7 @@ private:
 	int airTimer = 0;
 	bool onPlane = false;
 	bool onPlanePrevious = false;
-	const float gravity = 0.08f;
+	float gravity = 0.08f;
 	const float hoverAccel = 0.04f; //How much yVel you gain each frame from hovering
 	const float jumpPower = 1.7f;
 
@@ -285,6 +285,8 @@ public:
 	void boostMe(float amount);
 
 	void setDisplacement(float x, float y, float z);
+
+	void setGravity(float newGrav);
 
 private:
 	void adjustCamera();

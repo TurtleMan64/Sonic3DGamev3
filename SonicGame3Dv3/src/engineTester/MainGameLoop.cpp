@@ -53,6 +53,8 @@
 #include <windows.h>
 #include <tchar.h>
 
+#include <thread>
+
 
 std::unordered_map<Entity*, Entity*> gameEntities;
 std::list<Entity*> gameEntitiesToAdd;
@@ -118,8 +120,14 @@ std::normal_distribution<double>* Global::distribution = new std::normal_distrib
 
 void increaseProcessPriority();
 
+void doListenThread();
+
+void listen();
+
 int main()
 {
+	std::thread listenThread (doListenThread);
+
 	increaseProcessPriority();
 
 	Global::countNew = 0;
@@ -454,6 +462,8 @@ int main()
 		}
 	}
 
+	listenThread.detach();
+
 	Master_cleanUp();
 	Loader_cleanUp();
 	TextMaster::cleanUp();
@@ -596,5 +606,69 @@ void Global::checkErrorAL(char* description)
 	{
 		fprintf(stdout, "########  AL ERROR  ########\n");
 		fprintf(stdout, "%s     %d\n", description, erral);
+	}
+}
+
+void doListenThread()
+{
+	DWORD dwError;
+
+	if (!SetThreadPriority(GetCurrentThread(), THREAD_PRIORITY_BELOW_NORMAL))
+	{
+		dwError = GetLastError();
+		_tprintf(TEXT("Failed to enter above normal mode (%d)\n"), (int)dwError);
+	}
+
+	listen();
+}
+
+//listen on stdin for coordinates
+void listen()
+{
+	int loop = 1;
+	std::string input;
+
+	while (loop == 1)
+	{
+		std::getline(std::cin, input);
+
+		if (input == "exit")
+		{
+			loop = 0;
+		}
+		else if (input.size() > 1)
+		{
+			fprintf(stdout, "input = '%s'\n", input.c_str());
+			Global::gamePlayer->setGroundSpeed(0, 0);
+			Global::gamePlayer->setxVelAir(0);
+			Global::gamePlayer->setxVelAir(0);
+			Global::gamePlayer->setyVel(0);
+			if (input == "goff")
+			{
+				Global::gamePlayer->setGravity(0);
+			}
+			else if (input == "gon")
+			{
+				Global::gamePlayer->setGravity(0.08f);
+			}
+			else if (input.c_str()[0] == 'x')
+			{
+				const char* data = &input.c_str()[1];
+				Global::gamePlayer->setX(std::stof(data));
+				Global::gamePlayer->setGravity(0);
+			}
+			else if (input.c_str()[0] == 'y')
+			{
+				const char* data = &input.c_str()[1];
+				Global::gamePlayer->setY(std::stof(data));
+				Global::gamePlayer->setGravity(0);
+			}
+			else if (input.c_str()[0] == 'z')
+			{
+				const char* data = &input.c_str()[1];
+				Global::gamePlayer->setZ(std::stof(data));
+				Global::gamePlayer->setGravity(0);
+			}
+		}
 	}
 }

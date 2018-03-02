@@ -2673,3 +2673,8 @@ void Player::setDisplacement(float xDsp, float yDsp, float zDsp)
 	zDisp = zDsp;
 	isGettingExternallyMoved = true;
 }
+
+void Player::setGravity(float newGrav)
+{
+	gravity = newGrav;
+}

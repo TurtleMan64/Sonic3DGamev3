@@ -49,6 +49,7 @@
 #include "../audio/audioplayer.h"
 #include "../particles/particlemaster.h"
 #include "../particles/particleresources.h"
+#include "../toolbox/split.h"
 
 #include <windows.h>
 #include <tchar.h>
@@ -668,6 +669,24 @@ void listen()
 				const char* data = &input.c_str()[1];
 				Global::gamePlayer->setZ(std::stof(data));
 				Global::gamePlayer->setGravity(0);
+			}
+			else
+			{
+				char lineBuf[256]; //Buffer to copy line into
+				memset(lineBuf, 0, 256);
+				memcpy(lineBuf, input.c_str(), input.size());
+
+				int splitLength = 0;
+				char** lineSplit = split(lineBuf, ' ', &splitLength);
+
+				if (splitLength == 3)
+				{
+					Global::gamePlayer->setX(std::stof(lineSplit[0]));
+					Global::gamePlayer->setY(std::stof(lineSplit[1]));
+					Global::gamePlayer->setZ(std::stof(lineSplit[2]));
+					Global::gamePlayer->setGravity(0);
+				}
+				free(lineSplit);
 			}
 		}
 	}

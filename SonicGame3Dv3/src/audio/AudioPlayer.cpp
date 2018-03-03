@@ -173,7 +173,7 @@ Source* AudioPlayer::playBGM(int bufferLoop)
 
 Source* AudioPlayer::playBGMWithIntro(int bufferIntro, int bufferLoop)
 {
-	AudioPlayer::bgmTimer = 3600; //Intro must be less than 60 seconds
+	AudioPlayer::bgmTimer = 3000; //Intro must be less than 50 seconds, Loop must be at least 50 seconds
 
 	Source* src = AudioPlayer::sources[14];
 	src->stop();

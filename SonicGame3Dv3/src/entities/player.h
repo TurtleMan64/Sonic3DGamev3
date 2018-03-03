@@ -288,6 +288,8 @@ public:
 
 	void setGravity(float newGrav);
 
+	bool isDying();
+
 private:
 	void adjustCamera();
 

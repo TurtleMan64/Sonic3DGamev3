@@ -726,6 +726,11 @@ void PauseScreen::unpause()
 
 void PauseScreen::pause()
 {
+	if (Global::gamePlayer != nullptr && Global::gamePlayer->isDying() == true)
+	{
+		return;
+	}
+
 	Global::gameState = STATE_PAUSED;
 	menuSelection = 0;
 	menuDisplayID = 0;

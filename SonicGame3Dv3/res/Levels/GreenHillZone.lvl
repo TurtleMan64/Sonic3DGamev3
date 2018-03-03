@@ -21,8 +21,14 @@ Chunk8 1
 0 18
 0
 0
-7 Sky SkySphereModel2Repeat MTL_GreenHillBG 8 0
+
+
+# Player        original coords: 0 2350 0       debug coords: -1094.997681  1284.102539 -7444.205566
 6 0 2350 0
+
+
+# Objects
+7 Sky SkySphereModel2Repeat MTL_GreenHillBG 8 0
 9 -2953 201 -10545
 0 0.0 2280.0 0.0
 3 -2866.443 462.78613 -9523.428 -2866.443 368.63428 -9711.139 7

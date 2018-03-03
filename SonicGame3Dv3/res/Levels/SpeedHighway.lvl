@@ -12,8 +12,10 @@ Collision 8
 0.0001 1.25
 63.0
 90 18
-0
-0
+1
+2
+res/Audio/BGM/highway1_intro.wav
+res/Audio/BGM/highway1_loop.wav
 
 # Start of objects
 6 -911 5486 7

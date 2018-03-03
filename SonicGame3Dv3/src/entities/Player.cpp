@@ -75,6 +75,9 @@ Player::Player(float x, float y, float z)
 	currNorm.x = 0;
 	currNorm.y = 1;
 	currNorm.z = 0;
+	xDisp = 0;
+	yDisp = 0;
+	zDisp = 0;
 	setVisible(false); //Our limbs are what will be visible
 	Player::maniaSonic = nullptr;
 	createLimbs();
@@ -351,11 +354,11 @@ void Player::step()
 				//Is the wall steep?
 				if (triCol->normal.y < wallThreshold) //Some arbitrary steepness constant
 				{
-					Vector3f approach(xVel + xVelAir + xDisp, yVel + yDisp, zVel + zVelAir + zDisp);
-					Vector3f wallNorm(&(triCol->normal));
+					//Vector3f approach(xVel + xVelAir + xDisp, yVel + yDisp, zVel + zVelAir + zDisp);
+					//Vector3f wallNorm(&(triCol->normal));
 
-					approach.normalize();
-					wallNorm.normalize();
+					//approach.normalize();
+					//wallNorm.normalize();
 
 					//float similarity = abs(wallNorm.dot(&approach));
 
@@ -393,28 +396,37 @@ void Player::step()
 					{
 						//Superbounce
 						Vector3f speeds(xVelAir, yVel, zVelAir);
-						Vector3f newSPeeds = projectOntoPlane(&speeds, &(triCol->normal));
+						Vector3f newSpeeds = projectOntoPlane(&speeds, &(triCol->normal));
 
-						newSPeeds.normalize();
-						newSPeeds.scale(speeds.length());
+						//Handle case where you superbounce exactly perpendicular to the wall
+						if (newSpeeds.lengthSquared() == 0)
+						{
+							newSpeeds.y = -1;
+						}
 
-						xVelAir = newSPeeds.x/2;
-						yVel    = newSPeeds.y;
-						zVelAir = newSPeeds.z/2;
+						newSpeeds.normalize();
+						newSpeeds.scale(speeds.length());
+
+						xVelAir = newSpeeds.x/2;
+						yVel    = newSpeeds.y;
+						zVelAir = newSpeeds.z/2;
 
 						justBounced = false;
+
+						setPosition(colPos);
+						increasePosition(triCol->normal.x * 4.0f, triCol->normal.y * 4.0f, triCol->normal.z * 4.0f);
 					}
 					else
 					{
 						bounceOffGround(&(triCol->normal), cantStickBounceFactor, 18);
+
+						setPosition(colPos);
+						increasePosition(triCol->normal.x * 1.5f, triCol->normal.y * 1.5f, triCol->normal.z * 1.5f);
 					}
 
 					canMoveTimer = 8;
 					isBall = true;
 					bonked = true;
-
-					setPosition(colPos);
-					increasePosition(triCol->normal.x * 1.5f, triCol->normal.y * 1.5f, triCol->normal.z * 1.5f);
 				}
 			}
 
@@ -2677,4 +2689,9 @@ void Player::setDisplacement(float xDsp, float yDsp, float zDsp)
 void Player::setGravity(float newGrav)
 {
 	gravity = newGrav;
+}
+
+bool Player::isDying()
+{
+	return deadTimer != -1;
 }

@@ -53,6 +53,7 @@
 #include "../audio/source.h"
 #include "../entities/EmeraldCoast/ecstagetransparent.h"
 #include "../entities/Snowhead/shdstagetransparent.h"
+#include "../entities/SpeedHighway/shturnasi.h"
 
 float toFloat(char* input);
 int toInt(char* input);
@@ -860,6 +861,17 @@ void processLine(char** dat)
 			return;
 		}
 
+		case 55: //Speed Highway Fork+Bucket
+		{
+			SH_TurnAsi::loadStaticModels();
+			SH_TurnAsi* turn = new SH_TurnAsi(
+				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
+				toFloat(dat[4]));                                  //rotation
+			Global::countNew++;
+			Main_addEntity(turn);
+			return;
+		}
+
 		default:
 		{
 			return;
@@ -912,4 +924,5 @@ void freeAllStaticModels()
 	FF_HealPads::deleteStaticModels();
 	EC_StageTransparent::deleteStaticModels();
 	SHD_StageTransparent::deleteStaticModels();
+	SH_TurnAsi::deleteStaticModels();
 }

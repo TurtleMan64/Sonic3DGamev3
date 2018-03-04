@@ -275,7 +275,7 @@ void PauseScreen::step()
 
 				case 2:
 					Global::levelID = LVL_GHZ;
-					LevelLoader_loadLevel("GreenHillZone.lvl");
+					LevelLoader_loadLevel("SunshineTest.lvl");
 					unpause();
 					break;
 

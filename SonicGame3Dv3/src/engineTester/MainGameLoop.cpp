@@ -54,7 +54,7 @@
 #include <windows.h>
 #include <tchar.h>
 
-#define RELEASE_MODE
+#define DEV_MODE
 
 #ifdef DEV_MODE
 #include <thread>

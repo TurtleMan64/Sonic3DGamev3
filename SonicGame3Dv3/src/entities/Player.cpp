@@ -2412,7 +2412,7 @@ float Player::getHitboxHorizontal()
 
 float Player::getHitboxVertical()
 {
-	return 6;
+	return 12;
 }
 
 void Player::stopMoving()

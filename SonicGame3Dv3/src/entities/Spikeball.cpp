@@ -44,12 +44,26 @@ void Spikeball::step()
 	setZ(centerZ - radius*sinf(toRadians(getRotY())));
 
 	float xDiff = Global::gamePlayer->getX() - getX();
-	float yDiff = Global::gamePlayer->getY()+2 - getY();
+	float yDiff = Global::gamePlayer->getY() + (Global::gamePlayer->getHitboxVertical() * 0.25f) - getY();
 	float zDiff = Global::gamePlayer->getZ() - getZ();
 
-	if (sqrt(xDiff*xDiff+yDiff*yDiff+zDiff*zDiff) < 12)
+	float diffRadSquared = Global::gamePlayer->getHitboxHorizontal() + 10.0f;
+	diffRadSquared = diffRadSquared*diffRadSquared;
+
+	if (xDiff*xDiff + yDiff*yDiff + zDiff*zDiff < diffRadSquared)
 	{
 		Global::gamePlayer->takeDamage(getPosition());
+	}
+	else
+	{
+		xDiff = Global::gamePlayer->getX() - getX();
+		yDiff = Global::gamePlayer->getY() + (Global::gamePlayer->getHitboxVertical() * 0.75f) - getY();
+		zDiff = Global::gamePlayer->getZ() - getZ();
+
+		if (xDiff*xDiff + yDiff*yDiff + zDiff*zDiff < diffRadSquared)
+		{
+			Global::gamePlayer->takeDamage(getPosition());
+		}
 	}
 
 	updateTransformationMatrix();

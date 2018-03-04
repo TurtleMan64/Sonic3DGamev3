@@ -67,13 +67,13 @@ void SkyManager::initSkyManager(Entity* mySun, Entity *center)
 
 void SkyManager::calculateValues()
 {
-	timeOfDay = (float)fmod(timeOfDay + 360, 360);
-	sunAngle = (float)toRadians(timeOfDay);
+	timeOfDay = fmodf(timeOfDay + 360, 360);
+	sunAngle = toRadians(timeOfDay);
 	float sunPeakAngle = 60;
-	float sunVangle = (float)toRadians(sunPeakAngle*sin(sunAngle));
-	float sunHangle = (float)toRadians(90 * cos(sunAngle));
-	float moonVangle = (float)toRadians(sunPeakAngle*(float)sin(sunAngle - M_PI));
-	float moonHangle = (float)toRadians(90 * cos(sunAngle));
+	float sunVangle  = toRadians(sunPeakAngle*sinf(sunAngle));
+	float sunHangle  = toRadians(90 * cosf(sunAngle));
+	float moonVangle = toRadians(sunPeakAngle*sinf((float)(sunAngle - M_PI)));
+	float moonHangle = toRadians(90 * cosf(sunAngle));
 
 	Vector3f dummy;
 	Vector3f* center = &dummy;
@@ -81,8 +81,8 @@ void SkyManager::calculateValues()
 	{
 		center = centerObject->getPosition();
 	}
-	Vector3f sunOffset = spherePositionFromAngles(sunHangle, sunVangle, sunRadius);
-	Vector3f moonOffset = spherePositionFromAngles(moonHangle, moonVangle, sunRadius);
+	Vector3f sunOffset   = spherePositionFromAngles(sunHangle, sunVangle, sunRadius);
+	Vector3f moonOffset  = spherePositionFromAngles(moonHangle, moonVangle, sunRadius);
 	Vector3f modelOffset = spherePositionFromAngles(sunHangle, sunVangle, sunModelRadius);
 
 	Global::gameLightSun->setPosition(center->x + sunOffset.x,
@@ -110,9 +110,9 @@ void SkyManager::calculateValues()
 		colourMoonInterpolated.set(&colourMoonDay);
 	}
 
-	if (sin(sunAngle) <= 0.2 && sin(sunAngle) >= -0.2)//  sunrise / sunset
+	if (sin(sunAngle) <= 0.2f && sin(sunAngle) >= -0.2f)//  sunrise / sunset
 	{
-		dayFactor = (float)((sin(sunAngle)*2.5) + 0.5);
+		dayFactor = ((sinf(sunAngle)*2.5f) + 0.5f);
 		nightFactor = 1 - dayFactor;
 
 		colourFogInterpolated.x = ((currentFogColourNight.x*nightFactor) + (currentFogColourDay.x*dayFactor));
@@ -154,7 +154,7 @@ float SkyManager::getFogBlue()
 
 void SkyManager::increaseTimeOfDay(float timeIncrease)
 {
-	setTimeOfDay((float)fmod(timeOfDay + timeIncrease, 360));
+	setTimeOfDay(fmodf(timeOfDay + timeIncrease, 360.0f));
 }
 
 void SkyManager::setTimeOfDay(float timeSet)
@@ -170,7 +170,7 @@ float SkyManager::getTimeOfDay()
 
 float SkyManager::getOverallBrightness()
 {
-	float rawVal = (float)sin(sunAngle);
+	float rawVal = sinf(sunAngle);
 	if (rawVal >= 0)
 	{
 		return (rawVal*0.5f + 0.5f);

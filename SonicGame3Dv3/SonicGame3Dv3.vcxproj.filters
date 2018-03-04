@@ -73,6 +73,9 @@
     <Filter Include="Source Files\entities\Snowhead">
       <UniqueIdentifier>{ec92e2ab-cba1-4d83-a0ce-58e8fa5fbf49}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\entities\SpeedHighway">
+      <UniqueIdentifier>{07b5d2ce-e31d-4396-825d-bf69ea65a666}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="glad.c">
@@ -366,6 +369,9 @@
     <ClCompile Include="src\entities\Snowhead\SHD_StageTransparent.cpp">
       <Filter>Source Files\entities\Snowhead</Filter>
     </ClCompile>
+    <ClCompile Include="src\entities\SpeedHighway\SH_TurnAsi.cpp">
+      <Filter>Source Files\entities\SpeedHighway</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\renderEngine\renderEngine.h">
@@ -640,6 +646,9 @@
     </ClInclude>
     <ClInclude Include="src\entities\Snowhead\shdstagetransparent.h">
       <Filter>Source Files\entities\Snowhead</Filter>
+    </ClInclude>
+    <ClInclude Include="src\entities\SpeedHighway\shturnasi.h">
+      <Filter>Source Files\entities\SpeedHighway</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

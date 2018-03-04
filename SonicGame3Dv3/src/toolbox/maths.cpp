@@ -287,11 +287,11 @@ Vector3f projectOntoPlane(Vector3f* A, Vector3f* normal)
 */
 Vector3f spherePositionFromAngles(float angH, float angV, float radius)
 {
-	float y = (float)(radius*sin(angV));
-	float hpt = (float)(radius*cos(angV));
+	float y   = (radius*sinf(angV));
+	float hpt = (radius*cosf(angV));
 
-	float x = (float)(hpt*cos(angH));
-	float z = (float)(hpt*sin(angH));
+	float x = (hpt*cosf(angH));
+	float z = (hpt*sinf(angH));
 
 	return Vector3f(x, y, z);
 }

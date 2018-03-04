@@ -1,0 +1,86 @@
+# Blender MTL File: 'None'
+# Material Count: 7
+
+newmtl 01___Default
+	Ns 20.0
+	Ka 0.588200 0.588200 0.588200
+	Kd 0.588200 0.588200 0.588200
+	Ks 0.000000 0.000000 0.000000
+	Ke 0.000000 0.000000 0.000000
+	Ni 0.15
+	d 1.000000
+	illum 2
+	map_Kd TestSS05.png
+	map_Ka TestSS05.png
+
+newmtl 02___Default
+	Ns 20.0
+	Ka 0.588200 0.588200 0.588200
+	Kd 0.588200 0.588200 0.588200
+	Ks 0.000000 0.000000 0.000000
+	Ke 0.000000 0.000000 0.000000
+	Ni 0.15
+	d 1.000000
+	illum 2
+	map_Kd TestSS03.png
+	map_Ka TestSS03.png
+
+newmtl 03___Default
+	Ns 20.0
+	Ka 0.588200 0.588200 0.588200
+	Kd 0.588200 0.588200 0.588200
+	Ks 0.000000 0.000000 0.000000
+	Ke 0.000000 0.000000 0.000000
+	Ni 0.15
+	d 1.000000
+	illum 2
+	map_Kd TestSS06.png
+	map_Ka TestSS06.png
+
+newmtl 04___Default
+	Ns 20.0
+	Ka 0.588200 0.588200 0.588200
+	Kd 0.588200 0.588200 0.588200
+	Ks 0.000000 0.000000 0.000000
+	Ke 0.000000 0.000000 0.000000
+	Ni 0.15
+	d 1.000000
+	illum 2
+	map_Kd TestSS01.png
+	map_Ka TestSS01.png
+
+newmtl 05___Default
+	Ns 20.0
+	Ka 0.588200 0.588200 0.588200
+	Kd 0.588200 0.588200 0.588200
+	Ks 0.000000 0.000000 0.000000
+	Ke 0.000000 0.000000 0.000000
+	Ni 0.15
+	d 1.000000
+	illum 2
+	map_Kd TestSS04.png
+	map_Ka TestSS04.png
+
+newmtl 06___Default
+	Ns 20.0
+	Ka 0.588200 0.588200 0.588200
+	Kd 0.588200 0.588200 0.588200
+	Ks 0.000000 0.000000 0.000000
+	Ke 0.000000 0.000000 0.000000
+	Ni 0.15
+	d 1.000000
+	illum 2
+	map_Kd TestSS00.png
+	map_Ka TestSS00.png
+
+newmtl 07___Default
+	Ns 20.0
+	Ka 0.588200 0.588200 0.588200
+	Kd 0.588200 0.588200 0.588200
+	Ks 0.000000 0.000000 0.000000
+	Ke 0.000000 0.000000 0.000000
+	Ni 0.15
+	d 1.000000
+	illum 2
+	map_Kd TestSS02.png
+	map_Ka TestSS02.png

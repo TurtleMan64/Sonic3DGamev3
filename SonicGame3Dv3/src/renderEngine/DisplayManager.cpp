@@ -1,5 +1,6 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+#include <SOIL/SOIL.h>
 
 #include <iostream>
 #include <cmath>
@@ -81,7 +82,7 @@ int createDisplay()
 
 	// glfw window creation
 	// --------------------
-	window = glfwCreateWindow(screenWidth, screenHeight, "Sonic 3D Game 2 2", monitor, NULL);
+	window = glfwCreateWindow(screenWidth, screenHeight, "Version 0.0010", monitor, NULL);
 	if (window == NULL)
 	{
 		std::cout << "Failed to create GLFW window" << std::endl;
@@ -92,6 +93,15 @@ int createDisplay()
 	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 	glfwSetWindowCloseCallback(window, window_close_callback);
 	glfwSetScrollCallback(window, mouse_scroll_callback);
+
+	GLFWimage icons[3];
+	icons[0].pixels = SOIL_load_image("res/Icon16.png", &icons[0].width, &icons[0].height, 0, SOIL_LOAD_RGBA);
+	icons[1].pixels = SOIL_load_image("res/Icon32.png", &icons[1].width, &icons[1].height, 0, SOIL_LOAD_RGBA);
+	icons[2].pixels = SOIL_load_image("res/Icon64.png", &icons[2].width, &icons[2].height, 0, SOIL_LOAD_RGBA);
+	glfwSetWindowIcon(window, 3, icons);
+	SOIL_free_image_data(icons[0].pixels);
+	SOIL_free_image_data(icons[1].pixels);
+	SOIL_free_image_data(icons[2].pixels);
 
 	// glad: load all OpenGL function pointers
 	// ---------------------------------------

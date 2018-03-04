@@ -54,7 +54,11 @@
 #include <windows.h>
 #include <tchar.h>
 
+#define RELEASE_MODE
+
+#ifdef DEV_MODE
 #include <thread>
+#endif
 
 
 std::unordered_map<Entity*, Entity*> gameEntities;
@@ -127,7 +131,9 @@ void listen();
 
 int main()
 {
-	std::thread listenThread (doListenThread);
+	#ifdef DEV_MODE
+	std::thread listenThread(doListenThread);
+	#endif
 
 	increaseProcessPriority();
 
@@ -137,6 +143,10 @@ int main()
 	srand(0);
 
 	createDisplay();
+
+	#ifndef DEV_MODE
+	FreeConsole();
+	#endif
 
 	Input_init();
 
@@ -194,11 +204,11 @@ int main()
 		WaterShader* waterShader = new WaterShader; Global::countNew++;
 		Global::gameWaterRenderer = new WaterRenderer(waterShader, Master_getProjectionMatrix(), Global::gameWaterFBOs); Global::countNew++;
 		Global::gameWaterTiles = new std::list<WaterTile*>; Global::countNew++;
-		for (int r = -9; r < 9; r++) //-18 , 18
+		for (int r = -6; r < 6; r++) //-9 , 9
 		{
-			for (int c = -12; c < 12; c++) //-18  18
+			for (int c = -8; c < 8; c++) //-12  12
 			{
-				Global::gameWaterTiles->push_back(new WaterTile(r * 2000.0f, c * 2000.0f, 0.0f)); Global::countNew++;
+				Global::gameWaterTiles->push_back(new WaterTile(r * 3000.0f, c * 3000.0f, 0.0f)); Global::countNew++;
 			}
 		}
 	}
@@ -463,7 +473,9 @@ int main()
 		}
 	}
 
+	#ifdef DEV_MODE
 	listenThread.detach();
+	#endif
 
 	Master_cleanUp();
 	Loader_cleanUp();

@@ -654,7 +654,7 @@ void processLine(char** dat)
 			SpeedRamp* ramp = new SpeedRamp(
 				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
 				toFloat(dat[4]), toFloat(dat[5]),                  //rotation
-				toFloat(dat[6]));                                  //power
+				toFloat(dat[6]), toInt(dat[7]));                   //power, time
 			Global::countNew++;
 			Main_addEntity(ramp);
 			return;

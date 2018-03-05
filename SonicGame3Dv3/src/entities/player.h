@@ -290,6 +290,8 @@ public:
 
 	bool isDying();
 
+	void setOnPlanePrevious(bool on);
+
 private:
 	void adjustCamera();
 

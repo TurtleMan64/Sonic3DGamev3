@@ -750,7 +750,8 @@ void Player::step()
 	}
 	Global::gameSkySphere->setPosition(getX(), skyYVal, getZ());
 
-	//std::fprintf(stdout, "player speed = %f\n", sqrtf(xVelGround*xVelGround + zVelGround*zVelGround));
+	//std::fprintf(stdout, "ground speed = %f\n", sqrtf(xVelGround*xVelGround + zVelGround*zVelGround));
+	//std::fprintf(stdout, "air    speed = %f    %f\n\n", xVelAir, zVelAir);
 }
 
 void Player::addLimbsToGame()
@@ -2409,6 +2410,11 @@ int Player::getHoverCount()
 void Player::setOnPlane(bool on)
 {
 	onPlane = on;
+}
+
+void Player::setOnPlanePrevious(bool on)
+{
+	onPlanePrevious = on;
 }
 
 float Player::getHitboxHorizontal()

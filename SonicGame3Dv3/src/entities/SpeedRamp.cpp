@@ -26,7 +26,7 @@ SpeedRamp::SpeedRamp()
 
 }
 
-SpeedRamp::SpeedRamp(float x, float y, float z, float rotY, float rotZ, float myPower)
+SpeedRamp::SpeedRamp(float x, float y, float z, float rotY, float rotZ, float myPower, int inputLockDuration)
 {
 	this->position.x = x;
 	this->position.y = y;
@@ -37,6 +37,7 @@ SpeedRamp::SpeedRamp(float x, float y, float z, float rotY, float rotZ, float my
 	this->scale = 1;
 	this->visible = true;
 	this->power = myPower;
+	this->inputLockDuration = inputLockDuration;
 	updateTransformationMatrix();
 
 	collideModelOriginal = SpeedRamp::cmOriginal;
@@ -65,9 +66,22 @@ void SpeedRamp::step()
 
 			if (collideModelTransformed->playerIsOn)
 			{
-				float dx = (float)(power*cos(toRadians(getRotY())));
-				float dz = (float)(-power*sin(toRadians(getRotY())));
-				Global::gamePlayer->increaseGroundSpeed(dx, dz);
+				//float dx =  power*cosf(toRadians(getRotY()));
+				//float dz = -power*sinf(toRadians(getRotY()));
+				//Global::gamePlayer->increaseGroundSpeed(dx, dz);
+
+				Vector3f newSpeeds = spherePositionFromAngles(-toRadians(getRotY()), toRadians(getRotZ()+10), power);
+
+				Global::gamePlayer->setOnPlane(false);
+				Global::gamePlayer->setOnPlanePrevious(false);
+				Global::gamePlayer->increasePosition(0, 4, 0);
+				Global::gamePlayer->setxVelAir(newSpeeds.x);
+				Global::gamePlayer->setzVelAir(newSpeeds.z);
+				Global::gamePlayer->setyVel(newSpeeds.y);
+				Global::gamePlayer->setxVel(0);
+				Global::gamePlayer->setzVel(0);
+				Global::gamePlayer->setCanMoveTimer(inputLockDuration);
+				Global::gamePlayer->setGroundSpeed(0, 0);
 			}
 		}
 	}

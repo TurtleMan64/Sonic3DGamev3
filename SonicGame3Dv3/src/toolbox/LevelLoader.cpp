@@ -54,6 +54,8 @@
 #include "../entities/EmeraldCoast/ecstagetransparent.h"
 #include "../entities/Snowhead/shdstagetransparent.h"
 #include "../entities/SpeedHighway/shturnasi.h"
+#include "../entities/EmeraldCoast/ecbigrock.h"
+#include "../entities/EmeraldCoast/ecrockplatform.h"
 
 float toFloat(char* input);
 int toInt(char* input);
@@ -872,6 +874,29 @@ void processLine(char** dat)
 			return;
 		}
 
+		case 56: //Emerald Coast Big Rock
+		{
+			EC_BigRock::loadStaticModels();
+			EC_BigRock* rock = new EC_BigRock(
+				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
+				toFloat(dat[4]), toFloat(dat[5]), toFloat(dat[6]), //rotation
+				toFloat(dat[7]), toInt(dat[8]));                   //type
+			Global::countNew++;
+			Main_addEntity(rock);
+			return;
+		}
+
+		case 57: //Emerald Coast Rock Platform
+		{
+			EC_RockPlatform::loadStaticModels();
+			EC_RockPlatform* rock = new EC_RockPlatform(
+				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
+				toFloat(dat[4]));                                  //rotation
+			Global::countNew++;
+			Main_addEntity(rock);
+			return;
+		}
+
 		default:
 		{
 			return;
@@ -925,4 +950,6 @@ void freeAllStaticModels()
 	EC_StageTransparent::deleteStaticModels();
 	SHD_StageTransparent::deleteStaticModels();
 	SH_TurnAsi::deleteStaticModels();
+	EC_BigRock::deleteStaticModels();
+	EC_RockPlatform::deleteStaticModels();
 }

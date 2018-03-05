@@ -1900,6 +1900,12 @@ void Player::setCameraTargetYaw(float yaw)
 void Player::setCameraTargetPitch(float pitch)
 {
 	cameraPitchTarget = pitch;
+
+	Camera* cam = Global::gameCamera;
+
+	float diff = compareTwoAngles(pitch, cam->getPitch());
+
+	cam->setPitch(pitch - diff);
 }
 
 void Player::animate()

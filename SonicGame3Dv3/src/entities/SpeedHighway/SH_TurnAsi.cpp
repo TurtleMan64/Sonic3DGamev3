@@ -116,7 +116,14 @@ void SH_TurnAsi::step()
 			{
 				if (rotZ < 90.0f)
 				{
+					float prevRotZ = rotZ;
 					rotZ += storedSonicSpeed*0.4f;
+
+					if (prevRotZ < 0.0f && rotZ >= 0.0f)
+					{
+						Global::gamePlayer->setCameraTargetYaw(-rotY + 270);
+						Global::gamePlayer->setCameraTargetPitch(30);
+					}
 
 					float zAng = toRadians(rotZ);
 					float yAng = toRadians(rotY);
@@ -137,11 +144,12 @@ void SH_TurnAsi::step()
 						float newZSpd = -storedSonicSpeed*sinf((float)(yAng+M_PI));
 						Global::gamePlayer->setxVelAir(newXSpd);
 						Global::gamePlayer->setzVelAir(newZSpd);
+
+						bucketPos.set(getX(), getY() + 105.0f, getZ());
+						bucket->setPosition(&bucketPos);
 					}
 				}
 			}
-
-			//fork length = 105
 
 			updateTransformationMatrix();
 			bucket->updateTransformationMatrix();

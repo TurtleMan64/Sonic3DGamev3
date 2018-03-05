@@ -1,0 +1,8 @@
+# Blender MTL File: 'None'
+# Material Count: 1
+
+newmtl object_00C8D154_material_67
+	Ns 20
+	Ni 0.1
+	d 1.000000
+	map_Kd m128_cos006.png

@@ -36,6 +36,7 @@
     <ClCompile Include="src\entities\Camera.cpp" />
     <ClCompile Include="src\entities\CollideableObject.cpp" />
     <ClCompile Include="src\entities\Dashpad.cpp" />
+    <ClCompile Include="src\entities\EmeraldCoast\EC_BigRock.cpp" />
     <ClCompile Include="src\entities\EmeraldCoast\EC_Chair.cpp" />
     <ClCompile Include="src\entities\EmeraldCoast\EC_Dock.cpp" />
     <ClCompile Include="src\entities\EmeraldCoast\EC_DockCorner.cpp" />
@@ -46,6 +47,7 @@
     <ClCompile Include="src\entities\EmeraldCoast\EC_Pole.cpp" />
     <ClCompile Include="src\entities\EmeraldCoast\EC_Raft.cpp" />
     <ClCompile Include="src\entities\EmeraldCoast\EC_RaftSmall.cpp" />
+    <ClCompile Include="src\entities\EmeraldCoast\EC_RockPlatform.cpp" />
     <ClCompile Include="src\entities\EmeraldCoast\EC_Shark.cpp" />
     <ClCompile Include="src\entities\EmeraldCoast\EC_SinkingPlatform.cpp" />
     <ClCompile Include="src\entities\EmeraldCoast\EC_StageTransparent.cpp" />
@@ -135,6 +137,7 @@
     <ClInclude Include="src\entities\camera.h" />
     <ClInclude Include="src\entities\collideableobject.h" />
     <ClInclude Include="src\entities\dashpad.h" />
+    <ClInclude Include="src\entities\EmeraldCoast\ecbigrock.h" />
     <ClInclude Include="src\entities\EmeraldCoast\ecchair.h" />
     <ClInclude Include="src\entities\EmeraldCoast\ecdock.h" />
     <ClInclude Include="src\entities\EmeraldCoast\ecdockcorner.h" />
@@ -145,6 +148,7 @@
     <ClInclude Include="src\entities\EmeraldCoast\ecpole.h" />
     <ClInclude Include="src\entities\EmeraldCoast\ecraft.h" />
     <ClInclude Include="src\entities\EmeraldCoast\ecraftsmall.h" />
+    <ClInclude Include="src\entities\EmeraldCoast\ecrockplatform.h" />
     <ClInclude Include="src\entities\EmeraldCoast\ecshark.h" />
     <ClInclude Include="src\entities\EmeraldCoast\ecsinkingplatform.h" />
     <ClInclude Include="src\entities\EmeraldCoast\ecstagetransparent.h" />

@@ -48,6 +48,7 @@
     <ClCompile Include="src\entities\EmeraldCoast\EC_Raft.cpp" />
     <ClCompile Include="src\entities\EmeraldCoast\EC_RaftSmall.cpp" />
     <ClCompile Include="src\entities\EmeraldCoast\EC_RockPlatform.cpp" />
+    <ClCompile Include="src\entities\EmeraldCoast\EC_Seagull.cpp" />
     <ClCompile Include="src\entities\EmeraldCoast\EC_Shark.cpp" />
     <ClCompile Include="src\entities\EmeraldCoast\EC_SinkingPlatform.cpp" />
     <ClCompile Include="src\entities\EmeraldCoast\EC_StageTransparent.cpp" />
@@ -149,6 +150,7 @@
     <ClInclude Include="src\entities\EmeraldCoast\ecraft.h" />
     <ClInclude Include="src\entities\EmeraldCoast\ecraftsmall.h" />
     <ClInclude Include="src\entities\EmeraldCoast\ecrockplatform.h" />
+    <ClInclude Include="src\entities\EmeraldCoast\ecseagull.h" />
     <ClInclude Include="src\entities\EmeraldCoast\ecshark.h" />
     <ClInclude Include="src\entities\EmeraldCoast\ecsinkingplatform.h" />
     <ClInclude Include="src\entities\EmeraldCoast\ecstagetransparent.h" />

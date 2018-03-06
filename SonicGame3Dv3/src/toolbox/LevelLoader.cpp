@@ -56,6 +56,7 @@
 #include "../entities/SpeedHighway/shturnasi.h"
 #include "../entities/EmeraldCoast/ecbigrock.h"
 #include "../entities/EmeraldCoast/ecrockplatform.h"
+#include "../entities/EmeraldCoast/ecseagull.h"
 
 float toFloat(char* input);
 int toInt(char* input);
@@ -897,6 +898,23 @@ void processLine(char** dat)
 			return;
 		}
 
+		case 58: //Seagull
+		{
+			EC_Seagull::loadStaticModels();
+			EC_Seagull* rock = new EC_Seagull(
+				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
+				toFloat(dat[4]),                                   //angle offset
+				toFloat(dat[5]),                                   //flying speed
+				toFloat(dat[6]),							       //flying radius
+				toFloat(dat[7]),						           //radius amplitude
+				toFloat(dat[8]),							       //radius delta
+				toFloat(dat[9]),						           //height amplitude
+				toFloat(dat[10]));							       //height delta
+			Global::countNew++;
+			Main_addEntity(rock);
+			return;
+		}
+
 		default:
 		{
 			return;
@@ -952,4 +970,5 @@ void freeAllStaticModels()
 	SH_TurnAsi::deleteStaticModels();
 	EC_BigRock::deleteStaticModels();
 	EC_RockPlatform::deleteStaticModels();
+	EC_Seagull::deleteStaticModels();
 }

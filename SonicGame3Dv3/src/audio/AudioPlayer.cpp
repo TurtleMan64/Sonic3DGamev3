@@ -43,6 +43,7 @@ void AudioPlayer::loadSoundEffects()
 	AudioPlayer::buffersSE.push_back(AudioMaster::loadWAV("res/Audio/Sonic/StompLand.wav"));         //17
 	AudioPlayer::buffersSE.push_back(AudioMaster::loadWAV("res/Audio/Sonic/CantStick.wav"));         //18
 	AudioPlayer::buffersSE.push_back(AudioMaster::loadWAV("res/Audio/General/DockBreak.wav"));       //19
+	AudioPlayer::buffersSE.push_back(AudioMaster::loadWAV("res/Audio/General/Seagull.wav"));         //20
 }
 
 void AudioPlayer::loadBGM(char* fileName)
@@ -281,12 +282,12 @@ void AudioPlayer::loadSettings()
 
 			if (splitLength == 2)
 			{
-				if (strcmp(lineSplit[0], "SFX_Volume ") == 0)
+				if (strcmp(lineSplit[0], "SFX_Volume") == 0)
 				{
 					AudioPlayer::soundLevelSE = std::stof(lineSplit[1], nullptr);
 					AudioPlayer::soundLevelSE = fmaxf(0.0f, fminf(AudioPlayer::soundLevelSE, 1.0f));
 				}
-				else if (strcmp(lineSplit[0], "Music_Volume ") == 0)
+				else if (strcmp(lineSplit[0], "Music_Volume") == 0)
 				{
 					AudioPlayer::soundLevelBGM = std::stof(lineSplit[1], nullptr);
 					AudioPlayer::soundLevelBGM = fmaxf(0.0f, fminf(AudioPlayer::soundLevelBGM, 1.0f));

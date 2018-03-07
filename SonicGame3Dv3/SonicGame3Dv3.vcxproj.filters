@@ -381,6 +381,9 @@
     <ClCompile Include="src\entities\EmeraldCoast\EC_Seagull.cpp">
       <Filter>Source Files\entities\EmeraldCoast</Filter>
     </ClCompile>
+    <ClCompile Include="src\entities\ItemCapsule.cpp">
+      <Filter>Source Files\entities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\renderEngine\renderEngine.h">
@@ -667,6 +670,9 @@
     </ClInclude>
     <ClInclude Include="src\entities\EmeraldCoast\ecseagull.h">
       <Filter>Source Files\entities\EmeraldCoast</Filter>
+    </ClInclude>
+    <ClInclude Include="src\entities\itemcapsule.h">
+      <Filter>Source Files\entities</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

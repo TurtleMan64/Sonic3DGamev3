@@ -44,6 +44,7 @@ void AudioPlayer::loadSoundEffects()
 	AudioPlayer::buffersSE.push_back(AudioMaster::loadWAV("res/Audio/Sonic/CantStick.wav"));         //18
 	AudioPlayer::buffersSE.push_back(AudioMaster::loadWAV("res/Audio/General/DockBreak.wav"));       //19
 	AudioPlayer::buffersSE.push_back(AudioMaster::loadWAV("res/Audio/General/Seagull.wav"));         //20
+	AudioPlayer::buffersSE.push_back(AudioMaster::loadWAV("res/Audio/General/SpeedRamp.wav"));       //21
 }
 
 void AudioPlayer::loadBGM(char* fileName)

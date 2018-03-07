@@ -9,5 +9,6 @@ newmtl item
 	Ke 0.000000 0.000000 0.000000
 	Ni 0.02
 	d 0.000000
+	glow 1.0
 	illum 2
 	map_Kd item_ring5.png

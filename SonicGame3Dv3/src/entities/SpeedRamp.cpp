@@ -12,6 +12,7 @@
 #include "camera.h"
 #include "../collision/collisionmodel.h"
 #include "../collision/collisionchecker.h"
+#include "../audio/audioplayer.h"
 
 #include <list>
 #include <iostream>
@@ -82,6 +83,8 @@ void SpeedRamp::step()
 				Global::gamePlayer->setzVel(0);
 				Global::gamePlayer->setCanMoveTimer(inputLockDuration);
 				Global::gamePlayer->setGroundSpeed(0, 0);
+
+				AudioPlayer::play(21, getPosition());
 			}
 		}
 	}

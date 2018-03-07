@@ -57,6 +57,7 @@
 #include "../entities/EmeraldCoast/ecbigrock.h"
 #include "../entities/EmeraldCoast/ecrockplatform.h"
 #include "../entities/EmeraldCoast/ecseagull.h"
+#include "../entities/itemcapsule.h"
 
 float toFloat(char* input);
 int toInt(char* input);
@@ -640,6 +641,18 @@ void processLine(char** dat)
 			return;
 		}
 
+		case 27: //Item Capsule
+		{
+			ItemCapsule::loadStaticModels();
+			ItemCapsule* capsule = new ItemCapsule(
+				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
+				toFloat(dat[4]), toFloat(dat[5]),                  //rotation
+				toInt(dat[6]));                                    //type
+			Global::countNew++;
+			Main_addEntity(capsule);
+			return;
+		}
+
 		case 28: //Spinner
 		{
 			Spinner::loadStaticModels();
@@ -971,4 +984,5 @@ void freeAllStaticModels()
 	EC_BigRock::deleteStaticModels();
 	EC_RockPlatform::deleteStaticModels();
 	EC_Seagull::deleteStaticModels();
+	ItemCapsule::deleteStaticModels();
 }

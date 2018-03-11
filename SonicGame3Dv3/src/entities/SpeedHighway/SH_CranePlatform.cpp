@@ -109,14 +109,15 @@ void SH_CranePlatform::step()
 		}
 	}
 
-	if (collideModelTransformed->playerIsOn && canMove)
+	if (collideModelTransformed->playerIsOn && canMove) //start moving
 	{
 		isMoving = true;
+		cranePlatSource = AudioPlayer::play(22, getPosition());
 	}
 
 	if (!(position.x * point2GreaterX >= pointPos2.x * point2GreaterX &&
 		  position.y * point2GreaterY >= pointPos2.y * point2GreaterY &&
-		  position.z * point2GreaterZ >= pointPos2.z * point2GreaterZ))
+		  position.z * point2GreaterZ >= pointPos2.z * point2GreaterZ) && isMoving == true) //stop moving
 	{
 		isMoving = false;
 		canMove = false;
@@ -134,6 +135,18 @@ void SH_CranePlatform::step()
 		}
 	}
 
+	if (cranePlatSource != nullptr)
+	{
+		if (!cranePlatSource->isPlaying() && isMoving)
+		{
+			cranePlatSource = AudioPlayer::play(22, getPosition());
+		}
+		else if (cranePlatSource->isPlaying() && canMove && !isMoving)
+		{
+			cranePlatSource->stop();
+		}
+	}
+	
 	updateCMJustPosition();
 	updateTransformationMatrix();
 }

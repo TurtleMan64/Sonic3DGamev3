@@ -27,12 +27,14 @@ res/Audio/BGM/highway1_loop.wav
 32 2443.74 3545 26 180 I saw you magically appear in that tunnel!
 47 -946.995 13 1545.058 50 3
 2 3867 2190 909 90 0 16 90 30
-60 3560 3725 1072 0 //crane platform 1 path point 1
-60 4250 3865 1072 1 //crane platform 1 path point 2
-59 3560 3725 1072 0 5 0 1 //actual crane platform 1
-60 4435 2658 5635 2 //crane platform 2 path point 1
-60 5089 2800 5635 3 //crane platform 2 path point 2
-59 4435 2658 5635 0 5 2 3 //actual crane platform 2
+
+60 3570.06 3724.33 1078.49 0        #crane platform 1 path point 1
+60 4256.19 3864.37 1078.49 1        #crane platform 1 path point 2
+59 3570.06 3724.33 1078.49 0 5 0 1  #actual crane platform 1
+
+60 4435    2658    5639.7 2          #crane platform 2 path point 1
+60 5094.44 2800.37 5639.7 3          #crane platform 2 path point 2
+59 4435    2658    5639.7 0 5 2 3    #actual crane platform 2
 
 
 

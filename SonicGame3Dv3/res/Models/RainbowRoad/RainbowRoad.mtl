@@ -1,5 +1,5 @@
-	# Blender MTL File: 'None'
-	# Material Count: 5
+# Blender MTL File: 'None'
+# Material Count: 5
 
 newmtl material_2
 	Ns 19.607843
@@ -9,6 +9,7 @@ newmtl material_2
 	Ke 0.000000 0.000000 0.000000
 	Ni 0.02
 	glow 1.0
+	Tr 0.0
 	d 1.000000
 	illum 2
 	map_Kd 7FE6FB49_c.png
@@ -21,6 +22,7 @@ newmtl material_3
 	Ke 0.000000 0.000000 0.000000
 	Ni 0.02
 	glow 1.0
+	Tr 0.0
 	d 1.000000
 	illum 2
 	map_Kd 194B895E_c.png
@@ -33,6 +35,7 @@ newmtl material_4
 	Ke 0.000000 0.000000 0.000000
 	Ni 0.02
 	glow 1.0
+	Tr 0.0
 	d 0.000000
 	illum 2
 	map_Kd 31A3FF89_c.png
@@ -45,6 +48,7 @@ newmtl material_5
 	Ke 0.000000 0.000000 0.000000
 	Ni 0.02
 	glow 1.0
+	Tr 0.0
 	d 1.000000
 	illum 2
 	map_Kd 4481E72_c.png

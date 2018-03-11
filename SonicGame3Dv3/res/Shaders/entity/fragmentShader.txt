@@ -19,7 +19,7 @@ uniform float glowAmount;
 void main(void)
 {
 	vec4 rawTextureColour = texture(textureSampler, pass_textureCoords);
-	if (hasTransparency == 0 && glowAmount == 0)
+	if (hasTransparency == 0) //&& glowAmount == 0
 	{
 		if (rawTextureColour.a < 0.9)
 		{

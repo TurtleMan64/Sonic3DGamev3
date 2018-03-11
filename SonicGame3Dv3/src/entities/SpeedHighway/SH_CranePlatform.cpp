@@ -26,7 +26,7 @@ SH_CranePlatform::SH_CranePlatform()
 
 }
 
-SH_CranePlatform::SH_CranePlatform(float x, float y, float z, float rotY, float speed, int point1, int point2)
+SH_CranePlatform::SH_CranePlatform(float x, float y, float z, float rotY, float speed, int point1ID, int point2ID)
 {
 	position.x = x;
 	position.y = y;
@@ -60,11 +60,11 @@ SH_CranePlatform::SH_CranePlatform(float x, float y, float z, float rotY, float 
 		if (e->isPoint()) 
 		{
 			Point* thisPoint = (Point*)e;
-			if (thisPoint->getid() == point1)
+			if (thisPoint->getID() == point1ID)
 			{
 				pointPos1 = thisPoint->getPosition();
 			}
-			else
+			else if(thisPoint->getID() == point2ID)
 			{
 				pointPos2 = thisPoint->getPosition();
 			}
@@ -72,7 +72,7 @@ SH_CranePlatform::SH_CranePlatform(float x, float y, float z, float rotY, float 
 	}
 
 	moveDir = pointPos2 - pointPos1;
-	moveDir.scale(0.01);
+	moveDir.scale(0.01f);
 	moveDir.x = moveDir.x / speed;
 	moveDir.y = moveDir.y / speed;
 	moveDir.z = moveDir.z / speed;
@@ -115,8 +115,8 @@ void SH_CranePlatform::step()
 	}
 
 	if (!(position.x * point2GreaterX >= pointPos2.x * point2GreaterX &&
-		position.y * point2GreaterY >= pointPos2.y * point2GreaterY &&
-		position.z * point2GreaterZ >= pointPos2.z * point2GreaterZ))
+		  position.y * point2GreaterY >= pointPos2.y * point2GreaterY &&
+		  position.z * point2GreaterZ >= pointPos2.z * point2GreaterZ))
 	{
 		isMoving = false;
 		canMove = false;
@@ -127,8 +127,11 @@ void SH_CranePlatform::step()
 		newPos = position + moveDir;
 		position = newPos;
 		//move the player only if the player is standing on the platform
-		if (collideModelTransformed->playerIsOn) Global::gamePlayer->setPosition(Global::gamePlayer->getX() + moveDir.x, Global::gamePlayer->getY() + moveDir.y, Global::gamePlayer->getZ() + moveDir.z);
-		//Global::gamePlayer->setDisplacement(moveDir.x, moveDir.y, moveDir.z);
+		if (collideModelTransformed->playerIsOn)
+		{
+			//Global::gamePlayer->setPosition(Global::gamePlayer->getX() + moveDir.x, Global::gamePlayer->getY() + moveDir.y, Global::gamePlayer->getZ() + moveDir.z);
+			Global::gamePlayer->setDisplacement(moveDir.x, moveDir.y, moveDir.z);
+		}
 	}
 
 	updateCMJustPosition();

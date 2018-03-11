@@ -30,7 +30,7 @@ private:
 
 public:
 	SH_CranePlatform();
-	SH_CranePlatform(float x, float y, float z, float rotY, float speed, int point1, int point2);
+	SH_CranePlatform(float x, float y, float z, float rotY, float speed, int point1ID, int point2ID);
 
 	void step();
 

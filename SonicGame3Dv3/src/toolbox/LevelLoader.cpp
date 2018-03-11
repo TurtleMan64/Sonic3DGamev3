@@ -935,9 +935,9 @@ void processLine(char** dat)
 			SH_CranePlatform::loadStaticModels();
 			SH_CranePlatform* elevator = new SH_CranePlatform(
 				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
-				toFloat(dat[4]), //rotY
-				toFloat(dat[5]), //speed
-				toInt(dat[6]), toInt(dat[7])); //point ids
+				toFloat(dat[4]),				                   //rotY
+				toFloat(dat[5]),				                   //speed
+				toInt(dat[6]), toInt(dat[7]));	                   //point ids
 
 			Global::countNew++;
 			Main_addEntity(elevator);
@@ -1012,4 +1012,5 @@ void freeAllStaticModels()
 	EC_RockPlatform::deleteStaticModels();
 	EC_Seagull::deleteStaticModels();
 	ItemCapsule::deleteStaticModels();
+	SH_CranePlatform::deleteStaticModels();
 }

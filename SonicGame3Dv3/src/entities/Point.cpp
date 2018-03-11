@@ -1,4 +1,5 @@
 #include "point.h"
+#include "../toolbox/vector.h"
 
 Point::Point()
 {
@@ -18,7 +19,7 @@ Point::Point(float x, float y, float z, int id)
 	this->visible = false;
 }
 
-int Point::getid()
+int Point::getID()
 {
 	return id;
 }

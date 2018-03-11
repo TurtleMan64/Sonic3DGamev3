@@ -9,6 +9,6 @@ newmtl object_004BF28C_material_25
 	Ke 0.000000 0.000000 0.000000
 	Ni 0.5
 	Tr 0.0
-	d 1.000000
+	d 0.000000
 	illum 2
 	map_Kd fine_sky_ref.png

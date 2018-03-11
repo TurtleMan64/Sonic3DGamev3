@@ -301,7 +301,7 @@ void parseMtl(std::string filePath, std::string fileName)
 				currentScrollXValue = 0.0f;
 				currentScrollYValue = 0.0f;
 			}
-			else if (strcmp(lineSplit[0], "\tmap_Kd") == 0) //end of material found, generate it with all its attrributes
+			else if (strcmp(lineSplit[0], "\tmap_Kd") == 0 || strcmp(lineSplit[0], "map_Kd") == 0) //end of material found, generate it with all its attrributes
 			{
 				std::string imageFilenameString = filePath+lineSplit[1];
 				char* fname = (char*)imageFilenameString.c_str();
@@ -323,31 +323,31 @@ void parseMtl(std::string filePath, std::string fileName)
 				newTexture.setScrollY(currentScrollYValue);
 				modelTexturesList.push_back(newTexture); //put a copy of newTexture into the list
 			}
-			else if (strcmp(lineSplit[0], "\tNs") == 0)
+			else if (strcmp(lineSplit[0], "\tNs") == 0 || strcmp(lineSplit[0], "Ns") == 0)
 			{
 				currentShineDamperValue = std::stof(lineSplit[1]);
 			}
-			else if (strcmp(lineSplit[0], "\tNi") == 0)
+			else if (strcmp(lineSplit[0], "\tNi") == 0 || strcmp(lineSplit[0], "Ni") == 0)
 			{
 				currentReflectivityValue = std::stof(lineSplit[1]);
 			}
-			else if (strcmp(lineSplit[0], "\tTr") == 0)
+			else if (strcmp(lineSplit[0], "\tTr") == 0 || strcmp(lineSplit[0], "Tr") == 0)
 			{
 				currentTransparencyValue = std::stof(lineSplit[1]);
 			}
-			else if (strcmp(lineSplit[0], "\td") == 0)
+			else if (strcmp(lineSplit[0], "\td") == 0 || strcmp(lineSplit[0], "td") == 0)
 			{
 				currentFakeLightingValue = std::stof(lineSplit[1]);
 			}
-			else if (strcmp(lineSplit[0], "\tglow") == 0)
+			else if (strcmp(lineSplit[0], "\tglow") == 0 || strcmp(lineSplit[0], "glow") == 0)
 			{
 				currentGlowAmountValue = std::stof(lineSplit[1]);
 			}
-			else if (strcmp(lineSplit[0], "\tscrollX") == 0)
+			else if (strcmp(lineSplit[0], "\tscrollX") == 0 || strcmp(lineSplit[0], "scrollX") == 0)
 			{
 				currentScrollXValue = std::stof(lineSplit[1]);
 			}
-			else if (strcmp(lineSplit[0], "\tscrollY") == 0)
+			else if (strcmp(lineSplit[0], "\tscrollY") == 0 || strcmp(lineSplit[0], "scrollY") == 0)
 			{
 				currentScrollYValue = std::stof(lineSplit[1]);
 			}

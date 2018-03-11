@@ -75,5 +75,7 @@ public:
 	virtual bool canLightdashOn();
 
 	virtual bool canHomingAttackOn();
+	
+	virtual bool isPoint();
 };
 #endif

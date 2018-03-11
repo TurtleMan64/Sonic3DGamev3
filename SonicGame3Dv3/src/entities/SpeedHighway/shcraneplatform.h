@@ -2,6 +2,7 @@
 #define SHCRANEPLATFORM_H
 
 class TexturedModel;
+class Source;
 
 #include <list>
 #include "../entities.h"
@@ -23,6 +24,7 @@ private:
 	Vector3f newPos;
 	bool isMoving;
 	bool canMove;
+	Source* cranePlatSource = nullptr;
 
 	int point2GreaterX;
 	int point2GreaterY;

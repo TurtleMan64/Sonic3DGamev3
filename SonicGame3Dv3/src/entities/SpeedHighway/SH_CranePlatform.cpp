@@ -13,6 +13,8 @@
 #include "../../collision/collisionmodel.h"
 #include "../../collision/collisionchecker.h"
 #include "../point.h"
+#include "../../audio/audioplayer.h"
+#include "../../audio/source.h"
 
 #include <list>
 #include <iostream>
@@ -109,9 +111,10 @@ void SH_CranePlatform::step()
 		}
 	}
 
-	if (collideModelTransformed->playerIsOn && canMove) //start moving
+	if (collideModelTransformed->playerIsOn && canMove && !isMoving) //start moving
 	{
 		isMoving = true;
+		canMove = false;
 		cranePlatSource = AudioPlayer::play(22, getPosition());
 	}
 
@@ -120,7 +123,10 @@ void SH_CranePlatform::step()
 		  position.z * point2GreaterZ >= pointPos2.z * point2GreaterZ) && isMoving == true) //stop moving
 	{
 		isMoving = false;
-		canMove = false;
+		if (cranePlatSource->isPlaying())
+		{
+			cranePlatSource->stop();
+		}
 	}
 
 	if (isMoving)
@@ -137,13 +143,9 @@ void SH_CranePlatform::step()
 
 	if (cranePlatSource != nullptr)
 	{
-		if (!cranePlatSource->isPlaying() && isMoving)
+		if (!cranePlatSource->isPlaying() && isMoving && !canMove)
 		{
 			cranePlatSource = AudioPlayer::play(22, getPosition());
-		}
-		else if (cranePlatSource->isPlaying() && canMove && !isMoving)
-		{
-			cranePlatSource->stop();
 		}
 	}
 	

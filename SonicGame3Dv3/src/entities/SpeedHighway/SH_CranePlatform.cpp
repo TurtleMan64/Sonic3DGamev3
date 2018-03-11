@@ -47,7 +47,7 @@ SH_CranePlatform::SH_CranePlatform(float x, float y, float z, float rotY, float 
 	point2GreaterZ = 1;
 
 	collideModelOriginal = SH_CranePlatform::cmOriginal;
-	collideModelTransformed = loadCollisionModel("Models/SpeedHighway/", "CranePlatform1");
+	collideModelTransformed = loadCollisionModel("Models/SpeedHighway/", "CranePlatform");
 
 	CollisionChecker::addCollideModel(collideModelTransformed);
 
@@ -149,7 +149,7 @@ void SH_CranePlatform::loadStaticModels()
 
 	std::fprintf(stdout, "Loading SH_CranePlatform static models...\n");
 
-	std::list<TexturedModel*>* newModels = loadObjModel("res/Models/SpeedHighway/", "CranePlatform1.obj");
+	std::list<TexturedModel*>* newModels = loadObjModel("res/Models/SpeedHighway/", "CranePlatform.obj");
 	for (auto newModel : (*newModels))
 	{
 		SH_CranePlatform::models.push_back(newModel);
@@ -160,7 +160,7 @@ void SH_CranePlatform::loadStaticModels()
 
 	if (SH_CranePlatform::cmOriginal == nullptr)
 	{
-		SH_CranePlatform::cmOriginal = loadCollisionModel("Models/SpeedHighway/", "CranePlatform1");
+		SH_CranePlatform::cmOriginal = loadCollisionModel("Models/SpeedHighway/", "CranePlatform");
 	}
 }
 

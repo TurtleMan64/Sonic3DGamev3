@@ -189,3 +189,8 @@ bool Entity::canHomingAttackOn()
 {
 	return false;
 }
+
+bool Entity::isPoint()
+{
+	return false;
+}

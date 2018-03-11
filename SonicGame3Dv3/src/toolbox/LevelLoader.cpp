@@ -58,6 +58,8 @@
 #include "../entities/EmeraldCoast/ecrockplatform.h"
 #include "../entities/EmeraldCoast/ecseagull.h"
 #include "../entities/itemcapsule.h"
+#include "../entities/SpeedHighway/shcraneplatform.h"
+#include "../entities/point.h"
 
 float toFloat(char* input);
 int toInt(char* input);
@@ -925,6 +927,31 @@ void processLine(char** dat)
 				toFloat(dat[10]));							       //height delta
 			Global::countNew++;
 			Main_addEntity(rock);
+			return;
+		}
+
+		case 59: //Speed Highway Elevator Platform
+		{
+			SH_CranePlatform::loadStaticModels();
+			SH_CranePlatform* elevator = new SH_CranePlatform(
+				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
+				toFloat(dat[4]), //rotY
+				toFloat(dat[5]), //speed
+				toInt(dat[6]), toInt(dat[7])); //point ids
+
+			Global::countNew++;
+			Main_addEntity(elevator);
+			return;
+		}
+
+		case 60: //Invisible point for paths
+		{
+			Point* point = new Point(
+				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
+				toInt(dat[4])); //point id
+
+			Global::countNew++;
+			Main_addEntity(point);
 			return;
 		}
 

@@ -388,10 +388,10 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\entities\SpeedHighway\SH_CranePlatform.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\entities\SpeedHighway</Filter>
     </ClCompile>
     <ClCompile Include="src\entities\SpeedHighway\SH_CranePlatformPath.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\entities\SpeedHighway</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -684,13 +684,13 @@
       <Filter>Source Files\entities</Filter>
     </ClInclude>
     <ClInclude Include="src\entities\point.h">
-      <Filter>Header Files</Filter>
+      <Filter>Source Files\entities</Filter>
     </ClInclude>
     <ClInclude Include="src\entities\SpeedHighway\shcraneplatform.h">
-      <Filter>Header Files</Filter>
+      <Filter>Source Files\entities\SpeedHighway</Filter>
     </ClInclude>
     <ClInclude Include="src\entities\SpeedHighway\shcraneplatformpath.h">
-      <Filter>Header Files</Filter>
+      <Filter>Source Files\entities\SpeedHighway</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -60,6 +60,7 @@
 #include "../entities/itemcapsule.h"
 #include "../entities/SpeedHighway/shcraneplatform.h"
 #include "../entities/point.h"
+#include "../entities/SpeedHighway/shcraneplatformpath.h"
 
 float toFloat(char* input);
 int toInt(char* input);
@@ -933,14 +934,14 @@ void processLine(char** dat)
 		case 59: //Speed Highway Elevator Platform
 		{
 			SH_CranePlatform::loadStaticModels();
-			SH_CranePlatform* elevator = new SH_CranePlatform(
+			SH_CranePlatform* cranePlat = new SH_CranePlatform(
 				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
 				toFloat(dat[4]),				                   //rotY
 				toFloat(dat[5]),				                   //speed
 				toInt(dat[6]), toInt(dat[7]));	                   //point ids
 
 			Global::countNew++;
-			Main_addEntity(elevator);
+			Main_addEntity(cranePlat);
 			return;
 		}
 
@@ -952,6 +953,18 @@ void processLine(char** dat)
 
 			Global::countNew++;
 			Main_addEntity(point);
+			return;
+		}
+
+		case 61: //Path for the crane platform
+		{
+			SH_CranePlatformPath::loadStaticModels();
+			SH_CranePlatformPath* cranePlatPath = new SH_CranePlatformPath(
+				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
+				toFloat(dat[4])); //rotation
+
+			Global::countNew++;
+			Main_addEntity(cranePlatPath);
 			return;
 		}
 

@@ -31,12 +31,12 @@ res/Audio/BGM/highway1_loop.wav
 60 3570.06 3724.33 1078.49 0        #crane platform 1 path point 1
 60 4256.19 3864.37 1078.49 1        #crane platform 1 path point 2
 59 3570.06 3724.33 1078.49 0 5 0 1  #actual crane platform 1
+61 3570 3708.8 1075.2 90			#crane platform path 1
 
 60 4435    2658    5639.7 2          #crane platform 2 path point 1
 60 5094.44 2800.37 5639.7 3          #crane platform 2 path point 2
 59 4435    2658    5639.7 0 5 2 3    #actual crane platform 2
-
-
+61 4408.6 2639.8 5642 90			 #crane platform path 2 
 
 # Generated objects
 1 3434.8718 3673.0 1078.462 -0.0 90.0 15.0 40

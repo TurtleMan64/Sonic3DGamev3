@@ -32,7 +32,6 @@ SH_CranePlatform::SH_CranePlatform(float x, float y, float z, float rotY, float 
 {
 	position.x = x;
 	position.y = y;
-	origHeight = y;
 	position.z = z;
 	rotX = 0;
 	this->rotY = rotY;

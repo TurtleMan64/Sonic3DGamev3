@@ -20,18 +20,7 @@ std::list<TexturedModel*> Dashpad::models;
 
 Dashpad::Dashpad()
 {
-	this->position.x = 0;
-	this->position.y = 0;
-	this->position.z = 0;
-	this->rotX = 0;
-	this->rotY = 0;
-	this->rotZ = 0;
-	this->hitRadius = 0;
-	this->power = 0;
-	this->cooldownTimer = 0;
-	this->cooldownTimerMax = 20;
-	this->scale = 1;
-	this->visible = true;
+
 }
 
 Dashpad::Dashpad(float x, float y, float z, float rotY, float rotZ, float myPower, float myCamYawTarget, int time)
@@ -42,7 +31,7 @@ Dashpad::Dashpad(float x, float y, float z, float rotY, float rotZ, float myPowe
 	this->rotX = 0;
 	this->rotY = rotY;
 	this->rotZ = rotZ;
-	this->hitRadius = 5;
+	this->hitRadius = 6.5f;
 	this->power = myPower;
 	this->cooldownTimer = 0;
 	this->cooldownTimerMax = time;

@@ -20,18 +20,7 @@ std::list<TexturedModel*> Spring::models;
 
 Spring::Spring()
 {
-	this->position.x = 0;
-	this->position.y = 0;
-	this->position.z = 0;
-	this->rotX = 0;
-	this->rotY = 0;
-	this->rotZ = 0;
-	this->springRadius = 0;
-	this->springPower = 0;
-	this->cooldownTimer = 0;
-	this->cooldownTimerMax = 0;
-	this->scale = 1;
-	this->visible = true;
+
 }
 
 Spring::Spring(float x, float y, float z, float rotY, float rotZ, float myPower, int cooldownMax)
@@ -42,7 +31,7 @@ Spring::Spring(float x, float y, float z, float rotY, float rotZ, float myPower,
 	this->rotX = 0;
 	this->rotY = rotY;
 	this->rotZ = rotZ;
-	this->springRadius = 5;
+	this->springRadius = 7.8f;
 	this->springPower = myPower;
 	this->cooldownTimer = 0;
 	this->cooldownTimerMax = cooldownMax;

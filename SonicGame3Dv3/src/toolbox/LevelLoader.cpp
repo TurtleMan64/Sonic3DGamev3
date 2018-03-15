@@ -1026,4 +1026,5 @@ void freeAllStaticModels()
 	EC_Seagull::deleteStaticModels();
 	ItemCapsule::deleteStaticModels();
 	SH_CranePlatform::deleteStaticModels();
+	SH_CranePlatformPath::deleteStaticModels();
 }

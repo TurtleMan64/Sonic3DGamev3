@@ -269,7 +269,7 @@ void parseMtl(std::string filePath, std::string fileName)
 	std::string line;
 
 	//default values
-	float currentShineDamperValue = 0.0f;
+	float currentShineDamperValue = 20.0f;
 	float currentReflectivityValue = 0.0f;
 	float currentTransparencyValue = 1.0f;
 	float currentFakeLightingValue = 1.0f;

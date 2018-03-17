@@ -1,5 +1,5 @@
-#ifndef SHCRANEPLATFORM_H
-#define SHCRANEPLATFORM_H
+#ifndef SHELEVATORPLATFORM_H
+#define SHELEVATORPLATFORM_H
 
 class TexturedModel;
 class Source;
@@ -9,31 +9,27 @@ class Source;
 #include "../collideableobject.h"
 
 
-class SH_CranePlatform : public CollideableObject
+class SH_ElevatorPlatform : public CollideableObject
 {
 private:
 	static std::list<TexturedModel*> models;
 	static CollisionModel* cmOriginal;
 
-	Vector3f pointPos1;
-	Vector3f pointPos2;
+	Vector3f pointPos[4];
+
+	int pointIDs[4];
+	int currentState;
 
 	float speed;
-	Vector3f moveDir;
+	Vector3f moveDir[4];
 	Vector3f newPos;
-	bool isMoving;
-	bool canMove;
 	Source* cranePlatSource = nullptr;
 
-	Vector3f pointGreaterPos;
-
-	/*int point2GreaterX;
-	int point2GreaterY;
-	int point2GreaterZ;*/
+	Vector3f pointGreaterPos[4];
 
 public:
-	SH_CranePlatform();
-	SH_CranePlatform(float x, float y, float z, float rotY, float speed, int point1ID, int point2ID);
+	SH_ElevatorPlatform();
+	SH_ElevatorPlatform(float x, float y, float z, float rotY, float speed, int point1ID, int point2ID, int point3ID, int point4ID);
 
 	void step();
 

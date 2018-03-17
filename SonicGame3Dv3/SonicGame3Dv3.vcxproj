@@ -70,6 +70,8 @@
     <ClCompile Include="src\entities\Snowhead\SHD_StageTransparent.cpp" />
     <ClCompile Include="src\entities\SpeedHighway\SH_CranePlatform.cpp" />
     <ClCompile Include="src\entities\SpeedHighway\SH_CranePlatformPath.cpp" />
+    <ClCompile Include="src\entities\SpeedHighway\SH_ElevatorPlatform.cpp" />
+    <ClCompile Include="src\entities\SpeedHighway\SH_ElevatorPlatformPath.cpp" />
     <ClCompile Include="src\entities\SpeedHighway\SH_TurnAsi.cpp" />
     <ClCompile Include="src\entities\SpeedRamp.cpp" />
     <ClCompile Include="src\entities\Spikeball.cpp" />
@@ -176,6 +178,8 @@
     <ClInclude Include="src\entities\Snowhead\shdstagetransparent.h" />
     <ClInclude Include="src\entities\SpeedHighway\shcraneplatform.h" />
     <ClInclude Include="src\entities\SpeedHighway\shcraneplatformpath.h" />
+    <ClInclude Include="src\entities\SpeedHighway\shelevatorplatform.h" />
+    <ClInclude Include="src\entities\SpeedHighway\shelevatorplatformpath.h" />
     <ClInclude Include="src\entities\SpeedHighway\shturnasi.h" />
     <ClInclude Include="src\entities\speedramp.h" />
     <ClInclude Include="src\entities\spikeball.h" />

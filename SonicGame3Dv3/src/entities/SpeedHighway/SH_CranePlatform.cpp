@@ -43,9 +43,9 @@ SH_CranePlatform::SH_CranePlatform(float x, float y, float z, float rotY, float 
 	isMoving = false;
 	canMove = true;
 
-	point2GreaterX = 1; //used for keeping track of if the initial position is greater than or less than the final position on that axis
-	point2GreaterY = 1; 
-	point2GreaterZ = 1;
+	pointGreaterPos.x = 1; //used for keeping track of if the initial position is greater than or less than the final position on that axis
+	pointGreaterPos.y = 1;
+	pointGreaterPos.z = 1;
 
 	collideModelOriginal = SH_CranePlatform::cmOriginal;
 	collideModelTransformed = loadCollisionModel("Models/SpeedHighway/", "CranePlatform");
@@ -78,17 +78,18 @@ SH_CranePlatform::SH_CranePlatform(float x, float y, float z, float rotY, float 
 	moveDir.y = moveDir.y / speed;
 	moveDir.z = moveDir.z / speed;
 
+
 	if (pointPos2.x > pointPos1.x)
 	{
-		point2GreaterX = -1; //comparisons are flipped for negatives, -2 < -1, but 1 < 2
+		pointGreaterPos.x = -1; //comparisons are flipped for negatives, -2 < -1, but 1 < 2
 	}
 	if (pointPos2.y > pointPos1.y)
 	{
-		point2GreaterY = -1;
+		pointGreaterPos.y = -1;
 	}
 	if (pointPos2.z > pointPos1.z)
 	{
-		point2GreaterZ = -1;
+		pointGreaterPos.z = -1;
 	}
 }
 
@@ -117,9 +118,9 @@ void SH_CranePlatform::step()
 		cranePlatSource = AudioPlayer::play(22, getPosition());
 	}
 
-	if (!(position.x * point2GreaterX >= pointPos2.x * point2GreaterX &&
-		  position.y * point2GreaterY >= pointPos2.y * point2GreaterY &&
-		  position.z * point2GreaterZ >= pointPos2.z * point2GreaterZ) && isMoving == true) //stop moving
+	if (!(position.x * pointGreaterPos.x >= pointPos2.x * pointGreaterPos.x &&
+		  position.y * pointGreaterPos.y >= pointPos2.y * pointGreaterPos.y &&
+		  position.z * pointGreaterPos.z >= pointPos2.z * pointGreaterPos.z) && isMoving == true) //stop moving
 	{
 		isMoving = false;
 		if (cranePlatSource->isPlaying())

@@ -61,6 +61,8 @@
 #include "../entities/SpeedHighway/shcraneplatform.h"
 #include "../entities/point.h"
 #include "../entities/SpeedHighway/shcraneplatformpath.h"
+#include "../entities/SpeedHighway/shelevatorplatformpath.h"
+#include "../entities/SpeedHighway/shelevatorplatform.h"
 
 float toFloat(char* input);
 int toInt(char* input);
@@ -968,6 +970,32 @@ void processLine(char** dat)
 			return;
 		}
 
+		case 62: //Path for the elevator platform
+		{
+			SH_ElevatorPlatformPath::loadStaticModels();
+			SH_ElevatorPlatformPath* elevatorPlatPath = new SH_ElevatorPlatformPath(
+				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
+				toFloat(dat[4])); //rotation
+
+			Global::countNew++;
+			Main_addEntity(elevatorPlatPath);
+			return;
+		}
+
+		case 63: //Speed Highway Elevator Platform
+		{
+			SH_ElevatorPlatform::loadStaticModels();
+			SH_ElevatorPlatform* cranePlat = new SH_ElevatorPlatform(
+				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
+				toFloat(dat[4]),				                   //rotY
+				toFloat(dat[5]),				                   //speed
+				toInt(dat[6]), toInt(dat[7]), toInt(dat[8]), toInt(dat[9]));//point ids
+
+			Global::countNew++;
+			Main_addEntity(cranePlat);
+			return;
+		}
+
 		default:
 		{
 			return;
@@ -1027,4 +1055,6 @@ void freeAllStaticModels()
 	ItemCapsule::deleteStaticModels();
 	SH_CranePlatform::deleteStaticModels();
 	SH_CranePlatformPath::deleteStaticModels();
+	SH_ElevatorPlatformPath::deleteStaticModels();
+	SH_ElevatorPlatform::deleteStaticModels();
 }

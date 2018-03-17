@@ -112,6 +112,11 @@
     <ClCompile Include="src\renderEngine\SkyManager.cpp" />
     <ClCompile Include="src\shaders\ShaderProgram.cpp" />
     <ClCompile Include="src\shaders\StaticShader.cpp" />
+    <ClCompile Include="src\shadows\ShadowBox.cpp" />
+    <ClCompile Include="src\shadows\ShadowFrameBuffer.cpp" />
+    <ClCompile Include="src\shadows\ShadowMapEntityRenderer.cpp" />
+    <ClCompile Include="src\shadows\ShadowMapMasterRenderer.cpp" />
+    <ClCompile Include="src\shadows\ShadowShader.cpp" />
     <ClCompile Include="src\textures\ModelTexture.cpp" />
     <ClCompile Include="src\toolbox\Input.cpp" />
     <ClCompile Include="src\toolbox\LevelLoader.cpp" />
@@ -213,6 +218,11 @@
     <ClInclude Include="src\renderEngine\renderEngine.h" />
     <ClInclude Include="src\renderEngine\skymanager.h" />
     <ClInclude Include="src\shaders\shaders.h" />
+    <ClInclude Include="src\shadows\shadowbox.h" />
+    <ClInclude Include="src\shadows\shadowframebuffer.h" />
+    <ClInclude Include="src\shadows\shadowmapentityrenderer.h" />
+    <ClInclude Include="src\shadows\shadowmapmasterrenderer.h" />
+    <ClInclude Include="src\shadows\shadowshader.h" />
     <ClInclude Include="src\textures\textures.h" />
     <ClInclude Include="src\toolbox\input.h" />
     <ClInclude Include="src\toolbox\levelloader.h" />

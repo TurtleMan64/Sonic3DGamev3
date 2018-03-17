@@ -76,6 +76,9 @@
     <Filter Include="Source Files\entities\SpeedHighway">
       <UniqueIdentifier>{07b5d2ce-e31d-4396-825d-bf69ea65a666}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\shadows">
+      <UniqueIdentifier>{5414a83a-1101-4db6-b9b9-0ef9efe5395a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="glad.c">
@@ -384,14 +387,29 @@
     <ClCompile Include="src\entities\ItemCapsule.cpp">
       <Filter>Source Files\entities</Filter>
     </ClCompile>
-    <ClCompile Include="src\entities\Point.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\entities\SpeedHighway\SH_CranePlatform.cpp">
       <Filter>Source Files\entities\SpeedHighway</Filter>
     </ClCompile>
     <ClCompile Include="src\entities\SpeedHighway\SH_CranePlatformPath.cpp">
       <Filter>Source Files\entities\SpeedHighway</Filter>
+    </ClCompile>
+    <ClCompile Include="src\entities\Point.cpp">
+      <Filter>Source Files\entities</Filter>
+    </ClCompile>
+    <ClCompile Include="src\shadows\ShadowBox.cpp">
+      <Filter>Source Files\shadows</Filter>
+    </ClCompile>
+    <ClCompile Include="src\shadows\ShadowFrameBuffer.cpp">
+      <Filter>Source Files\shadows</Filter>
+    </ClCompile>
+    <ClCompile Include="src\shadows\ShadowMapMasterRenderer.cpp">
+      <Filter>Source Files\shadows</Filter>
+    </ClCompile>
+    <ClCompile Include="src\shadows\ShadowMapEntityRenderer.cpp">
+      <Filter>Source Files\shadows</Filter>
+    </ClCompile>
+    <ClCompile Include="src\shadows\ShadowShader.cpp">
+      <Filter>Source Files\shadows</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -691,6 +709,21 @@
     </ClInclude>
     <ClInclude Include="src\entities\SpeedHighway\shcraneplatformpath.h">
       <Filter>Source Files\entities\SpeedHighway</Filter>
+    </ClInclude>
+    <ClInclude Include="src\shadows\shadowbox.h">
+      <Filter>Source Files\shadows</Filter>
+    </ClInclude>
+    <ClInclude Include="src\shadows\shadowframebuffer.h">
+      <Filter>Source Files\shadows</Filter>
+    </ClInclude>
+    <ClInclude Include="src\shadows\shadowmapmasterrenderer.h">
+      <Filter>Source Files\shadows</Filter>
+    </ClInclude>
+    <ClInclude Include="src\shadows\shadowmapentityrenderer.h">
+      <Filter>Source Files\shadows</Filter>
+    </ClInclude>
+    <ClInclude Include="src\shadows\shadowshader.h">
+      <Filter>Source Files\shadows</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

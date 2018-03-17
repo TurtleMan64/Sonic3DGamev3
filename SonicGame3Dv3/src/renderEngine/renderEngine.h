@@ -6,6 +6,9 @@ class Entity;
 class Matrix4f;
 class Light;
 class Camera;
+class ShadowMapMasterRenderer;
+
+#include <unordered_map>
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
@@ -62,6 +65,18 @@ void Master_makeProjectionMatrix();
 
 Matrix4f* Master_getProjectionMatrix();
 
+float Master_getVFOV();
+
+float Master_getNearPlane();
+
+float Master_getFarPlane();
+
+GLuint Master_getShadowMapTexture();
+
+ShadowMapMasterRenderer* Master_getShadowRenderer();
+
+void Master_renderShadowMaps(Light* sun);
+
 //Renderer
 class EntityRenderer
 {
@@ -81,7 +96,7 @@ public:
 
 	void render(Entity*);
 
-	void renderNEW(std::unordered_map<TexturedModel*, std::list<Entity*>>* entities);
+	void renderNEW(std::unordered_map<TexturedModel*, std::list<Entity*>>* entities, Matrix4f* toShadowSpaceFar);
 
 	void updateProjectionMatrix(Matrix4f* projectionMatrix);
 

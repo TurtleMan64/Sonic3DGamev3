@@ -29,7 +29,7 @@ unsigned int F_HZ = 60;
 
 unsigned int AA_SAMPLES = 4;
 
-extern float HFOV;
+extern float VFOV;
 
 bool useFullscreeen = false;
 
@@ -312,7 +312,7 @@ void loadGraphicsSettings()
 				}
 				else if (strcmp(lineSplit[0], "FOV") == 0)
 				{
-					HFOV = std::stof(lineSplit[1], nullptr);
+					VFOV = std::stof(lineSplit[1], nullptr);
 				}
 				else if (strcmp(lineSplit[0], "Anti-Aliasing_Samples") == 0)
 				{
@@ -327,6 +327,28 @@ void loadGraphicsSettings()
 					else
 					{
 						Global::renderParticles = false;
+					}
+				}
+				else if (strcmp(lineSplit[0], "Render_Shadows_Far") == 0)
+				{
+					if (strcmp(lineSplit[1], "on") == 0)
+					{
+						Global::renderShadowsFar = true;
+					}
+					else
+					{
+						Global::renderShadowsFar = false;
+					}
+				}
+				else if (strcmp(lineSplit[0], "Render_Shadows_Close") == 0)
+				{
+					if (strcmp(lineSplit[1], "on") == 0)
+					{
+						Global::renderShadowsClose = true;
+					}
+					else
+					{
+						Global::renderShadowsClose = false;
 					}
 				}
 			}

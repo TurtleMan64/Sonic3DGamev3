@@ -12,6 +12,7 @@ class WaterRenderer;
 class WaterFrameBuffers;
 class WaterTile;
 class Spring;
+class ShadowMapMasterRenderer;
 
 #include <string>
 #include <random>
@@ -75,6 +76,7 @@ public:
 	static WaterRenderer* gameWaterRenderer;
 	static WaterFrameBuffers* gameWaterFBOs;
 	static std::list<WaterTile*>* gameWaterTiles;
+	//static ShadowMapMasterRenderer* gameShadowRenderer;
 
 	//Debug display
 	static bool debugDisplay;
@@ -89,6 +91,9 @@ public:
 	static unsigned HQWaterRefractionHeight;
 
 	static bool renderParticles;
+
+	static bool renderShadowsFar;
+	static bool renderShadowsClose;
 
 	//Emerald Coast
 	static EC_Shark* ecShark;

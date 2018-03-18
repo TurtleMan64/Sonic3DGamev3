@@ -993,6 +993,24 @@ void Player::createLimbs()
 		myRightShin =    new Limb(&modelRightShin,    0,      -4.42f,   0,     nullptr, myRightThigh);   Global::countNew++;
 		myRightFoot =    new Limb(&modelRightFoot,    0,      -3.75f,   0,     nullptr, myRightShin);    Global::countNew++;
 	}
+	else if (Player::characterID == 7) //Pac Man
+	{
+		displayHeightOffset = 1.95f*2.0f;
+		myBody         = new Body(&modelBody);                                                           Global::countNew++;
+		myHead         = new Limb(&modelHead,         0.0f,    0.0f,    0.0f,  myBody,  nullptr);        Global::countNew++;
+		myLeftHumerus  = new Limb(&modelLeftHumerus,  0.0f,   -0.2f*1.3f,   -2.85f*1.3f, myBody,  nullptr);        Global::countNew++;
+		myLeftForearm  = new Limb(&modelLeftForearm,  0,      -1.0f*1.3f,    0,     nullptr, myLeftHumerus);  Global::countNew++;
+		myLeftHand     = new Limb(&modelLeftHand,     0,      -1.0f*1.3f,    0,     nullptr, myLeftForearm);  Global::countNew++;
+		myLeftThigh    = new Limb(&modelLeftThigh,   -2.84f*1.3f,   0.0f,   -0.79f*1.3f, myBody,  nullptr);        Global::countNew++;
+		myLeftShin     = new Limb(&modelLeftShin,     0,      -1.0f*1.3f,    0,     nullptr, myLeftThigh);    Global::countNew++;
+		myLeftFoot     = new Limb(&modelLeftFoot,     0,      -1.0f*1.3f,    0,     nullptr, myLeftShin);     Global::countNew++;
+		myRightHumerus = new Limb(&modelRightHumerus, 0.0f,    0.2f*1.3f,    2.85f*1.3f, myBody,  nullptr);        Global::countNew++;
+		myRightForearm = new Limb(&modelRightForearm, 0,      -1.0f*1.3f,    0,     nullptr, myRightHumerus); Global::countNew++;
+		myRightHand    = new Limb(&modelRightHand,    0,      -1.0f*1.3f,    0,     nullptr, myRightForearm); Global::countNew++;
+		myRightThigh   = new Limb(&modelRightThigh,  -2.84f*1.3f,   0.0f,    0.79f*1.3f, myBody,  nullptr);        Global::countNew++;
+		myRightShin    = new Limb(&modelRightShin,    0,      -1.0f*1.3f,    0,     nullptr, myRightThigh);   Global::countNew++;
+		myRightFoot    = new Limb(&modelRightFoot,    0,      -1.0f*1.3f,    0,     nullptr, myRightShin);    Global::countNew++;
+	}
 
 	AnimationResources::assignAnimationsHuman(myBody, myHead,
 		myLeftHumerus, myLeftForearm, myLeftHand,
@@ -1141,6 +1159,23 @@ void Player::loadStaticModels()
 		if (Player::modelRightThigh.size() == 0) {   loadModelsHelper(loadObjModel("res/Models/WanamaDageLimbs/", "ThighRight.obj"), &Player::modelRightThigh); }
 		if (Player::modelRightShin.size() == 0) {    loadModelsHelper(loadObjModel("res/Models/WanamaDageLimbs/", "ShinRight.obj"), &Player::modelRightShin); }
 		if (Player::modelRightFoot.size() == 0) {    loadModelsHelper(loadObjModel("res/Models/WanamaDageLimbs/", "Shoe.obj"), &Player::modelRightFoot); }
+	}
+	else if (Player::characterID == 7) //Pac Man
+	{
+		if (Player::modelBody.size() == 0) {         loadModelsHelper(loadObjModel("res/Models/PacMan/", "HeadBody.obj"), &Player::modelBody); }
+		if (Player::modelHead.size() == 0) {         loadModelsHelper(loadObjModel("res/Models/PacMan/", "Blank.obj"), &Player::modelHead); }
+		if (Player::modelLeftHumerus.size() == 0) {  loadModelsHelper(loadObjModel("res/Models/PacMan/", "Limb.obj"), &Player::modelLeftHumerus); }
+		if (Player::modelLeftForearm.size() == 0) {  loadModelsHelper(loadObjModel("res/Models/PacMan/", "Limb.obj"), &Player::modelLeftForearm); }
+		if (Player::modelLeftHand.size() == 0) {     loadModelsHelper(loadObjModel("res/Models/PacMan/", "Hand.obj"), &Player::modelLeftHand); }
+		if (Player::modelLeftThigh.size() == 0) {    loadModelsHelper(loadObjModel("res/Models/PacMan/", "Limb.obj"), &Player::modelLeftThigh); }
+		if (Player::modelLeftShin.size() == 0) {     loadModelsHelper(loadObjModel("res/Models/PacMan/", "Limb.obj"), &Player::modelLeftShin); }
+		if (Player::modelLeftFoot.size() == 0) {     loadModelsHelper(loadObjModel("res/Models/PacMan/", "Shoe.obj"), &Player::modelLeftFoot); }
+		if (Player::modelRightHumerus.size() == 0) { loadModelsHelper(loadObjModel("res/Models/PacMan/", "Limb.obj"), &Player::modelRightHumerus); }
+		if (Player::modelRightForearm.size() == 0) { loadModelsHelper(loadObjModel("res/Models/PacMan/", "Limb.obj"), &Player::modelRightForearm); }
+		if (Player::modelRightHand.size() == 0) {    loadModelsHelper(loadObjModel("res/Models/PacMan/", "Hand.obj"), &Player::modelRightHand); }
+		if (Player::modelRightThigh.size() == 0) {   loadModelsHelper(loadObjModel("res/Models/PacMan/", "Limb.obj"), &Player::modelRightThigh); }
+		if (Player::modelRightShin.size() == 0) {    loadModelsHelper(loadObjModel("res/Models/PacMan/", "Limb.obj"), &Player::modelRightShin); }
+		if (Player::modelRightFoot.size() == 0) {    loadModelsHelper(loadObjModel("res/Models/PacMan/", "Shoe.obj"), &Player::modelRightFoot); }
 	}
 }
 
@@ -2044,6 +2079,7 @@ void Player::animate()
 	{
 		float height = 2;
 		if (characterID == 6) height = -5;
+		if (characterID == 7) height = -2.65f;
 		Vector3f offset(currNorm.x*height, currNorm.y*height, currNorm.z*height);
 		Vector3f prevPos(previousDisplayPos);
 		prevPos = prevPos + offset;
@@ -2067,6 +2103,7 @@ void Player::animate()
 
 		float height = 2;
 		if (characterID == 6) height = -5;
+		if (characterID == 7) height = -2.65f;
 		Vector3f offset(currNorm.x*height, currNorm.y*height, currNorm.z*height);
 		Vector3f prevPos(previousDisplayPos);
 		prevPos = prevPos + offset;
@@ -2086,6 +2123,7 @@ void Player::animate()
 		}
 		float height = 2;
 		if (characterID == 6) height = -5;
+		if (characterID == 7) height = -2.65f;
 		Vector3f offset(currNorm.x*height, currNorm.y*height, currNorm.z*height);
 		Vector3f prevPos(previousDisplayPos);
 		prevPos = prevPos + offset;
@@ -2116,6 +2154,7 @@ void Player::animate()
 		}
 		float height = 2;
 		if (characterID == 6) height = -5;
+		if (characterID == 7) height = -2.65f;
 		Vector3f offset(currNorm.x*height, currNorm.y*height, currNorm.z*height);
 		Vector3f prevPos(previousDisplayPos);
 		prevPos = prevPos + offset;
@@ -2302,6 +2341,12 @@ void Player::newSpindashTrail(Vector3f* trailPos, float trailXVel, float trailYV
 
 		case 6:
 			new Particle(ParticleResources::textureDarkGreenTrail,
+				trailPos, &spd,
+				trailGravity, life, 0, size, -(size / life), false);
+			break;
+
+		case 7:
+			new Particle(ParticleResources::textureOrangeTrail,
 				trailPos, &spd,
 				trailGravity, life, 0, size, -(size / life), false);
 			break;

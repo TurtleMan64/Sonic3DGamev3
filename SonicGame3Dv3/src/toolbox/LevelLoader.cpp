@@ -63,6 +63,7 @@
 #include "../entities/SpeedHighway/shcraneplatformpath.h"
 #include "../entities/SpeedHighway/shelevatorplatformpath.h"
 #include "../entities/SpeedHighway/shelevatorplatform.h"
+#include "../entities/soundemitter.h"
 
 float toFloat(char* input);
 int toInt(char* input);
@@ -989,10 +990,23 @@ void processLine(char** dat)
 				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
 				toFloat(dat[4]),				                   //rotY
 				toFloat(dat[5]),				                   //speed
-				toInt(dat[6]), toInt(dat[7]), toInt(dat[8]), toInt(dat[9]));//point ids
+				toInt(dat[6]), toInt(dat[7]), toInt(dat[8]), toInt(dat[9]), //point ids
+				toFloat(dat[10]), //timeOffset
+				toInt(dat[11])); //sound emitter id
 
 			Global::countNew++;
 			Main_addEntity(cranePlat);
+			return;
+		}
+
+		case 64: //sound emitter
+		{
+			SoundEmitter* soundemitter = new SoundEmitter(
+				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
+				toInt(dat[4])); //sound emitter id
+
+			Global::countNew++;
+			Main_addEntity(soundemitter);
 			return;
 		}
 

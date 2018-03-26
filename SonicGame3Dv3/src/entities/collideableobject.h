@@ -8,11 +8,17 @@ class CollisionModel;
 class CollideableObject : public Entity
 {
 protected:
-	CollisionModel* collideModelOriginal;
+	CollisionModel * collideModelOriginal;
 	CollisionModel* collideModelTransformed;
 
 public:
 	CollideableObject();
+
+	void updateCMJustPosition(CollisionModel* cmToUpdate);
+
+	void updateCollisionModel(CollisionModel* cmToUpdate);
+
+	void updateCollisionModelWithZ(CollisionModel* cmToUpdate);
 
 	void updateCMJustPosition();
 

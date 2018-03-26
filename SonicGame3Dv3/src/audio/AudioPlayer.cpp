@@ -45,7 +45,8 @@ void AudioPlayer::loadSoundEffects()
 	AudioPlayer::buffersSE.push_back(AudioMaster::loadWAV("res/Audio/General/DockBreak.wav"));       //19
 	AudioPlayer::buffersSE.push_back(AudioMaster::loadWAV("res/Audio/General/Seagull.wav"));         //20
 	AudioPlayer::buffersSE.push_back(AudioMaster::loadWAV("res/Audio/General/SpeedRamp.wav"));       //21
-	AudioPlayer::buffersSE.push_back(AudioMaster::loadWAV("res/Audio/General/CranePlatform.wav"));   //22
+	AudioPlayer::buffersSE.push_back(AudioMaster::loadWAV("res/Audio/SpeedHighway/CranePlatform.wav"));   //22
+	AudioPlayer::buffersSE.push_back(AudioMaster::loadWAV("res/Audio/SpeedHighway/ElevatorPlatform.wav"));//23
 }
 
 void AudioPlayer::loadBGM(char* fileName)

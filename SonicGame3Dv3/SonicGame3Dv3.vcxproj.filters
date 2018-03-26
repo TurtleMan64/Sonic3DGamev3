@@ -399,6 +399,9 @@
     <ClCompile Include="src\entities\SpeedHighway\SH_ElevatorPlatform.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\entities\SoundEmitter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\renderEngine\renderEngine.h">
@@ -702,6 +705,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\entities\SpeedHighway\shelevatorplatform.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\entities\soundemitter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

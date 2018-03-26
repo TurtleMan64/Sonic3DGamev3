@@ -77,5 +77,7 @@ public:
 	virtual bool canHomingAttackOn();
 	
 	virtual bool isPoint();
+
+	virtual bool isSoundEmitter();
 };
 #endif

@@ -39,13 +39,12 @@ SH_CranePlatform::SH_CranePlatform(float x, float y, float z, float rotY, float 
 	scale = 1;
 	visible = true;
 	updateTransformationMatrix();
+	this->speed = speed;
 
 	isMoving = false;
 	canMove = true;
 
-	pointGreaterPos.x = 1; //used for keeping track of if the initial position is greater than or less than the final position on that axis
-	pointGreaterPos.y = 1;
-	pointGreaterPos.z = 1;
+	timeOffset = 0;
 
 	collideModelOriginal = SH_CranePlatform::cmOriginal;
 	collideModelTransformed = loadCollisionModel("Models/SpeedHighway/", "CranePlatform");
@@ -72,25 +71,8 @@ SH_CranePlatform::SH_CranePlatform(float x, float y, float z, float rotY, float 
 		}
 	}
 
-	moveDir = pointPos2 - pointPos1;
-	moveDir.scale(0.01f);
-	moveDir.x = moveDir.x / speed;
-	moveDir.y = moveDir.y / speed;
-	moveDir.z = moveDir.z / speed;
-
-
-	if (pointPos2.x > pointPos1.x)
-	{
-		pointGreaterPos.x = -1; //comparisons are flipped for negatives, -2 < -1, but 1 < 2
-	}
-	if (pointPos2.y > pointPos1.y)
-	{
-		pointGreaterPos.y = -1;
-	}
-	if (pointPos2.z > pointPos1.z)
-	{
-		pointGreaterPos.z = -1;
-	}
+	pointDifference = pointPos2 - pointPos1;
+	pointLength = pointDifference.length();
 }
 
 void SH_CranePlatform::step()
@@ -111,34 +93,38 @@ void SH_CranePlatform::step()
 		}
 	}
 
-	if (collideModelTransformed->playerIsOn && canMove && !isMoving) //start moving
+
+	if (collideModelTransformed->playerIsOn && canMove && !isMoving && Global::gamePlayer->getY() > position.y - 10) //start moving
 	{
 		isMoving = true;
 		canMove = false;
 		cranePlatSource = AudioPlayer::play(22, getPosition());
 	}
 
-	if (!(position.x * pointGreaterPos.x >= pointPos2.x * pointGreaterPos.x &&
-		  position.y * pointGreaterPos.y >= pointPos2.y * pointGreaterPos.y &&
-		  position.z * pointGreaterPos.z >= pointPos2.z * pointGreaterPos.z) && isMoving == true) //stop moving
+	if (timeOffset > 1 && isMoving) //stop moving
 	{
 		isMoving = false;
-		if (cranePlatSource->isPlaying())
+		if (cranePlatSource != nullptr)
 		{
-			cranePlatSource->stop();
+			if (cranePlatSource->isPlaying())
+			{
+				cranePlatSource->stop();
+			}
 		}
 	}
 
 	if (isMoving)
 	{
-		newPos = position + moveDir;
-		position = newPos;
+		oldPos = position;
+		position.x = pointPos1.x + (pointDifference.x * fmod(timeOffset, 1));
+		position.y = pointPos1.y + (pointDifference.y * fmod(timeOffset, 1));
+		position.z = pointPos1.z + (pointDifference.z * fmod(timeOffset, 1));
 		//move the player only if the player is standing on the platform
 		if (collideModelTransformed->playerIsOn)
 		{
-			//Global::gamePlayer->setPosition(Global::gamePlayer->getX() + moveDir.x, Global::gamePlayer->getY() + moveDir.y, Global::gamePlayer->getZ() + moveDir.z);
-			Global::gamePlayer->setDisplacement(moveDir.x, moveDir.y, moveDir.z);
+			Global::gamePlayer->setDisplacement(position.x - oldPos.x, position.y - oldPos.y, position.z - oldPos.z);
 		}
+		timeOffset += speed / pointLength;
 	}
 
 	if (cranePlatSource != nullptr)

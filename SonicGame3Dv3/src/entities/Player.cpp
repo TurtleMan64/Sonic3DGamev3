@@ -257,6 +257,7 @@ void Player::step()
 			calcSpindashAngle();
 			if (spindashTimer > spindashDelay)
 			{
+				//TODO: testing this
 				applyFriction(spindashFriction);
 			}
 		}

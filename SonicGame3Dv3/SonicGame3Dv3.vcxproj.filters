@@ -411,6 +411,9 @@
     <ClCompile Include="src\shadows\ShadowShader.cpp">
       <Filter>Source Files\shadows</Filter>
     </ClCompile>
+    <ClCompile Include="src\entities\SoundEmitter.cpp">
+      <Filter>Source Files\entities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\renderEngine\renderEngine.h">
@@ -724,6 +727,9 @@
     </ClInclude>
     <ClInclude Include="src\shadows\shadowshader.h">
       <Filter>Source Files\shadows</Filter>
+    </ClInclude>
+    <ClInclude Include="src\entities\soundemitter.h">
+      <Filter>Source Files\entities</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

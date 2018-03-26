@@ -91,8 +91,8 @@ private:
 	const float slowDownRate = 0.06f; //How fast you slowdown every frame when youre going faster than max speed 
 	const float slowDownAirRate = 0.025f;
 
-	const float spindashPower = 0.15f;
-	const float spindashFriction = 0.09f;
+	const float spindashPower = 0.16f;    //0.15f
+	const float spindashFriction = 0.10f; //0.09f
 	int spindashDelay = 0;
 	int spindashTimer = 0;
 	const int spindashTimerMax = 30;

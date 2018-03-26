@@ -68,6 +68,7 @@
     <ClCompile Include="src\entities\Ring.cpp" />
     <ClCompile Include="src\entities\SkySphere.cpp" />
     <ClCompile Include="src\entities\Snowhead\SHD_StageTransparent.cpp" />
+    <ClCompile Include="src\entities\SoundEmitter.cpp" />
     <ClCompile Include="src\entities\SpeedHighway\SH_CranePlatform.cpp" />
     <ClCompile Include="src\entities\SpeedHighway\SH_CranePlatformPath.cpp" />
     <ClCompile Include="src\entities\SpeedHighway\SH_TurnAsi.cpp" />
@@ -179,6 +180,7 @@
     <ClInclude Include="src\entities\ring.h" />
     <ClInclude Include="src\entities\skysphere.h" />
     <ClInclude Include="src\entities\Snowhead\shdstagetransparent.h" />
+    <ClInclude Include="src\entities\soundemitter.h" />
     <ClInclude Include="src\entities\SpeedHighway\shcraneplatform.h" />
     <ClInclude Include="src\entities\SpeedHighway\shcraneplatformpath.h" />
     <ClInclude Include="src\entities\SpeedHighway\shturnasi.h" />

@@ -49,8 +49,10 @@ SH_CranePlatform::SH_CranePlatform(float x, float y, float z, float rotY, float 
 
 	collideModelOriginal = SH_CranePlatform::cmOriginal;
 	collideModelTransformed = loadCollisionModel("Models/SpeedHighway/", "CranePlatform");
+	collideModelTransformed2 = loadCollisionModel("Models/SpeedHighway/", "CranePlatform");
 
 	CollisionChecker::addCollideModel(collideModelTransformed);
+	CollisionChecker::addCollideModel(collideModelTransformed2);
 
 	updateCollisionModel();
 
@@ -94,6 +96,15 @@ SH_CranePlatform::SH_CranePlatform(float x, float y, float z, float rotY, float 
 
 void SH_CranePlatform::step()
 {
+	if (collideModelTransformed2->playerIsOn)
+	{
+		float dx = moveDir.x;
+		float dy = moveDir.y;
+		float dz = moveDir.z;
+		Global::gamePlayer->increasePosition(dx, dy, dz);
+	}
+	updateCMJustPosition(collideModelTransformed2);
+
 	if (abs(getX() - Global::gameCamera->getPosition()->x) > ENTITY_RENDER_DIST)
 	{
 		setVisible(false);

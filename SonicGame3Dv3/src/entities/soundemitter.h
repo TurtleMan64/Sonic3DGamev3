@@ -10,7 +10,6 @@ class SoundEmitter : public Entity
 private:
 	int bufferToPlay;
 	Source* currentSource;
-	bool prevInRange;
 
 public:
 	SoundEmitter();

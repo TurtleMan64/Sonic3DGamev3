@@ -100,7 +100,11 @@ void LevelLoader_loadLevel(std::string levelFilename)
 
 	Global::levelName = fname;
 
-	freeAllStaticModels();
+	if (stageFault == 1)
+	{
+		freeAllStaticModels();
+	}
+
 	Main_deleteAllEntites();
 	Main_deleteAllTransparentEntites();
 

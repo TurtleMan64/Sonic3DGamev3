@@ -17,7 +17,7 @@ SoundEmitter::SoundEmitter(float x, float y, float z, int buffer)
 	position.z = z;
 	bufferToPlay = buffer;
 
-	prevInRange = false;
+	currentSource = nullptr;
 
 	visible = false;
 }
@@ -31,7 +31,7 @@ void SoundEmitter::step()
 
 	if (xDiff*xDiff + yDiff*yDiff + zDiff*zDiff < 500 * 500)
 	{
-		if (prevInRange == false)
+		if (currentSource == nullptr)
 		{
 			currentSource = AudioPlayer::play(bufferToPlay, getPosition(), 1, true);
 		}
@@ -40,21 +40,14 @@ void SoundEmitter::step()
 		{
 			currentSource->setPosition(getX(), getY(), getZ());
 		}
-
-		prevInRange = true;
 	}
 	else
 	{
-		if (prevInRange == true)
+		if (currentSource != nullptr)
 		{
-			if (currentSource != nullptr)
-			{
-				currentSource->stop();
-				currentSource = nullptr;
-			}
+			currentSource->stop();
+			currentSource = nullptr;
 		}
-
-		prevInRange = false;
 	}
 }
 

@@ -8,6 +8,8 @@
 #include <iostream>
 #include <windows.h>
 
+#include <vorbis/vorbisfile.h>
+
 #include "audiomaster.h"
 #include "../toolbox/vector.h"
 #include "source.h"
@@ -68,6 +70,65 @@ void AudioMaster::updateListenerData(Vector3f* pos, Vector3f* vel, float camYaw,
 	alListenerfv(AL_POSITION,    listenerPos);
 	alListenerfv(AL_VELOCITY,    listenerVel);
 	alListenerfv(AL_ORIENTATION, listenerOri);
+}
+
+ALuint AudioMaster::loadOGG(char* fileName)
+{
+	FILE* fp = nullptr;
+	fp = fopen(fileName, "rb");
+
+	if (fp == NULL)
+	{
+		fprintf(stdout, "Error when trying to open '%s'\n", fileName);
+		fclose(fp);
+		return (ALuint)-1;
+	}
+
+	int endian = 0; //0 = little
+	int bitStream;
+	long bytes;
+	char array[32768];
+
+	std::vector<char> buf;
+
+	ALuint frequency;
+	ALenum format;
+
+	vorbis_info* pInfo;
+	OggVorbis_File oggFile;
+
+	ov_open(fp, &oggFile, NULL, 0);
+
+	pInfo = ov_info(&oggFile, -1);
+
+	if (pInfo->channels == 1)
+	{
+		format = AL_FORMAT_MONO16;
+	}
+	else
+	{
+		format = AL_FORMAT_STEREO16;
+	}
+
+	frequency = pInfo->rate;
+
+	do
+	{
+		bytes = ov_read(&oggFile, array, 32768, endian, 2, 1, &bitStream);
+		buf.insert(buf.end(), array, array + bytes);
+	}
+	while (bytes > 0);
+
+	ov_clear(&oggFile);
+
+	ALuint buffer;
+	alGenBuffers(1, &buffer);
+	alBufferData(buffer, format, &buf[0], buf.size(), frequency);
+
+	buf.clear();
+	buf.shrink_to_fit();
+
+	return buffer;
 }
 
 ALuint AudioMaster::loadWAV(char* fileName)

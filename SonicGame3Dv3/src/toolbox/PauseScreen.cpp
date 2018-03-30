@@ -1,4 +1,5 @@
 #include "pausescreen.h"
+#include "../engineTester/main.h"
 
 #include <cmath>
 #include <algorithm>
@@ -6,7 +7,6 @@
 #include "../fontMeshCreator/guitext.h"
 #include "../fontMeshCreator/fonttype.h"
 #include "../renderEngine/renderEngine.h"
-#include "../engineTester/main.h"
 #include "../toolbox/input.h"
 #include "../entities/player.h"
 #include "../toolbox/levelloader.h"
@@ -70,7 +70,7 @@ void PauseScreen::init()
 {
 	font = new FontType(Loader_loadTexture("res/Fonts/vipnagorgialla.png"), "res/Fonts/vipnagorgialla.fnt");
 	Global::countNew++;
-	textCursor = new GUIText(">", 3, font, 0.47f, 0.25f, 1.0f, false, false);
+	textCursor = new GUIText(">", 2.5f, font, 0.47f, 0.25f, 1.0f, false, false);
 	Global::countNew++;
 }
 
@@ -731,39 +731,40 @@ void PauseScreen::pause()
 		return;
 	}
 
+	const float size = 2.5f;
+	const float spacing = 1 / 15.0f;
+
 	Global::gameState = STATE_PAUSED;
 	menuSelection = 0;
 	menuDisplayID = 0;
 	menuSelectionMAX = 4;
 	textCursor->setVisibility(true);
-	textResume = new GUIText("Resume", 3, font, 0.5f, 0.3f, 1.0f, false, true); Global::countNew++;
-	textRestart = new GUIText("Restart", 3, font, 0.5f, 0.4f, 1.0f, false, true); Global::countNew++;
-	textLevelSelect = new GUIText("Level Select", 3, font, 0.5f, 0.5f, 1.0f, false, true); Global::countNew++;
-	textCharSelect = new GUIText("Character Select", 3, font, 0.5f, 0.6f, 1.0f, false, true); Global::countNew++;
-	textQuit = new GUIText("Quit Game", 3, font, 0.5f, 0.7f, 1.0f, false, true); Global::countNew++;
+	textResume        = new GUIText("Resume",           size, font, 0.5f, 0.3f, 1.0f, false, true); Global::countNew++;
+	textRestart       = new GUIText("Restart",          size, font, 0.5f, 0.4f, 1.0f, false, true); Global::countNew++;
+	textLevelSelect   = new GUIText("Level Select",     size, font, 0.5f, 0.5f, 1.0f, false, true); Global::countNew++;
+	textCharSelect    = new GUIText("Character Select", size, font, 0.5f, 0.6f, 1.0f, false, true); Global::countNew++;
+	textQuit          = new GUIText("Quit Game",        size, font, 0.5f, 0.7f, 1.0f, false, true); Global::countNew++;
 
-	float spacing = 1 / 15.0f;
+	textEmeraldCoast  = new GUIText("Emerald Coast",   size, font, 0.5f, spacing * 0,  1.0f, false, false); Global::countNew++;
+	textSpeedHighway  = new GUIText("Speed Highway",   size, font, 0.5f, spacing * 1,  1.0f, false, false); Global::countNew++;
+	textGreenHillZone = new GUIText("Green Hill Zone", size, font, 0.5f, spacing * 2,  1.0f, false, false); Global::countNew++;
+	textWuhuIsland    = new GUIText("Wuhu Island",     size, font, 0.5f, spacing * 3,  1.0f, false, false); Global::countNew++;
+	textPeachCastle   = new GUIText("Peach's Castle",  size, font, 0.5f, spacing * 4,  1.0f, false, false); Global::countNew++;
+	textSandHill      = new GUIText("Sand Hill",       size, font, 0.5f, spacing * 5,  1.0f, false, false); Global::countNew++;
+	textKoopaBeach    = new GUIText("Koopa Beach",     size, font, 0.5f, spacing * 6,  1.0f, false, false); Global::countNew++;
+	textOutsetIsland  = new GUIText("Outset Island",   size, font, 0.5f, spacing * 7,  1.0f, false, false); Global::countNew++;
+	textWeaponsBed    = new GUIText("Weapons Bed",     size, font, 0.5f, spacing * 8,  1.0f, false, false); Global::countNew++;
+	textMetalHarbor   = new GUIText("Metal Harbor",    size, font, 0.5f, spacing * 9,  1.0f, false, false); Global::countNew++;
+	textBOB           = new GUIText("Bob-omb Btlfld",  size, font, 0.5f, spacing * 10, 1.0f, false, false); Global::countNew++;
+	textRainbowRoad   = new GUIText("Rainbow Road",    size, font, 0.5f, spacing * 11, 1.0f, false, false); Global::countNew++;
+	textSnowhead      = new GUIText("Snowhead",        size, font, 0.5f, spacing * 12, 1.0f, false, false); Global::countNew++;
+	textTwinklePark   = new GUIText("Twinkle Park",    size, font, 0.5f, spacing * 13, 1.0f, false, false); Global::countNew++;
+	textFireField     = new GUIText("Fire Field",      size, font, 0.5f, spacing * 14, 1.0f, false, false); Global::countNew++;
 
-	textEmeraldCoast = new GUIText("Emerald Coast", 3, font, 0.5f, 0.0f, 1.0f, false, false); Global::countNew++;
-	textSpeedHighway = new GUIText("Speed Highway", 3, font, 0.5f, spacing, 1.0f, false, false); Global::countNew++;
-	textGreenHillZone = new GUIText("Green Hill Zone", 3, font, 0.5f, spacing * 2, 1.0f, false, false); Global::countNew++;
-	textWuhuIsland = new GUIText("Wuhu Island", 3, font, 0.5f, spacing * 3, 1.0f, false, false); Global::countNew++;
-	textPeachCastle = new GUIText("Peach's Castle", 3, font, 0.5f, spacing * 4, 1.0f, false, false); Global::countNew++;
-	textSandHill = new GUIText("Sand Hill", 3, font, 0.5f, spacing * 5, 1.0f, false, false); Global::countNew++;
-	textKoopaBeach = new GUIText("Koopa Beach", 3, font, 0.5f, spacing * 6, 1.0f, false, false); Global::countNew++;
-	textOutsetIsland = new GUIText("Outset Island", 3, font, 0.5f, spacing * 7, 1.0f, false, false); Global::countNew++;
-	textWeaponsBed = new GUIText("Weapons Bed", 3, font, 0.5f, spacing * 8, 1.0f, false, false); Global::countNew++;
-	textMetalHarbor = new GUIText("Metal Harbor", 3, font, 0.5f, spacing * 9, 1.0f, false, false); Global::countNew++;
-	textBOB = new GUIText("Bob-omb Btlfld", 3, font, 0.5f, spacing * 10, 1.0f, false, false); Global::countNew++;
-	textRainbowRoad = new GUIText("Rainbow Road", 3, font, 0.5f, spacing * 11, 1.0f, false, false); Global::countNew++;
-	textSnowhead = new GUIText("Snowhead", 3, font, 0.5f, spacing * 12, 1.0f, false, false); Global::countNew++;
-	textTwinklePark = new GUIText("Twinkle Park", 3, font, 0.5f, spacing * 13, 1.0f, false, false); Global::countNew++;
-	textFireField = new GUIText("Fire Field", 3, font, 0.5f, spacing * 14, 1.0f, false, false); Global::countNew++;
-
-	textClassicSonic = new GUIText("Classic Sonic", 3, font, 0.5f, 0.3f, 1.0f, false, false); Global::countNew++;
-	textDollSonic = new GUIText("Sonic Doll", 3, font, 0.5f, 0.4f, 1.0f, false, false); Global::countNew++;
-	textMechaSonic = new GUIText("Mecha Sonic", 3, font, 0.5f, 0.5f, 1.0f, false, false); Global::countNew++;
-	textDage4Aquatic = new GUIText("Dage4 Aquatic", 3, font, 0.5f, 0.6f, 1.0f, false, false); Global::countNew++;
-	textManiaSonic = new GUIText("Mania Sonic", 3, font, 0.5f, 0.7f, 1.0f, false, false); Global::countNew++;
-	textAmy = new GUIText("Amy", 3, font, 0.5f, 0.8f, 1.0f, false, false); Global::countNew++;
+	textClassicSonic  = new GUIText("Classic Sonic", size, font, 0.5f, 0.3f, 1.0f, false, false); Global::countNew++;
+	textDollSonic     = new GUIText("Sonic Doll",    size, font, 0.5f, 0.4f, 1.0f, false, false); Global::countNew++;
+	textMechaSonic    = new GUIText("Mecha Sonic",   size, font, 0.5f, 0.5f, 1.0f, false, false); Global::countNew++;
+	textDage4Aquatic  = new GUIText("Dage4 Aquatic", size, font, 0.5f, 0.6f, 1.0f, false, false); Global::countNew++;
+	textManiaSonic    = new GUIText("Mania Sonic",   size, font, 0.5f, 0.7f, 1.0f, false, false); Global::countNew++;
+	textAmy           = new GUIText("Amy",           size, font, 0.5f, 0.8f, 1.0f, false, false); Global::countNew++;
 }

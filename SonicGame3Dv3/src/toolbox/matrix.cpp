@@ -5,22 +5,6 @@
 
 Matrix4f::Matrix4f()
 {
-	//this->m00 = 0;
-	//this->m01 = 0;
-	//this->m02 = 0;
-	//this->m03 = 0;
-	//this->m10 = 0;
-	//this->m11 = 0;
-	//this->m12 = 0;
-	//this->m13 = 0;
-	//this->m20 = 0;
-	//this->m21 = 0;
-	//this->m22 = 0;
-	//this->m23 = 0;
-	//this->m30 = 0;
-	//this->m31 = 0;
-	//this->m32 = 0;
-	//this->m33 = 0;
 	setIdentity();
 }
 
@@ -243,4 +227,104 @@ void Matrix4f::rotate(float angle, Vector3f* axis)
 	m11 = t11;
 	m12 = t12;
 	m13 = t13;
+}
+
+Vector4f Matrix4f::transform(Vector4f* vec)
+{
+	float x = m00 * vec->x + m10 * vec->y + m20 * vec->z + m30 * vec->w;
+	float y = m01 * vec->x + m11 * vec->y + m21 * vec->z + m31 * vec->w;
+	float z = m02 * vec->x + m12 * vec->y + m22 * vec->z + m32 * vec->w;
+	float w = m03 * vec->x + m13 * vec->y + m23 * vec->z + m33 * vec->w;
+
+	return Vector4f(x, y, z, w);
+}
+
+void Matrix4f::invert()
+{
+	float deter = determinant();
+
+	if (deter != 0)
+	{
+		/*
+		* m00 m01 m02 m03
+		* m10 m11 m12 m13
+		* m20 m21 m22 m23
+		* m30 m31 m32 m33
+		*/
+		float determinant_inv = 1.0f / deter;
+
+		// first row
+		float t00 =  determinant3x3(m11, m12, m13, m21, m22, m23, m31, m32, m33);
+		float t01 = -determinant3x3(m10, m12, m13, m20, m22, m23, m30, m32, m33);
+		float t02 =  determinant3x3(m10, m11, m13, m20, m21, m23, m30, m31, m33);
+		float t03 = -determinant3x3(m10, m11, m12, m20, m21, m22, m30, m31, m32);
+		// second row
+		float t10 = -determinant3x3(m01, m02, m03, m21, m22, m23, m31, m32, m33);
+		float t11 =  determinant3x3(m00, m02, m03, m20, m22, m23, m30, m32, m33);
+		float t12 = -determinant3x3(m00, m01, m03, m20, m21, m23, m30, m31, m33);
+		float t13 =  determinant3x3(m00, m01, m02, m20, m21, m22, m30, m31, m32);
+		// third row
+		float t20 =  determinant3x3(m01, m02, m03, m11, m12, m13, m31, m32, m33);
+		float t21 = -determinant3x3(m00, m02, m03, m10, m12, m13, m30, m32, m33);
+		float t22 =  determinant3x3(m00, m01, m03, m10, m11, m13, m30, m31, m33);
+		float t23 = -determinant3x3(m00, m01, m02, m10, m11, m12, m30, m31, m32);
+		// fourth row
+		float t30 = -determinant3x3(m01, m02, m03, m11, m12, m13, m21, m22, m23);
+		float t31 =  determinant3x3(m00, m02, m03, m10, m12, m13, m20, m22, m23);
+		float t32 = -determinant3x3(m00, m01, m03, m10, m11, m13, m20, m21, m23);
+		float t33 =  determinant3x3(m00, m01, m02, m10, m11, m12, m20, m21, m22);
+
+		// transpose and divide by the determinant
+		m00 = t00*determinant_inv;
+		m11 = t11*determinant_inv;
+		m22 = t22*determinant_inv;
+		m33 = t33*determinant_inv;
+		m01 = t10*determinant_inv;
+		m10 = t01*determinant_inv;
+		m20 = t02*determinant_inv;
+		m02 = t20*determinant_inv;
+		m12 = t21*determinant_inv;
+		m21 = t12*determinant_inv;
+		m03 = t30*determinant_inv;
+		m30 = t03*determinant_inv;
+		m13 = t31*determinant_inv;
+		m31 = t13*determinant_inv;
+		m32 = t23*determinant_inv;
+		m23 = t32*determinant_inv;
+	}
+}
+
+float Matrix4f::determinant()
+{
+	float f = m00 * ((m11 * m22 * m33 + m12 * m23 * m31 + m13 * m21 * m32)
+			        - m13 * m22 * m31
+			        - m11 * m23 * m32
+			        - m12 * m21 * m33);
+
+	f -= m01 * ((m10 * m22 * m33 + m12 * m23 * m30 + m13 * m20 * m32)
+			   - m13 * m22 * m30
+			   - m10 * m23 * m32
+			   - m12 * m20 * m33);
+
+	f += m02 * ((m10 * m21 * m33 + m11 * m23 * m30 + m13 * m20 * m31)
+			   - m13 * m21 * m30
+			   - m10 * m23 * m31
+			   - m11 * m20 * m33);
+
+	f -= m03 * ((m10 * m21 * m32 + m11 * m22 * m30 + m12 * m20 * m31)
+			   - m12 * m21 * m30
+			   - m10 * m22 * m31
+			   - m11 * m20 * m32);
+
+	return f;
+}
+
+float Matrix4f::determinant3x3(
+	float t00, float t01, float t02,
+	float t10, float t11, float t12,
+	float t20, float t21, float t22)
+{
+	return t00 * (t11 * t22 - t12 * t21)
+		 + t01 * (t12 * t20 - t10 * t22)
+		 + t02 * (t10 * t21 - t11 * t20);
 }

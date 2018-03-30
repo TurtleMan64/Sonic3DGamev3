@@ -14,6 +14,7 @@ class SH_CranePlatform : public CollideableObject
 private:
 	static std::list<TexturedModel*> models;
 	static CollisionModel* cmOriginal;
+	CollisionModel* collideModelTransformed2;
 
 	Vector3f pointPos1;
 	Vector3f pointPos2;

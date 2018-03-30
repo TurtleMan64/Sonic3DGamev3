@@ -71,84 +71,81 @@ void Ring::step()
 		else
 		{
 			setVisible(true);
-		}
-	}
 
-	if (visible)
-	{
-		if (grabTimer == 0 &&
-			Global::gamePlayer->getX() > getX() - hitboxH - Global::gamePlayer->getHitboxHorizontal() && Global::gamePlayer->getX() < getX() + hitboxH + Global::gamePlayer->getHitboxHorizontal() &&
-			Global::gamePlayer->getZ() > getZ() - hitboxH - Global::gamePlayer->getHitboxHorizontal() && Global::gamePlayer->getZ() < getZ() + hitboxH + Global::gamePlayer->getHitboxHorizontal() &&
-			Global::gamePlayer->getY() > getY() - hitboxV - Global::gamePlayer->getHitboxVertical()   && Global::gamePlayer->getY() < getY() + hitboxV)
-		{
-			AudioPlayer::play(4, getPosition());
-			
-			for (int i = 0; i < 10; i++)
+			if (grabTimer == 0 &&
+				Global::gamePlayer->getX() > getX() - hitboxH - Global::gamePlayer->getHitboxHorizontal() && Global::gamePlayer->getX() < getX() + hitboxH + Global::gamePlayer->getHitboxHorizontal() &&
+				Global::gamePlayer->getZ() > getZ() - hitboxH - Global::gamePlayer->getHitboxHorizontal() && Global::gamePlayer->getZ() < getZ() + hitboxH + Global::gamePlayer->getHitboxHorizontal() &&
+				Global::gamePlayer->getY() > getY() - hitboxV - Global::gamePlayer->getHitboxVertical()   && Global::gamePlayer->getY() < getY() + hitboxV)
 			{
-				Vector3f pos(
-					getX() + random() * 8 - 4,
-					getY() + random() * 8 - 4,
-					getZ() + random() * 8 - 4);
+				AudioPlayer::play(4, getPosition());
 
-				Vector3f vel(0, 0.4f, 0);
+				for (int i = 0; i < 10; i++)
+				{
+					Vector3f pos(
+						getX() + random() * 8 - 4,
+						getY() + random() * 8 - 4,
+						getZ() + random() * 8 - 4);
 
-				new Particle(ParticleResources::textureSparkleYellow, &pos, &vel,
-					0.025f, 30, 0, 7, -(7.0f / 30.0f), false);
+					Vector3f vel(0, 0.4f, 0);
+
+					new Particle(ParticleResources::textureSparkleYellow, &pos, &vel,
+						0.025f, 30, 0, 7, -(7.0f / 30.0f), false);
+				}
+
+				Global::gameRingCount++;
+
+				Main_deleteEntity(this);
+				return;
 			}
 
-			Global::gameRingCount++;
-
-			Main_deleteEntity(this);
-			return;
-		}
-
-		if (moves)
-		{
-			grabTimer = std::max(0, grabTimer - 1);
-
-			yVel -= 0.1f; //gravity
-
-			Vector3f velVec(xVel, yVel, zVel);
-			velVec.scale(0.99f); //air friction
-			xVel = velVec.x;
-			yVel = velVec.y;
-			zVel = velVec.z;
-
-			if (CollisionChecker::checkCollision(getX(), getY() - 5.0f, getZ(), getX() + xVel, getY() + yVel - 5.0f, getZ() + zVel))
+			if (moves)
 			{
-				setPosition(CollisionChecker::getCollidePosition());
-				increasePosition(0, 5.0f, 0);
+				grabTimer = std::max(0, grabTimer - 1);
 
-				Vector3f normal = CollisionChecker::getCollideTriangle()->normal;
-				float speed = sqrtf(xVel*xVel + yVel*yVel + zVel*zVel);
+				yVel -= 0.1f; //gravity
 
-				if (speed > 0.5f)
+				Vector3f velVec(xVel, yVel, zVel);
+				velVec.scale(0.99f); //air friction
+				xVel = velVec.x;
+				yVel = velVec.y;
+				zVel = velVec.z;
+
+				if (CollisionChecker::checkCollision(getX(), getY() - 5.0f, getZ(), getX() + xVel, getY() + yVel - 5.0f, getZ() + zVel))
 				{
-					Vector3f vel(xVel, yVel, zVel);
-					Vector3f newVel = bounceVector(&vel, &normal, 0.7f);
-					xVel = newVel.x;
-					yVel = newVel.y;
-					zVel = newVel.z;
-					increasePosition(normal.x*0.01f, normal.y*0.01f, normal.z*0.01f);
+					setPosition(CollisionChecker::getCollidePosition());
+					increasePosition(0, 5.0f, 0);
+
+					Vector3f normal = CollisionChecker::getCollideTriangle()->normal;
+					float speed = sqrtf(xVel*xVel + yVel*yVel + zVel*zVel);
+
+					if (speed > 0.5f)
+					{
+						Vector3f vel(xVel, yVel, zVel);
+						Vector3f newVel = bounceVector(&vel, &normal, 0.7f);
+						xVel = newVel.x;
+						yVel = newVel.y;
+						zVel = newVel.z;
+						increasePosition(normal.x*0.01f, normal.y*0.01f, normal.z*0.01f);
+					}
+					else
+					{
+						moves = false;
+						grabTimer = 0;
+					}
 				}
 				else
 				{
-					moves = false;
-					grabTimer = 0;
+					increasePosition(xVel, yVel, zVel);
+				}
+
+				if (getY() < -100)
+				{
+					Main_deleteEntity(this);
 				}
 			}
-			else
-			{
-				increasePosition(xVel, yVel, zVel);
-			}
 
-			if (getY() < -100)
-			{
-				Main_deleteEntity(this);
-			}
+			updateTransformationMatrix();
 		}
-
-		updateTransformationMatrix();
 	}
 }
 

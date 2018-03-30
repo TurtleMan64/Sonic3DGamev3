@@ -61,8 +61,11 @@
 #include "../entities/SpeedHighway/shcraneplatform.h"
 #include "../entities/point.h"
 #include "../entities/SpeedHighway/shcraneplatformpath.h"
+<<<<<<< HEAD
 #include "../entities/SpeedHighway/shelevatorplatformpath.h"
 #include "../entities/SpeedHighway/shelevatorplatform.h"
+=======
+>>>>>>> upstream/master
 #include "../entities/soundemitter.h"
 
 float toFloat(char* input);
@@ -102,7 +105,11 @@ void LevelLoader_loadLevel(std::string levelFilename)
 
 	Global::levelName = fname;
 
-	freeAllStaticModels();
+	if (stageFault == 1)
+	{
+		freeAllStaticModels();
+	}
+
 	Main_deleteAllEntites();
 	Main_deleteAllTransparentEntites();
 
@@ -110,6 +117,10 @@ void LevelLoader_loadLevel(std::string levelFilename)
 	{
 		Stage::deleteModels(); //Only delete stage if loading a new stage
 	}
+
+	//Reload the players models always, to load a new player model
+	Player::deleteStaticModels();
+	Player::loadStaticModels();
 
 
 	std::ifstream file("res/Levels/" + fname);
@@ -971,6 +982,7 @@ void processLine(char** dat)
 			return;
 		}
 
+<<<<<<< HEAD
 		case 62: //Path for the elevator platform
 		{
 			SH_ElevatorPlatformPath::loadStaticModels();
@@ -1007,6 +1019,16 @@ void processLine(char** dat)
 
 			Global::countNew++;
 			Main_addEntity(soundemitter);
+=======
+		case 64: //Sound emitter
+		{
+			SoundEmitter* emitter = new SoundEmitter(
+					toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
+					toInt(dat[4])); //sound emitter id
+			
+			Global::countNew++;
+			Main_addEntity(emitter);
+>>>>>>> upstream/master
 			return;
 		}
 

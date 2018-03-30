@@ -18,6 +18,8 @@ public:
 	static void updateListenerData(Vector3f* pos, Vector3f* vel, float camYaw, float camPitch);
 
 	static ALuint loadWAV(char* fileName);
+
+	static ALuint loadOGG(char* fileName);
 	
 	static void cleanUp();
 };

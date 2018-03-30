@@ -50,6 +50,7 @@
 #include "../particles/particlemaster.h"
 #include "../particles/particleresources.h"
 #include "../toolbox/split.h"
+#include "../shadows/shadowmapmasterrenderer.h"
 
 #include <windows.h>
 #include <tchar.h>
@@ -80,6 +81,8 @@ WaterRenderer* Global::gameWaterRenderer = nullptr;
 WaterFrameBuffers* Global::gameWaterFBOs = nullptr;
 std::list<WaterTile*>* Global::gameWaterTiles = nullptr;
 
+//ShadowMapMasterRenderer* Global::gameShadowRenderer = nullptr;
+
 bool Global::debugDisplay = false;
 bool Global::frozen = false;
 bool Global::step = false;
@@ -91,6 +94,9 @@ unsigned Global::HQWaterRefractionWidth = 1280;
 unsigned Global::HQWaterRefractionHeight = 720;
 
 bool Global::renderParticles = true;
+
+bool Global::renderShadowsFar = true;
+bool Global::renderShadowsClose = true;
 
 //Emerald Coast
 EC_Shark* Global::ecShark = nullptr;
@@ -150,6 +156,10 @@ int main()
 
 	Input_init();
 
+	//This camera is never deleted.
+	Camera cam;
+	Global::gameCamera = &cam;
+
 	Master_init();
 
 	TextMaster::init();
@@ -176,10 +186,6 @@ int main()
 	Light lightMoon;
 	Global::gameLightMoon = &lightMoon;
 
-	//This camera is never deleted.
-	Camera cam;
-	Global::gameCamera = &cam;
-
 	//This stage never gets deleted.
 	Stage stage;
 	Global::gameStage = &stage;
@@ -197,6 +203,11 @@ int main()
 	lightSun.getPosition()->y = 0;
 	lightSun.getPosition()->z = 0;
 	lightMoon.getPosition()->y = -100000;
+
+	if (Global::renderShadowsFar)
+	{
+		//Global::gameShadowRenderer = new ShadowMapMasterRenderer; Global::countNew++;
+	}
 
 	if (Global::useHighQualityWater)
 	{
@@ -368,8 +379,14 @@ int main()
 		{
 			Master_processTransparentEntity(e.first);
 		}
-		Master_processEntity(&skySphere);
+		
 		Master_processEntity(&stage);
+		if (Global::renderShadowsFar)
+		{
+			Master_renderShadowMaps(&lightSun);
+		}
+		Master_processEntity(&skySphere);
+
 
 
 		if (Global::useHighQualityWater)

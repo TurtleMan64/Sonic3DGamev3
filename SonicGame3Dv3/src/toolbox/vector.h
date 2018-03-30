@@ -79,4 +79,46 @@ public:
 
 	Vector2f operator / (const Vector2f &other);
 };
+
+class Vector4f
+{
+public:
+	float x;
+	float y;
+	float z;
+	float w;
+
+	Vector4f();
+	Vector4f(float x, float y, float z, float w);
+	Vector4f(Vector4f*);
+
+	float getX();
+	float getY();
+	float getZ();
+	float getW();
+
+	void set(float x, float y, float z, float w);
+
+	void set(Vector4f* other);
+
+	float length();
+
+	float lengthSquared();
+
+	void normalize();
+
+	void neg();
+
+	float dot(Vector4f* other);
+
+	void scale(float scale);
+
+	Vector4f operator + (const Vector4f &other);
+
+	Vector4f operator - (const Vector4f &other);
+
+	Vector4f operator * (const Vector4f &other);
+
+	Vector4f operator / (const Vector4f &other);
+};
 #endif

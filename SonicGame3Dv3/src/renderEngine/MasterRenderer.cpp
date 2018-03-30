@@ -13,6 +13,7 @@
 #include "skymanager.h"
 #include "../water/waterrenderer.h"
 #include "../particles/particlemaster.h"
+#include "../shadows/shadowmapmasterrenderer.h"
 
 #include <iostream>
 #include <list>
@@ -21,6 +22,7 @@
 
 ShaderProgram* shader;
 EntityRenderer* renderer;
+ShadowMapMasterRenderer* shadowMapRenderer;
 
 std::unordered_map<TexturedModel*, std::list<Entity*>> entitiesMap;
 std::unordered_map<TexturedModel*, std::list<Entity*>> entitiesMapPass2;
@@ -28,7 +30,7 @@ std::unordered_map<TexturedModel*, std::list<Entity*>> entitiesTransparentMap;
 
 Matrix4f* projectionMatrix;
 
-float HFOV = 85; //horizontal fov
+float VFOV = 60; //Vertical fov
 const float NEAR_PLANE = 0.5f;
 const float FAR_PLANE = 15000;
 
@@ -41,13 +43,25 @@ void prepareTransparentRender();
 
 void Master_init()
 {
-	shader = new ShaderProgram("res/Shaders/entity/vertexShader.txt", "res/Shaders/entity/fragmentShader.txt");
+	if (Global::renderShadowsFar)
+	{
+		shader = new ShaderProgram("res/Shaders/entity/vertexShaderShadowFar.txt", "res/Shaders/entity/fragmentShaderShadowFar.txt");
+	}
+	else
+	{
+		shader = new ShaderProgram("res/Shaders/entity/vertexShader.txt", "res/Shaders/entity/fragmentShader.txt");
+	}
 	Global::countNew++;
-	projectionMatrix = new Matrix4f();
+	projectionMatrix = new Matrix4f;
 	Global::countNew++;
 	renderer = new EntityRenderer(shader, projectionMatrix);
 	Master_makeProjectionMatrix();
 	Global::countNew++;
+
+	//if (Global::renderShadowsFar)
+	{
+		shadowMapRenderer = new ShadowMapMasterRenderer; Global::countNew++;
+	}
 
 	Master_disableCulling();
 }
@@ -63,12 +77,13 @@ void Master_render(Camera* camera, float clipX, float clipY, float clipZ, float 
 	shader->loadSkyColour(RED, GREEN, BLUE);
 	shader->loadLight(Global::gameLightSun);
 	shader->loadViewMatrix(camera);
+	shader->connectTextureUnits();
 
-	renderer->renderNEW(&entitiesMap);
-	renderer->renderNEW(&entitiesMapPass2);
+	renderer->renderNEW(&entitiesMap, shadowMapRenderer->getToShadowMapSpaceMatrix());
+	renderer->renderNEW(&entitiesMapPass2, shadowMapRenderer->getToShadowMapSpaceMatrix());
 
 	prepareTransparentRender();
-	renderer->renderNEW(&entitiesTransparentMap);
+	renderer->renderNEW(&entitiesTransparentMap, shadowMapRenderer->getToShadowMapSpaceMatrix());
 
 	shader->stop();
 }
@@ -79,52 +94,10 @@ void Master_processEntity(Entity* entity)
 	{
 		return;
 	}
-	//entitiesList.push_back(entity);
-
-
-	//new idea (scrap this).
-	//just have a render function in the entity class where the entity can decide to call the render function with its model if it wants to. yeah just do that. and go back to old render method here
 
 	std::list<TexturedModel*>* modellist = entity->getModels();
 	for (TexturedModel* entityModel : (*modellist))
 	{
-		//3 ways, not sure which is best
-		//try
-		//{
-			//std::list<Entity*>* list = entitiesMap.at(entityModel);
-		//}
-		//catch (const std::out_of_range& oor)
-		//{
-
-		//}
-
-		//not sure if find or count is going to be faster - it doesnt specify if count stops once it finds one
-		//int count = entitiesMap.count(entityModel);
-		//if (count == 0)
-		{
-			//make new list, add to map
-			//std::list<Entity*> newList;
-			//newList.push_back(entity);
-			//entitiesMap.insert(std::pair<TexturedModel*, std::list<Entity*>>(entityModel, newList));
-		}
-		//else
-		{
-			//add to list
-			//std::list<Entity*>* list = &entitiesMap.at(entityModel);
-			//list->push_back(entity);
-		}
-
-		//std::unordered_map<TexturedModel*, std::list<Entity*>>::iterator iterator = entitiesMap.find(entityModel);
-		//if (iterator == entitiesMap.end())
-		//{
-			// not found
-		//}
-		//else
-		//{
-			// found
-			//iterator->second->push_back(entity);
-		//}
-
 		std::list<Entity*>* list = &entitiesMap[entityModel];
 		list->push_back(entity);
 	}
@@ -185,6 +158,9 @@ void prepare()
 	glDepthMask(true);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glClearColor(RED, GREEN, BLUE, 1);
+
+	glActiveTexture(GL_TEXTURE5);
+	glBindTexture(GL_TEXTURE_2D, Master_getShadowMapTexture());
 }
 
 void prepareTransparentRender()
@@ -204,6 +180,10 @@ void Master_cleanUp()
 	delete renderer;
 	Global::countDelete++;
 	delete projectionMatrix;
+	Global::countDelete++;
+
+	shadowMapRenderer->cleanUp();
+	delete shadowMapRenderer;
 	Global::countDelete++;
 }
 
@@ -231,13 +211,13 @@ void Master_makeProjectionMatrix()
 
 
 	//FOV = 50;
-	//float y_scale = (float)((1.0f / tan(toRadians(VFOV / 2.0f))));
-	//float x_scale = y_scale / aspectRatio;
+	float y_scale = (float)((1.0f / tan(toRadians(VFOV / 2.0f))));
+	float x_scale = y_scale / aspectRatio;
 
 
 	//FOV = 88.88888;
-	float x_scale = (float)((1.0f / tan(toRadians(HFOV / 2.0f))));
-	float y_scale = x_scale * aspectRatio;
+	//float x_scale = (float)((1.0f / tan(toRadians(HFOV / 2.0f))));
+	//float y_scale = x_scale * aspectRatio;
 
 
 	float frustum_length = FAR_PLANE - NEAR_PLANE;
@@ -265,4 +245,34 @@ void Master_makeProjectionMatrix()
 Matrix4f* Master_getProjectionMatrix()
 {
 	return projectionMatrix;
+}
+
+float Master_getVFOV()
+{
+	return VFOV;
+}
+
+float Master_getNearPlane()
+{
+	return NEAR_PLANE;
+}
+
+float Master_getFarPlane()
+{
+	return FAR_PLANE;
+}
+
+GLuint Master_getShadowMapTexture()
+{
+	return shadowMapRenderer->getShadowMap();
+}
+
+ShadowMapMasterRenderer* Master_getShadowRenderer()
+{
+	return shadowMapRenderer;
+}
+
+void Master_renderShadowMaps(Light* sun)
+{
+	shadowMapRenderer->render(&entitiesMap, sun);
 }

@@ -32,6 +32,8 @@ private:
 	int location_fogDensity;
 	int location_fogGradient;
 	int location_clipPlane;
+	int location_shadowMapFar;
+	int location_toShadowMapSpaceFar;
 
 public:
 	ShaderProgram(char*, char*);
@@ -68,6 +70,10 @@ public:
 
 	void loadClipPlane(float clipX, float clipY, float clipZ, float clipW);
 
+	void loadToShadowSpaceMatrix(Matrix4f* matrix);
+
+	void connectTextureUnits();
+
 protected:
 	void bindAttributes();
 
@@ -78,6 +84,8 @@ protected:
 	int getUniformLocation(char*);
 
 	void loadFloat(int, float);
+
+	void loadInt(int, int);
 
 	void loadVector(int, Vector3f*);
 

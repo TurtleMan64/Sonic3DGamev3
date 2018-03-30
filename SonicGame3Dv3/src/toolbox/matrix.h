@@ -4,6 +4,7 @@
 class Vector3f;
 
 #include <math.h>
+#include "vector.h"
 
 
 class Matrix4f
@@ -51,7 +52,7 @@ public:
 	* @param right The right source matrix
 	* @param dest The destination matrix
 	*/
-	void multiply(Matrix4f*, Matrix4f*);
+	void multiply(Matrix4f* right, Matrix4f* dest);
 
 	void translate(Vector3f*);
 
@@ -59,5 +60,16 @@ public:
 
 	//angle in radians
 	void rotate(float, Vector3f*);
+
+	Vector4f transform(Vector4f* vec);
+
+	void invert();
+
+	float determinant();
+
+	float determinant3x3(
+		float t00, float t01, float t02,
+		float t10, float t11, float t12,
+		float t20, float t21, float t22);
 };
 #endif

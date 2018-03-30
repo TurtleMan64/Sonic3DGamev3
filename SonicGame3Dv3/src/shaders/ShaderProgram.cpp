@@ -11,6 +11,7 @@
 #include "../toolbox/maths.h"
 #include "../entities/light.h"
 #include "../renderEngine/renderEngine.h"
+#include "../engineTester/main.h"
 #include "shaders.h"
 
 float matrixBuffer[16];
@@ -129,21 +130,23 @@ void ShaderProgram::bindAttribute(int attribute, char* variableName)
 void ShaderProgram::getAllUniformLocations()
 {
 	location_transformationMatrix = getUniformLocation("transformationMatrix");
-	location_projectionMatrix = getUniformLocation("projectionMatrix");
-	location_viewMatrix = getUniformLocation("viewMatrix");
-	location_lightPosition = getUniformLocation("lightPosition");
-	location_lightColour = getUniformLocation("lightColour");
-	location_shineDamper = getUniformLocation("shineDamper");
-	location_reflectivity = getUniformLocation("reflectivity");
-	location_useFakeLighting = getUniformLocation("useFakeLighting");
-	location_hasTransparency = getUniformLocation("hasTransparency");
-	location_glowAmount = getUniformLocation("glowAmount");
-	location_texOffX = getUniformLocation("texOffX");
-	location_texOffY = getUniformLocation("texOffY");
-	location_skyColour = getUniformLocation("skyColour");
-	location_fogDensity = getUniformLocation("fogDensity");
-	location_fogGradient = getUniformLocation("fogGradient");
-	location_clipPlane = getUniformLocation("clipPlane");
+	location_projectionMatrix     = getUniformLocation("projectionMatrix");
+	location_viewMatrix           = getUniformLocation("viewMatrix");
+	location_lightPosition        = getUniformLocation("lightPosition");
+	location_lightColour          = getUniformLocation("lightColour");
+	location_shineDamper          = getUniformLocation("shineDamper");
+	location_reflectivity         = getUniformLocation("reflectivity");
+	location_useFakeLighting      = getUniformLocation("useFakeLighting");
+	location_hasTransparency      = getUniformLocation("hasTransparency");
+	location_glowAmount           = getUniformLocation("glowAmount");
+	location_texOffX              = getUniformLocation("texOffX");
+	location_texOffY              = getUniformLocation("texOffY");
+	location_skyColour            = getUniformLocation("skyColour");
+	location_fogDensity           = getUniformLocation("fogDensity");
+	location_fogGradient          = getUniformLocation("fogGradient");
+	location_clipPlane            = getUniformLocation("clipPlane");
+	location_shadowMapFar         = getUniformLocation("shadowMapFar");
+	location_toShadowMapSpaceFar  = getUniformLocation("toShadowMapSpaceFar");
 }
 
 int ShaderProgram::getUniformLocation(char* uniformName)
@@ -154,6 +157,11 @@ int ShaderProgram::getUniformLocation(char* uniformName)
 void ShaderProgram::loadFloat(int location, float value)
 {
 	glUniform1f(location, value);
+}
+
+void ShaderProgram::loadInt(int location, int value)
+{
+	glUniform1i(location, value);
 }
 
 void ShaderProgram::loadVector(int location, Vector3f* vect)
@@ -175,4 +183,17 @@ void ShaderProgram::loadMatrix(int location, Matrix4f* matrix)
 void ShaderProgram::loadClipPlane(float clipX, float clipY, float clipZ, float clipW)
 {
 	glUniform4f(location_clipPlane, clipX, clipY, clipZ, clipW);
+}
+
+void ShaderProgram::connectTextureUnits()
+{
+	if (Global::renderShadowsFar)
+	{
+		loadInt(location_shadowMapFar, 5);
+	}
+}
+
+void ShaderProgram::loadToShadowSpaceMatrix(Matrix4f* matrix)
+{
+	loadMatrix(location_toShadowMapSpaceFar, matrix);
 }

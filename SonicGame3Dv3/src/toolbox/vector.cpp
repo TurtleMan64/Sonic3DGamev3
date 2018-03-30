@@ -169,3 +169,114 @@ Vector2f::Vector2f(Vector2f* base) {
 	this->x = base->x;
 	this->y = base->y;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+float Vector4f::getX() { return x; }
+float Vector4f::getY() { return y; }
+float Vector4f::getZ() { return z; }
+float Vector4f::getW() { return w; }
+
+void Vector4f::set(float newX, float newY, float newZ, float newW)
+{
+	x = newX;
+	y = newY;
+	z = newZ;
+	w = newW;
+}
+
+void Vector4f::set(Vector4f* other)
+{
+	x = other->x;
+	y = other->y;
+	z = other->z;
+	w = other->w;
+}
+
+float Vector4f::length()
+{
+	return sqrtf((x * x) + (y * y) + (z * z) + (w * w));
+}
+
+float Vector4f::lengthSquared()
+{
+	return (x * x) + (y * y) + (z * z) + (w * w);
+}
+
+void Vector4f::normalize() {
+	float mag = length();
+
+	x = x / mag;
+	y = y / mag;
+	z = z / mag;
+	w = w / mag;
+}
+
+void Vector4f::neg() {
+	x = -x;
+	y = -y;
+	z = -z;
+	w = -w;
+}
+
+void Vector4f::scale(float scale)
+{
+	x *= scale;
+	y *= scale;
+	z *= scale;
+	w *= scale;
+}
+
+float Vector4f::dot(Vector4f* other) {
+	return x * other->getX() + y * other->getY() + z * other->getZ() + w * other->getW();
+}
+
+Vector4f Vector4f::operator + (const Vector4f &other) {
+	return Vector4f(x + other.x, y + other.y, z + other.z, w + other.w);
+}
+
+Vector4f Vector4f::operator - (const Vector4f &other) {
+	return Vector4f(x - other.x, y - other.y, z - other.z, w - other.w);
+}
+
+Vector4f Vector4f::operator * (const Vector4f &other) {
+	return Vector4f(x * other.x, y * other.y, z * other.z, w * other.w);
+}
+
+Vector4f Vector4f::operator / (const Vector4f &other) {
+	return Vector4f(x / other.x, y / other.y, z / other.z, w / other.w);
+}
+
+
+Vector4f::Vector4f() {
+	x = 0;
+	y = 0;
+	z = 0;
+	w = 0;
+}
+
+Vector4f::Vector4f(float x, float y, float z, float w) {
+	this->x = x;
+	this->y = y;
+	this->z = z;
+	this->w = w;
+}
+
+Vector4f::Vector4f(Vector4f* base) {
+	this->x = base->x;
+	this->y = base->y;
+	this->z = base->z;
+	this->w = base->w;
+}

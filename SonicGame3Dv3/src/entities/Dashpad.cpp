@@ -49,21 +49,20 @@ void Dashpad::step()
 		Global::gamePlayer->getZ() > getZ() - hitRadius - Global::gamePlayer->getHitboxHorizontal() && Global::gamePlayer->getZ() < getZ() + hitRadius + Global::gamePlayer->getHitboxHorizontal() &&
 		Global::gamePlayer->getY() > getY() - hitRadius - Global::gamePlayer->getHitboxVertical()   && Global::gamePlayer->getY() < getY() + hitRadius)
 	{
-		if (cooldownTimer == 0)
+		if (cooldownTimer == 0 && Global::gamePlayer->isOnGround())
 		{
-			float xOff =  cosf(toRadians(getRotY()))*cosf(toRadians(getRotZ()));
-			float zOff = -sinf(toRadians(getRotY()))*cosf(toRadians(getRotZ()));
+			float dx =  cosf(toRadians(getRotY()));
+			float dz = -sinf(toRadians(getRotY()));
+
+			float spindashPower = 0;
 
 			Global::gamePlayer->setX(getX());
 			Global::gamePlayer->setY(getY());
 			Global::gamePlayer->setZ(getZ());
 
-			Global::gamePlayer->setxVelAir(xOff*power);
-			Global::gamePlayer->setzVelAir(zOff*power);
 			Global::gamePlayer->setyVel(0);
 			Global::gamePlayer->setxVel(0);
 			Global::gamePlayer->setzVel(0);
-			Global::gamePlayer->setGroundSpeed(xOff*power, zOff*power);
 			Global::gamePlayer->setHoverCount(0);
 			Global::gamePlayer->setCameraTargetYaw(-(camYawTarget)+90);
 
@@ -72,6 +71,19 @@ void Dashpad::step()
 			cooldownTimer = cooldownTimerMax;
 
 			Global::gamePlayer->setCanMoveTimer(cooldownTimerMax);
+
+			if (Global::gamePlayer->isChargingSpindash())
+			{
+				spindashPower = Global::gamePlayer->calculateSpindashSpeed(Global::gamePlayer->getSpindashTimer());
+				Global::gamePlayer->setIsBall(true);
+				Global::gamePlayer->setSpindashTimer(0);
+
+				//TODO: get stored spindash speed and set if < that?
+			}
+
+			Global::gamePlayer->setxVelAir(dx*power + dx*spindashPower);
+			Global::gamePlayer->setzVelAir(dz*power + dz*spindashPower);
+			Global::gamePlayer->setGroundSpeed(dx*power + dx*spindashPower, dz*power + dz*spindashPower);
 		}
 	}
 }

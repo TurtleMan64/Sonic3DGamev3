@@ -428,7 +428,8 @@ newmtl material_22FD2D4
 	Ks 1.000000 1.000000 1.000000
 	Ke 0.000000 0.000000 0.000000
 	Ni 0.02
-	d 0.396078
+	d 1
+	Tr 0
 	illum 2
 	map_Kd grass.png
 	map_Ka grass.png

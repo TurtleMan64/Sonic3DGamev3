@@ -125,7 +125,6 @@ void SH_CranePlatform::step()
 	{
 		isMoving = true;
 		canMove = false;
-		cranePlatSource = AudioPlayer::play(22, getPosition());
 	}
 
 	if (!(position.x * point2GreaterX >= pointPos2.x * point2GreaterX &&
@@ -133,10 +132,6 @@ void SH_CranePlatform::step()
 		  position.z * point2GreaterZ >= pointPos2.z * point2GreaterZ) && isMoving == true) //stop moving
 	{
 		isMoving = false;
-		if (cranePlatSource->isPlaying())
-		{
-			cranePlatSource->stop();
-		}
 	}
 
 	if (isMoving)
@@ -149,13 +144,23 @@ void SH_CranePlatform::step()
 			//Global::gamePlayer->setPosition(Global::gamePlayer->getX() + moveDir.x, Global::gamePlayer->getY() + moveDir.y, Global::gamePlayer->getZ() + moveDir.z);
 			Global::gamePlayer->setDisplacement(moveDir.x, moveDir.y, moveDir.z);
 		}
-	}
 
-	if (cranePlatSource != nullptr)
-	{
-		if (!cranePlatSource->isPlaying() && isMoving && !canMove)
+		if (cranePlatSource == nullptr)
 		{
-			cranePlatSource = AudioPlayer::play(22, getPosition());
+			cranePlatSource = AudioPlayer::play(22, getPosition(), 1, true);
+		}
+
+		if (cranePlatSource != nullptr)
+		{
+			cranePlatSource->setPosition(getX(), getY(), getZ());
+		}
+	}
+	else
+	{
+		if (cranePlatSource != nullptr)
+		{
+			cranePlatSource->stop();
+			cranePlatSource = nullptr;
 		}
 	}
 	

@@ -113,6 +113,10 @@ void LevelLoader_loadLevel(std::string levelFilename)
 		Stage::deleteModels(); //Only delete stage if loading a new stage
 	}
 
+	//Reload the players models always, to load a new player model
+	Player::deleteStaticModels();
+	Player::loadStaticModels();
+
 
 	std::ifstream file("res/Levels/" + fname);
 	if (!file.is_open())

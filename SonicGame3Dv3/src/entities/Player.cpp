@@ -1474,17 +1474,12 @@ void Player::calcSpindashAngle()
 
 void Player::spindash(int timer)
 {
-	float mag = spindashPower*timer;
-	float dx = cosf(spindashAngle)*mag;
-	float dz = -sinf(spindashAngle)*mag;
+	float dx = cosf(spindashAngle);
+	float dz = -sinf(spindashAngle);
 
-	float xspd = xVelGround;
-	float zspd = zVelGround;
-	float totalSpd = sqrtf(xspd*xspd + zspd*zspd);
+	float totalSpd = sqrtf(xVelGround*xVelGround + zVelGround*zVelGround);
 
-	float factor = std::fminf(1, 6.5f / totalSpd);
-
-	factor = std::fmaxf(0.85f, factor);
+	float factor = calculateSpindashSpeed(timer);
 
 	xVelGround += dx*factor;
 	zVelGround += dz*factor;
@@ -2752,4 +2747,41 @@ void Player::setGravity(float newGrav)
 bool Player::isDying()
 {
 	return deadTimer != -1;
+}
+
+void Player::setSpindashTimer(int newTimer)
+{
+	spindashTimer = newTimer;
+}
+
+int Player::getSpindashTimer()
+{
+	return spindashTimer;
+}
+
+bool Player::isChargingSpindash()
+{
+	return isSpindashing;
+}
+
+void Player::setIsBall(bool newIsBall)
+{
+	isBall = newIsBall;
+}
+
+float Player::calculateSpindashSpeed(int spindashCharge)
+{
+	float mag = spindashPower*spindashCharge;
+	float totalSpd = sqrtf(xVelGround*xVelGround + zVelGround*zVelGround);
+
+	float factor = std::fminf(1, 6.5f / totalSpd);
+
+	factor = std::fmaxf(0.85f, factor);
+
+	return factor*mag;
+}
+
+bool Player::isOnGround()
+{
+	return onPlane;
 }

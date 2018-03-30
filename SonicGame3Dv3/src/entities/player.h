@@ -292,6 +292,19 @@ public:
 
 	void setOnPlanePrevious(bool on);
 
+	int getSpindashTimer();
+
+	void setSpindashTimer(int newTimer);
+
+	bool isChargingSpindash();
+
+	void setIsBall(bool newisBall);
+
+	//returns the speed sonic goes after releasing a spindash
+	float calculateSpindashSpeed(int spindashCharge);
+
+	bool isOnGround();
+
 private:
 	void adjustCamera();
 

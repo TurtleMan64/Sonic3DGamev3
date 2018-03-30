@@ -385,22 +385,22 @@
       <Filter>Source Files\entities</Filter>
     </ClCompile>
     <ClCompile Include="src\entities\Point.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\entities\SpeedHighway\SH_CranePlatform.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\entities\SpeedHighway\SH_CranePlatformPath.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\entities\SpeedHighway\SH_ElevatorPlatformPath.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\entities\SpeedHighway\SH_ElevatorPlatform.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\entities</Filter>
     </ClCompile>
     <ClCompile Include="src\entities\SoundEmitter.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\entities</Filter>
+    </ClCompile>
+    <ClCompile Include="src\entities\SpeedHighway\SH_CranePlatform.cpp">
+      <Filter>Source Files\entities\SpeedHighway</Filter>
+    </ClCompile>
+    <ClCompile Include="src\entities\SpeedHighway\SH_CranePlatformPath.cpp">
+      <Filter>Source Files\entities\SpeedHighway</Filter>
+    </ClCompile>
+    <ClCompile Include="src\entities\SpeedHighway\SH_ElevatorPlatformPath.cpp">
+      <Filter>Source Files\entities\SpeedHighway</Filter>
+    </ClCompile>
+    <ClCompile Include="src\entities\SpeedHighway\SH_ElevatorPlatform.cpp">
+      <Filter>Source Files\entities\SpeedHighway</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -692,23 +692,23 @@
     <ClInclude Include="src\entities\itemcapsule.h">
       <Filter>Source Files\entities</Filter>
     </ClInclude>
-    <ClInclude Include="src\entities\point.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\entities\SpeedHighway\shcraneplatform.h">
-      <Filter>Header Files</Filter>
+      <Filter>Source Files\entities\SpeedHighway</Filter>
     </ClInclude>
     <ClInclude Include="src\entities\SpeedHighway\shcraneplatformpath.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\entities\SpeedHighway\shelevatorplatformpath.h">
-      <Filter>Header Files</Filter>
+      <Filter>Source Files\entities\SpeedHighway</Filter>
     </ClInclude>
     <ClInclude Include="src\entities\SpeedHighway\shelevatorplatform.h">
-      <Filter>Header Files</Filter>
+      <Filter>Source Files\entities\SpeedHighway</Filter>
+    </ClInclude>
+    <ClInclude Include="src\entities\SpeedHighway\shelevatorplatformpath.h">
+      <Filter>Source Files\entities\SpeedHighway</Filter>
+    </ClInclude>
+    <ClInclude Include="src\entities\point.h">
+      <Filter>Source Files\entities</Filter>
     </ClInclude>
     <ClInclude Include="src\entities\soundemitter.h">
-      <Filter>Header Files</Filter>
+      <Filter>Source Files\entities</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -387,30 +387,23 @@
     <ClCompile Include="src\entities\ItemCapsule.cpp">
       <Filter>Source Files\entities</Filter>
     </ClCompile>
-<<<<<<< HEAD
     <ClCompile Include="src\entities\Point.cpp">
       <Filter>Source Files\entities</Filter>
     </ClCompile>
     <ClCompile Include="src\entities\SoundEmitter.cpp">
       <Filter>Source Files\entities</Filter>
     </ClCompile>
-=======
->>>>>>> upstream/master
     <ClCompile Include="src\entities\SpeedHighway\SH_CranePlatform.cpp">
       <Filter>Source Files\entities\SpeedHighway</Filter>
     </ClCompile>
     <ClCompile Include="src\entities\SpeedHighway\SH_CranePlatformPath.cpp">
       <Filter>Source Files\entities\SpeedHighway</Filter>
     </ClCompile>
-<<<<<<< HEAD
     <ClCompile Include="src\entities\SpeedHighway\SH_ElevatorPlatformPath.cpp">
       <Filter>Source Files\entities\SpeedHighway</Filter>
     </ClCompile>
     <ClCompile Include="src\entities\SpeedHighway\SH_ElevatorPlatform.cpp">
       <Filter>Source Files\entities\SpeedHighway</Filter>
-=======
-    <ClCompile Include="src\entities\Point.cpp">
-      <Filter>Source Files\entities</Filter>
     </ClCompile>
     <ClCompile Include="src\shadows\ShadowBox.cpp">
       <Filter>Source Files\shadows</Filter>
@@ -426,10 +419,6 @@
     </ClCompile>
     <ClCompile Include="src\shadows\ShadowShader.cpp">
       <Filter>Source Files\shadows</Filter>
-    </ClCompile>
-    <ClCompile Include="src\entities\SoundEmitter.cpp">
-      <Filter>Source Files\entities</Filter>
->>>>>>> upstream/master
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -727,7 +716,6 @@
     <ClInclude Include="src\entities\SpeedHighway\shcraneplatformpath.h">
       <Filter>Source Files\entities\SpeedHighway</Filter>
     </ClInclude>
-<<<<<<< HEAD
     <ClInclude Include="src\entities\SpeedHighway\shelevatorplatform.h">
       <Filter>Source Files\entities\SpeedHighway</Filter>
     </ClInclude>
@@ -736,7 +724,7 @@
     </ClInclude>
     <ClInclude Include="src\entities\point.h">
       <Filter>Source Files\entities</Filter>
-=======
+    </ClInclude>
     <ClInclude Include="src\shadows\shadowbox.h">
       <Filter>Source Files\shadows</Filter>
     </ClInclude>
@@ -751,7 +739,6 @@
     </ClInclude>
     <ClInclude Include="src\shadows\shadowshader.h">
       <Filter>Source Files\shadows</Filter>
->>>>>>> upstream/master
     </ClInclude>
     <ClInclude Include="src\entities\soundemitter.h">
       <Filter>Source Files\entities</Filter>

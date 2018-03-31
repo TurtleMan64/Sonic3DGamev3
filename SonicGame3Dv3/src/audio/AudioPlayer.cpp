@@ -23,32 +23,6 @@ ALuint AudioPlayer::bgmLoop;
 
 void AudioPlayer::loadSoundEffects()
 {
-<<<<<<< HEAD
-	AudioPlayer::buffersSE.push_back(AudioMaster::loadWAV("res/Audio/General/BigDestroy.wav"));      //0
-	AudioPlayer::buffersSE.push_back(AudioMaster::loadWAV("res/Audio/General/Dashpad.wav"));         //1
-	AudioPlayer::buffersSE.push_back(AudioMaster::loadWAV("res/Audio/General/Goal.wav"));            //2
-	AudioPlayer::buffersSE.push_back(AudioMaster::loadWAV("res/Audio/General/ItemCapsule.wav"));     //3
-	AudioPlayer::buffersSE.push_back(AudioMaster::loadWAV("res/Audio/General/Ring.wav"));            //4
-	AudioPlayer::buffersSE.push_back(AudioMaster::loadWAV("res/Audio/General/Splash.wav"));          //5
-	AudioPlayer::buffersSE.push_back(AudioMaster::loadWAV("res/Audio/General/Spring.wav"));          //6
-	AudioPlayer::buffersSE.push_back(AudioMaster::loadWAV("res/Audio/General/UnlockSomething.wav")); //7
-	AudioPlayer::buffersSE.push_back(AudioMaster::loadWAV("res/Audio/Sonic/Bounce.wav"));            //8
-	AudioPlayer::buffersSE.push_back(AudioMaster::loadWAV("res/Audio/Sonic/Death.wav"));             //9
-	AudioPlayer::buffersSE.push_back(AudioMaster::loadWAV("res/Audio/Sonic/GetHit.wav"));            //10
-	AudioPlayer::buffersSE.push_back(AudioMaster::loadWAV("res/Audio/Sonic/HomingAttack.wav"));      //11
-	AudioPlayer::buffersSE.push_back(AudioMaster::loadWAV("res/Audio/Sonic/Jump.wav"));              //12
-	AudioPlayer::buffersSE.push_back(AudioMaster::loadWAV("res/Audio/Sonic/Skid.wav"));              //13
-	AudioPlayer::buffersSE.push_back(AudioMaster::loadWAV("res/Audio/Sonic/SpindashCharge.wav"));    //14
-	AudioPlayer::buffersSE.push_back(AudioMaster::loadWAV("res/Audio/Sonic/SpindashRelease.wav"));   //15
-	AudioPlayer::buffersSE.push_back(AudioMaster::loadWAV("res/Audio/Sonic/StompInit.wav"));         //16
-	AudioPlayer::buffersSE.push_back(AudioMaster::loadWAV("res/Audio/Sonic/StompLand.wav"));         //17
-	AudioPlayer::buffersSE.push_back(AudioMaster::loadWAV("res/Audio/Sonic/CantStick.wav"));         //18
-	AudioPlayer::buffersSE.push_back(AudioMaster::loadWAV("res/Audio/General/DockBreak.wav"));       //19
-	AudioPlayer::buffersSE.push_back(AudioMaster::loadWAV("res/Audio/General/Seagull.wav"));         //20
-	AudioPlayer::buffersSE.push_back(AudioMaster::loadWAV("res/Audio/General/SpeedRamp.wav"));       //21
-	AudioPlayer::buffersSE.push_back(AudioMaster::loadWAV("res/Audio/SpeedHighway/CranePlatform.wav"));   //22
-	AudioPlayer::buffersSE.push_back(AudioMaster::loadWAV("res/Audio/SpeedHighway/ElevatorPlatform.wav"));//23
-=======
 	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/General/BigDestroy.ogg"));      //0
 	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/General/Dashpad.ogg"));         //1
 	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/General/Goal.ogg"));            //2
@@ -71,8 +45,8 @@ void AudioPlayer::loadSoundEffects()
 	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/General/DockBreak.ogg"));       //19
 	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/General/Seagull.ogg"));         //20
 	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/General/SpeedRamp.ogg"));       //21
-	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/General/CranePlatform.ogg"));   //22
->>>>>>> upstream/master
+	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/SpeedHighway/CranePlatform.ogg"));   //22
+	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/SpeedHighway/ElevatorPlatform.ogg"));//23
 }
 
 void AudioPlayer::loadBGM(char* fileName)

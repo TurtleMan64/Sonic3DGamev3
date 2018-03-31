@@ -61,11 +61,8 @@
 #include "../entities/SpeedHighway/shcraneplatform.h"
 #include "../entities/point.h"
 #include "../entities/SpeedHighway/shcraneplatformpath.h"
-<<<<<<< HEAD
 #include "../entities/SpeedHighway/shelevatorplatformpath.h"
 #include "../entities/SpeedHighway/shelevatorplatform.h"
-=======
->>>>>>> upstream/master
 #include "../entities/soundemitter.h"
 
 float toFloat(char* input);
@@ -945,7 +942,7 @@ void processLine(char** dat)
 			return;
 		}
 
-		case 59: //Speed Highway Elevator Platform
+		case 59: //Speed Highway Crane Platform
 		{
 			SH_CranePlatform::loadStaticModels();
 			SH_CranePlatform* cranePlat = new SH_CranePlatform(
@@ -981,8 +978,6 @@ void processLine(char** dat)
 			Main_addEntity(cranePlatPath);
 			return;
 		}
-
-<<<<<<< HEAD
 		case 62: //Path for the elevator platform
 		{
 			SH_ElevatorPlatformPath::loadStaticModels();
@@ -1011,15 +1006,6 @@ void processLine(char** dat)
 			return;
 		}
 
-		case 64: //sound emitter
-		{
-			SoundEmitter* soundemitter = new SoundEmitter(
-				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
-				toInt(dat[4])); //sound emitter id
-
-			Global::countNew++;
-			Main_addEntity(soundemitter);
-=======
 		case 64: //Sound emitter
 		{
 			SoundEmitter* emitter = new SoundEmitter(
@@ -1028,7 +1014,6 @@ void processLine(char** dat)
 			
 			Global::countNew++;
 			Main_addEntity(emitter);
->>>>>>> upstream/master
 			return;
 		}
 

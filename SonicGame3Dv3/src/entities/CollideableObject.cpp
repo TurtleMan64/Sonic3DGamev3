@@ -36,8 +36,4 @@ void CollideableObject::updateCollisionModel(CollisionModel* cmToUpdate)
 void CollideableObject::updateCollisionModelWithZ(CollisionModel* cmToUpdate)
 {
 	collideModelOriginal->transformModel(cmToUpdate, getPosition(), -getRotY(), getRotZ());
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> upstream/master

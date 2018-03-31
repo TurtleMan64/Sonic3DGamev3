@@ -75,19 +75,6 @@ SH_ElevatorPlatform::SH_ElevatorPlatform(float x, float y, float z, float rotY, 
 				}
 			}
 		}
-		else if (e->isSoundEmitter())
-		{
-			SoundEmitter* thisSoundEmitter = (SoundEmitter*)e;
-			for (int i = 0; i < 4; i++)
-			{
-				//printf("%d", thisSoundEmitter->getID());
-				if (thisSoundEmitter->getID() == soundEmitterID)
-				{
-					elevatorPlatSoundEmitter = thisSoundEmitter;
-					break;
-				}
-			}
-		}
 	}
 
 	for (int i = 0; i < 4; i++)
@@ -112,25 +99,16 @@ void SH_ElevatorPlatform::step()
 	if (abs(getX() - Global::gameCamera->getPosition()->x) > ENTITY_RENDER_DIST)
 	{
 		setVisible(false);
-		if (elevatorPlatSource != nullptr)
-		{
-			elevatorPlatSoundEmitter->stop();
-		}
 	}
 	else
 	{
 		if (abs(getZ() - Global::gameCamera->getPosition()->z) > ENTITY_RENDER_DIST)
 		{
 			setVisible(false);
-			if (elevatorPlatSource != nullptr)
-			{
-				elevatorPlatSoundEmitter->stop();
-			}
 		}
 		else
 		{
 			setVisible(true);
-			elevatorPlatSoundEmitter->play(23);
 		}
 	}
 

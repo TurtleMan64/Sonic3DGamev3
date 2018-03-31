@@ -22,6 +22,7 @@
 
 std::list<TexturedModel*> SH_CranePlatform::models;
 CollisionModel* SH_CranePlatform::cmOriginal;
+CollisionModel* SH_CranePlatform::cmOriginalBackWall;
 
 SH_CranePlatform::SH_CranePlatform()
 {
@@ -50,16 +51,14 @@ SH_CranePlatform::SH_CranePlatform(float x, float y, float z, float rotY, float 
 	collideModelOriginal = SH_CranePlatform::cmOriginal;
 	collideModelTransformed = loadCollisionModel("Models/SpeedHighway/", "CranePlatform");
 	collideModelTransformed2 = loadCollisionModel("Models/SpeedHighway/", "CranePlatform");
-
-	//for (Triangle3D* tri : collideModelTransformedBackWall->triangles)
-	{
-		//fprintf(stdout, "%f %f %f\n", tri->p1X, tri->p1Y, tri->p1Z);
-	}
+	collideModelTransformedBackWall = loadCollisionModel("Models/SpeedHighway/", "CranePlatform");
 
 	CollisionChecker::addCollideModel(collideModelTransformed);
 	CollisionChecker::addCollideModel(collideModelTransformed2);
+	CollisionChecker::addCollideModel(collideModelTransformedBackWall);
 
 	updateCollisionModel();
+	updateCollisionModel(cmOriginalBackWall, collideModelTransformedBackWall);
 
 	extern std::list<Entity*> gameEntitiesToAdd;
 
@@ -109,7 +108,7 @@ void SH_CranePlatform::step()
 		Global::gamePlayer->increasePosition(dx, dy, dz);
 		Global::gamePlayer->setCanMoveTimer(0);
 	}
-	updateCMJustPosition(collideModelTransformed2);
+	updateCMJustPosition(cmOriginal, collideModelTransformed2);
 
 	if (abs(getX() - Global::gameCamera->getPosition()->x) > ENTITY_RENDER_DIST)
 	{
@@ -133,9 +132,12 @@ void SH_CranePlatform::step()
 		canMove = false;
 	}
 
-	if (collideModelTransformed->playerIsOn)
+	if (collideModelTransformedBackWall->playerIsOn)
 	{
 		Global::gamePlayer->setCanMoveTimer(0);
+		Global::gamePlayer->increasePosition(moveDir.x * 2, moveDir.y * 2, moveDir.z * 2);
+		Global::gamePlayer->setGroundSpeed(moveDir.x*0.2f, moveDir.z*0.2f);
+		Global::gamePlayer->setDisplacement(moveDir.x, moveDir.y, moveDir.z);
 	}
 
 	if (!(position.x * point2GreaterX >= pointPos2.x * point2GreaterX &&
@@ -152,8 +154,8 @@ void SH_CranePlatform::step()
 		//move the player only if the player is standing on the platform
 		if (collideModelTransformed->playerIsOn)
 		{
-			//Global::gamePlayer->setPosition(Global::gamePlayer->getX() + moveDir.x, Global::gamePlayer->getY() + moveDir.y, Global::gamePlayer->getZ() + moveDir.z);
 			Global::gamePlayer->setDisplacement(moveDir.x, moveDir.y, moveDir.z);
+			//Global::gamePlayer->increasePosition(moveDir.x, moveDir.y, moveDir.z);
 		}
 
 		if (cranePlatSource == nullptr)
@@ -176,6 +178,7 @@ void SH_CranePlatform::step()
 	}
 	
 	updateCMJustPosition();
+	updateCMJustPosition(cmOriginalBackWall, collideModelTransformedBackWall);
 	updateTransformationMatrix();
 }
 
@@ -206,6 +209,11 @@ void SH_CranePlatform::loadStaticModels()
 	{
 		SH_CranePlatform::cmOriginal = loadCollisionModel("Models/SpeedHighway/", "CranePlatform");
 	}
+
+	if (SH_CranePlatform::cmOriginalBackWall == nullptr)
+	{
+		SH_CranePlatform::cmOriginalBackWall = loadCollisionModel("Models/SpeedHighway/", "CranePlatformBackWall");
+	}
 }
 
 void SH_CranePlatform::deleteStaticModels()
@@ -226,5 +234,13 @@ void SH_CranePlatform::deleteStaticModels()
 		delete SH_CranePlatform::cmOriginal;
 		Global::countDelete++;
 		SH_CranePlatform::cmOriginal = nullptr;
+	}
+
+	if (SH_CranePlatform::cmOriginalBackWall != nullptr)
+	{
+		SH_CranePlatform::cmOriginalBackWall->deleteMe();
+		delete SH_CranePlatform::cmOriginalBackWall;
+		Global::countDelete++;
+		SH_CranePlatform::cmOriginalBackWall = nullptr;
 	}
 }

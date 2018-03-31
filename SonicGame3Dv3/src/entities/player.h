@@ -305,6 +305,9 @@ public:
 
 	bool isOnGround();
 
+	//Returns the normal of the triangle that the player has collided with
+	Vector3f* getCurrNorm();
+
 private:
 	void adjustCamera();
 

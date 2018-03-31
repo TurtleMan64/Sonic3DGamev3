@@ -2785,3 +2785,8 @@ bool Player::isOnGround()
 {
 	return onPlane;
 }
+
+Vector3f* Player::getCurrNorm()
+{
+	return &currNorm;
+}

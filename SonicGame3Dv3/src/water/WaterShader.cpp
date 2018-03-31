@@ -5,6 +5,7 @@
 #include <string>
 #include <math.h>
 
+#include "../engineTester/main.h"
 #include "../toolbox/vector.h"
 #include "../toolbox/matrix.h"
 #include "../entities/camera.h"
@@ -15,8 +16,16 @@
 
 WaterShader::WaterShader()
 {
-	vertexShaderID = Loader_loadShader("res/Shaders/water/waterVertex.txt", GL_VERTEX_SHADER);
-	fragmentShaderID = Loader_loadShader("res/Shaders/water/waterFragment.txt", GL_FRAGMENT_SHADER);
+	if (Global::renderShadowsFar)
+	{
+		vertexShaderID = Loader_loadShader("res/Shaders/water/waterVertexWithShadows.txt", GL_VERTEX_SHADER);
+		fragmentShaderID = Loader_loadShader("res/Shaders/water/waterFragmentWithShadows.txt", GL_FRAGMENT_SHADER);
+	}
+	else
+	{
+		vertexShaderID = Loader_loadShader("res/Shaders/water/waterVertex.txt", GL_VERTEX_SHADER);
+		fragmentShaderID = Loader_loadShader("res/Shaders/water/waterFragment.txt", GL_FRAGMENT_SHADER);
+	}
 	programID = glCreateProgram();
 	glAttachShader(programID, vertexShaderID);
 	glAttachShader(programID, fragmentShaderID);
@@ -53,7 +62,7 @@ void WaterShader::connectTextureUnits()
 	loadInt(location_dudvMap, 2);
 	loadInt(location_normalMap, 3);
 	loadInt(location_depthMap, 4);
-	//loadInt(location_shadowMap, 5);
+	loadInt(location_shadowMap, 5);
 }
 
 void WaterShader::loadLight(Light* sun)
@@ -83,6 +92,11 @@ void WaterShader::loadViewMatrix(Camera* cam)
 void WaterShader::loadModelMatrix(Matrix4f* modelMatrix)
 {
 	loadMatrix(location_modelMatrix, modelMatrix);
+}
+
+void WaterShader::loadToShadowSpaceMatrix(Matrix4f* matrix)
+{
+	loadMatrix(location_toShadowMapSpace, matrix);
 }
 
 void WaterShader::bindAttributes()
@@ -116,8 +130,8 @@ void WaterShader::getAllUniformLocations()
 	location_lightColour       = getUniformLocation("lightColour");
 	location_lightPosition     = getUniformLocation("lightPosition");
 	location_depthMap          = getUniformLocation("depthMap");
-	//location_shadowMap         = getUniformLocation("shadowMap");
-	//location_toShadowMapSpace  = getUniformLocation("toShadowMapSpace");
+	location_shadowMap         = getUniformLocation("shadowMap");
+	location_toShadowMapSpace  = getUniformLocation("toShadowMapSpace");
 }
 
 int WaterShader::getUniformLocation(char* uniformName)

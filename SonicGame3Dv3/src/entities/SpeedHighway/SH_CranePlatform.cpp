@@ -51,6 +51,11 @@ SH_CranePlatform::SH_CranePlatform(float x, float y, float z, float rotY, float 
 	collideModelTransformed = loadCollisionModel("Models/SpeedHighway/", "CranePlatform");
 	collideModelTransformed2 = loadCollisionModel("Models/SpeedHighway/", "CranePlatform");
 
+	//for (Triangle3D* tri : collideModelTransformedBackWall->triangles)
+	{
+		//fprintf(stdout, "%f %f %f\n", tri->p1X, tri->p1Y, tri->p1Z);
+	}
+
 	CollisionChecker::addCollideModel(collideModelTransformed);
 	CollisionChecker::addCollideModel(collideModelTransformed2);
 
@@ -102,6 +107,7 @@ void SH_CranePlatform::step()
 		float dy = moveDir.y;
 		float dz = moveDir.z;
 		Global::gamePlayer->increasePosition(dx, dy, dz);
+		Global::gamePlayer->setCanMoveTimer(0);
 	}
 	updateCMJustPosition(collideModelTransformed2);
 
@@ -125,6 +131,11 @@ void SH_CranePlatform::step()
 	{
 		isMoving = true;
 		canMove = false;
+	}
+
+	if (collideModelTransformed->playerIsOn)
+	{
+		Global::gamePlayer->setCanMoveTimer(0);
 	}
 
 	if (!(position.x * point2GreaterX >= pointPos2.x * point2GreaterX &&

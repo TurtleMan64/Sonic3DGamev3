@@ -14,6 +14,7 @@
 #include "../water/waterrenderer.h"
 #include "../particles/particlemaster.h"
 #include "../shadows/shadowmapmasterrenderer.h"
+#include "../shadows2/shadowmapmasterrenderer2.h"
 
 #include <iostream>
 #include <list>
@@ -23,6 +24,7 @@
 ShaderProgram* shader;
 EntityRenderer* renderer;
 ShadowMapMasterRenderer* shadowMapRenderer;
+ShadowMapMasterRenderer2* shadowMapRenderer2;
 
 std::unordered_map<TexturedModel*, std::list<Entity*>> entitiesMap;
 std::unordered_map<TexturedModel*, std::list<Entity*>> entitiesMapPass2;
@@ -45,11 +47,25 @@ void Master_init()
 {
 	if (Global::renderShadowsFar)
 	{
-		shader = new ShaderProgram("res/Shaders/entity/vertexShaderShadowFar.txt", "res/Shaders/entity/fragmentShaderShadowFar.txt");
+		if (Global::renderShadowsClose)
+		{
+			shader = new ShaderProgram("res/Shaders/entity/vertexShaderShadowBoth.txt", "res/Shaders/entity/fragmentShaderShadowBoth.txt");
+		}
+		else
+		{
+			shader = new ShaderProgram("res/Shaders/entity/vertexShaderFar.txt", "res/Shaders/entity/fragmentShaderFar.txt");
+		}
 	}
 	else
 	{
-		shader = new ShaderProgram("res/Shaders/entity/vertexShader.txt", "res/Shaders/entity/fragmentShader.txt");
+		if (Global::renderShadowsClose)
+		{
+			shader = new ShaderProgram("res/Shaders/entity/vertexShaderShadowClose.txt", "res/Shaders/entity/fragmentShaderShadowClose.txt");
+		}
+		else
+		{
+			shader = new ShaderProgram("res/Shaders/entity/vertexShader.txt", "res/Shaders/entity/fragmentShader.txt");
+		}
 	}
 	Global::countNew++;
 	projectionMatrix = new Matrix4f;
@@ -58,10 +74,8 @@ void Master_init()
 	Master_makeProjectionMatrix();
 	Global::countNew++;
 
-	//if (Global::renderShadowsFar)
-	{
-		shadowMapRenderer = new ShadowMapMasterRenderer; Global::countNew++;
-	}
+	shadowMapRenderer = new ShadowMapMasterRenderer; Global::countNew++;
+	shadowMapRenderer2 = new ShadowMapMasterRenderer2; Global::countNew++;
 
 	Master_disableCulling();
 }
@@ -79,11 +93,11 @@ void Master_render(Camera* camera, float clipX, float clipY, float clipZ, float 
 	shader->loadViewMatrix(camera);
 	shader->connectTextureUnits();
 
-	renderer->renderNEW(&entitiesMap, shadowMapRenderer->getToShadowMapSpaceMatrix());
-	renderer->renderNEW(&entitiesMapPass2, shadowMapRenderer->getToShadowMapSpaceMatrix());
+	renderer->renderNEW(&entitiesMap, shadowMapRenderer->getToShadowMapSpaceMatrix(), shadowMapRenderer2->getToShadowMapSpaceMatrix());
+	renderer->renderNEW(&entitiesMapPass2, shadowMapRenderer->getToShadowMapSpaceMatrix(), shadowMapRenderer2->getToShadowMapSpaceMatrix());
 
 	prepareTransparentRender();
-	renderer->renderNEW(&entitiesTransparentMap, shadowMapRenderer->getToShadowMapSpaceMatrix());
+	renderer->renderNEW(&entitiesTransparentMap, shadowMapRenderer->getToShadowMapSpaceMatrix(), shadowMapRenderer2->getToShadowMapSpaceMatrix());
 
 	shader->stop();
 }
@@ -161,6 +175,9 @@ void prepare()
 
 	glActiveTexture(GL_TEXTURE5);
 	glBindTexture(GL_TEXTURE_2D, Master_getShadowMapTexture());
+
+	glActiveTexture(GL_TEXTURE6);
+	glBindTexture(GL_TEXTURE_2D, Master_getShadowMapTexture2());
 }
 
 void prepareTransparentRender()
@@ -184,6 +201,10 @@ void Master_cleanUp()
 
 	shadowMapRenderer->cleanUp();
 	delete shadowMapRenderer;
+	Global::countDelete++;
+
+	shadowMapRenderer2->cleanUp();
+	delete shadowMapRenderer2;
 	Global::countDelete++;
 }
 
@@ -267,12 +288,29 @@ GLuint Master_getShadowMapTexture()
 	return shadowMapRenderer->getShadowMap();
 }
 
+GLuint Master_getShadowMapTexture2()
+{
+	return shadowMapRenderer2->getShadowMap();
+}
+
 ShadowMapMasterRenderer* Master_getShadowRenderer()
 {
 	return shadowMapRenderer;
 }
 
+ShadowMapMasterRenderer2* Master_getShadowRenderer2()
+{
+	return shadowMapRenderer2;
+}
+
 void Master_renderShadowMaps(Light* sun)
 {
-	shadowMapRenderer->render(&entitiesMap, sun);
+	if (Global::renderShadowsFar)
+	{
+		shadowMapRenderer->render(&entitiesMap, sun);
+	}
+	if (Global::renderShadowsClose)
+	{
+		shadowMapRenderer2->render(&entitiesMap, sun);
+	}
 }

@@ -34,6 +34,8 @@ private:
 	int location_clipPlane;
 	int location_shadowMapFar;
 	int location_toShadowMapSpaceFar;
+	int location_shadowMapClose;
+	int location_toShadowMapSpaceClose;
 
 public:
 	ShaderProgram(char*, char*);
@@ -70,7 +72,9 @@ public:
 
 	void loadClipPlane(float clipX, float clipY, float clipZ, float clipW);
 
-	void loadToShadowSpaceMatrix(Matrix4f* matrix);
+	void loadToShadowSpaceMatrixFar(Matrix4f* matrix);
+
+	void loadToShadowSpaceMatrixClose(Matrix4f* matrix);
 
 	void connectTextureUnits();
 

@@ -119,6 +119,7 @@ newmtl HIGHWAY01_material_18
 	Ke 0.000000 0.000000 0.000000
 	Ni 0.02
 	d 1.000000
+	Tr 0.0
 	illum 2
 	map_Kd TexPC/st1_14.png
 
@@ -130,6 +131,7 @@ newmtl HIGHWAY01_material_19
 	Ke 0.000000 0.000000 0.000000
 	Ni 0.02
 	d 1.000000
+	Tr 0.0
 	illum 2
 	map_Kd TexPC/st1_14oda.png
 
@@ -460,6 +462,7 @@ newmtl HIGHWAY01_material_46
 	Ke 0.000000 0.000000 0.000000
 	Ni 0.02
 	d 1.000000
+	Tr 0.0
 	illum 2
 	map_Kd TexPC/st1_e1.png
 

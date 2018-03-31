@@ -9,7 +9,7 @@ Collision 8
 0.3 0.3 0.45
 0.0 0.0 0.0 #blue tint: 0.0 0.0 0.055
 0.0 0.0 0.0
-0.0001 1.25
+0.00000001 2
 63.0
 90 18
 1
@@ -18,10 +18,23 @@ res/Audio/BGM/highway1_intro.ogg
 res/Audio/BGM/highway1_loop.ogg
 
 # Start of objects
-#
+
+# Sky sphere
+7 Sky SkyCylinderModel6Repeat MTL_SpeedHighway 9 1
+
+# Player
 6 -911 5486 7
+
+# Old Goal, marked by a ring
 0 6749 705 10340
+
+# Goal
 9 13043 1120 12926
+
+# Kill Box
+34 -8776 1800 -6467 16860 1845 19300
+
+
 32 4851.5376 1755.5 6437.9 58.189 I swear this used to be an entrance to the city...
 32 10387 2455.5 11317.8 -103.6 I forgot how to get down from here.
 32 2443.74 3545 26 180 I saw you magically appear in that tunnel!

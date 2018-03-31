@@ -751,6 +751,11 @@ void Player::step()
 	}
 	Global::gameSkySphere->setPosition(getX(), skyYVal, getZ());
 
+	if (Global::levelID == LVL_SH)
+	{
+		Global::gameSkySphere->setPosition(getX(), 4550, getZ());
+	}
+
 	//std::fprintf(stdout, "ground speed = %f\n", sqrtf(xVelGround*xVelGround + zVelGround*zVelGround));
 	//std::fprintf(stdout, "air    speed = %f    %f\n\n", xVelAir, zVelAir);
 }

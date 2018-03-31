@@ -14,6 +14,10 @@ class SH_CranePlatform : public CollideableObject
 private:
 	static std::list<TexturedModel*> models;
 	static CollisionModel* cmOriginal;
+<<<<<<< HEAD
+=======
+	static CollisionModel* cmOriginalBackWall;
+>>>>>>> upstream/master
 
 	CollisionModel* collideModelTransformed2;
 	CollisionModel* collideModelTransformedBackWall;

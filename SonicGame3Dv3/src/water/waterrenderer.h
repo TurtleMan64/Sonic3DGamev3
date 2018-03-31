@@ -9,6 +9,7 @@ class Camera;
 class WaterTile;
 class Camera;
 class Light;
+class ShadowMapMasterRenderer;
 
 
 #include "../renderEngine/renderEngine.h"
@@ -26,6 +27,8 @@ private:
 	WaterShader* shader;
 	WaterFrameBuffers* fbos;
 
+	ShadowMapMasterRenderer* shadowMapRenderer;
+
 	void prepareRender(Camera* camera, Light* sun);
 
 	void unbind();
@@ -35,7 +38,7 @@ private:
 public:
 	static const float WAVE_SPEED;
 
-	WaterRenderer(WaterShader* shader, Matrix4f* projectionMatrix, WaterFrameBuffers* fbos);
+	WaterRenderer(WaterShader* shader, Matrix4f* projectionMatrix, WaterFrameBuffers* fbos, ShadowMapMasterRenderer* shadowMapRenderer);
 
 	void render(std::list<WaterTile*>* water, Camera* camera, Light* sun);
 

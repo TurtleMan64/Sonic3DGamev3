@@ -54,6 +54,7 @@ public:
 
 	void loadModelMatrix(Matrix4f* modelMatrix);
 
+	void loadToShadowSpaceMatrix(Matrix4f* matrix);
 
 protected:
 	void bindAttributes();

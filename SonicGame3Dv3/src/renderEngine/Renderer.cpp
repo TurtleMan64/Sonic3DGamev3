@@ -23,11 +23,16 @@ EntityRenderer::EntityRenderer(ShaderProgram* shader, Matrix4f* projectionMatrix
 	this->shader = shader;
 }
 
-void EntityRenderer::renderNEW(std::unordered_map<TexturedModel*, std::list<Entity*>>* entitiesMap, Matrix4f* toShadowSpaceFar)
+void EntityRenderer::renderNEW(std::unordered_map<TexturedModel*, std::list<Entity*>>* entitiesMap, Matrix4f* toShadowSpaceFar, Matrix4f* toShadowSpaceClose)
 {
 	if (Global::renderShadowsFar)
 	{
-		shader->loadToShadowSpaceMatrix(toShadowSpaceFar);
+		shader->loadToShadowSpaceMatrixFar(toShadowSpaceFar);
+	}
+
+	if (Global::renderShadowsClose)
+	{
+		shader->loadToShadowSpaceMatrixClose(toShadowSpaceClose);
 	}
 
 	clockTime = Global::gameClock / 60.0f;

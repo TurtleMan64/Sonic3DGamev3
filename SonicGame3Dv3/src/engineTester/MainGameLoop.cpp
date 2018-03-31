@@ -51,6 +51,7 @@
 #include "../particles/particleresources.h"
 #include "../toolbox/split.h"
 #include "../shadows/shadowmapmasterrenderer.h"
+#include "../shadows2/shadowmapmasterrenderer2.h"
 
 #include <windows.h>
 #include <tchar.h>
@@ -80,8 +81,6 @@ Light* Global::gameLightMoon = nullptr;
 WaterRenderer* Global::gameWaterRenderer = nullptr;
 WaterFrameBuffers* Global::gameWaterFBOs = nullptr;
 std::list<WaterTile*>* Global::gameWaterTiles = nullptr;
-
-//ShadowMapMasterRenderer* Global::gameShadowRenderer = nullptr;
 
 bool Global::debugDisplay = false;
 bool Global::frozen = false;
@@ -204,16 +203,11 @@ int main()
 	lightSun.getPosition()->z = 0;
 	lightMoon.getPosition()->y = -100000;
 
-	if (Global::renderShadowsFar)
-	{
-		//Global::gameShadowRenderer = new ShadowMapMasterRenderer; Global::countNew++;
-	}
-
 	if (Global::useHighQualityWater)
 	{
 		Global::gameWaterFBOs = new WaterFrameBuffers; Global::countNew++;
 		WaterShader* waterShader = new WaterShader; Global::countNew++;
-		Global::gameWaterRenderer = new WaterRenderer(waterShader, Master_getProjectionMatrix(), Global::gameWaterFBOs); Global::countNew++;
+		Global::gameWaterRenderer = new WaterRenderer(waterShader, Master_getProjectionMatrix(), Global::gameWaterFBOs, Master_getShadowRenderer()); Global::countNew++;
 		Global::gameWaterTiles = new std::list<WaterTile*>; Global::countNew++;
 		for (int r = -6; r < 6; r++) //-9 , 9
 		{
@@ -381,10 +375,7 @@ int main()
 		}
 		
 		Master_processEntity(&stage);
-		if (Global::renderShadowsFar)
-		{
-			Master_renderShadowMaps(&lightSun);
-		}
+		Master_renderShadowMaps(&lightSun);
 		Master_processEntity(&skySphere);
 
 

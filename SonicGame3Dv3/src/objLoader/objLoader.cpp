@@ -951,7 +951,7 @@ void processVertexOLD(char** vertexData,
 
 CollisionModel* loadCollisionModel(std::string filePath, std::string fileName)
 {
-	CollisionModel* collisionModel = new CollisionModel();
+	CollisionModel* collisionModel = new CollisionModel;
 	Global::countNew++;
 	std::list<FakeTexture*> fakeTextures;
 

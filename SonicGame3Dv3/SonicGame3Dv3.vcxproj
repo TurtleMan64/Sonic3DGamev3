@@ -115,6 +115,11 @@
     <ClCompile Include="src\renderEngine\SkyManager.cpp" />
     <ClCompile Include="src\shaders\ShaderProgram.cpp" />
     <ClCompile Include="src\shaders\StaticShader.cpp" />
+    <ClCompile Include="src\shadows2\ShadowBox2.cpp" />
+    <ClCompile Include="src\shadows2\ShadowFrameBuffer2.cpp" />
+    <ClCompile Include="src\shadows2\ShadowMapEntityRenderer2.cpp" />
+    <ClCompile Include="src\shadows2\ShadowMapMasterRenderer2.cpp" />
+    <ClCompile Include="src\shadows2\ShadowShader2.cpp" />
     <ClCompile Include="src\shadows\ShadowBox.cpp" />
     <ClCompile Include="src\shadows\ShadowFrameBuffer.cpp" />
     <ClCompile Include="src\shadows\ShadowMapEntityRenderer.cpp" />
@@ -224,6 +229,11 @@
     <ClInclude Include="src\renderEngine\renderEngine.h" />
     <ClInclude Include="src\renderEngine\skymanager.h" />
     <ClInclude Include="src\shaders\shaders.h" />
+    <ClInclude Include="src\shadows2\shadowbox2.h" />
+    <ClInclude Include="src\shadows2\shadowframebuffer2.h" />
+    <ClInclude Include="src\shadows2\shadowmapentityrenderer2.h" />
+    <ClInclude Include="src\shadows2\shadowmapmasterrenderer2.h" />
+    <ClInclude Include="src\shadows2\shadowshader2.h" />
     <ClInclude Include="src\shadows\shadowbox.h" />
     <ClInclude Include="src\shadows\shadowframebuffer.h" />
     <ClInclude Include="src\shadows\shadowmapentityrenderer.h" />

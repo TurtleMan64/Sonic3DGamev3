@@ -79,6 +79,9 @@
     <Filter Include="Source Files\shadows">
       <UniqueIdentifier>{5414a83a-1101-4db6-b9b9-0ef9efe5395a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\shadows2">
+      <UniqueIdentifier>{eb41df37-149c-49df-b0c6-49f9627b57c5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="glad.c">
@@ -420,6 +423,27 @@
     <ClCompile Include="src\shadows\ShadowShader.cpp">
       <Filter>Source Files\shadows</Filter>
     </ClCompile>
+<<<<<<< HEAD
+=======
+    <ClCompile Include="src\entities\SoundEmitter.cpp">
+      <Filter>Source Files\entities</Filter>
+    </ClCompile>
+    <ClCompile Include="src\shadows2\ShadowBox2.cpp">
+      <Filter>Source Files\shadows2</Filter>
+    </ClCompile>
+    <ClCompile Include="src\shadows2\ShadowFrameBuffer2.cpp">
+      <Filter>Source Files\shadows2</Filter>
+    </ClCompile>
+    <ClCompile Include="src\shadows2\ShadowMapEntityRenderer2.cpp">
+      <Filter>Source Files\shadows2</Filter>
+    </ClCompile>
+    <ClCompile Include="src\shadows2\ShadowMapMasterRenderer2.cpp">
+      <Filter>Source Files\shadows2</Filter>
+    </ClCompile>
+    <ClCompile Include="src\shadows2\ShadowShader2.cpp">
+      <Filter>Source Files\shadows2</Filter>
+    </ClCompile>
+>>>>>>> upstream/master
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\renderEngine\renderEngine.h">
@@ -742,6 +766,21 @@
     </ClInclude>
     <ClInclude Include="src\entities\soundemitter.h">
       <Filter>Source Files\entities</Filter>
+    </ClInclude>
+    <ClInclude Include="src\shadows2\shadowbox2.h">
+      <Filter>Source Files\shadows2</Filter>
+    </ClInclude>
+    <ClInclude Include="src\shadows2\shadowframebuffer2.h">
+      <Filter>Source Files\shadows2</Filter>
+    </ClInclude>
+    <ClInclude Include="src\shadows2\shadowmapentityrenderer2.h">
+      <Filter>Source Files\shadows2</Filter>
+    </ClInclude>
+    <ClInclude Include="src\shadows2\shadowmapmasterrenderer2.h">
+      <Filter>Source Files\shadows2</Filter>
+    </ClInclude>
+    <ClInclude Include="src\shadows2\shadowshader2.h">
+      <Filter>Source Files\shadows2</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -23,17 +23,17 @@ void CollideableObject::updateCollisionModelWithZ()
 	collideModelOriginal->transformModel(collideModelTransformed, getPosition(), -getRotY(), getRotZ());
 }
 
-void CollideableObject::updateCMJustPosition(CollisionModel* cmToUpdate)
+void CollideableObject::updateCMJustPosition(CollisionModel* cmBase, CollisionModel* cmToUpdate)
 {
-	collideModelOriginal->transformModel(cmToUpdate, getPosition());
+	cmBase->transformModel(cmToUpdate, getPosition());
 }
 
-void CollideableObject::updateCollisionModel(CollisionModel* cmToUpdate)
+void CollideableObject::updateCollisionModel(CollisionModel* cmBase, CollisionModel* cmToUpdate)
 {
-	collideModelOriginal->transformModel(cmToUpdate, getPosition(), -getRotY());
+	cmBase->transformModel(cmToUpdate, getPosition(), -getRotY());
 }
 
-void CollideableObject::updateCollisionModelWithZ(CollisionModel* cmToUpdate)
+void CollideableObject::updateCollisionModelWithZ(CollisionModel* cmBase, CollisionModel* cmToUpdate)
 {
-	collideModelOriginal->transformModel(cmToUpdate, getPosition(), -getRotY(), getRotZ());
+	cmBase->transformModel(cmToUpdate, getPosition(), -getRotY(), getRotZ());
 }

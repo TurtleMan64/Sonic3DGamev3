@@ -9,14 +9,15 @@
 #include "../toolbox/maths.h"
 #include "../toolbox/vector.h"
 #include "../toolbox/matrix.h"
+#include "../shadows/shadowmapmasterrenderer.h"
 
 const float WaterRenderer::WAVE_SPEED = 0.0002f;
 
-WaterRenderer::WaterRenderer(WaterShader* shader, Matrix4f* projectionMatrix, WaterFrameBuffers* fbos)
+WaterRenderer::WaterRenderer(WaterShader* shader, Matrix4f* projectionMatrix, WaterFrameBuffers* fbos, ShadowMapMasterRenderer* shadowMapRenderer)
 {
 	this->shader = shader;
 	this->fbos = fbos;
-	//this.shadowMapRenderer = shadowMapRenderer;
+	this->shadowMapRenderer = shadowMapRenderer;
 	dudvTexture = Loader_loadTexture("res/waterDUDV.png");
 	normalMap = Loader_loadTexture("res/normalMap.png");
 	shader->start();
@@ -30,7 +31,10 @@ void WaterRenderer::prepareRender(Camera* camera, Light* sun)
 {
 	shader->start();
 	shader->loadViewMatrix(camera);
-	//shader->loadToShadowSpaceMatrix(shadowMapRenderer.getToShadowMapSpaceMatrix());
+	if (Global::renderShadowsFar)
+	{
+		shader->loadToShadowSpaceMatrix(shadowMapRenderer->getToShadowMapSpaceMatrix());
+	}
 	moveFactor += WAVE_SPEED;
 	moveFactor = fmodf(moveFactor, 1);
 	shader->loadMoveFactor(moveFactor);

@@ -53,7 +53,7 @@ void Master_init()
 		}
 		else
 		{
-			shader = new ShaderProgram("res/Shaders/entity/vertexShaderFar.txt", "res/Shaders/entity/fragmentShaderFar.txt");
+			shader = new ShaderProgram("res/Shaders/entity/vertexShaderShadowFar.txt", "res/Shaders/entity/fragmentShaderShadowFar.txt");
 		}
 	}
 	else

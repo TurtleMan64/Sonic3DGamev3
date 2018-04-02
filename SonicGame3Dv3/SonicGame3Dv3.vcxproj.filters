@@ -423,8 +423,6 @@
     <ClCompile Include="src\shadows\ShadowShader.cpp">
       <Filter>Source Files\shadows</Filter>
     </ClCompile>
-<<<<<<< HEAD
-=======
     <ClCompile Include="src\entities\SoundEmitter.cpp">
       <Filter>Source Files\entities</Filter>
     </ClCompile>
@@ -443,7 +441,6 @@
     <ClCompile Include="src\shadows2\ShadowShader2.cpp">
       <Filter>Source Files\shadows2</Filter>
     </ClCompile>
->>>>>>> upstream/master
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\renderEngine\renderEngine.h">

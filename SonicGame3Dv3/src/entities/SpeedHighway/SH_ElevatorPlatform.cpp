@@ -16,12 +16,14 @@
 #include "../../audio/audioplayer.h"
 #include "../../audio/source.h"
 #include "../soundemitter.h"
+#include "../../animation/body.h"
 
 #include <list>
 #include <iostream>
 #include <algorithm>
 
-std::list<TexturedModel*> SH_ElevatorPlatform::models;
+std::list<TexturedModel*> SH_ElevatorPlatform::modelsPlatform;
+std::list<TexturedModel*> SH_ElevatorPlatform::modelsRotate;
 CollisionModel* SH_ElevatorPlatform::cmOriginal;
 
 SH_ElevatorPlatform::SH_ElevatorPlatform()
@@ -29,7 +31,7 @@ SH_ElevatorPlatform::SH_ElevatorPlatform()
 
 }
 
-SH_ElevatorPlatform::SH_ElevatorPlatform(float x, float y, float z, float rotY, float speed, int point1ID, int point2ID, int point3ID, int point4ID, float timeOffset, int soundEmitterID)
+SH_ElevatorPlatform::SH_ElevatorPlatform(float x, float y, float z, float rotY, float speed, int point1ID, int point2ID, int point3ID, int point4ID, float timeOffset)
 {
 	position.x = x;
 	position.y = y;
@@ -44,6 +46,12 @@ SH_ElevatorPlatform::SH_ElevatorPlatform(float x, float y, float z, float rotY, 
 	this->speed = speed;
 
 	this->timeOffset = timeOffset;
+
+	rotate = new Body(&SH_ElevatorPlatform::modelsRotate);
+	rotate->setVisible(true);
+	Global::countNew++;
+	Main_addEntity(rotate);
+	rotate->setPosition(&position);
 
 	pointIDs[0] = point1ID;
 	pointIDs[1] = point2ID;
@@ -89,7 +97,7 @@ SH_ElevatorPlatform::SH_ElevatorPlatform(float x, float y, float z, float rotY, 
 void SH_ElevatorPlatform::step()
 {
 	//second collision model so that if the player falls through the platform, they land on this, and don't actually fall through
-	updateCollisionModel(collideModelTransformed2);
+	updateCollisionModel(cmOriginal, collideModelTransformed2);
 
 	if (collideModelTransformed2->playerIsOn)
 	{
@@ -99,16 +107,22 @@ void SH_ElevatorPlatform::step()
 	if (abs(getX() - Global::gameCamera->getPosition()->x) > ENTITY_RENDER_DIST)
 	{
 		setVisible(false);
+		rotate->setVisible(false);
 	}
 	else
 	{
 		if (abs(getZ() - Global::gameCamera->getPosition()->z) > ENTITY_RENDER_DIST)
 		{
 			setVisible(false);
+			rotate->setVisible(false);
 		}
 		else
 		{
 			setVisible(true);
+			rotate->setVisible(true);
+			rotate->setPosition(&position);
+			rotate->increaseRotation(0, 0, -2.5f);
+			rotate->updateTransformationMatrix();
 		}
 	}
 
@@ -141,12 +155,12 @@ void SH_ElevatorPlatform::step()
 
 std::list<TexturedModel*>* SH_ElevatorPlatform::getModels()
 {
-	return &SH_ElevatorPlatform::models;
+	return &SH_ElevatorPlatform::modelsPlatform;
 }
 
 void SH_ElevatorPlatform::loadStaticModels()
 {
-	if (SH_ElevatorPlatform::models.size() > 0)
+	if (SH_ElevatorPlatform::modelsPlatform.size() > 0)
 	{
 		return;
 	}
@@ -156,9 +170,17 @@ void SH_ElevatorPlatform::loadStaticModels()
 	std::list<TexturedModel*>* newModels = loadObjModel("res/Models/SpeedHighway/", "ElevatorPlatform.obj");
 	for (auto newModel : (*newModels))
 	{
-		SH_ElevatorPlatform::models.push_back(newModel);
+		SH_ElevatorPlatform::modelsPlatform.push_back(newModel);
 	}
 	delete newModels;
+	Global::countDelete++;
+
+	std::list<TexturedModel*>* newModels2 = loadObjModel("res/Models/SpeedHighway/", "ElevatorPlatformRotate.obj");
+	for (auto newModel : (*newModels2))
+	{
+		SH_ElevatorPlatform::modelsRotate.push_back(newModel);
+	}
+	delete newModels2;
 	Global::countDelete++;
 
 
@@ -166,19 +188,29 @@ void SH_ElevatorPlatform::loadStaticModels()
 	{
 		SH_ElevatorPlatform::cmOriginal = loadCollisionModel("Models/SpeedHighway/", "ElevatorPlatform");
 	}
+
 }
 
 void SH_ElevatorPlatform::deleteStaticModels()
 {
 	std::fprintf(stdout, "Deleting SH_ElevatorPlatform static models...\n");
-	for (auto model : SH_ElevatorPlatform::models)
+	for (auto model : SH_ElevatorPlatform::modelsPlatform)
 	{
 		model->deleteMe();
 		delete model;
 		Global::countDelete++;
 	}
 
-	SH_ElevatorPlatform::models.clear();
+	SH_ElevatorPlatform::modelsPlatform.clear();
+
+	for (auto model : SH_ElevatorPlatform::modelsRotate)
+	{
+		model->deleteMe();
+		delete model;
+		Global::countDelete++;
+	}
+
+	SH_ElevatorPlatform::modelsRotate.clear();
 
 	if (SH_ElevatorPlatform::cmOriginal != nullptr)
 	{

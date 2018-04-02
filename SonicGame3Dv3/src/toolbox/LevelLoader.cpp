@@ -998,8 +998,7 @@ void processLine(char** dat)
 				toFloat(dat[4]),				                   //rotY
 				toFloat(dat[5]),				                   //speed
 				toInt(dat[6]), toInt(dat[7]), toInt(dat[8]), toInt(dat[9]), //point ids
-				toFloat(dat[10]), //timeOffset
-				toInt(dat[11])); //sound emitter id
+				toFloat(dat[10])); //timeOffset
 
 			Global::countNew++;
 			Main_addEntity(cranePlat);

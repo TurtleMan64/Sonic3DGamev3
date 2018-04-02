@@ -62,6 +62,7 @@
 #include "../entities/point.h"
 #include "../entities/SpeedHighway/shcraneplatformpath.h"
 #include "../entities/soundemitter.h"
+#include "../entities/SpeedHighway/shstagetransparent.h"
 
 float toFloat(char* input);
 int toInt(char* input);
@@ -988,6 +989,15 @@ void processLine(char** dat)
 			return;
 		}
 
+		case 65: //Speed Highway Transparent
+		{
+			SH_StageTransparent::loadStaticModels();
+			SH_StageTransparent* trans = new SH_StageTransparent();
+			Global::countNew++;
+			Main_addEntityPass2(trans);
+			return;
+		}
+
 		default:
 		{
 			return;
@@ -1047,4 +1057,5 @@ void freeAllStaticModels()
 	ItemCapsule::deleteStaticModels();
 	SH_CranePlatform::deleteStaticModels();
 	SH_CranePlatformPath::deleteStaticModels();
+	SH_StageTransparent::deleteStaticModels();
 }

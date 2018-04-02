@@ -91,8 +91,8 @@ private:
 	const float slowDownRate = 0.06f; //How fast you slowdown every frame when youre going faster than max speed 
 	const float slowDownAirRate = 0.025f;
 
-	const float spindashPower = 0.16f;    //0.15f
-	const float spindashFriction = 0.10f; //0.09f
+	const float spindashPower = 0.17f;    //0.15f
+	const float spindashFriction = 0.107f; //0.09f
 	int spindashDelay = 0;
 	int spindashTimer = 0;
 	const int spindashTimerMax = 30;
@@ -101,6 +101,14 @@ private:
 	int spindashRestartDelay = 0;
 	const int spindashRestartDelayMax = 8;
 	float storedSpindashSpeed = 0;
+
+	//Drop dash variables
+	bool isDropDashing = false;
+	float dropDashCharge = 0.0f;
+	const float dropDashChargeIncrease = 0.75f;
+	const float dropDashChargeDecrease = 0.02f;
+	const float dropDashChargeMax = 3.5f;
+	const float dropDashChargeMin = 0.5f;
 
 	int homingAttackTimer = -1; // -1 = can start a homing attack
 	const int homingAttackTimerMax = 10;
@@ -113,6 +121,7 @@ private:
 	int wallStickTimer = 0;
 
 	float animCount = 0;
+	float airSpinRotation = 0;//Rotation used when in the air
 
 	const float ballSlopeAccelFactor = 1.25f; //Additional accel on slopes from being in ball
 	const float wallThreshold = 0.3f; //How steep a slope must be to be considered a wall
@@ -367,5 +376,7 @@ private:
 	void createStompParticles();
 
 	void popOffWall();
+
+	void dropDash(float charge);
 };
 #endif

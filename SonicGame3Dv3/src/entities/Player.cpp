@@ -96,6 +96,8 @@ void Player::step()
 	canMoveTimer = std::max(0, canMoveTimer - 1);
 	deadTimer = std::max(-1, deadTimer - 1);
 
+	dropDashCharge = std::fmaxf(0, dropDashCharge-dropDashChargeDecrease);
+
 	if (deadTimer == 59)
 	{
 		Vector3f partVel(0, 0, 0);
@@ -163,8 +165,10 @@ void Player::step()
 		isJumping = false;
 		isBouncing = false;
 		isStomping = false;
+		isDropDashing = false;
 		justBounced = false;
 		homingAttackTimer = -1;
+		dropDashCharge = 0.0f;
 		float speed = sqrtf(xVelGround*xVelGround + zVelGround*zVelGround);
 		if (currNorm.y <= wallThreshold && speed < wallSpeedStickThreshold) //Arbitrary constants
 		{
@@ -284,17 +288,17 @@ void Player::step()
 	}
 	else //In the air
 	{
-		if (jumpInput && !previousJumpInput && homingAttackTimer == -1 && (isJumping || isBall || isBouncing))
+		if (jumpInput && !previousJumpInput && homingAttackTimer == -1 && (isJumping || isBall || isBouncing) && !isDropDashing)
 		{
 			homingAttack();
 		}
 
-		if (actionInput && !previousActionInput && (isJumping || isBall) && !isBouncing && homingAttackTimer == -1 && !isStomping)
+		if (actionInput && !previousActionInput && (isJumping || isBall) && !isBouncing && homingAttackTimer == -1 && !isStomping && !isDropDashing)
 		{
 			initiateBounce();
 		}
 
-		if (action2Input && !previousAction2Input && (isJumping || isBall) && !isBouncing && homingAttackTimer == -1 && !isStomping)
+		if (action2Input && !previousAction2Input && (isJumping || isBall) && !isBouncing && homingAttackTimer == -1 && !isStomping && !isDropDashing)
 		{
 			initiateStomp();
 		}
@@ -310,6 +314,15 @@ void Player::step()
 		if (hoverCount > 0)
 		{
 			yVel += hoverAccel;
+		}
+
+		//TODO: make new buttons for this
+		if (specialInput && !previousSpecialInput && (isJumping || isBall) && !isBouncing && homingAttackTimer == -1 && !isStomping)
+		{
+			isDropDashing = true;
+			dropDashCharge += dropDashChargeIncrease;
+			
+			AudioPlayer::play(14, getPosition());
 		}
 
 		//if (Keyboard.isKeyDown(Keyboard.KEY_J))
@@ -379,11 +392,16 @@ void Player::step()
 
 				if (canStick)
 				{
-					Vector3f speeds = calculatePlaneSpeed((float)((xVel + xVelAir + xDisp)), (float)((yVel + yDisp)), (float)(zVel + zVelAir + zDisp), &(triCol->normal));
+					Vector3f speeds = calculatePlaneSpeed(xVel + xVelAir + xDisp, yVel + yDisp, zVel + zVelAir + zDisp, &(triCol->normal));
 					xVelGround = speeds.x;
 					zVelGround = speeds.z;
 					isBall = false;
 					onPlane = true;
+
+					if (isDropDashing)
+					{
+						dropDash(dropDashCharge);
+					}
 				}
 				else
 				{
@@ -427,6 +445,7 @@ void Player::step()
 
 					canMoveTimer = 8;
 					isBall = true;
+					isDropDashing = false;
 					bonked = true;
 				}
 			}
@@ -1477,6 +1496,30 @@ void Player::calcSpindashAngle()
 	}
 }
 
+void Player::dropDash(float charge)
+{
+	float dx =  cosf(toRadians(getRotY()));
+	float dz = -sinf(toRadians(getRotY()));
+
+	charge = fminf(charge, dropDashChargeMax);
+	charge = fmaxf(charge, dropDashChargeMin);
+
+	float totalSpd = sqrtf(xVelGround*xVelGround + zVelGround*zVelGround);
+
+	float factor = std::fminf(1, 5.0f / totalSpd);
+
+	factor = std::fmaxf(0.35f, factor);
+
+	charge = charge*factor;
+
+	xVelGround += dx*charge;
+	zVelGround += dz*charge;
+
+	isBall = true;
+	isDropDashing = false;
+	AudioPlayer::play(15, getPosition());
+}
+
 void Player::spindash(int timer)
 {
 	float dx = cosf(spindashAngle);
@@ -2115,10 +2158,10 @@ void Player::animate()
 	}
 	else if (isBouncing)
 	{
-		if (myBody != nullptr) myBody->setBaseOrientation(&displayPos, 0, twistAngle, pitchAngle, -animCount * 60);
+		if (myBody != nullptr) myBody->setBaseOrientation(&displayPos, 0, twistAngle, pitchAngle, airSpinRotation);
 		if (Player::maniaSonic != nullptr)
 		{
-			Player::maniaSonic->setOrientation(dspX, dspY, dspZ, 0, twistAngle, pitchAngle, -animCount*60);
+			Player::maniaSonic->setOrientation(dspX, dspY, dspZ, 0, twistAngle, pitchAngle, airSpinRotation);
 			Player::maniaSonic->animate(12, 0);
 			setLimbsVisibility(false);
 		}
@@ -2132,24 +2175,38 @@ void Player::animate()
 		newPos = newPos + offset;
 		createSpindashTrails(&prevPos, &newPos, 5, 20);
 		updateLimbs(12, 0);
+		airSpinRotation += -60;
+	}
+	else if (isDropDashing)
+	{
+		if (myBody != nullptr) myBody->setBaseOrientation(&displayPos, 0, twistAngle, pitchAngle, airSpinRotation);
+		if (Player::maniaSonic != nullptr)
+		{
+			Player::maniaSonic->setOrientation(dspX, dspY, dspZ, 0, twistAngle, pitchAngle, airSpinRotation);
+			Player::maniaSonic->animate(12, 0);
+			setLimbsVisibility(false);
+		}
+		updateLimbs(12, 0);
+		airSpinRotation += -(1 + sqrt(dropDashCharge)*18);
 	}
 	else if (isJumping)
 	{
-		if (myBody != nullptr) myBody->setBaseOrientation(&displayPos, 0, twistAngle, pitchAngle, -animCount * 35);
+		if (myBody != nullptr) myBody->setBaseOrientation(&displayPos, 0, twistAngle, pitchAngle, airSpinRotation);
 		if (Player::maniaSonic != nullptr)
 		{
-			Player::maniaSonic->setOrientation(dspX, dspY, dspZ, 0, twistAngle, pitchAngle, -animCount*35);
+			Player::maniaSonic->setOrientation(dspX, dspY, dspZ, 0, twistAngle, pitchAngle, airSpinRotation);
 			Player::maniaSonic->animate(12, 0);
 			setLimbsVisibility(false);
 		}
 		updateLimbs(12, 0);
+		airSpinRotation += -35;
 	}
 	else if (isBall)
 	{
-		if (myBody != nullptr) myBody->setBaseOrientation(dspX, dspY, dspZ, diff, yawAngle, pitchAngle, -animCount * 70);
+		if (myBody != nullptr) myBody->setBaseOrientation(dspX, dspY, dspZ, diff, yawAngle, pitchAngle, airSpinRotation);
 		if (Player::maniaSonic != nullptr)
 		{
-			Player::maniaSonic->setOrientation(dspX, dspY, dspZ, diff, yawAngle, pitchAngle, -animCount*70);
+			Player::maniaSonic->setOrientation(dspX, dspY, dspZ, diff, yawAngle, pitchAngle, airSpinRotation);
 			Player::maniaSonic->animate(12, 0);
 			setLimbsVisibility(false);
 		}
@@ -2163,6 +2220,7 @@ void Player::animate()
 		newPos = newPos + offset;
 		createSpindashTrails(&prevPos, &newPos, 5, 20);
 		updateLimbs(12, 0);
+		airSpinRotation += -70;
 	}
 	else if (isSpindashing)
 	{
@@ -2234,6 +2292,7 @@ void Player::animate()
 				Player::maniaSonic->animate(1, time);
 			}
 		}
+		airSpinRotation = 0;
 	}
 	
 	float snowRadius = 110;

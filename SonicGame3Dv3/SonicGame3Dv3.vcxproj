@@ -71,6 +71,7 @@
     <ClCompile Include="src\entities\SoundEmitter.cpp" />
     <ClCompile Include="src\entities\SpeedHighway\SH_CranePlatform.cpp" />
     <ClCompile Include="src\entities\SpeedHighway\SH_CranePlatformPath.cpp" />
+    <ClCompile Include="src\entities\SpeedHighway\SH_StageTransparent.cpp" />
     <ClCompile Include="src\entities\SpeedHighway\SH_TurnAsi.cpp" />
     <ClCompile Include="src\entities\SpeedRamp.cpp" />
     <ClCompile Include="src\entities\Spikeball.cpp" />
@@ -188,6 +189,7 @@
     <ClInclude Include="src\entities\soundemitter.h" />
     <ClInclude Include="src\entities\SpeedHighway\shcraneplatform.h" />
     <ClInclude Include="src\entities\SpeedHighway\shcraneplatformpath.h" />
+    <ClInclude Include="src\entities\SpeedHighway\shstagetransparent.h" />
     <ClInclude Include="src\entities\SpeedHighway\shturnasi.h" />
     <ClInclude Include="src\entities\speedramp.h" />
     <ClInclude Include="src\entities\spikeball.h" />

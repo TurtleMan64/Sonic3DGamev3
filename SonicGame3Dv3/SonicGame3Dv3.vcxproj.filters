@@ -432,6 +432,9 @@
     <ClCompile Include="src\shadows2\ShadowShader2.cpp">
       <Filter>Source Files\shadows2</Filter>
     </ClCompile>
+    <ClCompile Include="src\entities\SpeedHighway\SH_StageTransparent.cpp">
+      <Filter>Source Files\entities\SpeedHighway</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\renderEngine\renderEngine.h">
@@ -763,6 +766,9 @@
     </ClInclude>
     <ClInclude Include="src\shadows2\shadowshader2.h">
       <Filter>Source Files\shadows2</Filter>
+    </ClInclude>
+    <ClInclude Include="src\entities\SpeedHighway\shstagetransparent.h">
+      <Filter>Source Files\entities\SpeedHighway</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

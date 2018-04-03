@@ -63,6 +63,7 @@
 #include "../entities/SpeedHighway/shcraneplatformpath.h"
 #include "../entities/soundemitter.h"
 #include "../entities/SpeedHighway/shstagetransparent.h"
+#include "../entities/SpeedHighway/shlamppost.h"
 
 float toFloat(char* input);
 int toInt(char* input);
@@ -457,8 +458,8 @@ void processLine(char** dat)
 			Dashpad::loadStaticModels();
 			Dashpad* dashpad = new Dashpad(
 				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
-				toFloat(dat[4]), toFloat(dat[5]),                  //rotation
-				toFloat(dat[6]), toFloat(dat[7]), toInt(dat[8]));  //power, camYaw, time
+				toFloat(dat[4]), toFloat(dat[5]), toFloat(dat[6]), //rotation
+				toFloat(dat[7]), toFloat(dat[8]), toInt(dat[9]));  //power, camYaw, time
 			Global::countNew++;
 			Main_addEntity(dashpad);
 			return;
@@ -998,6 +999,17 @@ void processLine(char** dat)
 			return;
 		}
 
+		case 66: //Speed Highway Lamppost
+		{
+			SH_Lamppost::loadStaticModels();
+			SH_Lamppost* post = new SH_Lamppost(
+				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]),
+				toFloat(dat[4]), toFloat(dat[5]), toFloat(dat[6]));
+			Global::countNew++;
+			Main_addEntityPass2(post);
+			return;
+		}
+
 		default:
 		{
 			return;
@@ -1058,4 +1070,5 @@ void freeAllStaticModels()
 	SH_CranePlatform::deleteStaticModels();
 	SH_CranePlatformPath::deleteStaticModels();
 	SH_StageTransparent::deleteStaticModels();
+	SH_Lamppost::deleteStaticModels();
 }

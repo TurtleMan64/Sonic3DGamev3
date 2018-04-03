@@ -70,6 +70,8 @@ public:
 
 	void updateTransformationMatrix();
 
+	void updateTransformationMatrixSADX();
+
 	virtual std::string getName();
 
 	virtual bool canLightdashOn();

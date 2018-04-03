@@ -23,12 +23,12 @@ Dashpad::Dashpad()
 
 }
 
-Dashpad::Dashpad(float x, float y, float z, float rotY, float rotZ, float myPower, float myCamYawTarget, int time)
+Dashpad::Dashpad(float x, float y, float z, float rotX, float rotY, float rotZ, float myPower, float myCamYawTarget, int time)
 {
 	this->position.x = x;
 	this->position.y = y;
 	this->position.z = z;
-	this->rotX = 0;
+	this->rotX = rotX;
 	this->rotY = rotY;
 	this->rotZ = rotZ;
 	this->hitRadius = 6.5f;
@@ -38,7 +38,7 @@ Dashpad::Dashpad(float x, float y, float z, float rotY, float rotZ, float myPowe
 	this->scale = 1;
 	this->visible = true;
 	this->camYawTarget = myCamYawTarget;
-	updateTransformationMatrix();
+	updateTransformationMatrixSADX();
 }
 
 void Dashpad::step()

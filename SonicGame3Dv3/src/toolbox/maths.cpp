@@ -21,12 +21,11 @@ float toDegrees(float radians)
 /*
 ** Blank Matrix4f should have already been created. This function does not allocate any memory to matrix.
 */
-
 void createTransformationMatrix(Matrix4f* matrix, Vector3f* translation, float rx, float ry, float rz, float rs, float scale)
 {
 	matrix->setIdentity();
 	matrix->translate(translation);
-	Vector3f vec(0, 0, 0);
+	Vector3f vec;
 
 	vec.set(0, 1, 0);
 	matrix->rotate(toRadians(ry), &vec);
@@ -39,6 +38,26 @@ void createTransformationMatrix(Matrix4f* matrix, Vector3f* translation, float r
 
 	vec.set(0, 0, 1);
 	matrix->rotate(toRadians(rs), &vec);
+
+	vec.set(scale, scale, scale);
+	matrix->scale(&vec);
+}
+
+//Based on how sadx calculates rotations
+void createTransformationMatrixSADX(Matrix4f* matrix, Vector3f* translation, float rx, float ry, float rz, float scale)
+{
+	matrix->setIdentity();
+	matrix->translate(translation);
+	Vector3f vec;
+
+	vec.set(0, 0, 1);
+	matrix->rotate(toRadians(rz), &vec);
+
+	vec.set(1, 0, 0);
+	matrix->rotate(toRadians(rx), &vec);
+
+	vec.set(0, 1, 0);
+	matrix->rotate(toRadians(ry), &vec);
 
 	vec.set(scale, scale, scale);
 	matrix->scale(&vec);

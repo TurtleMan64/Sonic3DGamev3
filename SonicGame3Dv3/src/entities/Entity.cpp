@@ -170,6 +170,11 @@ void Entity::updateTransformationMatrix()
 	createTransformationMatrix(&transformationMatrix, &position, rotX, rotY, rotZ, rotSpin, scale);
 }
 
+void Entity::updateTransformationMatrixSADX()
+{
+	createTransformationMatrixSADX(&transformationMatrix, &position, rotX, rotY, rotZ, scale);
+}
+
 Matrix4f* Entity::getTransformationMatrix()
 {
 	return &transformationMatrix;

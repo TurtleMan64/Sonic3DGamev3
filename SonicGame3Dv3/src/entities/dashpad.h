@@ -20,7 +20,7 @@ private:
 
 public:
 	Dashpad();
-	Dashpad(float x, float y, float z, float rotY, float rotZ, float myPower, float myCamYawTarget, int time);
+	Dashpad(float x, float y, float z, float rotX, float rotY, float rotZ, float myPower, float myCamYawTarget, int time);
 
 	void step();
 

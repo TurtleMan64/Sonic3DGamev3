@@ -19,6 +19,9 @@ float toDegrees(float);
 */
 void createTransformationMatrix(Matrix4f*, Vector3f*, float, float, float, float, float);
 
+//Based on how sadx calculates rotations
+void createTransformationMatrixSADX(Matrix4f*, Vector3f*, float, float, float, float);
+
 void createViewMatrix(Matrix4f*, Camera*);
 
 //Returns the difference between the two angles

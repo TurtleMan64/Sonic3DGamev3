@@ -71,8 +71,11 @@
     <ClCompile Include="src\entities\SoundEmitter.cpp" />
     <ClCompile Include="src\entities\SpeedHighway\SH_CranePlatform.cpp" />
     <ClCompile Include="src\entities\SpeedHighway\SH_CranePlatformPath.cpp" />
+<<<<<<< HEAD
     <ClCompile Include="src\entities\SpeedHighway\SH_ElevatorPlatform.cpp" />
     <ClCompile Include="src\entities\SpeedHighway\SH_ElevatorPlatformPath.cpp" />
+=======
+>>>>>>> upstream/master
     <ClCompile Include="src\entities\SpeedHighway\SH_Lamppost.cpp" />
     <ClCompile Include="src\entities\SpeedHighway\SH_StageTransparent.cpp" />
     <ClCompile Include="src\entities\SpeedHighway\SH_TurnAsi.cpp" />
@@ -192,8 +195,11 @@
     <ClInclude Include="src\entities\soundemitter.h" />
     <ClInclude Include="src\entities\SpeedHighway\shcraneplatform.h" />
     <ClInclude Include="src\entities\SpeedHighway\shcraneplatformpath.h" />
+<<<<<<< HEAD
     <ClInclude Include="src\entities\SpeedHighway\shelevatorplatform.h" />
     <ClInclude Include="src\entities\SpeedHighway\shelevatorplatformpath.h" />	
+=======
+>>>>>>> upstream/master
     <ClInclude Include="src\entities\SpeedHighway\shlamppost.h" />
     <ClInclude Include="src\entities\SpeedHighway\shstagetransparent.h" />
     <ClInclude Include="src\entities\SpeedHighway\shturnasi.h" />

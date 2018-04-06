@@ -1098,8 +1098,11 @@ void freeAllStaticModels()
 	ItemCapsule::deleteStaticModels();
 	SH_CranePlatform::deleteStaticModels();
 	SH_CranePlatformPath::deleteStaticModels();
+<<<<<<< HEAD
 	SH_ElevatorPlatformPath::deleteStaticModels();
 	SH_ElevatorPlatform::deleteStaticModels();
+=======
+>>>>>>> upstream/master
 	SH_StageTransparent::deleteStaticModels();
 	SH_Lamppost::deleteStaticModels();
 }

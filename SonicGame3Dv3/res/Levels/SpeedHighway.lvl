@@ -37,6 +37,10 @@ res/Audio/BGM/highway1_loop.ogg
 #Transparent Stage
 65
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> upstream/master
 32 4851.5376 1755.5 6437.9 58.189 I swear this used to be an entrance to the city...
 32 10387 2455.5 11317.8 -103.6 I forgot how to get down from here.
 32 2443.74 3545 26 180 I saw you magically appear in that tunnel!
@@ -53,6 +57,7 @@ res/Audio/BGM/highway1_loop.ogg
 59 4435    2658    5639.7 0 2 2 3    #actual crane platform 2
 61 4408.6 2639.8 5642 90			 #crane platform path 2 
 
+<<<<<<< HEAD
 60 6377.75 3310 2364 4				 		 	#elevator platform 1 path point 1
 60 6179.91 3310 2364 5						 	#elevator platform 1 path point 2
 60 6179.91 3618 2364 6				 		 	#elevator platform 1 path point 3
@@ -79,6 +84,8 @@ res/Audio/BGM/highway1_loop.ogg
 63 5347.80 3266 2744 270 0.8 8 9 10 11 3.33 1 	#elevator platform 2 6
 62 5343.408 3317.4 2645.426 90		  		 	#elevator platform 2 path
 
+=======
+>>>>>>> upstream/master
 ######## Generated Objects ########
 
 66 4246.214 3937.572 65.786 11.483517 356.41757 322.83517

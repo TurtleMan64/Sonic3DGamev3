@@ -64,6 +64,8 @@
 #include "../entities/SpeedHighway/shelevatorplatformpath.h"
 #include "../entities/SpeedHighway/shelevatorplatform.h"
 #include "../entities/soundemitter.h"
+#include "../entities/SpeedHighway/shstagetransparent.h"
+#include "../entities/SpeedHighway/shlamppost.h"
 
 float toFloat(char* input);
 int toInt(char* input);
@@ -458,8 +460,8 @@ void processLine(char** dat)
 			Dashpad::loadStaticModels();
 			Dashpad* dashpad = new Dashpad(
 				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
-				toFloat(dat[4]), toFloat(dat[5]),                  //rotation
-				toFloat(dat[6]), toFloat(dat[7]), toInt(dat[8]));  //power, camYaw, time
+				toFloat(dat[4]), toFloat(dat[5]), toFloat(dat[6]), //rotation
+				toFloat(dat[7]), toFloat(dat[8]), toInt(dat[9]));  //power, camYaw, time
 			Global::countNew++;
 			Main_addEntity(dashpad);
 			return;
@@ -942,7 +944,7 @@ void processLine(char** dat)
 			return;
 		}
 
-		case 59: //Speed Highway Crane Platform
+		case 59: //Speed Highway Elevator Platform
 		{
 			SH_CranePlatform::loadStaticModels();
 			SH_CranePlatform* cranePlat = new SH_CranePlatform(
@@ -978,6 +980,7 @@ void processLine(char** dat)
 			Main_addEntity(cranePlatPath);
 			return;
 		}
+		
 		case 62: //Path for the elevator platform
 		{
 			SH_ElevatorPlatformPath::loadStaticModels();
@@ -1004,7 +1007,7 @@ void processLine(char** dat)
 			Main_addEntity(cranePlat);
 			return;
 		}
-
+		
 		case 64: //Sound emitter
 		{
 			SoundEmitter* emitter = new SoundEmitter(
@@ -1013,6 +1016,26 @@ void processLine(char** dat)
 			
 			Global::countNew++;
 			Main_addEntity(emitter);
+			return;
+		}
+
+		case 65: //Speed Highway Transparent
+		{
+			SH_StageTransparent::loadStaticModels();
+			SH_StageTransparent* trans = new SH_StageTransparent();
+			Global::countNew++;
+			Main_addEntityPass2(trans);
+			return;
+		}
+
+		case 66: //Speed Highway Lamppost
+		{
+			SH_Lamppost::loadStaticModels();
+			SH_Lamppost* post = new SH_Lamppost(
+				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]),
+				toFloat(dat[4]), toFloat(dat[5]), toFloat(dat[6]));
+			Global::countNew++;
+			Main_addEntityPass2(post);
 			return;
 		}
 
@@ -1077,4 +1100,6 @@ void freeAllStaticModels()
 	SH_CranePlatformPath::deleteStaticModels();
 	SH_ElevatorPlatformPath::deleteStaticModels();
 	SH_ElevatorPlatform::deleteStaticModels();
+	SH_StageTransparent::deleteStaticModels();
+	SH_Lamppost::deleteStaticModels();
 }

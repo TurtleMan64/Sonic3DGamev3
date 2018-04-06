@@ -9,7 +9,7 @@ newmtl Texture_Middle
 	Ke 0.000000 0.000000 0.000000
 	Ni 0.00
 	d 0.000000
-	glow 1.0
+	glow 0.0
 	illum 2
 	map_Kd SpeedHighway.png
 	
@@ -21,7 +21,7 @@ newmtl Texture_Top
 	Ke 0.000000 0.000000 0.000000
 	Ni 0.00
 	d 0.000000
-	glow 1.0
+	glow 0.0
 	illum 2
 	map_Kd SpeedHighwayTop.png
 
@@ -33,6 +33,6 @@ newmtl Texture_Bottom
 	Ke 0.000000 0.000000 0.000000
 	Ni 0.00
 	d 0.000000
-	glow 1.0
+	glow 0.0
 	illum 2
 	map_Kd SpeedHighwayBottom.png

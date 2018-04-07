@@ -61,6 +61,8 @@
 #include "../entities/SpeedHighway/shcraneplatform.h"
 #include "../entities/point.h"
 #include "../entities/SpeedHighway/shcraneplatformpath.h"
+#include "../entities/SpeedHighway/shelevatorplatformpath.h"
+#include "../entities/SpeedHighway/shelevatorplatform.h"
 #include "../entities/soundemitter.h"
 #include "../entities/SpeedHighway/shstagetransparent.h"
 #include "../entities/SpeedHighway/shlamppost.h"
@@ -978,7 +980,34 @@ void processLine(char** dat)
 			Main_addEntity(cranePlatPath);
 			return;
 		}
+		
+		case 62: //Path for the elevator platform
+		{
+			SH_ElevatorPlatformPath::loadStaticModels();
+			SH_ElevatorPlatformPath* elevatorPlatPath = new SH_ElevatorPlatformPath(
+				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
+				toFloat(dat[4])); //rotation
 
+			Global::countNew++;
+			Main_addEntity(elevatorPlatPath);
+			return;
+		}
+
+		case 63: //Speed Highway Elevator Platform
+		{
+			SH_ElevatorPlatform::loadStaticModels();
+			SH_ElevatorPlatform* cranePlat = new SH_ElevatorPlatform(
+				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
+				toFloat(dat[4]),				                   //rotY
+				toFloat(dat[5]),				                   //speed
+				toInt(dat[6]), toInt(dat[7]), toInt(dat[8]), toInt(dat[9]), //point ids
+				toFloat(dat[10])); //timeOffset
+
+			Global::countNew++;
+			Main_addEntity(cranePlat);
+			return;
+		}
+		
 		case 64: //Sound emitter
 		{
 			SoundEmitter* emitter = new SoundEmitter(
@@ -1069,6 +1098,11 @@ void freeAllStaticModels()
 	ItemCapsule::deleteStaticModels();
 	SH_CranePlatform::deleteStaticModels();
 	SH_CranePlatformPath::deleteStaticModels();
+<<<<<<< HEAD
+	SH_ElevatorPlatformPath::deleteStaticModels();
+	SH_ElevatorPlatform::deleteStaticModels();
+=======
+>>>>>>> upstream/master
 	SH_StageTransparent::deleteStaticModels();
 	SH_Lamppost::deleteStaticModels();
 }

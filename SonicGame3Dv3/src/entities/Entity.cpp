@@ -199,3 +199,8 @@ bool Entity::isPoint()
 {
 	return false;
 }
+
+bool Entity::isSoundEmitter()
+{
+	return false;
+}

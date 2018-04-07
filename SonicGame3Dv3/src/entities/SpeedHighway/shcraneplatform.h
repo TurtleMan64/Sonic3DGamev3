@@ -14,24 +14,32 @@ class SH_CranePlatform : public CollideableObject
 private:
 	static std::list<TexturedModel*> models;
 	static CollisionModel* cmOriginal;
+<<<<<<< HEAD
+
+	CollisionModel* collideModelTransformed2;
+	CollisionModel* collideModelTransformedBackWall;
+	static CollisionModel* cmOriginalBackWall;
+=======
 	static CollisionModel* cmOriginalBackWall;
 
 	CollisionModel* collideModelTransformed2;
 	CollisionModel* collideModelTransformedBackWall;
+>>>>>>> upstream/master
 
 	Vector3f pointPos1;
 	Vector3f pointPos2;
 
 	float speed;
-	Vector3f moveDir;
-	Vector3f newPos;
 	bool isMoving;
 	bool canMove;
 	Source* cranePlatSource = nullptr;
 
-	int point2GreaterX;
-	int point2GreaterY;
-	int point2GreaterZ;
+	Vector3f oldPos;
+
+	Vector3f pointDifference;
+	float pointLength;
+
+	float timeOffset;
 
 public:
 	SH_CranePlatform();

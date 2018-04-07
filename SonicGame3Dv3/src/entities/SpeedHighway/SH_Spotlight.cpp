@@ -8,8 +8,10 @@
 #include "../../engineTester/main.h"
 #include "../../animation/body.h"
 #include "../camera.h"
+#include "../../toolbox/maths.h"
 
 #include <list>
+#include <cmath>
 
 std::list<TexturedModel*> SH_Spotlight::models;
 std::list<TexturedModel*> SH_Spotlight::modelsLight;
@@ -23,8 +25,10 @@ SH_Spotlight::SH_Spotlight(float x, float y, float z,
 	rotX = xRot;
 	rotY = yRot;
 	rotZ = zRot;
+	initRotZ = zRot;
 	scale = 1;
 	visible = true;
+	timer = rand();
 	updateTransformationMatrixSADX();
 
 	light = new Body(&SH_Spotlight::modelsLight);
@@ -57,6 +61,12 @@ void SH_Spotlight::step()
 		{
 			setVisible(true);
 			light->setVisible(true);
+			timer++;
+
+			rotZ = initRotZ+10*sinf(timer/40.0f);
+			light->setRotZ(rotZ);
+			updateTransformationMatrixSADX();
+			light->updateTransformationMatrixSADX();
 		}
 	}
 }

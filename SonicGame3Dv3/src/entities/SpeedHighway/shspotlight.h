@@ -16,6 +16,9 @@ private:
 
 	Body* light;
 
+	float initRotZ;
+	int timer;
+
 public:
 	SH_Spotlight(float x, float y, float z,
 				float xRot, float yRot, float zRot);

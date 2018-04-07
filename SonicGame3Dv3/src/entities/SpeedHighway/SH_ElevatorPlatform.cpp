@@ -52,6 +52,7 @@ SH_ElevatorPlatform::SH_ElevatorPlatform(float x, float y, float z, float rotY, 
 	Global::countNew++;
 	Main_addEntity(rotate);
 	rotate->setPosition(&position);
+	rotate->setRotY(rotY);
 
 	pointIDs[0] = point1ID;
 	pointIDs[1] = point2ID;
@@ -133,7 +134,7 @@ void SH_ElevatorPlatform::step()
 	*/
 
 	timeOffset += speed / pointLengths[(int) timeOffset];
-	timeOffset = fmod(timeOffset, 4.0f);
+	timeOffset = fmodf(timeOffset, 4.0f);
 	
 	oldPos = position;
 

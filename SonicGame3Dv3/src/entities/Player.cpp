@@ -2129,6 +2129,14 @@ void Player::animate()
 		if (myBody != nullptr) myBody->setBaseOrientation(&displayPos, diff, yawAngle, pitchAngle, 0);
 		updateLimbs(15, 25);
 	}
+	else if (isLightdashing)
+	{
+		float h = sqrtf(xVelAir*xVelAir + zVelAir*zVelAir);
+		float zr = toDegrees(atan2f(yVel, h));
+		if (myBody != nullptr) myBody->setBaseOrientation(&displayPos, 0, getRotY(), zr, 0);
+		if (Player::maniaSonic != nullptr) { Player::maniaSonic->setVisible(false); }
+		updateLimbs(18, 100);
+	}
 	else if (isStomping)
 	{
 		float h = sqrtf(xVelAir*xVelAir + zVelAir*zVelAir);

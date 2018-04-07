@@ -98,8 +98,8 @@ void AnimationResources::createAnimations()
 	animsHumanBody[13].addKeyframe(100.0f, 2.0f, -0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f);
 
 	//dab animation
-	animsHumanBody[14].addKeyframe(0.0f,   3.04f,   0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f);
-	animsHumanBody[14].addKeyframe(100.0f, 2.5385f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f);
+	animsHumanBody[14].addKeyframe(0.0f,   3.54f,   0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f);
+	animsHumanBody[14].addKeyframe(100.0f, 3.0385f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f);
 
 	//swim animation
 	animsHumanBody[15].addKeyframe(0.0f, 0.0f, -0.0f, 0.0f, 0.0f, 0.0f, 0.0f, -90.0f, 1.0f);

@@ -23,15 +23,16 @@ private:
 	Vector3f pointPos2;
 
 	float speed;
-	Vector3f moveDir;
-	Vector3f newPos;
 	bool isMoving;
 	bool canMove;
 	Source* cranePlatSource = nullptr;
 
-	int point2GreaterX;
-	int point2GreaterY;
-	int point2GreaterZ;
+	Vector3f oldPos;
+
+	Vector3f pointDifference;
+	float pointLength;
+
+	float timeOffset;
 
 public:
 	SH_CranePlatform();

@@ -37,7 +37,6 @@ void Stage::loadModels(char* folder, char* name)
 {
 	if (Stage::models.size() > 0)
 	{
-		//std::fprintf(stdout, "stage models gone astray");
 		return;
 	}
 
@@ -49,26 +48,14 @@ void Stage::loadModels(char* folder, char* name)
 	std::string filename = name;
 	filename = filename + ".obj";
 
-	std::list<TexturedModel*>* newModels = loadObjModel(path.c_str(), filename.c_str());
-	for (auto newModel : (*newModels))
-	{
-		Stage::models.push_back(newModel);
-	}
-	delete newModels;
-	Global::countDelete++;
+	loadObjModel(&Stage::models, path.c_str(), filename.c_str());
 }
 
 void Stage::deleteModels()
 {
 	std::fprintf(stdout, "Deleting stage models...\n");
-	for (auto model : Stage::models)
-	{
-		model->deleteMe(); //delete opengl ids
-		delete model;
-		Global::countDelete++;
-	}
 
-	Stage::models.clear();
+	Entity::deleteModels(&Stage::models);
 }
 
 std::string Stage::getName()

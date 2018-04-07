@@ -32,6 +32,8 @@ public:
 	static ParticleTexture* textureBlackFadeOut;
 	static ParticleTexture* textureTear1;
 	static ParticleTexture* textureTear2;
+	static ParticleTexture* textureWhiteFadeOutAndIn;
+	static ParticleTexture* textureBlackFadeOutAndIn;
 
 	static void loadParticles();
 };

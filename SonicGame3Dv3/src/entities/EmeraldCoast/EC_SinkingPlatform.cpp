@@ -98,14 +98,7 @@ void EC_SinkingPlatform::loadStaticModels()
 
 	std::fprintf(stdout, "Loading EC_SinkingPlatform static models...\n");
 
-	std::list<TexturedModel*>* newModels = loadObjModel("res/Models/EmeraldCoast/", "SinkingPlatform.obj");
-	for (auto newModel : (*newModels))
-	{
-		EC_SinkingPlatform::models.push_back(newModel);
-	}
-	delete newModels;
-	Global::countDelete++;
-
+	loadObjModel(&EC_SinkingPlatform::models, "res/Models/EmeraldCoast/", "SinkingPlatform.obj");
 
 	if (EC_SinkingPlatform::cmOriginal == nullptr)
 	{
@@ -116,20 +109,7 @@ void EC_SinkingPlatform::loadStaticModels()
 void EC_SinkingPlatform::deleteStaticModels()
 {
 	std::fprintf(stdout, "Deleting EC_SinkingPlatform static models...\n");
-	for (auto model : EC_SinkingPlatform::models)
-	{
-		model->deleteMe();
-		delete model;
-		Global::countDelete++;
-	}
 
-	EC_SinkingPlatform::models.clear();
-
-	if (EC_SinkingPlatform::cmOriginal != nullptr)
-	{
-		EC_SinkingPlatform::cmOriginal->deleteMe();
-		delete EC_SinkingPlatform::cmOriginal;
-		Global::countDelete++;
-		EC_SinkingPlatform::cmOriginal = nullptr;
-	}
+	Entity::deleteModels(&EC_SinkingPlatform::models);
+	Entity::deleteCollisionModel(&EC_SinkingPlatform::cmOriginal);
 }

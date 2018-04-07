@@ -78,14 +78,7 @@ void EC_Hut::loadStaticModels()
 
 	std::fprintf(stdout, "Loading EC_Hut static models...\n");
 
-	std::list<TexturedModel*>* newModels = loadObjModel("res/Models/EmeraldCoast/", "Hut.obj");
-	for (auto newModel : (*newModels))
-	{
-		EC_Hut::models.push_back(newModel);
-	}
-	delete newModels;
-	Global::countDelete++;
-
+	loadObjModel(&EC_Hut::models, "res/Models/EmeraldCoast/", "Hut.obj");
 
 	if (EC_Hut::cmOriginal == nullptr)
 	{
@@ -96,21 +89,8 @@ void EC_Hut::loadStaticModels()
 void EC_Hut::deleteStaticModels()
 {
 	std::fprintf(stdout, "Deleting EC_Hut static models...\n");
-	for (auto model : EC_Hut::models)
-	{
-		model->deleteMe();
-		delete model;
-		Global::countDelete++;
-	}
 
-	EC_Hut::models.clear();
-
-	if (EC_Hut::cmOriginal != nullptr)
-	{
-		EC_Hut::cmOriginal->deleteMe();
-		delete EC_Hut::cmOriginal;
-		Global::countDelete++;
-		EC_Hut::cmOriginal = nullptr;
-	}
+	Entity::deleteModels(&EC_Hut::models);
+	Entity::deleteCollisionModel(&EC_Hut::cmOriginal);
 }
 

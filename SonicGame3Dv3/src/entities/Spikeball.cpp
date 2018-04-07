@@ -84,24 +84,12 @@ void Spikeball::loadStaticModels()
 
 	std::fprintf(stdout, "Loading Spikeball static models...\n");
 
-	std::list<TexturedModel*>* newModels = loadObjModel("res/Models/Spikeball/", "Spikeball.obj");
-	for (auto newModel : (*newModels))
-	{
-		Spikeball::models.push_back(newModel);
-	}
-	delete newModels;
-	Global::countDelete++;
+	loadObjModel(&Spikeball::models, "res/Models/Spikeball/", "Spikeball.obj");
 }
 
 void Spikeball::deleteStaticModels()
 {
 	std::fprintf(stdout, "Deleting Spikeball static models...\n");
-	for (auto model : Spikeball::models)
-	{
-		model->deleteMe();
-		delete model;
-		Global::countDelete++;
-	}
 
-	Spikeball::models.clear();
+	Entity::deleteModels(&Spikeball::models);
 }

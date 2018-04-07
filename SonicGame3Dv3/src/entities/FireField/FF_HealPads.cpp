@@ -62,14 +62,7 @@ void FF_HealPads::loadStaticModels()
 
 	std::fprintf(stdout, "Loading FF_HealPads static models...\n");
 
-	std::list<TexturedModel*>* newModels = loadObjModel("res/Models/FireField/", "HealPanel.obj");
-	for (auto newModel : (*newModels))
-	{
-		FF_HealPads::models.push_back(newModel);
-	}
-	delete newModels;
-	Global::countDelete++;
-
+	loadObjModel(&FF_HealPads::models, "res/Models/FireField/", "HealPanel.obj");
 
 	if (FF_HealPads::cmOriginal == nullptr)
 	{
@@ -80,20 +73,7 @@ void FF_HealPads::loadStaticModels()
 void FF_HealPads::deleteStaticModels()
 {
 	std::fprintf(stdout, "Deleting FF_HealPads static models...\n");
-	for (auto model : FF_HealPads::models)
-	{
-		model->deleteMe();
-		delete model;
-		Global::countDelete++;
-	}
 
-	FF_HealPads::models.clear();
-
-	if (FF_HealPads::cmOriginal != nullptr)
-	{
-		FF_HealPads::cmOriginal->deleteMe();
-		delete FF_HealPads::cmOriginal;
-		Global::countDelete++;
-		FF_HealPads::cmOriginal = nullptr;
-	}
+	Entity::deleteModels(&FF_HealPads::models);
+	Entity::deleteCollisionModel(&FF_HealPads::cmOriginal);
 }

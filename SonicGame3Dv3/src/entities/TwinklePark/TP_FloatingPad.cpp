@@ -79,14 +79,7 @@ void TP_FloatingPad::loadStaticModels()
 
 	std::fprintf(stdout, "Loading TP_FloatingPad static models...\n");
 
-	std::list<TexturedModel*>* newModels = loadObjModel("res/Models/TwinklePark/", "FloatingPad.obj");
-	for (auto newModel : (*newModels))
-	{
-		TP_FloatingPad::models.push_back(newModel);
-	}
-	delete newModels;
-	Global::countDelete++;
-
+	loadObjModel(&TP_FloatingPad::models, "res/Models/TwinklePark/", "FloatingPad.obj");
 
 	if (TP_FloatingPad::cmOriginal == nullptr)
 	{
@@ -97,20 +90,7 @@ void TP_FloatingPad::loadStaticModels()
 void TP_FloatingPad::deleteStaticModels()
 {
 	std::fprintf(stdout, "Deleting TP_FloatingPad static models...\n");
-	for (auto model : TP_FloatingPad::models)
-	{
-		model->deleteMe();
-		delete model;
-		Global::countDelete++;
-	}
 
-	TP_FloatingPad::models.clear();
-
-	if (TP_FloatingPad::cmOriginal != nullptr)
-	{
-		TP_FloatingPad::cmOriginal->deleteMe();
-		delete TP_FloatingPad::cmOriginal;
-		Global::countDelete++;
-		TP_FloatingPad::cmOriginal = nullptr;
-	}
+	Entity::deleteModels(&TP_FloatingPad::models);
+	Entity::deleteCollisionModel(&TP_FloatingPad::cmOriginal);
 }

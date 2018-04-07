@@ -98,26 +98,14 @@ void Spring::loadStaticModels()
 
 	std::fprintf(stdout, "Loading spring static models...\n");
 
-	std::list<TexturedModel*>* newModels = loadObjModel("res/Models/Spring/", "Spring.obj");
-	for (auto newModel : (*newModels))
-	{
-		Spring::models.push_back(newModel);
-	}
-	delete newModels;
-	Global::countDelete++;
+	loadObjModel(&Spring::models, "res/Models/Spring/", "Spring.obj");
 }
 
 void Spring::deleteStaticModels()
 {
 	std::fprintf(stdout, "Deleting spring static models...\n");
-	for (auto model : Spring::models)
-	{
-		model->deleteMe();
-		delete model;
-		Global::countDelete++;
-	}
 
-	Spring::models.clear();
+	Entity::deleteModels(&Spring::models);
 }
 
 std::string Spring::getName()

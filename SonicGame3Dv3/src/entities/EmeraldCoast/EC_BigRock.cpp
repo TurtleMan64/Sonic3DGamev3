@@ -57,7 +57,7 @@ void EC_BigRock::step()
 	}
 
 	//rotY++;
-	updateTransformationMatrix();
+	//updateTransformationMatrix();
 
 	//fprintf(stdout, "%f\n", rotY - baseYrot);
 }
@@ -83,42 +83,14 @@ void EC_BigRock::loadStaticModels()
 
 	std::fprintf(stdout, "Loading EC_BigRock static models...\n");
 
-	std::list<TexturedModel*>* newModels1 = loadObjModel("res/Models/EmeraldCoast/", "BigRockA.obj");
-	for (auto newModel : (*newModels1))
-	{
-		EC_BigRock::modelsA.push_back(newModel);
-	}
-	delete newModels1;
-	Global::countDelete++;
-
-
-
-	std::list<TexturedModel*>* newModels2 = loadObjModel("res/Models/EmeraldCoast/", "BigRockB.obj");
-	for (auto newModel : (*newModels2))
-	{
-		EC_BigRock::modelsB.push_back(newModel);
-	}
-	delete newModels2;
-	Global::countDelete++;
+	loadObjModel(&EC_BigRock::modelsA, "res/Models/EmeraldCoast/", "BigRockA.obj");
+	loadObjModel(&EC_BigRock::modelsB, "res/Models/EmeraldCoast/", "BigRockB.obj");
 }
 
 void EC_BigRock::deleteStaticModels()
 {
 	std::fprintf(stdout, "Deleting EC_BigRock static models...\n");
 
-	for (auto model : EC_BigRock::modelsA)
-	{
-		model->deleteMe();
-		delete model;
-		Global::countDelete++;
-	}
-	EC_BigRock::modelsA.clear();
-
-	for (auto model : EC_BigRock::modelsB)
-	{
-		model->deleteMe();
-		delete model;
-		Global::countDelete++;
-	}
-	EC_BigRock::modelsB.clear();
+	Entity::deleteModels(&EC_BigRock::modelsA);
+	Entity::deleteModels(&EC_BigRock::modelsB);
 }

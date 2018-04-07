@@ -97,9 +97,9 @@ void AnimationResources::createAnimations()
 	animsHumanBody[13].addKeyframe(0.0f, 2.0f, -0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f);
 	animsHumanBody[13].addKeyframe(100.0f, 2.0f, -0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f);
 
-	//pose animation
-	animsHumanBody[14].addKeyframe(0.0f, 3.0f, -0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f);
-	animsHumanBody[14].addKeyframe(100.0f, 3.0f, -0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f);
+	//dab animation
+	animsHumanBody[14].addKeyframe(0.0f,   3.04f,   0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f);
+	animsHumanBody[14].addKeyframe(100.0f, 2.5385f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f);
 
 	//swim animation
 	animsHumanBody[15].addKeyframe(0.0f, 0.0f, -0.0f, 0.0f, 0.0f, 0.0f, 0.0f, -90.0f, 1.0f);
@@ -150,8 +150,8 @@ void AnimationResources::createAnimations()
 	animsHumanHead[12].addKeyframe(100.0f, 0.0f, -0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 5.0f, 1.0f);
 	animsHumanHead[13].addKeyframe(0.0f, 0.0f, -0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 45.0f, 1.0f);
 	animsHumanHead[13].addKeyframe(100.0f, 0.0f, -0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 45.0f, 1.0f);
-	animsHumanHead[14].addKeyframe(0.0f, 0.0f, -0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 45.0f, 1.0f);
-	animsHumanHead[14].addKeyframe(100.0f, 0.0f, -0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 45.0f, 1.0f);
+	animsHumanHead[14].addKeyframe(0.0f,   0.0f, 0.0f, 0.0f,  0.0f,  0.0f, 0.0f, 0.0f,   1.0f);
+	animsHumanHead[14].addKeyframe(100.0f, 0.0f, 0.0f, 0.0f, -34.1f, 0.0f, 0.0f, -20.9f, 1.0f);
 	animsHumanHead[15].addKeyframe(0.0f, 0.0f, -0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 70.0f, 1.0f);
 	animsHumanHead[15].addKeyframe(100.0f, 0.0f, -0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 70.0f, 1.0f);
 	animsHumanHead[16].addKeyframe(0.0f, 0.0f, -0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 70.0f, 1.0f);
@@ -190,8 +190,8 @@ void AnimationResources::createAnimations()
 	animsHumanLeftHumerus[12].addKeyframe(100.0f, 0.0f, -0.0f, 0.0f, 45.0f, 0.0f, 0.0f, 35.0f, 1.0f);
 	animsHumanLeftHumerus[13].addKeyframe(0.0f, 0.0f, -0.0f, 0.0f, 5.0f, 0.0f, 0.0f, -130.0f, 1.0f);
 	animsHumanLeftHumerus[13].addKeyframe(100.0f, 0.0f, -0.0f, 0.0f, 5.0f, 0.0f, 0.0f, -130.0f, 1.0f);
-	animsHumanLeftHumerus[14].addKeyframe(0.0f, 0.0f, -0.0f, 0.0f, 5.0f, 0.0f, 0.0f, -130.0f, 1.0f);
-	animsHumanLeftHumerus[14].addKeyframe(100.0f, 0.0f, -0.0f, 0.0f, 5.0f, 0.0f, 0.0f, -130.0f, 1.0f);
+	animsHumanLeftHumerus[14].addKeyframe(0,   0, 0, 0, 110, 0, 0, -25, 1);
+	animsHumanLeftHumerus[14].addKeyframe(100, 0, 0, 0, 100, 0, 0, 25.9f,  1);
 	animsHumanLeftHumerus[15].addKeyframe(0.0f, 0.0f, -0.0f, 0.0f, -30.0f, 0.0f, 0.0f, -90.0f, 1.0f);
 	animsHumanLeftHumerus[15].addKeyframe(100.0f, 0.0f, -0.0f, 0.0f, -30.0f, 0.0f, 0.0f, -90.0f, 1.0f);
 	animsHumanLeftHumerus[16].addKeyframe(0.0f, 0.0f, -0.0f, 0.0f, -150.0f, 0.0f, 0.0f, -90.0f, 1.0f);
@@ -230,8 +230,8 @@ void AnimationResources::createAnimations()
 	animsHumanLeftForearm[12].addKeyframe(100.0f, 0.0f, -0.0f, 0.0f, -20.0f, 0.0f, 0.0f, 20.0f, 1.0f);
 	animsHumanLeftForearm[13].addKeyframe(0.0f, 0.0f, -0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f);
 	animsHumanLeftForearm[13].addKeyframe(100.0f, 0.0f, -0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f);
-	animsHumanLeftForearm[14].addKeyframe(0.0f, 0.0f, -0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f);
-	animsHumanLeftForearm[14].addKeyframe(100.0f, 0.0f, -0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f);
+	animsHumanLeftForearm[14].addKeyframe(0,   0, 0, 0, -120, 0, 0, -25,   1);
+	animsHumanLeftForearm[14].addKeyframe(100, 0, 0, 0, 0,    0, 0, -2.9f, 1);
 	animsHumanLeftForearm[15].addKeyframe(0.0f, 0.0f, -0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f);
 	animsHumanLeftForearm[15].addKeyframe(100.0f, 0.0f, -0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f);
 	animsHumanLeftForearm[16].addKeyframe(0.0f, 0.0f, -0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f);
@@ -267,8 +267,8 @@ void AnimationResources::createAnimations()
 	animsHumanLeftHand[12].addKeyframe(100.0f, 0.0f, -0.0f, 0.0f, 10.0f, 0.0f, 0.0f, 30.0f, 1.0f);
 	animsHumanLeftHand[13].addKeyframe(0.0f, 0.0f, -0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f);
 	animsHumanLeftHand[13].addKeyframe(100.0f, 0.0f, -0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f);
-	animsHumanLeftHand[14].addKeyframe(0.0f, 0.0f, -0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f);
-	animsHumanLeftHand[14].addKeyframe(100.0f, 0.0f, -0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f);
+	animsHumanLeftHand[14].addKeyframe(0,   0, 0, 0, 0, 0, 0, 0, 1);
+	animsHumanLeftHand[14].addKeyframe(100, 0, 0, 0, 0, 0, 0, 0, 1);
 	animsHumanLeftHand[15].addKeyframe(0.0f, 0.0f, -0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f);
 	animsHumanLeftHand[15].addKeyframe(100.0f, 0.0f, -0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f);
 	animsHumanLeftHand[16].addKeyframe(0.0f, 0.0f, -0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f);
@@ -307,8 +307,8 @@ void AnimationResources::createAnimations()
 	animsHumanRightHumerus[12].addKeyframe(100.0f, 0.0f, -0.0f, 0.0f, -45.0f, 0.0f, 0.0f, 35.0f, 1.0f);
 	animsHumanRightHumerus[13].addKeyframe(0.0f, 0.0f, -0.0f, 0.0f, -5.0f, 0.0f, 0.0f, -130.0f, 1.0f);
 	animsHumanRightHumerus[13].addKeyframe(100.0f, 0.0f, -0.0f, 0.0f, -5.0f, 0.0f, 0.0f, -130.0f, 1.0f);
-	animsHumanRightHumerus[14].addKeyframe(0.0f, 0.0f, -0.0f, 0.0f, -5.0f, 0.0f, 0.0f, -130.0f, 1.0f);
-	animsHumanRightHumerus[14].addKeyframe(100.0f, 0.0f, -0.0f, 0.0f, -5.0f, 0.0f, 0.0f, -130.0f, 1.0f);
+	animsHumanRightHumerus[14].addKeyframe(0,   0, 0, 0, -110,   0, 0, -25,  1);
+	animsHumanRightHumerus[14].addKeyframe(100, 0, 0, 0, -65.3f, 0, 0, 4.5f, 1);
 	animsHumanRightHumerus[15].addKeyframe(0.0f, 0.0f, -0.0f, 0.0f, 30.0f, 0.0f, 0.0f, -90.0f, 1.0f);
 	animsHumanRightHumerus[15].addKeyframe(100.0f, 0.0f, -0.0f, 0.0f, 30.0f, 0.0f, 0.0f, -90.0f, 1.0f);
 	animsHumanRightHumerus[16].addKeyframe(0.0f, 0.0f, -0.0f, 0.0f, 150.0f, 0.0f, 0.0f, -90.0f, 1.0f);
@@ -347,8 +347,8 @@ void AnimationResources::createAnimations()
 	animsHumanRightForearm[12].addKeyframe(100.0f, 0.0f, -0.0f, 0.0f, 20.0f, 0.0f, 0.0f, 20.0f, 1.0f);
 	animsHumanRightForearm[13].addKeyframe(0.0f, 0.0f, -0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f);
 	animsHumanRightForearm[13].addKeyframe(100.0f, 0.0f, -0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f);
-	animsHumanRightForearm[14].addKeyframe(0.0f, 0.0f, -0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f);
-	animsHumanRightForearm[14].addKeyframe(100.0f, 0.0f, -0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f);
+	animsHumanRightForearm[14].addKeyframe(0,   0, 0, 0, 120,   0, 0, -25,   1);
+	animsHumanRightForearm[14].addKeyframe(100, 0, 0, 0, 88.5f, 0, 0, 20.8f, 1);
 	animsHumanRightForearm[15].addKeyframe(0.0f, 0.0f, -0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f);
 	animsHumanRightForearm[15].addKeyframe(100.0f, 0.0f, -0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f);
 	animsHumanRightForearm[16].addKeyframe(0.0f, 0.0f, -0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f);
@@ -384,8 +384,8 @@ void AnimationResources::createAnimations()
 	animsHumanRightHand[12].addKeyframe(100.0f, 0.0f, -0.0f, 0.0f, 10.0f, 0.0f, 0.0f, 30.0f, 1.0f);
 	animsHumanRightHand[13].addKeyframe(0.0f, 0.0f, -0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f);
 	animsHumanRightHand[13].addKeyframe(100.0f, 0.0f, -0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f);
-	animsHumanRightHand[14].addKeyframe(0.0f, 0.0f, -0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f);
-	animsHumanRightHand[14].addKeyframe(100.0f, 0.0f, -0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f);
+	animsHumanRightHand[14].addKeyframe(0,   0, 0, 0, 0, 0, 0, 0, 1);
+	animsHumanRightHand[14].addKeyframe(100, 0, 0, 0, 0, 0, 0, 0, 1);
 	animsHumanRightHand[15].addKeyframe(0.0f, 0.0f, -0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f);
 	animsHumanRightHand[15].addKeyframe(100.0f, 0.0f, -0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f);
 	animsHumanRightHand[16].addKeyframe(0.0f, 0.0f, -0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f);
@@ -442,8 +442,8 @@ void AnimationResources::createAnimations()
 	animsHumanLeftThigh[12].addKeyframe(100.0f, 0.0f, -0.0f, 0.0f, 20.0f, 0.0f, 0.0f, 0.0f, 1.0f);
 	animsHumanLeftThigh[13].addKeyframe(0.0f, 0.0f, -0.0f, 0.0f, 0.0f, 0.0f, 0.0f, -130.0f, 1.0f);
 	animsHumanLeftThigh[13].addKeyframe(100.0f, 0.0f, -0.0f, 0.0f, 0.0f, 0.0f, 0.0f, -130.0f, 1.0f);
-	animsHumanLeftThigh[14].addKeyframe(0.0f, 0.0f, -0.0f, 0.0f, 0.0f, 0.0f, 0.0f, -130.0f, 1.0f);
-	animsHumanLeftThigh[14].addKeyframe(100.0f, 0.0f, -0.0f, 0.0f, 0.0f, 0.0f, 0.0f, -130.0f, 1.0f);
+	animsHumanLeftThigh[14].addKeyframe(0,   0, 0, 0, 50, 0, 0, -55,    1);
+	animsHumanLeftThigh[14].addKeyframe(100, 0, 0, 0, 50, 0, 0, -37.2f, 1);
 	animsHumanLeftThigh[15].addKeyframe(0.0f, 0.0f, -0.0f, 0.0f, 0.0f, 0.0f, 0.0f, -70.0f, 1.0f);
 	animsHumanLeftThigh[15].addKeyframe(50.0f, 0.0f, -0.0f, 0.0f, 0.0f, 0.0f, 0.0f, -110.0f, 1.0f);
 	animsHumanLeftThigh[15].addKeyframe(100.0f, 0.0f, -0.0f, 0.0f, 0.0f, 0.0f, 0.0f, -70.0f, 1.0f);
@@ -502,8 +502,8 @@ void AnimationResources::createAnimations()
 	animsHumanLeftShin[12].addKeyframe(100.0f, 0.0f, -0.0f, 0.0f, 0.0f, 0.0f, 0.0f, -120.0f, 1.0f);
 	animsHumanLeftShin[13].addKeyframe(0.0f, 0.0f, -0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f);
 	animsHumanLeftShin[13].addKeyframe(100.0f, 0.0f, -0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f);
-	animsHumanLeftShin[14].addKeyframe(0.0f, 0.0f, -0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f);
-	animsHumanLeftShin[14].addKeyframe(100.0f, 0.0f, -0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f);
+	animsHumanLeftShin[14].addKeyframe(0,   0, 0, 0, 0, 0, 0, -70,   1);
+	animsHumanLeftShin[14].addKeyframe(100, 0, 0, 0, 0, 0, 0, -1.4f, 1);
 	animsHumanLeftShin[15].addKeyframe(0.0f, 0.0f, -0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f);
 	animsHumanLeftShin[15].addKeyframe(100.0f, 0.0f, -0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f);
 	animsHumanLeftShin[16].addKeyframe(0.0f, 0.0f, -0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f);
@@ -560,8 +560,8 @@ void AnimationResources::createAnimations()
 	animsHumanLeftFoot[12].addKeyframe(100.0f, 0.0f, -0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 150.0f, 1.0f);
 	animsHumanLeftFoot[13].addKeyframe(0.0f, 0.0f, -0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 30.0f, 1.0f);
 	animsHumanLeftFoot[13].addKeyframe(100.0f, 0.0f, -0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 30.0f, 1.0f);
-	animsHumanLeftFoot[14].addKeyframe(0.0f, 0.0f, -0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 30.0f, 1.0f);
-	animsHumanLeftFoot[14].addKeyframe(100.0f, 0.0f, -0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 30.0f, 1.0f);
+	animsHumanLeftFoot[14].addKeyframe(0,   0, 0, 0, 0, 0, 0, 125, 1);
+	animsHumanLeftFoot[14].addKeyframe(100, 0, 0, 0, 0, 0, 0, 39,  1);
 	animsHumanLeftFoot[15].addKeyframe(0.0f, 0.0f, -0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 30.0f, 1.0f);
 	animsHumanLeftFoot[15].addKeyframe(100.0f, 0.0f, -0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 30.0f, 1.0f);
 	animsHumanLeftFoot[16].addKeyframe(0.0f, 0.0f, -0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 30.0f, 1.0f);
@@ -618,8 +618,8 @@ void AnimationResources::createAnimations()
 	animsHumanRightThigh[12].addKeyframe(100.0f, 0.0f, -0.0f, 0.0f, -20.0f, 0.0f, 0.0f, 0.0f, 1.0f);
 	animsHumanRightThigh[13].addKeyframe(0.0f, 0.0f, -0.0f, 0.0f, 0.0f, 0.0f, 0.0f, -130.0f, 1.0f);
 	animsHumanRightThigh[13].addKeyframe(100.0f, 0.0f, -0.0f, 0.0f, 0.0f, 0.0f, 0.0f, -130.0f, 1.0f);
-	animsHumanRightThigh[14].addKeyframe(0.0f, 0.0f, -0.0f, 0.0f, 0.0f, 0.0f, 0.0f, -130.0f, 1.0f);
-	animsHumanRightThigh[14].addKeyframe(100.0f, 0.0f, -0.0f, 0.0f, 0.0f, 0.0f, 0.0f, -130.0f, 1.0f);
+	animsHumanRightThigh[14].addKeyframe(0,   0, 0, 0, -50, 0, 0, -55,    1);
+	animsHumanRightThigh[14].addKeyframe(100, 0, 0, 0, -50, 0, 0, -22.3f, 1);
 	animsHumanRightThigh[15].addKeyframe(0.0f, 0.0f, -0.0f, 0.0f, 0.0f, 0.0f, 0.0f, -110.0f, 1.0f);
 	animsHumanRightThigh[15].addKeyframe(50.0f, 0.0f, -0.0f, 0.0f, 0.0f, 0.0f, 0.0f, -70.0f, 1.0f);
 	animsHumanRightThigh[15].addKeyframe(100.0f, 0.0f, -0.0f, 0.0f, 0.0f, 0.0f, 0.0f, -110.0f, 1.0f);
@@ -678,8 +678,8 @@ void AnimationResources::createAnimations()
 	animsHumanRightShin[12].addKeyframe(100.0f, 0.0f, -0.0f, 0.0f, 0.0f, 0.0f, 0.0f, -120.0f, 1.0f);
 	animsHumanRightShin[13].addKeyframe(0.0f, 0.0f, -0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f);
 	animsHumanRightShin[13].addKeyframe(100.0f, 0.0f, -0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f);
-	animsHumanRightShin[14].addKeyframe(0.0f, 0.0f, -0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f);
-	animsHumanRightShin[14].addKeyframe(100.0f, 0.0f, -0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f);
+	animsHumanRightShin[14].addKeyframe(0,   0, 0, 0, 0, 0, 0, -70,    1);
+	animsHumanRightShin[14].addKeyframe(100, 0, 0, 0, 0, 0, 0, -94.4f, 1);
 	animsHumanRightShin[15].addKeyframe(0.0f, 0.0f, -0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f);
 	animsHumanRightShin[15].addKeyframe(100.0f, 0.0f, -0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f);
 	animsHumanRightShin[16].addKeyframe(0.0f, 0.0f, -0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f);
@@ -736,8 +736,8 @@ void AnimationResources::createAnimations()
 	animsHumanRightFoot[12].addKeyframe(100.0f, 0.0f, -0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 150.0f, 1.0f);
 	animsHumanRightFoot[13].addKeyframe(0.0f, 0.0f, -0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 30.0f, 1.0f);
 	animsHumanRightFoot[13].addKeyframe(100.0f, 0.0f, -0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 30.0f, 1.0f);
-	animsHumanRightFoot[14].addKeyframe(0.0f, 0.0f, -0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 30.0f, 1.0f);
-	animsHumanRightFoot[14].addKeyframe(100.0f, 0.0f, -0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 30.0f, 1.0f);
+	animsHumanRightFoot[14].addKeyframe(0,   0, 0, 0, 0, 0, 0, 125, 1);
+	animsHumanRightFoot[14].addKeyframe(100, 0, 0, 0, 0, 0, 0, 117, 1);
 	animsHumanRightFoot[15].addKeyframe(0.0f, 0.0f, -0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 30.0f, 1.0f);
 	animsHumanRightFoot[15].addKeyframe(100.0f, 0.0f, -0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 30.0f, 1.0f);
 	animsHumanRightFoot[16].addKeyframe(0.0f, 0.0f, -0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 30.0f, 1.0f);
@@ -752,18 +752,18 @@ void AnimationResources::assignAnimationsHuman(Body* body, Limb* head,
 	Limb* leftThigh, Limb* leftShin, Limb* leftFoot,
 	Limb* rightThigh, Limb* rightShin, Limb* rightFoot)
 {
-	body->animations = &AnimationResources::animsHumanBody;
-	head->animations = &AnimationResources::animsHumanHead;
-	leftHumerus->animations = &AnimationResources::animsHumanLeftHumerus;
-	leftForearm->animations = &AnimationResources::animsHumanLeftForearm;
-	leftHand->animations = &AnimationResources::animsHumanLeftHand;
+	body->animations         = &AnimationResources::animsHumanBody;
+	head->animations         = &AnimationResources::animsHumanHead;
+	leftHumerus->animations  = &AnimationResources::animsHumanLeftHumerus;
+	leftForearm->animations  = &AnimationResources::animsHumanLeftForearm;
+	leftHand->animations     = &AnimationResources::animsHumanLeftHand;
 	rightHumerus->animations = &AnimationResources::animsHumanRightHumerus;
 	rightForearm->animations = &AnimationResources::animsHumanRightForearm;
-	rightHand->animations = &AnimationResources::animsHumanRightHand;
-	leftThigh->animations = &AnimationResources::animsHumanLeftThigh;
-	leftShin->animations = &AnimationResources::animsHumanLeftShin;
-	leftFoot->animations = &AnimationResources::animsHumanLeftFoot;
-	rightThigh->animations = &AnimationResources::animsHumanRightThigh;
-	rightShin->animations = &AnimationResources::animsHumanRightShin;
-	rightFoot->animations = &AnimationResources::animsHumanRightFoot;
+	rightHand->animations    = &AnimationResources::animsHumanRightHand;
+	leftThigh->animations    = &AnimationResources::animsHumanLeftThigh;
+	leftShin->animations     = &AnimationResources::animsHumanLeftShin;
+	leftFoot->animations     = &AnimationResources::animsHumanLeftFoot;
+	rightThigh->animations   = &AnimationResources::animsHumanRightThigh;
+	rightShin->animations    = &AnimationResources::animsHumanRightShin;
+	rightFoot->animations    = &AnimationResources::animsHumanRightFoot;
 }

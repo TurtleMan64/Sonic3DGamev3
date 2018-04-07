@@ -163,28 +163,14 @@ void Ring::loadStaticModels()
 
 	std::fprintf(stdout, "Loading ring static models...\n");
 
-	std::list<TexturedModel*>* newModels = loadObjModel("res/Models/Ring/", "Ring.obj");
-	for (auto newModel : (*newModels))
-	{
-		Ring::models.push_back(newModel);
-	}
-	delete newModels;
-	Global::countDelete++;
-
-
+	loadObjModel(&Ring::models, "res/Models/Ring/", "Ring.obj");
 }
 
 void Ring::deleteStaticModels()
 {
 	std::fprintf(stdout, "Deleting ring static models...\n");
-	for (auto model : Ring::models)
-	{
-		model->deleteMe(); //delete opengl ids
-		delete model;
-		Global::countDelete++;
-	}
 
-	Ring::models.clear();
+	Entity::deleteModels(&Ring::models);
 }
 
 bool Ring::canLightdashOn()

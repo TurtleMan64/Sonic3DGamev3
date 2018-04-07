@@ -94,14 +94,7 @@ void EC_Dock::loadStaticModels()
 
 	std::fprintf(stdout, "Loading EC_Dock static models...\n");
 
-	std::list<TexturedModel*>* newModels = loadObjModel("res/Models/EmeraldCoast/", "Dock.obj");
-	for (auto newModel : (*newModels))
-	{
-		EC_Dock::models.push_back(newModel);
-	}
-	delete newModels;
-	Global::countDelete++;
-
+	loadObjModel(&EC_Dock::models, "res/Models/EmeraldCoast/", "Dock.obj");
 
 	if (EC_Dock::cmOriginal == nullptr)
 	{
@@ -112,20 +105,7 @@ void EC_Dock::loadStaticModels()
 void EC_Dock::deleteStaticModels()
 {
 	std::fprintf(stdout, "Deleting EC_Dock static models...\n");
-	for (auto model : EC_Dock::models)
-	{
-		model->deleteMe();
-		delete model;
-		Global::countDelete++;
-	}
 
-	EC_Dock::models.clear();
-
-	if (EC_Dock::cmOriginal != nullptr)
-	{
-		EC_Dock::cmOriginal->deleteMe();
-		delete EC_Dock::cmOriginal;
-		Global::countDelete++;
-		EC_Dock::cmOriginal = nullptr;
-	}
+	Entity::deleteModels(&EC_Dock::models);
+	Entity::deleteCollisionModel(&EC_Dock::cmOriginal);
 }

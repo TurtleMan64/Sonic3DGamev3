@@ -184,24 +184,12 @@ void EC_Shark::loadStaticModels()
 
 	std::fprintf(stdout, "Loading EC_Shark static models...\n");
 
-	std::list<TexturedModel*>* newModels = loadObjModel("res/Models/EmeraldCoast/", "Shark.obj");
-	for (auto newModel : (*newModels))
-	{
-		EC_Shark::models.push_back(newModel);
-	}
-	delete newModels;
-	Global::countDelete++;
+	loadObjModel(&EC_Shark::models, "res/Models/EmeraldCoast/", "Shark.obj");
 }
 
 void EC_Shark::deleteStaticModels()
 {
 	std::fprintf(stdout, "Deleting EC_Shark static models...\n");
-	for (auto model : EC_Shark::models)
-	{
-		model->deleteMe();
-		delete model;
-		Global::countDelete++;
-	}
-
-	EC_Shark::models.clear();
+	
+	Entity::deleteModels(&EC_Shark::models);
 }

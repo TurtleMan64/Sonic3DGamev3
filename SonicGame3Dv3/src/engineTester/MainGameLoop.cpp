@@ -82,6 +82,8 @@ WaterRenderer* Global::gameWaterRenderer = nullptr;
 WaterFrameBuffers* Global::gameWaterFBOs = nullptr;
 std::list<WaterTile*>* Global::gameWaterTiles = nullptr;
 
+int Global::finishStageTimer = -1;
+
 bool Global::debugDisplay = false;
 bool Global::frozen = false;
 bool Global::step = false;
@@ -254,6 +256,16 @@ int main()
 		if (Global::bufferTime == 0)
 		{
 			GuiManager::startTimer();
+		}
+
+		if (Global::finishStageTimer >= 0)
+		{
+			Global::finishStageTimer++;
+
+			if (Global::finishStageTimer > 460)
+			{
+				LevelLoader_loadTitle();
+			}
 		}
 
 		if (Global::shouldRestartLevel)
@@ -476,6 +488,7 @@ int main()
 			//std::fprintf(stdout, "fps: %f\n", frameCount / (seconds - previousTime));
 			//std::fprintf(stdout, "diff: %d\n", Global::countNew - Global::countDelete);
 			//Loader_printInfo();
+			//std::fprintf(stdout, "entity counts: %d %d %d\n", gameEntities.size(), gameEntitiesPass2.size(), gameTransparentEntities.size());
 			frameCount = 0;
 			previousTime = seconds;
 		}

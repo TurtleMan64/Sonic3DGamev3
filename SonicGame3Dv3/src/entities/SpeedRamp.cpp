@@ -104,14 +104,7 @@ void SpeedRamp::loadStaticModels()
 
 	std::fprintf(stdout, "Loading SpeedRamp static models...\n");
 
-	std::list<TexturedModel*>* newModels = loadObjModel("res/Models/SpeedRamp/", "SpeedRamp.obj");
-	for (auto newModel : (*newModels))
-	{
-		SpeedRamp::models.push_back(newModel);
-	}
-	delete newModels;
-	Global::countDelete++;
-
+	loadObjModel(&SpeedRamp::models, "res/Models/SpeedRamp/", "SpeedRamp.obj");
 
 	if (SpeedRamp::cmOriginal == nullptr)
 	{
@@ -122,20 +115,7 @@ void SpeedRamp::loadStaticModels()
 void SpeedRamp::deleteStaticModels()
 {
 	std::fprintf(stdout, "Deleting SpeedRamp static models...\n");
-	for (auto model : SpeedRamp::models)
-	{
-		model->deleteMe();
-		delete model;
-		Global::countDelete++;
-	}
 
-	SpeedRamp::models.clear();
-
-	if (SpeedRamp::cmOriginal != nullptr)
-	{
-		SpeedRamp::cmOriginal->deleteMe();
-		delete SpeedRamp::cmOriginal;
-		Global::countDelete++;
-		SpeedRamp::cmOriginal = nullptr;
-	}
+	Entity::deleteModels(&SpeedRamp::models);
+	Entity::deleteCollisionModel(&SpeedRamp::cmOriginal);
 }

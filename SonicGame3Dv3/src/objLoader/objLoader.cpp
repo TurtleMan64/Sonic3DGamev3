@@ -48,14 +48,19 @@ std::vector<ModelTexture> modelTextures;
 std::vector<ModelTexture> modelTexturesList;
 std::vector<std::string> textureNamesList;
 
-std::list<TexturedModel*>* loadObjModel(std::string filePath, std::string fileName)
+void loadObjModel(std::list<TexturedModel*>* models, std::string filePath, std::string fileName)
 {
+	if (models->size() > 0)
+	{
+		return;
+	}
+
 	std::ifstream file(filePath+fileName);
 	if (!file.is_open())
 	{
 		std::fprintf(stdout, "Error: Cannot load file '%s'\n", (filePath + fileName).c_str());
 		file.close();
-		return nullptr;
+		return;
 	}
 
 	std::string line;
@@ -204,14 +209,13 @@ std::list<TexturedModel*>* loadObjModel(std::string filePath, std::string fileNa
 
 	rawModelsList.push_back(newRaw); //put a copy of the final model into rawModelsList
 
-	//go through rawModelsList and modelTextures to construct the final TexturedModel list
-	std::list<TexturedModel*>* tmList = new std::list<TexturedModel*>();
+	//go through rawModelsList and modelTextures to construct and add to the given TexturedModel list
 	Global::countNew++;
 	for (unsigned int i = 0; i < rawModelsList.size(); i++)
 	{
 		TexturedModel* tm = new TexturedModel(&rawModelsList[i], &modelTextures[i]);
 		Global::countNew++;
-		tmList->push_back(tm);
+		models->push_back(tm);
 	}
 
 	for (auto vertex : vertices)
@@ -241,8 +245,6 @@ std::list<TexturedModel*>* loadObjModel(std::string filePath, std::string fileNa
 	modelTextures.shrink_to_fit();
 	modelTexturesList.shrink_to_fit();
 	textureNamesList.shrink_to_fit();
-
-	return tmList;
 }
 
 void parseMtl(std::string filePath, std::string fileName)
@@ -335,7 +337,7 @@ void parseMtl(std::string filePath, std::string fileName)
 			{
 				currentTransparencyValue = std::stof(lineSplit[1]);
 			}
-			else if (strcmp(lineSplit[0], "\td") == 0 || strcmp(lineSplit[0], "td") == 0)
+			else if (strcmp(lineSplit[0], "\td") == 0 || strcmp(lineSplit[0], "d") == 0)
 			{
 				currentFakeLightingValue = std::stof(lineSplit[1]);
 			}
@@ -364,14 +366,19 @@ void parseMtl(std::string filePath, std::string fileName)
 
 
 
-std::list<TexturedModel*>* loadObjModelWithMTL(std::string filePath, std::string fileNameOBJ, std::string fileNameMTL)
+void loadObjModelWithMTL(std::list<TexturedModel*>* models, std::string filePath, std::string fileNameOBJ, std::string fileNameMTL)
 {
+	if (models->size() > 0)
+	{
+		return;
+	}
+
 	std::ifstream file(filePath + fileNameOBJ);
 	if (!file.is_open())
 	{
 		std::fprintf(stdout, "Error: Cannot load file '%s'\n", (filePath + fileNameOBJ).c_str());
 		file.close();
-		return nullptr;
+		return;
 	}
 
 	std::string line;
@@ -509,14 +516,13 @@ std::list<TexturedModel*>* loadObjModelWithMTL(std::string filePath, std::string
 
 	rawModelsList.push_back(newRaw); //put a copy of the final model into rawModelsList
 
-	//go through rawModelsList and modelTextures to construct the final TexturedModel list
-	std::list<TexturedModel*>* tmList = new std::list<TexturedModel*>();
+	//go through rawModelsList and modelTextures to construct and add to the given TexturedModel list
 	Global::countNew++;
 	for (unsigned int i = 0; i < rawModelsList.size(); i++)
 	{
 		TexturedModel* tm = new TexturedModel(&rawModelsList[i], &modelTextures[i]);
 		Global::countNew++;
-		tmList->push_back(tm);
+		models->push_back(tm);
 	}
 
 	for (auto vertex : vertices)
@@ -537,7 +543,15 @@ std::list<TexturedModel*>* loadObjModelWithMTL(std::string filePath, std::string
 	modelTexturesList.clear();
 	textureNamesList.clear();
 
-	return tmList;
+	vertices.shrink_to_fit();
+	textures.shrink_to_fit();
+	normals.shrink_to_fit();
+	indices.shrink_to_fit();
+
+	rawModelsList.shrink_to_fit();
+	modelTextures.shrink_to_fit();
+	modelTexturesList.shrink_to_fit();
+	textureNamesList.shrink_to_fit();
 }
 
 /*

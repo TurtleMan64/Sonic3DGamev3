@@ -61,11 +61,13 @@
 #include "../entities/SpeedHighway/shcraneplatform.h"
 #include "../entities/point.h"
 #include "../entities/SpeedHighway/shcraneplatformpath.h"
-#include "../entities/SpeedHighway/shelevatorplatformpath.h"
-#include "../entities/SpeedHighway/shelevatorplatform.h"
 #include "../entities/soundemitter.h"
 #include "../entities/SpeedHighway/shstagetransparent.h"
 #include "../entities/SpeedHighway/shlamppost.h"
+#include "../entities/SpeedHighway/shcone.h"
+#include "../entities/SpeedHighway/shspotlight.h"
+#include "../entities/SpeedHighway/shelevatorplatformpath.h"
+#include "../entities/SpeedHighway/shelevatorplatform.h"
 
 float toFloat(char* input);
 int toInt(char* input);
@@ -82,8 +84,19 @@ void LevelLoader_loadTitle()
 	CollisionChecker::deleteAllCollideModels();
 
 	Main_deleteAllEntites();
-
+	Main_deleteAllEntitesPass2();
 	Main_deleteAllTransparentEntites();
+
+	AudioPlayer::stopBGM();
+	AudioPlayer::deleteBuffersBGM();
+
+	Global::gameSkySphere->setVisible(false);
+
+	Global::finishStageTimer = -1;
+
+	Global::gameRingCount = 0;
+	GuiManager::setTimer(0, 0, 0);
+	GuiManager::stopTimer();
 }
 
 void LevelLoader_loadLevel(std::string levelFilename)
@@ -110,6 +123,7 @@ void LevelLoader_loadLevel(std::string levelFilename)
 	}
 
 	Main_deleteAllEntites();
+	Main_deleteAllEntitesPass2();
 	Main_deleteAllTransparentEntites();
 
 	if (stageFault == 1)
@@ -367,6 +381,28 @@ void LevelLoader_loadLevel(std::string levelFilename)
 	}
 
 
+	//Finish the level positions and cam settings
+	char finishBuf[512];
+
+	std::string finishPosition;
+	getline(file, finishPosition);
+	memset(finishBuf, 0, 512);
+	memcpy(finishBuf, finishPosition.c_str(), finishPosition.size());
+	int finishLength = 0;
+	char** finishSplit = split(finishBuf, ' ', &finishLength);
+	Global::gameStage->finishPlayerPosition.x = toFloat(finishSplit[0]);
+	Global::gameStage->finishPlayerPosition.y = toFloat(finishSplit[1]);
+	Global::gameStage->finishPlayerPosition.z = toFloat(finishSplit[2]);
+	free(finishSplit);
+
+	std::string finishCamVars;
+	getline(file, finishCamVars);
+	memset(finishBuf, 0, 512);
+	memcpy(finishBuf, finishCamVars.c_str(), finishCamVars.size());
+	finishSplit = split(finishBuf, ' ', &finishLength);
+	Global::gameStage->finishPlayerRotY  = toFloat(finishSplit[0]);
+	Global::gameStage->finishCameraPitch = toFloat(finishSplit[1]);
+	free(finishSplit);
 
 	//Now read through all the objects defined in the file
 
@@ -407,6 +443,8 @@ void LevelLoader_loadLevel(std::string levelFilename)
 	Global::gameRingCount = 0;
 	GuiManager::setTimer(0, 0, 0);
 	GuiManager::stopTimer();
+
+	Global::finishStageTimer = -1;
 
 	Vector3f partVel(0, 0, 0);
 	new Particle(ParticleResources::textureBlackFade, Global::gameCamera->getFadePosition(), &partVel, 0, 60, 0, 400, 0, true);
@@ -1007,7 +1045,7 @@ void processLine(char** dat)
 			Main_addEntity(cranePlat);
 			return;
 		}
-		
+
 		case 64: //Sound emitter
 		{
 			SoundEmitter* emitter = new SoundEmitter(
@@ -1032,10 +1070,33 @@ void processLine(char** dat)
 		{
 			SH_Lamppost::loadStaticModels();
 			SH_Lamppost* post = new SH_Lamppost(
-				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]),
-				toFloat(dat[4]), toFloat(dat[5]), toFloat(dat[6]));
+				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]),  //position
+				toFloat(dat[4]), toFloat(dat[5]), toFloat(dat[6])); //rotation
 			Global::countNew++;
-			Main_addEntityPass2(post);
+			Main_addEntity(post);
+			return;
+		}
+
+		case 67: //Speed Highway Cone
+		{
+			SH_Cone::loadStaticModels();
+			SH_Cone* cone = new SH_Cone(
+				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
+				toFloat(dat[4]), toFloat(dat[5]), toFloat(dat[6]), //rotation
+				toInt(dat[7])); //cone kind
+			Global::countNew++;
+			Main_addEntity(cone);
+			return;
+		}
+
+		case 68: //Speed Highway Spotlight
+		{
+			SH_Spotlight::loadStaticModels();
+			SH_Spotlight* spotlight = new SH_Spotlight(
+				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]),  //position
+				toFloat(dat[4]), toFloat(dat[5]), toFloat(dat[6])); //rotation
+			Global::countNew++;
+			Main_addEntity(spotlight);
 			return;
 		}
 
@@ -1098,11 +1159,10 @@ void freeAllStaticModels()
 	ItemCapsule::deleteStaticModels();
 	SH_CranePlatform::deleteStaticModels();
 	SH_CranePlatformPath::deleteStaticModels();
-<<<<<<< HEAD
-	SH_ElevatorPlatformPath::deleteStaticModels();
-	SH_ElevatorPlatform::deleteStaticModels();
-=======
->>>>>>> upstream/master
 	SH_StageTransparent::deleteStaticModels();
 	SH_Lamppost::deleteStaticModels();
+	SH_Cone::deleteStaticModels();
+	SH_Spotlight::deleteStaticModels();
+	SH_ElevatorPlatformPath::deleteStaticModels();
+	SH_ElevatorPlatform::deleteStaticModels();
 }

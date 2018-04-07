@@ -78,14 +78,7 @@ void EC_StrawRoofHut::loadStaticModels()
 
 	std::fprintf(stdout, "Loading EC_StrawRoofHut static models...\n");
 
-	std::list<TexturedModel*>* newModels = loadObjModel("res/Models/EmeraldCoast/", "StrawRoofHut.obj");
-	for (auto newModel : (*newModels))
-	{
-		EC_StrawRoofHut::models.push_back(newModel);
-	}
-	delete newModels;
-	Global::countDelete++;
-
+	loadObjModel(&EC_StrawRoofHut::models, "res/Models/EmeraldCoast/", "StrawRoofHut.obj");
 
 	if (EC_StrawRoofHut::cmOriginal == nullptr)
 	{
@@ -96,21 +89,7 @@ void EC_StrawRoofHut::loadStaticModels()
 void EC_StrawRoofHut::deleteStaticModels()
 {
 	std::fprintf(stdout, "Deleting EC_StrawRoofHut static models...\n");
-	for (auto model : EC_StrawRoofHut::models)
-	{
-		model->deleteMe();
-		delete model;
-		Global::countDelete++;
-	}
 
-	EC_StrawRoofHut::models.clear();
-
-	if (EC_StrawRoofHut::cmOriginal != nullptr)
-	{
-		EC_StrawRoofHut::cmOriginal->deleteMe();
-		delete EC_StrawRoofHut::cmOriginal;
-		Global::countDelete++;
-		EC_StrawRoofHut::cmOriginal = nullptr;
-	}
+	Entity::deleteModels(&EC_StrawRoofHut::models);
+	Entity::deleteCollisionModel(&EC_StrawRoofHut::cmOriginal);
 }
-

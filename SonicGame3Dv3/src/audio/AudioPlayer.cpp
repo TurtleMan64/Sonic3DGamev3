@@ -23,30 +23,32 @@ ALuint AudioPlayer::bgmLoop;
 
 void AudioPlayer::loadSoundEffects()
 {
-	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/General/BigDestroy.ogg"));      //0
-	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/General/Dashpad.ogg"));         //1
-	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/General/Goal.ogg"));            //2
-	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/General/ItemCapsule.ogg"));     //3
-	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/General/Ring.ogg"));            //4
-	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/General/Splash.ogg"));          //5
-	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/General/Spring.ogg"));          //6
-	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/General/UnlockSomething.ogg")); //7
-	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/Sonic/Bounce.ogg"));            //8
-	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/Sonic/Death.ogg"));             //9
-	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/Sonic/GetHit.ogg"));            //10
-	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/Sonic/HomingAttack.ogg"));      //11
-	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/Sonic/Jump.ogg"));              //12
-	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/Sonic/Skid.ogg"));              //13
-	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/Sonic/SpindashCharge.ogg"));    //14
-	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/Sonic/SpindashRelease.ogg"));   //15
-	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/Sonic/StompInit.ogg"));         //16
-	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/Sonic/StompLand.ogg"));         //17
-	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/Sonic/CantStick.ogg"));         //18
-	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/General/DockBreak.ogg"));       //19
-	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/General/Seagull.ogg"));         //20
-	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/General/SpeedRamp.ogg"));       //21
+	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/General/BigDestroy.ogg"));           //0
+	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/General/Dashpad.ogg"));              //1
+	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/General/Goal.ogg"));                 //2
+	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/General/ItemCapsule.ogg"));          //3
+	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/General/Ring.ogg"));                 //4
+	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/General/Splash.ogg"));               //5
+	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/General/Spring.ogg"));               //6
+	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/General/UnlockSomething.ogg"));      //7
+	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/Sonic/Bounce.ogg"));                 //8
+	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/Sonic/Death.ogg"));                  //9
+	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/Sonic/GetHit.ogg"));                 //10
+	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/Sonic/HomingAttack.ogg"));           //11
+	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/Sonic/Jump.ogg"));                   //12
+	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/Sonic/Skid.ogg"));                   //13
+	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/Sonic/SpindashCharge.ogg"));         //14
+	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/Sonic/SpindashRelease.ogg"));        //15
+	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/Sonic/StompInit.ogg"));              //16
+	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/Sonic/StompLand.ogg"));              //17
+	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/Sonic/CantStick.ogg"));              //18
+	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/General/DockBreak.ogg"));            //19
+	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/General/Seagull.ogg"));              //20
+	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/General/SpeedRamp.ogg"));            //21
 	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/SpeedHighway/CranePlatform.ogg"));   //22
 	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/SpeedHighway/ElevatorPlatform.ogg"));//23
+	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/General/ActClear.ogg"));             //24
+	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/General/ExitStage.ogg"));            //25
 }
 
 void AudioPlayer::loadBGM(char* fileName)
@@ -63,6 +65,7 @@ void AudioPlayer::deleteSources()
 		Global::countDelete++;
 	}
 	AudioPlayer::sources.clear();
+	AudioPlayer::sources.shrink_to_fit();
 }
 
 void AudioPlayer::deleteBuffersSE()
@@ -72,6 +75,7 @@ void AudioPlayer::deleteBuffersSE()
 		alDeleteBuffers(1, &buff);
 	}
 	AudioPlayer::buffersSE.clear();
+	AudioPlayer::buffersSE.shrink_to_fit();
 }
 
 void AudioPlayer::deleteBuffersBGM()
@@ -84,6 +88,7 @@ void AudioPlayer::deleteBuffersBGM()
 		alDeleteBuffers(1, &buff);
 	}
 	AudioPlayer::buffersBGM.clear();
+	AudioPlayer::buffersBGM.shrink_to_fit();
 }
 
 void AudioPlayer::createSources()
@@ -258,6 +263,12 @@ void AudioPlayer::stopBGM()
 Source* AudioPlayer::getSource(int i)
 {
 	return AudioPlayer::sources[i];
+}
+
+void AudioPlayer::setBGMVolume(float percent)
+{
+	Source* src = AudioPlayer::sources[14];
+	src->setVolume(percent*soundLevelBGM);
 }
 
 void AudioPlayer::loadSettings()

@@ -4,6 +4,8 @@
 #include "../models/models.h"
 #include "../toolbox/vector.h"
 #include "../toolbox/maths.h"
+#include "../engineTester/main.h"
+#include "../collision/collisionmodel.h"
 
 #include <list>
 #include <iostream>
@@ -200,7 +202,24 @@ bool Entity::isPoint()
 	return false;
 }
 
-bool Entity::isSoundEmitter()
+void Entity::deleteModels(std::list<TexturedModel*>* modelsToDelete)
 {
-	return false;
+	for (auto model : (*modelsToDelete))
+	{
+		model->deleteMe();
+		delete model;
+		Global::countDelete++;
+	}
+	modelsToDelete->clear();
+}
+
+void Entity::deleteCollisionModel(CollisionModel** colModelToDelete)
+{
+	if ((*colModelToDelete) != nullptr)
+	{
+		(*colModelToDelete)->deleteMe();
+		delete (*colModelToDelete);
+		Global::countDelete++;
+		(*colModelToDelete) = nullptr;
+	}
 }

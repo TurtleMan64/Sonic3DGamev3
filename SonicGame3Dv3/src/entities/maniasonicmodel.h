@@ -24,9 +24,7 @@ private:
 	static std::list<TexturedModel*> modelDash9;
 	static std::list<TexturedModel*> modelDash10;
 	static std::list<TexturedModel*> modelDash11;
-
 	static std::list<TexturedModel*> modelJump;
-
 	static std::list<TexturedModel*> modelJog0;
 	static std::list<TexturedModel*> modelJog1;
 	static std::list<TexturedModel*> modelJog2;
@@ -45,8 +43,6 @@ private:
 	static std::list<TexturedModel*> modelJog15;
 	static std::list<TexturedModel*> modelJog16;
 	static std::list<TexturedModel*> modelJog17;
-
-	static void deleteModelHelper(std::list<TexturedModel*>* mod);
 
 public:
 	ManiaSonicModel();

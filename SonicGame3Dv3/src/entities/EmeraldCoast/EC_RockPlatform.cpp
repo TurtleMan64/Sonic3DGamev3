@@ -78,14 +78,7 @@ void EC_RockPlatform::loadStaticModels()
 
 	std::fprintf(stdout, "Loading EC_RockPlatform static models...\n");
 
-	std::list<TexturedModel*>* newModels = loadObjModel("res/Models/EmeraldCoast/", "RockPlatform.obj");
-	for (auto newModel : (*newModels))
-	{
-		EC_RockPlatform::models.push_back(newModel);
-	}
-	delete newModels;
-	Global::countDelete++;
-
+	loadObjModel(&EC_RockPlatform::models, "res/Models/EmeraldCoast/", "RockPlatform.obj");
 
 	if (EC_RockPlatform::cmOriginal == nullptr)
 	{
@@ -96,20 +89,7 @@ void EC_RockPlatform::loadStaticModels()
 void EC_RockPlatform::deleteStaticModels()
 {
 	std::fprintf(stdout, "Deleting EC_RockPlatform static models...\n");
-	for (auto model : EC_RockPlatform::models)
-	{
-		model->deleteMe();
-		delete model;
-		Global::countDelete++;
-	}
 
-	EC_RockPlatform::models.clear();
-
-	if (EC_RockPlatform::cmOriginal != nullptr)
-	{
-		EC_RockPlatform::cmOriginal->deleteMe();
-		delete EC_RockPlatform::cmOriginal;
-		Global::countDelete++;
-		EC_RockPlatform::cmOriginal = nullptr;
-	}
+	Entity::deleteModels(&EC_RockPlatform::models);
+	Entity::deleteCollisionModel(&EC_RockPlatform::cmOriginal);
 }

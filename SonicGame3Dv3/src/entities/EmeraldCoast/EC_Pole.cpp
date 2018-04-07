@@ -78,14 +78,7 @@ void EC_Pole::loadStaticModels()
 
 	std::fprintf(stdout, "Loading EC_Pole static models...\n");
 
-	std::list<TexturedModel*>* newModels = loadObjModel("res/Models/EmeraldCoast/", "Pole.obj");
-	for (auto newModel : (*newModels))
-	{
-		EC_Pole::models.push_back(newModel);
-	}
-	delete newModels;
-	Global::countDelete++;
-
+	loadObjModel(&EC_Pole::models, "res/Models/EmeraldCoast/", "Pole.obj");
 
 	if (EC_Pole::cmOriginal == nullptr)
 	{
@@ -96,21 +89,8 @@ void EC_Pole::loadStaticModels()
 void EC_Pole::deleteStaticModels()
 {
 	std::fprintf(stdout, "Deleting EC_Pole static models...\n");
-	for (auto model : EC_Pole::models)
-	{
-		model->deleteMe();
-		delete model;
-		Global::countDelete++;
-	}
-
-	EC_Pole::models.clear();
-
-	if (EC_Pole::cmOriginal != nullptr)
-	{
-		EC_Pole::cmOriginal->deleteMe();
-		delete EC_Pole::cmOriginal;
-		Global::countDelete++;
-		EC_Pole::cmOriginal = nullptr;
-	}
+	
+	Entity::deleteModels(&EC_Pole::models);
+	Entity::deleteCollisionModel(&EC_Pole::cmOriginal);
 }
 

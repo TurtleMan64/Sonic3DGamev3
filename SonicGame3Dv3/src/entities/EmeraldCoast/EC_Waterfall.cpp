@@ -68,26 +68,14 @@ void EC_Waterfall::loadStaticModels()
 
 	std::fprintf(stdout, "Loading EC_Waterfall static models...\n");
 
-	std::list<TexturedModel*>* newModels = loadObjModel("res/Models/EmeraldCoast/", "WaterfallDouble.obj");
-	for (auto newModel : (*newModels))
-	{
-		EC_Waterfall::models.push_back(newModel);
-	}
-	delete newModels;
-	Global::countDelete++;
+	loadObjModel(&EC_Waterfall::models, "res/Models/EmeraldCoast/", "WaterfallDouble.obj");
 }
 
 void EC_Waterfall::deleteStaticModels()
 {
 	std::fprintf(stdout, "Deleting EC_Waterfall static models...\n");
-	for (auto model : EC_Waterfall::models)
-	{
-		model->deleteMe();
-		delete model;
-		Global::countDelete++;
-	}
 
-	EC_Waterfall::models.clear();
+	Entity::deleteModels(&EC_Waterfall::models);
 }
 
 

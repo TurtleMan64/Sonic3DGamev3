@@ -8,7 +8,7 @@ class CollisionModel;
 class CollideableObject : public Entity
 {
 protected:
-	CollisionModel * collideModelOriginal;
+	CollisionModel* collideModelOriginal;
 	CollisionModel* collideModelTransformed;
 
 public:

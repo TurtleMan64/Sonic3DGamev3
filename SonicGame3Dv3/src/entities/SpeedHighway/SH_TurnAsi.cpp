@@ -171,43 +171,14 @@ void SH_TurnAsi::loadStaticModels()
 
 	std::fprintf(stdout, "Loading SH_TurnAsi static models...\n");
 
-	std::list<TexturedModel*>* newModels = loadObjModel("res/Models/SpeedHighway/", "Fork.obj");
-	for (auto newModel : (*newModels))
-	{
-		SH_TurnAsi::modelsFork.push_back(newModel);
-	}
-	delete newModels;
-	Global::countDelete++;
-
-
-	std::list<TexturedModel*>* newModels2 = loadObjModel("res/Models/SpeedHighway/", "Bucket.obj");
-	for (auto newModel : (*newModels2))
-	{
-		SH_TurnAsi::modelsBucket.push_back(newModel);
-	}
-	delete newModels2;
-	Global::countDelete++;
+	loadObjModel(&SH_TurnAsi::modelsFork, "res/Models/SpeedHighway/", "Fork.obj");
+	loadObjModel(&SH_TurnAsi::modelsBucket, "res/Models/SpeedHighway/", "Bucket.obj");
 }
 
 void SH_TurnAsi::deleteStaticModels()
 {
 	std::fprintf(stdout, "Deleting SH_TurnAsi static models...\n");
-	for (auto model : SH_TurnAsi::modelsFork)
-	{
-		model->deleteMe();
-		delete model;
-		Global::countDelete++;
-	}
 
-	SH_TurnAsi::modelsFork.clear();
-
-
-	for (auto model : SH_TurnAsi::modelsBucket)
-	{
-		model->deleteMe();
-		delete model;
-		Global::countDelete++;
-	}
-
-	SH_TurnAsi::modelsBucket.clear();
+	Entity::deleteModels(&SH_TurnAsi::modelsFork);
+	Entity::deleteModels(&SH_TurnAsi::modelsBucket);
 }

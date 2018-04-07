@@ -65,6 +65,8 @@ void GoalSign::step()
 
 				GuiManager::stopTimer();
 
+				Global::finishStageTimer = 0;
+
 				float speed = Global::gamePlayer->getSpeed() * 2 + 3;
 				rotateSpeed = std::fmin(48.0f, speed);
 
@@ -135,28 +137,14 @@ void GoalSign::loadStaticModels()
 
 	std::fprintf(stdout, "Loading GoalSign static models...\n");
 
-	std::list<TexturedModel*>* newModels = loadObjModel("res/Models/GoalSign/", "GoalSign.obj");
-	for (auto newModel : (*newModels))
-	{
-		GoalSign::models.push_back(newModel);
-	}
-	delete newModels;
-	Global::countDelete++;
-
-
+	loadObjModel(&GoalSign::models, "res/Models/GoalSign/", "GoalSign.obj");
 }
 
 void GoalSign::deleteStaticModels()
 {
 	std::fprintf(stdout, "Deleting GoalSign static models...\n");
-	for (auto model : GoalSign::models)
-	{
-		model->deleteMe(); //delete opengl ids
-		delete model;
-		Global::countDelete++;
-	}
 
-	GoalSign::models.clear();
+	Entity::deleteModels(&GoalSign::models);
 }
 
 void GoalSign::addTrigger()

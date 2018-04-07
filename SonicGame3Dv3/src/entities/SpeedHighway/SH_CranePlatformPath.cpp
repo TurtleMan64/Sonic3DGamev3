@@ -78,14 +78,7 @@ void SH_CranePlatformPath::loadStaticModels()
 
 	std::fprintf(stdout, "Loading SH_CranePlatformPath static models...\n");
 
-	std::list<TexturedModel*>* newModels = loadObjModel("res/Models/SpeedHighway/", "CranePlatformPath.obj");
-	for (auto newModel : (*newModels))
-	{
-		SH_CranePlatformPath::models.push_back(newModel);
-	}
-	delete newModels;
-	Global::countDelete++;
-
+	loadObjModel(&SH_CranePlatformPath::models, "res/Models/SpeedHighway/", "CranePlatformPath.obj");
 
 	if (SH_CranePlatformPath::cmOriginal == nullptr)
 	{
@@ -96,20 +89,7 @@ void SH_CranePlatformPath::loadStaticModels()
 void SH_CranePlatformPath::deleteStaticModels()
 {
 	std::fprintf(stdout, "Deleting SH_CranePlatformPath static models...\n");
-	for (auto model : SH_CranePlatformPath::models)
-	{
-		model->deleteMe();
-		delete model;
-		Global::countDelete++;
-	}
 
-	SH_CranePlatformPath::models.clear();
-
-	if (SH_CranePlatformPath::cmOriginal != nullptr)
-	{
-		SH_CranePlatformPath::cmOriginal->deleteMe();
-		delete SH_CranePlatformPath::cmOriginal;
-		Global::countDelete++;
-		SH_CranePlatformPath::cmOriginal = nullptr;
-	}
+	Entity::deleteModels(&SH_CranePlatformPath::models);
+	Entity::deleteCollisionModel(&SH_CranePlatformPath::cmOriginal);
 }

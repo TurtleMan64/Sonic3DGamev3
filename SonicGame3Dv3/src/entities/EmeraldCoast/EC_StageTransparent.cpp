@@ -49,24 +49,12 @@ void EC_StageTransparent::loadStaticModels()
 
 	std::fprintf(stdout, "Loading EC_StageTransparent static models...\n");
 
-	std::list<TexturedModel*>* newModels = loadObjModel("res/Models/EmeraldCoast/", "EmeraldCoastTransparent.obj");
-	for (auto newModel : (*newModels))
-	{
-		EC_StageTransparent::models.push_back(newModel);
-	}
-	delete newModels;
-	Global::countDelete++;
+	loadObjModel(&EC_StageTransparent::models, "res/Models/EmeraldCoast/", "EmeraldCoastTransparent.obj");
 }
 
 void EC_StageTransparent::deleteStaticModels()
 {
 	std::fprintf(stdout, "Deleting EC_StageTransparent static models...\n");
-	for (auto model : EC_StageTransparent::models)
-	{
-		model->deleteMe();
-		delete model;
-		Global::countDelete++;
-	}
 
-	EC_StageTransparent::models.clear();
+	Entity::deleteModels(&EC_StageTransparent::models);
 }

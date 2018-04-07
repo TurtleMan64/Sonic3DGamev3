@@ -139,9 +139,9 @@ void SH_ElevatorPlatform::step()
 
 	int timeOffsetInt = (int)timeOffset;
 
-	position.x = pointPos[(timeOffsetInt + 4 - 1) % 4].x + (pointDifferences[timeOffsetInt].x * fmod(timeOffset, 1));
-	position.y = pointPos[(timeOffsetInt + 4 - 1) % 4].y + (pointDifferences[timeOffsetInt].y * fmod(timeOffset, 1));
-	position.z = pointPos[(timeOffsetInt + 4 - 1) % 4].z + (pointDifferences[timeOffsetInt].z * fmod(timeOffset, 1));
+	position.x = pointPos[(timeOffsetInt + 4 - 1) % 4].x + (pointDifferences[timeOffsetInt].x * fmodf(timeOffset, 1));
+	position.y = pointPos[(timeOffsetInt + 4 - 1) % 4].y + (pointDifferences[timeOffsetInt].y * fmodf(timeOffset, 1));
+	position.z = pointPos[(timeOffsetInt + 4 - 1) % 4].z + (pointDifferences[timeOffsetInt].z * fmodf(timeOffset, 1));
 
 	//move the player only if the player is standing on the platform
 	if (collideModelTransformed->playerIsOn)
@@ -167,22 +167,8 @@ void SH_ElevatorPlatform::loadStaticModels()
 
 	std::fprintf(stdout, "Loading SH_ElevatorPlatform static models...\n");
 
-	std::list<TexturedModel*>* newModels = loadObjModel("res/Models/SpeedHighway/", "ElevatorPlatform.obj");
-	for (auto newModel : (*newModels))
-	{
-		SH_ElevatorPlatform::modelsPlatform.push_back(newModel);
-	}
-	delete newModels;
-	Global::countDelete++;
-
-	std::list<TexturedModel*>* newModels2 = loadObjModel("res/Models/SpeedHighway/", "ElevatorPlatformRotate.obj");
-	for (auto newModel : (*newModels2))
-	{
-		SH_ElevatorPlatform::modelsRotate.push_back(newModel);
-	}
-	delete newModels2;
-	Global::countDelete++;
-
+	loadObjModel(&SH_ElevatorPlatform::modelsPlatform, "res/Models/SpeedHighway/", "ElevatorPlatform.obj");
+	loadObjModel(&SH_ElevatorPlatform::modelsRotate, "res/Models/SpeedHighway/", "ElevatorPlatformRotate.obj");
 
 	if (SH_ElevatorPlatform::cmOriginal == nullptr)
 	{
@@ -194,29 +180,9 @@ void SH_ElevatorPlatform::loadStaticModels()
 void SH_ElevatorPlatform::deleteStaticModels()
 {
 	std::fprintf(stdout, "Deleting SH_ElevatorPlatform static models...\n");
-	for (auto model : SH_ElevatorPlatform::modelsPlatform)
-	{
-		model->deleteMe();
-		delete model;
-		Global::countDelete++;
-	}
 
-	SH_ElevatorPlatform::modelsPlatform.clear();
+	Entity::deleteModels(&SH_ElevatorPlatform::modelsPlatform);
+	Entity::deleteModels(&SH_ElevatorPlatform::modelsRotate);
 
-	for (auto model : SH_ElevatorPlatform::modelsRotate)
-	{
-		model->deleteMe();
-		delete model;
-		Global::countDelete++;
-	}
-
-	SH_ElevatorPlatform::modelsRotate.clear();
-
-	if (SH_ElevatorPlatform::cmOriginal != nullptr)
-	{
-		SH_ElevatorPlatform::cmOriginal->deleteMe();
-		delete SH_ElevatorPlatform::cmOriginal;
-		Global::countDelete++;
-		SH_ElevatorPlatform::cmOriginal = nullptr;
-	}
+	Entity::deleteCollisionModel(&SH_ElevatorPlatform::cmOriginal);
 }

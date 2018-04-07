@@ -149,24 +149,12 @@ void EC_Dolphin::loadStaticModels()
 
 	std::fprintf(stdout, "Loading EC_Dolphin static models...\n");
 
-	std::list<TexturedModel*>* newModels = loadObjModel("res/Models/EmeraldCoast/", "Dolphin.obj");
-	for (auto newModel : (*newModels))
-	{
-		EC_Dolphin::models.push_back(newModel);
-	}
-	delete newModels;
-	Global::countDelete++;
+	loadObjModel(&EC_Dolphin::models, "res/Models/EmeraldCoast/", "Dolphin.obj");
 }
 
 void EC_Dolphin::deleteStaticModels()
 {
 	std::fprintf(stdout, "Deleting EC_Dolphin static models...\n");
-	for (auto model : EC_Dolphin::models)
-	{
-		model->deleteMe();
-		delete model;
-		Global::countDelete++;
-	}
 
-	EC_Dolphin::models.clear();
+	Entity::deleteModels(&EC_Dolphin::models);
 }

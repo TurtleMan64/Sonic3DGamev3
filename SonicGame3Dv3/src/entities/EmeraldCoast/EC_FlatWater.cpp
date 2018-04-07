@@ -70,26 +70,14 @@ void EC_FlatWater::loadStaticModels()
 
 	std::fprintf(stdout, "Loading EC_FlatWater static models...\n");
 
-	std::list<TexturedModel*>* newModels = loadObjModel("res/Models/EmeraldCoast/", "FlatWater.obj");
-	for (auto newModel : (*newModels))
-	{
-		EC_FlatWater::models.push_back(newModel);
-	}
-	delete newModels;
-	Global::countDelete++;
+	loadObjModel(&EC_FlatWater::models, "res/Models/EmeraldCoast/", "FlatWater.obj");
 }
 
 void EC_FlatWater::deleteStaticModels()
 {
 	std::fprintf(stdout, "Deleting EC_FlatWater static models...\n");
-	for (auto model : EC_FlatWater::models)
-	{
-		model->deleteMe();
-		delete model;
-		Global::countDelete++;
-	}
 
-	EC_FlatWater::models.clear();
+	Entity::deleteModels(&EC_FlatWater::models);
 }
 
 std::string EC_FlatWater::getName()

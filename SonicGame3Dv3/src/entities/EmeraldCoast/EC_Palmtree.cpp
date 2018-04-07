@@ -83,80 +83,18 @@ void EC_Palmtree::loadStaticModels()
 
 	std::fprintf(stdout, "Loading EC_Palmtree static models...\n");
 
-	std::list<TexturedModel*>* newModels1 = loadObjModel("res/Models/EmeraldCoast/", "Palmtree.obj");
-	for (auto newModel : (*newModels1))
-	{
-		EC_Palmtree::models1.push_back(newModel);
-	}
-	delete newModels1;
-	Global::countDelete++;
-
-
-
-	std::list<TexturedModel*>* newModels2 = loadObjModel("res/Models/EmeraldCoast/", "Palmtree.obj");
-	for (auto newModel : (*newModels2))
-	{
-		EC_Palmtree::models2.push_back(newModel);
-	}
-	delete newModels2;
-	Global::countDelete++;
-
-
-
-
-	std::list<TexturedModel*>* newModels3 = loadObjModel("res/Models/EmeraldCoast/", "Palmtree.obj");
-	for (auto newModel : (*newModels3))
-	{
-		EC_Palmtree::models3.push_back(newModel);
-	}
-	delete newModels3;
-	Global::countDelete++;
-
-
-
-
-	std::list<TexturedModel*>* newModels4 = loadObjModel("res/Models/EmeraldCoast/", "PalmtreeHorizontal.obj");
-	for (auto newModel : (*newModels4))
-	{
-		EC_Palmtree::modelsHorizontal.push_back(newModel);
-	}
-	delete newModels4;
-	Global::countDelete++;
+	loadObjModel(&EC_Palmtree::models1, "res/Models/EmeraldCoast/", "Palmtree.obj");
+	loadObjModel(&EC_Palmtree::models2, "res/Models/EmeraldCoast/", "Palmtree.obj");
+	loadObjModel(&EC_Palmtree::models3, "res/Models/EmeraldCoast/", "Palmtree.obj");
+	loadObjModel(&EC_Palmtree::modelsHorizontal, "res/Models/EmeraldCoast/", "PalmtreeHorizontal.obj");
 }
 
 void EC_Palmtree::deleteStaticModels()
 {
 	std::fprintf(stdout, "Deleting EC_Palmtree static models...\n");
 
-	for (auto model : EC_Palmtree::models1)
-	{
-		model->deleteMe();
-		delete model;
-		Global::countDelete++;
-	}
-	EC_Palmtree::models1.clear();
-
-	for (auto model : EC_Palmtree::models2)
-	{
-		model->deleteMe();
-		delete model;
-		Global::countDelete++;
-	}
-	EC_Palmtree::models2.clear();
-
-	for (auto model : EC_Palmtree::models3)
-	{
-		model->deleteMe();
-		delete model;
-		Global::countDelete++;
-	}
-	EC_Palmtree::models3.clear();
-
-	for (auto model : EC_Palmtree::modelsHorizontal)
-	{
-		model->deleteMe();
-		delete model;
-		Global::countDelete++;
-	}
-	EC_Palmtree::modelsHorizontal.clear();
+	Entity::deleteModels(&EC_Palmtree::models1);
+	Entity::deleteModels(&EC_Palmtree::models2);
+	Entity::deleteModels(&EC_Palmtree::models3);
+	Entity::deleteModels(&EC_Palmtree::modelsHorizontal);
 }

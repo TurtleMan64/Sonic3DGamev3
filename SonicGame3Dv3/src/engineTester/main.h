@@ -54,6 +54,7 @@ void Main_deleteAllTransparentEntites();
 #define LVL_FF 14
 
 #define ENTITY_RENDER_DIST 2000.0f
+#define ENTITY_RENDER_DIST_HIGH 5000.0f
 
 class Global
 {
@@ -76,7 +77,7 @@ public:
 	static WaterRenderer* gameWaterRenderer;
 	static WaterFrameBuffers* gameWaterFBOs;
 	static std::list<WaterTile*>* gameWaterTiles;
-	//static ShadowMapMasterRenderer* gameShadowRenderer;
+	static int finishStageTimer;
 
 	//Debug display
 	static bool debugDisplay;

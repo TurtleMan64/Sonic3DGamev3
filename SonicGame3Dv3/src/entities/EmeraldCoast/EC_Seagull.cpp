@@ -137,24 +137,12 @@ void EC_Seagull::loadStaticModels()
 
 	std::fprintf(stdout, "Loading EC_Seagull static models...\n");
 
-	std::list<TexturedModel*>* newModels = loadObjModel("res/Models/EmeraldCoast/", "Seagull.obj");
-	for (auto newModel : (*newModels))
-	{
-		EC_Seagull::models.push_back(newModel);
-	}
-	delete newModels;
-	Global::countDelete++;
+	loadObjModel(&EC_Seagull::models, "res/Models/EmeraldCoast/", "Seagull.obj");
 }
 
 void EC_Seagull::deleteStaticModels()
 {
 	std::fprintf(stdout, "Deleting EC_Seagull static models...\n");
-	for (auto model : EC_Seagull::models)
-	{
-		model->deleteMe();
-		delete model;
-		Global::countDelete++;
-	}
 
-	EC_Seagull::models.clear();
+	Entity::deleteModels(&EC_Seagull::models);
 }

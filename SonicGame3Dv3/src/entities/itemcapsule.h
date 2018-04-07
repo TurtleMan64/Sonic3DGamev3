@@ -31,8 +31,6 @@ private:
 	Body* entityGlass;
 	Body* entityItem;
 
-	static void deleteHelper(std::list<TexturedModel*>* models);
-
 public:
 	ItemCapsule();
 	ItemCapsule(float x, float y, float z, float yRot, float zRot, int type);

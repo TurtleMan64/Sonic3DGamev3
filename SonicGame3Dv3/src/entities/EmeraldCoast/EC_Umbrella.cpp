@@ -83,46 +83,14 @@ void EC_Umbrella::loadStaticModels()
 
 	std::fprintf(stdout, "Loading EC_Umbrella static models...\n");
 
-
-	{
-		std::list<TexturedModel*>* newModels = loadObjModel("res/Models/EmeraldCoast/", "Umbrella.obj");
-		for (auto newModel : (*newModels))
-		{
-			EC_Umbrella::models1.push_back(newModel);
-		}
-		delete newModels;
-		Global::countDelete++;
-	}
-
-	{
-		std::list<TexturedModel*>* newModels = loadObjModel("res/Models/EmeraldCoast/", "Umbrella2.obj");
-		for (auto newModel : (*newModels))
-		{
-			EC_Umbrella::models2.push_back(newModel);
-		}
-		delete newModels;
-		Global::countDelete++;
-	}
+	loadObjModel(&EC_Umbrella::models1, "res/Models/EmeraldCoast/", "Umbrella.obj");
+	loadObjModel(&EC_Umbrella::models2, "res/Models/EmeraldCoast/", "Umbrella2.obj");
 }
 
 void EC_Umbrella::deleteStaticModels()
 {
 	std::fprintf(stdout, "Deleting EC_Umbrella static models...\n");
-	for (auto model : EC_Umbrella::models1)
-	{
-		model->deleteMe();
-		delete model;
-		Global::countDelete++;
-	}
 
-	EC_Umbrella::models1.clear();
-
-	for (auto model : EC_Umbrella::models2)
-	{
-		model->deleteMe();
-		delete model;
-		Global::countDelete++;
-	}
-
-	EC_Umbrella::models2.clear();
+	Entity::deleteModels(&EC_Umbrella::models1);
+	Entity::deleteModels(&EC_Umbrella::models2);
 }

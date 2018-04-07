@@ -51,26 +51,14 @@ void LowQualityWater::loadStaticModels()
 
 	std::fprintf(stdout, "Loading LowQualityWater static models...\n");
 
-	std::list<TexturedModel*>* newModels = loadObjModel("res/Models/Water/", "LowQualityWater.obj");
-	for (auto newModel : (*newModels))
-	{
-		LowQualityWater::models.push_back(newModel);
-	}
-	delete newModels;
-	Global::countDelete++;
+	loadObjModel(&LowQualityWater::models, "res/Models/Water/", "LowQualityWater.obj");
 }
 
 void LowQualityWater::deleteStaticModels()
 {
 	std::fprintf(stdout, "Deleting LowQualityWater models...\n");
-	for (auto model : LowQualityWater::models)
-	{
-		model->deleteMe(); //delete opengl ids
-		delete model;
-		Global::countDelete++;
-	}
 
-	LowQualityWater::models.clear();
+	Entity::deleteModels(&LowQualityWater::models);
 }
 
 std::string LowQualityWater::getName()

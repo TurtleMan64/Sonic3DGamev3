@@ -102,26 +102,14 @@ void TP_FlatWater::loadStaticModels()
 
 	std::fprintf(stdout, "Loading TP_FlatWater static models...\n");
 
-	std::list<TexturedModel*>* newModels = loadObjModel("res/Models/TwinklePark/", "FlatWater.obj");
-	for (auto newModel : (*newModels))
-	{
-		TP_FlatWater::models.push_back(newModel);
-	}
-	delete newModels;
-	Global::countDelete++;
+	loadObjModel(&TP_FlatWater::models, "res/Models/TwinklePark/", "FlatWater.obj");
 }
 
 void TP_FlatWater::deleteStaticModels()
 {
 	std::fprintf(stdout, "Deleting TP_FlatWater static models...\n");
-	for (auto model : TP_FlatWater::models)
-	{
-		model->deleteMe();
-		delete model;
-		Global::countDelete++;
-	}
 
-	TP_FlatWater::models.clear();
+	Entity::deleteModels(&TP_FlatWater::models);
 }
 
 std::string TP_FlatWater::getName()

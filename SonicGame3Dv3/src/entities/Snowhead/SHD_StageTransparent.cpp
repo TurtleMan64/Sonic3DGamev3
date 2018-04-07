@@ -49,24 +49,12 @@ void SHD_StageTransparent::loadStaticModels()
 
 	std::fprintf(stdout, "Loading SHD_StageTransparent static models...\n");
 
-	std::list<TexturedModel*>* newModels = loadObjModel("res/Models/Snowhead/", "SnowheadTransparent.obj");
-	for (auto newModel : (*newModels))
-	{
-		SHD_StageTransparent::models.push_back(newModel);
-	}
-	delete newModels;
-	Global::countDelete++;
+	loadObjModel(&SHD_StageTransparent::models, "res/Models/Snowhead/", "SnowheadTransparent.obj");
 }
 
 void SHD_StageTransparent::deleteStaticModels()
 {
 	std::fprintf(stdout, "Deleting SHD_StageTransparent static models...\n");
-	for (auto model : SHD_StageTransparent::models)
-	{
-		model->deleteMe();
-		delete model;
-		Global::countDelete++;
-	}
 
-	SHD_StageTransparent::models.clear();
+	Entity::deleteModels(&SHD_StageTransparent::models);
 }

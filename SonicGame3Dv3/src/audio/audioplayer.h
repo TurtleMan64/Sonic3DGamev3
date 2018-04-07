@@ -56,5 +56,13 @@ public:
 	static void refreshBGM();
 
 	static void stopBGM();
+
+	//static float getSoundLevelBGM();
+
+	//static float getSoundLevelSE();
+
+	//percent should be 0 ... 1
+	//this is then multiplied by soundLevelBGM
+	static void setBGMVolume(float percent);
 };
 #endif

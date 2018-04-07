@@ -121,14 +121,7 @@ void EC_RaftSmall::loadStaticModels()
 
 	std::fprintf(stdout, "Loading EC_RaftSmall static models...\n");
 
-	std::list<TexturedModel*>* newModels = loadObjModel("res/Models/EmeraldCoast/", "RaftSmall.obj");
-	for (auto newModel : (*newModels))
-	{
-		EC_RaftSmall::models.push_back(newModel);
-	}
-	delete newModels;
-	Global::countDelete++;
-
+	loadObjModel(&EC_RaftSmall::models, "res/Models/EmeraldCoast/", "RaftSmall.obj");
 
 	if (EC_RaftSmall::cmOriginal == nullptr)
 	{
@@ -139,20 +132,7 @@ void EC_RaftSmall::loadStaticModels()
 void EC_RaftSmall::deleteStaticModels()
 {
 	std::fprintf(stdout, "Deleting EC_RaftSmall static models...\n");
-	for (auto model : EC_RaftSmall::models)
-	{
-		model->deleteMe();
-		delete model;
-		Global::countDelete++;
-	}
-
-	EC_RaftSmall::models.clear();
-
-	if (EC_RaftSmall::cmOriginal != nullptr)
-	{
-		EC_RaftSmall::cmOriginal->deleteMe();
-		delete EC_RaftSmall::cmOriginal;
-		Global::countDelete++;
-		EC_RaftSmall::cmOriginal = nullptr;
-	}
+	
+	Entity::deleteModels(&EC_RaftSmall::models);
+	Entity::deleteCollisionModel(&EC_RaftSmall::cmOriginal);
 }

@@ -25,6 +25,7 @@
 #include "../audio/source.h"
 #include "../particles/particle.h"
 #include "../particles/particleresources.h"
+#include "stage.h"
 
 std::list<TexturedModel*> Player::modelBody;
 std::list<TexturedModel*> Player::modelHead;
@@ -1051,176 +1052,166 @@ std::list<TexturedModel*>* Player::getModels()
 	return nullptr; //We should never be visible, so this should never be called anyway
 }
 
-void loadModelsHelper(std::list<TexturedModel*>* newModels, std::list<TexturedModel*>* destination)
-{
-	for (TexturedModel* newModel : (*newModels))
-	{
-		destination->push_back(newModel);
-	}
-
-	delete newModels;
-	Global::countDelete++;
-}
-
 void Player::loadStaticModels()
 {
 	if (Player::characterID == 0)
 	{
-		if (Player::modelBody.size() == 0) { loadModelsHelper(loadObjModel("res/Models/Sonic/", "Body.obj"), &Player::modelBody); }
-		if (Player::modelHead.size() == 0) { loadModelsHelper(loadObjModel("res/Models/Sonic/", "Head.obj"), &Player::modelHead); }
-		if (Player::modelLeftHumerus.size() == 0) { loadModelsHelper(loadObjModel("res/Models/Sonic/", "Humerus.obj"), &Player::modelLeftHumerus); }
-		if (Player::modelLeftForearm.size() == 0) { loadModelsHelper(loadObjModel("res/Models/Sonic/", "Forearm.obj"), &Player::modelLeftForearm); }
-		if (Player::modelLeftHand.size() == 0) { loadModelsHelper(loadObjModel("res/Models/Sonic/", "LeftHand.obj"), &Player::modelLeftHand); }
-		if (Player::modelLeftThigh.size() == 0) { loadModelsHelper(loadObjModel("res/Models/Sonic/", "Thigh.obj"), &Player::modelLeftThigh); }
-		if (Player::modelLeftShin.size() == 0) { loadModelsHelper(loadObjModel("res/Models/Sonic/", "Shin.obj"), &Player::modelLeftShin); }
-		if (Player::modelLeftFoot.size() == 0) { loadModelsHelper(loadObjModel("res/Models/Sonic/", "Foot.obj"), &Player::modelLeftFoot); }
-		if (Player::modelRightHumerus.size() == 0) { loadModelsHelper(loadObjModel("res/Models/Sonic/", "Humerus.obj"), &Player::modelRightHumerus); }
-		if (Player::modelRightForearm.size() == 0) { loadModelsHelper(loadObjModel("res/Models/Sonic/", "Forearm.obj"), &Player::modelRightForearm); }
-		if (Player::modelRightHand.size() == 0) { loadModelsHelper(loadObjModel("res/Models/Sonic/", "RightHand.obj"), &Player::modelRightHand); }
-		if (Player::modelRightThigh.size() == 0) { loadModelsHelper(loadObjModel("res/Models/Sonic/", "Thigh.obj"), &Player::modelRightThigh); }
-		if (Player::modelRightShin.size() == 0) { loadModelsHelper(loadObjModel("res/Models/Sonic/", "Shin.obj"), &Player::modelRightShin); }
-		if (Player::modelRightFoot.size() == 0) { loadModelsHelper(loadObjModel("res/Models/Sonic/", "Foot.obj"), &Player::modelRightFoot); }
+		loadObjModel(&Player::modelBody,         "res/Models/Sonic/", "Body.obj");
+		loadObjModel(&Player::modelHead,         "res/Models/Sonic/", "Head.obj");
+		loadObjModel(&Player::modelLeftHumerus,  "res/Models/Sonic/", "Humerus.obj");
+		loadObjModel(&Player::modelLeftForearm,  "res/Models/Sonic/", "Forearm.obj");
+		loadObjModel(&Player::modelLeftHand,     "res/Models/Sonic/", "LeftHand.obj");
+		loadObjModel(&Player::modelLeftThigh,    "res/Models/Sonic/", "Thigh.obj");
+		loadObjModel(&Player::modelLeftShin,     "res/Models/Sonic/", "Shin.obj");
+		loadObjModel(&Player::modelLeftFoot,     "res/Models/Sonic/", "Foot.obj");
+		loadObjModel(&Player::modelRightHumerus, "res/Models/Sonic/", "Humerus.obj");
+		loadObjModel(&Player::modelRightForearm, "res/Models/Sonic/", "Forearm.obj");
+		loadObjModel(&Player::modelRightHand,    "res/Models/Sonic/", "RightHand.obj");
+		loadObjModel(&Player::modelRightThigh,   "res/Models/Sonic/", "Thigh.obj");
+		loadObjModel(&Player::modelRightShin,    "res/Models/Sonic/", "Shin.obj");
+		loadObjModel(&Player::modelRightFoot,    "res/Models/Sonic/", "Foot.obj");
 	}
 	if (Player::characterID == 1) //Doll Sonic
 	{
-		if (Player::modelBody.size() == 0) { loadModelsHelper(loadObjModel("res/Models/SonicDoll/", "Body.obj"), &Player::modelBody); }
-		if (Player::modelHead.size() == 0) { loadModelsHelper(loadObjModel("res/Models/SonicDoll/", "Head.obj"), &Player::modelHead); }
-		if (Player::modelLeftHumerus.size() == 0) { loadModelsHelper(loadObjModel("res/Models/SonicDoll/", "Humerus.obj"), &Player::modelLeftHumerus); }
-		if (Player::modelLeftForearm.size() == 0) { loadModelsHelper(loadObjModel("res/Models/SonicDoll/", "Forearm.obj"), &Player::modelLeftForearm); }
-		if (Player::modelLeftHand.size() == 0) { loadModelsHelper(loadObjModel("res/Models/SonicDoll/", "HandL.obj"), &Player::modelLeftHand); }
-		if (Player::modelLeftThigh.size() == 0) { loadModelsHelper(loadObjModel("res/Models/SonicDoll/", "Thigh.obj"), &Player::modelLeftThigh); }
-		if (Player::modelLeftShin.size() == 0) { loadModelsHelper(loadObjModel("res/Models/SonicDoll/", "Shin.obj"), &Player::modelLeftShin); }
-		if (Player::modelLeftFoot.size() == 0) { loadModelsHelper(loadObjModel("res/Models/SonicDoll/", "FootL.obj"), &Player::modelLeftFoot); }
-		if (Player::modelRightHumerus.size() == 0) { loadModelsHelper(loadObjModel("res/Models/SonicDoll/", "Humerus.obj"), &Player::modelRightHumerus); }
-		if (Player::modelRightForearm.size() == 0) { loadModelsHelper(loadObjModel("res/Models/SonicDoll/", "Forearm.obj"), &Player::modelRightForearm); }
-		if (Player::modelRightHand.size() == 0) { loadModelsHelper(loadObjModel("res/Models/SonicDoll/", "HandR.obj"), &Player::modelRightHand); }
-		if (Player::modelRightThigh.size() == 0) { loadModelsHelper(loadObjModel("res/Models/SonicDoll/", "Thigh.obj"), &Player::modelRightThigh); }
-		if (Player::modelRightShin.size() == 0) { loadModelsHelper(loadObjModel("res/Models/SonicDoll/", "Shin.obj"), &Player::modelRightShin); }
-		if (Player::modelRightFoot.size() == 0) { loadModelsHelper(loadObjModel("res/Models/SonicDoll/", "FootR.obj"), &Player::modelRightFoot); }
+		loadObjModel(&Player::modelBody,         "res/Models/SonicDoll/", "Body.obj");
+		loadObjModel(&Player::modelHead,         "res/Models/SonicDoll/", "Head.obj");
+		loadObjModel(&Player::modelLeftHumerus,  "res/Models/SonicDoll/", "Humerus.obj");
+		loadObjModel(&Player::modelLeftForearm,  "res/Models/SonicDoll/", "Forearm.obj");
+		loadObjModel(&Player::modelLeftHand,     "res/Models/SonicDoll/", "HandL.obj");
+		loadObjModel(&Player::modelLeftThigh,    "res/Models/SonicDoll/", "Thigh.obj");
+		loadObjModel(&Player::modelLeftShin,     "res/Models/SonicDoll/", "Shin.obj");
+		loadObjModel(&Player::modelLeftFoot,     "res/Models/SonicDoll/", "FootL.obj");
+		loadObjModel(&Player::modelRightHumerus, "res/Models/SonicDoll/", "Humerus.obj");
+		loadObjModel(&Player::modelRightForearm, "res/Models/SonicDoll/", "Forearm.obj");
+		loadObjModel(&Player::modelRightHand,    "res/Models/SonicDoll/", "HandR.obj");
+		loadObjModel(&Player::modelRightThigh,   "res/Models/SonicDoll/", "Thigh.obj");
+		loadObjModel(&Player::modelRightShin,    "res/Models/SonicDoll/", "Shin.obj");
+		loadObjModel(&Player::modelRightFoot,    "res/Models/SonicDoll/", "FootR.obj");
 	}
 	if (Player::characterID == 2) //Mecha Sonic
 	{
-		if (Player::modelBody.size() == 0) { loadModelsHelper(loadObjModel("res/Models/SilverSonic/", "Body.obj"), &Player::modelBody); }
-		if (Player::modelHead.size() == 0) { loadModelsHelper(loadObjModel("res/Models/SilverSonic/", "Head.obj"), &Player::modelHead); }
-		if (Player::modelLeftHumerus.size() == 0) { loadModelsHelper(loadObjModel("res/Models/SilverSonic/", "Humerus.obj"), &Player::modelLeftHumerus); }
-		if (Player::modelLeftForearm.size() == 0) { loadModelsHelper(loadObjModel("res/Models/SilverSonic/", "ForearmL.obj"), &Player::modelLeftForearm); }
-		if (Player::modelLeftHand.size() == 0) { loadModelsHelper(loadObjModel("res/Models/SilverSonic/", "HandL.obj"), &Player::modelLeftHand); }
-		if (Player::modelLeftThigh.size() == 0) { loadModelsHelper(loadObjModel("res/Models/SilverSonic/", "Thigh.obj"), &Player::modelLeftThigh); }
-		if (Player::modelLeftShin.size() == 0) { loadModelsHelper(loadObjModel("res/Models/SilverSonic/", "ShinL.obj"), &Player::modelLeftShin); }
-		if (Player::modelLeftFoot.size() == 0) { loadModelsHelper(loadObjModel("res/Models/SilverSonic/", "FootL.obj"), &Player::modelLeftFoot); }
-		if (Player::modelRightHumerus.size() == 0) { loadModelsHelper(loadObjModel("res/Models/SilverSonic/", "Humerus.obj"), &Player::modelRightHumerus); }
-		if (Player::modelRightForearm.size() == 0) { loadModelsHelper(loadObjModel("res/Models/SilverSonic/", "ForearmR.obj"), &Player::modelRightForearm); }
-		if (Player::modelRightHand.size() == 0) { loadModelsHelper(loadObjModel("res/Models/SilverSonic/", "HandR.obj"), &Player::modelRightHand); }
-		if (Player::modelRightThigh.size() == 0) { loadModelsHelper(loadObjModel("res/Models/SilverSonic/", "Thigh.obj"), &Player::modelRightThigh); }
-		if (Player::modelRightShin.size() == 0) { loadModelsHelper(loadObjModel("res/Models/SilverSonic/", "ShinR.obj"), &Player::modelRightShin); }
-		if (Player::modelRightFoot.size() == 0) { loadModelsHelper(loadObjModel("res/Models/SilverSonic/", "FootR.obj"), &Player::modelRightFoot); }
+		loadObjModel(&Player::modelBody,         "res/Models/SilverSonic/", "Body.obj");
+		loadObjModel(&Player::modelHead,         "res/Models/SilverSonic/", "Head.obj");
+		loadObjModel(&Player::modelLeftHumerus,  "res/Models/SilverSonic/", "Humerus.obj");
+		loadObjModel(&Player::modelLeftForearm,  "res/Models/SilverSonic/", "ForearmL.obj");
+		loadObjModel(&Player::modelLeftHand,     "res/Models/SilverSonic/", "HandL.obj");
+		loadObjModel(&Player::modelLeftThigh,    "res/Models/SilverSonic/", "Thigh.obj");
+		loadObjModel(&Player::modelLeftShin,     "res/Models/SilverSonic/", "ShinL.obj");
+		loadObjModel(&Player::modelLeftFoot,     "res/Models/SilverSonic/", "FootL.obj");
+		loadObjModel(&Player::modelRightHumerus, "res/Models/SilverSonic/", "Humerus.obj");
+		loadObjModel(&Player::modelRightForearm, "res/Models/SilverSonic/", "ForearmR.obj");
+		loadObjModel(&Player::modelRightHand,    "res/Models/SilverSonic/", "HandR.obj");
+		loadObjModel(&Player::modelRightThigh,   "res/Models/SilverSonic/", "Thigh.obj");
+		loadObjModel(&Player::modelRightShin,    "res/Models/SilverSonic/", "ShinR.obj");
+		loadObjModel(&Player::modelRightFoot,    "res/Models/SilverSonic/", "FootR.obj");
 	}
 	else if(Player::characterID == 3) //Dage 4 Aquatic
 	{
-		if (Player::modelBody.size() == 0) { loadModelsHelper(loadObjModel("res/Models/Dage4Aquatic/", "Body.obj"), &Player::modelBody); }
-		if (Player::modelHead.size() == 0) { loadModelsHelper(loadObjModel("res/Models/Dage4Aquatic/", "Head.obj"), &Player::modelHead); }
-		if (Player::modelLeftHumerus.size() == 0) { loadModelsHelper(loadObjModel("res/Models/Dage4Aquatic/", "Humerus.obj"), &Player::modelLeftHumerus); }
-		if (Player::modelLeftForearm.size() == 0) { loadModelsHelper(loadObjModel("res/Models/Dage4Aquatic/", "Forearm.obj"), &Player::modelLeftForearm); }
-		if (Player::modelLeftHand.size() == 0) { loadModelsHelper(loadObjModel("res/Models/Dage4Aquatic/", "LeftHand.obj"), &Player::modelLeftHand); }
-		if (Player::modelLeftThigh.size() == 0) { loadModelsHelper(loadObjModel("res/Models/Dage4Aquatic/", "Thigh.obj"), &Player::modelLeftThigh); }
-		if (Player::modelLeftShin.size() == 0) { loadModelsHelper(loadObjModel("res/Models/Dage4Aquatic/", "Shin.obj"), &Player::modelLeftShin); }
-		if (Player::modelLeftFoot.size() == 0) { loadModelsHelper(loadObjModel("res/Models/Dage4Aquatic/", "Foot.obj"), &Player::modelLeftFoot); }
-		if (Player::modelRightHumerus.size() == 0) { loadModelsHelper(loadObjModel("res/Models/Dage4Aquatic/", "Humerus.obj"), &Player::modelRightHumerus); }
-		if (Player::modelRightForearm.size() == 0) { loadModelsHelper(loadObjModel("res/Models/Dage4Aquatic/", "Forearm.obj"), &Player::modelRightForearm); }
-		if (Player::modelRightHand.size() == 0) { loadModelsHelper(loadObjModel("res/Models/Dage4Aquatic/", "RightHand.obj"), &Player::modelRightHand); }
-		if (Player::modelRightThigh.size() == 0) { loadModelsHelper(loadObjModel("res/Models/Dage4Aquatic/", "Thigh.obj"), &Player::modelRightThigh); }
-		if (Player::modelRightShin.size() == 0) { loadModelsHelper(loadObjModel("res/Models/Dage4Aquatic/", "Shin.obj"), &Player::modelRightShin); }
-		if (Player::modelRightFoot.size() == 0) { loadModelsHelper(loadObjModel("res/Models/Dage4Aquatic/", "Foot.obj"), &Player::modelRightFoot); }
+		loadObjModel(&Player::modelBody,         "res/Models/Dage4Aquatic/", "Body.obj");
+		loadObjModel(&Player::modelHead,         "res/Models/Dage4Aquatic/", "Head.obj");
+		loadObjModel(&Player::modelLeftHumerus,  "res/Models/Dage4Aquatic/", "Humerus.obj");
+		loadObjModel(&Player::modelLeftForearm,  "res/Models/Dage4Aquatic/", "Forearm.obj");
+		loadObjModel(&Player::modelLeftHand,     "res/Models/Dage4Aquatic/", "LeftHand.obj");
+		loadObjModel(&Player::modelLeftThigh,    "res/Models/Dage4Aquatic/", "Thigh.obj");
+		loadObjModel(&Player::modelLeftShin,     "res/Models/Dage4Aquatic/", "Shin.obj");
+		loadObjModel(&Player::modelLeftFoot,     "res/Models/Dage4Aquatic/", "Foot.obj");
+		loadObjModel(&Player::modelRightHumerus, "res/Models/Dage4Aquatic/", "Humerus.obj");
+		loadObjModel(&Player::modelRightForearm, "res/Models/Dage4Aquatic/", "Forearm.obj");
+		loadObjModel(&Player::modelRightHand,    "res/Models/Dage4Aquatic/", "RightHand.obj");
+		loadObjModel(&Player::modelRightThigh,   "res/Models/Dage4Aquatic/", "Thigh.obj");
+		loadObjModel(&Player::modelRightShin,    "res/Models/Dage4Aquatic/", "Shin.obj");
+		loadObjModel(&Player::modelRightFoot,    "res/Models/Dage4Aquatic/", "Foot.obj");
 	}
 	else if (Player::characterID == 4) //Mania Sonic
 	{
 		ManiaSonicModel::loadStaticModels();
 
-		if (Player::modelBody.size() == 0) { loadModelsHelper(loadObjModel("res/Models/SonicMania/", "Body.obj"), &Player::modelBody); }
-		if (Player::modelHead.size() == 0) { loadModelsHelper(loadObjModel("res/Models/SonicMania/", "Head.obj"), &Player::modelHead); }
-		if (Player::modelLeftHumerus.size() == 0) { loadModelsHelper(loadObjModel("res/Models/SonicMania/", "Humerus.obj"), &Player::modelLeftHumerus); }
-		if (Player::modelLeftForearm.size() == 0) { loadModelsHelper(loadObjModel("res/Models/SonicMania/", "Forearm.obj"), &Player::modelLeftForearm); }
-		if (Player::modelLeftHand.size() == 0) { loadModelsHelper(loadObjModel("res/Models/SonicMania/", "HandLeft.obj"), &Player::modelLeftHand); }
-		if (Player::modelLeftThigh.size() == 0) { loadModelsHelper(loadObjModel("res/Models/SonicMania/", "Thigh.obj"), &Player::modelLeftThigh); }
-		if (Player::modelLeftShin.size() == 0) { loadModelsHelper(loadObjModel("res/Models/SonicMania/", "Shin.obj"), &Player::modelLeftShin); }
-		if (Player::modelLeftFoot.size() == 0) { loadModelsHelper(loadObjModel("res/Models/SonicMania/", "ShoeLeft.obj"), &Player::modelLeftFoot); }
-		if (Player::modelRightHumerus.size() == 0) { loadModelsHelper(loadObjModel("res/Models/SonicMania/", "Humerus.obj"), &Player::modelRightHumerus); }
-		if (Player::modelRightForearm.size() == 0) { loadModelsHelper(loadObjModel("res/Models/SonicMania/", "Forearm.obj"), &Player::modelRightForearm); }
-		if (Player::modelRightHand.size() == 0) { loadModelsHelper(loadObjModel("res/Models/SonicMania/", "HandRight.obj"), &Player::modelRightHand); }
-		if (Player::modelRightThigh.size() == 0) { loadModelsHelper(loadObjModel("res/Models/SonicMania/", "Thigh.obj"), &Player::modelRightThigh); }
-		if (Player::modelRightShin.size() == 0) { loadModelsHelper(loadObjModel("res/Models/SonicMania/", "Shin.obj"), &Player::modelRightShin); }
-		if (Player::modelRightFoot.size() == 0) { loadModelsHelper(loadObjModel("res/Models/SonicMania/", "ShoeRight.obj"), &Player::modelRightFoot); }
+		loadObjModel(&Player::modelBody,         "res/Models/SonicMania/", "Body.obj");
+		loadObjModel(&Player::modelHead,         "res/Models/SonicMania/", "Head.obj");
+		loadObjModel(&Player::modelLeftHumerus,  "res/Models/SonicMania/", "Humerus.obj");
+		loadObjModel(&Player::modelLeftForearm,  "res/Models/SonicMania/", "Forearm.obj");
+		loadObjModel(&Player::modelLeftHand,     "res/Models/SonicMania/", "HandLeft.obj");
+		loadObjModel(&Player::modelLeftThigh,    "res/Models/SonicMania/", "Thigh.obj");
+		loadObjModel(&Player::modelLeftShin,     "res/Models/SonicMania/", "Shin.obj");
+		loadObjModel(&Player::modelLeftFoot,     "res/Models/SonicMania/", "ShoeLeft.obj");
+		loadObjModel(&Player::modelRightHumerus, "res/Models/SonicMania/", "Humerus.obj");
+		loadObjModel(&Player::modelRightForearm, "res/Models/SonicMania/", "Forearm.obj");
+		loadObjModel(&Player::modelRightHand,    "res/Models/SonicMania/", "HandRight.obj");
+		loadObjModel(&Player::modelRightThigh,   "res/Models/SonicMania/", "Thigh.obj");
+		loadObjModel(&Player::modelRightShin,    "res/Models/SonicMania/", "Shin.obj");
+		loadObjModel(&Player::modelRightFoot,    "res/Models/SonicMania/", "ShoeRight.obj");
 	}
 	else if (Player::characterID == 5) //Amy
 	{
-		if (Player::modelBody.size() == 0) { loadModelsHelper(loadObjModel("res/Models/Amy/", "Body.obj"), &Player::modelBody); }
-		if (Player::modelHead.size() == 0) { loadModelsHelper(loadObjModel("res/Models/Amy/", "Head.obj"), &Player::modelHead); }
-		if (Player::modelLeftHumerus.size() == 0) { loadModelsHelper(loadObjModel("res/Models/Amy/", "Humerus.obj"), &Player::modelLeftHumerus); }
-		if (Player::modelLeftForearm.size() == 0) { loadModelsHelper(loadObjModel("res/Models/Amy/", "Forearm.obj"), &Player::modelLeftForearm); }
-		if (Player::modelLeftHand.size() == 0) { loadModelsHelper(loadObjModel("res/Models/Amy/", "LeftHand.obj"), &Player::modelLeftHand); }
-		if (Player::modelLeftThigh.size() == 0) { loadModelsHelper(loadObjModel("res/Models/Amy/", "Thigh.obj"), &Player::modelLeftThigh); }
-		if (Player::modelLeftShin.size() == 0) { loadModelsHelper(loadObjModel("res/Models/Amy/", "Shin.obj"), &Player::modelLeftShin); }
-		if (Player::modelLeftFoot.size() == 0) { loadModelsHelper(loadObjModel("res/Models/Amy/", "Foot.obj"), &Player::modelLeftFoot); }
-		if (Player::modelRightHumerus.size() == 0) { loadModelsHelper(loadObjModel("res/Models/Amy/", "Humerus.obj"), &Player::modelRightHumerus); }
-		if (Player::modelRightForearm.size() == 0) { loadModelsHelper(loadObjModel("res/Models/Amy/", "Forearm.obj"), &Player::modelRightForearm); }
-		if (Player::modelRightHand.size() == 0) { loadModelsHelper(loadObjModel("res/Models/Amy/", "RightHand.obj"), &Player::modelRightHand); }
-		if (Player::modelRightThigh.size() == 0) { loadModelsHelper(loadObjModel("res/Models/Amy/", "Thigh.obj"), &Player::modelRightThigh); }
-		if (Player::modelRightShin.size() == 0) { loadModelsHelper(loadObjModel("res/Models/Amy/", "Shin.obj"), &Player::modelRightShin); }
-		if (Player::modelRightFoot.size() == 0) { loadModelsHelper(loadObjModel("res/Models/Amy/", "Foot.obj"), &Player::modelRightFoot); }
+		loadObjModel(&Player::modelBody,         "res/Models/Amy/", "Body.obj");
+		loadObjModel(&Player::modelHead,         "res/Models/Amy/", "Head.obj");
+		loadObjModel(&Player::modelLeftHumerus,  "res/Models/Amy/", "Humerus.obj");
+		loadObjModel(&Player::modelLeftForearm,  "res/Models/Amy/", "Forearm.obj");
+		loadObjModel(&Player::modelLeftHand,     "res/Models/Amy/", "LeftHand.obj");
+		loadObjModel(&Player::modelLeftThigh,    "res/Models/Amy/", "Thigh.obj");
+		loadObjModel(&Player::modelLeftShin,     "res/Models/Amy/", "Shin.obj");
+		loadObjModel(&Player::modelLeftFoot,     "res/Models/Amy/", "Foot.obj");
+		loadObjModel(&Player::modelRightHumerus, "res/Models/Amy/", "Humerus.obj");
+		loadObjModel(&Player::modelRightForearm, "res/Models/Amy/", "Forearm.obj");
+		loadObjModel(&Player::modelRightHand,    "res/Models/Amy/", "RightHand.obj");
+		loadObjModel(&Player::modelRightThigh,   "res/Models/Amy/", "Thigh.obj");
+		loadObjModel(&Player::modelRightShin,    "res/Models/Amy/", "Shin.obj");
+		loadObjModel(&Player::modelRightFoot,    "res/Models/Amy/", "Foot.obj");
 	}
 	else if (Player::characterID == 6) //WanamaDage
 	{
-		if (Player::modelBody.size() == 0) {         loadModelsHelper(loadObjModel("res/Models/WanamaDageLimbs/", "Body.obj"), &Player::modelBody); }
-		if (Player::modelHead.size() == 0) {         loadModelsHelper(loadObjModel("res/Models/WanamaDageLimbs/", "Head.obj"), &Player::modelHead); }
-		if (Player::modelLeftHumerus.size() == 0) {  loadModelsHelper(loadObjModel("res/Models/WanamaDageLimbs/", "HumerusLeft.obj"), &Player::modelLeftHumerus); }
-		if (Player::modelLeftForearm.size() == 0) {  loadModelsHelper(loadObjModel("res/Models/WanamaDageLimbs/", "ForearmLeft.obj"), &Player::modelLeftForearm); }
-		if (Player::modelLeftHand.size() == 0) {     loadModelsHelper(loadObjModel("res/Models/WanamaDageLimbs/", "HandLeft.obj"), &Player::modelLeftHand); }
-		if (Player::modelLeftThigh.size() == 0) {    loadModelsHelper(loadObjModel("res/Models/WanamaDageLimbs/", "ThighLeft.obj"), &Player::modelLeftThigh); }
-		if (Player::modelLeftShin.size() == 0) {     loadModelsHelper(loadObjModel("res/Models/WanamaDageLimbs/", "ShinLeft.obj"), &Player::modelLeftShin); }
-		if (Player::modelLeftFoot.size() == 0) {     loadModelsHelper(loadObjModel("res/Models/WanamaDageLimbs/", "Shoe.obj"), &Player::modelLeftFoot); }
-		if (Player::modelRightHumerus.size() == 0) { loadModelsHelper(loadObjModel("res/Models/WanamaDageLimbs/", "HumerusRight.obj"), &Player::modelRightHumerus); }
-		if (Player::modelRightForearm.size() == 0) { loadModelsHelper(loadObjModel("res/Models/WanamaDageLimbs/", "ForearmRight.obj"), &Player::modelRightForearm); }
-		if (Player::modelRightHand.size() == 0) {    loadModelsHelper(loadObjModel("res/Models/WanamaDageLimbs/", "HandRight.obj"), &Player::modelRightHand); }
-		if (Player::modelRightThigh.size() == 0) {   loadModelsHelper(loadObjModel("res/Models/WanamaDageLimbs/", "ThighRight.obj"), &Player::modelRightThigh); }
-		if (Player::modelRightShin.size() == 0) {    loadModelsHelper(loadObjModel("res/Models/WanamaDageLimbs/", "ShinRight.obj"), &Player::modelRightShin); }
-		if (Player::modelRightFoot.size() == 0) {    loadModelsHelper(loadObjModel("res/Models/WanamaDageLimbs/", "Shoe.obj"), &Player::modelRightFoot); }
+		loadObjModel(&Player::modelBody,         "res/Models/WanamaDageLimbs/", "Body.obj");
+		loadObjModel(&Player::modelHead,         "res/Models/WanamaDageLimbs/", "Head.obj");
+		loadObjModel(&Player::modelLeftHumerus,  "res/Models/WanamaDageLimbs/", "HumerusLeft.obj");
+		loadObjModel(&Player::modelLeftForearm,  "res/Models/WanamaDageLimbs/", "ForearmLeft.obj");
+		loadObjModel(&Player::modelLeftHand,     "res/Models/WanamaDageLimbs/", "HandLeft.obj");
+		loadObjModel(&Player::modelLeftThigh,    "res/Models/WanamaDageLimbs/", "ThighLeft.obj");
+		loadObjModel(&Player::modelLeftShin,     "res/Models/WanamaDageLimbs/", "ShinLeft.obj");
+		loadObjModel(&Player::modelLeftFoot,     "res/Models/WanamaDageLimbs/", "Shoe.obj");
+		loadObjModel(&Player::modelRightHumerus, "res/Models/WanamaDageLimbs/", "HumerusRight.obj");
+		loadObjModel(&Player::modelRightForearm, "res/Models/WanamaDageLimbs/", "ForearmRight.obj");
+		loadObjModel(&Player::modelRightHand,    "res/Models/WanamaDageLimbs/", "HandRight.obj");
+		loadObjModel(&Player::modelRightThigh,   "res/Models/WanamaDageLimbs/", "ThighRight.obj");
+		loadObjModel(&Player::modelRightShin,    "res/Models/WanamaDageLimbs/", "ShinRight.obj");
+		loadObjModel(&Player::modelRightFoot,    "res/Models/WanamaDageLimbs/", "Shoe.obj");
 	}
 	else if (Player::characterID == 7) //Pac Man
 	{
-		if (Player::modelBody.size() == 0) {         loadModelsHelper(loadObjModel("res/Models/PacMan/", "HeadBody.obj"), &Player::modelBody); }
-		if (Player::modelHead.size() == 0) {         loadModelsHelper(loadObjModel("res/Models/PacMan/", "Blank.obj"), &Player::modelHead); }
-		if (Player::modelLeftHumerus.size() == 0) {  loadModelsHelper(loadObjModel("res/Models/PacMan/", "Limb.obj"), &Player::modelLeftHumerus); }
-		if (Player::modelLeftForearm.size() == 0) {  loadModelsHelper(loadObjModel("res/Models/PacMan/", "Limb.obj"), &Player::modelLeftForearm); }
-		if (Player::modelLeftHand.size() == 0) {     loadModelsHelper(loadObjModel("res/Models/PacMan/", "Hand.obj"), &Player::modelLeftHand); }
-		if (Player::modelLeftThigh.size() == 0) {    loadModelsHelper(loadObjModel("res/Models/PacMan/", "Limb.obj"), &Player::modelLeftThigh); }
-		if (Player::modelLeftShin.size() == 0) {     loadModelsHelper(loadObjModel("res/Models/PacMan/", "Limb.obj"), &Player::modelLeftShin); }
-		if (Player::modelLeftFoot.size() == 0) {     loadModelsHelper(loadObjModel("res/Models/PacMan/", "Shoe.obj"), &Player::modelLeftFoot); }
-		if (Player::modelRightHumerus.size() == 0) { loadModelsHelper(loadObjModel("res/Models/PacMan/", "Limb.obj"), &Player::modelRightHumerus); }
-		if (Player::modelRightForearm.size() == 0) { loadModelsHelper(loadObjModel("res/Models/PacMan/", "Limb.obj"), &Player::modelRightForearm); }
-		if (Player::modelRightHand.size() == 0) {    loadModelsHelper(loadObjModel("res/Models/PacMan/", "Hand.obj"), &Player::modelRightHand); }
-		if (Player::modelRightThigh.size() == 0) {   loadModelsHelper(loadObjModel("res/Models/PacMan/", "Limb.obj"), &Player::modelRightThigh); }
-		if (Player::modelRightShin.size() == 0) {    loadModelsHelper(loadObjModel("res/Models/PacMan/", "Limb.obj"), &Player::modelRightShin); }
-		if (Player::modelRightFoot.size() == 0) {    loadModelsHelper(loadObjModel("res/Models/PacMan/", "Shoe.obj"), &Player::modelRightFoot); }
+		loadObjModel(&Player::modelBody,         "res/Models/PacMan/", "HeadBody.obj");
+		loadObjModel(&Player::modelHead,         "res/Models/PacMan/", "Blank.obj");
+		loadObjModel(&Player::modelLeftHumerus,  "res/Models/PacMan/", "Limb.obj");
+		loadObjModel(&Player::modelLeftForearm,  "res/Models/PacMan/", "Limb.obj");
+		loadObjModel(&Player::modelLeftHand,     "res/Models/PacMan/", "Hand.obj");
+		loadObjModel(&Player::modelLeftThigh,    "res/Models/PacMan/", "Limb.obj");
+		loadObjModel(&Player::modelLeftShin,     "res/Models/PacMan/", "Limb.obj");
+		loadObjModel(&Player::modelLeftFoot,     "res/Models/PacMan/", "Shoe.obj");
+		loadObjModel(&Player::modelRightHumerus, "res/Models/PacMan/", "Limb.obj");
+		loadObjModel(&Player::modelRightForearm, "res/Models/PacMan/", "Limb.obj");
+		loadObjModel(&Player::modelRightHand,    "res/Models/PacMan/", "Hand.obj");
+		loadObjModel(&Player::modelRightThigh,   "res/Models/PacMan/", "Limb.obj");
+		loadObjModel(&Player::modelRightShin,    "res/Models/PacMan/", "Limb.obj");
+		loadObjModel(&Player::modelRightFoot,    "res/Models/PacMan/", "Shoe.obj");
 	}
 }
 
 void Player::deleteStaticModels()
 {
 	std::fprintf(stdout, "Deleting player models...\n");
-	for (auto model : Player::modelBody) {         model->deleteMe(); delete model; Global::countDelete++; } Player::modelBody.clear();
-	for (auto model : Player::modelHead) {         model->deleteMe(); delete model; Global::countDelete++; } Player::modelHead.clear();
-	for (auto model : Player::modelLeftHumerus) {  model->deleteMe(); delete model; Global::countDelete++; } Player::modelLeftHumerus.clear();
-	for (auto model : Player::modelLeftForearm) {  model->deleteMe(); delete model; Global::countDelete++; } Player::modelLeftForearm.clear();
-	for (auto model : Player::modelLeftHand) {     model->deleteMe(); delete model; Global::countDelete++; } Player::modelLeftHand.clear();
-	for (auto model : Player::modelLeftThigh) {    model->deleteMe(); delete model; Global::countDelete++; } Player::modelLeftThigh.clear();
-	for (auto model : Player::modelLeftShin) {     model->deleteMe(); delete model; Global::countDelete++; } Player::modelLeftShin.clear();
-	for (auto model : Player::modelLeftFoot) {     model->deleteMe(); delete model; Global::countDelete++; } Player::modelLeftFoot.clear();
-	for (auto model : Player::modelRightHumerus) { model->deleteMe(); delete model; Global::countDelete++; } Player::modelRightHumerus.clear();
-	for (auto model : Player::modelRightForearm) { model->deleteMe(); delete model; Global::countDelete++; } Player::modelRightForearm.clear();
-	for (auto model : Player::modelRightHand) {    model->deleteMe(); delete model; Global::countDelete++; } Player::modelRightHand.clear();
-	for (auto model : Player::modelRightThigh) {   model->deleteMe(); delete model; Global::countDelete++; } Player::modelRightThigh.clear();
-	for (auto model : Player::modelRightShin) {    model->deleteMe(); delete model; Global::countDelete++; } Player::modelRightShin.clear();
-	for (auto model : Player::modelRightFoot) {    model->deleteMe(); delete model; Global::countDelete++; } Player::modelRightFoot.clear();
+
+	Entity::deleteModels(&Player::modelBody);
+	Entity::deleteModels(&Player::modelHead);
+	Entity::deleteModels(&Player::modelLeftHumerus);
+	Entity::deleteModels(&Player::modelLeftForearm);
+	Entity::deleteModels(&Player::modelLeftHand);
+	Entity::deleteModels(&Player::modelLeftThigh);
+	Entity::deleteModels(&Player::modelLeftShin);
+	Entity::deleteModels(&Player::modelLeftFoot);
+	Entity::deleteModels(&Player::modelRightHumerus);
+	Entity::deleteModels(&Player::modelRightForearm);
+	Entity::deleteModels(&Player::modelRightHand);
+	Entity::deleteModels(&Player::modelRightThigh);
+	Entity::deleteModels(&Player::modelRightShin);
+	Entity::deleteModels(&Player::modelRightFoot);
 }
 
 void Player::moveMeGround()
@@ -1298,7 +1289,7 @@ void Player::setMovementInputs()
 	moveSpeedAirCurrent = moveAccelerationAir*inputMag;
 	movementAngle = toDegrees(atan2f(movementInputY, movementInputX));
 
-	if (canMoveTimer != 0 || hitTimer > 0 || deadTimer >= 0)
+	if (canMoveTimer != 0 || hitTimer > 0 || deadTimer >= 0 || Global::finishStageTimer >= 0)
 	{
 		jumpInput = false;
 		actionInput = false;
@@ -2326,6 +2317,63 @@ void Player::animate()
 		{
 			break;
 		}
+	}
+
+	//Stage finished stuff
+	if (Global::finishStageTimer == 1)
+	{
+		Vector3f partVel(0, 0, 0);
+		new Particle(ParticleResources::textureWhiteFadeOutAndIn, Global::gameCamera->getFadePosition(), &partVel, 0, 120, 0, 400, 0, true);
+	}
+	else if (Global::finishStageTimer == 60)
+	{
+		AudioPlayer::stopBGM();
+		AudioPlayer::play(24, getPosition());
+	}
+	else if (Global::finishStageTimer == 400)
+	{
+		Vector3f partVel(0, 0, 0);
+		new Particle(ParticleResources::textureBlackFadeOutAndIn, Global::gameCamera->getFadePosition(), &partVel, 0, 120, 0, 400, 0, true);
+
+		AudioPlayer::play(25, getPosition());
+	}
+
+	if (Global::finishStageTimer >= 1 &&
+		Global::finishStageTimer < 60)
+	{
+		AudioPlayer::setBGMVolume((60-Global::finishStageTimer)/60.0f);
+	}
+
+	if (Global::finishStageTimer >= 60)
+	{
+		position.set(&Global::gameStage->finishPlayerPosition);
+		position.y = Global::gameStage->finishPlayerPosition.y + displayHeightOffset;
+		setRotY(Global::gameStage->finishPlayerRotY);
+		setCameraTargetYaw(-(getRotY()+180)+90);
+		setCameraTargetPitch(Global::gameStage->finishCameraPitch);
+		cameraRadiusTarget = 40;
+
+		setGroundSpeed(0, 0);
+		xVelAir = 0;
+		zVelAir = 0;
+		yVel = 0;
+		xVel = 0;
+		zVel = 0;
+		isJumping = false;
+		isSpindashing = false;
+		isSkidding = false;
+		isBall = false;
+		isBouncing = false;
+		isStomping = false;
+		isLightdashing = false;
+
+		if (Player::maniaSonic != nullptr) { Player::maniaSonic->setVisible(false); }
+		if (myBody != nullptr) myBody->setBaseOrientation(&position, 0, getRotY(), 90, 0);
+		setLimbsVisibility(true);
+
+		float finishTimeAnim = fminf((float)(Global::finishStageTimer-100)*2.0f, 99.99f);
+
+		updateLimbs(14, finishTimeAnim);
 	}
 
 	previousDisplayPos.set(&displayPos);

@@ -2,6 +2,7 @@
 #define ENTITIES_H
 
 class TexturedModel;
+class CollisionModel;
 
 #include <list>
 #include "../toolbox/vector.h"
@@ -17,6 +18,9 @@ protected:
 	float scale;
 	bool visible;
 	Matrix4f transformationMatrix;
+
+	static void deleteModels(std::list<TexturedModel*>* modelsToDelete);
+	static void deleteCollisionModel(CollisionModel** colModelToDelete);
 
 public:
 	Entity();
@@ -79,7 +83,5 @@ public:
 	virtual bool canHomingAttackOn();
 	
 	virtual bool isPoint();
-
-	virtual bool isSoundEmitter();
 };
 #endif

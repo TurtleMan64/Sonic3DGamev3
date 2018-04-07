@@ -70,24 +70,12 @@ void SkySphere::loadModels(char* folder, char* objname, char* mtlname)
 	std::string mtlfilename = mtlname;
 	mtlfilename = mtlfilename + ".mtl";
 
-	std::list<TexturedModel*>* newModels = loadObjModelWithMTL(path.c_str(), objfilename.c_str(), mtlfilename.c_str());
-	for (auto newModel : (*newModels))
-	{
-		SkySphere::models.push_back(newModel);
-	}
-	delete newModels;
-	Global::countDelete++;
+	loadObjModelWithMTL(&SkySphere::models, path.c_str(), objfilename.c_str(), mtlfilename.c_str());
 }
 
 void SkySphere::deleteModels()
 {
 	std::fprintf(stdout, "Deleting sky sphere models...\n");
-	for (auto model : SkySphere::models)
-	{
-		model->deleteMe(); //delete opengl ids
-		delete model;
-		Global::countDelete++;
-	}
 
-	SkySphere::models.clear();
+	Entity::deleteModels(&SkySphere::models);
 }

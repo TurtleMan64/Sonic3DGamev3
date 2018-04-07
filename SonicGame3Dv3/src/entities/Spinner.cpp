@@ -142,45 +142,16 @@ void Spinner::loadStaticModels()
 
 	std::fprintf(stdout, "Loading Spinner static models...\n");
 
-	std::list<TexturedModel*>* newModels = loadObjModel("res/Models/Spinner/", "Body.obj");
-	for (auto newModel : (*newModels))
-	{
-		Spinner::modelsBody.push_back(newModel);
-	}
-	delete newModels;
-	Global::countDelete++;
-
-
-	std::list<TexturedModel*>* newModels2 = loadObjModel("res/Models/Spinner/", "Blades.obj");
-	for (auto newModel : (*newModels2))
-	{
-		Spinner::modelsBlades.push_back(newModel);
-	}
-	delete newModels2;
-	Global::countDelete++;
+	loadObjModel(&Spinner::modelsBody,   "res/Models/Spinner/", "Body.obj");
+	loadObjModel(&Spinner::modelsBlades, "res/Models/Spinner/", "Blades.obj");
 }
 
 void Spinner::deleteStaticModels()
 {
 	std::fprintf(stdout, "Deleting Spinner static models...\n");
-	for (auto model : Spinner::modelsBody)
-	{
-		model->deleteMe();
-		delete model;
-		Global::countDelete++;
-	}
 
-	Spinner::modelsBody.clear();
-
-
-	for (auto model : Spinner::modelsBlades)
-	{
-		model->deleteMe();
-		delete model;
-		Global::countDelete++;
-	}
-
-	Spinner::modelsBlades.clear();
+	Entity::deleteModels(&Spinner::modelsBody);
+	Entity::deleteModels(&Spinner::modelsBlades);
 }
 
 bool Spinner::canHomingAttackOn()

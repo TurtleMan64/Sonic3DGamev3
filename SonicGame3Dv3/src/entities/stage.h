@@ -5,6 +5,7 @@ class TexturedModel;
 
 #include <list>
 #include "entities.h"
+#include "../toolbox/vector.h"
 #include <string>
 
 
@@ -14,6 +15,10 @@ private:
 	static std::list<TexturedModel*> models;
 
 public:
+	Vector3f finishPlayerPosition;
+	float finishPlayerRotY;
+	float finishCameraPitch;
+
 	Stage();
 
 	void step();

@@ -94,14 +94,7 @@ void EC_DockCorner::loadStaticModels()
 
 	std::fprintf(stdout, "Loading EC_DockCorner static models...\n");
 
-	std::list<TexturedModel*>* newModels = loadObjModel("res/Models/EmeraldCoast/", "DockCorner.obj");
-	for (auto newModel : (*newModels))
-	{
-		EC_DockCorner::models.push_back(newModel);
-	}
-	delete newModels;
-	Global::countDelete++;
-
+	loadObjModel(&EC_DockCorner::models, "res/Models/EmeraldCoast/", "DockCorner.obj");
 
 	if (EC_DockCorner::cmOriginal == nullptr)
 	{
@@ -112,20 +105,7 @@ void EC_DockCorner::loadStaticModels()
 void EC_DockCorner::deleteStaticModels()
 {
 	std::fprintf(stdout, "Deleting EC_DockCorner static models...\n");
-	for (auto model : EC_DockCorner::models)
-	{
-		model->deleteMe();
-		delete model;
-		Global::countDelete++;
-	}
 
-	EC_DockCorner::models.clear();
-
-	if (EC_DockCorner::cmOriginal != nullptr)
-	{
-		EC_DockCorner::cmOriginal->deleteMe();
-		delete EC_DockCorner::cmOriginal;
-		Global::countDelete++;
-		EC_DockCorner::cmOriginal = nullptr;
-	}
+	Entity::deleteModels(&EC_DockCorner::models);
+	Entity::deleteCollisionModel(&EC_DockCorner::cmOriginal);
 }

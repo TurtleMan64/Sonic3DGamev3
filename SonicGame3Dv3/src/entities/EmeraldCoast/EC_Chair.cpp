@@ -78,14 +78,7 @@ void EC_Chair::loadStaticModels()
 
 	std::fprintf(stdout, "Loading EC_Chair static models...\n");
 
-	std::list<TexturedModel*>* newModels = loadObjModel("res/Models/EmeraldCoast/", "Chair.obj");
-	for (auto newModel : (*newModels))
-	{
-		EC_Chair::models.push_back(newModel);
-	}
-	delete newModels;
-	Global::countDelete++;
-
+	loadObjModel(&EC_Chair::models, "res/Models/EmeraldCoast/", "Chair.obj");
 
 	if (EC_Chair::cmOriginal == nullptr)
 	{
@@ -96,21 +89,8 @@ void EC_Chair::loadStaticModels()
 void EC_Chair::deleteStaticModels()
 {
 	std::fprintf(stdout, "Deleting EC_Chair static models...\n");
-	for (auto model : EC_Chair::models)
-	{
-		model->deleteMe();
-		delete model;
-		Global::countDelete++;
-	}
 
-	EC_Chair::models.clear();
-
-	if (EC_Chair::cmOriginal != nullptr)
-	{
-		EC_Chair::cmOriginal->deleteMe();
-		delete EC_Chair::cmOriginal;
-		Global::countDelete++;
-		EC_Chair::cmOriginal = nullptr;
-	}
+	Entity::deleteModels(&EC_Chair::models);
+	Entity::deleteCollisionModel(&EC_Chair::cmOriginal);
 }
 

@@ -117,14 +117,7 @@ void EC_Raft::loadStaticModels()
 
 	std::fprintf(stdout, "Loading EC_Raft static models...\n");
 
-	std::list<TexturedModel*>* newModels = loadObjModel("res/Models/EmeraldCoast/", "Raft.obj");
-	for (auto newModel : (*newModels))
-	{
-		EC_Raft::models.push_back(newModel);
-	}
-	delete newModels;
-	Global::countDelete++;
-
+	loadObjModel(&EC_Raft::models, "res/Models/EmeraldCoast/", "Raft.obj");
 
 	if (EC_Raft::cmOriginal == nullptr)
 	{
@@ -135,20 +128,7 @@ void EC_Raft::loadStaticModels()
 void EC_Raft::deleteStaticModels()
 {
 	std::fprintf(stdout, "Deleting EC_Raft static models...\n");
-	for (auto model : EC_Raft::models)
-	{
-		model->deleteMe();
-		delete model;
-		Global::countDelete++;
-	}
-
-	EC_Raft::models.clear();
-
-	if (EC_Raft::cmOriginal != nullptr)
-	{
-		EC_Raft::cmOriginal->deleteMe();
-		delete EC_Raft::cmOriginal;
-		Global::countDelete++;
-		EC_Raft::cmOriginal = nullptr;
-	}
+	
+	Entity::deleteModels(&EC_Raft::models);
+	Entity::deleteCollisionModel(&EC_Raft::cmOriginal);
 }

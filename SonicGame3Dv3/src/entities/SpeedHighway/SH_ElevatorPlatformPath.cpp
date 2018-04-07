@@ -78,14 +78,7 @@ void SH_ElevatorPlatformPath::loadStaticModels()
 
 	std::fprintf(stdout, "Loading SH_ElevatorPlatformPath static models...\n");
 
-	std::list<TexturedModel*>* newModels = loadObjModel("res/Models/SpeedHighway/", "ElevatorPlatformPath.obj");
-	for (auto newModel : (*newModels))
-	{
-		SH_ElevatorPlatformPath::models.push_back(newModel);
-	}
-	delete newModels;
-	Global::countDelete++;
-
+	loadObjModel(&SH_ElevatorPlatformPath::models, "res/Models/SpeedHighway/", "ElevatorPlatformPath.obj");
 
 	if (SH_ElevatorPlatformPath::cmOriginal == nullptr)
 	{
@@ -96,20 +89,7 @@ void SH_ElevatorPlatformPath::loadStaticModels()
 void SH_ElevatorPlatformPath::deleteStaticModels()
 {
 	std::fprintf(stdout, "Deleting SH_ElevatorPlatformPath static models...\n");
-	for (auto model : SH_ElevatorPlatformPath::models)
-	{
-		model->deleteMe();
-		delete model;
-		Global::countDelete++;
-	}
 
-	SH_ElevatorPlatformPath::models.clear();
-
-	if (SH_ElevatorPlatformPath::cmOriginal != nullptr)
-	{
-		SH_ElevatorPlatformPath::cmOriginal->deleteMe();
-		delete SH_ElevatorPlatformPath::cmOriginal;
-		Global::countDelete++;
-		SH_ElevatorPlatformPath::cmOriginal = nullptr;
-	}
+	Entity::deleteModels(&SH_ElevatorPlatformPath::models);
+	Entity::deleteCollisionModel(&SH_ElevatorPlatformPath::cmOriginal);
 }

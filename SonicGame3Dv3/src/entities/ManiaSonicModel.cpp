@@ -29,9 +29,7 @@ std::list<TexturedModel*> ManiaSonicModel::modelDash8;
 std::list<TexturedModel*> ManiaSonicModel::modelDash9;
 std::list<TexturedModel*> ManiaSonicModel::modelDash10;
 std::list<TexturedModel*> ManiaSonicModel::modelDash11;
-
 std::list<TexturedModel*> ManiaSonicModel::modelJump;
-
 std::list<TexturedModel*> ManiaSonicModel::modelJog0;
 std::list<TexturedModel*> ManiaSonicModel::modelJog1;
 std::list<TexturedModel*> ManiaSonicModel::modelJog2;
@@ -162,215 +160,75 @@ void ManiaSonicModel::loadStaticModels()
 
 	std::fprintf(stdout, "Loading mania sonic static models...\n");
 
-	std::list<TexturedModel*>* newModels = loadObjModel("res/Models/SonicMania/", "Dash0.obj");
-	for (auto newModel : (*newModels)){ ManiaSonicModel::modelDash0.push_back(newModel); }
-	delete newModels;
-	Global::countDelete++;
+	loadObjModel(&ManiaSonicModel::modelDash0 , "res/Models/SonicMania/", "Dash0.obj");
+	loadObjModel(&ManiaSonicModel::modelDash1 , "res/Models/SonicMania/", "Dash1.obj");
+	loadObjModel(&ManiaSonicModel::modelDash2 , "res/Models/SonicMania/", "Dash2.obj");
+	loadObjModel(&ManiaSonicModel::modelDash3 , "res/Models/SonicMania/", "Dash3.obj");
+	loadObjModel(&ManiaSonicModel::modelDash4 , "res/Models/SonicMania/", "Dash4.obj");
+	loadObjModel(&ManiaSonicModel::modelDash5 , "res/Models/SonicMania/", "Dash5.obj");
+	loadObjModel(&ManiaSonicModel::modelDash6 , "res/Models/SonicMania/", "Dash6.obj");
+	loadObjModel(&ManiaSonicModel::modelDash7 , "res/Models/SonicMania/", "Dash7.obj");
+	loadObjModel(&ManiaSonicModel::modelDash8 , "res/Models/SonicMania/", "Dash8.obj");
+	loadObjModel(&ManiaSonicModel::modelDash9 , "res/Models/SonicMania/", "Dash9.obj");
+	loadObjModel(&ManiaSonicModel::modelDash10, "res/Models/SonicMania/", "Dash10.obj");
+	loadObjModel(&ManiaSonicModel::modelDash11, "res/Models/SonicMania/", "Dash11.obj");
+	loadObjModel(&ManiaSonicModel::modelJump  , "res/Models/SonicMania/", "Jump.obj");
+	loadObjModel(&ManiaSonicModel::modelJog0  , "res/Models/SonicMania/", "Jog0.obj");
+	loadObjModel(&ManiaSonicModel::modelJog1  , "res/Models/SonicMania/", "Jog1.obj");
+	loadObjModel(&ManiaSonicModel::modelJog2  , "res/Models/SonicMania/", "Jog2.obj");
+	loadObjModel(&ManiaSonicModel::modelJog3  , "res/Models/SonicMania/", "Jog3.obj");
+	loadObjModel(&ManiaSonicModel::modelJog4  , "res/Models/SonicMania/", "Jog4.obj");
+	loadObjModel(&ManiaSonicModel::modelJog5  , "res/Models/SonicMania/", "Jog5.obj");
+	loadObjModel(&ManiaSonicModel::modelJog6  , "res/Models/SonicMania/", "Jog6.obj");
+	loadObjModel(&ManiaSonicModel::modelJog7  , "res/Models/SonicMania/", "Jog7.obj");
+	loadObjModel(&ManiaSonicModel::modelJog8  , "res/Models/SonicMania/", "Jog8.obj");
+	loadObjModel(&ManiaSonicModel::modelJog9  , "res/Models/SonicMania/", "Jog9.obj");
+	loadObjModel(&ManiaSonicModel::modelJog10 , "res/Models/SonicMania/", "Jog10.obj");
+	loadObjModel(&ManiaSonicModel::modelJog11 , "res/Models/SonicMania/", "Jog11.obj");
+	loadObjModel(&ManiaSonicModel::modelJog12 , "res/Models/SonicMania/", "Jog12.obj");
+	loadObjModel(&ManiaSonicModel::modelJog13 , "res/Models/SonicMania/", "Jog13.obj");
+	loadObjModel(&ManiaSonicModel::modelJog14 , "res/Models/SonicMania/", "Jog14.obj");
+	loadObjModel(&ManiaSonicModel::modelJog15 , "res/Models/SonicMania/", "Jog15.obj");
+	loadObjModel(&ManiaSonicModel::modelJog16 , "res/Models/SonicMania/", "Jog16.obj");
+	loadObjModel(&ManiaSonicModel::modelJog17 , "res/Models/SonicMania/", "Jog17.obj");
 
-	newModels = loadObjModel("res/Models/SonicMania/", "Dash1.obj");
-	for (auto newModel : (*newModels)) { ManiaSonicModel::modelDash1.push_back(newModel); }
-	delete newModels;
-	Global::countDelete++;
-
-	newModels = loadObjModel("res/Models/SonicMania/", "Dash2.obj");
-	for (auto newModel : (*newModels)) { ManiaSonicModel::modelDash2.push_back(newModel); }
-	delete newModels;
-	Global::countDelete++;
-
-	newModels = loadObjModel("res/Models/SonicMania/", "Dash3.obj");
-	for (auto newModel : (*newModels)) { ManiaSonicModel::modelDash3.push_back(newModel); }
-	delete newModels;
-	Global::countDelete++;
-
-	newModels = loadObjModel("res/Models/SonicMania/", "Dash4.obj");
-	for (auto newModel : (*newModels)) { ManiaSonicModel::modelDash4.push_back(newModel); }
-	delete newModels;
-	Global::countDelete++;
-
-	newModels = loadObjModel("res/Models/SonicMania/", "Dash5.obj");
-	for (auto newModel : (*newModels)) { ManiaSonicModel::modelDash5.push_back(newModel); }
-	delete newModels;
-	Global::countDelete++;
-
-	newModels = loadObjModel("res/Models/SonicMania/", "Dash6.obj");
-	for (auto newModel : (*newModels)) { ManiaSonicModel::modelDash6.push_back(newModel); }
-	delete newModels;
-	Global::countDelete++;
-
-	newModels = loadObjModel("res/Models/SonicMania/", "Dash7.obj");
-	for (auto newModel : (*newModels)) { ManiaSonicModel::modelDash7.push_back(newModel); }
-	delete newModels;
-	Global::countDelete++;
-
-	newModels = loadObjModel("res/Models/SonicMania/", "Dash8.obj");
-	for (auto newModel : (*newModels)) { ManiaSonicModel::modelDash8.push_back(newModel); }
-	delete newModels;
-	Global::countDelete++;
-
-	newModels = loadObjModel("res/Models/SonicMania/", "Dash9.obj");
-	for (auto newModel : (*newModels)) { ManiaSonicModel::modelDash9.push_back(newModel); }
-	delete newModels;
-	Global::countDelete++;
-
-	newModels = loadObjModel("res/Models/SonicMania/", "Dash10.obj");
-	for (auto newModel : (*newModels)) { ManiaSonicModel::modelDash10.push_back(newModel); }
-	delete newModels;
-	Global::countDelete++;
-
-	newModels = loadObjModel("res/Models/SonicMania/", "Dash11.obj");
-	for (auto newModel : (*newModels)) { ManiaSonicModel::modelDash11.push_back(newModel); }
-	delete newModels;
-	Global::countDelete++;
-
-
-	newModels = loadObjModel("res/Models/SonicMania/", "Jump.obj");
-	for (auto newModel : (*newModels)) { ManiaSonicModel::modelJump.push_back(newModel); }
-	delete newModels;
-	Global::countDelete++;
-
-
-	newModels = loadObjModel("res/Models/SonicMania/", "Jog0.obj");
-	for (auto newModel : (*newModels)) { ManiaSonicModel::modelJog0.push_back(newModel); }
-	delete newModels;
-	Global::countDelete++;
-
-	newModels = loadObjModel("res/Models/SonicMania/", "Jog1.obj");
-	for (auto newModel : (*newModels)) { ManiaSonicModel::modelJog1.push_back(newModel); }
-	delete newModels;
-	Global::countDelete++;
-
-	newModels = loadObjModel("res/Models/SonicMania/", "Jog2.obj");
-	for (auto newModel : (*newModels)) { ManiaSonicModel::modelJog2.push_back(newModel); }
-	delete newModels;
-	Global::countDelete++;
-
-	newModels = loadObjModel("res/Models/SonicMania/", "Jog3.obj");
-	for (auto newModel : (*newModels)) { ManiaSonicModel::modelJog3.push_back(newModel); }
-	delete newModels;
-	Global::countDelete++;
-
-	newModels = loadObjModel("res/Models/SonicMania/", "Jog4.obj");
-	for (auto newModel : (*newModels)) { ManiaSonicModel::modelJog4.push_back(newModel); }
-	delete newModels;
-	Global::countDelete++;
-
-	newModels = loadObjModel("res/Models/SonicMania/", "Jog5.obj");
-	for (auto newModel : (*newModels)) { ManiaSonicModel::modelJog5.push_back(newModel); }
-	delete newModels;
-	Global::countDelete++;
-
-	newModels = loadObjModel("res/Models/SonicMania/", "Jog6.obj");
-	for (auto newModel : (*newModels)) { ManiaSonicModel::modelJog6.push_back(newModel); }
-	delete newModels;
-	Global::countDelete++;
-
-	newModels = loadObjModel("res/Models/SonicMania/", "Jog7.obj");
-	for (auto newModel : (*newModels)) { ManiaSonicModel::modelJog7.push_back(newModel); }
-	delete newModels;
-	Global::countDelete++;
-
-	newModels = loadObjModel("res/Models/SonicMania/", "Jog8.obj");
-	for (auto newModel : (*newModels)) { ManiaSonicModel::modelJog8.push_back(newModel); }
-	delete newModels;
-	Global::countDelete++;
-
-	newModels = loadObjModel("res/Models/SonicMania/", "Jog9.obj");
-	for (auto newModel : (*newModels)) { ManiaSonicModel::modelJog9.push_back(newModel); }
-	delete newModels;
-	Global::countDelete++;
-
-	newModels = loadObjModel("res/Models/SonicMania/", "Jog10.obj");
-	for (auto newModel : (*newModels)) { ManiaSonicModel::modelJog10.push_back(newModel); }
-	delete newModels;
-	Global::countDelete++;
-
-	newModels = loadObjModel("res/Models/SonicMania/", "Jog11.obj");
-	for (auto newModel : (*newModels)) { ManiaSonicModel::modelJog11.push_back(newModel); }
-	delete newModels;
-	Global::countDelete++;
-
-	newModels = loadObjModel("res/Models/SonicMania/", "Jog12.obj");
-	for (auto newModel : (*newModels)) { ManiaSonicModel::modelJog12.push_back(newModel); }
-	delete newModels;
-	Global::countDelete++;
-
-	newModels = loadObjModel("res/Models/SonicMania/", "Jog13.obj");
-	for (auto newModel : (*newModels)) { ManiaSonicModel::modelJog13.push_back(newModel); }
-	delete newModels;
-	Global::countDelete++;
-
-	newModels = loadObjModel("res/Models/SonicMania/", "Jog14.obj");
-	for (auto newModel : (*newModels)) { ManiaSonicModel::modelJog14.push_back(newModel); }
-	delete newModels;
-	Global::countDelete++;
-
-	newModels = loadObjModel("res/Models/SonicMania/", "Jog15.obj");
-	for (auto newModel : (*newModels)) { ManiaSonicModel::modelJog15.push_back(newModel); }
-	delete newModels;
-	Global::countDelete++;
-
-	newModels = loadObjModel("res/Models/SonicMania/", "Jog16.obj");
-	for (auto newModel : (*newModels)) { ManiaSonicModel::modelJog16.push_back(newModel); }
-	delete newModels;
-	Global::countDelete++;
-
-	newModels = loadObjModel("res/Models/SonicMania/", "Jog17.obj");
-	for (auto newModel : (*newModels)) { ManiaSonicModel::modelJog17.push_back(newModel); }
-	delete newModels;
-	Global::countDelete++;
 }
 
 void ManiaSonicModel::deleteStaticModels()
 {
 	std::fprintf(stdout, "Deleting mania sonic static models...\n");
 
-	ManiaSonicModel::deleteModelHelper(&ManiaSonicModel::modelDash0);
-	ManiaSonicModel::deleteModelHelper(&ManiaSonicModel::modelDash1);
-	ManiaSonicModel::deleteModelHelper(&ManiaSonicModel::modelDash2);
-	ManiaSonicModel::deleteModelHelper(&ManiaSonicModel::modelDash3);
-	ManiaSonicModel::deleteModelHelper(&ManiaSonicModel::modelDash4);
-	ManiaSonicModel::deleteModelHelper(&ManiaSonicModel::modelDash5);
-	ManiaSonicModel::deleteModelHelper(&ManiaSonicModel::modelDash6);
-	ManiaSonicModel::deleteModelHelper(&ManiaSonicModel::modelDash7);
-	ManiaSonicModel::deleteModelHelper(&ManiaSonicModel::modelDash8);
-	ManiaSonicModel::deleteModelHelper(&ManiaSonicModel::modelDash9);
-	ManiaSonicModel::deleteModelHelper(&ManiaSonicModel::modelDash10);
-	ManiaSonicModel::deleteModelHelper(&ManiaSonicModel::modelDash11);
-
-	ManiaSonicModel::deleteModelHelper(&ManiaSonicModel::modelJump);
-
-
-	ManiaSonicModel::deleteModelHelper(&ManiaSonicModel::modelJog0);
-	ManiaSonicModel::deleteModelHelper(&ManiaSonicModel::modelJog1);
-	ManiaSonicModel::deleteModelHelper(&ManiaSonicModel::modelJog2);
-	ManiaSonicModel::deleteModelHelper(&ManiaSonicModel::modelJog3);
-	ManiaSonicModel::deleteModelHelper(&ManiaSonicModel::modelJog4);
-	ManiaSonicModel::deleteModelHelper(&ManiaSonicModel::modelJog5);
-	ManiaSonicModel::deleteModelHelper(&ManiaSonicModel::modelJog6);
-	ManiaSonicModel::deleteModelHelper(&ManiaSonicModel::modelJog7);
-	ManiaSonicModel::deleteModelHelper(&ManiaSonicModel::modelJog8);
-	ManiaSonicModel::deleteModelHelper(&ManiaSonicModel::modelJog9);
-	ManiaSonicModel::deleteModelHelper(&ManiaSonicModel::modelJog10);
-	ManiaSonicModel::deleteModelHelper(&ManiaSonicModel::modelJog11);
-	ManiaSonicModel::deleteModelHelper(&ManiaSonicModel::modelJog12);
-	ManiaSonicModel::deleteModelHelper(&ManiaSonicModel::modelJog13);
-	ManiaSonicModel::deleteModelHelper(&ManiaSonicModel::modelJog14);
-	ManiaSonicModel::deleteModelHelper(&ManiaSonicModel::modelJog15);
-	ManiaSonicModel::deleteModelHelper(&ManiaSonicModel::modelJog16);
-	ManiaSonicModel::deleteModelHelper(&ManiaSonicModel::modelJog17);
+	Entity::deleteModels(&ManiaSonicModel::modelDash0);
+	Entity::deleteModels(&ManiaSonicModel::modelDash1);
+	Entity::deleteModels(&ManiaSonicModel::modelDash2);
+	Entity::deleteModels(&ManiaSonicModel::modelDash3);
+	Entity::deleteModels(&ManiaSonicModel::modelDash4);
+	Entity::deleteModels(&ManiaSonicModel::modelDash5);
+	Entity::deleteModels(&ManiaSonicModel::modelDash6);
+	Entity::deleteModels(&ManiaSonicModel::modelDash7);
+	Entity::deleteModels(&ManiaSonicModel::modelDash8);
+	Entity::deleteModels(&ManiaSonicModel::modelDash9);
+	Entity::deleteModels(&ManiaSonicModel::modelDash10);
+	Entity::deleteModels(&ManiaSonicModel::modelDash11);
+	Entity::deleteModels(&ManiaSonicModel::modelJump);
+	Entity::deleteModels(&ManiaSonicModel::modelJog0);
+	Entity::deleteModels(&ManiaSonicModel::modelJog1);
+	Entity::deleteModels(&ManiaSonicModel::modelJog2);
+	Entity::deleteModels(&ManiaSonicModel::modelJog3);
+	Entity::deleteModels(&ManiaSonicModel::modelJog4);
+	Entity::deleteModels(&ManiaSonicModel::modelJog5);
+	Entity::deleteModels(&ManiaSonicModel::modelJog6);
+	Entity::deleteModels(&ManiaSonicModel::modelJog7);
+	Entity::deleteModels(&ManiaSonicModel::modelJog8);
+	Entity::deleteModels(&ManiaSonicModel::modelJog9);
+	Entity::deleteModels(&ManiaSonicModel::modelJog10);
+	Entity::deleteModels(&ManiaSonicModel::modelJog11);
+	Entity::deleteModels(&ManiaSonicModel::modelJog12);
+	Entity::deleteModels(&ManiaSonicModel::modelJog13);
+	Entity::deleteModels(&ManiaSonicModel::modelJog14);
+	Entity::deleteModels(&ManiaSonicModel::modelJog15);
+	Entity::deleteModels(&ManiaSonicModel::modelJog16);
+	Entity::deleteModels(&ManiaSonicModel::modelJog17);
 
 	ManiaSonicModel::models = nullptr;
-}
-
-
-void ManiaSonicModel::deleteModelHelper(std::list<TexturedModel*>* mod)
-{
-	for (auto model : (*mod))
-	{
-		model->deleteMe();
-		delete model;
-		Global::countDelete++;
-	}
-
-	mod->clear();
 }

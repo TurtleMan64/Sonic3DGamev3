@@ -102,14 +102,7 @@ void TP_SpinningFloor::loadStaticModels()
 
 	std::fprintf(stdout, "Loading TP_SpinningFloor static models...\n");
 
-	std::list<TexturedModel*>* newModels = loadObjModel("res/Models/TwinklePark/", "SpinningFloor.obj");
-	for (auto newModel : (*newModels))
-	{
-		TP_SpinningFloor::models.push_back(newModel);
-	}
-	delete newModels;
-	Global::countDelete++;
-
+	loadObjModel(&TP_SpinningFloor::models, "res/Models/TwinklePark/", "SpinningFloor.obj");
 
 	if (TP_SpinningFloor::cmOriginal == nullptr)
 	{
@@ -120,20 +113,7 @@ void TP_SpinningFloor::loadStaticModels()
 void TP_SpinningFloor::deleteStaticModels()
 {
 	std::fprintf(stdout, "Deleting TP_SpinningFloor static models...\n");
-	for (auto model : TP_SpinningFloor::models)
-	{
-		model->deleteMe();
-		delete model;
-		Global::countDelete++;
-	}
 
-	TP_SpinningFloor::models.clear();
-
-	if (TP_SpinningFloor::cmOriginal != nullptr)
-	{
-		TP_SpinningFloor::cmOriginal->deleteMe();
-		delete TP_SpinningFloor::cmOriginal;
-		Global::countDelete++;
-		TP_SpinningFloor::cmOriginal = nullptr;
-	}
+	Entity::deleteModels(&TP_SpinningFloor::models);
+	Entity::deleteCollisionModel(&TP_SpinningFloor::cmOriginal);
 }

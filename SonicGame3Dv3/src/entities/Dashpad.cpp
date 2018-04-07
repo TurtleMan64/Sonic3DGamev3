@@ -102,24 +102,12 @@ void Dashpad::loadStaticModels()
 
 	std::fprintf(stdout, "Loading Dashpad static models...\n");
 
-	std::list<TexturedModel*>* newModels = loadObjModel("res/Models/Dashpad/", "Dashpad.obj");
-	for (auto newModel : (*newModels))
-	{
-		Dashpad::models.push_back(newModel);
-	}
-	delete newModels;
-	Global::countDelete++;
+	loadObjModel(&Dashpad::models, "res/Models/Dashpad/", "Dashpad.obj");
 }
 
 void Dashpad::deleteStaticModels()
 {
 	std::fprintf(stdout, "Deleting Dashpad static models...\n");
-	for (auto model : Dashpad::models)
-	{
-		model->deleteMe();
-		delete model;
-		Global::countDelete++;
-	}
 
-	Dashpad::models.clear();
+	Entity::deleteModels(&Dashpad::models);
 }

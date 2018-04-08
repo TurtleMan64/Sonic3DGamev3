@@ -82,6 +82,15 @@
     <Filter Include="Source Files\shadows2">
       <UniqueIdentifier>{eb41df37-149c-49df-b0c6-49f9627b57c5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\bloom">
+      <UniqueIdentifier>{7eb6db96-ccb1-43f2-ad9f-33fac124bb2d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\postProcessing">
+      <UniqueIdentifier>{941a4f3a-646a-4b0f-80c7-b3f0c1cc14d2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\gaussianBlur">
+      <UniqueIdentifier>{039eddca-a831-4ed5-be59-a7691b88ae1e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="glad.c">
@@ -450,6 +459,33 @@
     <ClCompile Include="src\entities\SpeedHighway\SH_Spotlight.cpp">
       <Filter>Source Files\entities\SpeedHighway</Filter>
     </ClCompile>
+    <ClCompile Include="src\bloom\CombineShader.cpp">
+      <Filter>Source Files\bloom</Filter>
+    </ClCompile>
+    <ClCompile Include="src\postProcessing\Fbo.cpp">
+      <Filter>Source Files\postProcessing</Filter>
+    </ClCompile>
+    <ClCompile Include="src\postProcessing\ImageRenderer.cpp">
+      <Filter>Source Files\postProcessing</Filter>
+    </ClCompile>
+    <ClCompile Include="src\postProcessing\PostProcessing.cpp">
+      <Filter>Source Files\postProcessing</Filter>
+    </ClCompile>
+    <ClCompile Include="src\bloom\CombineFilter.cpp">
+      <Filter>Source Files\bloom</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gaussianBlur\HorizontalBlur.cpp">
+      <Filter>Source Files\gaussianBlur</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gaussianBlur\HorizontalBlurShader.cpp">
+      <Filter>Source Files\gaussianBlur</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gaussianBlur\VerticalBlur.cpp">
+      <Filter>Source Files\gaussianBlur</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gaussianBlur\VerticalBlurShader.cpp">
+      <Filter>Source Files\gaussianBlur</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\renderEngine\renderEngine.h">
@@ -799,6 +835,33 @@
     </ClInclude>
     <ClInclude Include="src\entities\SpeedHighway\shspotlight.h">
       <Filter>Source Files\entities\SpeedHighway</Filter>
+    </ClInclude>
+    <ClInclude Include="src\bloom\combineshader.h">
+      <Filter>Source Files\bloom</Filter>
+    </ClInclude>
+    <ClInclude Include="src\postProcessing\fbo.h">
+      <Filter>Source Files\postProcessing</Filter>
+    </ClInclude>
+    <ClInclude Include="src\postProcessing\imagerenderer.h">
+      <Filter>Source Files\postProcessing</Filter>
+    </ClInclude>
+    <ClInclude Include="src\postProcessing\postprocessing.h">
+      <Filter>Source Files\postProcessing</Filter>
+    </ClInclude>
+    <ClInclude Include="src\bloom\combinefilter.h">
+      <Filter>Source Files\bloom</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gaussianBlur\verticalblurshader.h">
+      <Filter>Source Files\gaussianBlur</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gaussianBlur\horizontalblur.h">
+      <Filter>Source Files\gaussianBlur</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gaussianBlur\horizontalblurshader.h">
+      <Filter>Source Files\gaussianBlur</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gaussianBlur\verticalblur.h">
+      <Filter>Source Files\gaussianBlur</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -83,6 +83,8 @@ protected:
 
 	void bindAttribute(int, char*);
 
+	void bindFragOutput(int attatchment, char* variableName);
+
 	void getAllUniformLocations();
 
 	int getUniformLocation(char*);

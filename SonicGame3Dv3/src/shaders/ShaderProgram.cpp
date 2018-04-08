@@ -117,6 +117,12 @@ void ShaderProgram::loadFogGradient(float gradient)
 
 void ShaderProgram::bindAttributes()
 {
+	if (Global::renderBloom)
+	{
+		bindFragOutput(0, "out_Colour");
+		bindFragOutput(1, "out_BrightColour");
+	}
+
 	bindAttribute(0, "position");
 	bindAttribute(1, "textureCoords");
 	bindAttribute(2, "normal");
@@ -125,6 +131,11 @@ void ShaderProgram::bindAttributes()
 void ShaderProgram::bindAttribute(int attribute, char* variableName)
 {
 	glBindAttribLocation(programID, attribute, variableName);
+}
+
+void ShaderProgram::bindFragOutput(int attatchment, char* variableName)
+{
+	glBindFragDataLocation(programID, attatchment, variableName);
 }
 
 void ShaderProgram::getAllUniformLocations()

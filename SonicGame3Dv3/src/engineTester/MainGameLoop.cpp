@@ -52,6 +52,8 @@
 #include "../toolbox/split.h"
 #include "../shadows/shadowmapmasterrenderer.h"
 #include "../shadows2/shadowmapmasterrenderer2.h"
+#include "../postProcessing/postprocessing.h"
+#include "../postProcessing/fbo.h"
 
 #include <windows.h>
 #include <tchar.h>
@@ -84,6 +86,10 @@ std::list<WaterTile*>* Global::gameWaterTiles = nullptr;
 
 int Global::finishStageTimer = -1;
 
+Fbo* Global::gameMultisampleFbo = nullptr;
+Fbo* Global::gameOutputFbo = nullptr;
+Fbo* Global::gameOutputFbo2 = nullptr;
+
 bool Global::debugDisplay = false;
 bool Global::frozen = false;
 bool Global::step = false;
@@ -95,6 +101,8 @@ unsigned Global::HQWaterRefractionWidth = 1280;
 unsigned Global::HQWaterRefractionHeight = 720;
 
 bool Global::renderParticles = true;
+
+bool Global::renderBloom = true;
 
 bool Global::renderShadowsFar = true;
 bool Global::renderShadowsClose = true;
@@ -110,6 +118,9 @@ extern bool INPUT_ACTION2;
 extern bool INPUT_PREVIOUS_JUMP;
 extern bool INPUT_PREVIOUS_ACTION;
 extern bool INPUT_PREVIOUS_ACTION2;
+
+extern unsigned int SCR_WIDTH;
+extern unsigned int SCR_HEIGHT;
 
 int Global::countNew = 0;
 int Global::countDelete = 0;
@@ -218,6 +229,14 @@ int main()
 				Global::gameWaterTiles->push_back(new WaterTile(r * 3000.0f, c * 3000.0f, 0.0f)); Global::countNew++;
 			}
 		}
+	}
+
+	if (Global::renderBloom)
+	{
+		Global::gameMultisampleFbo = new Fbo(SCR_WIDTH, SCR_HEIGHT);
+		Global::gameOutputFbo = new Fbo(SCR_WIDTH, SCR_HEIGHT, Fbo::DEPTH_TEXTURE);
+		Global::gameOutputFbo2 = new Fbo(SCR_WIDTH, SCR_HEIGHT, Fbo::DEPTH_TEXTURE);
+		PostProcessing::init();
 	}
 
 	ParticleMaster::init(Master_getProjectionMatrix());
@@ -449,6 +468,11 @@ int main()
 			glDisable(GL_CLIP_DISTANCE0);
 		}
 
+		if (Global::renderBloom)
+		{
+			Global::gameMultisampleFbo->bindFrameBuffer();
+		}
+
 		Vector3f camVel = cam.calcVelocity();
 		if (Global::gamePlayer != nullptr)
 		{
@@ -467,6 +491,14 @@ int main()
 		if (Global::renderParticles)
 		{
 			ParticleMaster::renderParticles(&cam, SkyManager::getOverallBrightness(), 0);
+		}
+
+		if (Global::renderBloom)
+		{
+			Global::gameMultisampleFbo->unbindFrameBuffer();
+			Global::gameMultisampleFbo->resolveToFbo(GL_COLOR_ATTACHMENT0, Global::gameOutputFbo);
+			Global::gameMultisampleFbo->resolveToFbo(GL_COLOR_ATTACHMENT1, Global::gameOutputFbo2);
+			PostProcessing::doPostProcessing(Global::gameOutputFbo->getColourTexture(), Global::gameOutputFbo2->getColourTexture());
 		}
 
 		Master_clearEntities();

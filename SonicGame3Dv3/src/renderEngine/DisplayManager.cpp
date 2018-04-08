@@ -329,6 +329,17 @@ void loadGraphicsSettings()
 						Global::renderParticles = false;
 					}
 				}
+				else if (strcmp(lineSplit[0], "Render_Bloom") == 0)
+				{
+					if (strcmp(lineSplit[1], "on") == 0)
+					{
+						Global::renderBloom = true;
+					}
+					else
+					{
+						Global::renderBloom = false;
+					}
+				}
 				else if (strcmp(lineSplit[0], "Render_Shadows_Far") == 0)
 				{
 					if (strcmp(lineSplit[1], "on") == 0)

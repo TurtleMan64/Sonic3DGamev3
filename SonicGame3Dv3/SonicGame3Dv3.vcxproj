@@ -28,6 +28,8 @@
     <ClCompile Include="src\audio\AudioMaster.cpp" />
     <ClCompile Include="src\audio\AudioPlayer.cpp" />
     <ClCompile Include="src\audio\Source.cpp" />
+    <ClCompile Include="src\bloom\CombineFilter.cpp" />
+    <ClCompile Include="src\bloom\CombineShader.cpp" />
     <ClCompile Include="src\collision\CollisionChecker.cpp" />
     <ClCompile Include="src\collision\CollisionModel.cpp" />
     <ClCompile Include="src\collision\QuadTreeNode.cpp" />
@@ -98,6 +100,10 @@
     <ClCompile Include="src\fontRendering\FontRenderer.cpp" />
     <ClCompile Include="src\fontRendering\FontShader.cpp" />
     <ClCompile Include="src\fontRendering\TextMaster.cpp" />
+    <ClCompile Include="src\gaussianBlur\HorizontalBlur.cpp" />
+    <ClCompile Include="src\gaussianBlur\HorizontalBlurShader.cpp" />
+    <ClCompile Include="src\gaussianBlur\VerticalBlur.cpp" />
+    <ClCompile Include="src\gaussianBlur\VerticalBlurShader.cpp" />
     <ClCompile Include="src\guis\GuiManager.cpp" />
     <ClCompile Include="src\models\RawModel.cpp" />
     <ClCompile Include="src\models\TexturedModel.cpp" />
@@ -112,6 +118,9 @@
     <ClCompile Include="src\particles\ParticleResources.cpp" />
     <ClCompile Include="src\particles\ParticleShader.cpp" />
     <ClCompile Include="src\particles\ParticleTexture.cpp" />
+    <ClCompile Include="src\postProcessing\Fbo.cpp" />
+    <ClCompile Include="src\postProcessing\ImageRenderer.cpp" />
+    <ClCompile Include="src\postProcessing\PostProcessing.cpp" />
     <ClCompile Include="src\renderEngine\DisplayManager.cpp" />
     <ClCompile Include="src\renderEngine\Loader.cpp" />
     <ClCompile Include="src\renderEngine\MasterRenderer.cpp" />
@@ -151,6 +160,8 @@
     <ClInclude Include="src\audio\audiomaster.h" />
     <ClInclude Include="src\audio\audioplayer.h" />
     <ClInclude Include="src\audio\source.h" />
+    <ClInclude Include="src\bloom\combinefilter.h" />
+    <ClInclude Include="src\bloom\combineshader.h" />
     <ClInclude Include="src\collision\collisionchecker.h" />
     <ClInclude Include="src\collision\collisionmodel.h" />
     <ClInclude Include="src\collision\quadtreenode.h" />
@@ -221,6 +232,10 @@
     <ClInclude Include="src\fontRendering\fontrenderer.h" />
     <ClInclude Include="src\fontRendering\fontshader.h" />
     <ClInclude Include="src\fontRendering\textmaster.h" />
+    <ClInclude Include="src\gaussianBlur\horizontalblur.h" />
+    <ClInclude Include="src\gaussianBlur\horizontalblurshader.h" />
+    <ClInclude Include="src\gaussianBlur\verticalblur.h" />
+    <ClInclude Include="src\gaussianBlur\verticalblurshader.h" />
     <ClInclude Include="src\guis\guimanager.h" />
     <ClInclude Include="src\models\models.h" />
     <ClInclude Include="src\objLoader\fakeTexture.h" />
@@ -234,6 +249,9 @@
     <ClInclude Include="src\particles\particleresources.h" />
     <ClInclude Include="src\particles\particleshader.h" />
     <ClInclude Include="src\particles\particletexture.h" />
+    <ClInclude Include="src\postProcessing\fbo.h" />
+    <ClInclude Include="src\postProcessing\imagerenderer.h" />
+    <ClInclude Include="src\postProcessing\postprocessing.h" />
     <ClInclude Include="src\renderEngine\renderEngine.h" />
     <ClInclude Include="src\renderEngine\skymanager.h" />
     <ClInclude Include="src\shaders\shaders.h" />
@@ -323,6 +341,10 @@
     <IncludePath>..\OpenGLStuff\Include;$(IncludePath)</IncludePath>
     <LibraryPath>..\OpenGLStuff\Libraries;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <IncludePath>../OpenGLStuff/Include;$(IncludePath)</IncludePath>
+    <LibraryPath>../OpenGLStuff/Libraries;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -361,15 +383,19 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
-      <Optimization>MaxSpeed</Optimization>
+      <WarningLevel>Level4</WarningLevel>
+      <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <OmitFramePointers>true</OmitFramePointers>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>opengl32.lib;glfw3.lib;SOIL.lib;OpenAL32.lib;libogg_static.lib;libvorbis_static.lib;libvorbisfile_static.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

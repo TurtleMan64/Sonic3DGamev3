@@ -2126,8 +2126,8 @@ void Player::animate()
 	if (deadTimer >= 0)
 	{
 		if (Player::maniaSonic != nullptr) { Player::maniaSonic->setVisible(false); }
-		if (myBody != nullptr) myBody->setBaseOrientation(&displayPos, diff, yawAngle, pitchAngle, 0);
-		updateLimbs(15, 25);
+		if (myBody != nullptr) myBody->setBaseOrientation(&displayPos, 0, getRotY(), 0, 0);
+		updateLimbs(19, 0);
 	}
 	else if (isLightdashing)
 	{
@@ -2135,7 +2135,7 @@ void Player::animate()
 		float zr = toDegrees(atan2f(yVel, h));
 		if (myBody != nullptr) myBody->setBaseOrientation(&displayPos, 0, getRotY(), zr, 0);
 		if (Player::maniaSonic != nullptr) { Player::maniaSonic->setVisible(false); }
-		updateLimbs(18, 100);
+		updateLimbs(18, 0);
 	}
 	else if (isStomping)
 	{

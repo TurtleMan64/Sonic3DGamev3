@@ -49,22 +49,50 @@ void Master_init()
 	{
 		if (Global::renderShadowsClose)
 		{
-			shader = new ShaderProgram("res/Shaders/entity/vertexShaderShadowBoth.txt", "res/Shaders/entity/fragmentShaderShadowBoth.txt");
+			if (Global::renderBloom)
+			{
+				shader = new ShaderProgram("res/Shaders/entity/vertexShaderShadowBoth.txt", "res/Shaders/entity/fragmentShaderShadowBothBloom.txt");
+			}
+			else
+			{
+				shader = new ShaderProgram("res/Shaders/entity/vertexShaderShadowBoth.txt", "res/Shaders/entity/fragmentShaderShadowBoth.txt");
+			}
 		}
 		else
 		{
-			shader = new ShaderProgram("res/Shaders/entity/vertexShaderShadowFar.txt", "res/Shaders/entity/fragmentShaderShadowFar.txt");
+			if (Global::renderBloom)
+			{
+				shader = new ShaderProgram("res/Shaders/entity/vertexShaderShadowFar.txt", "res/Shaders/entity/fragmentShaderShadowFarBloom.txt");
+			}
+			else
+			{
+				shader = new ShaderProgram("res/Shaders/entity/vertexShaderShadowFar.txt", "res/Shaders/entity/fragmentShaderShadowFar.txt");
+			}
 		}
 	}
 	else
 	{
 		if (Global::renderShadowsClose)
 		{
-			shader = new ShaderProgram("res/Shaders/entity/vertexShaderShadowClose.txt", "res/Shaders/entity/fragmentShaderShadowClose.txt");
+			if (Global::renderBloom)
+			{
+				shader = new ShaderProgram("res/Shaders/entity/vertexShaderShadowClose.txt", "res/Shaders/entity/fragmentShaderShadowCloseBloom.txt");
+			}
+			else
+			{
+				shader = new ShaderProgram("res/Shaders/entity/vertexShaderShadowClose.txt", "res/Shaders/entity/fragmentShaderShadowClose.txt");
+			}
 		}
 		else
 		{
-			shader = new ShaderProgram("res/Shaders/entity/vertexShader.txt", "res/Shaders/entity/fragmentShader.txt");
+			if (Global::renderBloom)
+			{
+				shader = new ShaderProgram("res/Shaders/entity/vertexShader.txt", "res/Shaders/entity/fragmentShaderBloom.txt");
+			}
+			else
+			{
+				shader = new ShaderProgram("res/Shaders/entity/vertexShader.txt", "res/Shaders/entity/fragmentShader.txt");
+			}
 		}
 	}
 	Global::countNew++;

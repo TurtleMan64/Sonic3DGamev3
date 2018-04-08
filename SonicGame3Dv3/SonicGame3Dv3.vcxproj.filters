@@ -486,6 +486,9 @@
     <ClCompile Include="src\gaussianBlur\VerticalBlurShader.cpp">
       <Filter>Source Files\gaussianBlur</Filter>
     </ClCompile>
+    <ClCompile Include="src\entities\Capsule.cpp">
+      <Filter>Source Files\entities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\renderEngine\renderEngine.h">
@@ -862,6 +865,9 @@
     </ClInclude>
     <ClInclude Include="src\gaussianBlur\verticalblur.h">
       <Filter>Source Files\gaussianBlur</Filter>
+    </ClInclude>
+    <ClInclude Include="src\entities\capsule.h">
+      <Filter>Source Files\entities</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

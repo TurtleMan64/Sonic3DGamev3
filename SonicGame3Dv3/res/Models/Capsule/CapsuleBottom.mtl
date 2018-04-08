@@ -1,0 +1,122 @@
+# Blender MTL File: 'None'
+# Material Count: 10
+
+newmtl material_4B90A0
+Ns 20
+Ka 0.498039 0.498039 0.498039
+Kd 0.498039 0.498039 0.498039
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 0.02
+d 1.000000
+illum 2
+map_Kd kabe2.png
+map_Ka kabe2.png
+
+newmtl material_4B90B4
+Ns 20
+Ka 0.698039 0.698039 0.698039
+Kd 0.698039 0.698039 0.698039
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 0.02
+d 1.000000
+illum 2
+map_Kd kabe1.png
+map_Ka kabe1.png
+
+newmtl material_4B90C8
+Ns 20
+Ka 0.698039 0.698039 0.698039
+Kd 0.698039 0.698039 0.698039
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 0.02
+d 1.000000
+illum 2
+map_Kd kabe0.png
+map_Ka kabe0.png
+
+newmtl material_4B90DC
+Ns 20
+Ka 0.698039 0.698039 0.698039
+Kd 0.698039 0.698039 0.698039
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 0.02
+d 1.000000
+illum 2
+map_Kd kaiho_gray.png
+map_Ka kaiho_gray.png
+
+newmtl material_4B96D0
+Ns 20
+Ka 0.698039 0.698039 0.698039
+Kd 0.698039 0.698039 0.698039
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 0.02
+d 1.000000
+illum 2
+map_Kd kabe3.png
+map_Ka kabe3.png
+
+newmtl material_4B96E4
+Ns 20
+Ka 0.698039 0.698039 0.698039
+Kd 0.698039 0.698039 0.698039
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 0.02
+d 1.000000
+illum 2
+map_Kd kabe4.png
+map_Ka kabe4.png
+
+newmtl material_4B96F8
+Ns 20
+Ka 0.698039 0.698039 0.698039
+Kd 0.698039 0.698039 0.698039
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 0.02
+d 1.000000
+illum 2
+map_Kd yuka.png
+map_Ka yuka.png
+
+newmtl material_4B970C
+Ns 20
+Ka 0.698039 0.698039 0.698039
+Kd 0.698039 0.698039 0.698039
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 0.02
+d 1.000000
+illum 2
+map_Kd kabe4.png
+map_Ka kabe4.png
+
+newmtl material_4B9720
+Ns 20
+Ka 0.698039 0.698039 0.698039
+Kd 0.698039 0.698039 0.698039
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 0.02
+d 1.000000
+illum 2
+map_Kd kaiho_asi.png
+map_Ka kaiho_asi.png
+
+newmtl material_4B9734
+Ns 20
+Ka 0.698039 0.698039 0.698039
+Kd 0.698039 0.698039 0.698039
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 0.02
+d 1.000000
+illum 2
+map_Kd kabe0.png
+map_Ka kabe0.png

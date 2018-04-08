@@ -68,6 +68,7 @@
 #include "../entities/SpeedHighway/shspotlight.h"
 #include "../entities/SpeedHighway/shelevatorplatformpath.h"
 #include "../entities/SpeedHighway/shelevatorplatform.h"
+#include "../entities/capsule.h"
 
 float toFloat(char* input);
 int toInt(char* input);
@@ -1100,6 +1101,16 @@ void processLine(char** dat)
 			return;
 		}
 
+		case 69: //Capsule
+		{
+			Capsule::loadStaticModels();
+			Capsule* cap = new Capsule(
+				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]));  //position
+			Global::countNew++;
+			Main_addEntity(cap);
+			return;
+		}
+
 		default:
 		{
 			return;
@@ -1165,4 +1176,5 @@ void freeAllStaticModels()
 	SH_Spotlight::deleteStaticModels();
 	SH_ElevatorPlatformPath::deleteStaticModels();
 	SH_ElevatorPlatform::deleteStaticModels();
+	Capsule::deleteStaticModels();
 }

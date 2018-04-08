@@ -49,6 +49,7 @@ void AudioPlayer::loadSoundEffects()
 	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/SpeedHighway/ElevatorPlatform.ogg"));//23
 	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/General/ActClear.ogg"));             //24
 	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/General/ExitStage.ogg"));            //25
+	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/General/CapsuleClick.ogg"));         //26
 }
 
 void AudioPlayer::loadBGM(char* fileName)

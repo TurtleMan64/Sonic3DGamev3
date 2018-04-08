@@ -1,0 +1,38 @@
+# Blender MTL File: 'None'
+# Material Count: 3
+
+newmtl material_4B8BCC
+Ns 20
+Ka 0.698039 0.698039 0.698039
+Kd 0.698039 0.698039 0.698039
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 0.02
+d 1.000000
+illum 2
+map_Kd rock_panel4.png
+map_Ka rock_panel4.png
+
+newmtl material_4B8BE0
+Ns 20
+Ka 0.698039 0.698039 0.698039
+Kd 0.698039 0.698039 0.698039
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 0.02
+d 1.000000
+illum 2
+map_Kd kaiho_gray.png
+map_Ka kaiho_gray.png
+
+newmtl material_4B8BF4
+Ns 20
+Ka 0.698039 0.698039 0.698039
+Kd 0.698039 0.698039 0.698039
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 0.02
+d 1.000000
+illum 2
+map_Kd c_chg.png
+map_Ka c_chg.png

@@ -15,6 +15,8 @@
 #include "../audio/audioplayer.h"
 #include "../animation/body.h"
 #include "../guis/guimanager.h"
+#include "../particles/particleresources.h"
+#include "../particles/particle.h"
 
 #include <list>
 #include <iostream>
@@ -22,6 +24,7 @@
 #include <cmath>
 
 std::list<TexturedModel*> Capsule::modelsBase;
+std::list<TexturedModel*> Capsule::modelsBaseBroke;
 std::list<TexturedModel*> Capsule::modelsTop;
 CollisionModel* Capsule::cmOriginalBase;
 CollisionModel* Capsule::cmOriginalTop;
@@ -42,6 +45,7 @@ Capsule::Capsule(float x, float y, float z)
 	scale = 1;
 	visible = true;
 	opened = false;
+	openedTimer = 0;
 	updateTransformationMatrix();
 	
 	top = new Body(&Capsule::modelsTop);
@@ -78,25 +82,43 @@ void Capsule::step()
 		{
 			setVisible(true);
 
-			if (collideModelTopTransformed->playerIsOn && opened == false)
+			if (opened)
 			{
-				opened = true;
-				
-				top->increasePosition(0, -4, 0);
-				top->updateTransformationMatrix();
-				increasePosition(0, -4, 0);
-				updateCMJustPosition(Capsule::cmOriginalTop, collideModelTopTransformed);
-				
-				AudioPlayer::play(26, getPosition());
+				openedTimer++;
+			}
 
-				GuiManager::stopTimer();
-
+			if (openedTimer == 80)
+			{
 				Global::finishStageTimer = 0;
 			}
 
 			if (collideModelTopTransformed->playerIsOn)
 			{
 				Global::gamePlayer->setGroundSpeed(0, 0);
+				Global::gamePlayer->setCanMoveTimer(80);
+
+				if (!opened)
+				{
+					opened = true;
+				
+					top->increasePosition(0, -4, 0);
+					top->updateTransformationMatrix();
+					increasePosition(0, -4, 0);
+					updateCMJustPosition(Capsule::cmOriginalTop, collideModelTopTransformed);
+
+					AudioPlayer::play(26, getPosition());
+					GuiManager::stopTimer();
+
+					Vector3f pos(
+						getX(),
+						getY() + 20,
+						getZ());
+
+					Vector3f vel(0, 0, 0);
+	
+					new Particle(ParticleResources::textureExplosion2, &pos, &vel,
+						0, 80, 0, 40, 0, false);
+				}
 			}
 		}
 	}
@@ -104,6 +126,10 @@ void Capsule::step()
 
 std::list<TexturedModel*>* Capsule::getModels()
 {
+	if (opened)
+	{
+		return &Capsule::modelsBaseBroke;
+	}
 	return &Capsule::modelsBase;
 }
 
@@ -116,8 +142,9 @@ void Capsule::loadStaticModels()
 
 	std::fprintf(stdout, "Loading Capsule static models...\n");
 
-	loadObjModel(&Capsule::modelsBase, "res/Models/Capsule/", "CapsuleBottom.obj");
-	loadObjModel(&Capsule::modelsTop, "res/Models/Capsule/", "CapsuleTop.obj");
+	loadObjModel(&Capsule::modelsBase,      "res/Models/Capsule/", "CapsuleBottom.obj");
+	loadObjModel(&Capsule::modelsBaseBroke, "res/Models/Capsule/", "CapsuleBroke.obj");
+	loadObjModel(&Capsule::modelsTop,       "res/Models/Capsule/", "CapsuleTop.obj");
 
 	if (Capsule::cmOriginalBase == nullptr)
 	{
@@ -135,6 +162,7 @@ void Capsule::deleteStaticModels()
 	std::fprintf(stdout, "Deleting Capsule static models...\n");
 
 	Entity::deleteModels(&Capsule::modelsBase);
+	Entity::deleteModels(&Capsule::modelsBaseBroke);
 	Entity::deleteModels(&Capsule::modelsTop);
 	Entity::deleteCollisionModel(&Capsule::cmOriginalBase);
 	Entity::deleteCollisionModel(&Capsule::cmOriginalTop);

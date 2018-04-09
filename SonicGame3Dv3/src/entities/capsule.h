@@ -12,6 +12,7 @@ class Capsule : public CollideableObject
 {
 private:
 	static std::list<TexturedModel*> modelsBase;
+	static std::list<TexturedModel*> modelsBaseBroke;
 	static std::list<TexturedModel*> modelsTop;
 	static CollisionModel* cmOriginalBase;
 	static CollisionModel* cmOriginalTop;
@@ -21,6 +22,7 @@ private:
 	Body* top;
 	
 	bool opened;
+	int openedTimer;
 
 public:
 	Capsule();

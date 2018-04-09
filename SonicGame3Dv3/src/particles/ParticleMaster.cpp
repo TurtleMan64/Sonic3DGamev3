@@ -18,6 +18,7 @@ void ParticleMaster::init(Matrix4f* projectionMatrix)
 	ParticleMaster::renderer = new ParticleRenderer(projectionMatrix); Global::countNew++;
 }
 
+//There was a crash in here once for some reason... something with 'list'?
 void ParticleMaster::update(Camera* cam)
 {
 	std::unordered_map<ParticleTexture*, std::list<Particle*>>::iterator mapIt = ParticleMaster::particles.begin();

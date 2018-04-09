@@ -69,6 +69,7 @@
 #include "../entities/SpeedHighway/shelevatorplatformpath.h"
 #include "../entities/SpeedHighway/shelevatorplatform.h"
 #include "../entities/capsule.h"
+#include "../toolbox/pausescreen.h"
 
 float toFloat(char* input);
 int toInt(char* input);
@@ -98,6 +99,8 @@ void LevelLoader_loadTitle()
 	Global::gameRingCount = 0;
 	GuiManager::setTimer(0, 0, 0);
 	GuiManager::stopTimer();
+
+	//PauseScreen::pause();
 }
 
 void LevelLoader_loadLevel(std::string levelFilename)

@@ -33,7 +33,7 @@ ParticleTexture* ParticleResources::textureBlackFadeOutAndIn = nullptr;
 void ParticleResources::loadParticles()
 {
 	textureSnowDrop          = new ParticleTexture(Loader_loadTexture("res/Models/Particle/SnowDropAtlas.png"), 2, 1.0f, 0);
-	textureDustCloud         = new ParticleTexture(Loader_loadTexture("res/Models/Particle/41257828.png"), 1, 0.2f, 0);
+	textureDustCloud         = new ParticleTexture(Loader_loadTexture("res/Models/Particle/DustCloud.png"), 1, 0.2f, 0);
 	textureSnowball          = new ParticleTexture(Loader_loadTexture("res/Models/Particle/Snowball.png"), 1, 0.75f, 0);
 	textureStar              = new ParticleTexture(Loader_loadTexture("res/Models/Particle/Star.png"), 1, 1.0f, 0);
 	textureSparkleYellow     = new ParticleTexture(Loader_loadTexture("res/Models/Particle/Sparkle.png"), 1, 1.0f, 1);

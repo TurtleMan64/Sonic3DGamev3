@@ -7,7 +7,7 @@
 #include "../renderEngine/renderEngine.h"
 #include "../objLoader/objLoader.h"
 #include "../engineTester/main.h"
-#include "../entities/player.h"
+#include "../entities/playersonic.h"
 #include "../toolbox/maths.h"
 #include "../animation/body.h"
 #include "../entities/camera.h"

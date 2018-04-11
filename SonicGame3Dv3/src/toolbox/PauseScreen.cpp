@@ -8,7 +8,7 @@
 #include "../fontMeshCreator/fonttype.h"
 #include "../renderEngine/renderEngine.h"
 #include "../toolbox/input.h"
-#include "../entities/player.h"
+#include "../entities/playersonic.h"
 #include "../toolbox/levelloader.h"
 #include "../fontMeshCreator/guitext.h"
 
@@ -107,7 +107,7 @@ void PauseScreen::step()
 			menuSelection = std::max(0, std::min(menuSelectionMAX, menuSelection));
 		}
 
-		switch (Player::characterID)
+		switch (PlayerSonic::characterID)
 		{
 		case 0:
 			textClassicSonic->setColour(1, 1, 1);
@@ -360,41 +360,41 @@ void PauseScreen::step()
 				switch (menuSelection)
 				{
 				case 0:
-					Player::characterID = 0;
+					PlayerSonic::characterID = 0;
 					break;
 
 				case 1:
 					if (Global::unlockedSonicDoll)
 					{
-						Player::characterID = 1;
+						PlayerSonic::characterID = 1;
 					}
 					break;
 
 				case 2:
 					if (Global::unlockedMechaSonic)
 					{
-						Player::characterID = 2;
+						PlayerSonic::characterID = 2;
 					}
 					break;
 
 				case 3:
 					if (Global::unlockedDage4)
 					{
-						Player::characterID = 3;
+						PlayerSonic::characterID = 3;
 					}
 					break;
 
 				case 4:
 					if (Global::unlockedManiaSonic)
 					{
-						Player::characterID = 4;
+						PlayerSonic::characterID = 4;
 					}
 					break;
 
 				case 5:
 					if (Global::unlockedAmy)
 					{
-						Player::characterID = 5;
+						PlayerSonic::characterID = 5;
 					}
 					break;
 				}

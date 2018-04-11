@@ -7,7 +7,7 @@
 #include "../renderEngine/renderEngine.h"
 #include "../objLoader/objLoader.h"
 #include "../engineTester/main.h"
-#include "../entities/player.h"
+#include "../entities/playersonic.h"
 #include "../toolbox/maths.h"
 
 #include <list>
@@ -160,37 +160,37 @@ void ManiaSonicModel::loadStaticModels()
 
 	std::fprintf(stdout, "Loading mania sonic static models...\n");
 
-	loadObjModel(&ManiaSonicModel::modelDash0 , "res/Models/SonicMania/", "Dash0.obj");
-	loadObjModel(&ManiaSonicModel::modelDash1 , "res/Models/SonicMania/", "Dash1.obj");
-	loadObjModel(&ManiaSonicModel::modelDash2 , "res/Models/SonicMania/", "Dash2.obj");
-	loadObjModel(&ManiaSonicModel::modelDash3 , "res/Models/SonicMania/", "Dash3.obj");
-	loadObjModel(&ManiaSonicModel::modelDash4 , "res/Models/SonicMania/", "Dash4.obj");
-	loadObjModel(&ManiaSonicModel::modelDash5 , "res/Models/SonicMania/", "Dash5.obj");
-	loadObjModel(&ManiaSonicModel::modelDash6 , "res/Models/SonicMania/", "Dash6.obj");
-	loadObjModel(&ManiaSonicModel::modelDash7 , "res/Models/SonicMania/", "Dash7.obj");
-	loadObjModel(&ManiaSonicModel::modelDash8 , "res/Models/SonicMania/", "Dash8.obj");
-	loadObjModel(&ManiaSonicModel::modelDash9 , "res/Models/SonicMania/", "Dash9.obj");
-	loadObjModel(&ManiaSonicModel::modelDash10, "res/Models/SonicMania/", "Dash10.obj");
-	loadObjModel(&ManiaSonicModel::modelDash11, "res/Models/SonicMania/", "Dash11.obj");
-	loadObjModel(&ManiaSonicModel::modelJump  , "res/Models/SonicMania/", "Jump.obj");
-	loadObjModel(&ManiaSonicModel::modelJog0  , "res/Models/SonicMania/", "Jog0.obj");
-	loadObjModel(&ManiaSonicModel::modelJog1  , "res/Models/SonicMania/", "Jog1.obj");
-	loadObjModel(&ManiaSonicModel::modelJog2  , "res/Models/SonicMania/", "Jog2.obj");
-	loadObjModel(&ManiaSonicModel::modelJog3  , "res/Models/SonicMania/", "Jog3.obj");
-	loadObjModel(&ManiaSonicModel::modelJog4  , "res/Models/SonicMania/", "Jog4.obj");
-	loadObjModel(&ManiaSonicModel::modelJog5  , "res/Models/SonicMania/", "Jog5.obj");
-	loadObjModel(&ManiaSonicModel::modelJog6  , "res/Models/SonicMania/", "Jog6.obj");
-	loadObjModel(&ManiaSonicModel::modelJog7  , "res/Models/SonicMania/", "Jog7.obj");
-	loadObjModel(&ManiaSonicModel::modelJog8  , "res/Models/SonicMania/", "Jog8.obj");
-	loadObjModel(&ManiaSonicModel::modelJog9  , "res/Models/SonicMania/", "Jog9.obj");
-	loadObjModel(&ManiaSonicModel::modelJog10 , "res/Models/SonicMania/", "Jog10.obj");
-	loadObjModel(&ManiaSonicModel::modelJog11 , "res/Models/SonicMania/", "Jog11.obj");
-	loadObjModel(&ManiaSonicModel::modelJog12 , "res/Models/SonicMania/", "Jog12.obj");
-	loadObjModel(&ManiaSonicModel::modelJog13 , "res/Models/SonicMania/", "Jog13.obj");
-	loadObjModel(&ManiaSonicModel::modelJog14 , "res/Models/SonicMania/", "Jog14.obj");
-	loadObjModel(&ManiaSonicModel::modelJog15 , "res/Models/SonicMania/", "Jog15.obj");
-	loadObjModel(&ManiaSonicModel::modelJog16 , "res/Models/SonicMania/", "Jog16.obj");
-	loadObjModel(&ManiaSonicModel::modelJog17 , "res/Models/SonicMania/", "Jog17.obj");
+	loadObjModel(&ManiaSonicModel::modelDash0 , "res/Models/ManiaSonic/", "Dash0.obj");
+	loadObjModel(&ManiaSonicModel::modelDash1 , "res/Models/ManiaSonic/", "Dash1.obj");
+	loadObjModel(&ManiaSonicModel::modelDash2 , "res/Models/ManiaSonic/", "Dash2.obj");
+	loadObjModel(&ManiaSonicModel::modelDash3 , "res/Models/ManiaSonic/", "Dash3.obj");
+	loadObjModel(&ManiaSonicModel::modelDash4 , "res/Models/ManiaSonic/", "Dash4.obj");
+	loadObjModel(&ManiaSonicModel::modelDash5 , "res/Models/ManiaSonic/", "Dash5.obj");
+	loadObjModel(&ManiaSonicModel::modelDash6 , "res/Models/ManiaSonic/", "Dash6.obj");
+	loadObjModel(&ManiaSonicModel::modelDash7 , "res/Models/ManiaSonic/", "Dash7.obj");
+	loadObjModel(&ManiaSonicModel::modelDash8 , "res/Models/ManiaSonic/", "Dash8.obj");
+	loadObjModel(&ManiaSonicModel::modelDash9 , "res/Models/ManiaSonic/", "Dash9.obj");
+	loadObjModel(&ManiaSonicModel::modelDash10, "res/Models/ManiaSonic/", "Dash10.obj");
+	loadObjModel(&ManiaSonicModel::modelDash11, "res/Models/ManiaSonic/", "Dash11.obj");
+	loadObjModel(&ManiaSonicModel::modelJump  , "res/Models/ManiaSonic/", "Jump.obj");
+	loadObjModel(&ManiaSonicModel::modelJog0  , "res/Models/ManiaSonic/", "Jog0.obj");
+	loadObjModel(&ManiaSonicModel::modelJog1  , "res/Models/ManiaSonic/", "Jog1.obj");
+	loadObjModel(&ManiaSonicModel::modelJog2  , "res/Models/ManiaSonic/", "Jog2.obj");
+	loadObjModel(&ManiaSonicModel::modelJog3  , "res/Models/ManiaSonic/", "Jog3.obj");
+	loadObjModel(&ManiaSonicModel::modelJog4  , "res/Models/ManiaSonic/", "Jog4.obj");
+	loadObjModel(&ManiaSonicModel::modelJog5  , "res/Models/ManiaSonic/", "Jog5.obj");
+	loadObjModel(&ManiaSonicModel::modelJog6  , "res/Models/ManiaSonic/", "Jog6.obj");
+	loadObjModel(&ManiaSonicModel::modelJog7  , "res/Models/ManiaSonic/", "Jog7.obj");
+	loadObjModel(&ManiaSonicModel::modelJog8  , "res/Models/ManiaSonic/", "Jog8.obj");
+	loadObjModel(&ManiaSonicModel::modelJog9  , "res/Models/ManiaSonic/", "Jog9.obj");
+	loadObjModel(&ManiaSonicModel::modelJog10 , "res/Models/ManiaSonic/", "Jog10.obj");
+	loadObjModel(&ManiaSonicModel::modelJog11 , "res/Models/ManiaSonic/", "Jog11.obj");
+	loadObjModel(&ManiaSonicModel::modelJog12 , "res/Models/ManiaSonic/", "Jog12.obj");
+	loadObjModel(&ManiaSonicModel::modelJog13 , "res/Models/ManiaSonic/", "Jog13.obj");
+	loadObjModel(&ManiaSonicModel::modelJog14 , "res/Models/ManiaSonic/", "Jog14.obj");
+	loadObjModel(&ManiaSonicModel::modelJog15 , "res/Models/ManiaSonic/", "Jog15.obj");
+	loadObjModel(&ManiaSonicModel::modelJog16 , "res/Models/ManiaSonic/", "Jog16.obj");
+	loadObjModel(&ManiaSonicModel::modelJog17 , "res/Models/ManiaSonic/", "Jog17.obj");
 
 }
 

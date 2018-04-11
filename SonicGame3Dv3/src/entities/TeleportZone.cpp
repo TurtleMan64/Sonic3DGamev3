@@ -8,7 +8,7 @@
 #include "../objLoader/objLoader.h"
 #include "../engineTester/main.h"
 #include "../entities/camera.h"
-#include "../entities/player.h"
+#include "../entities/playersonic.h"
 #include "../collision/collisionchecker.h"
 #include "../collision/triangle3d.h"
 #include "../toolbox/maths.h"

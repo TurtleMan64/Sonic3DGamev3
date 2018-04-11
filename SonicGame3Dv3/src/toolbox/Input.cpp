@@ -10,7 +10,7 @@
 #include "input.h"
 #include "../renderEngine/skymanager.h"
 #include "../engineTester/main.h"
-#include "../entities/player.h"
+#include "../entities/playersonic.h"
 #include "../entities/camera.h"
 #include "../entities/ring.h"
 #include "maths.h"

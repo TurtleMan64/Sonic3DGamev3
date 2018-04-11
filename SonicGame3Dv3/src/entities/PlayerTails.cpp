@@ -6,7 +6,7 @@
 #include "entities.h"
 #include "../models/models.h"
 #include "../toolbox/vector.h"
-#include "player.h"
+#include "playertails.h"
 #include "../renderEngine/renderEngine.h"
 #include "../objLoader/objLoader.h"
 #include "../engineTester/main.h"
@@ -20,31 +20,31 @@
 #include "../animation/animationresources.h"
 #include "skysphere.h"
 #include "../entities/ring.h"
-#include "maniasonicmodel.h"
+#include "maniatailsmodel.h"
 #include "../audio/audioplayer.h"
 #include "../audio/source.h"
 #include "../particles/particle.h"
 #include "../particles/particleresources.h"
 #include "stage.h"
 
-std::list<TexturedModel*> Player::modelBody;
-std::list<TexturedModel*> Player::modelHead;
-std::list<TexturedModel*> Player::modelLeftHumerus;
-std::list<TexturedModel*> Player::modelLeftForearm;
-std::list<TexturedModel*> Player::modelLeftHand;
-std::list<TexturedModel*> Player::modelLeftThigh;
-std::list<TexturedModel*> Player::modelLeftShin;
-std::list<TexturedModel*> Player::modelLeftFoot;
-std::list<TexturedModel*> Player::modelRightHumerus;
-std::list<TexturedModel*> Player::modelRightForearm;
-std::list<TexturedModel*> Player::modelRightHand;
-std::list<TexturedModel*> Player::modelRightThigh;
-std::list<TexturedModel*> Player::modelRightShin;
-std::list<TexturedModel*> Player::modelRightFoot;
+std::list<TexturedModel*> PlayerTails::modelBody;
+std::list<TexturedModel*> PlayerTails::modelHead;
+std::list<TexturedModel*> PlayerTails::modelLeftHumerus;
+std::list<TexturedModel*> PlayerTails::modelLeftForearm;
+std::list<TexturedModel*> PlayerTails::modelLeftHand;
+std::list<TexturedModel*> PlayerTails::modelLeftThigh;
+std::list<TexturedModel*> PlayerTails::modelLeftShin;
+std::list<TexturedModel*> PlayerTails::modelLeftFoot;
+std::list<TexturedModel*> PlayerTails::modelRightHumerus;
+std::list<TexturedModel*> PlayerTails::modelRightForearm;
+std::list<TexturedModel*> PlayerTails::modelRightHand;
+std::list<TexturedModel*> PlayerTails::modelRightThigh;
+std::list<TexturedModel*> PlayerTails::modelRightShin;
+std::list<TexturedModel*> PlayerTails::modelRightFoot;
 
-ManiaSonicModel* Player::maniaSonic;
+ManiaTailsModel* PlayerTails::maniaTails;
 
-int Player::characterID = 4;
+int PlayerTails::skinID = 4;
 
 extern bool INPUT_JUMP;
 extern bool INPUT_ACTION;
@@ -68,7 +68,7 @@ extern float INPUT_X2;
 extern float INPUT_Y2;
 extern float INPUT_ZOOM;
 
-Player::Player(float x, float y, float z)
+PlayerTails::PlayerTails(float x, float y, float z)
 {
 	position.x = x;
 	position.y = y;
@@ -80,11 +80,11 @@ Player::Player(float x, float y, float z)
 	yDisp = 0;
 	zDisp = 0;
 	setVisible(false); //Our limbs are what will be visible
-	Player::maniaSonic = nullptr;
+	PlayerTails::maniaTails = nullptr;
 	createLimbs();
 }
 
-void Player::step()
+void PlayerTails::step()
 {
 	previousPos.set(&position);
 	animCount++;
@@ -125,7 +125,15 @@ void Player::step()
 		applyFrictionAir();
 		moveMeAir();
 		limitMovementSpeedAir();
-		yVel -= gravity;
+
+		if (isFlying && flyingUsesRemaining > 0)
+		{
+			yVel -= gravity*0.5f;
+		}
+		else
+		{
+			yVel -= gravity;
+		}
 	}
 	else //on ground
 	{
@@ -164,12 +172,10 @@ void Player::step()
 	if (onPlane) //On Ground
 	{
 		isJumping = false;
-		isBouncing = false;
-		isStomping = false;
 		isDropDashing = false;
 		justBounced = false;
-		homingAttackTimer = -1;
 		dropDashCharge = 0.0f;
+		isFlying = false;
 		float speed = sqrtf(xVelGround*xVelGround + zVelGround*zVelGround);
 		if (currNorm.y <= wallThreshold && speed < wallSpeedStickThreshold) //Arbitrary constants
 		{
@@ -289,19 +295,32 @@ void Player::step()
 	}
 	else //In the air
 	{
-		if (jumpInput && !previousJumpInput && homingAttackTimer == -1 && (isJumping || isBall || isBouncing) && !isDropDashing)
+		if (jumpInput && !previousJumpInput &&  (isJumping || isBall) && !isDropDashing)
 		{
-			homingAttack();
+			if (!isFlying)
+			{
+				isFlying = true;
+				isJumping = false;
+				isBall = false;
+				flyingUsesRemaining = maxFlyingUses;
+				hoverCount = 0;
+			}
 		}
 
-		if (actionInput && !previousActionInput && (isJumping || isBall) && !isBouncing && homingAttackTimer == -1 && !isStomping && !isDropDashing)
+		if (jumpInput && !previousJumpInput && isFlying)
 		{
-			initiateBounce();
+			if (flyingUsesRemaining > 0 && yVel < flyYSpeedMax)
+			{
+				yVel+=flyYSpeedIncrease;
+				flyingUsesRemaining--;
+			}
 		}
 
-		if (action2Input && !previousAction2Input && (isJumping || isBall) && !isBouncing && homingAttackTimer == -1 && !isStomping && !isDropDashing)
+		if (((actionInput  && !previousActionInput)   || 
+			 (action2Input && !previousAction2Input)) && 
+			  isFlying)
 		{
-			initiateStomp();
+			flyingUsesRemaining = 0;
 		}
 
 		isSpindashing = false;
@@ -318,148 +337,59 @@ void Player::step()
 		}
 
 		//TODO: make new buttons for this
-		if (specialInput && !previousSpecialInput && (isJumping || isBall) && !isBouncing && homingAttackTimer == -1 && !isStomping)
+		if (specialInput && !previousSpecialInput && (isJumping || isBall) && !isFlying)
 		{
 			isDropDashing = true;
 			dropDashCharge += dropDashChargeIncrease;
 			
 			AudioPlayer::play(14, getPosition());
 		}
-
-		//if (Keyboard.isKeyDown(Keyboard.KEY_J))
-		//{
-			//yVel += 0.5f;
-		//}
 	}
 
 	spindashReleaseTimer = std::max(spindashReleaseTimer - 1, 0);
 	spindashRestartDelay = std::max(spindashRestartDelay - 1, 0);
-	if (homingAttackTimer > 0)
-	{
-		homingAttackTimer--;
-	}
 
 	onPlanePrevious = onPlane;
 	CollisionChecker::setCheckPlayer();
-	if (CollisionChecker::checkCollision(getX(), getY(), getZ(), (float)(getX() + (xVel + xVelAir + xDisp)), (float)(getY() + (yVel + yDisp)), (float)(getZ() + (zVel + zVelAir + zDisp))))
+	if (CollisionChecker::checkCollision(getX(), getY(), getZ(), getX() + xVel + xVelAir + xDisp, getY() + yVel + yDisp, getZ() + zVel + zVelAir + zDisp))
 	{
 		triCol = CollisionChecker::getCollideTriangle();
 		colPos = CollisionChecker::getCollidePosition();
 		bool bonked = false;
 		if (onPlane == false) //Transition from air to ground
 		{
-			if (isBouncing)
+			bool canStick = true;
+
+			//Is the wall steep?
+			if (triCol->normal.y < wallThreshold)
 			{
-				bounceOffGround(&(triCol->normal), bounceFactor, 8);
-				isBall = true;
-				isBouncing = false;
-				isStomping = false;
-				homingAttackTimer = -1;
-				hoverCount = 0;
+				canStick = false;
+			}
+
+			if (canStick)
+			{
+				Vector3f speeds = calculatePlaneSpeed(xVel + xVelAir + xDisp, yVel + yDisp, zVel + zVelAir + zDisp, &(triCol->normal));
+				xVelGround = speeds.x;
+				zVelGround = speeds.z;
+				isBall = false;
+				onPlane = true;
+
+				if (isDropDashing)
+				{
+					dropDash(dropDashCharge);
+				}
 			}
 			else
 			{
-				//New idea: if the wall is very steep, check if we are approaching the wall at too flat of an angle.
-				//If we are, do a small bounce off the wall sintead of sticking to it.
+				bounceOffGround(&(triCol->normal), cantStickBounceFactor, 18);
 
-				bool canStick = true;
+				setPosition(colPos);
+				increasePosition(triCol->normal.x * 1.5f, triCol->normal.y * 1.5f, triCol->normal.z * 1.5f);
 
-				//std::fprintf(stdout, "normal.y = %f\n", triCol->normal.y);
-
-				//Is the wall steep?
-				if (triCol->normal.y < wallThreshold) //Some arbitrary steepness constant
-				{
-					//Vector3f approach(xVel + xVelAir + xDisp, yVel + yDisp, zVel + zVelAir + zDisp);
-					//Vector3f wallNorm(&(triCol->normal));
-
-					//approach.normalize();
-					//wallNorm.normalize();
-
-					//float similarity = abs(wallNorm.dot(&approach));
-
-					//std::fprintf(stdout, "similarity = %f\n", similarity);
-
-					//if (similarity > smoothTransitionThreshold) //Another arbitrary "how steep of an angle you can stick at" constant
-					{
-						//canStick = false;
-					}
-
-					//Not sure if I like this...
-					canStick = false;
-				}
-
-				//Not sure if I like the canStick thing or not...
-				//canStick = true;
-
-				if (canStick)
-				{
-					Vector3f speeds = calculatePlaneSpeed(xVel + xVelAir + xDisp, yVel + yDisp, zVel + zVelAir + zDisp, &(triCol->normal));
-					xVelGround = speeds.x;
-					zVelGround = speeds.z;
-					isBall = false;
-					onPlane = true;
-
-					if (isDropDashing)
-					{
-						dropDash(dropDashCharge);
-					}
-				}
-				else
-				{
-					//Vector3f speeds(xVel + xVelAir + xDisp, yVel + yDisp, zVel + zVelAir + zDisp);
-					//Vector3f newSPeeds = projectOntoPlane(&speeds, &(triCol->normal));
-					//xVelAir = speeds.x;
-					//yVel = speeds.y;
-					//zVelAir = speeds.z;
-					
-					if (justBounced == true)
-					{
-						//Superbounce
-						Vector3f speeds(xVelAir, yVel, zVelAir);
-						Vector3f newSpeeds = projectOntoPlane(&speeds, &(triCol->normal));
-
-						//Handle case where you superbounce exactly perpendicular to the wall
-						if (newSpeeds.lengthSquared() == 0)
-						{
-							newSpeeds.y = -1;
-						}
-
-						newSpeeds.normalize();
-						newSpeeds.scale(speeds.length());
-
-						xVelAir = newSpeeds.x/2;
-						yVel    = newSpeeds.y;
-						zVelAir = newSpeeds.z/2;
-
-						justBounced = false;
-
-						setPosition(colPos);
-						increasePosition(triCol->normal.x * 4.0f, triCol->normal.y * 4.0f, triCol->normal.z * 4.0f);
-					}
-					else
-					{
-						bounceOffGround(&(triCol->normal), cantStickBounceFactor, 18);
-
-						setPosition(colPos);
-						increasePosition(triCol->normal.x * 1.5f, triCol->normal.y * 1.5f, triCol->normal.z * 1.5f);
-					}
-
-					canMoveTimer = 8;
-					isBall = true;
-					isDropDashing = false;
-					bonked = true;
-				}
-			}
-
-			if (isStomping)
-			{
-				if (stompSource != nullptr)
-				{
-					stompSource->stop();
-				}
-				AudioPlayer::play(17, getPosition());
-
-				createStompParticles();
+				canMoveTimer = 8;
+				isBall = true;
+				isDropDashing = false;
+				bonked = true;
 			}
 		}
 		else //check if you can smoothly transition from previous triangle to this triangle
@@ -472,26 +402,15 @@ void Player::step()
 
 				bonked = true;
 
-				//currNorm.set(0, 1, 0);
-
 				Vector3f currDisp(xVel + xDisp, yVel + yDisp, zVel + zDisp);
 
 				Vector3f parToWall = projectOntoPlane(&currDisp, &(triCol->normal));
 
 				float sameness = parToWall.length();
 
-				//fprintf(stdout, "Length = %f\n", parToWall.length());
-
 				Vector3f parToGround = projectOntoPlane(&parToWall, &currNorm);
 
 				Vector3f newGroundSpeeds = calculatePlaneSpeed(parToWall.x, parToWall.y, parToWall.z, &currNorm);
-
-				//fprintf(stdout, "newGroundSpeeds.y = %f\n", newGroundSpeeds.y);
-
-				//if (CollisionChecker::checkCollision(getX(), getY(), getZ(), getX() + parToGround.x, getY() + parToGround.y, getZ() + parToGround.z) == false)
-				{
-					//increasePosition(parToGround.x, parToGround.y, parToGround.z);
-				}
 
 				if (isBall || isSpindashing)
 				{
@@ -520,57 +439,6 @@ void Player::step()
 						currNorm.set(0, 1, 0);
 					}
 				}
-
-
-
-				/*
-				Vector3f currDisp(xVel + xDisp, yVel + yDisp, zVel + zDisp);
-
-				Vector3f newDisp = projectOntoPlane(&currDisp, &(triCol->normal));
-
-				CollisionChecker::setCheckPlayer();
-				if (CollisionChecker::checkCollision(getX(), getY(), getZ(), getX() + newDisp.x, getY() + newDisp.y, getZ() + newDisp.z))
-				{
-					setPosition(CollisionChecker::getCollidePosition());
-					increasePosition(CollisionChecker::getCollideTriangle()->normal.x, CollisionChecker::getCollideTriangle()->normal.y, CollisionChecker::getCollideTriangle()->normal.z);
-				}
-				else
-				{
-					increasePosition(newDisp.x, newDisp.y, newDisp.z);
-
-					CollisionChecker::setCheckPlayer();
-					bool checkPassed = CollisionChecker::checkCollision(getX(), getY(), getZ(), getX() - currNorm.x*surfaceTension, getY() - currNorm.y*surfaceTension, getZ() - currNorm.z*surfaceTension);
-					if (checkPassed)
-					{
-						float dotProduct = currNorm.dot(&(CollisionChecker::getCollideTriangle()->normal));
-						if (dotProduct < 0.6) //It's a wall, pretend the collision check didn't see it
-						{
-							checkPassed = false;
-						}
-					}
-
-					if (checkPassed)
-					{
-						setPosition(CollisionChecker::getCollidePosition());
-						increasePosition(CollisionChecker::getCollideTriangle()->normal.x, CollisionChecker::getCollideTriangle()->normal.y, CollisionChecker::getCollideTriangle()->normal.z);
-					}
-					else
-					{
-						CollisionChecker::falseAlarm();
-						airTimer++;
-
-						xVelGround = 0;
-						zVelGround = 0;
-						xVelAir = xVel + xDisp;
-						zVelAir = zVel + zDisp;
-						yVel += yDisp;
-						xVel = 0;
-						zVel = 0;
-
-						onPlane = false;
-					}
-				}
-				*/
 			}
 			onPlane = true;
 		}
@@ -586,7 +454,7 @@ void Player::step()
 	}
 	else
 	{
-		increasePosition((float)((xVel + xVelAir + xDisp)), (float)((yVel + yDisp)), (float)((zVel + zVelAir + zDisp)));
+		increasePosition(xVel + xVelAir + xDisp, yVel + yDisp, zVel + zVelAir + zDisp);
 
 		//Check for if there's just a small gap "below" us (relative to the normal of the triangle)
 		//NEW: If the second check does pass but it is a wall, we pretend that the check didnt pass
@@ -775,12 +643,9 @@ void Player::step()
 	{
 		Global::gameSkySphere->setPosition(getX(), 4550, getZ());
 	}
-
-	//std::fprintf(stdout, "ground speed = %f\n", sqrtf(xVelGround*xVelGround + zVelGround*zVelGround));
-	//std::fprintf(stdout, "air    speed = %f    %f\n\n", xVelAir, zVelAir);
 }
 
-void Player::addLimbsToGame()
+void PlayerTails::addLimbsToGame()
 {
 	Main_addEntity(myBody);
 	Main_addEntity(myHead);
@@ -798,7 +663,7 @@ void Player::addLimbsToGame()
 	Main_addEntity(myRightFoot);
 }
 
-void Player::removeLimbsFromGame()
+void PlayerTails::removeLimbsFromGame()
 {
 	Main_deleteEntity(myBody); myBody = nullptr;
 	Main_deleteEntity(myHead); myHead = nullptr;
@@ -816,7 +681,7 @@ void Player::removeLimbsFromGame()
 	Main_deleteEntity(myRightFoot); myRightFoot = nullptr;
 }
 
-void Player::setLimbsVisibility(bool newVisible)
+void PlayerTails::setLimbsVisibility(bool newVisible)
 {
 	if (myBody == nullptr) return;
 	myBody->setVisible(newVisible);
@@ -835,7 +700,7 @@ void Player::setLimbsVisibility(bool newVisible)
 	myRightFoot->setVisible(newVisible);
 }
 
-void Player::updateLimbs(int animIndex, float time)
+void PlayerTails::updateLimbs(int animIndex, float time)
 {
 	if (myBody == nullptr) return;
 	myBody->animationIndex = animIndex;
@@ -868,7 +733,7 @@ void Player::updateLimbs(int animIndex, float time)
 	myRightFoot->update(time);
 }
 
-void Player::updateLimbsMatrix()
+void PlayerTails::updateLimbsMatrix()
 {
 	if (myBody == nullptr) return;
 	myBody->updateTransformationMatrix();
@@ -887,155 +752,49 @@ void Player::updateLimbsMatrix()
 	myRightFoot->updateTransformationMatrix();
 }
 
-void Player::createLimbs()
+void PlayerTails::createLimbs()
 {
-	if (Player::characterID == 0) //Classic Sonic
+	if (PlayerTails::skinID == 4) //Mania Tails
 	{
-		displayHeightOffset = 0;
-		myBody = new Body(&modelBody); Global::countNew++;
-		myHead = new Limb(&modelHead, 1.3f, 0, 0, myBody, nullptr); Global::countNew++;
-		myLeftHumerus = new Limb(&modelLeftHumerus, 0.9f, 0, -0.9f, myBody, nullptr); Global::countNew++;
-		myLeftForearm = new Limb(&modelLeftForearm, 0, -1.3f, 0, nullptr, myLeftHumerus); Global::countNew++;
-		myLeftHand = new Limb(&modelLeftHand, 0, -1.3f, 0, nullptr, myLeftForearm); Global::countNew++;
-		myLeftThigh = new Limb(&modelLeftThigh, -0.9f, 0, -0.3f, myBody, nullptr); Global::countNew++;
-		myLeftShin = new Limb(&modelLeftShin, 0, -1.1f, 0, nullptr, myLeftThigh); Global::countNew++;
-		myLeftFoot = new Limb(&modelLeftFoot, 0, -1.1f, 0, nullptr, myLeftShin); Global::countNew++;
-		myRightHumerus = new Limb(&modelRightHumerus, 0.9f, 0, 0.9f, myBody, nullptr); Global::countNew++;
-		myRightForearm = new Limb(&modelRightForearm, 0, -1.3f, 0, nullptr, myRightHumerus); Global::countNew++;
-		myRightHand = new Limb(&modelRightHand, 0, -1.3f, 0, nullptr, myRightForearm); Global::countNew++;
-		myRightThigh = new Limb(&modelRightThigh, -0.9f, 0, 0.3f, myBody, nullptr); Global::countNew++;
-		myRightShin = new Limb(&modelRightShin, 0, -1.1f, 0, nullptr, myRightThigh); Global::countNew++;
-		myRightFoot = new Limb(&modelRightFoot, 0, -1.1f, 0, nullptr, myRightShin); Global::countNew++;
-	}
-	else if (Player::characterID == 1) //Sonic Doll
-	{
-		displayHeightOffset = -0.525f;
-		myBody = new Body(&modelBody); Global::countNew++;
-		myHead = new Limb(&modelHead, 1.4f, -0.7f, 0, myBody, nullptr); Global::countNew++;
-		myLeftHumerus = new Limb(&modelLeftHumerus, 0.9f, 0, -0.9f, myBody, nullptr); Global::countNew++;
-		myLeftForearm = new Limb(&modelLeftForearm, 0, -0.92f, 0, nullptr, myLeftHumerus); Global::countNew++;
-		myLeftHand = new Limb(&modelLeftHand, 0, -0.62f, 0, nullptr, myLeftForearm); Global::countNew++;
-		myLeftThigh = new Limb(&modelLeftThigh, -0.9f, 0, -0.3f, myBody, nullptr); Global::countNew++;
-		myLeftShin = new Limb(&modelLeftShin, 0, -1.07f, 0, nullptr, myLeftThigh); Global::countNew++;
-		myLeftFoot = new Limb(&modelLeftFoot, 0, -1.23f, 0, nullptr, myLeftShin); Global::countNew++;
-		myRightHumerus = new Limb(&modelRightHumerus, 0.9f, 0, 0.9f, myBody, nullptr); Global::countNew++;
-		myRightForearm = new Limb(&modelRightForearm, 0, -0.92f, 0, nullptr, myRightHumerus); Global::countNew++;
-		myRightHand = new Limb(&modelRightHand, 0, -0.62f, 0, nullptr, myRightForearm); Global::countNew++;
-		myRightThigh = new Limb(&modelRightThigh, -0.9f, 0, 0.3f, myBody, nullptr); Global::countNew++;
-		myRightShin = new Limb(&modelRightShin, 0, -1.07f, 0, nullptr, myRightThigh); Global::countNew++;
-		myRightFoot = new Limb(&modelRightFoot, 0, -1.23f, 0, nullptr, myRightShin); Global::countNew++;
-	}
-	else if (Player::characterID == 2) //Mecha Sonic
-	{
-		displayHeightOffset = 0.8f;
-		myBody =         new Body(&modelBody); Global::countNew++;
-		myHead =         new Limb(&modelHead,         1.15f,  0,      0,     myBody,   nullptr);        Global::countNew++;
-		myLeftHumerus =  new Limb(&modelLeftHumerus,  0.9f,   0,     -0.9f,  myBody,   nullptr);        Global::countNew++;
-		myLeftForearm =  new Limb(&modelLeftForearm,  0,     -1.5f,   0,     nullptr,  myLeftHumerus);  Global::countNew++;
-		myLeftHand =     new Limb(&modelLeftHand,     0,     -1.9f,   0,     nullptr,  myLeftForearm);  Global::countNew++;
-		myLeftThigh =    new Limb(&modelLeftThigh,   -0.9f,   0,     -0.3f,  myBody,   nullptr);        Global::countNew++;
-		myLeftShin =     new Limb(&modelLeftShin,     0,     -1.47f,  0,     nullptr,  myLeftThigh);    Global::countNew++;
-		myLeftFoot =     new Limb(&modelLeftFoot,     0,     -1.21f,  0,     nullptr,  myLeftShin);     Global::countNew++;
-		myRightHumerus = new Limb(&modelRightHumerus, 0.9f,   0,      0.9f,  myBody,   nullptr);        Global::countNew++;
-		myRightForearm = new Limb(&modelRightForearm, 0,     -1.5f,   0,     nullptr,  myRightHumerus); Global::countNew++;
-		myRightHand =    new Limb(&modelRightHand,    0,     -1.9f,   0,     nullptr,  myRightForearm); Global::countNew++;
-		myRightThigh =   new Limb(&modelRightThigh,  -0.9f,   0,      0.3f,  myBody,   nullptr);        Global::countNew++;
-		myRightShin =    new Limb(&modelRightShin,    0,     -1.47f,  0,     nullptr,  myRightThigh);   Global::countNew++;
-		myRightFoot =    new Limb(&modelRightFoot,    0,     -1.21f,  0,     nullptr,  myRightShin);    Global::countNew++;
-	}
-	else if (Player::characterID == 3) //Dage 4 Aquatic
-	{
-		displayHeightOffset = 0;
-		myBody =         new Body(&modelBody); Global::countNew++;
-		myHead =         new Limb(&modelHead,         1.3f,   0,      0,     myBody,   nullptr);        Global::countNew++;
-		myLeftHumerus =  new Limb(&modelLeftHumerus,  0.9f,   0,     -0.9f,  myBody,   nullptr);        Global::countNew++;
-		myLeftForearm =  new Limb(&modelLeftForearm,  0,     -1.3f,   0,     nullptr,  myLeftHumerus);  Global::countNew++;
-		myLeftHand =     new Limb(&modelLeftHand,     0,     -1.3f,   0,     nullptr,  myLeftForearm);  Global::countNew++;
-		myLeftThigh =    new Limb(&modelLeftThigh,   -0.9f,   0,     -0.3f,  myBody,   nullptr);        Global::countNew++;
-		myLeftShin =     new Limb(&modelLeftShin,     0,     -1.1f,   0,     nullptr,  myLeftThigh);    Global::countNew++;
-		myLeftFoot =     new Limb(&modelLeftFoot,     0,     -1.1f,   0,     nullptr,  myLeftShin);     Global::countNew++;
-		myRightHumerus = new Limb(&modelRightHumerus, 0.9f,   0,      0.9f,  myBody,   nullptr);        Global::countNew++;
-		myRightForearm = new Limb(&modelRightForearm, 0,     -1.3f,   0,     nullptr,  myRightHumerus); Global::countNew++;
-		myRightHand =    new Limb(&modelRightHand,    0,     -1.3f,   0,     nullptr,  myRightForearm); Global::countNew++;
-		myRightThigh =   new Limb(&modelRightThigh,  -0.9f,   0,      0.3f,  myBody,   nullptr);        Global::countNew++;
-		myRightShin =    new Limb(&modelRightShin,    0,     -1.1f,   0,     nullptr,  myRightThigh);   Global::countNew++;
-		myRightFoot =    new Limb(&modelRightFoot,    0,     -1.1f,   0,     nullptr,  myRightShin);    Global::countNew++;
-	}
-	else if (Player::characterID == 4) //Mania Sonic
-	{
-		Player::maniaSonic = new ManiaSonicModel();
+		PlayerTails::maniaTails = new ManiaTailsModel;
 		Global::countNew++;
-		Main_addEntity(Player::maniaSonic);
+		Main_addEntity(PlayerTails::maniaTails);
 
-		displayHeightOffset = -0.25f;
+		float s = 0.71f;
+
+		displayHeightOffset = -1.0f;
 		myBody =         new Body(&modelBody);
-		myHead =         new Limb(&modelHead,         1.2f,  -0.3f,   0,     myBody,   nullptr);        Global::countNew++;
-		myLeftHumerus =  new Limb(&modelLeftHumerus,  0.9f,	  0,     -0.9f,  myBody,   nullptr);        Global::countNew++;
-		myLeftForearm =  new Limb(&modelLeftForearm,  0,     -1.3f,   0,     nullptr,  myLeftHumerus);  Global::countNew++;
-		myLeftHand =     new Limb(&modelLeftHand,     0,	 -1.3f,   0,     nullptr,  myLeftForearm);  Global::countNew++;
-		myLeftThigh =    new Limb(&modelLeftThigh,   -0.9f,   0,     -0.3f,  myBody,   nullptr);        Global::countNew++;
-		myLeftShin =     new Limb(&modelLeftShin,     0,	 -1.3f,   0,     nullptr,  myLeftThigh);    Global::countNew++;
-		myLeftFoot =     new Limb(&modelLeftFoot,     0,	 -1.1f,   0,     nullptr,  myLeftShin);     Global::countNew++;
-		myRightHumerus = new Limb(&modelRightHumerus, 0.9f,   0,      0.9f,  myBody,   nullptr);        Global::countNew++;
-		myRightForearm = new Limb(&modelRightForearm, 0,	 -1.3f,   0,     nullptr,  myRightHumerus); Global::countNew++;
-		myRightHand =    new Limb(&modelRightHand,    0,	 -1.3f,   0,     nullptr,  myRightForearm); Global::countNew++;
-		myRightThigh =   new Limb(&modelRightThigh,  -0.9f,   0,      0.3f,  myBody,   nullptr);        Global::countNew++;
-		myRightShin =    new Limb(&modelRightShin,    0,	 -1.3f,   0,     nullptr,  myRightThigh);   Global::countNew++;
-		myRightFoot =    new Limb(&modelRightFoot,    0,	 -1.1f,   0,     nullptr,  myRightShin);    Global::countNew++;
-	}
-	else if (Player::characterID == 5) //Amy
-	{
-		displayHeightOffset = -0.8f;
-		myBody =         new Body(&modelBody); Global::countNew++;
-		myHead =         new Limb(&modelHead,         1.4f,   0,      0,    myBody,  nullptr);        Global::countNew++;
-		myLeftHumerus =  new Limb(&modelLeftHumerus,  1.1f,   0,     -0.9f, myBody,  nullptr);        Global::countNew++;
-		myLeftForearm =  new Limb(&modelLeftForearm,  0,     -1.3f,   0,    nullptr, myLeftHumerus);  Global::countNew++;
-		myLeftHand =     new Limb(&modelLeftHand,     0,     -1.3f,   0,    nullptr, myLeftForearm);  Global::countNew++;
-		myLeftThigh =    new Limb(&modelLeftThigh,   -0.9f,   0,     -0.3f, myBody,  nullptr);        Global::countNew++;
-		myLeftShin =     new Limb(&modelLeftShin,     0,     -1.1f,   0,    nullptr, myLeftThigh);    Global::countNew++;
-		myLeftFoot =     new Limb(&modelLeftFoot,     0,     -1.1f,   0,    nullptr, myLeftShin);     Global::countNew++;
-		myRightHumerus = new Limb(&modelRightHumerus, 1.1f,   0,      0.9f, myBody,  nullptr);        Global::countNew++;
-		myRightForearm = new Limb(&modelRightForearm, 0,     -1.3f,   0,    nullptr, myRightHumerus); Global::countNew++;
-		myRightHand =    new Limb(&modelRightHand,    0,     -1.3f,   0,    nullptr, myRightForearm); Global::countNew++;
-		myRightThigh =   new Limb(&modelRightThigh,  -0.9f,   0,      0.3f, myBody,  nullptr);        Global::countNew++;
-		myRightShin =    new Limb(&modelRightShin,    0,     -1.1f,   0,    nullptr, myRightThigh);   Global::countNew++;
-		myRightFoot =    new Limb(&modelRightFoot,    0,     -1.1f,   0,    nullptr, myRightShin);    Global::countNew++;
-	}
-	else if (Player::characterID == 6) //WanamaDage
-	{
-		displayHeightOffset = 7.7f;
-		myBody =         new Body(&modelBody); Global::countNew++;
-		myHead =         new Limb(&modelHead,         4.835f,  0.715f,  0.0f,  myBody,  nullptr);        Global::countNew++;
-		myLeftHumerus =  new Limb(&modelLeftHumerus,  3.963f,  0.28f,  -2.73f, myBody,  nullptr);        Global::countNew++;
-		myLeftForearm =  new Limb(&modelLeftForearm,  0,      -3.7f,    0,     nullptr, myLeftHumerus);  Global::countNew++;
-		myLeftHand =     new Limb(&modelLeftHand,     0,      -4.18f,   0,     nullptr, myLeftForearm);  Global::countNew++;
-		myLeftThigh =    new Limb(&modelLeftThigh,   -3.893f,  0.42f,  -1.92f, myBody,  nullptr);        Global::countNew++;
-		myLeftShin =     new Limb(&modelLeftShin,     0,      -4.42f,   0,     nullptr, myLeftThigh);    Global::countNew++;
-		myLeftFoot =     new Limb(&modelLeftFoot,     0,      -3.75f,   0,     nullptr, myLeftShin);     Global::countNew++;
-		myRightHumerus = new Limb(&modelRightHumerus, 3.963f,  0.28f,   2.73f, myBody,  nullptr);        Global::countNew++;
-		myRightForearm = new Limb(&modelRightForearm, 0,      -3.7f,    0,     nullptr, myRightHumerus); Global::countNew++;
-		myRightHand =    new Limb(&modelRightHand,    0,      -4.18f,   0,     nullptr, myRightForearm); Global::countNew++;
-		myRightThigh =   new Limb(&modelRightThigh,  -3.893f,  0.42f,   1.92f, myBody,  nullptr);        Global::countNew++;
-		myRightShin =    new Limb(&modelRightShin,    0,      -4.42f,   0,     nullptr, myRightThigh);   Global::countNew++;
-		myRightFoot =    new Limb(&modelRightFoot,    0,      -3.75f,   0,     nullptr, myRightShin);    Global::countNew++;
-	}
-	else if (Player::characterID == 7) //Pac Man
-	{
-		displayHeightOffset = 1.95f*2.0f;
-		myBody         = new Body(&modelBody);                                                           Global::countNew++;
-		myHead         = new Limb(&modelHead,         0.0f,    0.0f,    0.0f,  myBody,  nullptr);        Global::countNew++;
-		myLeftHumerus  = new Limb(&modelLeftHumerus,  0.0f,   -0.2f*1.3f,   -2.85f*1.3f, myBody,  nullptr);        Global::countNew++;
-		myLeftForearm  = new Limb(&modelLeftForearm,  0,      -1.0f*1.3f,    0,     nullptr, myLeftHumerus);  Global::countNew++;
-		myLeftHand     = new Limb(&modelLeftHand,     0,      -1.0f*1.3f,    0,     nullptr, myLeftForearm);  Global::countNew++;
-		myLeftThigh    = new Limb(&modelLeftThigh,   -2.84f*1.3f,   0.0f,   -0.79f*1.3f, myBody,  nullptr);        Global::countNew++;
-		myLeftShin     = new Limb(&modelLeftShin,     0,      -1.0f*1.3f,    0,     nullptr, myLeftThigh);    Global::countNew++;
-		myLeftFoot     = new Limb(&modelLeftFoot,     0,      -1.0f*1.3f,    0,     nullptr, myLeftShin);     Global::countNew++;
-		myRightHumerus = new Limb(&modelRightHumerus, 0.0f,    0.2f*1.3f,    2.85f*1.3f, myBody,  nullptr);        Global::countNew++;
-		myRightForearm = new Limb(&modelRightForearm, 0,      -1.0f*1.3f,    0,     nullptr, myRightHumerus); Global::countNew++;
-		myRightHand    = new Limb(&modelRightHand,    0,      -1.0f*1.3f,    0,     nullptr, myRightForearm); Global::countNew++;
-		myRightThigh   = new Limb(&modelRightThigh,  -2.84f*1.3f,   0.0f,    0.79f*1.3f, myBody,  nullptr);        Global::countNew++;
-		myRightShin    = new Limb(&modelRightShin,    0,      -1.0f*1.3f,    0,     nullptr, myRightThigh);   Global::countNew++;
-		myRightFoot    = new Limb(&modelRightFoot,    0,      -1.0f*1.3f,    0,     nullptr, myRightShin);    Global::countNew++;
+		myHead =         new Limb(&modelHead,         1.35f*s,-0.3f*s,  0,      myBody,   nullptr);        Global::countNew++;
+		myLeftHumerus =  new Limb(&modelLeftHumerus,  0.9f*s,  0,      -0.9f*s, myBody,   nullptr);        Global::countNew++;
+		myLeftForearm =  new Limb(&modelLeftForearm,  0,      -1.3f*s,  0,      nullptr,  myLeftHumerus);  Global::countNew++;
+		myLeftHand =     new Limb(&modelLeftHand,     0,	  -1.3f*s,  0,      nullptr,  myLeftForearm);  Global::countNew++;
+		myLeftThigh =    new Limb(&modelLeftThigh,   -0.9f*s,  0,      -0.3f*s, myBody,   nullptr);        Global::countNew++;
+		myLeftShin =     new Limb(&modelLeftShin,     0,	  -1.3f*s,  0,      nullptr,  myLeftThigh);    Global::countNew++;
+		myLeftFoot =     new Limb(&modelLeftFoot,     0,	  -1.5f*s,  0,      nullptr,  myLeftShin);     Global::countNew++;
+		myRightHumerus = new Limb(&modelRightHumerus, 0.9f*s,  0,       0.9f*s, myBody,   nullptr);        Global::countNew++;
+		myRightForearm = new Limb(&modelRightForearm, 0,	  -1.3f*s,  0,      nullptr,  myRightHumerus); Global::countNew++;
+		myRightHand =    new Limb(&modelRightHand,    0,	  -1.3f*s,  0,      nullptr,  myRightForearm); Global::countNew++;
+		myRightThigh =   new Limb(&modelRightThigh,  -0.9f*s,  0,       0.3f*s, myBody,   nullptr);        Global::countNew++;
+		myRightShin =    new Limb(&modelRightShin,    0,	  -1.3f*s,  0,      nullptr,  myRightThigh);   Global::countNew++;
+		myRightFoot =    new Limb(&modelRightFoot,    0,	  -1.5f*s,  0,      nullptr,  myRightShin);    Global::countNew++;
+
+
+		s = 0.355f;
+
+		myBody->setScale(s);
+		myHead->setScale(s);
+		myLeftHumerus->setScale(s);
+		myLeftForearm->setScale(s);
+		myLeftHand->setScale(s);
+		myLeftThigh->setScale(s);
+		myLeftShin->setScale(s);
+		myLeftFoot->setScale(s);
+		myRightHumerus->setScale(s);
+		myRightForearm->setScale(s);
+		myRightHand->setScale(s);
+		myRightThigh->setScale(s);
+		myRightShin->setScale(s);
+		myRightFoot->setScale(s);
 	}
 
 	AnimationResources::assignAnimationsHuman(myBody, myHead,
@@ -1047,174 +806,55 @@ void Player::createLimbs()
 	addLimbsToGame();
 }
 
-std::list<TexturedModel*>* Player::getModels()
+std::list<TexturedModel*>* PlayerTails::getModels()
 {
 	return nullptr; //We should never be visible, so this should never be called anyway
 }
 
-void Player::loadStaticModels()
+void PlayerTails::loadStaticModels()
 {
-	if (Player::characterID == 0)
+	if (PlayerTails::skinID == 4) //Mania Sonic
 	{
-		loadObjModel(&Player::modelBody,         "res/Models/Sonic/", "Body.obj");
-		loadObjModel(&Player::modelHead,         "res/Models/Sonic/", "Head.obj");
-		loadObjModel(&Player::modelLeftHumerus,  "res/Models/Sonic/", "Humerus.obj");
-		loadObjModel(&Player::modelLeftForearm,  "res/Models/Sonic/", "Forearm.obj");
-		loadObjModel(&Player::modelLeftHand,     "res/Models/Sonic/", "LeftHand.obj");
-		loadObjModel(&Player::modelLeftThigh,    "res/Models/Sonic/", "Thigh.obj");
-		loadObjModel(&Player::modelLeftShin,     "res/Models/Sonic/", "Shin.obj");
-		loadObjModel(&Player::modelLeftFoot,     "res/Models/Sonic/", "Foot.obj");
-		loadObjModel(&Player::modelRightHumerus, "res/Models/Sonic/", "Humerus.obj");
-		loadObjModel(&Player::modelRightForearm, "res/Models/Sonic/", "Forearm.obj");
-		loadObjModel(&Player::modelRightHand,    "res/Models/Sonic/", "RightHand.obj");
-		loadObjModel(&Player::modelRightThigh,   "res/Models/Sonic/", "Thigh.obj");
-		loadObjModel(&Player::modelRightShin,    "res/Models/Sonic/", "Shin.obj");
-		loadObjModel(&Player::modelRightFoot,    "res/Models/Sonic/", "Foot.obj");
-	}
-	if (Player::characterID == 1) //Doll Sonic
-	{
-		loadObjModel(&Player::modelBody,         "res/Models/SonicDoll/", "Body.obj");
-		loadObjModel(&Player::modelHead,         "res/Models/SonicDoll/", "Head.obj");
-		loadObjModel(&Player::modelLeftHumerus,  "res/Models/SonicDoll/", "Humerus.obj");
-		loadObjModel(&Player::modelLeftForearm,  "res/Models/SonicDoll/", "Forearm.obj");
-		loadObjModel(&Player::modelLeftHand,     "res/Models/SonicDoll/", "HandL.obj");
-		loadObjModel(&Player::modelLeftThigh,    "res/Models/SonicDoll/", "Thigh.obj");
-		loadObjModel(&Player::modelLeftShin,     "res/Models/SonicDoll/", "Shin.obj");
-		loadObjModel(&Player::modelLeftFoot,     "res/Models/SonicDoll/", "FootL.obj");
-		loadObjModel(&Player::modelRightHumerus, "res/Models/SonicDoll/", "Humerus.obj");
-		loadObjModel(&Player::modelRightForearm, "res/Models/SonicDoll/", "Forearm.obj");
-		loadObjModel(&Player::modelRightHand,    "res/Models/SonicDoll/", "HandR.obj");
-		loadObjModel(&Player::modelRightThigh,   "res/Models/SonicDoll/", "Thigh.obj");
-		loadObjModel(&Player::modelRightShin,    "res/Models/SonicDoll/", "Shin.obj");
-		loadObjModel(&Player::modelRightFoot,    "res/Models/SonicDoll/", "FootR.obj");
-	}
-	if (Player::characterID == 2) //Mecha Sonic
-	{
-		loadObjModel(&Player::modelBody,         "res/Models/SilverSonic/", "Body.obj");
-		loadObjModel(&Player::modelHead,         "res/Models/SilverSonic/", "Head.obj");
-		loadObjModel(&Player::modelLeftHumerus,  "res/Models/SilverSonic/", "Humerus.obj");
-		loadObjModel(&Player::modelLeftForearm,  "res/Models/SilverSonic/", "ForearmL.obj");
-		loadObjModel(&Player::modelLeftHand,     "res/Models/SilverSonic/", "HandL.obj");
-		loadObjModel(&Player::modelLeftThigh,    "res/Models/SilverSonic/", "Thigh.obj");
-		loadObjModel(&Player::modelLeftShin,     "res/Models/SilverSonic/", "ShinL.obj");
-		loadObjModel(&Player::modelLeftFoot,     "res/Models/SilverSonic/", "FootL.obj");
-		loadObjModel(&Player::modelRightHumerus, "res/Models/SilverSonic/", "Humerus.obj");
-		loadObjModel(&Player::modelRightForearm, "res/Models/SilverSonic/", "ForearmR.obj");
-		loadObjModel(&Player::modelRightHand,    "res/Models/SilverSonic/", "HandR.obj");
-		loadObjModel(&Player::modelRightThigh,   "res/Models/SilverSonic/", "Thigh.obj");
-		loadObjModel(&Player::modelRightShin,    "res/Models/SilverSonic/", "ShinR.obj");
-		loadObjModel(&Player::modelRightFoot,    "res/Models/SilverSonic/", "FootR.obj");
-	}
-	else if(Player::characterID == 3) //Dage 4 Aquatic
-	{
-		loadObjModel(&Player::modelBody,         "res/Models/Dage4Aquatic/", "Body.obj");
-		loadObjModel(&Player::modelHead,         "res/Models/Dage4Aquatic/", "Head.obj");
-		loadObjModel(&Player::modelLeftHumerus,  "res/Models/Dage4Aquatic/", "Humerus.obj");
-		loadObjModel(&Player::modelLeftForearm,  "res/Models/Dage4Aquatic/", "Forearm.obj");
-		loadObjModel(&Player::modelLeftHand,     "res/Models/Dage4Aquatic/", "LeftHand.obj");
-		loadObjModel(&Player::modelLeftThigh,    "res/Models/Dage4Aquatic/", "Thigh.obj");
-		loadObjModel(&Player::modelLeftShin,     "res/Models/Dage4Aquatic/", "Shin.obj");
-		loadObjModel(&Player::modelLeftFoot,     "res/Models/Dage4Aquatic/", "Foot.obj");
-		loadObjModel(&Player::modelRightHumerus, "res/Models/Dage4Aquatic/", "Humerus.obj");
-		loadObjModel(&Player::modelRightForearm, "res/Models/Dage4Aquatic/", "Forearm.obj");
-		loadObjModel(&Player::modelRightHand,    "res/Models/Dage4Aquatic/", "RightHand.obj");
-		loadObjModel(&Player::modelRightThigh,   "res/Models/Dage4Aquatic/", "Thigh.obj");
-		loadObjModel(&Player::modelRightShin,    "res/Models/Dage4Aquatic/", "Shin.obj");
-		loadObjModel(&Player::modelRightFoot,    "res/Models/Dage4Aquatic/", "Foot.obj");
-	}
-	else if (Player::characterID == 4) //Mania Sonic
-	{
-		ManiaSonicModel::loadStaticModels();
+		ManiaTailsModel::loadStaticModels();
 
-		loadObjModel(&Player::modelBody,         "res/Models/SonicMania/", "Body.obj");
-		loadObjModel(&Player::modelHead,         "res/Models/SonicMania/", "Head.obj");
-		loadObjModel(&Player::modelLeftHumerus,  "res/Models/SonicMania/", "Humerus.obj");
-		loadObjModel(&Player::modelLeftForearm,  "res/Models/SonicMania/", "Forearm.obj");
-		loadObjModel(&Player::modelLeftHand,     "res/Models/SonicMania/", "HandLeft.obj");
-		loadObjModel(&Player::modelLeftThigh,    "res/Models/SonicMania/", "Thigh.obj");
-		loadObjModel(&Player::modelLeftShin,     "res/Models/SonicMania/", "Shin.obj");
-		loadObjModel(&Player::modelLeftFoot,     "res/Models/SonicMania/", "ShoeLeft.obj");
-		loadObjModel(&Player::modelRightHumerus, "res/Models/SonicMania/", "Humerus.obj");
-		loadObjModel(&Player::modelRightForearm, "res/Models/SonicMania/", "Forearm.obj");
-		loadObjModel(&Player::modelRightHand,    "res/Models/SonicMania/", "HandRight.obj");
-		loadObjModel(&Player::modelRightThigh,   "res/Models/SonicMania/", "Thigh.obj");
-		loadObjModel(&Player::modelRightShin,    "res/Models/SonicMania/", "Shin.obj");
-		loadObjModel(&Player::modelRightFoot,    "res/Models/SonicMania/", "ShoeRight.obj");
-	}
-	else if (Player::characterID == 5) //Amy
-	{
-		loadObjModel(&Player::modelBody,         "res/Models/Amy/", "Body.obj");
-		loadObjModel(&Player::modelHead,         "res/Models/Amy/", "Head.obj");
-		loadObjModel(&Player::modelLeftHumerus,  "res/Models/Amy/", "Humerus.obj");
-		loadObjModel(&Player::modelLeftForearm,  "res/Models/Amy/", "Forearm.obj");
-		loadObjModel(&Player::modelLeftHand,     "res/Models/Amy/", "LeftHand.obj");
-		loadObjModel(&Player::modelLeftThigh,    "res/Models/Amy/", "Thigh.obj");
-		loadObjModel(&Player::modelLeftShin,     "res/Models/Amy/", "Shin.obj");
-		loadObjModel(&Player::modelLeftFoot,     "res/Models/Amy/", "Foot.obj");
-		loadObjModel(&Player::modelRightHumerus, "res/Models/Amy/", "Humerus.obj");
-		loadObjModel(&Player::modelRightForearm, "res/Models/Amy/", "Forearm.obj");
-		loadObjModel(&Player::modelRightHand,    "res/Models/Amy/", "RightHand.obj");
-		loadObjModel(&Player::modelRightThigh,   "res/Models/Amy/", "Thigh.obj");
-		loadObjModel(&Player::modelRightShin,    "res/Models/Amy/", "Shin.obj");
-		loadObjModel(&Player::modelRightFoot,    "res/Models/Amy/", "Foot.obj");
-	}
-	else if (Player::characterID == 6) //WanamaDage
-	{
-		loadObjModel(&Player::modelBody,         "res/Models/WanamaDageLimbs/", "Body.obj");
-		loadObjModel(&Player::modelHead,         "res/Models/WanamaDageLimbs/", "Head.obj");
-		loadObjModel(&Player::modelLeftHumerus,  "res/Models/WanamaDageLimbs/", "HumerusLeft.obj");
-		loadObjModel(&Player::modelLeftForearm,  "res/Models/WanamaDageLimbs/", "ForearmLeft.obj");
-		loadObjModel(&Player::modelLeftHand,     "res/Models/WanamaDageLimbs/", "HandLeft.obj");
-		loadObjModel(&Player::modelLeftThigh,    "res/Models/WanamaDageLimbs/", "ThighLeft.obj");
-		loadObjModel(&Player::modelLeftShin,     "res/Models/WanamaDageLimbs/", "ShinLeft.obj");
-		loadObjModel(&Player::modelLeftFoot,     "res/Models/WanamaDageLimbs/", "Shoe.obj");
-		loadObjModel(&Player::modelRightHumerus, "res/Models/WanamaDageLimbs/", "HumerusRight.obj");
-		loadObjModel(&Player::modelRightForearm, "res/Models/WanamaDageLimbs/", "ForearmRight.obj");
-		loadObjModel(&Player::modelRightHand,    "res/Models/WanamaDageLimbs/", "HandRight.obj");
-		loadObjModel(&Player::modelRightThigh,   "res/Models/WanamaDageLimbs/", "ThighRight.obj");
-		loadObjModel(&Player::modelRightShin,    "res/Models/WanamaDageLimbs/", "ShinRight.obj");
-		loadObjModel(&Player::modelRightFoot,    "res/Models/WanamaDageLimbs/", "Shoe.obj");
-	}
-	else if (Player::characterID == 7) //Pac Man
-	{
-		loadObjModel(&Player::modelBody,         "res/Models/PacMan/", "HeadBody.obj");
-		loadObjModel(&Player::modelHead,         "res/Models/PacMan/", "Blank.obj");
-		loadObjModel(&Player::modelLeftHumerus,  "res/Models/PacMan/", "Limb.obj");
-		loadObjModel(&Player::modelLeftForearm,  "res/Models/PacMan/", "Limb.obj");
-		loadObjModel(&Player::modelLeftHand,     "res/Models/PacMan/", "Hand.obj");
-		loadObjModel(&Player::modelLeftThigh,    "res/Models/PacMan/", "Limb.obj");
-		loadObjModel(&Player::modelLeftShin,     "res/Models/PacMan/", "Limb.obj");
-		loadObjModel(&Player::modelLeftFoot,     "res/Models/PacMan/", "Shoe.obj");
-		loadObjModel(&Player::modelRightHumerus, "res/Models/PacMan/", "Limb.obj");
-		loadObjModel(&Player::modelRightForearm, "res/Models/PacMan/", "Limb.obj");
-		loadObjModel(&Player::modelRightHand,    "res/Models/PacMan/", "Hand.obj");
-		loadObjModel(&Player::modelRightThigh,   "res/Models/PacMan/", "Limb.obj");
-		loadObjModel(&Player::modelRightShin,    "res/Models/PacMan/", "Limb.obj");
-		loadObjModel(&Player::modelRightFoot,    "res/Models/PacMan/", "Shoe.obj");
+		loadObjModel(&PlayerTails::modelBody,         "res/Models/ManiaTails/", "Body.obj");
+		loadObjModel(&PlayerTails::modelHead,         "res/Models/ManiaTails/", "Head.obj");
+		loadObjModel(&PlayerTails::modelLeftHumerus,  "res/Models/ManiaTails/", "Humerus.obj");
+		loadObjModel(&PlayerTails::modelLeftForearm,  "res/Models/ManiaTails/", "Forearm.obj");
+		loadObjModel(&PlayerTails::modelLeftHand,     "res/Models/ManiaTails/", "HandLeft.obj");
+		loadObjModel(&PlayerTails::modelLeftThigh,    "res/Models/ManiaTails/", "Humerus.obj");
+		loadObjModel(&PlayerTails::modelLeftShin,     "res/Models/ManiaTails/", "Forearm.obj");
+		loadObjModel(&PlayerTails::modelLeftFoot,     "res/Models/ManiaTails/", "ShoeLeft.obj");
+		loadObjModel(&PlayerTails::modelRightHumerus, "res/Models/ManiaTails/", "Humerus.obj");
+		loadObjModel(&PlayerTails::modelRightForearm, "res/Models/ManiaTails/", "Forearm.obj");
+		loadObjModel(&PlayerTails::modelRightHand,    "res/Models/ManiaTails/", "HandRight.obj");
+		loadObjModel(&PlayerTails::modelRightThigh,   "res/Models/ManiaTails/", "Humerus.obj");
+		loadObjModel(&PlayerTails::modelRightShin,    "res/Models/ManiaTails/", "Forearm.obj");
+		loadObjModel(&PlayerTails::modelRightFoot,    "res/Models/ManiaTails/", "ShoeRight.obj");
 	}
 }
 
-void Player::deleteStaticModels()
+void PlayerTails::deleteStaticModels()
 {
 	std::fprintf(stdout, "Deleting player models...\n");
 
-	Entity::deleteModels(&Player::modelBody);
-	Entity::deleteModels(&Player::modelHead);
-	Entity::deleteModels(&Player::modelLeftHumerus);
-	Entity::deleteModels(&Player::modelLeftForearm);
-	Entity::deleteModels(&Player::modelLeftHand);
-	Entity::deleteModels(&Player::modelLeftThigh);
-	Entity::deleteModels(&Player::modelLeftShin);
-	Entity::deleteModels(&Player::modelLeftFoot);
-	Entity::deleteModels(&Player::modelRightHumerus);
-	Entity::deleteModels(&Player::modelRightForearm);
-	Entity::deleteModels(&Player::modelRightHand);
-	Entity::deleteModels(&Player::modelRightThigh);
-	Entity::deleteModels(&Player::modelRightShin);
-	Entity::deleteModels(&Player::modelRightFoot);
+	Entity::deleteModels(&PlayerTails::modelBody);
+	Entity::deleteModels(&PlayerTails::modelHead);
+	Entity::deleteModels(&PlayerTails::modelLeftHumerus);
+	Entity::deleteModels(&PlayerTails::modelLeftForearm);
+	Entity::deleteModels(&PlayerTails::modelLeftHand);
+	Entity::deleteModels(&PlayerTails::modelLeftThigh);
+	Entity::deleteModels(&PlayerTails::modelLeftShin);
+	Entity::deleteModels(&PlayerTails::modelLeftFoot);
+	Entity::deleteModels(&PlayerTails::modelRightHumerus);
+	Entity::deleteModels(&PlayerTails::modelRightForearm);
+	Entity::deleteModels(&PlayerTails::modelRightHand);
+	Entity::deleteModels(&PlayerTails::modelRightThigh);
+	Entity::deleteModels(&PlayerTails::modelRightShin);
+	Entity::deleteModels(&PlayerTails::modelRightFoot);
 }
 
-void Player::moveMeGround()
+void PlayerTails::moveMeGround()
 {
 	Camera* cam = Global::gameCamera;
 
@@ -1261,7 +901,7 @@ void Player::moveMeGround()
 	}
 }
 
-void Player::setMovementInputs()
+void PlayerTails::setMovementInputs()
 {
 	jumpInput = INPUT_JUMP;
 	actionInput = INPUT_ACTION;
@@ -1286,7 +926,14 @@ void Player::setMovementInputs()
 
 	float inputMag = sqrtf(movementInputX*movementInputX + movementInputY*movementInputY);
 	moveSpeedCurrent = moveAcceleration*inputMag;
-	moveSpeedAirCurrent = moveAccelerationAir*inputMag;
+	if (isFlying)
+	{
+		moveSpeedAirCurrent = moveAccelerationAirFly*inputMag;
+	}
+	else
+	{
+		moveSpeedAirCurrent = moveAccelerationAir*inputMag;
+	}
 	movementAngle = toDegrees(atan2f(movementInputY, movementInputX));
 
 	if (canMoveTimer != 0 || hitTimer > 0 || deadTimer >= 0 || Global::finishStageTimer >= 0)
@@ -1311,12 +958,12 @@ void Player::setMovementInputs()
 	}
 }
 
-void Player::setCanMoveTimer(int newMoveTimer)
+void PlayerTails::setCanMoveTimer(int newMoveTimer)
 {
 	canMoveTimer = newMoveTimer;
 }
 
-void Player::checkSkid()
+void PlayerTails::checkSkid()
 {
 	bool prevSkid = isSkidding;
 	isSkidding = false;
@@ -1353,20 +1000,26 @@ void Player::checkSkid()
 	}
 }
 
-void Player::applyFrictionAir()
+void PlayerTails::applyFrictionAir()
 {
 	float mag = sqrtf((xVelGround*xVelGround) + (zVelGround*zVelGround));
+	float fricToApply = frictionAir;
+	if (isFlying)
+	{
+		fricToApply = frictionAirFly;
+	}
+
 	if (mag != 0)
 	{
 		int before = sign(zVelGround);
-		zVelGround -= (((frictionAir)*(zVelGround)) / (mag));
+		zVelGround -= (((fricToApply)*(zVelGround)) / (mag));
 		int after = sign(zVelGround);
 		if (before != after)
 		{
 			zVelGround = 0;
 		}
 		before = sign(xVelGround);
-		xVelGround -= (((frictionAir)*(xVelGround)) / (mag));
+		xVelGround -= (((fricToApply)*(xVelGround)) / (mag));
 		after = sign(xVelGround);
 		if (before != after)
 		{
@@ -1378,14 +1031,14 @@ void Player::applyFrictionAir()
 	if (mag != 0)
 	{
 		int before = sign(zVelAir);
-		zVelAir -= (((frictionAir)*(zVelAir)) / (mag));
+		zVelAir -= (((fricToApply)*(zVelAir)) / (mag));
 		int after = sign(zVelAir);
 		if (before != after)
 		{
 			zVelAir = 0;
 		}
 		before = sign(xVelAir);
-		xVelAir -= (((frictionAir)*(xVelAir)) / (mag));
+		xVelAir -= (((fricToApply)*(xVelAir)) / (mag));
 		after = sign(xVelAir);
 		if (before != after)
 		{
@@ -1394,7 +1047,7 @@ void Player::applyFrictionAir()
 	}
 }
 
-void Player::moveMeAir()
+void PlayerTails::moveMeAir()
 {
 	Camera* cam = Global::gameCamera;
 	xVelAir += (moveSpeedAirCurrent*cosf(toRadians(cam->getYaw() + movementAngle)));
@@ -1416,22 +1069,37 @@ void Player::moveMeAir()
 		zVelAir = (currSpeed*sinf(toRadians(newAngle)));
 
 		float factor = 1 - (abs(diff) / 900);
+		if (isFlying)
+		{
+			factor = 1 - (abs(diff) / turnPenaltyFly);
+		}
 		xVelAir *= factor;
 		zVelAir *= factor;
 	}
 }
 
-void Player::limitMovementSpeedAir()
+void PlayerTails::limitMovementSpeedAir()
 {
 	float myspeed = sqrtf(xVelAir*xVelAir + zVelAir*zVelAir);
-	if (myspeed > airSpeedLimit)
+	if (isFlying)
 	{
-		xVelAir = (xVelAir*((myspeed - slowDownAirRate) / (myspeed)));
-		zVelAir = (zVelAir*((myspeed - slowDownAirRate) / (myspeed)));
+		if (myspeed > airSpeedLimitFly)
+		{
+			xVelAir = (xVelAir*((myspeed - slowDownAirRateFly) / (myspeed)));
+			zVelAir = (zVelAir*((myspeed - slowDownAirRateFly) / (myspeed)));
+		}
+	}
+	else
+	{
+		if (myspeed > airSpeedLimit)
+		{
+			xVelAir = (xVelAir*((myspeed - slowDownAirRate) / (myspeed)));
+			zVelAir = (zVelAir*((myspeed - slowDownAirRate) / (myspeed)));
+		}
 	}
 }
 
-void Player::limitMovementSpeed(float limit)
+void PlayerTails::limitMovementSpeed(float limit)
 {
 	if (isBall)
 	{
@@ -1446,7 +1114,7 @@ void Player::limitMovementSpeed(float limit)
 	}
 }
 
-void Player::applyFriction(float frictionToApply)
+void PlayerTails::applyFriction(float frictionToApply)
 {
 	if (isBall)
 	{
@@ -1473,7 +1141,7 @@ void Player::applyFriction(float frictionToApply)
 	}
 }
 
-void Player::calcSpindashAngle()
+void PlayerTails::calcSpindashAngle()
 {
 	Camera* cam = Global::gameCamera;
 	float inputMag = sqrtf(movementInputX*movementInputX + movementInputY*movementInputY);
@@ -1487,7 +1155,7 @@ void Player::calcSpindashAngle()
 	}
 }
 
-void Player::dropDash(float charge)
+void PlayerTails::dropDash(float charge)
 {
 	float dx =  cosf(toRadians(getRotY()));
 	float dz = -sinf(toRadians(getRotY()));
@@ -1511,7 +1179,7 @@ void Player::dropDash(float charge)
 	AudioPlayer::play(15, getPosition());
 }
 
-void Player::spindash(int timer)
+void PlayerTails::spindash(int timer)
 {
 	float dx = cosf(spindashAngle);
 	float dz = -sinf(spindashAngle);
@@ -1536,169 +1204,27 @@ void Player::spindash(int timer)
 	storedSpindashSpeed = 0;
 }
 
-float Player::getSpindashSpeed()
+float PlayerTails::getSpindashSpeed()
 {
 	return storedSpindashSpeed;
 }
 
-void Player::homingAttack()
+void PlayerTails::homingAttack()
 {
-	Camera* cam = Global::gameCamera;
 
-	float homingPower = 5.5f;
-
-	float currSpeed = sqrt(xVelAir*xVelAir + zVelAir*zVelAir);
-
-	homingPower = std::max(currSpeed, homingPower);
-
-	float angle = -cam->getYaw() - movementAngle;
-	if (moveSpeedCurrent < 0.05f)
-	{
-		angle = getRotY();
-	}
-
-	//if (characterID == 2)
-	{
-		bool targetNearest = false;
-		float closestMatchingAngle = 360;
-		float stickAngle = -cam->getYaw() - movementAngle;
-
-		if (moveSpeedCurrent < 0.05f)
-		{
-			angle = getRotY();
-			targetNearest = true;
-		}
-
-		Entity* closest = nullptr;
-		float dist = 16000; //Homing attack range. Distance squared
-		float myX = position.x;
-		float myZ = position.z;
-		float myY = position.y;
-
-		extern std::unordered_map<Entity*, Entity*> gameEntities;
-
-		for (auto e : gameEntities)
-		{
-			if (e.first->canHomingAttackOn())
-			{
-				float xDiff = e.first->getX() - myX;
-				float zDiff = e.first->getZ() - myZ;
-				float yDiff = myY - e.first->getY();
-				float thisDist = xDiff*xDiff + zDiff*zDiff + yDiff*yDiff;
-
-				if (targetNearest)
-				{
-					if (yDiff > -6 && thisDist < dist)
-					{
-						dist = thisDist;
-						closest = e.first;
-					}
-				}
-				else
-				{
-					if (thisDist < dist)
-					{
-						//calculate angle to this target
-						float toTargetAngle = toDegrees(atan2f(zDiff, -xDiff)) + 180;
-						//calculate difference in angles
-						float angleDiff = abs(compareTwoAngles(stickAngle, toTargetAngle));
-
-						if (angleDiff < 60)
-						{
-							if (yDiff > -6 && angleDiff < closestMatchingAngle)
-							{
-								closestMatchingAngle = angleDiff;
-								closest = e.first;
-							}
-						}
-					}
-				}
-			}
-		}
-
-		if (closest != nullptr)
-		{
-			
-			float xDiff = -(myX - closest->getX());
-			float zDiff = -(myZ - closest->getZ());
-			float yDiff = -(myY - closest->getY());
-
-			Vector3f unitDir(xDiff, yDiff + 3.5f, zDiff);
-			unitDir.normalize();
-			homingPower = 6.7f;
-
-			unitDir.x *= homingPower;
-			unitDir.y *= homingPower;
-			unitDir.z *= homingPower;
-
-			xVelAir = unitDir.x;
-			yVel    = unitDir.y;
-			zVelAir = unitDir.z;
-			
-		}
-		else
-		{
-			xVelAir =  cosf(toRadians(angle))*homingPower;
-			zVelAir = -sinf(toRadians(angle))*homingPower;
-		}
-	}
-	//else
-	{
-		//xVelAir = (float)cos(toRadians(angle))*homingPower;
-		//zVelAir = -(float)sin(toRadians(angle))*homingPower;
-	}
-
-	homingAttackTimer = homingAttackTimerMax;
-	isBall = false;
-	isJumping = true;
-	isBouncing = false;
-	isStomping = false;
-	justBounced = false;
-	AudioPlayer::play(11, getPosition());
 }
 
-void Player::initiateBounce()
+void PlayerTails::initiateBounce()
 {
-	if (yVel >= -4.5f)
-	{
-		yVel = -4.5f;
-	}
-	else
-	{
-		yVel -= 1;
-	}
 
-	hoverCount = 0;
-
-	isBouncing = true;
-	isStomping = false;
-	isJumping = false;
-	isBall = false;
-	justBounced = true;
 }
 
-void Player::initiateStomp()
+void PlayerTails::initiateStomp()
 {
-	if (yVel >= -4.0f)
-	{
-		yVel = -4.0f;
-	}
-	else
-	{
-		yVel -= 2.0f;
-	}
 
-	hoverCount = 0;
-
-	isBouncing = false;
-	isStomping = true;
-	isJumping = false;
-	isBall = false;
-
-	stompSource = AudioPlayer::play(16, getPosition());
 }
 
-void Player::bounceOffGround(Vector3f* surfaceNormal, float b, int s)
+void PlayerTails::bounceOffGround(Vector3f* surfaceNormal, float b, int s)
 {
 	Vector3f V = Vector3f(xVelAir, yVel, zVelAir);
 	Vector3f N = Vector3f(surfaceNormal);
@@ -1712,18 +1238,13 @@ void Player::bounceOffGround(Vector3f* surfaceNormal, float b, int s)
 	xVel = 0;
 	zVel = 0;
 
-	//isBall = true;
-	//isBouncing = false;
-	//isStomping = false;
-	//homingAttackTimer = -1;
-	//hoverCount = 0;
 	AudioPlayer::play(s, getPosition());
 }
 
 //attempt to continue a lightdash
 //if lightdash cant continue, sets isLightdashing
 //to false
-void Player::attemptLightdash()
+void PlayerTails::attemptLightdash()
 {
 	if (Global::gameClock % 2 != 0)
 	{
@@ -1812,7 +1333,7 @@ void Player::attemptLightdash()
 	}
 }
 
-void Player::adjustCamera()
+void PlayerTails::adjustCamera()
 {
 	if (deadTimer == -1)
 	{
@@ -1948,7 +1469,7 @@ void Player::adjustCamera()
 	}
 }
 
-void Player::setCameraAngles(float newYaw, float newPitch)
+void PlayerTails::setCameraAngles(float newYaw, float newPitch)
 {
 	cameraYawTarget = newYaw;
 	cameraPitchTarget = newPitch;
@@ -1957,7 +1478,7 @@ void Player::setCameraAngles(float newYaw, float newPitch)
 	cam->setPitch(newPitch);
 }
 
-void Player::setCameraTargetYaw(float yaw)
+void PlayerTails::setCameraTargetYaw(float yaw)
 {
 	cameraYawTarget = yaw;
 
@@ -1968,7 +1489,7 @@ void Player::setCameraTargetYaw(float yaw)
 	cam->setYaw(yaw - diff);
 }
 
-void Player::setCameraTargetPitch(float pitch)
+void PlayerTails::setCameraTargetPitch(float pitch)
 {
 	cameraPitchTarget = pitch;
 
@@ -1979,7 +1500,7 @@ void Player::setCameraTargetPitch(float pitch)
 	cam->setPitch(pitch - diff);
 }
 
-void Player::animate()
+void PlayerTails::animate()
 {
 	float xrel = xVelGround + xVelAir;
 	float zrel = zVelGround + zVelAir;
@@ -2009,8 +1530,7 @@ void Player::animate()
 
 	if (onPlane)
 	{
-		if (isBouncing ||
-			isBall ||
+		if (isBall ||
 			isSpindashing ||
 			spindashReleaseTimer > 0)
 		{
@@ -2035,28 +1555,28 @@ void Player::animate()
 
 
 	setLimbsVisibility(true);
-	if (Player::maniaSonic != nullptr) { Player::maniaSonic->setVisible(true); }
+	if (PlayerTails::maniaTails != nullptr) { PlayerTails::maniaTails->setVisible(true); }
 
 	if (firstPerson)
 	{
 		setLimbsVisibility(false);
-		if (Player::maniaSonic != nullptr) { Player::maniaSonic->setVisible(false); }
+		if (PlayerTails::maniaTails != nullptr) { PlayerTails::maniaTails->setVisible(false); }
 	}
 	else
 	{
 		if (iFrame % 4 == 2 || iFrame % 4 == 3)
 		{
 			setLimbsVisibility(false);
-			if (Player::maniaSonic != nullptr) { Player::maniaSonic->setVisible(false); }
+			if (PlayerTails::maniaTails != nullptr) { PlayerTails::maniaTails->setVisible(false); }
 		}
 	}
 
-	if (mySpeed > 0.01)
+	if (mySpeed > 0.01f)
 	{
 		if (myBody != nullptr) myBody->setBaseOrientation(&displayPos, diff, yawAngle, pitchAngle, 0);
-		if (Player::maniaSonic != nullptr)
+		if (PlayerTails::maniaTails != nullptr)
 		{
-			Player::maniaSonic->setOrientation(dspX, dspY, dspZ, diff, yawAngle, pitchAngle, 0);
+			PlayerTails::maniaTails->setOrientation(dspX, dspY, dspZ, diff, yawAngle, pitchAngle, 0);
 		}
 		setRotY(yrot);
 		setRotZ(zrot);
@@ -2064,9 +1584,9 @@ void Player::animate()
 	else
 	{
 		if (myBody != nullptr) myBody->setBaseOrientation(&displayPos, 0, getRotY(), 90, 0);
-		if (Player::maniaSonic != nullptr)
+		if (PlayerTails::maniaTails != nullptr)
 		{
-			Player::maniaSonic->setOrientation(dspX, dspY, dspZ, 0, getRotY(), 90, 0);
+			PlayerTails::maniaTails->setOrientation(dspX, dspY, dspZ, 0, getRotY(), 90, 0);
 		}
 	}
 
@@ -2074,115 +1594,48 @@ void Player::animate()
 	modelRunIndex += modelIncreaseVal;
 	if (modelRunIndex >= 20)
 	{
-		modelRunIndex = (float)fmod(modelRunIndex, 20);
+		modelRunIndex = fmodf(modelRunIndex, 20);
 	}
 	if (mySpeed == 0)
 	{
 		modelRunIndex = 0;
 	}
 
-	//footsteps
-	/*
-	if (onPlane)
-	{
-		if (isBall ||
-			isSpindashing ||
-			spindashReleaseTimer > 0)
-		{
-			//if (MainGameLoop.gameClock % 2 == 0)
-			{
-				//spawnFootsetpParticles();
-			}
-		}
-		else if ((modelRunIndex < 10 && modelRunIndex + modelIncreaseVal >= 10 ||
-			      modelRunIndex < 20 && modelRunIndex + modelIncreaseVal >= 20))
-		{
-			//spawnFootsetpParticles();
-			if (getY() > -0.5f)
-			{
-				//AudioSources.play(Math.max(triCol.sound, 0), getPosition(), 0.8f + mySpeed*0.05f + (float)Math.random()*0.4f);
-			}
-			else
-			{
-				//AudioSources.play(4, getPosition(), 0.8f + mySpeed*0.05f + (float)Math.random()*0.4f);
-			}
-		}
-	}
-	*/
-
-	if (homingAttackTimer > 0)
-	{
-		float height = 2;
-		if (characterID == 6) height = -5;
-		if (characterID == 7) height = -2.65f;
-		Vector3f offset(currNorm.x*height, currNorm.y*height, currNorm.z*height);
-		Vector3f prevPos(previousDisplayPos);
-		prevPos = prevPos + offset;
-		Vector3f newPos(displayPos);
-		newPos = newPos + offset;
-		createSpindashTrails(&prevPos, &newPos, 5, 20);
-	}
-
 	if (deadTimer >= 0)
 	{
-		if (Player::maniaSonic != nullptr) { Player::maniaSonic->setVisible(false); }
+		if (PlayerTails::maniaTails != nullptr) { PlayerTails::maniaTails->setVisible(false); }
 		if (myBody != nullptr) myBody->setBaseOrientation(&displayPos, 0, getRotY(), 0, 0);
 		updateLimbs(19, 0);
+	}
+	else if (isFlying)
+	{
+		if (PlayerTails::maniaTails != nullptr) { PlayerTails::maniaTails->setVisible(false); }
+		if (myBody != nullptr) myBody->setBaseOrientation(&displayPos, 0, getRotY(), 0, 0);
+
+		if (flyingUsesRemaining == 0)
+		{
+			updateLimbs(19, 0);
+		}
+		else
+		{
+			updateLimbs(6, 0);
+		}
 	}
 	else if (isLightdashing)
 	{
 		float h = sqrtf(xVelAir*xVelAir + zVelAir*zVelAir);
 		float zr = toDegrees(atan2f(yVel, h));
 		if (myBody != nullptr) myBody->setBaseOrientation(&displayPos, 0, getRotY(), zr, 0);
-		if (Player::maniaSonic != nullptr) { Player::maniaSonic->setVisible(false); }
+		if (PlayerTails::maniaTails != nullptr) { PlayerTails::maniaTails->setVisible(false); }
 		updateLimbs(18, 0);
-	}
-	else if (isStomping)
-	{
-		float h = sqrtf(xVelAir*xVelAir + zVelAir*zVelAir);
-		float zr = (toDegrees(atan2f(yVel, h)));
-		if (myBody != nullptr) myBody->setBaseOrientation(&displayPos, 0, twistAngle, pitchAngle, zr + 90);
-		if (Player::maniaSonic != nullptr) { Player::maniaSonic->setVisible(false); }
-
-		float height = 2;
-		if (characterID == 6) height = -5;
-		if (characterID == 7) height = -2.65f;
-		Vector3f offset(currNorm.x*height, currNorm.y*height, currNorm.z*height);
-		Vector3f prevPos(previousDisplayPos);
-		prevPos = prevPos + offset;
-		Vector3f newPos(displayPos);
-		newPos = newPos + offset;
-		createSpindashTrails(&prevPos, &newPos, 5, 20);
-		updateLimbs(3, 100);
-	}
-	else if (isBouncing)
-	{
-		if (myBody != nullptr) myBody->setBaseOrientation(&displayPos, 0, twistAngle, pitchAngle, airSpinRotation);
-		if (Player::maniaSonic != nullptr)
-		{
-			Player::maniaSonic->setOrientation(dspX, dspY, dspZ, 0, twistAngle, pitchAngle, airSpinRotation);
-			Player::maniaSonic->animate(12, 0);
-			setLimbsVisibility(false);
-		}
-		float height = 2;
-		if (characterID == 6) height = -5;
-		if (characterID == 7) height = -2.65f;
-		Vector3f offset(currNorm.x*height, currNorm.y*height, currNorm.z*height);
-		Vector3f prevPos(previousDisplayPos);
-		prevPos = prevPos + offset;
-		Vector3f newPos(displayPos);
-		newPos = newPos + offset;
-		createSpindashTrails(&prevPos, &newPos, 5, 20);
-		updateLimbs(12, 0);
-		airSpinRotation += -60;
 	}
 	else if (isDropDashing)
 	{
 		if (myBody != nullptr) myBody->setBaseOrientation(&displayPos, 0, twistAngle, pitchAngle, airSpinRotation);
-		if (Player::maniaSonic != nullptr)
+		if (PlayerTails::maniaTails != nullptr)
 		{
-			Player::maniaSonic->setOrientation(dspX, dspY, dspZ, 0, twistAngle, pitchAngle, airSpinRotation);
-			Player::maniaSonic->animate(12, 0);
+			PlayerTails::maniaTails->setOrientation(dspX, dspY, dspZ, 0, twistAngle, pitchAngle, airSpinRotation);
+			PlayerTails::maniaTails->animate(12, 0);
 			setLimbsVisibility(false);
 		}
 		updateLimbs(12, 0);
@@ -2191,10 +1644,10 @@ void Player::animate()
 	else if (isJumping)
 	{
 		if (myBody != nullptr) myBody->setBaseOrientation(&displayPos, 0, twistAngle, pitchAngle, airSpinRotation);
-		if (Player::maniaSonic != nullptr)
+		if (PlayerTails::maniaTails != nullptr)
 		{
-			Player::maniaSonic->setOrientation(dspX, dspY, dspZ, 0, twistAngle, pitchAngle, airSpinRotation);
-			Player::maniaSonic->animate(12, 0);
+			PlayerTails::maniaTails->setOrientation(dspX, dspY, dspZ, 0, twistAngle, pitchAngle, airSpinRotation);
+			PlayerTails::maniaTails->animate(12, 0);
 			setLimbsVisibility(false);
 		}
 		updateLimbs(12, 0);
@@ -2203,15 +1656,15 @@ void Player::animate()
 	else if (isBall)
 	{
 		if (myBody != nullptr) myBody->setBaseOrientation(dspX, dspY, dspZ, diff, yawAngle, pitchAngle, airSpinRotation);
-		if (Player::maniaSonic != nullptr)
+		if (PlayerTails::maniaTails != nullptr)
 		{
-			Player::maniaSonic->setOrientation(dspX, dspY, dspZ, diff, yawAngle, pitchAngle, airSpinRotation);
-			Player::maniaSonic->animate(12, 0);
+			PlayerTails::maniaTails->setOrientation(dspX, dspY, dspZ, diff, yawAngle, pitchAngle, airSpinRotation);
+			PlayerTails::maniaTails->animate(12, 0);
 			setLimbsVisibility(false);
 		}
 		float height = 2;
-		if (characterID == 6) height = -5;
-		if (characterID == 7) height = -2.65f;
+		if (skinID == 6) height = -5;
+		if (skinID == 7) height = -2.65f;
 		Vector3f offset(currNorm.x*height, currNorm.y*height, currNorm.z*height);
 		Vector3f prevPos(previousDisplayPos);
 		prevPos = prevPos + offset;
@@ -2234,11 +1687,11 @@ void Player::animate()
 		}
 		if (myBody != nullptr) myBody->setBaseOrientation(dspX, dspY, dspZ, diffNew, yawAngle, pitchAngle, zrotoff);
 		updateLimbs(12, 0);
-		if (Player::maniaSonic != nullptr)
+		if (PlayerTails::maniaTails != nullptr)
 		{
-			Player::maniaSonic->setOrientation(dspX, dspY, dspZ, diffNew, yawAngle, pitchAngle, zrotoff);
+			PlayerTails::maniaTails->setOrientation(dspX, dspY, dspZ, diffNew, yawAngle, pitchAngle, zrotoff);
 			setLimbsVisibility(false);
-			Player::maniaSonic->animate(12, 0);
+			PlayerTails::maniaTails->animate(12, 0);
 		}
 	}
 	else if (spindashReleaseTimer > 0)
@@ -2247,29 +1700,29 @@ void Player::animate()
 																		  //zrotoff = -count*40; //different look, might look better?
 		if (myBody != nullptr) myBody->setBaseOrientation(dspX, dspY, dspZ, diff, yawAngle, pitchAngle, zrotoff);
 		updateLimbs(12, 0);
-		if (Player::maniaSonic != nullptr)
+		if (PlayerTails::maniaTails != nullptr)
 		{
-			Player::maniaSonic->setOrientation(dspX, dspY, dspZ, diff, yawAngle, pitchAngle, zrotoff);
+			PlayerTails::maniaTails->setOrientation(dspX, dspY, dspZ, diff, yawAngle, pitchAngle, zrotoff);
 			setLimbsVisibility(false);
-			Player::maniaSonic->animate(12, 0);
+			PlayerTails::maniaTails->animate(12, 0);
 		}
 	}
 	else if (onPlane && mySpeed < 0.01f)
 	{
-		if (Player::maniaSonic != nullptr) { Player::maniaSonic->setVisible(false); }
+		if (PlayerTails::maniaTails != nullptr) { PlayerTails::maniaTails->setVisible(false); }
 		float time = fmodf((animCount * 1.0f), 100);
 		updateLimbs(0, time);
 	}
 	else if (isSkidding)
 	{
-		if (Player::maniaSonic != nullptr) { Player::maniaSonic->setVisible(false); }
+		if (PlayerTails::maniaTails != nullptr) { PlayerTails::maniaTails->setVisible(false); }
 		if (myBody != nullptr) myBody->setBaseOrientation(&displayPos, diff, yawAngle, pitchAngle, 0);
 		updateLimbs(8, 0);
 	}
 	else if (hitTimer > 0)
 	{
 		if (myBody != nullptr) myBody->setBaseOrientation(&displayPos, diff, yawAngle, pitchAngle, 0);
-		if (Player::maniaSonic != nullptr) { Player::maniaSonic->setVisible(false); }
+		if (PlayerTails::maniaTails != nullptr) { PlayerTails::maniaTails->setVisible(false); }
 		updateLimbs(11, 0);
 	}
 	else
@@ -2277,18 +1730,18 @@ void Player::animate()
 		if (myBody != nullptr) myBody->setBaseOrientation(&displayPos, diff, yawAngle, pitchAngle, 0);
 		float time = 10 * modelRunIndex * 0.5f;
 		updateLimbs(1, time);
-		if (Player::maniaSonic != nullptr)
+		if (PlayerTails::maniaTails != nullptr)
 		{
-			Player::maniaSonic->setOrientation(dspX, dspY, dspZ, diff, yawAngle, pitchAngle, 0);
+			PlayerTails::maniaTails->setOrientation(dspX, dspY, dspZ, diff, yawAngle, pitchAngle, 0);
 			setLimbsVisibility(false);
 
 			if (mySpeed < 3.9f)
 			{
-				Player::maniaSonic->animate(15, time);
+				PlayerTails::maniaTails->animate(15, time);
 			}
 			else
 			{
-				Player::maniaSonic->animate(1, time);
+				PlayerTails::maniaTails->animate(1, time);
 			}
 		}
 		airSpinRotation = 0;
@@ -2371,11 +1824,9 @@ void Player::animate()
 		isSpindashing = false;
 		isSkidding = false;
 		isBall = false;
-		isBouncing = false;
-		isStomping = false;
 		isLightdashing = false;
 
-		if (Player::maniaSonic != nullptr) { Player::maniaSonic->setVisible(false); }
+		if (PlayerTails::maniaTails != nullptr) { PlayerTails::maniaTails->setVisible(false); }
 		if (myBody != nullptr) myBody->setBaseOrientation(&position, 0, getRotY(), 90, 0);
 		setLimbsVisibility(true);
 
@@ -2388,7 +1839,7 @@ void Player::animate()
 	updateLimbsMatrix();
 }
 
-void Player::createSpindashTrails(Vector3f* initPos, Vector3f* endPos, int count, int life)
+void PlayerTails::createSpindashTrails(Vector3f* initPos, Vector3f* endPos, int count, int life)
 {
 	Vector3f diff(endPos);
 	diff.x -= initPos->x;
@@ -2405,16 +1856,16 @@ void Player::createSpindashTrails(Vector3f* initPos, Vector3f* endPos, int count
 		offset.y += initPos->y;
 		offset.z += initPos->z;
 
-		newSpindashTrail(&offset, life, characterID);
+		newSpindashTrail(&offset, life, skinID);
 	}
 }
 
-void Player::newSpindashTrail(Vector3f* trailPos, int life, int colourID)
+void PlayerTails::newSpindashTrail(Vector3f* trailPos, int life, int colourID)
 {
 	newSpindashTrail(trailPos, 0, 0, 0, 0, life, 10, colourID);
 }
 
-void Player::newSpindashTrail(Vector3f* trailPos, float trailXVel, float trailYVel, float trailZVel, float trailGravity, int life, float size, int colourID)
+void PlayerTails::newSpindashTrail(Vector3f* trailPos, float trailXVel, float trailYVel, float trailZVel, float trailGravity, int life, float size, int colourID)
 {
 	Vector3f spd(trailXVel, trailYVel, trailZVel);
 	switch (colourID)
@@ -2444,24 +1895,6 @@ void Player::newSpindashTrail(Vector3f* trailPos, float trailXVel, float trailYV
 			break;
 
 		case 4:
-			new Particle(ParticleResources::textureLightBlueTrail,
-				trailPos, &spd,
-				trailGravity, life, 0, size, -(size / life), false);
-			break;
-
-		case 5:
-			new Particle(ParticleResources::texturePinkTrail,
-				trailPos, &spd,
-				trailGravity, life, 0, size, -(size / life), false);
-			break;
-
-		case 6:
-			new Particle(ParticleResources::textureDarkGreenTrail,
-				trailPos, &spd,
-				trailGravity, life, 0, size, -(size / life), false);
-			break;
-
-		case 7:
 			new Particle(ParticleResources::textureOrangeTrail,
 				trailPos, &spd,
 				trailGravity, life, 0, size, -(size / life), false);
@@ -2472,7 +1905,7 @@ void Player::newSpindashTrail(Vector3f* trailPos, float trailXVel, float trailYV
 	}
 }
 
-void Player::createStompParticles()
+void PlayerTails::createStompParticles()
 {
 	float totXVel = xVel + xVelAir;
 	float totZVel = zVel + zVelAir;
@@ -2488,107 +1921,107 @@ void Player::createStompParticles()
 			(random() - 0.5f) * 3 + totXVel*0.8f,
 			(random()*1.2f + 0.5f),
 			(random() - 0.5f) * 3 + totZVel*0.8f,
-			0.08f, 25, 14, characterID);
+			0.08f, 25, 14, skinID);
 	}
 }
 
-void Player::goUp()
+void PlayerTails::goUp()
 {
 	yVel += 0.5f;
 }
 
-bool Player::isPlayer()
+bool PlayerTails::isPlayer()
 {
 	return true;
 }
 
-void Player::setGroundSpeed(float newXspd, float newZspd)
+void PlayerTails::setGroundSpeed(float newXspd, float newZspd)
 {
 	xVelGround = newXspd;
 	zVelGround = newZspd;
 }
 
-float Player::getxVel()
+float PlayerTails::getxVel()
 {
 	return xVel;
 }
 
-void Player::setxVel(float newXVel)
+void PlayerTails::setxVel(float newXVel)
 {
 	xVel = newXVel;
 }
 
-float Player::getyVel()
+float PlayerTails::getyVel()
 {
 	return yVel;
 }
 
-void Player::setyVel(float newYVel)
+void PlayerTails::setyVel(float newYVel)
 {
 	yVel = newYVel;
 }
 
-float Player::getzVel()
+float PlayerTails::getzVel()
 {
 	return zVel;
 }
 
-void Player::setzVel(float newZVel)
+void PlayerTails::setzVel(float newZVel)
 {
 	zVel = newZVel;
 }
 
-void Player::setxVelAir(float newXVelAir)
+void PlayerTails::setxVelAir(float newXVelAir)
 {
 	xVelAir = newXVelAir;
 }
 
-float Player::getXVelAir()
+float PlayerTails::getXVelAir()
 {
 	return xVelAir;
 }
 
-void Player::setzVelAir(float newZVelAir)
+void PlayerTails::setzVelAir(float newZVelAir)
 {
 	zVelAir = newZVelAir;
 }
 
-float Player::getZVelAir()
+float PlayerTails::getZVelAir()
 {
 	return zVelAir;
 }
 
-void Player::setHoverCount(int newCount)
+void PlayerTails::setHoverCount(int newCount)
 {
 	hoverCount = newCount;
 }
 
-int Player::getHoverCount()
+int PlayerTails::getHoverCount()
 {
 	return hoverCount;
 }
 
-void Player::setOnPlane(bool on)
+void PlayerTails::setOnPlane(bool on)
 {
 	onPlane = on;
 }
 
-void Player::setOnPlanePrevious(bool on)
+void PlayerTails::setOnPlanePrevious(bool on)
 {
 	onPlanePrevious = on;
 }
 
-float Player::getHitboxHorizontal()
+float PlayerTails::getHitboxHorizontal()
 {
 	return 6;
 }
 
-float Player::getHitboxVertical()
+float PlayerTails::getHitboxVertical()
 {
 	return 12;
 }
 
-void Player::stopMoving()
+void PlayerTails::stopMoving()
 {
 	xVel = 0;
 	yVel = 0;
@@ -2599,19 +2032,19 @@ void Player::stopMoving()
 	zVelGround = 0;
 }
 
-void Player::setInWater(float height)
+void PlayerTails::setInWater(float height)
 {
 	inWater = true;
 	waterHeight = height;
 }
 
-void Player::increaseGroundSpeed(float dx, float dz)
+void PlayerTails::increaseGroundSpeed(float dx, float dz)
 {
 	xVelGround += dx;
 	zVelGround += dz;
 }
 
-float Player::getSpeed()
+float PlayerTails::getSpeed()
 {
 	float xSpd = xVelAir + xVelGround;
 	float zSpd = zVelAir + zVelGround;
@@ -2619,7 +2052,7 @@ float Player::getSpeed()
 	return sqrtf(xSpd*xSpd + zSpd*zSpd);
 }
 
-void Player::takeDamage(Vector3f* damageSource)
+void PlayerTails::takeDamage(Vector3f* damageSource)
 {
 	if (iFrame == 0)
 	{
@@ -2640,8 +2073,6 @@ void Player::takeDamage(Vector3f* damageSource)
 		isSpindashing = false;
 		isSkidding = false;
 		isBall = false;
-		isBouncing = false;
-		isStomping = false;
 		isLightdashing = false;
 		spindashReleaseTimer = 0;
 		spindashRestartDelay = 0;
@@ -2679,12 +2110,12 @@ void Player::takeDamage(Vector3f* damageSource)
 	}
 }
 
-void Player::rebound(Vector3f* source)
+void PlayerTails::rebound(Vector3f* source)
 {
+	source;
 	if (onPlane == false)
 	{
-		if (true)
-		//if (characterID == 2) //Mecha Sonic
+		/*
 		{
 			yVel = 2.1f;
 			xVelAir = 0;
@@ -2692,10 +2123,10 @@ void Player::rebound(Vector3f* source)
 			setX(source->x);
 			setZ(source->z);
 			setY(source->y + 3.5f);
-			homingAttackTimer = -1;
 			hoverCount = hoverLimit / 2;
 		}
 		else
+		*/
 		{
 			if (yVel >= 0) //no rebound
 			{
@@ -2717,22 +2148,19 @@ void Player::rebound(Vector3f* source)
 					yVel = 1;
 				}
 			}
-			homingAttackTimer = -1;
 		}
 	}
 }
 
-bool Player::isVulnerable()
+bool PlayerTails::isVulnerable()
 {
-	return !(homingAttackTimer > 0 ||
-		isBouncing ||
+	return !(
 		isJumping ||
-		isBall ||
-		isSpindashing ||
-		isStomping);
+		isBall    ||
+		isSpindashing);
 }
 
-void Player::die()
+void PlayerTails::die()
 {
 	if (deadTimer == -1)
 	{
@@ -2741,22 +2169,22 @@ void Player::die()
 	}
 }
 
-Vector3f Player::getOverallVel()
+Vector3f PlayerTails::getOverallVel()
 {
 	return Vector3f(xVel, yVel, zVel);
 }
 
-float Player::getXVelGround()
+float PlayerTails::getXVelGround()
 {
 	return xVelGround;
 }
 
-float Player::getZVelGround()
+float PlayerTails::getZVelGround()
 {
 	return zVelGround;
 }
 
-void Player::debugAdjustCamera()
+void PlayerTails::debugAdjustCamera()
 {
 	cameraInputX = INPUT_X2;
 	cameraInputY = INPUT_Y2;
@@ -2826,7 +2254,7 @@ void Player::debugAdjustCamera()
 }
 
 //Do a small 'pop off' off the wall
-void Player::popOffWall()
+void PlayerTails::popOffWall()
 {
 	xVelAir = xVel + currNorm.x * 1.5f;
 	zVelAir = zVel + currNorm.z * 1.5f;
@@ -2839,7 +2267,7 @@ void Player::popOffWall()
 	currNorm.set(0, 1, 0);
 }
 
-void Player::boostMe(float amount)
+void PlayerTails::boostMe(float amount)
 {
 	float rad = sqrtf(xVelGround*xVelGround + zVelGround*zVelGround);
 	if (rad > 1)
@@ -2851,7 +2279,7 @@ void Player::boostMe(float amount)
 	}
 }
 
-void Player::setDisplacement(float xDsp, float yDsp, float zDsp)
+void PlayerTails::setDisplacement(float xDsp, float yDsp, float zDsp)
 {
 	xDisp = xDsp;
 	yDisp = yDsp;
@@ -2859,37 +2287,37 @@ void Player::setDisplacement(float xDsp, float yDsp, float zDsp)
 	isGettingExternallyMoved = true;
 }
 
-void Player::setGravity(float newGrav)
+void PlayerTails::setGravity(float newGrav)
 {
 	gravity = newGrav;
 }
 
-bool Player::isDying()
+bool PlayerTails::isDying()
 {
 	return deadTimer != -1;
 }
 
-void Player::setSpindashTimer(int newTimer)
+void PlayerTails::setSpindashTimer(int newTimer)
 {
 	spindashTimer = newTimer;
 }
 
-int Player::getSpindashTimer()
+int PlayerTails::getSpindashTimer()
 {
 	return spindashTimer;
 }
 
-bool Player::isChargingSpindash()
+bool PlayerTails::isChargingSpindash()
 {
 	return isSpindashing;
 }
 
-void Player::setIsBall(bool newIsBall)
+void PlayerTails::setIsBall(bool newIsBall)
 {
 	isBall = newIsBall;
 }
 
-float Player::calculateSpindashSpeed(int spindashCharge)
+float PlayerTails::calculateSpindashSpeed(int spindashCharge)
 {
 	float mag = spindashPower*spindashCharge;
 	float totalSpd = sqrtf(xVelGround*xVelGround + zVelGround*zVelGround);
@@ -2901,12 +2329,12 @@ float Player::calculateSpindashSpeed(int spindashCharge)
 	return factor*mag;
 }
 
-bool Player::isOnGround()
+bool PlayerTails::isOnGround()
 {
 	return onPlane;
 }
 
-Vector3f* Player::getCurrNorm()
+Vector3f* PlayerTails::getCurrNorm()
 {
 	return &currNorm;
 }

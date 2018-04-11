@@ -59,6 +59,7 @@ int createDisplay()
 	GLFWmonitor* monitor = NULL;
 
 	glfwWindowHint(GLFW_SAMPLES, AA_SAMPLES);
+	glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
 
 	if (useFullscreeen)
 	{
@@ -82,7 +83,7 @@ int createDisplay()
 
 	// glfw window creation
 	// --------------------
-	window = glfwCreateWindow(screenWidth, screenHeight, "Version 0.0010", monitor, NULL);
+	window = glfwCreateWindow(screenWidth, screenHeight, "Version 0.0011", monitor, NULL);
 	if (window == NULL)
 	{
 		std::cout << "Failed to create GLFW window" << std::endl;
@@ -117,6 +118,24 @@ int createDisplay()
 
 	glfwSwapInterval(1); //1 = vsync. 0 = off. 2 = half monitor refresh rate
 	glEnable(GL_MULTISAMPLE);
+
+	//Center the window
+	if (!useFullscreeen)
+	{
+		const GLFWvidmode * mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
+
+		int monitorWidth = mode->width;
+		int monitorHeight = mode->height;
+
+		if ((int)SCR_WIDTH <= monitorWidth && 
+			(int)SCR_HEIGHT <= monitorHeight)
+		{
+			int xpos = monitorWidth/2 - ((int)SCR_WIDTH)/2;
+			int ypos = monitorHeight/2 - ((int)SCR_HEIGHT)/2;
+
+			glfwSetWindowPos(window, xpos, ypos);
+		}
+	}
 
 	//glfwGetWindowAttrib(window, GLFW_SAMPLES);
 	//std::fprintf(stdout, "samples:   %d\n", glfwGetWindowAttrib(window, GLFW_SAMPLES));

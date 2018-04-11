@@ -6,7 +6,7 @@
 #include "maths.h"
 #include "../engineTester/main.h"
 #include "../entities/ring.h"
-#include "../entities/player.h"
+#include "../entities/playersonic.h"
 
 float toRadians(float degrees)
 {

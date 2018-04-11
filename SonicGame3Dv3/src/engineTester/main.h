@@ -3,7 +3,7 @@
 
 class Entity;
 class Camera;
-class Player;
+class ControllablePlayer;
 class Stage;
 class SkySphere;
 class Light;
@@ -61,7 +61,7 @@ class Global
 {
 public:
 	static Camera* gameCamera;
-	static Player* gamePlayer;
+	static ControllablePlayer* gamePlayer;
 	static Stage* gameStage;
 	static SkySphere* gameSkySphere;
 	static Light* gameLightSun;

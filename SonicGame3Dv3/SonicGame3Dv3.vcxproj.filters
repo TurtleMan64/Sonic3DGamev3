@@ -240,9 +240,6 @@
     <ClCompile Include="src\entities\ManiaSonicModel.cpp">
       <Filter>Source Files\entities</Filter>
     </ClCompile>
-    <ClCompile Include="src\entities\Player.cpp">
-      <Filter>Source Files\entities</Filter>
-    </ClCompile>
     <ClCompile Include="src\entities\Ring.cpp">
       <Filter>Source Files\entities</Filter>
     </ClCompile>
@@ -489,6 +486,18 @@
     <ClCompile Include="src\entities\Capsule.cpp">
       <Filter>Source Files\entities</Filter>
     </ClCompile>
+    <ClCompile Include="src\entities\ManiaTailsModel.cpp">
+      <Filter>Source Files\entities</Filter>
+    </ClCompile>
+    <ClCompile Include="src\entities\PlayerSonic.cpp">
+      <Filter>Source Files\entities</Filter>
+    </ClCompile>
+    <ClCompile Include="src\entities\PlayerTails.cpp">
+      <Filter>Source Files\entities</Filter>
+    </ClCompile>
+    <ClCompile Include="src\entities\ControllablePlayer.cpp">
+      <Filter>Source Files\entities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\renderEngine\renderEngine.h">
@@ -621,9 +630,6 @@
       <Filter>Source Files\entities</Filter>
     </ClInclude>
     <ClInclude Include="src\entities\maniasonicmodel.h">
-      <Filter>Source Files\entities</Filter>
-    </ClInclude>
-    <ClInclude Include="src\entities\player.h">
       <Filter>Source Files\entities</Filter>
     </ClInclude>
     <ClInclude Include="src\entities\ring.h">
@@ -867,6 +873,18 @@
       <Filter>Source Files\gaussianBlur</Filter>
     </ClInclude>
     <ClInclude Include="src\entities\capsule.h">
+      <Filter>Source Files\entities</Filter>
+    </ClInclude>
+    <ClInclude Include="src\entities\maniatailsmodel.h">
+      <Filter>Source Files\entities</Filter>
+    </ClInclude>
+    <ClInclude Include="src\entities\playersonic.h">
+      <Filter>Source Files\entities</Filter>
+    </ClInclude>
+    <ClInclude Include="src\entities\playertails.h">
+      <Filter>Source Files\entities</Filter>
+    </ClInclude>
+    <ClInclude Include="src\entities\controllableplayer.h">
       <Filter>Source Files\entities</Filter>
     </ClInclude>
   </ItemGroup>

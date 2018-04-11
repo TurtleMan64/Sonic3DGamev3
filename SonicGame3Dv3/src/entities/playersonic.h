@@ -1,4 +1,4 @@
-#ifndef PLAYER_H
+#ifndef PLAYERSONIC_H
 #define PLAYER_H
 
 class TexturedModel;
@@ -11,10 +11,11 @@ class Source;
 #include <list>
 
 #include "entities.h"
+#include "controllableplayer.h"
 #include "../toolbox/vector.h"
 
 
-class Player : public Entity
+class PlayerSonic : public ControllablePlayer
 {
 private:
 	static std::list<TexturedModel*> modelBody;
@@ -211,7 +212,7 @@ private:
 	Vector3f previousLightdashPosition;
 
 public:
-	Player(float, float, float);
+	PlayerSonic(float, float, float);
 
 	void step();
 
@@ -309,7 +310,7 @@ public:
 
 	void setIsBall(bool newisBall);
 
-	//returns the speed sonic goes after releasing a spindash
+	//returns the speed player goes after releasing a spindash
 	float calculateSpindashSpeed(int spindashCharge);
 
 	bool isOnGround();

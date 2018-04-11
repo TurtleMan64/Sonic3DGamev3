@@ -1,7 +1,7 @@
 #include "guimanager.h"
 
 #include "../engineTester/main.h"
-#include "../entities/player.h"
+#include "../entities/playersonic.h"
 #include "../fontMeshCreator/guitext.h"
 #include "../fontMeshCreator/fonttype.h"
 #include "../engineTester/main.h"

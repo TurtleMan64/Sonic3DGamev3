@@ -9,7 +9,7 @@
 #include "../objLoader/objLoader.h"
 #include "../engineTester/main.h"
 #include "../renderEngine/skymanager.h"
-#include "player.h"
+#include "playersonic.h"
 
 #include <list>
 #include <iostream>

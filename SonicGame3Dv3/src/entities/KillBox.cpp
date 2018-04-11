@@ -1,5 +1,5 @@
 #include "killbox.h"
-#include "player.h"
+#include "playersonic.h"
 #include "../engineTester/main.h"
 
 #include <algorithm>

@@ -7,7 +7,7 @@
 #include "../../renderEngine/renderEngine.h"
 #include "../../objLoader/objLoader.h"
 #include "../../engineTester/main.h"
-#include "../../entities/player.h"
+#include "../../entities/playersonic.h"
 #include "../../toolbox/maths.h"
 #include "../camera.h"
 #include "../../collision/collisionchecker.h"
@@ -47,7 +47,7 @@ TP_FlatWater::TP_FlatWater()
 
 void TP_FlatWater::step()
 {
-	Player* p = Global::gamePlayer;
+	ControllablePlayer* p = Global::gamePlayer;
 	float px = p->getX();
 	float py = p->getY();
 	float pz = p->getZ();

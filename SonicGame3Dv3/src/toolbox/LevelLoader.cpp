@@ -7,7 +7,7 @@
 #include "../engineTester/main.h"
 #include "../entities/stage.h"
 #include "../entities/ring.h"
-#include "../entities/player.h"
+#include "../entities/playersonic.h"
 #include "../toolbox/split.h"
 #include "../toolbox/input.h"
 #include "../collision/collisionchecker.h"
@@ -70,6 +70,8 @@
 #include "../entities/SpeedHighway/shelevatorplatform.h"
 #include "../entities/capsule.h"
 #include "../toolbox/pausescreen.h"
+#include "../entities/playertails.h"
+#include "../entities/controllableplayer.h"
 
 float toFloat(char* input);
 int toInt(char* input);
@@ -84,6 +86,9 @@ void LevelLoader_loadTitle()
 	freeAllStaticModels();
 
 	CollisionChecker::deleteAllCollideModels();
+
+	SkyManager::setCenterObject(nullptr);
+	Global::gamePlayer = nullptr;
 
 	Main_deleteAllEntites();
 	Main_deleteAllEntitesPass2();
@@ -126,6 +131,9 @@ void LevelLoader_loadLevel(std::string levelFilename)
 		freeAllStaticModels();
 	}
 
+	SkyManager::setCenterObject(nullptr);
+	Global::gamePlayer = nullptr;
+
 	Main_deleteAllEntites();
 	Main_deleteAllEntitesPass2();
 	Main_deleteAllTransparentEntites();
@@ -136,8 +144,8 @@ void LevelLoader_loadLevel(std::string levelFilename)
 	}
 
 	//Reload the players models always, to load a new player model
-	Player::deleteStaticModels();
-	Player::loadStaticModels();
+	PlayerSonic::deleteStaticModels();
+	PlayerSonic::loadStaticModels();
 
 
 	std::ifstream file("res/Levels/" + fname);
@@ -605,13 +613,23 @@ void processLine(char** dat)
 		
 		case 6: //Player
 		{
-			Player::loadStaticModels();
-			Player* player = new Player(toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]));
+			//PlayerSonic::loadStaticModels();
+			//PlayerSonic* player = new PlayerSonic(toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]));
+			//Global::countNew++;
+			//Global::gamePlayer = player;
+			//SkyManager::setCenterObject(player);
+			//player->setCameraAngles(Global::gameCamera->getYaw(), Global::gameCamera->getPitch());
+			//Main_addEntity(player);
+
+			PlayerTails::loadStaticModels();
+			PlayerTails* player = new PlayerTails(toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]));
 			Global::countNew++;
 			Global::gamePlayer = player;
 			SkyManager::setCenterObject(player);
 			player->setCameraAngles(Global::gameCamera->getYaw(), Global::gameCamera->getPitch());
 			Main_addEntity(player);
+			return;
+
 			return;
 		}
 
@@ -1113,6 +1131,18 @@ void processLine(char** dat)
 			Main_addEntity(cap);
 			return;
 		}
+		
+		case 70: //Tails
+		{
+			PlayerTails::loadStaticModels();
+			PlayerTails* player = new PlayerTails(toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]));
+			Global::countNew++;
+			Global::gamePlayer = player;
+			SkyManager::setCenterObject(player);
+			player->setCameraAngles(Global::gameCamera->getYaw(), Global::gameCamera->getPitch());
+			Main_addEntity(player);
+			return;
+		}
 
 		default:
 		{
@@ -1135,7 +1165,7 @@ int toInt(char* input)
 void freeAllStaticModels()
 {
 	Ring::deleteStaticModels();
-	Player::deleteStaticModels();
+	PlayerSonic::deleteStaticModels();
 	SkySphere::deleteModels();
 	Spring::deleteStaticModels();
 	Dashpad::deleteStaticModels();
@@ -1180,4 +1210,5 @@ void freeAllStaticModels()
 	SH_ElevatorPlatformPath::deleteStaticModels();
 	SH_ElevatorPlatform::deleteStaticModels();
 	Capsule::deleteStaticModels();
+	PlayerTails::deleteStaticModels();
 }

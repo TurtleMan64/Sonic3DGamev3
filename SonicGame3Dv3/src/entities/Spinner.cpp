@@ -7,7 +7,7 @@
 #include "../renderEngine/renderEngine.h"
 #include "../objLoader/objLoader.h"
 #include "../engineTester/main.h"
-#include "../entities/player.h"
+#include "../entities/playersonic.h"
 #include "../toolbox/maths.h"
 #include "../animation/body.h"
 #include "../entities/camera.h"
@@ -33,14 +33,14 @@ Spinner::Spinner()
 
 Spinner::Spinner(float x, float y, float z)
 {
-	this->position.x = x;
-	this->position.y = y;
-	this->position.z = z;
-	this->rotX = 0;
-	this->rotY = 0;
-	this->rotZ = 0;
-	this->scale = 1;
-	this->visible = true;
+	position.x = x;
+	position.y = y;
+	position.z = z;
+	rotX = 0;
+	rotY = 0;
+	rotZ = 0;
+	scale = 1;
+	visible = true;
 	updateTransformationMatrix();
 
 	blades = new Body(&Spinner::modelsBlades);

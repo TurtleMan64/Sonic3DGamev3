@@ -27,7 +27,7 @@
 #include "../objLoader/objLoader.h"
 #include "../entities/light.h"
 #include "../entities/ring.h"
-#include "../entities/player.h"
+#include "../entities/playersonic.h"
 #include "../entities/stage.h"
 #include "../toolbox/levelloader.h"
 #include "../collision/collisionchecker.h"
@@ -74,7 +74,7 @@ std::unordered_map<Entity*, Entity*> gameEntitiesPass2;
 std::unordered_map<Entity*, Entity*> gameTransparentEntities;
 
 Camera* Global::gameCamera = nullptr;
-Player* Global::gamePlayer = nullptr;
+ControllablePlayer* Global::gamePlayer = nullptr;
 Stage* Global::gameStage = nullptr;
 SkySphere* Global::gameSkySphere = nullptr;
 Light* Global::gameLightSun = nullptr;
@@ -517,7 +517,7 @@ int main()
 
 		if (seconds - previousTime >= 1.0)
 		{
-			//std::fprintf(stdout, "fps: %f\n", frameCount / (seconds - previousTime));
+			std::fprintf(stdout, "fps: %f\n", frameCount / (seconds - previousTime));
 			//std::fprintf(stdout, "diff: %d\n", Global::countNew - Global::countDelete);
 			//Loader_printInfo();
 			//std::fprintf(stdout, "entity counts: %d %d %d\n", gameEntities.size(), gameEntitiesPass2.size(), gameTransparentEntities.size());
@@ -575,11 +575,6 @@ void Main_deleteAllEntites()
 	//Delete all the rest
 	for (auto entityToDelete : gameEntities)
 	{
-		if (entityToDelete.first->isPlayer())
-		{
-			Global::gamePlayer = nullptr;
-			SkyManager::setCenterObject(nullptr);
-		}
 		delete entityToDelete.first;
 		Global::countDelete++;
 	}

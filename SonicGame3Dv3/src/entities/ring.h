@@ -6,7 +6,6 @@ class TexturedModel;
 #include <list>
 #include "entities.h"
 
-
 class Ring : public Entity
 {
 private:

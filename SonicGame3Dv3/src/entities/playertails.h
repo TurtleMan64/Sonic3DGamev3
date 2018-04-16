@@ -49,6 +49,9 @@ private:
 	Limb* myRightFoot;
 
 	static ManiaTailsModel* maniaTails;
+	static std::list<TexturedModel*> modelsManiaTailsFlyTails;
+	static std::list<TexturedModel*> modelsManiaTailsFlyBody;
+	static std::list<TexturedModel*> modelsManiaTailsFlyBodyTired;
 
 public:
 	static int skinID;
@@ -120,8 +123,13 @@ private:
 	const float moveAccelerationAirFly = 0.03f; 
 	const float frictionAirFly = 0.008f;
 	const float airSpeedLimitFly = 4.2f;
-	const float slowDownAirRateFly = 0.025f; //How fast you slowdown every frame when youre going faster than speed limit while flying
+	const float slowDownAirRateFly = 0.0425f; //How fast you slowdown every frame when youre going faster than speed limit while flying
 	const float turnPenaltyFly = 1500.0f; //How much you slowdown by when turning while flying
+
+	Source* flySource = nullptr;
+	float flyPitch = 1.0f; //Audio pitch
+	Body* maniaTailsFlyTails;
+	Body* maniaTailsFlyBody;
 
 	const float surfaceTension = 10.0f; //Increase to make sonic not fly off slopes when going fast
 	const float slopeAccel = 0.092f; //How much you are influenced by the terrain's slope
@@ -219,6 +227,8 @@ private:
 
 public:
 	PlayerTails(float, float, float);
+
+	~PlayerTails();
 
 	void step();
 

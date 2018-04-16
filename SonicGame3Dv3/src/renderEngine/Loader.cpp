@@ -79,8 +79,10 @@ GLuint Loader_loadTexture(char* fileName)
 	textures.push_back(textureID);
 	//std::fprintf(stdout, "	generated tex id #%d from %s\n", textureID, fileName);
 
-	int width, height;
-	unsigned char* image = SOIL_load_image(fileName, &width, &height, 0, SOIL_LOAD_RGBA);
+	//std::fprintf(stdout, "Loading image '%s'\n", fileName);
+
+	int width, height, channels;
+	unsigned char* image = SOIL_load_image(fileName, &width, &height, &channels, SOIL_LOAD_RGBA);
 
 	if (image == 0)
 	{

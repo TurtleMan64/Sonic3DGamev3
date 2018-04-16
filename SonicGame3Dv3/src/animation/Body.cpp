@@ -173,3 +173,8 @@ std::list<TexturedModel*>* Body::getModels()
 {
 	return myModels;
 }
+
+void Body::setModels(std::list<TexturedModel*>* newModels)
+{
+	myModels = newModels;
+}

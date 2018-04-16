@@ -57,9 +57,7 @@ public:
 
 	static void stopBGM();
 
-	//static float getSoundLevelBGM();
-
-	//static float getSoundLevelSE();
+	static ALuint getSEBuffer(int i);
 
 	//percent should be 0 ... 1
 	//this is then multiplied by soundLevelBGM

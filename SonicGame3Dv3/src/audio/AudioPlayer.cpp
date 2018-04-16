@@ -31,17 +31,17 @@ void AudioPlayer::loadSoundEffects()
 	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/General/Splash.ogg"));               //5
 	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/General/Spring.ogg"));               //6
 	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/General/UnlockSomething.ogg"));      //7
-	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/Sonic/Bounce.ogg"));                 //8
-	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/Sonic/Death.ogg"));                  //9
-	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/Sonic/GetHit.ogg"));                 //10
-	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/Sonic/HomingAttack.ogg"));           //11
-	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/Sonic/Jump.ogg"));                   //12
-	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/Sonic/Skid.ogg"));                   //13
-	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/Sonic/SpindashCharge.ogg"));         //14
-	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/Sonic/SpindashRelease.ogg"));        //15
-	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/Sonic/StompInit.ogg"));              //16
-	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/Sonic/StompLand.ogg"));              //17
-	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/Sonic/CantStick.ogg"));              //18
+	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/Player/Bounce.ogg"));                //8
+	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/Player/Death.ogg"));                 //9
+	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/Player/GetHit.ogg"));                //10
+	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/Player/HomingAttack.ogg"));          //11
+	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/Player/Jump.ogg"));                  //12
+	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/Player/Skid.ogg"));                  //13
+	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/Player/SpindashCharge.ogg"));        //14
+	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/Player/SpindashRelease.ogg"));       //15
+	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/Player/StompInit.ogg"));             //16
+	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/Player/StompLand.ogg"));             //17
+	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/Player/CantStick.ogg"));             //18
 	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/General/DockBreak.ogg"));            //19
 	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/General/Seagull.ogg"));              //20
 	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/General/SpeedRamp.ogg"));            //21
@@ -50,6 +50,8 @@ void AudioPlayer::loadSoundEffects()
 	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/General/ActClear.ogg"));             //24
 	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/General/ExitStage.ogg"));            //25
 	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/General/CapsuleClick.ogg"));         //26
+	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/Player/Fly.ogg"));                   //27
+	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/Player/FlyTired.ogg"));              //28
 }
 
 void AudioPlayer::loadBGM(char* fileName)
@@ -264,6 +266,11 @@ void AudioPlayer::stopBGM()
 Source* AudioPlayer::getSource(int i)
 {
 	return AudioPlayer::sources[i];
+}
+
+ALuint AudioPlayer::getSEBuffer(int i)
+{
+	return AudioPlayer::buffersSE[i];
 }
 
 void AudioPlayer::setBGMVolume(float percent)

@@ -43,6 +43,9 @@ std::list<TexturedModel*> PlayerTails::modelRightShin;
 std::list<TexturedModel*> PlayerTails::modelRightFoot;
 
 ManiaTailsModel* PlayerTails::maniaTails;
+std::list<TexturedModel*> PlayerTails::modelsManiaTailsFlyTails;
+std::list<TexturedModel*> PlayerTails::modelsManiaTailsFlyBody;
+std::list<TexturedModel*> PlayerTails::modelsManiaTailsFlyBodyTired;
 
 int PlayerTails::skinID = 4;
 
@@ -82,6 +85,16 @@ PlayerTails::PlayerTails(float x, float y, float z)
 	setVisible(false); //Our limbs are what will be visible
 	PlayerTails::maniaTails = nullptr;
 	createLimbs();
+}
+
+PlayerTails::~PlayerTails()
+{
+	//So that the flying sound effect doesn't keep looping forever
+	if (flySource != nullptr)
+	{
+		flySource->stop();
+		flySource = nullptr;
+	}
 }
 
 void PlayerTails::step()
@@ -304,6 +317,7 @@ void PlayerTails::step()
 				isBall = false;
 				flyingUsesRemaining = maxFlyingUses;
 				hoverCount = 0;
+				flyPitch = 1.0f;
 			}
 		}
 
@@ -313,6 +327,7 @@ void PlayerTails::step()
 			{
 				yVel+=flyYSpeedIncrease;
 				flyingUsesRemaining--;
+				flyPitch = 1.2f;
 			}
 		}
 
@@ -344,6 +359,28 @@ void PlayerTails::step()
 			
 			AudioPlayer::play(14, getPosition());
 		}
+	}
+
+	flyPitch = std::fmaxf(1.0f, flyPitch-0.01f);
+
+	if (isFlying && flySource == nullptr)
+	{
+		flySource = AudioPlayer::play(27, getPosition(), 1, true);
+	}
+	if (flySource != nullptr)
+	{
+		flySource->setPosition(getX(), getY(), getZ());
+		flySource->setPitch(flyPitch);
+
+		if (isFlying && flyingUsesRemaining == 0 && flySource->getLastPlayedBufferID() == AudioPlayer::getSEBuffer(27))
+		{
+			flySource->play(AudioPlayer::getSEBuffer(28));
+		}
+	}
+	if (!isFlying && flySource != nullptr)
+	{
+		flySource->stop();
+		flySource = nullptr;
 	}
 
 	spindashReleaseTimer = std::max(spindashReleaseTimer - 1, 0);
@@ -627,6 +664,15 @@ void PlayerTails::step()
 
 	//adjustCamera();
 
+	if (flyingUsesRemaining == 0)
+	{
+		maniaTailsFlyTails->increaseRotation(0, flyPitch*(-15), 0);
+	}
+	else
+	{
+		maniaTailsFlyTails->increaseRotation(0, flyPitch*(-35), 0);
+	}
+
 	animate(); //idea : in animate, when jumping, center the camera at not head height. then add back in the 10 units or whatever you get from jumping
 
 	inWaterPrevious = inWater;
@@ -795,6 +841,18 @@ void PlayerTails::createLimbs()
 		myRightThigh->setScale(s);
 		myRightShin->setScale(s);
 		myRightFoot->setScale(s);
+
+		maniaTailsFlyTails = new Body(&PlayerTails::modelsManiaTailsFlyTails);
+		maniaTailsFlyTails->setVisible(false);
+		Global::countNew++;
+		Main_addEntity(maniaTailsFlyTails);
+		maniaTailsFlyTails->setScale(s);
+
+		maniaTailsFlyBody = new Body(&PlayerTails::modelsManiaTailsFlyBody);
+		maniaTailsFlyBody->setVisible(false);
+		Global::countNew++;
+		Main_addEntity(maniaTailsFlyBody);
+		maniaTailsFlyBody->setScale(s);
 	}
 
 	AnimationResources::assignAnimationsHuman(myBody, myHead,
@@ -816,6 +874,10 @@ void PlayerTails::loadStaticModels()
 	if (PlayerTails::skinID == 4) //Mania Sonic
 	{
 		ManiaTailsModel::loadStaticModels();
+
+		loadObjModel(&PlayerTails::modelsManiaTailsFlyTails,     "res/Models/ManiaTails/", "FlyTails.obj");
+		loadObjModel(&PlayerTails::modelsManiaTailsFlyBody,      "res/Models/ManiaTails/", "FlyBody.obj");
+		loadObjModel(&PlayerTails::modelsManiaTailsFlyBodyTired, "res/Models/ManiaTails/", "FlyBodyTired.obj");
 
 		loadObjModel(&PlayerTails::modelBody,         "res/Models/ManiaTails/", "Body.obj");
 		loadObjModel(&PlayerTails::modelHead,         "res/Models/ManiaTails/", "Head.obj");
@@ -1553,6 +1615,8 @@ void PlayerTails::animate()
 
 	float mySpeed = sqrtf(xrel*xrel + zrel*zrel);
 
+	maniaTailsFlyTails->setVisible(false);
+	maniaTailsFlyBody->setVisible(false);
 
 	setLimbsVisibility(true);
 	if (PlayerTails::maniaTails != nullptr) { PlayerTails::maniaTails->setVisible(true); }
@@ -1610,16 +1674,25 @@ void PlayerTails::animate()
 	else if (isFlying)
 	{
 		if (PlayerTails::maniaTails != nullptr) { PlayerTails::maniaTails->setVisible(false); }
-		if (myBody != nullptr) myBody->setBaseOrientation(&displayPos, 0, getRotY(), 0, 0);
+		setLimbsVisibility(false);
 
 		if (flyingUsesRemaining == 0)
 		{
-			updateLimbs(19, 0);
+			maniaTailsFlyBody->setModels(&PlayerTails::modelsManiaTailsFlyBodyTired);
 		}
 		else
 		{
-			updateLimbs(6, 0);
+			maniaTailsFlyBody->setModels(&PlayerTails::modelsManiaTailsFlyBody);
 		}
+
+
+		maniaTailsFlyTails->setVisible(true);
+		maniaTailsFlyTails->setPosition(getPosition());
+		maniaTailsFlyTails->updateTransformationMatrix();
+		maniaTailsFlyBody->setVisible(true);
+		maniaTailsFlyBody->setPosition(getPosition());
+		maniaTailsFlyBody->setRotY(getRotY());
+		maniaTailsFlyBody->updateTransformationMatrix();
 	}
 	else if (isLightdashing)
 	{

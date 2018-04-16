@@ -37,6 +37,11 @@ Entity::Entity(Vector3f* position, float rotX, float rotY, float rotZ, float sca
 	this->visible = true;
 }
 
+Entity::~Entity()
+{
+
+}
+
 void Entity::step()
 {
 

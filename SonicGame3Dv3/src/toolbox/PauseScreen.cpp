@@ -284,7 +284,7 @@ void PauseScreen::step()
 
 				case 3:
 					Global::levelID = LVL_WI;
-					LevelLoader_loadLevel("WuhuIsland.lvl");
+					LevelLoader_loadLevel("KingdomValley.lvl");
 					unpause();
 					break;
 

@@ -25,6 +25,7 @@ protected:
 public:
 	Entity();
 	Entity(Vector3f*, float, float, float, float);
+	virtual ~Entity();
 
 	virtual void step();
 

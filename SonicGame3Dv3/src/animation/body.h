@@ -45,6 +45,8 @@ public:
 
 	std::list<TexturedModel*>* getModels();
 
+	void setModels(std::list<TexturedModel*>* newModels);
+
 	//std::string getName();
 };
 #endif

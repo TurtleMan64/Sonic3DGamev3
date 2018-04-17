@@ -75,7 +75,7 @@ void AudioMaster::updateListenerData(Vector3f* pos, Vector3f* vel, float camYaw,
 	alListenerfv(AL_ORIENTATION, listenerOri);
 }
 
-ALuint AudioMaster::loadOGG(char* fileName)
+ALuint AudioMaster::loadOGG(const char* fileName)
 {
 	FILE* fp = nullptr;
 	fp = fopen(fileName, "rb");
@@ -134,7 +134,7 @@ ALuint AudioMaster::loadOGG(char* fileName)
 	return buffer;
 }
 
-ALuint AudioMaster::loadWAV(char* fileName)
+ALuint AudioMaster::loadWAV(const char* fileName)
 {
 #ifdef _WIN32
 	FILE* fp = nullptr;

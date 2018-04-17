@@ -22,7 +22,7 @@ private:
 	float matrixBuffer[16];
 
 public:
-	FontShader(char*, char*);
+	FontShader(const char*, const char*);
 
 	void start();
 
@@ -37,11 +37,11 @@ public:
 protected:
 	void bindAttributes();
 
-	void bindAttribute(int, char*);
+	void bindAttribute(int, const char*);
 
 	void getAllUniformLocations();
 
-	int getUniformLocation(char*);
+	int getUniformLocation(const char*);
 
 	void loadFloat(int, float);
 
@@ -53,7 +53,7 @@ protected:
 
 	void loadMatrix(int, Matrix4f*);
 
-	GLuint loadShader(char*, int);
+	GLuint loadShader(const char*, int);
 };
 
 #endif

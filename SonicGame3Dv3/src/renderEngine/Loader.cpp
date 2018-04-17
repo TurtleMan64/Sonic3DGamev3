@@ -71,7 +71,7 @@ RawModel Loader_loadToVAO(std::vector<float>* positions, int dimensions)
 	return RawModel(vaoID, positions->size() / dimensions, &vboIDs);
 }
 
-GLuint Loader_loadTexture(char* fileName)
+GLuint Loader_loadTexture(const char* fileName)
 {
 	GLuint textureID = 0;
 	glGenTextures(1, &textureID);
@@ -294,7 +294,7 @@ void Loader_printInfo()
 	}
 }
 
-GLuint Loader_loadShader(char* file, int shaderType)
+GLuint Loader_loadShader(const char* file, int shaderType)
 {
 	std::ifstream sourceFile;
 	sourceFile.open(file);

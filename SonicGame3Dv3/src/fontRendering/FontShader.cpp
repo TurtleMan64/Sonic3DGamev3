@@ -11,7 +11,7 @@
 #include "fontshader.h"
 #include "../engineTester/main.h"
 
-FontShader::FontShader(char* vertexFile, char* fragmentFile)
+FontShader::FontShader(const char* vertexFile, const char* fragmentFile)
 {
 	vertexShaderID = loadShader(vertexFile, GL_VERTEX_SHADER);
 	fragmentShaderID = loadShader(fragmentFile, GL_FRAGMENT_SHADER);
@@ -51,7 +51,7 @@ void FontShader::bindAttributes()
 	bindAttribute(1, "textureCoords");
 }
 
-void FontShader::bindAttribute(int attribute, char* variableName)
+void FontShader::bindAttribute(int attribute, const char* variableName)
 {
 	glBindAttribLocation(programID, attribute, variableName);
 }
@@ -72,7 +72,7 @@ void FontShader::loadTranslation(Vector2f* translation)
 	load2DVector(location_translation, translation);
 }
 
-int FontShader::getUniformLocation(char* uniformName)
+int FontShader::getUniformLocation(const char* uniformName)
 {
 	return glGetUniformLocation(programID, uniformName);
 }
@@ -103,7 +103,7 @@ void FontShader::loadMatrix(int location, Matrix4f* matrix)
 	glUniformMatrix4fv(location, 1, GL_FALSE, matrixBuffer);
 }
 
-GLuint FontShader::loadShader(char* fileName, int type)
+GLuint FontShader::loadShader(const char* fileName, int type)
 {
 	std::ifstream sourceFile;
 	sourceFile.open(fileName);

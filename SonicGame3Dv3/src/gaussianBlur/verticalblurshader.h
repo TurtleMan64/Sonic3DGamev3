@@ -13,7 +13,7 @@ private:
 	int location_targetHeight;
 
 public:
-	VerticalBlurShader(char* vFile, char* fFile);
+	VerticalBlurShader(const char* vFile, const char* fFile);
 
 	void start();
 
@@ -26,11 +26,11 @@ public:
 protected:
 	void bindAttributes();
 
-	void bindAttribute(int attribute, char* variableName);
+	void bindAttribute(int attribute, const char* variableName);
 
 	void getAllUniformLocations();
 
-	int getUniformLocation(char* uniformName);
+	int getUniformLocation(const char* uniformName);
 
 	void loadFloat(int location, float value);
 };

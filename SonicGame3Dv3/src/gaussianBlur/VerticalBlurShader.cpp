@@ -3,7 +3,7 @@
 
 #include <glad/glad.h>
 
-VerticalBlurShader::VerticalBlurShader(char* vFile, char* fFile)
+VerticalBlurShader::VerticalBlurShader(const char* vFile, const char* fFile)
 {
 	vertexShaderID = Loader_loadShader(vFile, GL_VERTEX_SHADER);
 	fragmentShaderID = Loader_loadShader(fFile, GL_FRAGMENT_SHADER);
@@ -46,7 +46,7 @@ void VerticalBlurShader::bindAttributes()
 	bindAttribute(0, "position");
 }
 
-void VerticalBlurShader::bindAttribute(int attribute, char* variableName)
+void VerticalBlurShader::bindAttribute(int attribute, const char* variableName)
 {
 	glBindAttribLocation(programID, attribute, variableName);
 }
@@ -56,7 +56,7 @@ void VerticalBlurShader::getAllUniformLocations()
 	location_targetHeight = getUniformLocation("targetHeight");
 }
 
-int VerticalBlurShader::getUniformLocation(char* uniformName)
+int VerticalBlurShader::getUniformLocation(const char* uniformName)
 {
 	return glGetUniformLocation(programID, uniformName);
 }

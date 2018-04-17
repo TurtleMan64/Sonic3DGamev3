@@ -38,7 +38,7 @@ private:
 	int location_toShadowMapSpaceClose;
 
 public:
-	ShaderProgram(char*, char*);
+	ShaderProgram(const char*, const char*);
 
 	void start();
 
@@ -81,13 +81,13 @@ public:
 protected:
 	void bindAttributes();
 
-	void bindAttribute(int, char*);
+	void bindAttribute(int, const char*);
 
-	void bindFragOutput(int attatchment, char* variableName);
+	void bindFragOutput(int attatchment, const char* variableName);
 
 	void getAllUniformLocations();
 
-	int getUniformLocation(char*);
+	int getUniformLocation(const char*);
 
 	void loadFloat(int, float);
 

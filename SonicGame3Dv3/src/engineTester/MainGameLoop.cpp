@@ -665,7 +665,7 @@ void increaseProcessPriority()
 #endif
 }
 
-void Global::checkErrorAL(char* description)
+void Global::checkErrorAL(const char* description)
 {
 	ALenum erral = alGetError();
 	if (erral != AL_NO_ERROR)

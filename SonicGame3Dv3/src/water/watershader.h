@@ -59,13 +59,13 @@ public:
 protected:
 	void bindAttributes();
 
-	void bindAttribute(int attatchment, char* variableName);
+	void bindAttribute(int attatchment, const char* variableName);
 
-	void bindFragOutput(int attatchment, char* variableName);
+	void bindFragOutput(int attatchment, const char* variableName);
 
 	void getAllUniformLocations();
 
-	int getUniformLocation(char*);
+	int getUniformLocation(const char*);
 
 	void loadInt(int location, int value);
 

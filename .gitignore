@@ -2,3 +2,4 @@ Debug/
 .obj
 .*
 !/.gitignore
+SonicGame3Dv3/build/

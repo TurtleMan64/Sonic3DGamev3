@@ -281,9 +281,9 @@ int* storeDataInIntBuffer(std::vector<int>* data)
 
 void Loader_printInfo()
 {
-	std::fprintf(stdout, "VAO Count = %d = %d\n", vaoNumber, vaos.size());
-	std::fprintf(stdout, "VBO Count = %d = %d\n", vboNumber, vbos.size());
-	std::fprintf(stdout, "TEX Count = %d = %d\n", texNumber, textures.size());
+	std::fprintf(stdout, "VAO Count = %d = %lu\n", vaoNumber, vaos.size());
+	std::fprintf(stdout, "VBO Count = %d = %lu\n", vboNumber, vbos.size());
+	std::fprintf(stdout, "TEX Count = %d = %lu\n", texNumber, textures.size());
 
 	if (textures.size() == 3)
 	{

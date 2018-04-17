@@ -315,12 +315,12 @@ Vector3f spherePositionFromAngles(float angH, float angV, float radius)
 	return Vector3f(x, y, z);
 }
 
-float random()
+float Maths::random()
 {
 	return (rand() % RAND_MAX) / ((float)(RAND_MAX));
 }
 
-float nextGaussian()
+float Maths::nextGaussian()
 {
 	return (float)(*Global::distribution)((*Global::generator));
 }

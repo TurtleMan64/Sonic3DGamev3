@@ -35,6 +35,6 @@ public:
 
 	//std::string getName();
 
-	bool Ring::canLightdashOn();
+	bool canLightdashOn();
 };
 #endif

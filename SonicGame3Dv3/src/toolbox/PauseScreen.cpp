@@ -52,7 +52,7 @@ GUIText* PauseScreen::textDage4Aquatic = nullptr;
 GUIText* PauseScreen::textManiaSonic = nullptr;
 GUIText* PauseScreen::textAmy = nullptr;
 
-bool PauseScreen::shouldPause = nullptr;
+bool PauseScreen::shouldPause = false;
 
 extern bool INPUT_START;
 extern bool INPUT_PREVIOUS_START;

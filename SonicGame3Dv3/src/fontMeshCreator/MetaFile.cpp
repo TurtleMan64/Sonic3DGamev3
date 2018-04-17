@@ -4,6 +4,7 @@
 
 #include <iostream>
 #include <string>
+#include <cstring>
 
 #include "../engineTester/main.h"
 

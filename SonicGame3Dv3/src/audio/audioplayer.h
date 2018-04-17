@@ -46,9 +46,9 @@ public:
 	//with everything
 	static Source* play(int buffer, Vector3f* pos, float pitch, bool loop, float xVel, float yVel, float zVel);
 
-	static Source* AudioPlayer::playBGMWithIntro(int bufferIntro, int bufferLoop);
+	static Source* playBGMWithIntro(int bufferIntro, int bufferLoop);
 
-	static Source* AudioPlayer::playBGM(int bufferLoop);
+	static Source* playBGM(int bufferLoop);
 
 	static Source* getSource(int i);
 

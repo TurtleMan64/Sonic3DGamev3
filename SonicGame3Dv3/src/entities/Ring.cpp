@@ -82,9 +82,9 @@ void Ring::step()
 				for (int i = 0; i < 10; i++)
 				{
 					Vector3f pos(
-						getX() + random() * 8 - 4,
-						getY() + random() * 8 - 4,
-						getZ() + random() * 8 - 4);
+						getX() + Maths::random() * 8 - 4,
+						getY() + Maths::random() * 8 - 4,
+						getZ() + Maths::random() * 8 - 4);
 
 					Vector3f vel(0, 0.4f, 0);
 

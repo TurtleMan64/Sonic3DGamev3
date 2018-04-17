@@ -1,4 +1,5 @@
-#include <glad\glad.h>
+#include <glad/glad.h>
+#include <list>
 #include "fontrenderer.h"
 #include "../fontMeshCreator/fonttype.h"
 #include "../fontMeshCreator/guitext.h"
@@ -37,8 +38,6 @@ void FontRenderer::cleanUp()
 {
 	shader->cleanUp();
 }
-
-
 
 void FontRenderer::prepare()
 {

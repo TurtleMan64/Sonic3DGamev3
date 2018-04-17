@@ -681,8 +681,8 @@ void PlayerSonic::step()
 		int numBubbles = ((int)abs(yVel * 8)) + 18;
 		for (int i = 0; i < numBubbles; i++)
 		{
-			float xOff = (7 * (random() - 0.5f));
-			float zOff = (7 * (random() - 0.5f));
+			float xOff = (7 * (Maths::random() - 0.5f));
+			float zOff = (7 * (Maths::random() - 0.5f));
 
 			Vector3f bubPos(
 				getX() + xOff,
@@ -690,9 +690,9 @@ void PlayerSonic::step()
 				getZ() + zOff);
 
 			Vector3f bubVel(
-				random() - 0.5f + totXVel*0.4f,
-				random()*0.3f + 0.2f + yVel*0.3f,
-				random() - 0.5f + totZVel*0.4f);
+				Maths::random() - 0.5f + totXVel*0.4f,
+				Maths::random()*0.3f + 0.2f + yVel*0.3f,
+				Maths::random() - 0.5f + totZVel*0.4f);
 
 			new Particle(ParticleResources::textureBubble, &bubPos, &bubVel, 0.05f, 60, 0, 4, 0, false);
 		}
@@ -711,8 +711,8 @@ void PlayerSonic::step()
 		int numBubbles = ((int)abs(yVel * 8)) + 18;
 		for (int i = 0; i < numBubbles; i++)
 		{
-			float xOff = (7 * (random() - 0.5f));
-			float zOff = (7 * (random() - 0.5f));
+			float xOff = (7 * (Maths::random() - 0.5f));
+			float zOff = (7 * (Maths::random() - 0.5f));
 
 			Vector3f bubPos(
 				getX() + xOff,
@@ -720,9 +720,9 @@ void PlayerSonic::step()
 				getZ() + zOff);
 
 			Vector3f bubVel(
-				random() - 0.5f + totXVel*0.4f,
-				random()*0.3f + 0.2f - yVel*0.3f,
-				random() - 0.5f + totZVel*0.4f);
+				Maths::random() - 0.5f + totXVel*0.4f,
+				Maths::random()*0.3f + 0.2f - yVel*0.3f,
+				Maths::random() - 0.5f + totZVel*0.4f);
 
 			new Particle(ParticleResources::textureBubble, &bubPos, &bubVel, 0.05f, 60, 0, 4, 0, false);
 		}
@@ -2101,11 +2101,11 @@ void PlayerSonic::animate()
 			//spawnFootsetpParticles();
 			if (getY() > -0.5f)
 			{
-				//AudioSources.play(Math.max(triCol.sound, 0), getPosition(), 0.8f + mySpeed*0.05f + (float)Math.random()*0.4f);
+				//AudioSources.play(Math.max(triCol.sound, 0), getPosition(), 0.8f + mySpeed*0.05f + (float)Math.Maths::random()*0.4f);
 			}
 			else
 			{
-				//AudioSources.play(4, getPosition(), 0.8f + mySpeed*0.05f + (float)Math.random()*0.4f);
+				//AudioSources.play(4, getPosition(), 0.8f + mySpeed*0.05f + (float)Math.Maths::random()*0.4f);
 			}
 		}
 	}
@@ -2310,14 +2310,14 @@ void PlayerSonic::animate()
 			int density = snowDensity;
 			for (int i = 0; i < density; i++)
 			{
-				Vector3f pos(basex + radius2*random(),
-							 basey + radius*random(),
-							 basez + radius2*random());
+				Vector3f pos(basex + radius2*Maths::random(),
+							 basey + radius*Maths::random(),
+							 basez + radius2*Maths::random());
 
 				Vector3f vel(0.25f*7.5f, -0.4f*7.5f, 0.15f*7.5f);
 
 				new Particle(ParticleResources::textureSnowball, &pos, &vel, 
-					0, 80, 0, random() + 0.75f, -0.02f, false);
+					0, 80, 0, Maths::random() + 0.75f, -0.02f, false);
 			}
 			break;
 		}
@@ -2480,15 +2480,15 @@ void PlayerSonic::createStompParticles()
 	int numBubbles = ((int)abs(yVel * 10)) + 18;
 	for (int i = 0; i < numBubbles; i++)
 	{
-		float xOff = (18 * (random() - 0.5f));
-		float zOff = (18 * (random() - 0.5f));
+		float xOff = (18 * (Maths::random() - 0.5f));
+		float zOff = (18 * (Maths::random() - 0.5f));
 
 		Vector3f pos(getX() + xOff, getY() + 2, getZ() + zOff);
 
 		newSpindashTrail(&pos, 
-			(random() - 0.5f) * 3 + totXVel*0.8f,
-			(random()*1.2f + 0.5f),
-			(random() - 0.5f) * 3 + totZVel*0.8f,
+			(Maths::random() - 0.5f) * 3 + totXVel*0.8f,
+			(Maths::random()*1.2f + 0.5f),
+			(Maths::random() - 0.5f) * 3 + totZVel*0.8f,
 			0.08f, 25, 14, characterID);
 	}
 }
@@ -2661,8 +2661,8 @@ void PlayerSonic::takeDamage(Vector3f* damageSource)
 		while (ringsToScatter > 0)
 		{
 			float spoutSpd = 3.5f;
-			float anglH = (float)(M_PI * 2 * random());
-			float anglV = (toRadians(nextGaussian() * 42 + 90));
+			float anglH = (float)(M_PI * 2 * Maths::random());
+			float anglV = (toRadians(Maths::nextGaussian() * 42 + 90));
 
 			float yspd = (spoutSpd*sin(anglV));
 			float hpt = (spoutSpd*cos(anglV));

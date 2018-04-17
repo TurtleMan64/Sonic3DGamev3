@@ -68,10 +68,14 @@ Vector3f spherePositionFromAngles(float angH, float angV, float radius);
 
 Vector3f projectOntoPlane(Vector3f* A, Vector3f* normal);
 
-//returns uniform random float >= 0 and < 1
-float random();
+class Maths
+{
+public:
+	//returns uniform random float >= 0 and < 1
+	static float random();
 
-//normal distribution mean = 0, std dev = 1
-float nextGaussian();
+	//normal distribution mean = 0, std dev = 1
+	static float nextGaussian();
+};
 
 #endif

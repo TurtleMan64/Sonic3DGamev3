@@ -1,5 +1,5 @@
 #ifndef PLAYERSONIC_H
-#define PLAYER_H
+#define PLAYERSONIC_H
 
 class TexturedModel;
 class Triangle3D;
@@ -86,7 +86,7 @@ private:
 	const float frictionGround = 0.03f;
 	const float frictionAir = 0.01f;
 
-	const float normalSpeedLimit = 4.0f;
+	const float normalSpeedLimit = 4.2f; //4.0f
 	const float airSpeedLimit = 2.5f;
 
 	const float slowDownRate = 0.06f; //How fast you slowdown every frame when youre going faster than max speed 

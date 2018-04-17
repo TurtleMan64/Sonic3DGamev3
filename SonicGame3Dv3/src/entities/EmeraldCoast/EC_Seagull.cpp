@@ -59,7 +59,7 @@ EC_Seagull::EC_Seagull(
 	this->flyHeightDelta = flyHeightDelta;
 	flyHeightProgression = 0;
 
-	soundTimer = (int)(300*random());
+	soundTimer = (int)(300*Maths::random());
 
 	updateTransformationMatrix();
 }

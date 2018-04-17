@@ -1,5 +1,6 @@
 #include <AL/al.h>
 #include <vector>
+#include <cstring>
 #include <fstream>
 
 #include "audioplayer.h"

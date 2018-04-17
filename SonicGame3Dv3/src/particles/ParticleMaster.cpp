@@ -9,6 +9,7 @@
 #include "../engineTester/main.h"
 
 #include <unordered_map>
+#include <list>
 
 std::unordered_map<ParticleTexture*, std::list<Particle*>> ParticleMaster::particles;
 ParticleRenderer* ParticleMaster::renderer = nullptr;

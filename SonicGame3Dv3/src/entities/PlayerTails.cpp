@@ -585,8 +585,8 @@ void PlayerTails::step()
 		int numBubbles = ((int)abs(yVel * 8)) + 18;
 		for (int i = 0; i < numBubbles; i++)
 		{
-			float xOff = (7 * (random() - 0.5f));
-			float zOff = (7 * (random() - 0.5f));
+			float xOff = (7 * (Maths::random() - 0.5f));
+			float zOff = (7 * (Maths::random() - 0.5f));
 
 			Vector3f bubPos(
 				getX() + xOff,
@@ -594,9 +594,9 @@ void PlayerTails::step()
 				getZ() + zOff);
 
 			Vector3f bubVel(
-				random() - 0.5f + totXVel*0.4f,
-				random()*0.3f + 0.2f + yVel*0.3f,
-				random() - 0.5f + totZVel*0.4f);
+				Maths::random() - 0.5f + totXVel*0.4f,
+				Maths::random()*0.3f + 0.2f + yVel*0.3f,
+				Maths::random() - 0.5f + totZVel*0.4f);
 
 			new Particle(ParticleResources::textureBubble, &bubPos, &bubVel, 0.05f, 60, 0, 4, 0, false);
 		}
@@ -615,8 +615,8 @@ void PlayerTails::step()
 		int numBubbles = ((int)abs(yVel * 8)) + 18;
 		for (int i = 0; i < numBubbles; i++)
 		{
-			float xOff = (7 * (random() - 0.5f));
-			float zOff = (7 * (random() - 0.5f));
+			float xOff = (7 * (Maths::random() - 0.5f));
+			float zOff = (7 * (Maths::random() - 0.5f));
 
 			Vector3f bubPos(
 				getX() + xOff,
@@ -624,9 +624,9 @@ void PlayerTails::step()
 				getZ() + zOff);
 
 			Vector3f bubVel(
-				random() - 0.5f + totXVel*0.4f,
-				random()*0.3f + 0.2f - yVel*0.3f,
-				random() - 0.5f + totZVel*0.4f);
+				Maths::random() - 0.5f + totXVel*0.4f,
+				Maths::random()*0.3f + 0.2f - yVel*0.3f,
+				Maths::random() - 0.5f + totZVel*0.4f);
 
 			new Particle(ParticleResources::textureBubble, &bubPos, &bubVel, 0.05f, 60, 0, 4, 0, false);
 		}
@@ -1808,7 +1808,7 @@ void PlayerTails::animate()
 			PlayerTails::maniaTails->setOrientation(dspX, dspY, dspZ, diff, yawAngle, pitchAngle, 0);
 			setLimbsVisibility(false);
 
-			if (mySpeed < 3.9f)
+			if (mySpeed < 3.8f)
 			{
 				PlayerTails::maniaTails->animate(15, time);
 			}
@@ -1835,14 +1835,14 @@ void PlayerTails::animate()
 			int density = snowDensity;
 			for (int i = 0; i < density; i++)
 			{
-				Vector3f pos(basex + radius2*random(),
-							 basey + radius*random(),
-							 basez + radius2*random());
+				Vector3f pos(basex + radius2*Maths::random(),
+							 basey + radius*Maths::random(),
+							 basez + radius2*Maths::random());
 
 				Vector3f vel(0.25f*7.5f, -0.4f*7.5f, 0.15f*7.5f);
 
 				new Particle(ParticleResources::textureSnowball, &pos, &vel, 
-					0, 80, 0, random() + 0.75f, -0.02f, false);
+					0, 80, 0, Maths::random() + 0.75f, -0.02f, false);
 			}
 			break;
 		}
@@ -1858,6 +1858,7 @@ void PlayerTails::animate()
 	{
 		Vector3f partVel(0, 0, 0);
 		new Particle(ParticleResources::textureWhiteFadeOutAndIn, Global::gameCamera->getFadePosition(), &partVel, 0, 120, 0, 400, 0, true);
+		isFlying = false;
 	}
 	else if (Global::finishStageTimer == 60)
 	{
@@ -1985,15 +1986,15 @@ void PlayerTails::createStompParticles()
 	int numBubbles = ((int)abs(yVel * 10)) + 18;
 	for (int i = 0; i < numBubbles; i++)
 	{
-		float xOff = (18 * (random() - 0.5f));
-		float zOff = (18 * (random() - 0.5f));
+		float xOff = (18 * (Maths::random() - 0.5f));
+		float zOff = (18 * (Maths::random() - 0.5f));
 
 		Vector3f pos(getX() + xOff, getY() + 2, getZ() + zOff);
 
 		newSpindashTrail(&pos, 
-			(random() - 0.5f) * 3 + totXVel*0.8f,
-			(random()*1.2f + 0.5f),
-			(random() - 0.5f) * 3 + totZVel*0.8f,
+			(Maths::random() - 0.5f) * 3 + totXVel*0.8f,
+			(Maths::random()*1.2f + 0.5f),
+			(Maths::random() - 0.5f) * 3 + totZVel*0.8f,
 			0.08f, 25, 14, skinID);
 	}
 }
@@ -2164,8 +2165,8 @@ void PlayerTails::takeDamage(Vector3f* damageSource)
 		while (ringsToScatter > 0)
 		{
 			float spoutSpd = 3.5f;
-			float anglH = (float)(M_PI * 2 * random());
-			float anglV = (toRadians(nextGaussian() * 42 + 90));
+			float anglH = (float)(M_PI * 2 * Maths::random());
+			float anglV = (toRadians(Maths::nextGaussian() * 42 + 90));
 
 			float yspd = (spoutSpd*sin(anglV));
 			float hpt = (spoutSpd*cos(anglV));
@@ -2188,38 +2189,24 @@ void PlayerTails::rebound(Vector3f* source)
 	source;
 	if (onPlane == false)
 	{
-		/*
+		if (yVel >= 0) //no rebound
 		{
-			yVel = 2.1f;
-			xVelAir = 0;
-			zVelAir = 0;
-			setX(source->x);
-			setZ(source->z);
-			setY(source->y + 3.5f);
-			hoverCount = hoverLimit / 2;
+			yVel += 1;
 		}
-		else
-		*/
+		else if (jumpInput) //rebound
 		{
-			if (yVel >= 0) //no rebound
+			yVel = 0.2f + yVel*-1;
+			if (yVel < 2)
 			{
-				yVel += 1;
+				yVel = 2;
 			}
-			else if (jumpInput) //rebound
+		}
+		else //rebound
+		{
+			yVel = yVel*-1;
+			if (yVel > 1)
 			{
-				yVel = 0.2f + yVel*-1;
-				if (yVel < 2)
-				{
-					yVel = 2;
-				}
-			}
-			else //rebound
-			{
-				yVel = yVel*-1;
-				if (yVel > 1)
-				{
-					yVel = 1;
-				}
+				yVel = 1;
 			}
 		}
 	}

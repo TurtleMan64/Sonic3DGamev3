@@ -6,6 +6,7 @@
 #include <cmath>
 #include <fstream>
 #include <string>
+#include <cstring>
 
 #include "renderEngine.h"
 #include "../toolbox/input.h"

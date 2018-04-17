@@ -14,6 +14,7 @@ class ShadowMapMasterRenderer2;
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <list>
+#include <vector>
 #include <unordered_map>
 #include "../models/models.h"
 

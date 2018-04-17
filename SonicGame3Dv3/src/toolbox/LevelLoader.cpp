@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <cstring>
 #include <fstream>
 #include <AL/al.h>
 
@@ -72,6 +73,7 @@
 #include "../toolbox/pausescreen.h"
 #include "../entities/playertails.h"
 #include "../entities/controllableplayer.h"
+#include "../entities/playerknuckles.h"
 
 float toFloat(char* input);
 int toInt(char* input);
@@ -142,11 +144,6 @@ void LevelLoader_loadLevel(std::string levelFilename)
 	{
 		Stage::deleteModels(); //Only delete stage if loading a new stage
 	}
-
-	//Reload the players models always, to load a new player model
-	PlayerSonic::deleteStaticModels();
-	PlayerSonic::loadStaticModels();
-
 
 	std::ifstream file("res/Levels/" + fname);
 	if (!file.is_open())
@@ -613,22 +610,14 @@ void processLine(char** dat)
 		
 		case 6: //Player
 		{
-			//PlayerSonic::loadStaticModels();
-			//PlayerSonic* player = new PlayerSonic(toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]));
-			//Global::countNew++;
-			//Global::gamePlayer = player;
-			//SkyManager::setCenterObject(player);
-			//player->setCameraAngles(Global::gameCamera->getYaw(), Global::gameCamera->getPitch());
-			//Main_addEntity(player);
-
-			PlayerTails::loadStaticModels();
-			PlayerTails* player = new PlayerTails(toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]));
+			PlayerSonic::deleteStaticModels();
+			PlayerSonic::loadStaticModels();
+			PlayerSonic* player = new PlayerSonic(toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]));
 			Global::countNew++;
 			Global::gamePlayer = player;
 			SkyManager::setCenterObject(player);
 			player->setCameraAngles(Global::gameCamera->getYaw(), Global::gameCamera->getPitch());
 			Main_addEntity(player);
-			return;
 
 			return;
 		}
@@ -1134,8 +1123,22 @@ void processLine(char** dat)
 		
 		case 70: //Tails
 		{
+			PlayerTails::deleteStaticModels();
 			PlayerTails::loadStaticModels();
 			PlayerTails* player = new PlayerTails(toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]));
+			Global::countNew++;
+			Global::gamePlayer = player;
+			SkyManager::setCenterObject(player);
+			player->setCameraAngles(Global::gameCamera->getYaw(), Global::gameCamera->getPitch());
+			Main_addEntity(player);
+			return;
+		}
+
+		case 71: //Knuckles
+		{
+			PlayerKnuckles::deleteStaticModels();
+			PlayerKnuckles::loadStaticModels();
+			PlayerKnuckles* player = new PlayerKnuckles(toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]));
 			Global::countNew++;
 			Global::gamePlayer = player;
 			SkyManager::setCenterObject(player);
@@ -1211,4 +1214,5 @@ void freeAllStaticModels()
 	SH_ElevatorPlatform::deleteStaticModels();
 	Capsule::deleteStaticModels();
 	PlayerTails::deleteStaticModels();
+	PlayerKnuckles::deleteStaticModels();
 }

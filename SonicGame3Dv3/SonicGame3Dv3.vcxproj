@@ -19,7 +19,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="glad.c" />
     <ClCompile Include="src\animation\Animation.cpp" />
     <ClCompile Include="src\animation\AnimationResources.cpp" />
     <ClCompile Include="src\animation\Body.cpp" />
@@ -66,8 +65,10 @@
     <ClCompile Include="src\entities\KillBox.cpp" />
     <ClCompile Include="src\entities\Light.cpp" />
     <ClCompile Include="src\entities\LowQualityWater.cpp" />
+    <ClCompile Include="src\entities\ManiaKnucklesModel.cpp" />
     <ClCompile Include="src\entities\ManiaSonicModel.cpp" />
     <ClCompile Include="src\entities\ManiaTailsModel.cpp" />
+    <ClCompile Include="src\entities\PlayerKnuckles.cpp" />
     <ClCompile Include="src\entities\PlayerSonic.cpp" />
     <ClCompile Include="src\entities\PlayerTails.cpp" />
     <ClCompile Include="src\entities\Point.cpp" />
@@ -108,6 +109,7 @@
     <ClCompile Include="src\gaussianBlur\HorizontalBlurShader.cpp" />
     <ClCompile Include="src\gaussianBlur\VerticalBlur.cpp" />
     <ClCompile Include="src\gaussianBlur\VerticalBlurShader.cpp" />
+    <ClCompile Include="src\glad.c" />
     <ClCompile Include="src\guis\GuiManager.cpp" />
     <ClCompile Include="src\models\RawModel.cpp" />
     <ClCompile Include="src\models\TexturedModel.cpp" />
@@ -202,8 +204,10 @@
     <ClInclude Include="src\entities\killbox.h" />
     <ClInclude Include="src\entities\light.h" />
     <ClInclude Include="src\entities\lowqualitywater.h" />
+    <ClInclude Include="src\entities\maniaknucklesmodel.h" />
     <ClInclude Include="src\entities\maniasonicmodel.h" />
     <ClInclude Include="src\entities\maniatailsmodel.h" />
+    <ClInclude Include="src\entities\playerknuckles.h" />
     <ClInclude Include="src\entities\playersonic.h" />
     <ClInclude Include="src\entities\playertails.h" />
     <ClInclude Include="src\entities\point.h" />

@@ -107,14 +107,14 @@ void Spinner::die()
 	for (int i = 7; i != 0; i--)
 	{
 		Vector3f pos(
-			getX() + spread*(random() - 0.5f),
-			getY() + spread*(random() - 0.5f) + height,
-			getZ() + spread*(random() - 0.5f));
+			getX() + spread*(Maths::random() - 0.5f),
+			getY() + spread*(Maths::random() - 0.5f) + height,
+			getZ() + spread*(Maths::random() - 0.5f));
 
 		Vector3f vel(0, 0, 0);
 
 		new Particle(ParticleResources::textureExplosion1, &pos, &vel,
-			0, 45, 0, 3 * random() + 6, 0, false);
+			0, 45, 0, 3 * Maths::random() + 6, 0, false);
 	}
 
 	Vector3f pos(

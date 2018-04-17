@@ -93,9 +93,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="glad.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\renderEngine\DisplayManager.cpp">
       <Filter>Source Files\renderEngine</Filter>
     </ClCompile>
@@ -498,6 +495,15 @@
     <ClCompile Include="src\entities\ControllablePlayer.cpp">
       <Filter>Source Files\entities</Filter>
     </ClCompile>
+    <ClCompile Include="src\entities\ManiaKnucklesModel.cpp">
+      <Filter>Source Files\entities</Filter>
+    </ClCompile>
+    <ClCompile Include="src\entities\PlayerKnuckles.cpp">
+      <Filter>Source Files\entities</Filter>
+    </ClCompile>
+    <ClCompile Include="src\glad.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\renderEngine\renderEngine.h">
@@ -885,6 +891,12 @@
       <Filter>Source Files\entities</Filter>
     </ClInclude>
     <ClInclude Include="src\entities\controllableplayer.h">
+      <Filter>Source Files\entities</Filter>
+    </ClInclude>
+    <ClInclude Include="src\entities\maniaknucklesmodel.h">
+      <Filter>Source Files\entities</Filter>
+    </ClInclude>
+    <ClInclude Include="src\entities\playerknuckles.h">
       <Filter>Source Files\entities</Filter>
     </ClInclude>
   </ItemGroup>

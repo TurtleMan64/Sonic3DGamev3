@@ -81,22 +81,22 @@ private:
 	const int hoverLimit = 60;
 	int hoverCount = 0;
 
-	const float moveAcceleration = 0.07f;
+	const float moveAcceleration = 0.065f;
 	float moveSpeedCurrent = 0;
-	const float moveAccelerationAir = 0.035f;
+	const float moveAccelerationAir = 0.0375f;
 	float moveSpeedAirCurrent = 0;
 
 	const float frictionGround = 0.03f;
 	const float frictionAir = 0.01f;
 
-	const float normalSpeedLimit = 4.0f;
-	const float airSpeedLimit = 2.5f;
+	const float normalSpeedLimit = 3.9f;
+	const float airSpeedLimit = 2.4f;
 
-	const float slowDownRate = 0.06f; //How fast you slowdown every frame when youre going faster than max speed 
-	const float slowDownAirRate = 0.025f;
+	const float slowDownRate = 0.064f; //How fast you slowdown every frame when youre going faster than max speed 
+	const float slowDownAirRate = 0.028f;
 
-	const float spindashPower = 0.17f;    //0.15f
-	const float spindashFriction = 0.107f; //0.09f
+	const float spindashPower = 0.16f;    //0.15f
+	const float spindashFriction = 0.098f; //0.09f
 	int spindashDelay = 0;
 	int spindashTimer = 0;
 	const int spindashTimerMax = 30;

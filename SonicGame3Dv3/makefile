@@ -10,7 +10,7 @@ DEPS := $(OBJS:.o=.d)
 INC_DIRS := $(shell find $(SRC_DIRS) -type d) ../OpenGLStuff/Include/
 INC_FLAGS := $(addprefix -I,$(INC_DIRS)) `pkg-config --cflags glfw3 ogg vorbis vorbisfile openal gl`
 
-CPPFLAGS ?= $(INC_FLAGS) -MMD -MP# -D_GLIBCXX_USE_CXX11_ABI=0
+CPPFLAGS ?= -Wall $(INC_FLAGS) -MMD -MP# -D_GLIBCXX_USE_CXX11_ABI=0
 LDFLAGS := -lSOIL -lm -lpthread -ldl `pkg-config --libs glfw3 ogg vorbis vorbisfile openal gl`
 
 $(BUILD_DIR)/$(TARGET_EXEC): $(OBJS)

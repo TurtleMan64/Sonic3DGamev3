@@ -6,7 +6,10 @@
 #include <AL/al.h>
 #include <AL/alc.h>
 #include <iostream>
+
+#ifdef _WIN32
 #include <windows.h>
+#endif
 
 #include <vorbis/vorbisfile.h>
 
@@ -133,6 +136,7 @@ ALuint AudioMaster::loadOGG(char* fileName)
 
 ALuint AudioMaster::loadWAV(char* fileName)
 {
+#ifdef _WIN32
 	FILE* fp = nullptr;
 	fp = fopen(fileName, "rb");
 
@@ -262,6 +266,9 @@ ALuint AudioMaster::loadWAV(char* fileName)
 	fclose(fp);
 
 	return buffer;
+#else
+    return (ALuint) -1;
+#endif
 }
 
 void AudioMaster::cleanUp()

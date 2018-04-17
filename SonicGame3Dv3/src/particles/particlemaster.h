@@ -8,6 +8,7 @@ class Particle;
 class ParticleRenderer;
 
 #include <unordered_map>
+#include <list>
 
 class ParticleMaster
 {

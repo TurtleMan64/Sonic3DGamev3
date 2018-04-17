@@ -56,8 +56,10 @@
 #include "../postProcessing/postprocessing.h"
 #include "../postProcessing/fbo.h"
 
+#ifdef _WIN32
 #include <windows.h>
 #include <tchar.h>
+#endif
 
 #define DEV_MODE
 
@@ -630,6 +632,7 @@ void Main_deleteAllTransparentEntites()
 
 void increaseProcessPriority()
 {
+#ifdef _WIN32
 	DWORD dwError;//, dwPriClass;
 
 	if (!SetPriorityClass(GetCurrentProcess(), ABOVE_NORMAL_PRIORITY_CLASS))
@@ -659,6 +662,7 @@ void increaseProcessPriority()
 
 	//_tprintf(TEXT("Current thread priority is 0x%x\n"), dwThreadPri);
 
+#endif
 }
 
 void Global::checkErrorAL(char* description)
@@ -673,6 +677,7 @@ void Global::checkErrorAL(char* description)
 
 void doListenThread()
 {
+#ifdef _WIN32
 	DWORD dwError;
 
 	if (!SetThreadPriority(GetCurrentThread(), THREAD_PRIORITY_BELOW_NORMAL))
@@ -680,6 +685,7 @@ void doListenThread()
 		dwError = GetLastError();
 		_tprintf(TEXT("Failed to enter above normal mode (%d)\n"), (int)dwError);
 	}
+#endif
 
 	listen();
 }

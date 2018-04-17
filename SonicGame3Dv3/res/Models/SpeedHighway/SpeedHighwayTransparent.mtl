@@ -11,7 +11,7 @@ Ni 0.02
 d 1.000000
 Tr 0
 illum 2
-map_Kd TexDC\st1_14oda.png
+map_Kd TexDC/st1_14oda.png
 
 newmtl HIGHWAY01_material_46
 Ns 20
@@ -23,7 +23,7 @@ Ni 0.02
 d 1.000000
 Tr 0
 illum 2
-map_Kd TexDC\st1_e1.png
+map_Kd TexDC/st1_e1.png
 
 newmtl HIGHWAY01_material_7
 Ns 20
@@ -35,4 +35,4 @@ Ni 0.02
 d 1.000000
 Tr 0
 illum 2
-map_Kd TexDC\port01.png
+map_Kd TexDC/port01.png

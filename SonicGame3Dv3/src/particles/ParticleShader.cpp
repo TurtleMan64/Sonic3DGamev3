@@ -84,7 +84,7 @@ void ParticleShader::bindAttributes()
 	bindAttribute(0, "position");
 }
 
-void ParticleShader::bindAttribute(int attribute, char* variableName)
+void ParticleShader::bindAttribute(int attribute, const char* variableName)
 {
 	glBindAttribLocation(programID, attribute, variableName);
 }
@@ -101,7 +101,7 @@ void ParticleShader::getAllUniformLocations()
 	location_glow             = getUniformLocation("glow");
 }
 
-int ParticleShader::getUniformLocation(char* uniformName)
+int ParticleShader::getUniformLocation(const char* uniformName)
 {
 	return glGetUniformLocation(programID, uniformName);
 }

@@ -16,7 +16,7 @@
 
 float matrixBuffer[16];
 
-ShaderProgram::ShaderProgram(char* vertexFile, char* fragmentFile)
+ShaderProgram::ShaderProgram(const char* vertexFile, const char* fragmentFile)
 {
 	vertexShaderID = Loader_loadShader(vertexFile, GL_VERTEX_SHADER);
 	fragmentShaderID = Loader_loadShader(fragmentFile, GL_FRAGMENT_SHADER);
@@ -128,12 +128,12 @@ void ShaderProgram::bindAttributes()
 	bindAttribute(2, "normal");
 }
 
-void ShaderProgram::bindAttribute(int attribute, char* variableName)
+void ShaderProgram::bindAttribute(int attribute, const char* variableName)
 {
 	glBindAttribLocation(programID, attribute, variableName);
 }
 
-void ShaderProgram::bindFragOutput(int attatchment, char* variableName)
+void ShaderProgram::bindFragOutput(int attatchment, const char* variableName)
 {
 	glBindFragDataLocation(programID, attatchment, variableName);
 }
@@ -162,7 +162,7 @@ void ShaderProgram::getAllUniformLocations()
 	location_toShadowMapSpaceClose = getUniformLocation("toShadowMapSpaceClose");
 }
 
-int ShaderProgram::getUniformLocation(char* uniformName)
+int ShaderProgram::getUniformLocation(const char* uniformName)
 {
 	return glGetUniformLocation(programID, uniformName);
 }

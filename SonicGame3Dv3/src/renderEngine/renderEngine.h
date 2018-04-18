@@ -34,7 +34,7 @@ RawModel Loader_loadToVAO(std::vector<float>* positions, std::vector<float>* tex
 std::vector<int> Loader_loadToVAO(std::vector<float>* positions, std::vector<float>* textureCoords);
 //for water
 RawModel Loader_loadToVAO(std::vector<float>* positions, int dimensions);
-GLuint Loader_loadTexture(char* filename);
+GLuint Loader_loadTexture(const char* filename);
 GLuint Loader_loadTextureWORKS(char* filename);
 void Loader_cleanUp();
 void Loader_deleteVAO(GLuint vaoID);
@@ -42,7 +42,7 @@ void Loader_deleteVBO(GLuint vboID);
 void Loader_deleteTexture(GLuint texID);
 void Loader_deleteTexturedModels(std::list<TexturedModel*>* tm);
 void Loader_printInfo();
-GLuint Loader_loadShader(char* file, int shaderType);
+GLuint Loader_loadShader(const char* file, int shaderType);
 
 //Master Renderer
 void Master_render(Camera* camera, float clipX, float clipY, float clipZ, float clipW);

@@ -3,7 +3,7 @@
 
 #include <glad/glad.h>
 
-CombineShader::CombineShader(char* vFile, char* fFile)
+CombineShader::CombineShader(const char* vFile, const char* fFile)
 {
 	vertexShaderID = Loader_loadShader(vFile, GL_VERTEX_SHADER);
 	fragmentShaderID = Loader_loadShader(fFile, GL_FRAGMENT_SHADER);
@@ -47,7 +47,7 @@ void CombineShader::bindAttributes()
 	bindAttribute(0, "position");
 }
 
-void CombineShader::bindAttribute(int attribute, char* variableName)
+void CombineShader::bindAttribute(int attribute, const char* variableName)
 {
 	glBindAttribLocation(programID, attribute, variableName);
 }
@@ -58,7 +58,7 @@ void CombineShader::getAllUniformLocations()
 	location_highlightTexture = getUniformLocation("highlightTexture");
 }
 
-int CombineShader::getUniformLocation(char* uniformName)
+int CombineShader::getUniformLocation(const char* uniformName)
 {
 	return glGetUniformLocation(programID, uniformName);
 }

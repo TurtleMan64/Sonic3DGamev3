@@ -14,7 +14,7 @@ private:
 	int location_highlightTexture;
 
 public:
-	CombineShader(char* vFile, char* fFile);
+	CombineShader(const char* vFile, const char* fFile);
 
 	void start();
 
@@ -27,11 +27,11 @@ public:
 protected:
 	void bindAttributes();
 
-	void bindAttribute(int attribute, char* variableName);
+	void bindAttribute(int attribute, const char* variableName);
 
 	void getAllUniformLocations();
 
-	int getUniformLocation(char* uniformName);
+	int getUniformLocation(const char* uniformName);
 
 	void loadInt(int location, int value);
 };

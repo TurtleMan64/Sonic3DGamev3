@@ -53,11 +53,11 @@ public:
 protected:
 	void bindAttributes();
 
-	void bindAttribute(int attatchment, char* variableName);
+	void bindAttribute(int attatchment, const char* variableName);
 
 	void getAllUniformLocations();
 
-	int getUniformLocation(char* uniformName);
+	int getUniformLocation(const char* uniformName);
 
 	void loadInt(int location, int value);
 

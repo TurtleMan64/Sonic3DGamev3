@@ -106,12 +106,12 @@ void WaterShader::bindAttributes()
 	bindAttribute(0, "position");
 }
 
-void WaterShader::bindAttribute(int attribute, char* variableName)
+void WaterShader::bindAttribute(int attribute, const char* variableName)
 {
 	glBindAttribLocation(programID, attribute, variableName);
 }
 
-void WaterShader::bindFragOutput(int attatchment, char* variableName)
+void WaterShader::bindFragOutput(int attatchment, const char* variableName)
 {
 	glBindFragDataLocation(programID, attatchment, variableName);
 }
@@ -134,7 +134,7 @@ void WaterShader::getAllUniformLocations()
 	location_toShadowMapSpace  = getUniformLocation("toShadowMapSpace");
 }
 
-int WaterShader::getUniformLocation(char* uniformName)
+int WaterShader::getUniformLocation(const char* uniformName)
 {
 	return glGetUniformLocation(programID, uniformName);
 }

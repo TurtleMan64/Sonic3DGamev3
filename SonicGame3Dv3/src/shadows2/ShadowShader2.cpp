@@ -13,7 +13,7 @@
 #include "../entities/light.h"
 #include "../renderEngine/renderEngine.h"
 
-ShadowShader2::ShadowShader2(char* vertexFile, char* fragmentFile)
+ShadowShader2::ShadowShader2(const char* vertexFile, const char* fragmentFile)
 {
 	vertexShaderID = Loader_loadShader(vertexFile, GL_VERTEX_SHADER);
 	fragmentShaderID = Loader_loadShader(fragmentFile, GL_FRAGMENT_SHADER);
@@ -57,7 +57,7 @@ void ShadowShader2::bindAttributes()
 	bindAttribute(1, "in_textureCoords");
 }
 
-void ShadowShader2::bindAttribute(int attribute, char* variableName)
+void ShadowShader2::bindAttribute(int attribute, const char* variableName)
 {
 	glBindAttribLocation(programID, attribute, variableName);
 }
@@ -67,7 +67,7 @@ void ShadowShader2::getAllUniformLocations()
 	location_mvpMatrix = getUniformLocation("mvpMatrix");
 }
 
-int ShadowShader2::getUniformLocation(char* uniformName)
+int ShadowShader2::getUniformLocation(const char* uniformName)
 {
 	return glGetUniformLocation(programID, uniformName);
 }

@@ -117,6 +117,6 @@ public:
 	static std::default_random_engine* generator;
 	static std::normal_distribution<double>* distribution;
 
-	static void checkErrorAL(char* description);
+	static void checkErrorAL(const char* description);
 };
 #endif

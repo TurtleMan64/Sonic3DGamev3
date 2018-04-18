@@ -17,7 +17,7 @@ private:
 	int location_mvpMatrix;
 
 public:
-	ShadowShader2(char* vertFile, char* fragFile);
+	ShadowShader2(const char* vertFile, const char* fragFile);
 
 	void start();
 
@@ -31,11 +31,11 @@ public:
 protected:
 	void bindAttributes();
 
-	void bindAttribute(int, char* attrName);
+	void bindAttribute(int, const char* attrName);
 
 	void getAllUniformLocations();
 
-	int getUniformLocation(char* uniName);
+	int getUniformLocation(const char* uniName);
 
 	void loadMatrix(int, Matrix4f* mat);
 };

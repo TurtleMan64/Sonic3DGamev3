@@ -51,22 +51,42 @@ void Master_init()
 		{
 			if (Global::renderBloom)
 			{
-				shader = new ShaderProgram("res/Shaders/entity/vertexShaderShadowBoth.txt", "res/Shaders/entity/fragmentShaderShadowBothBloom.txt");
+				switch (Global::shadowsFarQuality)
+				{
+				case 0:  shader = new ShaderProgram("res/Shaders/entity/vertexShaderShadowBoth.txt", "res/Shaders/entity/fragmentShaderShadow1BothBloom.txt");  break;
+				case 1:  shader = new ShaderProgram("res/Shaders/entity/vertexShaderShadowBoth.txt", "res/Shaders/entity/fragmentShaderShadow9BothBloom.txt");  break;
+				default: shader = new ShaderProgram("res/Shaders/entity/vertexShaderShadowBoth.txt", "res/Shaders/entity/fragmentShaderShadow25BothBloom.txt"); break;
+				}
 			}
 			else
 			{
-				shader = new ShaderProgram("res/Shaders/entity/vertexShaderShadowBoth.txt", "res/Shaders/entity/fragmentShaderShadowBoth.txt");
+				switch (Global::shadowsFarQuality)
+				{
+				case 0:  shader = new ShaderProgram("res/Shaders/entity/vertexShaderShadowBoth.txt", "res/Shaders/entity/fragmentShaderShadow1Both.txt");  break;
+				case 1:  shader = new ShaderProgram("res/Shaders/entity/vertexShaderShadowBoth.txt", "res/Shaders/entity/fragmentShaderShadow9Both.txt");  break;
+				default: shader = new ShaderProgram("res/Shaders/entity/vertexShaderShadowBoth.txt", "res/Shaders/entity/fragmentShaderShadow25Both.txt"); break;
+				}
 			}
 		}
 		else
 		{
 			if (Global::renderBloom)
 			{
-				shader = new ShaderProgram("res/Shaders/entity/vertexShaderShadowFar.txt", "res/Shaders/entity/fragmentShaderShadowFarBloom.txt");
+				switch (Global::shadowsFarQuality)
+				{
+				case 0:  shader = new ShaderProgram("res/Shaders/entity/vertexShaderShadowFar.txt", "res/Shaders/entity/fragmentShaderShadow1FarBloom.txt");  break;
+				case 1:  shader = new ShaderProgram("res/Shaders/entity/vertexShaderShadowFar.txt", "res/Shaders/entity/fragmentShaderShadow9FarBloom.txt");  break;
+				default: shader = new ShaderProgram("res/Shaders/entity/vertexShaderShadowFar.txt", "res/Shaders/entity/fragmentShaderShadow25FarBloom.txt"); break;
+				}
 			}
 			else
 			{
-				shader = new ShaderProgram("res/Shaders/entity/vertexShaderShadowFar.txt", "res/Shaders/entity/fragmentShaderShadowFar.txt");
+				switch (Global::shadowsFarQuality)
+				{
+				case 0:  shader = new ShaderProgram("res/Shaders/entity/vertexShaderShadowFar.txt", "res/Shaders/entity/fragmentShaderShadow1Far.txt");  break;
+				case 1:  shader = new ShaderProgram("res/Shaders/entity/vertexShaderShadowFar.txt", "res/Shaders/entity/fragmentShaderShadow9Far.txt");  break;
+				default: shader = new ShaderProgram("res/Shaders/entity/vertexShaderShadowFar.txt", "res/Shaders/entity/fragmentShaderShadow25Far.txt"); break;
+				}
 			}
 		}
 	}

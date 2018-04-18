@@ -185,7 +185,7 @@ GLFWwindow* getWindow()
 
 // glfw: whenever the window size changed (by OS or user resize) this callback function executes
 // ---------------------------------------------------------------------------------------------
-void framebuffer_size_callback(GLFWwindow* windowHandle, int width, int height)
+void framebuffer_size_callback(GLFWwindow* /*windowHandle*/, int width, int height)
 {
 	// make sure the viewport matches the new window dimensions; note that width and 
 	// height will be significantly larger than specified on retina displays.
@@ -193,20 +193,16 @@ void framebuffer_size_callback(GLFWwindow* windowHandle, int width, int height)
 	SCR_WIDTH = width;
 	SCR_HEIGHT = height;
 	Master_makeProjectionMatrix();
-	windowHandle;
 }
 
-void window_close_callback(GLFWwindow* windowHandle)
+void window_close_callback(GLFWwindow* /*windowHandle*/)
 {
 	Global::gameState = STATE_EXITING;
-	windowHandle;
 }
 
-void mouse_scroll_callback(GLFWwindow* windowHandle, double xoffset, double yoffset)
+void mouse_scroll_callback(GLFWwindow* /*windowHandle*/, double /*xoffset*/, double yoffset)
 {
 	input_zoom_buffer = (float)yoffset;
-	windowHandle;
-	xoffset;
 }
 
 
@@ -381,6 +377,10 @@ void loadGraphicsSettings()
 					{
 						Global::renderShadowsClose = false;
 					}
+				}
+				else if (strcmp(lineSplit[0], "Shadows_Far_Quality") == 0)
+				{
+					Global::shadowsFarQuality = std::stoi(lineSplit[1], nullptr, 10);
 				}
 			}
 			free(lineSplit);

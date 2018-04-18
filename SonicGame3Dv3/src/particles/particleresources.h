@@ -24,6 +24,7 @@ public:
 	static ParticleTexture* texturePinkTrail;
 	static ParticleTexture* textureDarkGreenTrail;
 	static ParticleTexture* textureOrangeTrail;
+	static ParticleTexture* textureRedTrail;
 	static ParticleTexture* textureSplash;
 	static ParticleTexture* textureBubble;
 	static ParticleTexture* textureExplosion1;

@@ -2068,7 +2068,7 @@ void PlayerKnuckles::newSpindashTrail(Vector3f* trailPos, float trailXVel, float
 {
 	Vector3f spd(trailXVel, trailYVel, trailZVel);
 	colourID;
-	new Particle(ParticleResources::texturePinkTrail,
+	new Particle(ParticleResources::textureRedTrail,
 		trailPos, &spd,
 		trailGravity, life, 0, size, -(size / life), false);
 }

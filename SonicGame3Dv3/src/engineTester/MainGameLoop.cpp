@@ -105,10 +105,11 @@ unsigned Global::HQWaterRefractionHeight = 720;
 
 bool Global::renderParticles = true;
 
-bool Global::renderBloom = true;
+bool Global::renderBloom = false;
 
-bool Global::renderShadowsFar = true;
-bool Global::renderShadowsClose = true;
+bool Global::renderShadowsFar = false;
+bool Global::renderShadowsClose = false;
+int Global::shadowsFarQuality = 0;
 
 //Emerald Coast
 EC_Shark* Global::ecShark = nullptr;

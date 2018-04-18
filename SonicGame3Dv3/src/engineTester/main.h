@@ -101,6 +101,7 @@ public:
 
 	static bool renderShadowsFar;
 	static bool renderShadowsClose;
+	static int shadowsFarQuality;
 
 	//Emerald Coast
 	static EC_Shark* ecShark;

@@ -20,41 +20,23 @@ uniform sampler2D shadowMapFar;
 uniform float hasTransparency;
 uniform float glowAmount;
 
-const int pcfCount = 2;
-const float totalTexels = 25;//(pcfCount * 2.0 + 1.0) * (pcfCount * 2.0 + 1.0); //25
+//const int pcfCount = 1;
+const float totalTexels = 9;
 
-const float mapSize = 8192; //2048*4    Must be kept in sync with constants in c++ code
-const float texelSize = 0.00012207031;  //1.0 / mapSize
+//const float mapSize = 8192; //2048*4    Must be kept in sync with constants in c++ code
+//const float texelSize = 0.00012207031;  //1.0 / mapSize
 
-const vec2 it1  = vec2(-2, -2) * 0.00012207031;
-const vec2 it2  = vec2(-2, -1) * 0.00012207031;
-const vec2 it3  = vec2(-2,  0) * 0.00012207031;
-const vec2 it4  = vec2(-2,  1) * 0.00012207031;
-const vec2 it5  = vec2(-2,  2) * 0.00012207031;
+const vec2 it1  = vec2(-1, -1) * 0.00012207031;
+const vec2 it2  = vec2(-1,  0) * 0.00012207031;
+const vec2 it3  = vec2(-1,  1) * 0.00012207031;
 
-const vec2 it6  = vec2(-1, -2) * 0.00012207031;
-const vec2 it7  = vec2(-1, -1) * 0.00012207031;
-const vec2 it8  = vec2(-1,  0) * 0.00012207031;
-const vec2 it9  = vec2(-1,  1) * 0.00012207031;
-const vec2 it10 = vec2(-1,  2) * 0.00012207031;
+const vec2 it4 = vec2( 0, -1) * 0.00012207031;
+const vec2 it5 = vec2( 0,  0) * 0.00012207031;
+const vec2 it6 = vec2( 0,  1) * 0.00012207031;
 
-const vec2 it11 = vec2( 0, -2) * 0.00012207031;
-const vec2 it12 = vec2( 0, -1) * 0.00012207031;
-const vec2 it13 = vec2( 0,  0) * 0.00012207031;
-const vec2 it14 = vec2( 0,  1) * 0.00012207031;
-const vec2 it15 = vec2( 0,  2) * 0.00012207031;
-
-const vec2 it16 = vec2( 1, -2) * 0.00012207031;
-const vec2 it17 = vec2( 1, -1) * 0.00012207031;
-const vec2 it18 = vec2( 1,  0) * 0.00012207031;
-const vec2 it19 = vec2( 1,  1) * 0.00012207031;
-const vec2 it20 = vec2( 1,  2) * 0.00012207031;
-
-const vec2 it21 = vec2( 2, -2) * 0.00012207031;
-const vec2 it22 = vec2( 2, -1) * 0.00012207031;
-const vec2 it23 = vec2( 2,  0) * 0.00012207031;
-const vec2 it24 = vec2( 2,  1) * 0.00012207031;
-const vec2 it25 = vec2( 2,  2) * 0.00012207031;
+const vec2 it7 = vec2( 1, -1) * 0.00012207031;
+const vec2 it8 = vec2( 1,  0) * 0.00012207031;
+const vec2 it9 = vec2( 1,  1) * 0.00012207031;
 
 void main(void)
 {
@@ -69,22 +51,6 @@ void main(void)
 	if (shadowCoordsFar.z > texture(shadowMapFar, shadowCoordsFar.xy +  it7).r+0.00125) { total += 1.0; }
 	if (shadowCoordsFar.z > texture(shadowMapFar, shadowCoordsFar.xy +  it8).r+0.00125) { total += 1.0; }
 	if (shadowCoordsFar.z > texture(shadowMapFar, shadowCoordsFar.xy +  it9).r+0.00125) { total += 1.0; }
-	if (shadowCoordsFar.z > texture(shadowMapFar, shadowCoordsFar.xy + it10).r+0.00125) { total += 1.0; }
-	if (shadowCoordsFar.z > texture(shadowMapFar, shadowCoordsFar.xy + it11).r+0.00125) { total += 1.0; }
-	if (shadowCoordsFar.z > texture(shadowMapFar, shadowCoordsFar.xy + it12).r+0.00125) { total += 1.0; }
-	if (shadowCoordsFar.z > texture(shadowMapFar, shadowCoordsFar.xy + it13).r+0.00125) { total += 1.0; }
-	if (shadowCoordsFar.z > texture(shadowMapFar, shadowCoordsFar.xy + it14).r+0.00125) { total += 1.0; }
-	if (shadowCoordsFar.z > texture(shadowMapFar, shadowCoordsFar.xy + it15).r+0.00125) { total += 1.0; }
-	if (shadowCoordsFar.z > texture(shadowMapFar, shadowCoordsFar.xy + it16).r+0.00125) { total += 1.0; }
-	if (shadowCoordsFar.z > texture(shadowMapFar, shadowCoordsFar.xy + it17).r+0.00125) { total += 1.0; }
-	if (shadowCoordsFar.z > texture(shadowMapFar, shadowCoordsFar.xy + it18).r+0.00125) { total += 1.0; }
-	if (shadowCoordsFar.z > texture(shadowMapFar, shadowCoordsFar.xy + it19).r+0.00125) { total += 1.0; }
-	if (shadowCoordsFar.z > texture(shadowMapFar, shadowCoordsFar.xy + it20).r+0.00125) { total += 1.0; }
-	if (shadowCoordsFar.z > texture(shadowMapFar, shadowCoordsFar.xy + it21).r+0.00125) { total += 1.0; }
-	if (shadowCoordsFar.z > texture(shadowMapFar, shadowCoordsFar.xy + it22).r+0.00125) { total += 1.0; }
-	if (shadowCoordsFar.z > texture(shadowMapFar, shadowCoordsFar.xy + it23).r+0.00125) { total += 1.0; }
-	if (shadowCoordsFar.z > texture(shadowMapFar, shadowCoordsFar.xy + it24).r+0.00125) { total += 1.0; }
-	if (shadowCoordsFar.z > texture(shadowMapFar, shadowCoordsFar.xy + it25).r+0.00125) { total += 1.0; }
 	
 	total /= totalTexels;
 	

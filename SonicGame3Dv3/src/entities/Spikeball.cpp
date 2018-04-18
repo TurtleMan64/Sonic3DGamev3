@@ -17,6 +17,10 @@
 
 std::list<TexturedModel*> Spikeball::models;
 
+Spikeball::Spikeball()
+{
+
+}
 
 Spikeball::Spikeball(float x, float y, float z, float radius, float angVel)
 {

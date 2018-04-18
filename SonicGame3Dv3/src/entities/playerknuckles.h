@@ -86,7 +86,7 @@ private:
 	const float frictionGround = 0.03f;
 	const float frictionAir = 0.01f;
 
-	const float normalSpeedLimit = 4.2f; //4.0f
+	const float normalSpeedLimit = 4.2f*1.3f; //sa2 = 4.2
 	const float airSpeedLimit = 2.5f;
 
 	const float slowDownRate = 0.06f; //How fast you slowdown every frame when youre going faster than max speed 
@@ -113,6 +113,28 @@ private:
 
 	int homingAttackTimer = -1; // -1 = can start a homing attack
 	const int homingAttackTimerMax = 10;
+
+	//Gliding variables
+	const float glideSpeedLimit = 3.5f*1.3f; //sa2 = 3.5
+	const float glideAcceleration = 0.05f;
+	const float glideSlowDownRate = 0.051f;
+	const float glideFriction = 0.001f;
+	const float glideGravity = 0.005f;
+	const float glideTerminalVelocity = -0.8f*1.3f;  //sa2 = -0.8, horizontal asymptote
+	bool isGliding = false;
+	int canGlideTimer = 0;
+	const int canGlideTimerMax = 30;
+
+	//Drill dive
+	const float drillDiveSpeed = -4.0f;
+	bool isDrillDiving = false;
+
+	//Punch
+	//Controls and speed are locked during punch
+	bool isPunching = false;
+	const float punchSpeedFast = 3.125f*1.3f; //sa2 = 3.125
+	const float punchSpeedSlow = 0.625f*1.3f; //sa2 = 0.625
+	const float punchSpeedThreshold = 1.4f*1.3f; //sa2 = 1.4  speed determines which punch speed you do
 
 
 	const float surfaceTension = 10.0f; //Increase to make sonic not fly off slopes when going fast

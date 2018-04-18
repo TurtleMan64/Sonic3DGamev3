@@ -74,6 +74,7 @@
 #include "../entities/playertails.h"
 #include "../entities/controllableplayer.h"
 #include "../entities/playerknuckles.h"
+#include "../entities/stagetransparent.h"
 
 float toFloat(char* input);
 int toInt(char* input);
@@ -1147,6 +1148,14 @@ void processLine(char** dat)
 			return;
 		}
 
+		case 72: //Stage Transparent
+		{
+			StageTransparent* trans = new StageTransparent(dat[1], dat[2]);
+			Global::countNew++;
+			Main_addTransparentEntity(trans);
+			return;
+		}
+
 		default:
 		{
 			return;
@@ -1215,4 +1224,5 @@ void freeAllStaticModels()
 	Capsule::deleteStaticModels();
 	PlayerTails::deleteStaticModels();
 	PlayerKnuckles::deleteStaticModels();
+	StageTransparent::deleteStaticModels();
 }

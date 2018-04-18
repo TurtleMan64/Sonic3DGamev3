@@ -1,4 +1,4 @@
-# Material Count: 76
+# Material Count: 74
 
 newmtl material17
 Ns 20
@@ -351,15 +351,6 @@ scrollX 0
 scrollY 0
 map_Kd texturesPNG/kdv_leaf08_dfpt_p_k.png
 
-newmtl material1.043
-Ns 20
-Ni 0.02
-Tr 0
-d 1.000000
-scrollX 0
-scrollY 0
-map_Kd texturesPNG/kdv_cloud.png
-
 newmtl material4.007
 Ns 20
 Ni 0.02
@@ -377,15 +368,6 @@ d 1.000000
 scrollX 0
 scrollY 0
 map_Kd texturesPNG/kdv_stone04_dfsp_n.png
-
-newmtl material0.053
-Ns 20
-Ni 0.02
-Tr 1
-d 1.000000
-scrollX 0
-scrollY 0
-map_Kd texturesPNG/kdv_skyhem.png
 
 newmtl material4.033
 Ns 20
@@ -507,8 +489,9 @@ map_Kd texturesPNG/kdv_rope04_dfsp_r.png
 newmtl material7.005
 Ns 20
 Ni 0.02
-Tr 1
+Tr 0
 d 1.000000
+glow 1.0
 scrollX 0
 scrollY 0
 map_Kd texturesPNG/kdv_luminous05_enlu_r.png

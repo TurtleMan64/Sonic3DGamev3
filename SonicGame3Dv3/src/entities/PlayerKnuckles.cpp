@@ -97,6 +97,7 @@ void PlayerKnuckles::step()
 	hitTimer = std::max(0, hitTimer-1);
 	canMoveTimer = std::max(0, canMoveTimer - 1);
 	deadTimer = std::max(-1, deadTimer - 1);
+	canGlideTimer = std::max(0, canGlideTimer-1);
 
 	dropDashCharge = std::fmaxf(0, dropDashCharge-dropDashChargeDecrease);
 
@@ -126,7 +127,15 @@ void PlayerKnuckles::step()
 		applyFrictionAir();
 		moveMeAir();
 		limitMovementSpeedAir();
-		yVel -= gravity;
+
+		if (isGliding)
+		{
+			yVel = fmaxf(yVel-glideGravity, glideTerminalVelocity);
+		}
+		else
+		{
+			yVel -= gravity;
+		}
 	}
 	else //on ground
 	{
@@ -169,6 +178,9 @@ void PlayerKnuckles::step()
 		isStomping = false;
 		isDropDashing = false;
 		justBounced = false;
+		isGliding = false;
+		isDrillDiving = false;
+		canGlideTimer = 0;
 		homingAttackTimer = -1;
 		dropDashCharge = 0.0f;
 		float speed = sqrtf(xVelGround*xVelGround + zVelGround*zVelGround);
@@ -241,9 +253,9 @@ void PlayerKnuckles::step()
 		{
 			if (!isSpindashing)
 			{
-				storedSpindashSpeed = (float)sqrt(xVelGround*xVelGround + zVelGround*zVelGround);
+				//storedSpindashSpeed = (float)sqrt(xVelGround*xVelGround + zVelGround*zVelGround);
 			}
-			isSpindashing = true;
+			//isSpindashing = true;
 		}
 
 		if (!actionInput && !action2Input)
@@ -292,20 +304,62 @@ void PlayerKnuckles::step()
 	{
 		if (jumpInput && !previousJumpInput && homingAttackTimer == -1 && (isJumping || isBall || isBouncing) && !isDropDashing)
 		{
-			homingAttack();
+			//homingAttack();
 		}
 
-		if (actionInput && !previousActionInput && (isJumping || isBall) && !isBouncing && homingAttackTimer == -1 && !isStomping && !isDropDashing)
+		if (actionInput && !previousActionInput && (isJumping || isGliding && !isDrillDiving))
 		{
-			initiateBounce();
+			isDrillDiving = true;
+			isGliding = false;
+			yVel = drillDiveSpeed;
+			canGlideTimer = 0;
+			hoverCount = 0;
 		}
 
 		if (action2Input && !previousAction2Input && (isJumping || isBall) && !isBouncing && homingAttackTimer == -1 && !isStomping && !isDropDashing)
 		{
-			initiateStomp();
+			//initiateStomp();
+		}
+
+		if (jumpInput && !previousJumpInput && canGlideTimer == 0 && !isGliding)
+		{
+			isGliding = true;
+			isDrillDiving = false;
+			yVel = 0;
+			hoverCount = 0;
+
+			float currSpd = sqrtf(xVelAir*xVelAir + zVelAir*zVelAir);
+			if (currSpd < glideSpeedLimit*0.5f)
+			{
+				xVelAir =  0.5f*glideSpeedLimit*cosf(toRadians(getRotY()));
+				zVelAir = -0.5f*glideSpeedLimit*sinf(toRadians(getRotY()));
+			}
+			else if (currSpd < glideSpeedLimit*0.75f)
+			{
+				xVelAir =  0.75f*glideSpeedLimit*cosf(toRadians(getRotY()));
+				zVelAir = -0.75f*glideSpeedLimit*sinf(toRadians(getRotY()));
+			}
+			else
+			{
+				xVelAir =  glideSpeedLimit*cosf(toRadians(getRotY()));
+				zVelAir = -glideSpeedLimit*sinf(toRadians(getRotY()));
+			}
+		}
+
+		if (jumpInput && isGliding)
+		{
+			canGlideTimer = canGlideTimerMax;
+		}
+
+		if (!jumpInput && isGliding)
+		{
+			isGliding = false;
+			isJumping = true;
+			hoverCount = 0;
 		}
 
 		isSpindashing = false;
+		isPunching = false;
 		canStartSpindash = false;
 		bufferedSpindashInput = false;
 		spindashReleaseTimer = 0;
@@ -321,10 +375,10 @@ void PlayerKnuckles::step()
 		//TODO: make new buttons for this
 		if (specialInput && !previousSpecialInput && (isJumping || isBall) && !isBouncing && homingAttackTimer == -1 && !isStomping)
 		{
-			isDropDashing = true;
-			dropDashCharge += dropDashChargeIncrease;
+			//isDropDashing = true;
+			//dropDashCharge += dropDashChargeIncrease;
 			
-			AudioPlayer::play(14, getPosition());
+			//AudioPlayer::play(14, getPosition());
 		}
 	}
 
@@ -965,7 +1019,14 @@ void PlayerKnuckles::setMovementInputs()
 
 	float inputMag = sqrtf(movementInputX*movementInputX + movementInputY*movementInputY);
 	moveSpeedCurrent = moveAcceleration*inputMag;
-	moveSpeedAirCurrent = moveAccelerationAir*inputMag;
+	if (isGliding)
+	{
+		moveSpeedAirCurrent = glideAcceleration*inputMag;
+	}
+	else
+	{
+		moveSpeedAirCurrent = moveAccelerationAir*inputMag;
+	}
 	movementAngle = toDegrees(atan2f(movementInputY, movementInputX));
 
 	if (canMoveTimer != 0 || hitTimer > 0 || deadTimer >= 0 || Global::finishStageTimer >= 0)
@@ -1035,17 +1096,23 @@ void PlayerKnuckles::checkSkid()
 void PlayerKnuckles::applyFrictionAir()
 {
 	float mag = sqrtf((xVelGround*xVelGround) + (zVelGround*zVelGround));
+	float fricToApply = frictionAir;
+	if (isGliding)
+	{
+		fricToApply = glideFriction;
+	}
+
 	if (mag != 0)
 	{
 		int before = sign(zVelGround);
-		zVelGround -= (((frictionAir)*(zVelGround)) / (mag));
+		zVelGround -= (((fricToApply)*(zVelGround)) / (mag));
 		int after = sign(zVelGround);
 		if (before != after)
 		{
 			zVelGround = 0;
 		}
 		before = sign(xVelGround);
-		xVelGround -= (((frictionAir)*(xVelGround)) / (mag));
+		xVelGround -= (((fricToApply)*(xVelGround)) / (mag));
 		after = sign(xVelGround);
 		if (before != after)
 		{
@@ -1057,14 +1124,14 @@ void PlayerKnuckles::applyFrictionAir()
 	if (mag != 0)
 	{
 		int before = sign(zVelAir);
-		zVelAir -= (((frictionAir)*(zVelAir)) / (mag));
+		zVelAir -= (((fricToApply)*(zVelAir)) / (mag));
 		int after = sign(zVelAir);
 		if (before != after)
 		{
 			zVelAir = 0;
 		}
 		before = sign(xVelAir);
-		xVelAir -= (((frictionAir)*(xVelAir)) / (mag));
+		xVelAir -= (((fricToApply)*(xVelAir)) / (mag));
 		after = sign(xVelAir);
 		if (before != after)
 		{
@@ -1103,10 +1170,21 @@ void PlayerKnuckles::moveMeAir()
 void PlayerKnuckles::limitMovementSpeedAir()
 {
 	float myspeed = sqrtf(xVelAir*xVelAir + zVelAir*zVelAir);
-	if (myspeed > airSpeedLimit)
+	if (isGliding)
 	{
-		xVelAir = (xVelAir*((myspeed - slowDownAirRate) / (myspeed)));
-		zVelAir = (zVelAir*((myspeed - slowDownAirRate) / (myspeed)));
+		if (myspeed > glideSpeedLimit)
+		{
+			xVelAir = (xVelAir*((myspeed - glideSlowDownRate) / (myspeed)));
+			zVelAir = (zVelAir*((myspeed - glideSlowDownRate) / (myspeed)));
+		}
+	}
+	else
+	{
+		if (myspeed > airSpeedLimit)
+		{
+			xVelAir = (xVelAir*((myspeed - slowDownAirRate) / (myspeed)));
+			zVelAir = (zVelAir*((myspeed - slowDownAirRate) / (myspeed)));
+		}
 	}
 }
 
@@ -1190,8 +1268,9 @@ void PlayerKnuckles::dropDash(float charge)
 	AudioPlayer::play(15, getPosition());
 }
 
-void PlayerKnuckles::spindash(int timer)
+void PlayerKnuckles::spindash(int /*timer*/)
 {
+	/*
 	float dx = cosf(spindashAngle);
 	float dz = -sinf(spindashAngle);
 
@@ -1213,6 +1292,7 @@ void PlayerKnuckles::spindash(int timer)
 	isBall = true;
 	AudioPlayer::play(15, getPosition());
 	storedSpindashSpeed = 0;
+	*/
 }
 
 float PlayerKnuckles::getSpindashSpeed()
@@ -1338,6 +1418,7 @@ void PlayerKnuckles::homingAttack()
 
 void PlayerKnuckles::initiateBounce()
 {
+	/*
 	if (yVel >= -4.5f)
 	{
 		yVel = -4.5f;
@@ -1354,10 +1435,12 @@ void PlayerKnuckles::initiateBounce()
 	isJumping = false;
 	isBall = false;
 	justBounced = true;
+	*/
 }
 
 void PlayerKnuckles::initiateStomp()
 {
+	/*
 	if (yVel >= -4.0f)
 	{
 		yVel = -4.0f;
@@ -1375,6 +1458,7 @@ void PlayerKnuckles::initiateStomp()
 	isBall = false;
 
 	stompSource = AudioPlayer::play(16, getPosition());
+	*/
 }
 
 void PlayerKnuckles::bounceOffGround(Vector3f* surfaceNormal, float b, int s)
@@ -1778,6 +1862,29 @@ void PlayerKnuckles::animate()
 		if (PlayerKnuckles::maniaKnuckles != nullptr) { PlayerKnuckles::maniaKnuckles->setVisible(false); }
 		if (myBody != nullptr) myBody->setBaseOrientation(&displayPos, 0, getRotY(), 0, 0);
 		updateLimbs(19, 0);
+	}
+	else if (isGliding)
+	{
+		float h = sqrtf(xVelAir*xVelAir + zVelAir*zVelAir);
+		float zr = toDegrees(atan2f(yVel, h));
+		zr = fmaxf(zr, -10);
+		if (myBody != nullptr) myBody->setBaseOrientation(&displayPos, 0, getRotY(), zr, 0);
+		if (PlayerKnuckles::maniaKnuckles != nullptr) { PlayerKnuckles::maniaKnuckles->setVisible(false); }
+		updateLimbs(20, 0);
+	}
+	else if (isDrillDiving)
+	{
+		if (myBody != nullptr) myBody->setBaseOrientation(&displayPos, 0, animCount*42, -90, 0);
+		if (PlayerKnuckles::maniaKnuckles != nullptr) { PlayerKnuckles::maniaKnuckles->setVisible(false); }
+		updateLimbs(20, 0);
+
+		float height = 2;
+		Vector3f offset(currNorm.x*height, currNorm.y*height, currNorm.z*height);
+		Vector3f prevPos(previousDisplayPos);
+		prevPos = prevPos + offset;
+		Vector3f newPos(displayPos);
+		newPos = newPos + offset;
+		createSpindashTrails(&prevPos, &newPos, 5, 20);
 	}
 	else if (isLightdashing)
 	{

@@ -90,6 +90,7 @@
     <ClCompile Include="src\entities\Spinner.cpp" />
     <ClCompile Include="src\entities\Spring.cpp" />
     <ClCompile Include="src\entities\Stage.cpp" />
+    <ClCompile Include="src\entities\StageTransparent.cpp" />
     <ClCompile Include="src\entities\TeleportZone.cpp" />
     <ClCompile Include="src\entities\TwinklePark\TP_FlatWater.cpp" />
     <ClCompile Include="src\entities\TwinklePark\TP_FloatingPad.cpp" />
@@ -229,6 +230,7 @@
     <ClInclude Include="src\entities\spinner.h" />
     <ClInclude Include="src\entities\spring.h" />
     <ClInclude Include="src\entities\stage.h" />
+    <ClInclude Include="src\entities\stagetransparent.h" />
     <ClInclude Include="src\entities\teleportzone.h" />
     <ClInclude Include="src\entities\TwinklePark\tpflatwater.h" />
     <ClInclude Include="src\entities\TwinklePark\tpfloatingpad.h" />

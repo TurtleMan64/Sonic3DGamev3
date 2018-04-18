@@ -17,6 +17,8 @@ KingdomValleyCollision 7
 6843.700195 2358.780273 4532.264648
 -18.25 0
 
+7 KingdomValley SkySphere SkySphere 0.7 0
 70 6792 2359 4453
 0 0 0 0
 69 -2036 2080 -1366
+72 res/Models/KingdomValley/ KingdomValleyTransparent.obj

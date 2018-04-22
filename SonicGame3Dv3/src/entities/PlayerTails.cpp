@@ -1798,6 +1798,12 @@ void PlayerTails::animate()
 		if (PlayerTails::maniaTails != nullptr) { PlayerTails::maniaTails->setVisible(false); }
 		updateLimbs(11, 0);
 	}
+	else if (onPlane == false)
+	{
+		if (myBody != nullptr) myBody->setBaseOrientation(&displayPos, 0, getRotY(), 75, 0);
+		if (PlayerTails::maniaTails != nullptr) { PlayerTails::maniaTails->setVisible(false); }
+		updateLimbs(21, 0);
+	}
 	else
 	{
 		if (myBody != nullptr) myBody->setBaseOrientation(&displayPos, diff, yawAngle, pitchAngle, 0);

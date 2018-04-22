@@ -51,6 +51,8 @@ private:
 
 	static bool shouldPause;
 
+	static bool pausedSounds[14];
+
 public:
 	static FontType* font;
 
@@ -58,7 +60,7 @@ public:
 
 	static void step();
 
-	static void unpause();
+	static void unpause(bool shouldResumeSFX);
 
 	static void pause();
 };

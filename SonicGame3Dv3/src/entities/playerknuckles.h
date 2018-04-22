@@ -78,12 +78,12 @@ private:
 	const int hoverLimit = 60;
 	int hoverCount = 0;
 
-	const float moveAcceleration = 0.07f;
+	const float moveAcceleration = 0.045f;
 	float moveSpeedCurrent = 0;
 	const float moveAccelerationAir = 0.035f;
 	float moveSpeedAirCurrent = 0;
 
-	const float frictionGround = 0.03f;
+	const float frictionGround = 0.015f;
 	const float frictionAir = 0.01f;
 
 	const float normalSpeedLimit = 4.2f*1.3f; //sa2 = 4.2
@@ -116,8 +116,8 @@ private:
 
 	//Gliding variables
 	const float glideSpeedLimit = 3.5f*1.3f; //sa2 = 3.5
-	const float glideAcceleration = 0.05f;
-	const float glideSlowDownRate = 0.051f;
+	const float glideAcceleration = 0.04f;
+	const float glideSlowDownRate = 0.041f;
 	const float glideFriction = 0.001f;
 	const float glideGravity = 0.005f;
 	const float glideTerminalVelocity = -0.8f*1.3f;  //sa2 = -0.8, horizontal asymptote
@@ -132,9 +132,19 @@ private:
 	//Punch
 	//Controls and speed are locked during punch
 	bool isPunching = false;
-	const float punchSpeedFast = 3.125f*1.3f; //sa2 = 3.125
-	const float punchSpeedSlow = 0.625f*1.3f; //sa2 = 0.625
-	const float punchSpeedThreshold = 1.4f*1.3f; //sa2 = 1.4  speed determines which punch speed you do
+	const float punchSpeedFast = 3.3f*1.3f; //sa2 = 3.125
+	const float punchSpeedSlow = 0.7f*1.3f; //sa2 = 0.625
+	const float punchSpeedThreshold = 1.7f*1.3f; //sa2 = 1.4  speed determines which punch speed you do
+	int punchingTimer = 0;
+	const int punchingTimerMax = 24;
+	int punchType = 0; //0 = slow punch, 1 = fast punch
+	float punchAngle = 0; //in degrees
+
+
+	//Climbing
+	bool isClimbing = false;
+	const float climbSpeed = 1.2f;
+	float climbAnimTime = 0;
 
 
 	const float surfaceTension = 10.0f; //Increase to make sonic not fly off slopes when going fast

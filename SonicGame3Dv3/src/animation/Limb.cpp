@@ -149,7 +149,7 @@ void Limb::update(float time)
 		setRotY(limb->getRotY() + newYRot);
 		setRotZ(limb->getRotZ() + newZRot);
 		setRotSpin(limb->getRotSpin() + newSRot); //spin
-		//super.setScale(newScale);
+		setScale(getScale()*newScale);
 	}
 }
 

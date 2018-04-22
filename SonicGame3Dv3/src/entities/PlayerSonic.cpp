@@ -2273,6 +2273,12 @@ void PlayerSonic::animate()
 		if (PlayerSonic::maniaSonic != nullptr) { PlayerSonic::maniaSonic->setVisible(false); }
 		updateLimbs(11, 0);
 	}
+	else if (onPlane == false)
+	{
+		if (myBody != nullptr) myBody->setBaseOrientation(&displayPos, 0, getRotY(), 75, 0);
+		if (PlayerSonic::maniaSonic != nullptr) { PlayerSonic::maniaSonic->setVisible(false); }
+		updateLimbs(21, 0);
+	}
 	else
 	{
 		if (myBody != nullptr) myBody->setBaseOrientation(&displayPos, diff, yawAngle, pitchAngle, 0);

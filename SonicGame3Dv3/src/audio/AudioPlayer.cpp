@@ -322,3 +322,14 @@ void AudioPlayer::loadSettings()
 		file.close();
 	}
 }
+
+void AudioPlayer::stopAllSFX()
+{
+	for (int i = 0; i < 14; i++)
+	{
+		if (AudioPlayer::sources[i]->isPlaying())
+		{
+			AudioPlayer::sources[i]->stop();
+		}
+	}
+}

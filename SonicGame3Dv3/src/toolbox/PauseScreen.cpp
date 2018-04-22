@@ -11,6 +11,8 @@
 #include "../entities/playersonic.h"
 #include "../toolbox/levelloader.h"
 #include "../fontMeshCreator/guitext.h"
+#include "../audio/audioplayer.h"
+#include "../audio/source.h"
 
 int PauseScreen::menuSelection = 0;
 int PauseScreen::menuSelectionMAX = 4;
@@ -53,6 +55,7 @@ GUIText* PauseScreen::textManiaSonic = nullptr;
 GUIText* PauseScreen::textAmy = nullptr;
 
 bool PauseScreen::shouldPause = false;
+bool PauseScreen::pausedSounds[14];
 
 extern bool INPUT_START;
 extern bool INPUT_PREVIOUS_START;
@@ -81,7 +84,7 @@ void PauseScreen::step()
 		shouldPause = false;
 		if (Global::gameState == STATE_PAUSED)
 		{
-			unpause();
+			unpause(true);
 		}
 		else if (Global::gameState == STATE_RUNNING)
 		{
@@ -181,7 +184,7 @@ void PauseScreen::step()
 
 				case 1:
 					LevelLoader_loadLevel(Global::levelName);
-					unpause();
+					unpause(false);
 					break;
 
 				case 2:
@@ -267,91 +270,91 @@ void PauseScreen::step()
 				case 0:
 					Global::levelID = LVL_EC;
 					LevelLoader_loadLevel("EmeraldCoast.lvl");
-					unpause();
+					unpause(false);
 					break;
 
 				case 1:
 					Global::levelID = LVL_SH;
 					LevelLoader_loadLevel("SpeedHighway.lvl");
-					unpause();
+					unpause(false);
 					break;
 
 				case 2:
 					Global::levelID = LVL_GHZ;
 					LevelLoader_loadLevel("GreenHillZone.lvl");
-					unpause();
+					unpause(false);
 					break;
 
 				case 3:
 					Global::levelID = LVL_WI;
 					LevelLoader_loadLevel("KingdomValley.lvl");
-					unpause();
+					unpause(false);
 					break;
 
 				case 4:
 					Global::levelID = LVL_PC;
 					LevelLoader_loadLevel("PeachCastle.lvl");
-					unpause();
+					unpause(false);
 					break;
 
 				case 5:
 					Global::levelID = LVL_SHL;
 					LevelLoader_loadLevel("SandHill.lvl");
-					unpause();
+					unpause(false);
 					break;
 
 				case 6:
 					Global::levelID = LVL_KB;
 					LevelLoader_loadLevel("KoopaTroopaBeach.lvl");
-					unpause();
+					unpause(false);
 					break;
 
 				case 7:
 					Global::levelID = LVL_OI;
 					LevelLoader_loadLevel("OutsetIsland.lvl");
-					unpause();
+					unpause(false);
 					break;
 
 				case 8:
 					Global::levelID = LVL_WB;
 					LevelLoader_loadLevel("WeaponsBed.lvl");
-					unpause();
+					unpause(false);
 					break;
 
 				case 9:
 					Global::levelID = LVL_MH;
 					LevelLoader_loadLevel("MetalHarbor.lvl");
-					unpause();
+					unpause(false);
 					break;
 
 				case 10:
 					Global::levelID = LVL_BOB;
 					LevelLoader_loadLevel("BobOmbBattlefield.lvl");
-					unpause();
+					unpause(false);
 					break;
 
 				case 11:
 					Global::levelID = LVL_RR;
 					LevelLoader_loadLevel("RainbowRoad.lvl");
-					unpause();
+					unpause(false);
 					break;
 
 				case 12:
 					Global::levelID = LVL_SHD;
 					LevelLoader_loadLevel("Snowhead.lvl");
-					unpause();
+					unpause(false);
 					break;
 
 				case 13:
 					Global::levelID = LVL_TP;
 					LevelLoader_loadLevel("TwinklePark.lvl");
-					unpause();
+					unpause(false);
 					break;
 
 				case 14:
 					Global::levelID = LVL_FF;
 					LevelLoader_loadLevel("FireField.lvl");
-					unpause();
+					unpause(false);
 					break;
 				}
 				break;
@@ -533,7 +536,7 @@ void PauseScreen::step()
 	}
 }
 
-void PauseScreen::unpause()
+void PauseScreen::unpause(bool shouldResumeSFX)
 {
 	Global::gameState = STATE_RUNNING;
 
@@ -725,6 +728,22 @@ void PauseScreen::unpause()
 		Global::countDelete++;
 		textAmy = nullptr;
 	}
+
+	//Resume all sound effects that were paused
+	if (shouldResumeSFX)
+	{
+		for (int i = 0; i < 14; i++)
+		{
+			if (PauseScreen::pausedSounds[i])
+			{
+				AudioPlayer::getSource(i)->continuePlaying();
+			}
+		}
+	}
+	else
+	{
+		AudioPlayer::stopAllSFX();
+	}
 }
 
 void PauseScreen::pause()
@@ -770,4 +789,18 @@ void PauseScreen::pause()
 	textDage4Aquatic  = new GUIText("Dage4 Aquatic", size, font, 0.5f, 0.6f, 1.0f, false, false); Global::countNew++;
 	textManiaSonic    = new GUIText("Mania Sonic",   size, font, 0.5f, 0.7f, 1.0f, false, false); Global::countNew++;
 	textAmy           = new GUIText("Amy",           size, font, 0.5f, 0.8f, 1.0f, false, false); Global::countNew++;
+
+	//Pause all sound effects
+	for (int i = 0; i < 14; i++)
+	{
+		if (AudioPlayer::getSource(i)->isPlaying())
+		{
+			PauseScreen::pausedSounds[i] = true;
+			AudioPlayer::getSource(i)->pause();
+		}
+		else
+		{
+			PauseScreen::pausedSounds[i] = false;
+		}
+	}
 }

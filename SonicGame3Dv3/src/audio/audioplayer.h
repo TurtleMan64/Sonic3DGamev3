@@ -57,6 +57,8 @@ public:
 
 	static void stopBGM();
 
+	static void stopAllSFX();
+
 	static ALuint getSEBuffer(int i);
 
 	//percent should be 0 ... 1

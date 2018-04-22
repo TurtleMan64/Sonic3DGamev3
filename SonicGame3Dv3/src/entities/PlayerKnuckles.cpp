@@ -98,6 +98,7 @@ void PlayerKnuckles::step()
 	canMoveTimer = std::max(0, canMoveTimer - 1);
 	deadTimer = std::max(-1, deadTimer - 1);
 	canGlideTimer = std::max(0, canGlideTimer-1);
+	punchingTimer = std::max(0, punchingTimer-1);
 
 	dropDashCharge = std::fmaxf(0, dropDashCharge-dropDashChargeDecrease);
 
@@ -109,6 +110,11 @@ void PlayerKnuckles::step()
 	else if (deadTimer == 0)
 	{
 		Global::shouldRestartLevel = true;
+	}
+
+	if (punchingTimer == 1)
+	{
+		isPunching = false;
 	}
 
 	if (jumpInput)
@@ -159,6 +165,35 @@ void PlayerKnuckles::step()
 		zVelGround += currNorm.z*slopeAccel;
 	}
 
+	if (isPunching)
+	{
+		float rotYRad = toRadians(punchAngle);
+		switch (punchType)
+		{
+		case 0:
+			xVelGround =  punchSpeedSlow*cosf(rotYRad);
+			zVelGround = -punchSpeedSlow*sinf(rotYRad);
+			break;
+
+		default:
+			xVelGround =  punchSpeedFast*cosf(rotYRad);
+			zVelGround = -punchSpeedFast*sinf(rotYRad);
+			break;
+		}
+	}
+
+	if (isClimbing)
+	{
+		Camera* cam = Global::gameCamera;
+
+		float inputMag = sqrtf(movementInputX*movementInputX + movementInputY*movementInputY);
+
+		xVelGround = climbSpeed*inputMag*cosf(toRadians(cam->getYaw() + movementAngle));
+		zVelGround = climbSpeed*inputMag*sinf(toRadians(cam->getYaw() + movementAngle));
+
+		wallStickTimer = wallStickTimerMax;
+	}
+
 	float inputX = xVelGround;
 	float inputY = zVelGround;
 	float mag = sqrtf(inputX*inputX + inputY*inputY);
@@ -205,7 +240,12 @@ void PlayerKnuckles::step()
 			popOffWall();
 		}
 
-		if (jumpInput && !previousJumpInput)
+		if (isClimbing && currNorm.y > 0.5)
+		{
+			//isClimbing = false;
+		}
+
+		if (jumpInput && !previousJumpInput && !isPunching)
 		{
 			increasePosition(currNorm.x * 2, currNorm.y * 2, currNorm.z * 2);
 			xVelAir = xVel + currNorm.x*jumpPower + xDisp;
@@ -217,6 +257,7 @@ void PlayerKnuckles::step()
 			zVelGround = 0;
 			isJumping = true;
 			onPlane = false;
+			isClimbing = false;
 
 			AudioPlayer::play(12, getPosition());
 		}
@@ -291,13 +332,44 @@ void PlayerKnuckles::step()
 
 		if (((actionInput && !previousActionInput) || (action2Input && !previousAction2Input)))
 		{
-			if (isBall)
+			//if (isBall)
 			{
-				spindashReleaseTimer = spindashReleaseTimerMax;
-				spindashRestartDelay = spindashRestartDelayMax;
+				//spindashReleaseTimer = spindashReleaseTimerMax;
+				//spindashRestartDelay = spindashRestartDelayMax;
 			}
 
-			isBall = false;
+			//isBall = false;
+		}
+
+		if (((actionInput && !previousActionInput) || (action2Input && !previousAction2Input)))
+		{
+			if (!isPunching && !isClimbing)
+			{
+				if (speed < punchSpeedThreshold)
+				{
+					punchType = 0;
+				}
+				else
+				{
+					punchType = 1;
+				}
+				isPunching = true;
+				punchingTimer = punchingTimerMax;
+				punchAngle = getRotY();
+				float rotYRad = toRadians(punchAngle);
+				switch (punchType)
+				{
+				case 0:
+					xVelGround =  punchSpeedSlow*cosf(rotYRad);
+					zVelGround = -punchSpeedSlow*sinf(rotYRad);
+					break;
+
+				default:
+					xVelGround =  punchSpeedFast*cosf(rotYRad);
+					zVelGround = -punchSpeedFast*sinf(rotYRad);
+					break;
+				}
+			}
 		}
 	}
 	else //In the air
@@ -307,7 +379,7 @@ void PlayerKnuckles::step()
 			//homingAttack();
 		}
 
-		if (actionInput && !previousActionInput && (isJumping || isGliding && !isDrillDiving))
+		if (actionInput && !previousActionInput && (isJumping || isGliding) && !isDrillDiving)
 		{
 			isDrillDiving = true;
 			isGliding = false;
@@ -329,20 +401,16 @@ void PlayerKnuckles::step()
 			hoverCount = 0;
 
 			float currSpd = sqrtf(xVelAir*xVelAir + zVelAir*zVelAir);
-			if (currSpd < glideSpeedLimit*0.5f)
+
+			if (currSpd < glideSpeedLimit*0.6f)
 			{
-				xVelAir =  0.5f*glideSpeedLimit*cosf(toRadians(getRotY()));
-				zVelAir = -0.5f*glideSpeedLimit*sinf(toRadians(getRotY()));
-			}
-			else if (currSpd < glideSpeedLimit*0.75f)
-			{
-				xVelAir =  0.75f*glideSpeedLimit*cosf(toRadians(getRotY()));
-				zVelAir = -0.75f*glideSpeedLimit*sinf(toRadians(getRotY()));
+				xVelAir =  0.6f*glideSpeedLimit*cosf(toRadians(getRotY()));
+				zVelAir = -0.6f*glideSpeedLimit*sinf(toRadians(getRotY()));
 			}
 			else
 			{
-				xVelAir =  glideSpeedLimit*cosf(toRadians(getRotY()));
-				zVelAir = -glideSpeedLimit*sinf(toRadians(getRotY()));
+				xVelAir =  currSpd*cosf(toRadians(getRotY()));
+				zVelAir = -currSpd*sinf(toRadians(getRotY()));
 			}
 		}
 
@@ -358,14 +426,24 @@ void PlayerKnuckles::step()
 			hoverCount = 0;
 		}
 
+		if (yVel > 0 && isGliding)
+		{
+			isGliding = false;
+			isJumping = false;
+			hoverCount = 30;
+		}
+
 		isSpindashing = false;
 		isPunching = false;
+		isClimbing = false;
+		punchingTimer = 0;
 		canStartSpindash = false;
 		bufferedSpindashInput = false;
 		spindashReleaseTimer = 0;
 		spindashRestartDelay = 0;
 		spindashTimer = 0;
 		storedSpindashSpeed = 0;
+		climbAnimTime = 0;
 		wallStickTimer = wallStickTimerMax;
 		if (hoverCount > 0)
 		{
@@ -390,100 +468,62 @@ void PlayerKnuckles::step()
 	}
 
 	onPlanePrevious = onPlane;
+
 	CollisionChecker::setCheckPlayer();
-	if (CollisionChecker::checkCollision(getX(), getY(), getZ(), (float)(getX() + (xVel + xVelAir + xDisp)), (float)(getY() + (yVel + yDisp)), (float)(getZ() + (zVel + zVelAir + zDisp))))
+	if (CollisionChecker::checkCollision(getX(), getY(), getZ(), (getX() + (xVel + xVelAir + xDisp)), (getY() + (yVel + yDisp)), (getZ() + (zVel + zVelAir + zDisp))))
 	{
 		triCol = CollisionChecker::getCollideTriangle();
 		colPos = CollisionChecker::getCollidePosition();
 		bool bonked = false;
 		if (onPlane == false) //Transition from air to ground
 		{
-			if (isBouncing)
+			//New idea: if the wall is very steep, check if we are approaching the wall at too flat of an angle.
+			//If we are, do a small bounce off the wall sintead of sticking to it.
+
+			bool canStick = true;
+
+			//Is the wall steep?
+			if (triCol->normal.y < wallThreshold) //Some arbitrary steepness constant
 			{
-				bounceOffGround(&(triCol->normal), bounceFactor, 8);
-				isBall = true;
-				isBouncing = false;
-				isStomping = false;
-				homingAttackTimer = -1;
-				hoverCount = 0;
+				//Not sure if I like this...
+				canStick = false;
+			}
+
+			if (canStick)
+			{
+				Vector3f speeds = calculatePlaneSpeed(xVel + xVelAir + xDisp, yVel + yDisp, zVel + zVelAir + zDisp, &(triCol->normal));
+				xVelGround = speeds.x;
+				zVelGround = speeds.z;
+				isBall = false;
+				onPlane = true;
+
+				if (isDropDashing)
+				{
+					dropDash(dropDashCharge);
+				}
 			}
 			else
 			{
-				//New idea: if the wall is very steep, check if we are approaching the wall at too flat of an angle.
-				//If we are, do a small bounce off the wall sintead of sticking to it.
-
-				bool canStick = true;
-
-				//Is the wall steep?
-				if (triCol->normal.y < wallThreshold) //Some arbitrary steepness constant
+				if (isGliding)
 				{
-					//Not sure if I like this...
-					canStick = false;
-				}
-
-				if (canStick)
-				{
-					Vector3f speeds = calculatePlaneSpeed(xVel + xVelAir + xDisp, yVel + yDisp, zVel + zVelAir + zDisp, &(triCol->normal));
-					xVelGround = speeds.x;
-					zVelGround = speeds.z;
-					isBall = false;
+					isGliding = false;
+					isClimbing = true;
 					onPlane = true;
 
-					if (isDropDashing)
-					{
-						dropDash(dropDashCharge);
-					}
+					canMoveTimer = 16;
 				}
 				else
 				{
-					if (justBounced == true)
-					{
-						//Superbounce
-						Vector3f speeds(xVelAir, yVel, zVelAir);
-						Vector3f newSpeeds = projectOntoPlane(&speeds, &(triCol->normal));
+					bounceOffGround(&(triCol->normal), cantStickBounceFactor, 18);
 
-						//Handle case where you superbounce exactly perpendicular to the wall
-						if (newSpeeds.lengthSquared() == 0)
-						{
-							newSpeeds.y = -1;
-						}
-
-						newSpeeds.normalize();
-						newSpeeds.scale(speeds.length());
-
-						xVelAir = newSpeeds.x/2;
-						yVel    = newSpeeds.y;
-						zVelAir = newSpeeds.z/2;
-
-						justBounced = false;
-
-						setPosition(colPos);
-						increasePosition(triCol->normal.x * 4.0f, triCol->normal.y * 4.0f, triCol->normal.z * 4.0f);
-					}
-					else
-					{
-						bounceOffGround(&(triCol->normal), cantStickBounceFactor, 18);
-
-						setPosition(colPos);
-						increasePosition(triCol->normal.x * 1.5f, triCol->normal.y * 1.5f, triCol->normal.z * 1.5f);
-					}
+					setPosition(colPos);
+					increasePosition(triCol->normal.x * 1.5f, triCol->normal.y * 1.5f, triCol->normal.z * 1.5f);
 
 					canMoveTimer = 8;
 					isBall = true;
 					isDropDashing = false;
 					bonked = true;
 				}
-			}
-
-			if (isStomping)
-			{
-				if (stompSource != nullptr)
-				{
-					stompSource->stop();
-				}
-				AudioPlayer::play(17, getPosition());
-
-				createStompParticles();
 			}
 		}
 		else //check if you can smoothly transition from previous triangle to this triangle
@@ -548,7 +588,7 @@ void PlayerKnuckles::step()
 	}
 	else
 	{
-		increasePosition((float)((xVel + xVelAir + xDisp)), (float)((yVel + yDisp)), (float)((zVel + zVelAir + zDisp)));
+		increasePosition(((xVel + xVelAir + xDisp)), ((yVel + yDisp)), ((zVel + zVelAir + zDisp)));
 
 		//Check for if there's just a small gap "below" us (relative to the normal of the triangle)
 		//NEW: If the second check does pass but it is a wall, we pretend that the check didnt pass
@@ -706,7 +746,7 @@ void PlayerKnuckles::step()
 
 	if (specialInput && !previousSpecialInput && !isLightdashing)
 	{
-		isLightdashing = true;
+		//isLightdashing = true;
 	}
 
 	if (isLightdashing)
@@ -848,7 +888,7 @@ void PlayerKnuckles::updateLimbsMatrix()
 
 void PlayerKnuckles::createLimbs()
 {
-	if (PlayerKnuckles::characterID == 4) //Mania Sonic
+	if (PlayerKnuckles::characterID == 4) //Mania Knuckles
 	{
 		PlayerKnuckles::maniaKnuckles = new ManiaKnucklesModel;
 		Global::countNew++;
@@ -978,7 +1018,10 @@ void PlayerKnuckles::moveMeGround()
 			(fabsf(diff) > 45.0f && currSpeed < 5.0f) ||
 			(fabsf(diff) > 75.0f && currSpeed < 12.0f)))
 		{
-			popOffWall();
+			if (!isClimbing && !isPunching)
+			{
+				popOffWall();
+			}
 		}
 
 		if (fabsf(diff) > 120.0f)
@@ -1814,7 +1857,7 @@ void PlayerKnuckles::animate()
 		}
 	}
 
-	if (mySpeed > 0.01)
+	if (mySpeed > 0.01f)
 	{
 		if (myBody != nullptr) myBody->setBaseOrientation(&displayPos, diff, yawAngle, pitchAngle, 0);
 		if (PlayerKnuckles::maniaKnuckles != nullptr)
@@ -1835,9 +1878,11 @@ void PlayerKnuckles::animate()
 
 	float modelIncreaseVal = (mySpeed)*0.3f;
 	modelRunIndex += modelIncreaseVal;
+	climbAnimTime += mySpeed*2.5f;
+	climbAnimTime = fmodf(climbAnimTime, 100);
 	if (modelRunIndex >= 20)
 	{
-		modelRunIndex = (float)fmod(modelRunIndex, 20);
+		modelRunIndex = fmodf(modelRunIndex, 20);
 	}
 	if (mySpeed == 0)
 	{
@@ -1856,6 +1901,9 @@ void PlayerKnuckles::animate()
 		newPos = newPos + offset;
 		createSpindashTrails(&prevPos, &newPos, 5, 20);
 	}
+
+	//For punching animation
+	myRightHand->setScale(0.33f);
 
 	if (deadTimer >= 0)
 	{
@@ -1957,6 +2005,27 @@ void PlayerKnuckles::animate()
 		updateLimbs(12, 0);
 		airSpinRotation += -35;
 	}
+	else if (isPunching)
+	{
+		if (myBody != nullptr) myBody->setBaseOrientation(&displayPos, diff, yawAngle, pitchAngle, 0);
+		if (PlayerKnuckles::maniaKnuckles != nullptr) { PlayerKnuckles::maniaKnuckles->setVisible(false); }
+		float time = 100*(punchingTimerMax-punchingTimer)/(punchingTimerMax+0.01f);
+		updateLimbs(22, time*2);
+
+		float height = 5;
+		Vector3f offset(currNorm.x*height, currNorm.y*height, currNorm.z*height);
+		Vector3f prevPos(previousDisplayPos);
+		prevPos = prevPos + offset;
+		Vector3f newPos(displayPos);
+		newPos = newPos + offset;
+		createSpindashTrails(&prevPos, &newPos, 3, 20);
+	}
+	else if (isClimbing)
+	{
+		if (myBody != nullptr) myBody->setBaseOrientation(&displayPos, 0, yawAngle+180, -pitchAngle+100, 0);
+		if (PlayerKnuckles::maniaKnuckles != nullptr) { PlayerKnuckles::maniaKnuckles->setVisible(false); }
+		updateLimbs(23, climbAnimTime);
+	}
 	else if (isBall)
 	{
 		if (myBody != nullptr) myBody->setBaseOrientation(dspX, dspY, dspZ, diff, yawAngle, pitchAngle, airSpinRotation);
@@ -2028,6 +2097,12 @@ void PlayerKnuckles::animate()
 		if (myBody != nullptr) myBody->setBaseOrientation(&displayPos, diff, yawAngle, pitchAngle, 0);
 		if (PlayerKnuckles::maniaKnuckles != nullptr) { PlayerKnuckles::maniaKnuckles->setVisible(false); }
 		updateLimbs(11, 0);
+	}
+	else if (onPlane == false)
+	{
+		if (myBody != nullptr) myBody->setBaseOrientation(&displayPos, 0, getRotY(), 75, 0);
+		if (PlayerKnuckles::maniaKnuckles != nullptr) { PlayerKnuckles::maniaKnuckles->setVisible(false); }
+		updateLimbs(21, 0);
 	}
 	else
 	{

@@ -44,7 +44,7 @@ void Body::update(float newTime)
 	float newYRot = 0;
 	float newZRot = 0;
 	float newSRot = 0;
-	float newScale = 0;
+	//float newScale = 0;
 
 	for (unsigned int i = 0; i < (*animations)[animationIndex].keyframes.size() - 1; i++)
 	{
@@ -79,7 +79,7 @@ void Body::update(float newTime)
 		newYRot = key1->yRot + ratio*(key2->yRot - key1->yRot);
 		newZRot = key1->zRot + ratio*(key2->zRot - key1->zRot);
 		newSRot = key1->sRot + ratio*(key2->sRot - key1->sRot);
-		newScale = key1->scale + ratio*(key2->scale - key1->scale);
+		//newScale = key1->scale + ratio*(key2->scale - key1->scale);
 	}
 	else
 	{
@@ -90,7 +90,7 @@ void Body::update(float newTime)
 		newYRot = key2->yRot;
 		newZRot = key2->zRot;
 		newSRot = key2->sRot;
-		newScale = key2->scale;
+		//newScale = key2->scale;
 	}
 	
 	float newXOffset = newX;

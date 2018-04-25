@@ -579,7 +579,7 @@ void PlayerKnuckles::step()
 
 				float sameness = parToWall.length();
 
-				Vector3f parToGround = projectOntoPlane(&parToWall, &currNorm);
+				projectOntoPlane(&parToWall, &currNorm);
 
 				Vector3f newGroundSpeeds = calculatePlaneSpeed(parToWall.x, parToWall.y, parToWall.z, &currNorm);
 
@@ -2298,10 +2298,9 @@ void PlayerKnuckles::newSpindashTrail(Vector3f* trailPos, int life, int colourID
 	newSpindashTrail(trailPos, 0, 0, 0, 0, life, 10, colourID);
 }
 
-void PlayerKnuckles::newSpindashTrail(Vector3f* trailPos, float trailXVel, float trailYVel, float trailZVel, float trailGravity, int life, float size, int colourID)
+void PlayerKnuckles::newSpindashTrail(Vector3f* trailPos, float trailXVel, float trailYVel, float trailZVel, float trailGravity, int life, float size, int /*colourID*/)
 {
 	Vector3f spd(trailXVel, trailYVel, trailZVel);
-	colourID;
 	new Particle(ParticleResources::textureRedTrail,
 		trailPos, &spd,
 		trailGravity, life, 0, size, -(size / life), false);

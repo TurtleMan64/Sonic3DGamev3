@@ -9,7 +9,7 @@
 #include "../renderEngine/renderEngine.h"
 
 std::vector<float> PostProcessing::POSITIONS;
-RawModel       PostProcessing::quad;
+RawModel        PostProcessing::quadModel;
 HorizontalBlur* PostProcessing::hBlur  = nullptr;
 VerticalBlur*   PostProcessing::vBlur  = nullptr;
 HorizontalBlur* PostProcessing::hBlur2 = nullptr;
@@ -30,7 +30,7 @@ void PostProcessing::init()
 	PostProcessing::POSITIONS.push_back(1);
 	PostProcessing::POSITIONS.push_back(-1);
 	
-	PostProcessing::quad = Loader_loadToVAO(&PostProcessing::POSITIONS, 2);
+	PostProcessing::quadModel = Loader_loadToVAO(&PostProcessing::POSITIONS, 2);
 	
 	PostProcessing::hBlur  = new HorizontalBlur(SCR_WIDTH/16, SCR_HEIGHT/16);
 	PostProcessing::vBlur  = new VerticalBlur  (SCR_WIDTH/16, SCR_HEIGHT/16);
@@ -61,7 +61,7 @@ void PostProcessing::cleanUp()
 
 void PostProcessing::start()
 {
-	glBindVertexArray(PostProcessing::quad.getVaoID());
+	glBindVertexArray(PostProcessing::quadModel.getVaoID());
 	glEnableVertexAttribArray(0);
 	glDisable(GL_DEPTH_TEST);
 }

@@ -445,7 +445,7 @@ void PlayerTails::step()
 
 				float sameness = parToWall.length();
 
-				Vector3f parToGround = projectOntoPlane(&parToWall, &currNorm);
+				projectOntoPlane(&parToWall, &currNorm);
 
 				Vector3f newGroundSpeeds = calculatePlaneSpeed(parToWall.x, parToWall.y, parToWall.z, &currNorm);
 
@@ -2190,9 +2190,8 @@ void PlayerTails::takeDamage(Vector3f* damageSource)
 	}
 }
 
-void PlayerTails::rebound(Vector3f* source)
+void PlayerTails::rebound(Vector3f* /*source*/)
 {
-	source;
 	if (onPlane == false)
 	{
 		if (yVel >= 0) //no rebound

@@ -483,7 +483,8 @@ void PlayerSonic::step()
 
 				//fprintf(stdout, "Length = %f\n", parToWall.length());
 
-				Vector3f parToGround = projectOntoPlane(&parToWall, &currNorm);
+				//Vector3f parToGround = projectOntoPlane(&parToWall, &currNorm);
+				projectOntoPlane(&parToWall, &currNorm);
 
 				Vector3f newGroundSpeeds = calculatePlaneSpeed(parToWall.x, parToWall.y, parToWall.z, &currNorm);
 

@@ -1,18 +1,18 @@
 #ifndef POSTPROCESSING_H
 #define POSTPROCESSING_H
 
-class RawModel;
 class HorizontalBlur;
 class VerticalBlur;
 class CombineFilter;
 
 #include <vector>
+#include "../models/models.h"
 
 class PostProcessing 
 {
 private:
 	static std::vector<float> POSITIONS;
-	static RawModel quad;
+	static RawModel quadModel;
 	static HorizontalBlur* hBlur;
 	static VerticalBlur*   vBlur;
 	static HorizontalBlur* hBlur2;

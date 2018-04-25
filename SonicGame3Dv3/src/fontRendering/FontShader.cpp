@@ -129,7 +129,7 @@ GLuint FontShader::loadShader(const char* fileName, int type)
 
 	unsigned int id = glCreateShader(type);
 	const char* src = filetext.c_str();
-	const int len = filetext.size();
+	//const int len = filetext.size();
 	glShaderSource(id, 1, &src, nullptr);
 	glCompileShader(id);
 

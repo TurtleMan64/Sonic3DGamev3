@@ -13,6 +13,7 @@
 #include "../audio/audioplayer.h"
 #include "../particles/particle.h"
 #include "../particles/particleresources.h"
+#include "emeraldmanager.h"
 
 #include <list>
 #include <iostream>
@@ -74,6 +75,7 @@ void EmeraldPiece::step()
 						0.025f, 30, 0, 7, -(7.0f / 30.0f), false);
 				}
 
+				EmeraldManager::collectPiece(this);
 				Main_deleteEntity(this);
 				return;
 			}
@@ -86,6 +88,11 @@ void EmeraldPiece::step()
 int EmeraldPiece::getPieceNumber()
 {
 	return pieceNumber;
+}
+
+bool EmeraldPiece::isEmeraldPiece()
+{
+	return true;
 }
 
 std::list<TexturedModel*>* EmeraldPiece::getModels()

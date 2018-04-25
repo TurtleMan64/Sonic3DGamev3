@@ -76,6 +76,7 @@
 #include "../entities/playerknuckles.h"
 #include "../entities/stagetransparent.h"
 #include "../entities/emeraldpiece.h"
+#include "../entities/emeraldmanager.h"
 
 float toFloat(char* input);
 int toInt(char* input);
@@ -1165,6 +1166,14 @@ void processLine(char** dat)
 				toInt(dat[4])); //piece number
 			Global::countNew++;
 			Main_addEntity(piece);
+			return;
+		}
+
+		case 74: //Emerald Manager
+		{
+			EmeraldManager* manager = new EmeraldManager(toInt(dat[1])); //hard mode
+			Global::countNew++;
+			Main_addEntity(manager);
 			return;
 		}
 

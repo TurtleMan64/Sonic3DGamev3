@@ -305,7 +305,7 @@ void PauseScreen::step()
 
 				case 6:
 					Global::levelID = LVL_KB;
-					LevelLoader_loadLevel("KoopaTroopaBeach.lvl");
+					LevelLoader_loadLevel("WildCanyon.lvl");
 					unpause(false);
 					break;
 

@@ -22,6 +22,8 @@ public:
 
 	void step();
 
+	bool isEmeraldPiece();
+
 	std::list<TexturedModel*>* getModels();
 
 	static void loadStaticModels();

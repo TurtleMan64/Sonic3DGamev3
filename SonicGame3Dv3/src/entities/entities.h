@@ -31,6 +31,8 @@ public:
 
 	virtual bool isPlayer();
 
+	virtual bool isEmeraldPiece();
+
 	void increasePosition(float, float, float);
 
 	void increaseRotation(float, float, float);

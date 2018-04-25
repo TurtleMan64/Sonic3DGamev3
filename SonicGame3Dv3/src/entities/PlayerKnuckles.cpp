@@ -99,6 +99,7 @@ void PlayerKnuckles::step()
 	deadTimer = std::max(-1, deadTimer - 1);
 	canGlideTimer = std::max(0, canGlideTimer-1);
 	punchingTimer = std::max(0, punchingTimer-1);
+	drillDiveAudioTimer = std::max(0, drillDiveAudioTimer-1);
 
 	dropDashCharge = std::fmaxf(0, dropDashCharge-dropDashChargeDecrease);
 
@@ -167,19 +168,8 @@ void PlayerKnuckles::step()
 
 	if (isPunching)
 	{
-		float rotYRad = toRadians(punchAngle);
-		switch (punchType)
-		{
-		case 0:
-			xVelGround =  punchSpeedSlow*cosf(rotYRad);
-			zVelGround = -punchSpeedSlow*sinf(rotYRad);
-			break;
-
-		default:
-			xVelGround =  punchSpeedFast*cosf(rotYRad);
-			zVelGround = -punchSpeedFast*sinf(rotYRad);
-			break;
-		}
+		xVelGround = punchGroundVelX;
+		zVelGround = punchGroundVelZ;
 	}
 
 	if (isClimbing)
@@ -240,9 +230,9 @@ void PlayerKnuckles::step()
 			popOffWall();
 		}
 
-		if (isClimbing && currNorm.y > 0.5)
+		if (isClimbing && currNorm.y > climbSlopeStop)
 		{
-			//isClimbing = false;
+			isClimbing = false;
 		}
 
 		if (jumpInput && !previousJumpInput && !isPunching)
@@ -354,21 +344,33 @@ void PlayerKnuckles::step()
 					punchType = 1;
 				}
 				isPunching = true;
+				AudioPlayer::play(33, getPosition());
 				punchingTimer = punchingTimerMax;
-				punchAngle = getRotY();
-				float rotYRad = toRadians(punchAngle);
-				switch (punchType)
-				{
-				case 0:
-					xVelGround =  punchSpeedSlow*cosf(rotYRad);
-					zVelGround = -punchSpeedSlow*sinf(rotYRad);
-					break;
+				float speedScale = 1;
+				float newSpd = sqrtf(xVelGround*xVelGround+zVelGround*zVelGround);
 
-				default:
-					xVelGround =  punchSpeedFast*cosf(rotYRad);
-					zVelGround = -punchSpeedFast*sinf(rotYRad);
-					break;
+				if (newSpd < 0.001f)
+				{
+					punchGroundVelX =  punchSpeedSlow*cosf(toRadians(getRotY()));
+					punchGroundVelZ = -punchSpeedSlow*sinf(toRadians(getRotY()));
 				}
+				else
+				{
+					switch (punchType)
+					{
+					case 0:
+						speedScale = punchSpeedSlow/speed; //this might need to be switched
+						break;
+
+					default:
+						speedScale = punchSpeedFast/speed;
+						break;
+					}
+					punchGroundVelX = xVelGround*speedScale;
+					punchGroundVelZ = zVelGround*speedScale;
+				}
+				xVelGround = punchGroundVelX;
+				zVelGround = punchGroundVelZ;
 			}
 		}
 	}
@@ -384,8 +386,13 @@ void PlayerKnuckles::step()
 			isDrillDiving = true;
 			isGliding = false;
 			yVel = drillDiveSpeed;
+			xVelAir = xVelAir*0.95f;
+			zVelAir = zVelAir*0.95f;
 			canGlideTimer = 0;
 			hoverCount = 0;
+			drillDiveAudioTimer = drillDiveAudioTimerMax;
+
+			sourceDrillDive = AudioPlayer::play(31, getPosition(), 1, false);
 		}
 
 		if (action2Input && !previousAction2Input && (isJumping || isBall) && !isBouncing && homingAttackTimer == -1 && !isStomping && !isDropDashing)
@@ -412,6 +419,8 @@ void PlayerKnuckles::step()
 				xVelAir =  currSpd*cosf(toRadians(getRotY()));
 				zVelAir = -currSpd*sinf(toRadians(getRotY()));
 			}
+
+			sourceGlide = AudioPlayer::play(32, getPosition(), 1, true);
 		}
 
 		if (jumpInput && isGliding)
@@ -465,6 +474,34 @@ void PlayerKnuckles::step()
 	if (homingAttackTimer > 0)
 	{
 		homingAttackTimer--;
+	}
+
+	if (drillDiveAudioTimer == 1 && isDrillDiving)
+	{
+		sourceDrillDive = AudioPlayer::play(31, getPosition(), 1, false);
+		//stop previous one?
+		drillDiveAudioTimer = drillDiveAudioTimerMax;
+	}
+
+	if (sourceGlide != nullptr)
+	{
+		sourceGlide->setPosition(getX(), getY(), getZ());
+
+		if (!isGliding)
+		{
+			sourceGlide->stop();
+			sourceGlide = nullptr;
+		}
+	}
+	if (sourceDrillDive != nullptr)
+	{
+		sourceDrillDive->setPosition(getX(), getY(), getZ());
+
+		if (!isDrillDiving)
+		{
+			sourceDrillDive->stop();
+			sourceDrillDive = nullptr;
+		}
 	}
 
 	onPlanePrevious = onPlane;
@@ -1034,6 +1071,10 @@ void PlayerKnuckles::moveMeGround()
 			xVelGround = currSpeed*cosf(toRadians(newAngle));
 			zVelGround = currSpeed*sinf(toRadians(newAngle));
 		}
+
+		float factor = 1 - (abs(diff) / turnPenaltyRun);
+		zVelGround *= factor;
+		zVelGround *= factor;
 	}
 }
 
@@ -1878,8 +1919,19 @@ void PlayerKnuckles::animate()
 
 	float modelIncreaseVal = (mySpeed)*0.3f;
 	modelRunIndex += modelIncreaseVal;
-	climbAnimTime += mySpeed*2.5f;
+
+	float climbTimeBefore = climbAnimTime;
+	climbAnimTime += mySpeed*3.5f;
 	climbAnimTime = fmodf(climbAnimTime, 100);
+
+	if (isClimbing && 
+		(climbTimeBefore > climbAnimTime || 
+		(climbTimeBefore < 50 && climbAnimTime >= 50)))
+	{
+		AudioPlayer::play(29, getPosition());
+	}
+
+
 	if (modelRunIndex >= 20)
 	{
 		modelRunIndex = fmodf(modelRunIndex, 20);

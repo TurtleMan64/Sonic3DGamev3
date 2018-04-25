@@ -507,6 +507,9 @@
     <ClCompile Include="src\entities\StageTransparent.cpp">
       <Filter>Source Files\entities</Filter>
     </ClCompile>
+    <ClCompile Include="src\entities\EmeraldPiece.cpp">
+      <Filter>Source Files\entities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\renderEngine\renderEngine.h">
@@ -903,6 +906,9 @@
       <Filter>Source Files\entities</Filter>
     </ClInclude>
     <ClInclude Include="src\entities\stagetransparent.h">
+      <Filter>Source Files\entities</Filter>
+    </ClInclude>
+    <ClInclude Include="src\entities\emeraldpiece.h">
       <Filter>Source Files\entities</Filter>
     </ClInclude>
   </ItemGroup>

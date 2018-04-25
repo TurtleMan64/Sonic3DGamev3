@@ -78,6 +78,8 @@ private:
 	const int hoverLimit = 60;
 	int hoverCount = 0;
 
+	const float turnPenaltyRun = 8000.0f; //How much you slowdown by when turning while running on the ground
+
 	const float moveAcceleration = 0.045f;
 	float moveSpeedCurrent = 0;
 	const float moveAccelerationAir = 0.035f;
@@ -136,15 +138,18 @@ private:
 	const float punchSpeedSlow = 0.7f*1.3f; //sa2 = 0.625
 	const float punchSpeedThreshold = 1.7f*1.3f; //sa2 = 1.4  speed determines which punch speed you do
 	int punchingTimer = 0;
-	const int punchingTimerMax = 24;
+	const int punchingTimerMax = 20;
 	int punchType = 0; //0 = slow punch, 1 = fast punch
-	float punchAngle = 0; //in degrees
+	//float punchAngle = 0; //in degrees
+	float punchGroundVelX = 0;
+	float punchGroundVelZ = 0;
 
 
 	//Climbing
 	bool isClimbing = false;
 	const float climbSpeed = 1.2f;
 	float climbAnimTime = 0;
+	const float climbSlopeStop = 0.85f; //normal y component that makes knuckles stop climbing
 
 
 	const float surfaceTension = 10.0f; //Increase to make sonic not fly off slopes when going fast
@@ -239,7 +244,10 @@ private:
 	float yDisp = 0;
 	float zDisp = 0;
 
-	Source* stompSource = nullptr;
+	Source* sourceGlide = nullptr;
+	int drillDiveAudioTimer = 0;
+	const int drillDiveAudioTimerMax = 30; //Time between glide sound effects
+	Source* sourceDrillDive = nullptr;
 
 	Vector3f previousLightdashPosition;
 

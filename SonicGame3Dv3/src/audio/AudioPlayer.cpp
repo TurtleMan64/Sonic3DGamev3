@@ -53,6 +53,13 @@ void AudioPlayer::loadSoundEffects()
 	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/General/CapsuleClick.ogg"));         //26
 	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/Player/Fly.ogg"));                   //27
 	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/Player/FlyTired.ogg"));              //28
+	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/Player/Climb.ogg"));                 //29
+	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/Player/Dig.ogg"));                   //30
+	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/Player/DrillDive.ogg"));             //31
+	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/Player/Glide.ogg"));                 //32
+	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/Player/Punch.ogg"));                 //33
+	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/General/RadarPing.ogg"));            //34
+	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/General/1Up.ogg"));                  //35
 }
 
 void AudioPlayer::loadBGM(char* fileName)

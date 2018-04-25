@@ -9,6 +9,7 @@ ParticleTexture* ParticleResources::textureDustCloud = nullptr;
 ParticleTexture* ParticleResources::textureSnowball = nullptr;
 ParticleTexture* ParticleResources::textureStar = nullptr;
 ParticleTexture* ParticleResources::textureSparkleYellow = nullptr;
+ParticleTexture* ParticleResources::textureSparkleGreen = nullptr;
 ParticleTexture* ParticleResources::textureSparkleRed = nullptr;
 ParticleTexture* ParticleResources::textureSparkleBlue = nullptr;
 ParticleTexture* ParticleResources::textureWaterDrop = nullptr;
@@ -37,7 +38,8 @@ void ParticleResources::loadParticles()
 	textureDustCloud         = new ParticleTexture(Loader_loadTexture("res/Models/Particle/DustCloud.png"), 1, 0.2f, 0);
 	textureSnowball          = new ParticleTexture(Loader_loadTexture("res/Models/Particle/Snowball.png"), 1, 0.75f, 0);
 	textureStar              = new ParticleTexture(Loader_loadTexture("res/Models/Particle/Star.png"), 1, 1.0f, 0);
-	textureSparkleYellow     = new ParticleTexture(Loader_loadTexture("res/Models/Particle/Sparkle.png"), 1, 1.0f, 1);
+	textureSparkleYellow     = new ParticleTexture(Loader_loadTexture("res/Models/Particle/SparkleYellow.png"), 1, 1.0f, 1);
+	textureSparkleGreen      = new ParticleTexture(Loader_loadTexture("res/Models/Particle/SparkleGreen.png"), 1, 1.0f, 1);
 	textureSparkleRed        = new ParticleTexture(Loader_loadTexture("res/Models/Particle/SparkleRed.png"), 1, 1.0f, 1);
 	textureSparkleBlue       = new ParticleTexture(Loader_loadTexture("res/Models/Particle/SparkleBlue.png"), 1, 1.0f, 1);
 	textureWaterDrop         = new ParticleTexture(Loader_loadTexture("res/Models/Particle/WaterDrop.png"), 1, 1, 0);
@@ -60,5 +62,5 @@ void ParticleResources::loadParticles()
 	textureTear2             = new ParticleTexture(Loader_loadTexture("res/Models/Particle/Tear2.png"), 1, 1.0f, 0);
 	textureWhiteFadeOutAndIn = new ParticleTexture(Loader_loadTexture("res/Models/Particle/WhiteFadeOutAndInAtlas.png"), 2, 1.0f, 0);
 	textureBlackFadeOutAndIn = new ParticleTexture(Loader_loadTexture("res/Models/Particle/BlackFadeOutAndInAtlas.png"), 2, 1.0f, 0);
-	Global::countNew += 27;
+	Global::countNew += 28;
 }

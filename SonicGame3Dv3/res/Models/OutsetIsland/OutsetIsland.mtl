@@ -2,10 +2,10 @@
 # File Created: 10.03.2016 21:52:30
 
 newmtl m0
-	Ns 10.0000
+	Ns 20.0000
 	Ni 0.0125000
 	d 1.0000
-	Tr 0.0000
+	Tr 1
 	Tf 1.0000 1.0000 1.0000 
 	illum 2
 	Ka 0.0000 0.0000 0.0000
@@ -17,10 +17,10 @@ newmtl m0
 	map_d OutsSS00.png
 
 newmtl m1
-	Ns 10.0000
+	Ns 20.0000
 	Ni 0.0125000
 	d 1.0000
-	Tr 0.0000
+	Tr 1
 	Tf 1.0000 1.0000 1.0000 
 	illum 2
 	Ka 0.0000 0.0000 0.0000
@@ -32,10 +32,10 @@ newmtl m1
 	map_d OutsMM03.png
 
 newmtl m2
-	Ns 10.0000
+	Ns 20.0000
 	Ni 0.0125000
 	d 1.0000
-	Tr 0.0000
+	Tr 1
 	Tf 1.0000 1.0000 1.0000 
 	illum 2
 	Ka 0.0000 0.0000 0.0000
@@ -47,10 +47,10 @@ newmtl m2
 	map_d OutsMM02.png
 
 newmtl m3
-	Ns 10.0000
+	Ns 20.0000
 	Ni 0.0125000
 	d 1.0000
-	Tr 0.0000
+	Tr 1
 	Tf 1.0000 1.0000 1.0000 
 	illum 2
 	Ka 0.0000 0.0000 0.0000
@@ -62,10 +62,10 @@ newmtl m3
 	map_d OutsSS01.png
 
 newmtl m4
-	Ns 10.0000
+	Ns 20.0000
 	Ni 0.0125000
 	d 1.0000
-	Tr 0.0000
+	Tr 1
 	Tf 1.0000 1.0000 1.0000 
 	illum 2
 	Ka 0.0000 0.0000 0.0000
@@ -77,10 +77,10 @@ newmtl m4
 	map_d OutsSS05.png
 
 newmtl m5
-	Ns 10.0000
+	Ns 20.0000
 	Ni 0.0125000
 	d 1.0000
-	Tr 0.0000
+	Tr 1
 	Tf 1.0000 1.0000 1.0000 
 	illum 2
 	Ka 0.0000 0.0000 0.0000
@@ -92,10 +92,10 @@ newmtl m5
 	map_d OutsSS04.png
 
 newmtl m6
-	Ns 10.0000
+	Ns 20.0000
 	Ni 0.0125000
 	d 1.0000
-	Tr 0.0000
+	Tr 1
 	Tf 1.0000 1.0000 1.0000 
 	illum 2
 	Ka 0.0000 0.0000 0.0000
@@ -107,10 +107,10 @@ newmtl m6
 	map_d OutsSS07.png
 
 newmtl m7
-	Ns 10.0000
+	Ns 20.0000
 	Ni 0.0125000
 	d 1.0000
-	Tr 0.0000
+	Tr 1
 	Tf 1.0000 1.0000 1.0000 
 	illum 2
 	Ka 0.0000 0.0000 0.0000

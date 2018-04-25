@@ -75,6 +75,7 @@
 #include "../entities/controllableplayer.h"
 #include "../entities/playerknuckles.h"
 #include "../entities/stagetransparent.h"
+#include "../entities/emeraldpiece.h"
 
 float toFloat(char* input);
 int toInt(char* input);
@@ -1156,6 +1157,17 @@ void processLine(char** dat)
 			return;
 		}
 
+		case 73: //Emerald Piece
+		{
+			EmeraldPiece::loadStaticModels();
+			EmeraldPiece* piece = new EmeraldPiece(
+				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
+				toInt(dat[4])); //piece number
+			Global::countNew++;
+			Main_addEntity(piece);
+			return;
+		}
+
 		default:
 		{
 			return;
@@ -1225,4 +1237,5 @@ void freeAllStaticModels()
 	PlayerTails::deleteStaticModels();
 	PlayerKnuckles::deleteStaticModels();
 	StageTransparent::deleteStaticModels();
+	EmeraldPiece::deleteStaticModels();
 }

@@ -82,6 +82,7 @@ public:
 	static Fbo* gameMultisampleFbo;
 	static Fbo* gameOutputFbo;
 	static Fbo* gameOutputFbo2;
+	static float deathHeight;
 
 	//Debug display
 	static bool debugDisplay;

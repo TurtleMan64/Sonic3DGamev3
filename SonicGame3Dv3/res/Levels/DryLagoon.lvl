@@ -1,0 +1,30 @@
+DryLagoon
+DryLagoon
+DryLagoon
+1
+DryLagoon 7
+1.0 1.0 1.0
+0.0 0.0 0.0
+0.0 0.0 0.0
+0.3 0.3 0.45
+0.1922 0.3961 0.9059
+0.05 0.05 0.075
+0.00005 2.0
+95
+-540 6
+0
+0
+927 323.9218 -942
+88 6
+-500
+
+71 240.6 79.6 -527.0
+
+7 DryLagoon SkySphere SkySphere 0.7 0
+
+# Transparent
+72 res/Models/DryLagoon/ Transparent.obj
+
+# Emerald Manager
+#74 0
+

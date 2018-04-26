@@ -12,12 +12,15 @@ private:
 	static EmeraldPiece* piece2;
 	static EmeraldPiece* piece3;
 	static int piecesRemaining;
+	static int pingTimer;
 
 public:
 	EmeraldManager();
 	EmeraldManager(int hardMode);
 
 	void step();
+
+	float calcDistToNextPiece();
 	
 	static void collectPiece(EmeraldPiece* collectedPiece);
 };

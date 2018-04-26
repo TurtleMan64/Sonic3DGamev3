@@ -416,6 +416,12 @@ void LevelLoader_loadLevel(std::string levelFilename)
 	Global::gameStage->finishCameraPitch = toFloat(finishSplit[1]);
 	free(finishSplit);
 
+	//Global death height
+	std::string deathHeightLine;
+	getline(file, deathHeightLine);
+
+	Global::deathHeight = stof(deathHeightLine);
+
 	//Now read through all the objects defined in the file
 
 	std::string line;

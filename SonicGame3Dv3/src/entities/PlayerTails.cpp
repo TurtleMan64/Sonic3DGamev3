@@ -567,7 +567,7 @@ void PlayerTails::step()
 		waterHeight = 0;
 	}
 
-	if (getY() < -100)
+	if (getY() < Global::deathHeight)
 	{
 		die();
 	}

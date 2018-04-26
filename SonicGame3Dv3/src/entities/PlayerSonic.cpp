@@ -664,7 +664,7 @@ void PlayerSonic::step()
 		waterHeight = 0;
 	}
 
-	if (getY() < -100)
+	if (getY() < Global::deathHeight)
 	{
 		die();
 	}

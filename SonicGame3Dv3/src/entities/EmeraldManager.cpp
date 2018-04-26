@@ -4,14 +4,20 @@
 #include "../engineTester/main.h"
 #include "../guis/guimanager.h"
 #include "../toolbox/maths.h"
+#include "../audio/audioplayer.h"
+#include "../engineTester/main.h"
+#include "../entities/controllableplayer.h"
+#include "../toolbox/vector.h"
 
 #include <vector>
 #include <list>
+#include <algorithm>
 
 EmeraldPiece* EmeraldManager::piece1 = nullptr;
 EmeraldPiece* EmeraldManager::piece2 = nullptr;
 EmeraldPiece* EmeraldManager::piece3 = nullptr;
 int EmeraldManager::piecesRemaining = 3;
+int EmeraldManager::pingTimer = 0;
 
 EmeraldManager::EmeraldManager()
 {
@@ -25,6 +31,7 @@ EmeraldManager::EmeraldManager(int hardMode)
 	std::vector<EmeraldPiece*> piece3List;
 
 	int totalPieces = 0;
+	EmeraldManager::pingTimer = 0;
 	EmeraldManager::piece1 = nullptr;
 	EmeraldManager::piece2 = nullptr;
 	EmeraldManager::piece3 = nullptr;
@@ -158,6 +165,65 @@ EmeraldManager::EmeraldManager(int hardMode)
 void EmeraldManager::step()
 {
 	//make ping sounds, update radar
+	float distToPiece = EmeraldManager::calcDistToNextPiece();
+
+	if (EmeraldManager::pingTimer == 1)
+	{
+		AudioPlayer::play(34, Global::gamePlayer->getPosition());
+	}
+	EmeraldManager::pingTimer = std::max(0, EmeraldManager::pingTimer-1);
+
+	if (distToPiece >= 400 && distToPiece < 800)
+	{
+		if (EmeraldManager::pingTimer == 0)
+		{
+			EmeraldManager::pingTimer = 60;
+		}
+	}
+	else if (distToPiece >= 100 && distToPiece < 400)
+	{
+		if (EmeraldManager::pingTimer == 0)
+		{
+			EmeraldManager::pingTimer = 30;
+		}
+	}
+	else if (distToPiece >= 10 && distToPiece < 100)
+	{
+		if (EmeraldManager::pingTimer == 0)
+		{
+			EmeraldManager::pingTimer = 15;
+		}
+	}
+	else if (distToPiece >= 0 && distToPiece < 10)
+	{
+		if (EmeraldManager::pingTimer == 0)
+		{
+			EmeraldManager::pingTimer = 15;
+		}
+	}
+}
+
+float EmeraldManager::calcDistToNextPiece()
+{
+	if (EmeraldManager::piece1 != nullptr)
+	{
+		Vector3f pieceLoc(EmeraldManager::piece1->getPosition());
+		Vector3f playerLoc(Global::gamePlayer->getPosition());
+		return (pieceLoc-playerLoc).length();
+	}
+	else if (EmeraldManager::piece2 != nullptr)
+	{
+		Vector3f pieceLoc(EmeraldManager::piece2->getPosition());
+		Vector3f playerLoc(Global::gamePlayer->getPosition());
+		return (pieceLoc-playerLoc).length();
+	}
+	else if (EmeraldManager::piece3 != nullptr)
+	{
+		Vector3f pieceLoc(EmeraldManager::piece3->getPosition());
+		Vector3f playerLoc(Global::gamePlayer->getPosition());
+		return (pieceLoc-playerLoc).length();
+	}
+	return 1000000.0f;
 }
 
 void EmeraldManager::collectPiece(EmeraldPiece* collectedPiece)

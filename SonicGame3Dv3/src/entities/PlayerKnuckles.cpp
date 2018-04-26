@@ -566,7 +566,12 @@ void PlayerKnuckles::step()
 		else //check if you can smoothly transition from previous triangle to this triangle
 		{
 			float dotProduct = currNorm.dot(&(triCol->normal));
-			if (dotProduct < smoothTransitionThreshold)
+			float thresholdToUse = smoothTransitionThreshold;
+			if (isClimbing)
+			{
+				thresholdToUse = smoothClimbTransitionThreshold;
+			}
+			if (dotProduct < thresholdToUse)
 			{
 				xVelGround = 0;
 				zVelGround = 0;
@@ -639,7 +644,12 @@ void PlayerKnuckles::step()
 		if (checkPassed)
 		{
 			float dotProduct = currNorm.dot(&(CollisionChecker::getCollideTriangle()->normal));
-			if (dotProduct < smoothTransitionThreshold) //It's a wall, pretend the collision check didn't see it
+			float thresholdToUse = smoothTransitionThreshold;
+			if (isClimbing)
+			{
+				thresholdToUse = smoothClimbTransitionThreshold;
+			}
+			if (dotProduct < thresholdToUse) //It's a wall, pretend the collision check didn't see it
 			{
 				checkPassed = false;
 			}
@@ -654,7 +664,12 @@ void PlayerKnuckles::step()
 			bool bonked = false;
 			//check if you can smoothly transition from previous triangle to this triangle
 			float dotProduct = currNorm.dot(&(CollisionChecker::getCollideTriangle()->normal));
-			if (dotProduct < smoothTransitionThreshold)
+			float thresholdToUse = smoothTransitionThreshold;
+			if (isClimbing)
+			{
+				thresholdToUse = smoothClimbTransitionThreshold;
+			}
+			if (dotProduct < thresholdToUse)
 			{
 				xVelGround = 0;
 				zVelGround = 0;
@@ -701,7 +716,7 @@ void PlayerKnuckles::step()
 		waterHeight = 0;
 	}
 
-	if (getY() < -100)
+	if (getY() < Global::deathHeight)
 	{
 		die();
 	}

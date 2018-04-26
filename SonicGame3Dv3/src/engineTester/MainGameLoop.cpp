@@ -135,6 +135,7 @@ bool Global::shouldRestartLevel = false;
 std::string Global::levelName = "";
 int Global::gameRingCount = 0;
 int Global::gameClock = 0;
+float Global::deathHeight = -100.0f;
 
 bool Global::unlockedSonicDoll = true;
 bool Global::unlockedMechaSonic = true;

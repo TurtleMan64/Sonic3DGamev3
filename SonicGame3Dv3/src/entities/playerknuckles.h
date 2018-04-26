@@ -73,7 +73,7 @@ private:
 	bool onPlanePrevious = false;
 	float gravity = 0.08f;
 	const float hoverAccel = 0.04f; //How much yVel you gain each frame from hovering
-	const float jumpPower = 1.7f;
+	const float jumpPower = 2.0f;
 
 	const int hoverLimit = 60;
 	int hoverCount = 0;
@@ -150,6 +150,7 @@ private:
 	const float climbSpeed = 1.2f;
 	float climbAnimTime = 0;
 	const float climbSlopeStop = 0.85f; //normal y component that makes knuckles stop climbing
+	const float smoothClimbTransitionThreshold = 0.3f; //How similar 2 triangles must be to climb between them
 
 
 	const float surfaceTension = 10.0f; //Increase to make sonic not fly off slopes when going fast

@@ -12,6 +12,7 @@
 #include <vector>
 #include <list>
 #include <algorithm>
+#include <unordered_map>
 
 EmeraldPiece* EmeraldManager::piece1 = nullptr;
 EmeraldPiece* EmeraldManager::piece2 = nullptr;
@@ -38,15 +39,15 @@ EmeraldManager::EmeraldManager(int hardMode)
 
 	visible = false;
 
-	extern std::list<Entity*> gameEntitiesToAdd;
+	extern std::unordered_map<Entity*, Entity*> gameEntitiesPass2;
 
-	for (auto e : gameEntitiesToAdd)
+	for (auto e : gameEntitiesPass2)
 	{
-		if (e->isEmeraldPiece()) 
+		if (e.first->isEmeraldPiece()) 
 		{
-			EmeraldPiece* piece = (EmeraldPiece*)e;
+			EmeraldPiece* piece = (EmeraldPiece*)e.first;
 			totalPieces++;
-			switch(piece->getPieceNumber())
+			switch (piece->getPieceNumber())
 			{
 			case 1:
 				piece1List.push_back(piece);
@@ -142,21 +143,21 @@ EmeraldManager::EmeraldManager(int hardMode)
 		{
 			if (piece != EmeraldManager::piece1)
 			{
-				Main_deleteEntity(piece);
+				Main_deleteEntityPass2(piece);
 			}
 		}
 		for (EmeraldPiece* piece : piece2List)
 		{
 			if (piece != EmeraldManager::piece2)
 			{
-				Main_deleteEntity(piece);
+				Main_deleteEntityPass2(piece);
 			}
 		}
 		for (EmeraldPiece* piece : piece3List)
 		{
 			if (piece != EmeraldManager::piece3)
 			{
-				Main_deleteEntity(piece);
+				Main_deleteEntityPass2(piece);
 			}
 		}
 	}

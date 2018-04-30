@@ -3,7 +3,9 @@
 
 class FontType;
 class GUIText;
+class GuiTexture;
 
+#include <list>
 
 class GuiManager
 {
@@ -16,6 +18,8 @@ private:
 	static int minutes;
 
 	static GUIText* textRings;
+
+	static std::list<GuiTexture*> guisToRender;
 
 	static GUIText* textHorVel;
 	static GUIText* textVerVel;
@@ -31,7 +35,7 @@ private:
 	static float horVel;
 	static float verVel;
 	static float totalVel;
-	static int hoverCouunt;
+	static int hoverCount;
 	static float storedSpindashSpeed;
 
 public:
@@ -55,6 +59,12 @@ public:
 
 	//Total time on timer in seconds
 	static float getTotalTimer();
+
+	static void addGuiToRender(GuiTexture* newImage);
+
+	static void removeGui(GuiTexture* newImage);
+
+	static void clearGuisToRender();
 };
 
 #endif

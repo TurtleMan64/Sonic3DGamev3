@@ -114,6 +114,10 @@
     <ClCompile Include="src\gaussianBlur\VerticalBlurShader.cpp" />
     <ClCompile Include="src\glad.c" />
     <ClCompile Include="src\guis\GuiManager.cpp" />
+    <ClCompile Include="src\guis\GuiRenderer.cpp" />
+    <ClCompile Include="src\guis\GuiShader.cpp" />
+    <ClCompile Include="src\guis\GuiTexture.cpp" />
+    <ClCompile Include="src\guis\GuiTextureResources.cpp" />
     <ClCompile Include="src\models\RawModel.cpp" />
     <ClCompile Include="src\models\TexturedModel.cpp" />
     <ClCompile Include="src\objLoader\FakeTexture.cpp" />
@@ -255,6 +259,10 @@
     <ClInclude Include="src\gaussianBlur\verticalblur.h" />
     <ClInclude Include="src\gaussianBlur\verticalblurshader.h" />
     <ClInclude Include="src\guis\guimanager.h" />
+    <ClInclude Include="src\guis\guirenderer.h" />
+    <ClInclude Include="src\guis\guishader.h" />
+    <ClInclude Include="src\guis\guitexture.h" />
+    <ClInclude Include="src\guis\guitextureresources.h" />
     <ClInclude Include="src\models\models.h" />
     <ClInclude Include="src\objLoader\fakeTexture.h" />
     <ClInclude Include="src\objLoader\modeldata.h" />

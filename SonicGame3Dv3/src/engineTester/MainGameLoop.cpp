@@ -55,6 +55,8 @@
 #include "../shadows2/shadowmapmasterrenderer2.h"
 #include "../postProcessing/postprocessing.h"
 #include "../postProcessing/fbo.h"
+#include "../guis/guirenderer.h"
+#include "../guis/guitextureresources.h"
 
 #ifdef _WIN32
 #include <windows.h>
@@ -191,6 +193,8 @@ int main()
 	{
 		ParticleResources::loadParticles();
 	}
+
+	GuiTextureResources::loadGuiTextures();
 
 	CollisionChecker::initChecker();
 	AnimationResources::createAnimations();
@@ -539,6 +543,7 @@ int main()
 	Loader_cleanUp();
 	TextMaster::cleanUp();
 	AudioMaster::cleanUp();
+	GuiRenderer::cleanUp();
 	if (Global::gameWaterFBOs != nullptr)
 	{
 		Global::gameWaterFBOs->cleanUp();

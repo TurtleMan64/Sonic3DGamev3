@@ -43,6 +43,13 @@ void createTransformationMatrix(Matrix4f* matrix, Vector3f* translation, float r
 	matrix->scale(&vec);
 }
 
+void createTransformationMatrix(Matrix4f* result, Vector2f* translation, Vector2f* scale)
+{
+	result->setIdentity();
+	result->translate(translation);
+	result->scale(scale);
+}
+
 //Based on how sadx calculates rotations
 void createTransformationMatrixSADX(Matrix4f* matrix, Vector3f* translation, float rx, float ry, float rz, float scale)
 {

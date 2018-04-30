@@ -77,6 +77,7 @@
 #include "../entities/stagetransparent.h"
 #include "../entities/emeraldpiece.h"
 #include "../entities/emeraldmanager.h"
+#include "../guis/guitextureresources.h"
 
 float toFloat(char* input);
 int toInt(char* input);
@@ -110,6 +111,7 @@ void LevelLoader_loadTitle()
 	GuiManager::setTimer(0, 0, 0);
 	GuiManager::stopTimer();
 
+	GuiManager::clearGuisToRender();
 	//PauseScreen::pause();
 }
 
@@ -461,6 +463,9 @@ void LevelLoader_loadLevel(std::string levelFilename)
 	Global::gameRingCount = 0;
 	GuiManager::setTimer(0, 0, 0);
 	GuiManager::stopTimer();
+
+	GuiManager::clearGuisToRender();
+	GuiManager::addGuiToRender(GuiTextureResources::textureRing);
 
 	Global::finishStageTimer = -1;
 
@@ -1171,7 +1176,7 @@ void processLine(char** dat)
 				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
 				toInt(dat[4])); //piece number
 			Global::countNew++;
-			Main_addEntity(piece);
+			Main_addEntityPass2(piece);
 			return;
 		}
 

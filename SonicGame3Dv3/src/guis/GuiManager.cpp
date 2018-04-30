@@ -4,8 +4,8 @@
 #include "../entities/playersonic.h"
 #include "../fontMeshCreator/guitext.h"
 #include "../fontMeshCreator/fonttype.h"
-#include "../engineTester/main.h"
 #include "../toolbox/pausescreen.h"
+#include "guirenderer.h"
 
 #include <cmath>
 #include <string>
@@ -40,10 +40,10 @@ FontType* GuiManager::fontVip = nullptr;
 float GuiManager::horVel = 0;
 float GuiManager::verVel = 0;
 float GuiManager::totalVel = 0;
-int hoverCount = 0;
+int   GuiManager::hoverCount = 0;
 float GuiManager::storedSpindashSpeed = 0;
 
-
+std::list<GuiTexture*> GuiManager::guisToRender;
 
 void GuiManager::init()
 {
@@ -74,10 +74,19 @@ void GuiManager::init()
 	Global::countNew++;
 	textY = new GUIText("Y", 1, fontVip, 0.95f, 0.95f, 1, false, Global::debugDisplay);
 	Global::countNew++;
+
+	GuiRenderer::init();
 }
 
 void GuiManager::refresh()
 {
+	extern unsigned int SCR_WIDTH;
+	extern unsigned int SCR_HEIGHT;
+
+	float px = 1.0f/(SCR_WIDTH);  //1 pixel in x dimension
+	float py = 1.0f/(SCR_HEIGHT); //1 pixel in y dimension
+
+
 	textTimer->deleteMe();
 	delete textTimer;
 	Global::countDelete++;
@@ -100,14 +109,14 @@ void GuiManager::refresh()
 	}
 	std::string timer = partMin + ":" + partSec + "." + partCen;
 
-	textTimer = new GUIText(timer, 1.5f, fontVip, 0.01f, 0.01f, 1, false, true);
+	textTimer = new GUIText(timer, 1.5f, fontVip, 0+16*px, 0+16*py, 1, false, true);
 	Global::countNew++;
 
 	textRings->deleteMe();
 	delete textRings;
 	Global::countDelete++;
 	textRings = nullptr;
-	textRings = new GUIText(std::to_string(Global::gameRingCount), 1.5f, fontVip, 0.01f, 0.06f, 1, false, true);
+	textRings = new GUIText(std::to_string(Global::gameRingCount), 1.5f, fontVip, 0+48*px, 0+48*py, 1, false, true);
 	Global::countNew++;
 
 	if (Global::debugDisplay)
@@ -223,6 +232,9 @@ void GuiManager::refresh()
 		textX->setVisibility(false);
 		textY->setVisibility(false);
 	}
+
+	//Render images
+	GuiRenderer::render(&GuiManager::guisToRender);
 }
 
 void GuiManager::increaseTimer()
@@ -279,3 +291,17 @@ float GuiManager::getTotalTimer()
 	return minutes * 60 + seconds + centiseconds / 60.0f;
 }
 
+void GuiManager::addGuiToRender(GuiTexture* newImage)
+{
+	GuiManager::guisToRender.push_back(newImage);
+}
+
+void GuiManager::removeGui(GuiTexture* imageToRemove)
+{
+	GuiManager::guisToRender.remove(imageToRemove);
+}
+
+void GuiManager::clearGuisToRender()
+{
+	GuiManager::guisToRender.clear();
+}

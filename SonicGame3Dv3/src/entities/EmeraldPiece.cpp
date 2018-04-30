@@ -76,7 +76,7 @@ void EmeraldPiece::step()
 				}
 
 				EmeraldManager::collectPiece(this);
-				Main_deleteEntity(this);
+				Main_deleteEntityPass2(this);
 				return;
 			}
 

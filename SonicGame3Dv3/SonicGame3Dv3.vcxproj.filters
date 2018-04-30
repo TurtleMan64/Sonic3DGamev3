@@ -513,6 +513,18 @@
     <ClCompile Include="src\entities\EmeraldManager.cpp">
       <Filter>Source Files\entities</Filter>
     </ClCompile>
+    <ClCompile Include="src\guis\GuiRenderer.cpp">
+      <Filter>Source Files\guis</Filter>
+    </ClCompile>
+    <ClCompile Include="src\guis\GuiTexture.cpp">
+      <Filter>Source Files\guis</Filter>
+    </ClCompile>
+    <ClCompile Include="src\guis\GuiShader.cpp">
+      <Filter>Source Files\guis</Filter>
+    </ClCompile>
+    <ClCompile Include="src\guis\GuiTextureResources.cpp">
+      <Filter>Source Files\guis</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\renderEngine\renderEngine.h">
@@ -916,6 +928,18 @@
     </ClInclude>
     <ClInclude Include="src\entities\emeraldmanager.h">
       <Filter>Source Files\entities</Filter>
+    </ClInclude>
+    <ClInclude Include="src\guis\guirenderer.h">
+      <Filter>Source Files\guis</Filter>
+    </ClInclude>
+    <ClInclude Include="src\guis\guitexture.h">
+      <Filter>Source Files\guis</Filter>
+    </ClInclude>
+    <ClInclude Include="src\guis\guishader.h">
+      <Filter>Source Files\guis</Filter>
+    </ClInclude>
+    <ClInclude Include="src\guis\guitextureresources.h">
+      <Filter>Source Files\guis</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

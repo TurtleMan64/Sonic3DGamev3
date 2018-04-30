@@ -3,6 +3,7 @@
 
 class Matrix4f;
 class Vector3f;
+class Vector2f;
 class Camera;
 
 #include <math.h>
@@ -18,6 +19,9 @@ float toDegrees(float);
 ** Blank Matrix4f should have already been created. This function does not allocate any memory to matrix.
 */
 void createTransformationMatrix(Matrix4f*, Vector3f*, float, float, float, float, float);
+
+//For 2D GUI Images
+void createTransformationMatrix(Matrix4f* result, Vector2f* translation, Vector2f* scale);
 
 //Based on how sadx calculates rotations
 void createTransformationMatrixSADX(Matrix4f*, Vector3f*, float, float, float, float);

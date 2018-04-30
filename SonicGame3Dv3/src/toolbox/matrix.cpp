@@ -166,6 +166,14 @@ void Matrix4f::translate(Vector3f* vec)
 	m33 += m03 * vec->x + m13 * vec->y + m23 * vec->z;
 }
 
+void Matrix4f::translate(Vector2f* vec)
+{
+	m30 += m00 * vec->x + m10 * vec->y;
+	m31 += m01 * vec->x + m11 * vec->y;
+	m32 += m02 * vec->x + m12 * vec->y;
+	m33 += m03 * vec->x + m13 * vec->y;
+}
+
 void Matrix4f::scale(Vector3f* vec)
 {
 	m00 = m00 * vec->x;
@@ -180,6 +188,18 @@ void Matrix4f::scale(Vector3f* vec)
 	m21 = m21 * vec->z;
 	m22 = m22 * vec->z;
 	m23 = m23 * vec->z;
+}
+
+void Matrix4f::scale(Vector2f* vec)
+{
+	m00 = m00 * vec->x;
+	m01 = m01 * vec->x;
+	m02 = m02 * vec->x;
+	m03 = m03 * vec->x;
+	m10 = m10 * vec->y;
+	m11 = m11 * vec->y;
+	m12 = m12 * vec->y;
+	m13 = m13 * vec->y;
 }
 
 //angle in radians

@@ -56,7 +56,11 @@ public:
 
 	void translate(Vector3f*);
 
+	void translate(Vector2f*);
+
 	void scale(Vector3f*);
+
+	void scale(Vector2f*);
 
 	//angle in radians
 	void rotate(float, Vector3f*);

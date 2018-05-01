@@ -91,6 +91,9 @@
     <Filter Include="Source Files\gaussianBlur">
       <UniqueIdentifier>{039eddca-a831-4ed5-be59-a7691b88ae1e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\entities\WildCanyon">
+      <UniqueIdentifier>{9aaf4645-b380-461f-b18b-910196c59655}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\renderEngine\DisplayManager.cpp">
@@ -525,6 +528,9 @@
     <ClCompile Include="src\guis\GuiTextureResources.cpp">
       <Filter>Source Files\guis</Filter>
     </ClCompile>
+    <ClCompile Include="src\entities\WildCanyon\WC_Breeze.cpp">
+      <Filter>Source Files\entities\WildCanyon</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\renderEngine\renderEngine.h">
@@ -940,6 +946,9 @@
     </ClInclude>
     <ClInclude Include="src\guis\guitextureresources.h">
       <Filter>Source Files\guis</Filter>
+    </ClInclude>
+    <ClInclude Include="src\entities\WildCanyon\wcbreeze.h">
+      <Filter>Source Files\entities\WildCanyon</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

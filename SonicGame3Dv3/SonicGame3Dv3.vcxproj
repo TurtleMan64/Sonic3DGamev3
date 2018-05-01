@@ -97,6 +97,7 @@
     <ClCompile Include="src\entities\TwinklePark\TP_FlatWater.cpp" />
     <ClCompile Include="src\entities\TwinklePark\TP_FloatingPad.cpp" />
     <ClCompile Include="src\entities\TwinklePark\TP_SpinningFloor.cpp" />
+    <ClCompile Include="src\entities\WildCanyon\WC_Breeze.cpp" />
     <ClCompile Include="src\fontMeshCreator\Character.cpp" />
     <ClCompile Include="src\fontMeshCreator\FontType.cpp" />
     <ClCompile Include="src\fontMeshCreator\GUIText.cpp" />
@@ -243,6 +244,7 @@
     <ClInclude Include="src\entities\TwinklePark\tpflatwater.h" />
     <ClInclude Include="src\entities\TwinklePark\tpfloatingpad.h" />
     <ClInclude Include="src\entities\TwinklePark\tpspinningfloor.h" />
+    <ClInclude Include="src\entities\WildCanyon\wcbreeze.h" />
     <ClInclude Include="src\fontMeshCreator\character.h" />
     <ClInclude Include="src\fontMeshCreator\fonttype.h" />
     <ClInclude Include="src\fontMeshCreator\guitext.h" />

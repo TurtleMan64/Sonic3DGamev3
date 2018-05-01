@@ -1,5 +1,5 @@
 # Blender MTL File: 'None'
-# Material Count: 28
+# Material Count: 29
 
 newmtl LANDTX16_material_0
 Ns 20
@@ -308,3 +308,14 @@ Ni 0.02
 d 1.000000
 illum 2
 map_Kd kd_nde_hasira2_vq.png
+
+newmtl LANDTX16_material_9_kd_nde_hasira9_vq.png
+Ns 20
+Ka 1.000000 1.000000 1.000000
+Kd 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 0.02
+d 1.000000
+illum 2
+map_Kd kd_nde_hasira9_vq.png

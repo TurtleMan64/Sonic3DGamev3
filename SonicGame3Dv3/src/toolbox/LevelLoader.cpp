@@ -78,6 +78,7 @@
 #include "../entities/emeraldpiece.h"
 #include "../entities/emeraldmanager.h"
 #include "../guis/guitextureresources.h"
+#include "../entities/WildCanyon/wcbreeze.h"
 
 float toFloat(char* input);
 int toInt(char* input);
@@ -1186,6 +1187,16 @@ void processLine(char** dat)
 			EmeraldManager* manager = new EmeraldManager(toInt(dat[1])); //hard mode
 			Global::countNew++;
 			Main_addEntity(manager);
+			return;
+		}
+
+		case 75: //Breeze
+		{
+			WC_Breeze* breeze = new WC_Breeze(
+				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
+				toFloat(dat[4]), toFloat(dat[5])); //radius, height
+			Global::countNew++;
+			Main_addEntity(breeze);
 			return;
 		}
 

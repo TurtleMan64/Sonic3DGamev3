@@ -154,6 +154,11 @@ Vector2f Vector2f::operator / (const Vector2f &other) {
 	return Vector2f(x / other.x, y / other.y);
 }
 
+Vector2f Vector2f::operator * (const float &scale)
+{
+	return Vector2f(x * scale, y * scale);
+}
+
 
 Vector2f::Vector2f() {
 	x = 0;

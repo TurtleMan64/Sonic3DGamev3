@@ -65,9 +65,10 @@ void AudioMaster::updateListenerData(Vector3f* pos, Vector3f* vel, float camYaw,
 	float zOff2 = -sinf(toRadians(camYaw + 90))*((cosf(toRadians(camPitch + 90))));
 	Vector3f up(xOff2, yOff2, zOff2);
 	up.normalize();
+	up.neg(); //to flip speakers
 
 	ALfloat listenerPos[] = { pos->x, pos->y, pos->z };
-	ALfloat listenerVel[] = { vel->x/3.0f, vel->y/3.0f, vel->z/3.0f };
+	ALfloat listenerVel[] = { vel->x/3.0f, vel->y/3.0f, vel->z/3.0f }; // over 3 to scale down doppler effect
 	ALfloat listenerOri[] = { at.x, at.y, at.z, up.x, up.y, up.z };
 
 	alListenerfv(AL_POSITION,    listenerPos);

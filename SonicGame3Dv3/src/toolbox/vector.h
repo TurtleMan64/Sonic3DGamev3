@@ -78,6 +78,8 @@ public:
 	Vector2f operator * (const Vector2f &other);
 
 	Vector2f operator / (const Vector2f &other);
+
+	Vector2f operator * (const float &scale);
 };
 
 class Vector4f

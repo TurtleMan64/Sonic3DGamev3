@@ -424,6 +424,8 @@ void LevelLoader_loadLevel(std::string levelFilename)
 
 	Global::deathHeight = stof(deathHeightLine);
 
+	GuiManager::clearGuisToRender();
+
 	//Now read through all the objects defined in the file
 
 	std::string line;
@@ -464,7 +466,6 @@ void LevelLoader_loadLevel(std::string levelFilename)
 	GuiManager::setTimer(0, 0, 0);
 	GuiManager::stopTimer();
 
-	GuiManager::clearGuisToRender();
 	GuiManager::addGuiToRender(GuiTextureResources::textureRing);
 
 	Global::finishStageTimer = -1;

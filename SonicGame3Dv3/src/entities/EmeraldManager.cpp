@@ -109,13 +109,13 @@ EmeraldManager::EmeraldManager(int doHardMode)
 
 	visible = false;
 
-	extern std::unordered_map<Entity*, Entity*> gameEntitiesPass2;
+	extern std::list<Entity*> gameEntitiesPass2ToAdd;
 
-	for (auto e : gameEntitiesPass2)
+	for (Entity* e : gameEntitiesPass2ToAdd)
 	{
-		if (e.first->isEmeraldPiece()) 
+		if (e->isEmeraldPiece()) 
 		{
-			EmeraldPiece* piece = (EmeraldPiece*)e.first;
+			EmeraldPiece* piece = (EmeraldPiece*)e;
 			totalPieces++;
 			switch (piece->getPieceNumber())
 			{

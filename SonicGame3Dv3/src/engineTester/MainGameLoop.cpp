@@ -75,8 +75,12 @@ std::list<Entity*> gameEntitiesToAdd;
 std::list<Entity*> gameEntitiesToDelete;
 
 std::unordered_map<Entity*, Entity*> gameEntitiesPass2;
+std::list<Entity*> gameEntitiesPass2ToAdd;
+std::list<Entity*> gameEntitiesPass2ToDelete;
 
 std::unordered_map<Entity*, Entity*> gameTransparentEntities;
+std::list<Entity*> gameTransparentEntitiesToAdd;
+std::list<Entity*> gameTransparentEntitiesToDelete;
 
 Camera* Global::gameCamera = nullptr;
 ControllablePlayer* Global::gamePlayer = nullptr;
@@ -321,6 +325,24 @@ int main()
 			Global::countDelete++;
 		}
 		gameEntitiesToDelete.clear();
+
+
+		//entities pass2 managment
+		for (auto entityToAdd : gameEntitiesPass2ToAdd)
+		{
+			gameEntitiesPass2.insert(std::pair<Entity*, Entity*>(entityToAdd, entityToAdd));
+		}
+		gameEntitiesPass2ToAdd.clear();
+
+		for (auto entityToDelete : gameEntitiesPass2ToDelete)
+		{
+			gameEntitiesPass2.erase(entityToDelete);
+			delete entityToDelete;
+			Global::countDelete++;
+		}
+		gameEntitiesPass2ToDelete.clear();
+
+
 
 		PauseScreen::step();
 
@@ -591,21 +613,33 @@ void Main_deleteAllEntites()
 	gameEntities.clear();
 }
 
-//Entities in pass2 shouldn't create new pass2 entities from within their step function
 void Main_addEntityPass2(Entity* entityToAdd)
 {
-	gameEntitiesPass2.insert(std::pair<Entity*, Entity*>(entityToAdd, entityToAdd));
+	gameEntitiesPass2ToAdd.push_back(entityToAdd);
 }
 
 void Main_deleteEntityPass2(Entity* entityToDelete)
 {
-	gameEntitiesPass2.erase(entityToDelete);
-	delete entityToDelete;
-	Global::countDelete++;
+	gameEntitiesPass2ToDelete.push_back(entityToDelete);
 }
 
 void Main_deleteAllEntitesPass2()
 {
+	//Make sure no entities get left behind in transition
+	for (auto entityToAdd : gameEntitiesPass2ToAdd)
+	{
+		gameEntitiesPass2.insert(std::pair<Entity*, Entity*>(entityToAdd, entityToAdd));
+	}
+	gameEntitiesPass2ToAdd.clear();
+
+	for (auto entityToDelete : gameEntitiesPass2ToDelete)
+	{
+		gameEntitiesPass2.erase(entityToDelete);
+		delete entityToDelete;
+		Global::countDelete++;
+	}
+	gameEntitiesPass2ToDelete.clear();
+
 	for (auto entityToDelete : gameEntitiesPass2)
 	{
 		delete entityToDelete.first;

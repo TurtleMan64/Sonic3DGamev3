@@ -1,5 +1,5 @@
 # Blender MTL File: 'None'
-# Material Count: 61
+# Material Count: 60
 
 newmtl material0
 Ns 17.647059
@@ -10,7 +10,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Kd texturesPNG/kdv_wall01_dfsp_k.png
+map_Kd texturesPNG\kdv_wall01_dfsp_k.png
 
 newmtl material0.001
 Ns 17.647059
@@ -21,7 +21,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Kd texturesPNG/kdv_bridge01_dfsp_z.png
+map_Kd texturesPNG\kdv_bridge01_dfsp_z.png
 
 newmtl material0.002
 Ns 17.647059
@@ -32,7 +32,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Kd texturesPNG/kdv_wall04_dfsp_z.png
+map_Kd texturesPNG\kdv_wall04_dfsp_z.png
 
 newmtl material0.003
 Ns 17.647059
@@ -43,7 +43,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Kd texturesPNG/kdv_wall01_dfsp_r.png
+map_Kd texturesPNG\kdv_wall01_dfsp_r.png
 
 newmtl material0.004
 Ns 17.647059
@@ -54,7 +54,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Kd texturesPNG/kdv_bridge03_dfsp_z.png
+map_Kd texturesPNG\kdv_bridge03_dfsp_z.png
 
 newmtl material0.005
 Ns 17.647059
@@ -65,7 +65,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Kd texturesPNG/kdv_wall05_dfsp_k.png
+map_Kd texturesPNG\kdv_wall05_dfsp_k.png
 
 newmtl material0.006
 Ns 17.647059
@@ -76,7 +76,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Kd texturesPNG/kdv_debris01_dfsp_z.png
+map_Kd texturesPNG\kdv_debris01_dfsp_z.png
 
 newmtl material0.010
 Ns 17.647059
@@ -87,7 +87,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Kd texturesPNG/kdv_wall14_dfsp_r.png
+map_Kd texturesPNG\kdv_wall14_dfsp_r.png
 
 newmtl material0.011
 Ns 17.647059
@@ -98,7 +98,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Kd texturesPNG/kdv_piller08_dfsp_r.png
+map_Kd texturesPNG\kdv_piller08_dfsp_r.png
 
 newmtl material0.017
 Ns 17.647059
@@ -109,7 +109,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Kd texturesPNG/kdv_pillar01_dfsp_z.png
+map_Kd texturesPNG\kdv_pillar01_dfsp_z.png
 
 newmtl material0.018
 Ns 17.647059
@@ -120,7 +120,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Kd texturesPNG/kdv_longshot_df_y.png
+map_Kd texturesPNG\kdv_longshot_df_y.png
 
 newmtl material0.024
 Ns 17.647059
@@ -131,7 +131,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Kd texturesPNG/kdv_plant14_dfsp_n.png
+map_Kd texturesPNG\kdv_plant14_dfsp_n.png
 
 newmtl material0.026
 Ns 17.647059
@@ -142,7 +142,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Kd texturesPNG/kdv_wood03_dfsp_n.png
+map_Kd texturesPNG\kdv_wood03_dfsp_n.png
 
 newmtl material0.032
 Ns 17.647059
@@ -153,7 +153,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Kd texturesPNG/kdv_wood01_dfsp_y.png
+map_Kd texturesPNG\kdv_wood01_dfsp_y.png
 
 newmtl material0.043
 Ns 17.647059
@@ -164,7 +164,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Kd texturesPNG/kdv_brick19_dfsp_y.png
+map_Kd texturesPNG\kdv_brick19_dfsp_y.png
 
 newmtl material0.044
 Ns 17.647059
@@ -175,7 +175,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Kd texturesPNG/kdv_wall04_dfsp_k.png
+map_Kd texturesPNG\kdv_wall04_dfsp_k.png
 
 newmtl material0.049
 Ns 17.647059
@@ -186,7 +186,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Kd texturesPNG/kdv_wood02_dfsp_n.png
+map_Kd texturesPNG\kdv_wood02_dfsp_n.png
 
 newmtl material0.054
 Ns 17.647059
@@ -197,7 +197,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Kd texturesPNG/kdv_piller06_dfsp_r.png
+map_Kd texturesPNG\kdv_piller06_dfsp_r.png
 
 newmtl material1
 Ns 17.647059
@@ -208,7 +208,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Kd texturesPNG/kdv_wall02_dfsp_k.png
+map_Kd texturesPNG\kdv_wall02_dfsp_k.png
 
 newmtl material1.002
 Ns 17.647059
@@ -219,7 +219,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Kd texturesPNG/kdv_emblem02_dfsp_z.png
+map_Kd texturesPNG\kdv_emblem02_dfsp_z.png
 
 newmtl material1.004
 Ns 17.647059
@@ -230,7 +230,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Kd texturesPNG/kdv_iron02_dfsp_r.png
+map_Kd texturesPNG\kdv_iron02_dfsp_r.png
 
 newmtl material1.005
 Ns 17.647059
@@ -241,7 +241,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Kd texturesPNG/kdv_earth01_dfsp_k.png
+map_Kd texturesPNG\kdv_earth01_dfsp_k.png
 
 newmtl material1.010
 Ns 17.647059
@@ -252,7 +252,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Kd texturesPNG/kdv_rrlief06_dfsp_r.png
+map_Kd texturesPNG\kdv_rrlief06_dfsp_r.png
 
 newmtl material1.011
 Ns 17.647059
@@ -263,7 +263,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Kd texturesPNG/kdv_wall15_dfsp_r.png
+map_Kd texturesPNG\kdv_wall15_dfsp_r.png
 
 newmtl material1.023
 Ns 17.647059
@@ -274,7 +274,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Kd texturesPNG/kdv_stone01_dfsp_n.png
+map_Kd texturesPNG\kdv_stone01_dfsp_n.png
 
 newmtl material1.037
 Ns 17.647059
@@ -285,7 +285,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Kd texturesPNG/kdv_brick15_dfsp_y.png
+map_Kd texturesPNG\kdv_brick15_dfsp_y.png
 
 newmtl material1.038
 Ns 17.647059
@@ -296,7 +296,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Kd texturesPNG/kdv_earth02_dfsp_k.png
+map_Kd texturesPNG\kdv_earth02_dfsp_k.png
 
 newmtl material1.040
 Ns 17.647059
@@ -307,7 +307,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Kd texturesPNG/kdv_debris05_dfsp_z.png
+map_Kd texturesPNG\kdv_debris05_dfsp_z.png
 
 newmtl material1.041
 Ns 17.647059
@@ -318,7 +318,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Kd texturesPNG/kdv_bridge11_dfsp_z.png
+map_Kd texturesPNG\kdv_bridge11_dfsp_z.png
 
 newmtl material1.042
 Ns 17.647059
@@ -329,7 +329,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Kd texturesPNG/kdv_piller01_dfsp_k.png
+map_Kd texturesPNG\kdv_piller01_dfsp_k.png
 
 newmtl material1.044
 Ns 17.647059
@@ -340,7 +340,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Kd texturesPNG/kdv_piller05_dfsp_r.png
+map_Kd texturesPNG\kdv_piller05_dfsp_r.png
 
 newmtl material10
 Ns 17.647059
@@ -351,18 +351,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Kd texturesPNG/kdv_bridge02_dfsp_z.png
-
-newmtl material10.001
-Ns 17.647059
-Ka 1.000000 1.000000 1.000000
-Kd 0.640000 0.640000 0.640000
-Ks 0.500000 0.500000 0.500000
-Ke 0.000000 0.000000 0.000000
-Ni 1.000000
-d 1.000000
-illum 2
-map_Kd texturesPNG/kdv_floor01_dfsp_r.png
+map_Kd texturesPNG\kdv_bridge02_dfsp_z.png
 
 newmtl material11
 Ns 17.647059
@@ -373,7 +362,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Kd texturesPNG/kdv_debris04_dfsp_r.png
+map_Kd texturesPNG\kdv_debris04_dfsp_r.png
 
 newmtl material11.001
 Ns 17.647059
@@ -384,7 +373,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Kd texturesPNG/kdv_pillar02_dfsp_z.png
+map_Kd texturesPNG\kdv_pillar02_dfsp_z.png
 
 newmtl material12
 Ns 17.647059
@@ -395,7 +384,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Kd texturesPNG/kdv_iron03_dfsp_z.png
+map_Kd texturesPNG\kdv_iron03_dfsp_z.png
 
 newmtl material14.001
 Ns 17.647059
@@ -406,7 +395,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Kd texturesPNG/kdv_bridge07_dfsp_z.png
+map_Kd texturesPNG\kdv_bridge07_dfsp_z.png
 
 newmtl material15
 Ns 17.647059
@@ -417,7 +406,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Kd texturesPNG/kdv_floor01_dfsp_k.png
+map_Kd texturesPNG\kdv_floor01_dfsp_k.png
 
 newmtl material16
 Ns 17.647059
@@ -428,7 +417,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 0.000000
 illum 2
-map_Kd texturesPNG/kdv_obj_decoration06_dfsp_p_k.png
+map_Kd texturesPNG\kdv_obj_decoration06_dfsp_p_k.png
 
 newmtl material17
 Ns 17.647059
@@ -439,7 +428,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 0.000000
 illum 2
-map_Kd texturesPNG/kdv_obj_decoration11_dfsp_p_k.png
+map_Kd texturesPNG\kdv_obj_decoration11_dfsp_p_k.png
 
 newmtl material2
 Ns 17.647059
@@ -450,7 +439,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Kd texturesPNG/kdv_wall03_dfsp_k.png
+map_Kd texturesPNG\kdv_wall03_dfsp_k.png
 
 newmtl material2.002
 Ns 17.647059
@@ -461,7 +450,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Kd texturesPNG/kdv_emblem01_dfsp_z.png
+map_Kd texturesPNG\kdv_emblem01_dfsp_z.png
 
 newmtl material2.004
 Ns 17.647059
@@ -472,7 +461,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Kd texturesPNG/kdv_decoration01_dfsp_r.png
+map_Kd texturesPNG\kdv_decoration01_dfsp_r.png
 
 newmtl material2.008
 Ns 17.647059
@@ -483,7 +472,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Kd texturesPNG/kdv_iron07_dfsp_r.png
+map_Kd texturesPNG\kdv_iron07_dfsp_r.png
 
 newmtl material2.012
 Ns 17.647059
@@ -494,7 +483,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Kd texturesPNG/kdv_stone04_dfsp_n.png
+map_Kd texturesPNG\kdv_stone04_dfsp_n.png
 
 newmtl material2.033
 Ns 17.647059
@@ -505,7 +494,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Kd texturesPNG/kdv_bridge05_dfsp_z.png
+map_Kd texturesPNG\kdv_bridge05_dfsp_z.png
 
 newmtl material2.036
 Ns 17.647059
@@ -516,7 +505,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Kd texturesPNG/kdv_piller04_dfsp_r.png
+map_Kd texturesPNG\kdv_piller04_dfsp_r.png
 
 newmtl material3.001
 Ns 17.647059
@@ -527,7 +516,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Kd texturesPNG/kdv_decoration07_dfsp_z.png
+map_Kd texturesPNG\kdv_decoration07_dfsp_z.png
 
 newmtl material3.007
 Ns 17.647059
@@ -538,7 +527,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Kd texturesPNG/kdv_iron08_dfsp_r.png
+map_Kd texturesPNG\kdv_iron08_dfsp_r.png
 
 newmtl material3.031
 Ns 17.647059
@@ -549,7 +538,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Kd texturesPNG/kdv_bridge10_dfsp_z.png
+map_Kd texturesPNG\kdv_bridge10_dfsp_z.png
 
 newmtl material4.001
 Ns 17.647059
@@ -560,7 +549,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Kd texturesPNG/kdv_brick32_dfsp_r.png
+map_Kd texturesPNG\kdv_brick32_dfsp_r.png
 
 newmtl material4.002
 Ns 17.647059
@@ -571,7 +560,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Kd texturesPNG/kdv_wall13_dfsp_r.png
+map_Kd texturesPNG\kdv_wall13_dfsp_r.png
 
 newmtl material4.004
 Ns 17.647059
@@ -582,7 +571,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Kd texturesPNG/kdv_bridge04_dfsp_z.png
+map_Kd texturesPNG\kdv_bridge04_dfsp_z.png
 
 newmtl material4.007
 Ns 17.647059
@@ -593,7 +582,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Kd texturesPNG/kdv_rope01_dfsp_r.png
+map_Kd texturesPNG\kdv_rope01_dfsp_r.png
 
 newmtl material4.033
 Ns 17.647059
@@ -604,7 +593,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Kd texturesPNG/kdv_relief05_dfsp_r.png
+map_Kd texturesPNG\kdv_relief05_dfsp_r.png
 
 newmtl material5.007
 Ns 17.647059
@@ -615,7 +604,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Kd texturesPNG/kdv_rope04_dfsp_r.png
+map_Kd texturesPNG\kdv_rope04_dfsp_r.png
 
 newmtl material6.006
 Ns 17.647059
@@ -626,7 +615,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Kd texturesPNG/kdv_iron09_dfsp_r.png
+map_Kd texturesPNG\kdv_iron09_dfsp_r.png
 
 newmtl material7
 Ns 17.647059
@@ -637,7 +626,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Kd texturesPNG/kdv_emblem03_dfsp_z.png
+map_Kd texturesPNG\kdv_emblem03_dfsp_z.png
 
 newmtl material7.005
 Ns 17.647059
@@ -648,7 +637,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Kd texturesPNG/kdv_luminous05_enlu_r.png
+map_Kd texturesPNG\kdv_luminous05_enlu_r.png
 
 newmtl material8
 Ns 17.647059
@@ -659,7 +648,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Kd texturesPNG/kdv_decoration08_dfsp_z.png
+map_Kd texturesPNG\kdv_decoration08_dfsp_z.png
 
 newmtl material9.001
 Ns 17.647059
@@ -670,4 +659,4 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Kd texturesPNG/kdv_iron02_dfsp_z.png
+map_Kd texturesPNG\kdv_iron02_dfsp_z.png

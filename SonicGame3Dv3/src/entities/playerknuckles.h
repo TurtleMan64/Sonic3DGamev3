@@ -167,7 +167,7 @@ private:
 	const float wallSpeedStickThreshold = 2.0f; //How fast you must be going to keep sticking on a wall
 	const float autoUnrollThreshold = 0.45f; //Automatically unrolls from ball form when under this speed
 	const float bounceFactor = 0.75f; //Speed you retain from a bounce
-	const float cantStickBounceFactor = 0.6f; //Speed you retain from not sticking to a wall
+	const float cantStickBounceFactor = 0.99f; //Speed you retain from not sticking to a wall
 	const float smoothTransitionThreshold = 0.6f; //How similar 2 triangles must be to run between them
 	const float waterExitBoost = 0.4f; //When you jump out of water, get this boost
 	const float waterEntryMaxYVel = -1.0f; //When you enter water, yVel cant be less than this

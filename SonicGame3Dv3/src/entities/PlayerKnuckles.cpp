@@ -174,12 +174,12 @@ void PlayerKnuckles::step()
 
 	if (isClimbing)
 	{
-		Camera* cam = Global::gameCamera;
+		float fakeCamYaw = toDegrees(atan2f(currNorm.z, currNorm.x))-90;
 
 		float inputMag = sqrtf(movementInputX*movementInputX + movementInputY*movementInputY);
 
-		xVelGround = climbSpeed*inputMag*cosf(toRadians(cam->getYaw() + movementAngle));
-		zVelGround = climbSpeed*inputMag*sinf(toRadians(cam->getYaw() + movementAngle));
+		xVelGround = climbSpeed*inputMag*cosf(toRadians(fakeCamYaw + movementAngle));
+		zVelGround = climbSpeed*inputMag*sinf(toRadians(fakeCamYaw + movementAngle));
 
 		wallStickTimer = wallStickTimerMax;
 	}
@@ -556,7 +556,7 @@ void PlayerKnuckles::step()
 					setPosition(colPos);
 					increasePosition(triCol->normal.x * 1.5f, triCol->normal.y * 1.5f, triCol->normal.z * 1.5f);
 
-					canMoveTimer = 8;
+					//canMoveTimer = 8;
 					isBall = true;
 					isDropDashing = false;
 					bonked = true;
@@ -2550,7 +2550,8 @@ bool PlayerKnuckles::isVulnerable()
 		isJumping ||
 		isBall ||
 		isSpindashing ||
-		isStomping);
+		isStomping ||
+		isPunching);
 }
 
 void PlayerKnuckles::die()

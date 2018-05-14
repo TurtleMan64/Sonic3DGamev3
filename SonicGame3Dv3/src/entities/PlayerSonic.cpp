@@ -300,7 +300,7 @@ void PlayerSonic::step()
 			initiateBounce();
 		}
 
-		if (action2Input && !previousAction2Input && (isJumping || isBall) && !isBouncing && homingAttackTimer == -1 && !isStomping && !isDropDashing)
+		if (shoulderInput && !previousShoulderInput && (isJumping || isBall) && !isBouncing && homingAttackTimer == -1 && !isStomping && !isDropDashing)
 		{
 			initiateStomp();
 		}
@@ -318,8 +318,7 @@ void PlayerSonic::step()
 			yVel += hoverAccel;
 		}
 
-		//TODO: make new buttons for this
-		if (specialInput && !previousSpecialInput && (isJumping || isBall) && !isBouncing && homingAttackTimer == -1 && !isStomping)
+		if (action2Input && !previousAction2Input && (isJumping || isBall) && !isBouncing && homingAttackTimer == -1 && !isStomping)
 		{
 			isDropDashing = true;
 			dropDashCharge += dropDashChargeIncrease;
@@ -574,6 +573,20 @@ void PlayerSonic::step()
 				}
 				*/
 			}
+			else //new thing with VelGround adjusting
+			{
+				float speedBefore = sqrtf(xVelGround*xVelGround+zVelGround*zVelGround);
+				Vector3f directionOG(xVel, yVel, zVel);
+				Vector3f newDirection = projectOntoPlane(&directionOG, &(triCol->normal));
+				if (newDirection.lengthSquared() != 0)
+				{
+					newDirection.normalize();
+					newDirection.scale(speedBefore);
+					Vector3f newSpeeds = calculatePlaneSpeed(newDirection.x, newDirection.y, newDirection.z, &(triCol->normal));
+					xVelGround = newSpeeds.x;
+					zVelGround = newSpeeds.z;
+				}
+			}
 			onPlane = true;
 		}
 
@@ -624,6 +637,20 @@ void PlayerSonic::step()
 
 				bonked = true;
 				currNorm.set(0, 1, 0);
+			}
+			else //new thing with VelGround adjusting
+			{
+				float speedBefore = sqrtf(xVelGround*xVelGround+zVelGround*zVelGround);
+				Vector3f directionOG(xVel, yVel, zVel);
+				Vector3f newDirection = projectOntoPlane(&directionOG, &(triCol->normal));
+				if (newDirection.lengthSquared() != 0)
+				{
+					newDirection.normalize();
+					newDirection.scale(speedBefore);
+					Vector3f newSpeeds = calculatePlaneSpeed(newDirection.x, newDirection.y, newDirection.z, &(triCol->normal));
+					xVelGround = newSpeeds.x;
+					zVelGround = newSpeeds.z;
+				}
 			}
 
 			if (!bonked)
@@ -1247,7 +1274,10 @@ void PlayerSonic::moveMeGround()
 			(fabsf(diff) > 45.0f && currSpeed < 5.0f) ||
 			(fabsf(diff) > 75.0f && currSpeed < 12.0f)))
 		{
-			popOffWall();
+			if (currNorm.y >= -0.75f)
+			{
+				popOffWall();
+			}
 		}
 
 		if (fabsf(diff) > 120.0f)

@@ -79,6 +79,7 @@
 #include "../entities/emeraldmanager.h"
 #include "../guis/guitextureresources.h"
 #include "../entities/WildCanyon/wcbreeze.h"
+#include "../entities/goaltrigger.h"
 
 float toFloat(char* input);
 int toInt(char* input);
@@ -709,6 +710,17 @@ void processLine(char** dat)
 			Main_addTransparentEntity(water);
 			return;
 		}
+
+		case 25: //Goal Trigger
+		{
+			GoalTrigger::loadStaticModels();
+			GoalTrigger* trigger = new GoalTrigger(
+				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
+				toFloat(dat[4])); //scale
+			Global::countNew++;
+			Main_addEntity(trigger);
+			return;
+		}
 		
 		case 26: //Emerald Coast Umbrella
 		{
@@ -1270,4 +1282,5 @@ void freeAllStaticModels()
 	PlayerKnuckles::deleteStaticModels();
 	StageTransparent::deleteStaticModels();
 	EmeraldPiece::deleteStaticModels();
+	GoalTrigger::deleteStaticModels();
 }

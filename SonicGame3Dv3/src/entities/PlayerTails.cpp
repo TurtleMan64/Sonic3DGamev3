@@ -351,8 +351,7 @@ void PlayerTails::step()
 			yVel += hoverAccel;
 		}
 
-		//TODO: make new buttons for this
-		if (specialInput && !previousSpecialInput && (isJumping || isBall) && !isFlying)
+		if (action2Input && !previousAction2Input && (isJumping || isBall) && !isFlying)
 		{
 			isDropDashing = true;
 			dropDashCharge += dropDashChargeIncrease;

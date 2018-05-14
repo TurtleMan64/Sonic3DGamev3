@@ -22,7 +22,9 @@ EmeraldPiece* EmeraldManager::piece1 = nullptr;
 EmeraldPiece* EmeraldManager::piece2 = nullptr;
 EmeraldPiece* EmeraldManager::piece3 = nullptr;
 int EmeraldManager::piecesRemaining = 3;
-int EmeraldManager::pingTimer = 0;
+int EmeraldManager::pingTimer1 = 0;
+int EmeraldManager::pingTimer2 = 0;
+int EmeraldManager::pingTimer3 = 0;
 bool EmeraldManager::hardMode = false;
 
 GLuint EmeraldManager::radarGreyID   = 0;
@@ -102,7 +104,9 @@ EmeraldManager::EmeraldManager(int doHardMode)
 	std::vector<EmeraldPiece*> piece3List;
 
 	int totalPieces = 0;
-	EmeraldManager::pingTimer = 0;
+	EmeraldManager::pingTimer1 = 0;
+	EmeraldManager::pingTimer2 = 0;
+	EmeraldManager::pingTimer3 = 0;
 	EmeraldManager::piece1 = nullptr;
 	EmeraldManager::piece2 = nullptr;
 	EmeraldManager::piece3 = nullptr;
@@ -236,24 +240,23 @@ EmeraldManager::EmeraldManager(int doHardMode)
 	}
 }
 
-void EmeraldManager::step()
+void EmeraldManager::updatePiece(EmeraldPiece* piece, int* pingTimer, GuiTexture* radar, EmeraldPiece* closestPiece)
 {
-	//make ping sounds, update radar
-	GuiTexture* nextRadar = EmeraldManager::updateRadar();
-	if (nextRadar != nullptr)
+	if (piece == nullptr)
 	{
-		nextRadar->setTexture(EmeraldManager::radarGreyID);
+		radar->setVisible(false);
+		return;
 	}
+	radar->setTexture(EmeraldManager::radarGreyID);
 
-	float distToPiece = EmeraldManager::calcDistToNextPiece();
+	Vector3f pieceLoc(piece->getPosition());
+	Vector3f playerLoc(Global::gamePlayer->getPosition());
+	float distToPiece =  (pieceLoc-playerLoc).length();
 
-	if (EmeraldManager::pingTimer == 1)
+	if (*pingTimer == 1 && piece == closestPiece)
 	{
-		EmeraldPiece* nextPiece = EmeraldManager::getNextPiece();
-		if (nextPiece != nullptr)
-		{
 			//Play the sound in the direction to the piece from the camera
-			Vector3f diff(nextPiece->getPosition());
+			Vector3f diff(piece->getPosition());
 			diff = diff - Global::gameCamera->getPosition();
 			diff.scale(0.25f);
 
@@ -261,84 +264,94 @@ void EmeraldManager::step()
 			pingPosition = pingPosition + diff;
 
 			AudioPlayer::play(34, &pingPosition);
-		}
 	}
-	EmeraldManager::pingTimer = std::max(0, EmeraldManager::pingTimer-1);
+	*pingTimer = std::max(0, *pingTimer-1);
 
 	if (distToPiece >= 600 && distToPiece < 1000)
 	{
-		if (EmeraldManager::pingTimer == 0)
+		if (*pingTimer == 0)
 		{
-			EmeraldManager::pingTimer = 60;
+			*pingTimer = 60;
 		}
-		if (nextRadar != nullptr)
-		{
-			nextRadar->setTexture(EmeraldManager::radarBlueID);
-			nextRadar->setScale(1+0.5f*(EmeraldManager::pingTimer/60.0f));
-		}
+		radar->setTexture(EmeraldManager::radarBlueID);
+		radar->setScale(1+0.5f*(*pingTimer/60.0f));
 	}
 	else if (distToPiece >= 200 && distToPiece < 600)
 	{
-		if (EmeraldManager::pingTimer == 0)
+		if (*pingTimer == 0)
 		{
-			EmeraldManager::pingTimer = 30;
+			*pingTimer = 30;
 		}
-		if (nextRadar != nullptr)
-		{
-			nextRadar->setTexture(EmeraldManager::radarGreenID);
-			nextRadar->setScale(1+0.5f*(EmeraldManager::pingTimer/30.0f));
-		}
+		radar->setTexture(EmeraldManager::radarGreenID);
+		radar->setScale(1+0.5f*(*pingTimer/30.0f));
 	}
 	else if (distToPiece >= 50 && distToPiece < 200)
 	{
-		if (EmeraldManager::pingTimer == 0)
+		if (*pingTimer == 0)
 		{
-			EmeraldManager::pingTimer = 15;
+			*pingTimer = 15;
 		}
-		if (nextRadar != nullptr)
-		{
-			nextRadar->setTexture(EmeraldManager::radarYellowID);
-			nextRadar->setScale(1+0.5f*(EmeraldManager::pingTimer/15.0f));
-		}
+		radar->setTexture(EmeraldManager::radarYellowID);
+		radar->setScale(1+0.5f*(*pingTimer/15.0f));
 	}
 	else if (distToPiece >= 0 && distToPiece < 50)
 	{
-		if (EmeraldManager::pingTimer == 0)
+		if (*pingTimer == 0)
 		{
-			EmeraldManager::pingTimer = 12;
+			*pingTimer = 12;
 		}
-		if (nextRadar != nullptr)
-		{
-			nextRadar->setTexture(EmeraldManager::radarRedID);
-			nextRadar->setScale(1+0.5f*(EmeraldManager::pingTimer/12.0f));
-		}
+		radar->setTexture(EmeraldManager::radarRedID);
+		radar->setScale(1+0.5f*(*pingTimer/12.0f));
 	}
 }
 
-EmeraldPiece* EmeraldManager::getNextPiece()
+void EmeraldManager::step()
 {
+	EmeraldPiece* closestPiece = EmeraldManager::getClosestPiece();
+	EmeraldManager::updatePiece(EmeraldManager::piece1, &EmeraldManager::pingTimer1, EmeraldManager::radar1, closestPiece);
+	EmeraldManager::updatePiece(EmeraldManager::piece2, &EmeraldManager::pingTimer2, EmeraldManager::radar2, closestPiece);
+	EmeraldManager::updatePiece(EmeraldManager::piece3, &EmeraldManager::pingTimer3, EmeraldManager::radar3, closestPiece);
+}
+
+EmeraldPiece* EmeraldManager::getClosestPiece()
+{
+	EmeraldPiece* pieceToReturn = nullptr;
+	float closestDist = 1000000000.0f;
+
 	if (EmeraldManager::piece1 != nullptr)
 	{
-		return EmeraldManager::piece1;
-	}
-	else if (EmeraldManager::piece2 != nullptr)
-	{
-		return EmeraldManager::piece2;
-	}
-
-	return EmeraldManager::piece3;
-}
-
-float EmeraldManager::calcDistToNextPiece()
-{
-	EmeraldPiece* nextPiece = EmeraldManager::getNextPiece();
-	if (nextPiece != nullptr)
-	{
-		Vector3f pieceLoc(nextPiece->getPosition());
+		Vector3f pieceLoc(EmeraldManager::piece1->getPosition());
 		Vector3f playerLoc(Global::gamePlayer->getPosition());
-		return (pieceLoc-playerLoc).length();
+		float distToPiece =  (pieceLoc-playerLoc).length();
+		if (distToPiece < closestDist)
+		{
+			pieceToReturn = EmeraldManager::piece1;
+			closestDist = distToPiece;
+		}
 	}
-	return 1000000.0f;
+	if (EmeraldManager::piece2 != nullptr)
+	{
+		Vector3f pieceLoc(EmeraldManager::piece2->getPosition());
+		Vector3f playerLoc(Global::gamePlayer->getPosition());
+		float distToPiece =  (pieceLoc-playerLoc).length();
+		if (distToPiece < closestDist)
+		{
+			pieceToReturn = EmeraldManager::piece2;
+			closestDist = distToPiece;
+		}
+	}
+	if (EmeraldManager::piece3 != nullptr)
+	{
+		Vector3f pieceLoc(EmeraldManager::piece3->getPosition());
+		Vector3f playerLoc(Global::gamePlayer->getPosition());
+		float distToPiece =  (pieceLoc-playerLoc).length();
+		if (distToPiece < closestDist)
+		{
+			pieceToReturn = EmeraldManager::piece3;
+			closestDist = distToPiece;
+		}
+	}
+	return pieceToReturn;
 }
 
 void EmeraldManager::collectPiece(EmeraldPiece* collectedPiece)
@@ -364,31 +377,4 @@ void EmeraldManager::collectPiece(EmeraldPiece* collectedPiece)
 
 		Global::finishStageTimer = 0;
 	}
-}
-
-GuiTexture* EmeraldManager::updateRadar()
-{
-	if (EmeraldManager::piece1 == nullptr)
-	{
-		EmeraldManager::radar1->setVisible(false);
-	}
-	if (EmeraldManager::piece2 == nullptr)
-	{
-		EmeraldManager::radar2->setVisible(false);
-	}
-	if (EmeraldManager::piece3 == nullptr)
-	{
-		EmeraldManager::radar3->setVisible(false);
-	}
-
-	if (EmeraldManager::piece1 != nullptr)
-	{
-		return EmeraldManager::radar1;
-	}
-	else if (EmeraldManager::piece2 != nullptr)
-	{
-		return EmeraldManager::radar2;
-	}
-
-	return EmeraldManager::radar3;
 }

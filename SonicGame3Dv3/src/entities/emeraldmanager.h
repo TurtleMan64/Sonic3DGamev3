@@ -14,7 +14,9 @@ private:
 	static EmeraldPiece* piece2;
 	static EmeraldPiece* piece3;
 	static int piecesRemaining;
-	static int pingTimer;
+	static int pingTimer1;
+	static int pingTimer2;
+	static int pingTimer3;
 	static bool hardMode;
 
 	static GLuint radarGreyID;
@@ -27,12 +29,9 @@ private:
 	static GuiTexture* radar2;
 	static GuiTexture* radar3;
 
-	static float calcDistToNextPiece();
+	static EmeraldPiece* getClosestPiece();
 
-	static EmeraldPiece* getNextPiece();
-
-	//Updates radar and returns the current piece radar
-	static GuiTexture* updateRadar();
+	static void updatePiece(EmeraldPiece* piece, int* pingTimer, GuiTexture* radar, EmeraldPiece* closestPiece);
 
 public:
 	EmeraldManager();

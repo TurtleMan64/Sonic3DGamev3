@@ -117,8 +117,8 @@ int BUTTON_A = 0;
 int BUTTON_X = 1;
 int BUTTON_B = 2;
 int BUTTON_Y = 3;
-int BUTTON_RB = 5;
 int BUTTON_LB = 4;
+int BUTTON_RB = 5;
 int BUTTON_SELECT = 6;
 int BUTTON_START = 7;
 
@@ -248,11 +248,12 @@ void Input_pollInputs()
 		int buttonCount;
 		const unsigned char *buttons = glfwGetJoystickButtons(CONTROLLER_ID, &buttonCount);
 
-		DEBUG_JUMP = buttons[BUTTON_A];
-		DEBUG_ACTION = buttons[BUTTON_B];
-		DEBUG_ACTION2 = buttons[BUTTON_X];
-		DEBUG_SPECIAL = buttons[BUTTON_Y];
-		DEBUG_START = buttons[BUTTON_START];
+		DEBUG_JUMP     = buttons[BUTTON_A];
+		DEBUG_ACTION   = buttons[BUTTON_B];
+		DEBUG_ACTION2  = buttons[BUTTON_X];
+		DEBUG_SPECIAL  = buttons[BUTTON_Y];
+		DEBUG_SHOULDER = buttons[BUTTON_RB];
+		DEBUG_START    = buttons[BUTTON_START];
 
 		//const char *name = glfwGetJoystickName(GLFW_JOYSTICK_1);
 		//std::fprintf(stdout, "joystick name: %s\n", name);
@@ -562,6 +563,14 @@ void Input_init()
 				{
 					BUTTON_Y = std::stoi(lineSplit[1], nullptr, 10);
 				}
+				else if (strcmp(lineSplit[0], "LB") == 0)
+				{
+					BUTTON_LB = std::stoi(lineSplit[1], nullptr, 10);
+				}
+				else if (strcmp(lineSplit[0], "RB") == 0)
+				{
+					BUTTON_RB = std::stoi(lineSplit[1], nullptr, 10);
+				}
 				else if (strcmp(lineSplit[0], "Start") == 0)
 				{
 					BUTTON_START = std::stoi(lineSplit[1], nullptr, 10);
@@ -650,19 +659,21 @@ void Input_init()
 	{
 		int axesCount;
 		glfwGetJoystickAxes(CONTROLLER_ID, &axesCount);
-		STICK_LX = std::min(STICK_LX, axesCount - 1);
-		STICK_LY = std::min(STICK_LY, axesCount - 1);
-		STICK_RX = std::min(STICK_RX, axesCount - 1);
-		STICK_RY = std::min(STICK_RY, axesCount - 1);
+		STICK_LX  = std::min(STICK_LX,  axesCount - 1);
+		STICK_LY  = std::min(STICK_LY,  axesCount - 1);
+		STICK_RX  = std::min(STICK_RX,  axesCount - 1);
+		STICK_RY  = std::min(STICK_RY,  axesCount - 1);
 		TRIGGER_L = std::min(TRIGGER_L, axesCount - 1);
 		TRIGGER_R = std::min(TRIGGER_R, axesCount - 1);
 
 		int buttonCount;
 		glfwGetJoystickButtons(CONTROLLER_ID, &buttonCount);
-		BUTTON_A = std::min(BUTTON_A, buttonCount - 1);
-		BUTTON_B = std::min(BUTTON_B, buttonCount - 1);
-		BUTTON_X = std::min(BUTTON_X, buttonCount - 1);
-		BUTTON_Y = std::min(BUTTON_Y, buttonCount - 1);
+		BUTTON_A     = std::min(BUTTON_A,     buttonCount - 1);
+		BUTTON_B     = std::min(BUTTON_B,     buttonCount - 1);
+		BUTTON_X     = std::min(BUTTON_X,     buttonCount - 1);
+		BUTTON_Y     = std::min(BUTTON_Y,     buttonCount - 1);
+		BUTTON_LB    = std::min(BUTTON_LB,    buttonCount - 1);
+		BUTTON_RB    = std::min(BUTTON_RB,    buttonCount - 1);
 		BUTTON_START = std::min(BUTTON_START, buttonCount - 1);
 	}
 }

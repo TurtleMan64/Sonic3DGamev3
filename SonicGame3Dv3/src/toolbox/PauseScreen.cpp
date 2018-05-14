@@ -293,13 +293,13 @@ void PauseScreen::step()
 
 				case 4:
 					Global::levelID = LVL_PC;
-					LevelLoader_loadLevel("PeachCastle.lvl");
+					LevelLoader_loadLevel("DelfinoPlaza.lvl");
 					unpause(false);
 					break;
 
 				case 5:
 					Global::levelID = LVL_SHL;
-					LevelLoader_loadLevel("SandHill.lvl");
+					LevelLoader_loadLevel("SunsetIsles.lvl");
 					unpause(false);
 					break;
 

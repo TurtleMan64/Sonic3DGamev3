@@ -42,6 +42,9 @@ float BLUE = 1.0f;
 
 void prepare();
 void prepareTransparentRender();
+void prepareTransparentRenderDepthOnly();
+
+GLuint randomMap = (GLuint)(-1);
 
 void Master_init()
 {
@@ -125,6 +128,8 @@ void Master_init()
 	shadowMapRenderer = new ShadowMapMasterRenderer; Global::countNew++;
 	shadowMapRenderer2 = new ShadowMapMasterRenderer2; Global::countNew++;
 
+	randomMap = Loader_loadTextureNoInterpolation("res/randomMap.png");
+
 	Master_disableCulling();
 }
 
@@ -146,6 +151,10 @@ void Master_render(Camera* camera, float clipX, float clipY, float clipZ, float 
 
 	prepareTransparentRender();
 	renderer->renderNEW(&entitiesTransparentMap, shadowMapRenderer->getToShadowMapSpaceMatrix(), shadowMapRenderer2->getToShadowMapSpaceMatrix());
+	prepareTransparentRenderDepthOnly();
+	renderer->renderNEW(&entitiesTransparentMap, shadowMapRenderer->getToShadowMapSpaceMatrix(), shadowMapRenderer2->getToShadowMapSpaceMatrix());
+
+	glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
 
 	shader->stop();
 }
@@ -216,6 +225,8 @@ void prepare()
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
+	glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
+
 	glEnable(GL_DEPTH_TEST);
 	glDepthMask(true);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -226,6 +237,9 @@ void prepare()
 
 	glActiveTexture(GL_TEXTURE6);
 	glBindTexture(GL_TEXTURE_2D, Master_getShadowMapTexture2());
+
+	glActiveTexture(GL_TEXTURE7);
+	glBindTexture(GL_TEXTURE_2D, randomMap);
 }
 
 void prepareTransparentRender()
@@ -235,6 +249,17 @@ void prepareTransparentRender()
 
 	glEnable(GL_DEPTH_TEST);
 	glDepthMask(false);
+}
+
+void prepareTransparentRenderDepthOnly()
+{
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+	glColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE);
+
+	glEnable(GL_DEPTH_TEST);
+	glDepthMask(true);
 }
 
 void Master_cleanUp()
@@ -280,7 +305,7 @@ void Master_makeProjectionMatrix()
 
 
 	//FOV = 50;
-	float y_scale = (float)((1.0f / tan(toRadians(VFOV / 2.0f))));
+	float y_scale = 1.0f / tanf(toRadians(VFOV / 2.0f));
 	float x_scale = y_scale / aspectRatio;
 
 

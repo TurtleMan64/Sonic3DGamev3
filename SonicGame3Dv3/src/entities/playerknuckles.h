@@ -84,15 +84,19 @@ private:
 	float moveSpeedCurrent = 0;
 	const float moveAccelerationAir = 0.035f;
 	float moveSpeedAirCurrent = 0;
+	const float moveAccelerationWater = 0.032f;
 
 	const float frictionGround = 0.015f;
 	const float frictionAir = 0.01f;
+	const float frictionWater = 0.01f;
 
 	const float normalSpeedLimit = 4.2f*1.3f; //sa2 = 4.2
 	const float airSpeedLimit = 2.5f;
+	const float waterSpeedLimit = 3.0f;
 
 	const float slowDownRate = 0.06f; //How fast you slowdown every frame when youre going faster than max speed 
 	const float slowDownAirRate = 0.025f;
+	const float slowDownWaterRate = 0.022f;
 
 	const float spindashPower = 0.17f;    //0.15f
 	const float spindashFriction = 0.107f; //0.09f
@@ -161,6 +165,8 @@ private:
 
 	float animCount = 0;
 	float airSpinRotation = 0;//Rotation used when in the air
+	float swimAnim = 0;
+	float swimStrokeTimer = 0;
 
 	const float ballSlopeAccelFactor = 1.25f; //Additional accel on slopes from being in ball
 	const float wallThreshold = 0.3f; //How steep a slope must be to be considered a wall
@@ -170,9 +176,9 @@ private:
 	const float cantStickBounceFactor = 0.99f; //Speed you retain from not sticking to a wall
 	const float smoothTransitionThreshold = 0.6f; //How similar 2 triangles must be to run between them
 	const float waterExitBoost = 0.4f; //When you jump out of water, get this boost
-	const float waterEntryMaxYVel = -1.0f; //When you enter water, yVel cant be less than this
+	const float waterEntryMaxYVel = -2.0f; //When you enter water, yVel cant be less than this
 	const float waterEntrySlowdown = 0.75f; //When you enter water, slowdown horizontal speed
-	const float waterDeceleration = 0.987f; //When in water, speed gets multiplied by this every frame
+	const float waterDeceleration = 0.999f; //When in water, speed gets multiplied by this every frame
 
 	Triangle3D* triCol = nullptr;
 	Vector3f* colPos = nullptr;

@@ -275,7 +275,7 @@ void PauseScreen::step()
 
 				case 1:
 					Global::levelID = LVL_SH;
-					LevelLoader_loadLevel("SpeedHighway.lvl");
+					LevelLoader_loadLevel("NokiBay.lvl");
 					unpause(false);
 					break;
 

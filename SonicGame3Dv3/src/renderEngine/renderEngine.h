@@ -35,6 +35,7 @@ std::vector<int> Loader_loadToVAO(std::vector<float>* positions, std::vector<flo
 //for water
 RawModel Loader_loadToVAO(std::vector<float>* positions, int dimensions);
 GLuint Loader_loadTexture(const char* filename);
+GLuint Loader_loadTextureNoInterpolation(const char* fileName);
 GLuint Loader_loadTextureWORKS(char* filename);
 void Loader_cleanUp();
 void Loader_deleteVAO(GLuint vaoID);

@@ -129,6 +129,44 @@ GLuint Loader_loadTexture(const char* fileName)
 	return textureID;
 }
 
+GLuint Loader_loadTextureNoInterpolation(const char* fileName)
+{
+	GLuint textureID = 0;
+	glGenTextures(1, &textureID);
+	texNumber++;
+	textures.push_back(textureID);
+
+	int width, height, channels;
+	unsigned char* image = SOIL_load_image(fileName, &width, &height, &channels, SOIL_LOAD_RGBA);
+
+	if (image == 0)
+	{
+		const char* err = SOIL_last_result();
+		std::fprintf(stdout, "Error loading image '%s', because '%s'\n", fileName, err);
+		return 0;
+	}
+
+	glBindTexture(GL_TEXTURE_2D, textureID);
+
+	//Texture wrapping
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
+	//Texel interpolation
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+
+	//create
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image);
+
+	SOIL_free_image_data(image);
+
+	glBindTexture(GL_TEXTURE_2D, 0);
+	
+
+	return textureID;
+}
+
 GLuint Loader_loadTextureWORKS(char* fileName)
 {
 	std::string name = fileName;

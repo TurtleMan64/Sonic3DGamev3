@@ -23,7 +23,7 @@ DryLagoon 7
 7 DryLagoon SkySphere SkySphere 0.7 0
 
 # Transparent
-72 res/Models/DryLagoon/ Transparent.obj
+72 res/Models/DryLagoon/ Transparent.obj trans
 
 ######## Generated Objects ########
 

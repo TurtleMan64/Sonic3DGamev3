@@ -1,0 +1,16 @@
+# Material Count: 3
+
+newmtl None
+Ns 20
+Ni 0.02
+map_Kd platSS02.png
+
+newmtl m1
+Ns 20
+Ni 0.02
+map_Kd platSS01.png
+
+newmtl m2.001
+Ns 20
+Ni 0.02
+map_Kd platSS00.png

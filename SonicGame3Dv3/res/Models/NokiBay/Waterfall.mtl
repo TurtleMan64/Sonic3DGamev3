@@ -1,0 +1,19 @@
+# Blender MTL File: 'None'
+# Material Count: 2
+
+newmtl m0
+Ns 20
+Ni 0.02
+d 0
+Tr 0
+scrollY 1
+map_Kd wateSS01.png
+
+
+newmtl m2
+Ns 20
+Ni 0.02
+d 0
+Tr 0
+scrollY -1
+map_Kd wateSS01.png

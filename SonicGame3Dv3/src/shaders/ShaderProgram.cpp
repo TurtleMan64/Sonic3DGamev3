@@ -160,6 +160,7 @@ void ShaderProgram::getAllUniformLocations()
 	location_toShadowMapSpaceFar   = getUniformLocation("toShadowMapSpaceFar");
 	location_shadowMapClose        = getUniformLocation("shadowMapClose");
 	location_toShadowMapSpaceClose = getUniformLocation("toShadowMapSpaceClose");
+	location_randomMap             = getUniformLocation("randomMap");
 }
 
 int ShaderProgram::getUniformLocation(const char* uniformName)
@@ -200,14 +201,18 @@ void ShaderProgram::loadClipPlane(float clipX, float clipY, float clipZ, float c
 
 void ShaderProgram::connectTextureUnits()
 {
-	if (Global::renderShadowsFar)
+	if (Global::renderShadowsFar || Global::renderShadowsClose)
 	{
-		loadInt(location_shadowMapFar, 5);
-	}
+		if (Global::renderShadowsFar)
+		{
+			loadInt(location_shadowMapFar, 5);
+		}
+		if (Global::renderShadowsClose)
+		{
+			loadInt(location_shadowMapClose, 6);
+		}
 
-	if (Global::renderShadowsClose)
-	{
-		loadInt(location_shadowMapClose, 6);
+		loadInt(location_randomMap, 7);
 	}
 }
 

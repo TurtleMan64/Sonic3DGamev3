@@ -21,7 +21,7 @@ WildCanyon 7
 71 260.8 85.6 -551.4
 
 # Transparent
-72 res/Models/WildCanyon/ Transparent.obj
+72 res/Models/WildCanyon/ Transparent.obj trans
 
 # Breeze
 75 260 -140 0 95 1500

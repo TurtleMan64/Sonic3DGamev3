@@ -5,6 +5,8 @@
 #include "camera.h"
 #include "../toolbox/input.h"
 #include "../toolbox/maths.h"
+#include "../particles/particleresources.h"
+#include "../particles/particle.h"
 
 #include <cmath>
 
@@ -32,7 +34,7 @@ Camera::Camera()
 
 void Camera::refresh()
 {
-	float radius = 5;
+	float radius = 0.6f;
 	Vector3f newPos(
 		position.x - cosf(toRadians(yaw + 90))*(radius*(cosf(toRadians(pitch)))),
 		position.y + sinf(toRadians(pitch + 180))*radius,
@@ -41,6 +43,12 @@ void Camera::refresh()
 	fadePosition.x = newPos.x;
 	fadePosition.y = newPos.y;
 	fadePosition.z = newPos.z;
+
+	if (position.y < 0)
+	{
+		Vector3f partVel(0, 0, 0);
+		new Particle(ParticleResources::textureInWater, &fadePosition, &partVel, 0, 10, 0, 400, 0, true);
+	}
 }
 
 Vector3f Camera::calcVelocity()

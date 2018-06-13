@@ -31,6 +31,7 @@ ParticleTexture* ParticleResources::textureTear1 = nullptr;
 ParticleTexture* ParticleResources::textureTear2 = nullptr;
 ParticleTexture* ParticleResources::textureWhiteFadeOutAndIn = nullptr;
 ParticleTexture* ParticleResources::textureBlackFadeOutAndIn = nullptr;
+ParticleTexture* ParticleResources::textureInWater = nullptr;
 
 void ParticleResources::loadParticles()
 {
@@ -62,5 +63,6 @@ void ParticleResources::loadParticles()
 	textureTear2             = new ParticleTexture(Loader_loadTexture("res/Models/Particle/Tear2.png"), 1, 1.0f, 0);
 	textureWhiteFadeOutAndIn = new ParticleTexture(Loader_loadTexture("res/Models/Particle/WhiteFadeOutAndInAtlas.png"), 2, 1.0f, 0);
 	textureBlackFadeOutAndIn = new ParticleTexture(Loader_loadTexture("res/Models/Particle/BlackFadeOutAndInAtlas.png"), 2, 1.0f, 0);
-	Global::countNew += 28;
+	textureInWater           = new ParticleTexture(Loader_loadTexture("res/Models/Particle/InWater.png"), 1, 0.1f, 1);
+	Global::countNew += 29;
 }

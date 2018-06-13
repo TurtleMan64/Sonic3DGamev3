@@ -248,6 +248,7 @@ void EmeraldManager::updatePiece(EmeraldPiece* piece, int* pingTimer, GuiTexture
 		return;
 	}
 	radar->setTexture(EmeraldManager::radarGreyID);
+	radar->setScale(1);
 
 	Vector3f pieceLoc(piece->getPosition());
 	Vector3f playerLoc(Global::gamePlayer->getPosition());

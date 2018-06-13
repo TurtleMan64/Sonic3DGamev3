@@ -36,6 +36,7 @@ private:
 	int location_toShadowMapSpaceFar;
 	int location_shadowMapClose;
 	int location_toShadowMapSpaceClose;
+	int location_randomMap;
 
 public:
 	ShaderProgram(const char*, const char*);

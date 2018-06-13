@@ -87,8 +87,13 @@ PlayerKnuckles::PlayerKnuckles(float x, float y, float z)
 
 void PlayerKnuckles::step()
 {
-	previousPos.set(&position);
 	animCount++;
+	if (getY() < -5)
+	{
+		inWater = true;
+		waterHeight = 0;
+	}
+
 	setMovementInputs();
 	adjustCamera();
 	checkSkid();
@@ -135,13 +140,16 @@ void PlayerKnuckles::step()
 		moveMeAir();
 		limitMovementSpeedAir();
 
-		if (isGliding)
+		if (inWater == false)
 		{
-			yVel = fmaxf(yVel-glideGravity, glideTerminalVelocity);
-		}
-		else
-		{
-			yVel -= gravity;
+			if (isGliding)
+			{
+				yVel = fmaxf(yVel-glideGravity, glideTerminalVelocity);
+			}
+			else
+			{
+				yVel -= gravity;
+			}
 		}
 	}
 	else //on ground
@@ -381,7 +389,7 @@ void PlayerKnuckles::step()
 			//homingAttack();
 		}
 
-		if (actionInput && !previousActionInput && (isJumping || isGliding) && !isDrillDiving)
+		if (actionInput && !previousActionInput && (isJumping || isGliding) && !isDrillDiving && !inWater)
 		{
 			isDrillDiving = true;
 			isGliding = false;
@@ -400,7 +408,7 @@ void PlayerKnuckles::step()
 			//initiateStomp();
 		}
 
-		if (jumpInput && !previousJumpInput && canGlideTimer == 0 && !isGliding)
+		if (jumpInput && !previousJumpInput && canGlideTimer == 0 && !isGliding && !inWater)
 		{
 			isGliding = true;
 			isDrillDiving = false;
@@ -438,6 +446,13 @@ void PlayerKnuckles::step()
 		if (yVel > 0 && isGliding)
 		{
 			isGliding = false;
+			isJumping = false;
+			hoverCount = 30;
+		}
+
+		if (yVel > 0 && isDrillDiving)
+		{
+			isDrillDiving = false;
 			isJumping = false;
 			hoverCount = 30;
 		}
@@ -710,12 +725,6 @@ void PlayerKnuckles::step()
 		currNorm.set(0, 1, 0);
 	}
 
-	if (getY() < -5)
-	{
-		inWater = true;
-		waterHeight = 0;
-	}
-
 	if (getY() < Global::deathHeight)
 	{
 		die();
@@ -728,6 +737,7 @@ void PlayerKnuckles::step()
 		Vector3f vel(0, 0, 0);
 		new Particle(ParticleResources::textureSplash, &pos, &vel, 0, 30, 0, 10, 0, false);
 		yVel += waterExitBoost;
+		hoverCount = hoverLimit/2;
 		
 		float totXVel = xVel + xVelAir;
 		float totZVel = zVel + zVelAir;
@@ -789,11 +799,51 @@ void PlayerKnuckles::step()
 
 	if (inWater)
 	{
-
 		xVelGround *= waterDeceleration;
 		zVelGround *= waterDeceleration;
 		xVelAir *= waterDeceleration;
 		zVelAir *= waterDeceleration;
+
+		onPlane = false;
+		isGliding = false;
+		isDrillDiving = false;
+		isBall = false;
+		isJumping = false;
+		isClimbing = false;
+		isPunching = false;
+		hoverCount = 0;
+		xVelGround = 0;
+		zVelGround = 0;
+		xVel = 0;
+		zVel = 0;
+
+		swimStrokeTimer = std::fmaxf(0, swimStrokeTimer-2.0f);
+
+		yVel = yVel*0.97f;
+
+		if (jumpInput)
+		{
+			yVel+=0.08f;
+		}
+
+		if (actionInput || action2Input)
+		{
+			yVel-=0.08f;
+		}
+
+		if (jumpInput && !previousJumpInput)
+		{
+			swimStrokeTimer = 100.0f;
+		}
+
+		if ((actionInput || action2Input) && !(previousActionInput || previousAction2Input))
+		{
+			swimStrokeTimer = 100.0f;
+		}
+	}
+	else
+	{
+		swimStrokeTimer = 0;
 	}
 
 	if (specialInput && !previousSpecialInput && !isLightdashing)
@@ -1122,6 +1172,10 @@ void PlayerKnuckles::setMovementInputs()
 	{
 		moveSpeedAirCurrent = glideAcceleration*inputMag;
 	}
+	else if (inWater)
+	{
+		moveSpeedAirCurrent = moveAccelerationWater*inputMag;
+	}
 	else
 	{
 		moveSpeedAirCurrent = moveAccelerationAir*inputMag;
@@ -1200,6 +1254,10 @@ void PlayerKnuckles::applyFrictionAir()
 	{
 		fricToApply = glideFriction;
 	}
+	if (inWater)
+	{
+		fricToApply = frictionWater;
+	}
 
 	if (mag != 0)
 	{
@@ -1269,20 +1327,31 @@ void PlayerKnuckles::moveMeAir()
 void PlayerKnuckles::limitMovementSpeedAir()
 {
 	float myspeed = sqrtf(xVelAir*xVelAir + zVelAir*zVelAir);
-	if (isGliding)
+	if (inWater)
 	{
-		if (myspeed > glideSpeedLimit)
+		if (myspeed > waterSpeedLimit)
 		{
-			xVelAir = (xVelAir*((myspeed - glideSlowDownRate) / (myspeed)));
-			zVelAir = (zVelAir*((myspeed - glideSlowDownRate) / (myspeed)));
+			xVelAir = (xVelAir*((myspeed - slowDownWaterRate) / (myspeed)));
+			zVelAir = (zVelAir*((myspeed - slowDownWaterRate) / (myspeed)));
 		}
 	}
 	else
 	{
-		if (myspeed > airSpeedLimit)
+		if (isGliding)
 		{
-			xVelAir = (xVelAir*((myspeed - slowDownAirRate) / (myspeed)));
-			zVelAir = (zVelAir*((myspeed - slowDownAirRate) / (myspeed)));
+			if (myspeed > glideSpeedLimit)
+			{
+				xVelAir = (xVelAir*((myspeed - glideSlowDownRate) / (myspeed)));
+				zVelAir = (zVelAir*((myspeed - glideSlowDownRate) / (myspeed)));
+			}
+		}
+		else
+		{
+			if (myspeed > airSpeedLimit)
+			{
+				xVelAir = (xVelAir*((myspeed - slowDownAirRate) / (myspeed)));
+				zVelAir = (zVelAir*((myspeed - slowDownAirRate) / (myspeed)));
+			}
 		}
 	}
 }
@@ -1946,7 +2015,6 @@ void PlayerKnuckles::animate()
 		AudioPlayer::play(29, getPosition());
 	}
 
-
 	if (modelRunIndex >= 20)
 	{
 		modelRunIndex = fmodf(modelRunIndex, 20);
@@ -2059,6 +2127,25 @@ void PlayerKnuckles::animate()
 		}
 		updateLimbs(12, 0);
 		airSpinRotation += -(1 + sqrt(dropDashCharge)*18);
+	}
+	else if (inWater)
+	{
+		float h = sqrtf(xVelAir*xVelAir + zVelAir*zVelAir);
+		float zr = (toDegrees(atan2f(yVel, h)));
+		if (myBody != nullptr) myBody->setBaseOrientation(&displayPos, 0, twistAngle, pitchAngle, zr);
+		if (PlayerKnuckles::maniaKnuckles != nullptr) { PlayerKnuckles::maniaKnuckles->setVisible(false); }
+
+		swimAnim += 1.5f*sqrtf(h*h + yVel*yVel);
+		swimAnim = fmodf(swimAnim, 100);
+
+		if (swimStrokeTimer <= 0)
+		{
+			updateLimbs(15, swimAnim);
+		}
+		else
+		{
+			updateLimbs(16, 100-swimStrokeTimer);
+		}
 	}
 	else if (isJumping)
 	{

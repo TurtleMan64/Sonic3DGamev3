@@ -1,0 +1,14 @@
+# Blender MTL File: 'None'
+# Material Count: 12
+
+newmtl m0
+Ns 20
+Ka 1.000000 1.000000 1.000000
+Kd 0.470588 0.470588 0.470588
+Ks 0.449020 0.449020 0.449020
+Ke 0.000000 0.000000 0.000000
+Ni 0.02
+d 1.000000
+illum 2
+map_Kd palmSS00.tga
+map_d palmSS00.tga

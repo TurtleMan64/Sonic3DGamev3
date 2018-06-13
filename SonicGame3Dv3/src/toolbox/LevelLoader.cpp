@@ -80,6 +80,11 @@
 #include "../guis/guitextureresources.h"
 #include "../entities/WildCanyon/wcbreeze.h"
 #include "../entities/goaltrigger.h"
+#include "../entities/DelfinoPlaza/dppalmtree.h"
+#include "../entities/DelfinoPlaza/dpleaves.h"
+#include "../entities/NokiBay/nbpalmtree.h"
+#include "../entities/NokiBay/nbwaterplatform.h"
+#include "../entities/NokiBay/nbwaterplatformbounce.h"
 
 float toFloat(char* input);
 int toInt(char* input);
@@ -1179,7 +1184,18 @@ void processLine(char** dat)
 		{
 			StageTransparent* trans = new StageTransparent(dat[1], dat[2]);
 			Global::countNew++;
-			Main_addTransparentEntity(trans);
+			if (strcmp("trans", dat[3]) == 0)
+			{	
+				Main_addTransparentEntity(trans);
+			}
+			else if (strcmp("pass2", dat[3]) == 0)
+			{
+				Main_addEntityPass2(trans);
+			}
+			else
+			{
+				std::fprintf(stdout, "Error: Stage Transparent object (72) not given 'trans' or 'pass2'\n");
+			}
 			return;
 		}
 
@@ -1209,6 +1225,61 @@ void processLine(char** dat)
 				toFloat(dat[4]), toFloat(dat[5])); //radius, height
 			Global::countNew++;
 			Main_addEntity(breeze);
+			return;
+		}
+
+		case 76: //Delfino Plaza Palmtree
+		{
+			DP_Palmtree::loadStaticModels();
+			DP_Palmtree* tree = new DP_Palmtree(
+				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
+				toFloat(dat[4])); //rotation
+			Global::countNew++;
+			Main_addEntity(tree);
+			return;
+		}
+
+		case 77: //Delfino Plaza Leaves
+		{
+			DP_Leaves::loadStaticModels();
+			DP_Leaves* leaves = new DP_Leaves(
+				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
+				toFloat(dat[4])); //rotation
+			Global::countNew++;
+			Main_addEntity(leaves);
+			return;
+		}
+
+		case 78: //Noki Bay Palmtree
+		{
+			NB_Palmtree::loadStaticModels();
+			NB_Palmtree* tree = new NB_Palmtree(
+				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
+				toFloat(dat[4])); //rotation
+			Global::countNew++;
+			Main_addEntity(tree);
+			return;
+		}
+
+		case 79: //Noki Bay Water Platform
+		{
+			NB_WaterPlatform::loadStaticModels();
+			NB_WaterPlatform* platform = new NB_WaterPlatform(
+				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
+				toFloat(dat[4])); //rotation
+			Global::countNew++;
+			Main_addEntity(platform);
+			return;
+		}
+
+		case 80: //Noki Bay Water Platform Bounce
+		{
+			NB_WaterPlatformBounce::loadStaticModels();
+			NB_WaterPlatformBounce* platform = new NB_WaterPlatformBounce(
+				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
+				toFloat(dat[4])); //rotation
+			Global::countNew++;
+			Main_addEntity(platform);
 			return;
 		}
 
@@ -1283,4 +1354,9 @@ void freeAllStaticModels()
 	StageTransparent::deleteStaticModels();
 	EmeraldPiece::deleteStaticModels();
 	GoalTrigger::deleteStaticModels();
+	DP_Palmtree::deleteStaticModels();
+	DP_Leaves::deleteStaticModels();
+	NB_Palmtree::deleteStaticModels();
+	NB_WaterPlatform::deleteStaticModels();
+	NB_WaterPlatformBounce::deleteStaticModels();
 }

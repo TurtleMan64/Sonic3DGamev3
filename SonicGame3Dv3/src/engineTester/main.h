@@ -71,8 +71,10 @@ public:
 	static int gameState;
 	static int levelID;
 	static std::string levelName;
+	static std::string levelNameDisplay;
 	static int bufferTime;
-	static bool shouldRestartLevel;
+	static bool shouldLoadLevel;
+	static bool isNewLevel;
 	static int gameRingCount;
 	static int gameClock;
 	static WaterRenderer* gameWaterRenderer;
@@ -83,6 +85,8 @@ public:
 	static Fbo* gameOutputFbo;
 	static Fbo* gameOutputFbo2;
 	static float deathHeight;
+	static int gameMissionNumber;
+	static std::string gameMissionDescription;
 
 	//Debug display
 	static bool debugDisplay;

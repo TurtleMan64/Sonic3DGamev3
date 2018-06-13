@@ -13,6 +13,11 @@
 #include "../fontMeshCreator/guitext.h"
 #include "../audio/audioplayer.h"
 #include "../audio/source.h"
+#include "../particles/particle.h"
+#include "../particles/particleresources.h"
+#include "../particles/particletexture.h"
+#include "../entities/camera.h"
+#include "../particles/particlemaster.h"
 
 int PauseScreen::menuSelection = 0;
 int PauseScreen::menuSelectionMAX = 4;
@@ -54,6 +59,12 @@ GUIText* PauseScreen::textDage4Aquatic = nullptr;
 GUIText* PauseScreen::textManiaSonic = nullptr;
 GUIText* PauseScreen::textAmy = nullptr;
 
+GUIText* PauseScreen::textTitleCardLevelName = nullptr;
+GUIText* PauseScreen::textTitleCardMission = nullptr;
+GUIText* PauseScreen::textTitleCardMissionDescription = nullptr;
+
+int PauseScreen::titleCardTextTimer = 0;
+
 bool PauseScreen::shouldPause = false;
 bool PauseScreen::pausedSounds[14];
 
@@ -75,6 +86,7 @@ void PauseScreen::init()
 	Global::countNew++;
 	textCursor = new GUIText(">", 2.5f, font, 0.47f, 0.25f, 1.0f, false, false);
 	Global::countNew++;
+	PauseScreen::titleCardTextTimer = 0;
 }
 
 void PauseScreen::step()
@@ -98,6 +110,36 @@ void PauseScreen::step()
 	if (INPUT_START && !INPUT_PREVIOUS_START)
 	{
 		shouldPause = true;
+	}
+
+	if (PauseScreen::titleCardTextTimer != 0)
+	{
+		if (PauseScreen::titleCardTextTimer == 1)
+		{
+			if (textTitleCardLevelName != nullptr)
+			{
+				textTitleCardLevelName->deleteMe();
+				delete textTitleCardLevelName;
+				Global::countDelete++;
+				textTitleCardLevelName = nullptr;
+			}
+			if (textTitleCardMission != nullptr)
+			{
+				textTitleCardMission->deleteMe();
+				delete textTitleCardMission;
+				Global::countDelete++;
+				textTitleCardMission = nullptr;
+			}
+			if (textTitleCardMissionDescription != nullptr)
+			{
+				textTitleCardMissionDescription->deleteMe();
+				delete textTitleCardMissionDescription;
+				Global::countDelete++;
+				textTitleCardMissionDescription = nullptr;
+			}
+		}
+
+		PauseScreen::titleCardTextTimer--;
 	}
 
 	if (Global::gameState == STATE_PAUSED)
@@ -183,9 +225,13 @@ void PauseScreen::step()
 					break;
 
 				case 1:
-					LevelLoader_loadLevel(Global::levelName);
+				{
+					Global::shouldLoadLevel = true;
+					Vector3f vel(0,0,0);
+					new Particle(ParticleResources::textureBlackFade, Global::gameCamera->getFadePosition1(), &vel, 0, 60, 0.0f,  10.0f, 0, 1.0f, 0, true);
 					unpause(false);
 					break;
+				}
 
 				case 2:
 					menuDisplayID = LEVEL_SELECT;
@@ -269,91 +315,181 @@ void PauseScreen::step()
 				{
 				case 0:
 					Global::levelID = LVL_EC;
-					LevelLoader_loadLevel("EmeraldCoast.lvl");
+					Global::levelName = "EmeraldCoast.lvl";
+					Global::levelNameDisplay = "Emerald Coast";
+					Global::gameMissionNumber = 0;
+					Global::gameMissionDescription = "Destroy the capsule and rescue the animals!";
+					Global::isNewLevel = true;
+					Global::shouldLoadLevel = true;
+					PauseScreen::createTitleCard();
 					unpause(false);
 					break;
 
 				case 1:
 					Global::levelID = LVL_SH;
-					LevelLoader_loadLevel("NokiBay.lvl");
+					Global::levelName = "NokiBay.lvl";
+					Global::levelNameDisplay = "Speed Highway";
+					Global::gameMissionNumber = 0;
+					Global::gameMissionDescription = "Destroy the capsule and rescue the animals!";
+					Global::isNewLevel = true;
+					Global::shouldLoadLevel = true;
+					PauseScreen::createTitleCard();
 					unpause(false);
 					break;
 
 				case 2:
 					Global::levelID = LVL_GHZ;
-					LevelLoader_loadLevel("DryLagoon.lvl");
+					Global::levelName = "DryLagoon.lvl";
+					Global::levelNameDisplay = "Green Hill Zone";
+					Global::gameMissionNumber = 0;
+					Global::gameMissionDescription = "Placeholder";
+					Global::isNewLevel = true;
+					Global::shouldLoadLevel = true;
+					PauseScreen::createTitleCard();
 					unpause(false);
 					break;
 
 				case 3:
 					Global::levelID = LVL_WI;
-					LevelLoader_loadLevel("KingdomValley.lvl");
+					Global::levelName = "KingdomValley.lvl";
+					Global::levelNameDisplay = "Wuhu Island";
+					Global::gameMissionNumber = 0;
+					Global::gameMissionDescription = "Do a lap around the island";
+					Global::isNewLevel = true;
+					Global::shouldLoadLevel = true;
+					PauseScreen::createTitleCard();
 					unpause(false);
 					break;
 
 				case 4:
 					Global::levelID = LVL_PC;
-					LevelLoader_loadLevel("DelfinoPlaza.lvl");
+					Global::levelName = "DelfinoPlaza.lvl";
+					Global::levelNameDisplay = "Peach's Castle";
+					Global::gameMissionNumber = 0;
+					Global::gameMissionDescription = "Reach the tip top of the castle";
+					Global::isNewLevel = true;
+					Global::shouldLoadLevel = true;
+					PauseScreen::createTitleCard();
 					unpause(false);
 					break;
 
 				case 5:
 					Global::levelID = LVL_SHL;
-					LevelLoader_loadLevel("SunsetIsles.lvl");
+					Global::levelName = "SunsetIsles.lvl";
+					Global::levelNameDisplay = "Sand Hill";
+					Global::gameMissionNumber = 0;
+					Global::gameMissionDescription = "Go fast";
+					Global::isNewLevel = true;
+					Global::shouldLoadLevel = true;
+					PauseScreen::createTitleCard();
 					unpause(false);
 					break;
 
 				case 6:
 					Global::levelID = LVL_KB;
-					LevelLoader_loadLevel("WildCanyon.lvl");
+					Global::levelName = "WildCanyon.lvl";
+					Global::levelNameDisplay = "Koopa Beach";
+					Global::gameMissionNumber = 0;
+					Global::gameMissionDescription = "Do a lap around the island";
+					Global::isNewLevel = true;
+					Global::shouldLoadLevel = true;
+					PauseScreen::createTitleCard();
 					unpause(false);
 					break;
 
 				case 7:
 					Global::levelID = LVL_OI;
-					LevelLoader_loadLevel("OutsetIsland.lvl");
+					Global::levelName = "OutsetIsland.lvl";
+					Global::levelNameDisplay = "Outset Island";
+					Global::gameMissionNumber = 4;
+					Global::gameMissionDescription = "Find all the pieces of the Master Emerald!";
+					Global::isNewLevel = true;
+					Global::shouldLoadLevel = true;
+					PauseScreen::createTitleCard();
 					unpause(false);
 					break;
 
 				case 8:
 					Global::levelID = LVL_WB;
-					LevelLoader_loadLevel("WeaponsBed.lvl");
+					Global::levelName = "WeaponsBed.lvl";
+					Global::levelNameDisplay = "Weapons Bed";
+					Global::gameMissionNumber = 0;
+					Global::gameMissionDescription = "Placeholder";
+					Global::isNewLevel = true;
+					Global::shouldLoadLevel = true;
+					PauseScreen::createTitleCard();
 					unpause(false);
 					break;
 
 				case 9:
 					Global::levelID = LVL_MH;
-					LevelLoader_loadLevel("MetalHarbor.lvl");
+					Global::levelName = "MetalHarbor.lvl";
+					Global::levelNameDisplay = "Metal Harbor";
+					Global::gameMissionNumber = 0;
+					Global::gameMissionDescription = "Escape from the military base!";
+					Global::isNewLevel = true;
+					Global::shouldLoadLevel = true;
+					PauseScreen::createTitleCard();
 					unpause(false);
 					break;
 
 				case 10:
 					Global::levelID = LVL_BOB;
-					LevelLoader_loadLevel("BobOmbBattlefield.lvl");
+					Global::levelName = "BobOmbBattlefield.lvl";
+					Global::levelNameDisplay = "Bob-omb Battlefield";
+					Global::gameMissionNumber = 0;
+					Global::gameMissionDescription = "Find all the pieces";
+					Global::isNewLevel = true;
+					Global::shouldLoadLevel = true;
+					PauseScreen::createTitleCard();
 					unpause(false);
 					break;
 
 				case 11:
 					Global::levelID = LVL_RR;
-					LevelLoader_loadLevel("RainbowRoad.lvl");
+					Global::levelName = "RainbowRoad.lvl";
+					Global::levelNameDisplay = "Rainbow Road";
+					Global::gameMissionNumber = 0;
+					Global::gameMissionDescription = "Go fast and don't hit walls";
+					Global::isNewLevel = true;
+					Global::shouldLoadLevel = true;
+					PauseScreen::createTitleCard();
 					unpause(false);
 					break;
 
 				case 12:
 					Global::levelID = LVL_SHD;
-					LevelLoader_loadLevel("Snowhead.lvl");
+					Global::levelName = "Snowhead.lvl";
+					Global::levelNameDisplay = "Snowhead";
+					Global::gameMissionNumber = 0;
+					Global::gameMissionDescription = "Help the old goron dude find his son or something";
+					Global::isNewLevel = true;
+					Global::shouldLoadLevel = true;
+					PauseScreen::createTitleCard();
 					unpause(false);
 					break;
 
 				case 13:
 					Global::levelID = LVL_TP;
-					LevelLoader_loadLevel("TwinklePark.lvl");
+					Global::levelName = "TwinklePark.lvl";
+					Global::levelNameDisplay = "Twinkle Park";
+					Global::gameMissionNumber = 0;
+					Global::gameMissionDescription = "Destroy the capsule and rescue the animals!";
+					Global::isNewLevel = true;
+					Global::shouldLoadLevel = true;
+					PauseScreen::createTitleCard();
 					unpause(false);
 					break;
 
 				case 14:
 					Global::levelID = LVL_FF;
-					LevelLoader_loadLevel("FireField.lvl");
+					Global::levelName = "FireField.lvl";
+					Global::levelNameDisplay = "Fire Field";
+					Global::gameMissionNumber = 0;
+					Global::gameMissionDescription = "Placeholder";
+					Global::isNewLevel = true;
+					Global::shouldLoadLevel = true;
+					PauseScreen::createTitleCard();
 					unpause(false);
 					break;
 				}
@@ -803,4 +939,41 @@ void PauseScreen::pause()
 			PauseScreen::pausedSounds[i] = false;
 		}
 	}
+}
+
+void PauseScreen::createTitleCard()
+{
+	ParticleMaster::deleteAllParticles();
+
+	Vector3f vel(0,0,0);
+	new Particle(ParticleResources::textureBlackFade, Global::gameCamera->getFadePosition1(), &vel, 0, 60, 0.0f,  5.0f, 0, true);
+	new Particle(ParticleResources::textureBlueLine,  Global::gameCamera->getFadePosition2(), &vel, 0, 5,  45.0f, 0.1f,  0, 1.5f, 0, true);
+
+	if (textTitleCardLevelName != nullptr)
+	{
+		textTitleCardLevelName->deleteMe();
+		delete textTitleCardLevelName;
+		Global::countDelete++;
+		textTitleCardLevelName = nullptr;
+	}
+	if (textTitleCardMission != nullptr)
+	{
+		textTitleCardMission->deleteMe();
+		delete textTitleCardMission;
+		Global::countDelete++;
+		textTitleCardMission = nullptr;
+	}
+	if (textTitleCardMissionDescription != nullptr)
+	{
+		textTitleCardMissionDescription->deleteMe();
+		delete textTitleCardMissionDescription;
+		Global::countDelete++;
+		textTitleCardMissionDescription = nullptr;
+	}
+
+	textTitleCardLevelName          = new GUIText(Global::levelNameDisplay, 3.0f, font, 0.0f, 0.6f, 1.0f, true, true); Global::countNew++;
+	textTitleCardMission            = new GUIText("Mission "+std::to_string(Global::gameMissionNumber+1)+":", 2.5f, font, 0.0f, 0.7f, 1.0f, true, true); Global::countNew++;
+	textTitleCardMissionDescription = new GUIText(Global::gameMissionDescription, 2.0f, font, 0.0f, 0.8f, 1.0f, true, true); Global::countNew++;
+
+	PauseScreen::titleCardTextTimer = 3;
 }

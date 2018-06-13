@@ -11,7 +11,8 @@ private:
 	float pitch;
 	float yaw;
 	float roll;
-	Vector3f fadePosition;
+	Vector3f fadePosition1;
+	Vector3f fadePosition2;
 
 public:
 	Camera();
@@ -34,6 +35,8 @@ public:
 
 	Vector3f calcVelocity();
 
-	Vector3f* getFadePosition();
+	Vector3f* getFadePosition1();
+
+	Vector3f* getFadePosition2();
 };
 #endif

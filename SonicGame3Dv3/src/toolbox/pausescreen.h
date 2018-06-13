@@ -49,9 +49,16 @@ private:
 	static GUIText* textManiaSonic;
 	static GUIText* textAmy;
 
+	static GUIText* textTitleCardLevelName;
+	static GUIText* textTitleCardMission;
+	static GUIText* textTitleCardMissionDescription;
+	static int titleCardTextTimer;
+
 	static bool shouldPause;
 
 	static bool pausedSounds[14];
+
+	static void createTitleCard();
 
 public:
 	static FontType* font;

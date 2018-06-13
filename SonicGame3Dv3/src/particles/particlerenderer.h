@@ -25,7 +25,7 @@ private:
 
 	void finishRendering();
 
-	void updateModelViewMatrix(Vector3f* position, float rotation, float scale, Matrix4f* viewMatrix);
+	void updateModelViewMatrix(Vector3f* position, float rotation, float scaleX, float scaleY, Matrix4f* viewMatrix);
 
 public:
 	ParticleRenderer(Matrix4f* projectionMatrix);

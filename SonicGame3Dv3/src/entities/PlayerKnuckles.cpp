@@ -111,11 +111,11 @@ void PlayerKnuckles::step()
 	if (deadTimer == 59)
 	{
 		Vector3f partVel(0, 0, 0);
-		new Particle(ParticleResources::textureBlackFadeOut, Global::gameCamera->getFadePosition(), &partVel, 0, 66, 0, 400, 0, true);
+		new Particle(ParticleResources::textureBlackFadeOut, Global::gameCamera->getFadePosition1(), &partVel, 0, 66, 0, 400, 0, true);
 	}
 	else if (deadTimer == 0)
 	{
-		Global::shouldRestartLevel = true;
+		Global::shouldLoadLevel = true;
 	}
 
 	if (punchingTimer == 1)
@@ -529,6 +529,17 @@ void PlayerKnuckles::step()
 		bool bonked = false;
 		if (onPlane == false) //Transition from air to ground
 		{
+			if (inWater)
+			{
+				Vector3f currDisp(xVel+xVelAir+xDisp, yVel+yDisp, zVel+zVelAir+zDisp);
+				Vector3f parToWall = projectOntoPlane(&currDisp, &(triCol->normal));
+				xVelGround = 0;
+				zVelGround = 0;
+				xVelAir = parToWall.x;
+				yVel    = parToWall.y;
+				zVelAir = parToWall.z;
+			}
+
 			//New idea: if the wall is very steep, check if we are approaching the wall at too flat of an angle.
 			//If we are, do a small bounce off the wall sintead of sticking to it.
 
@@ -2317,7 +2328,7 @@ void PlayerKnuckles::animate()
 	if (Global::finishStageTimer == 1)
 	{
 		Vector3f partVel(0, 0, 0);
-		new Particle(ParticleResources::textureWhiteFadeOutAndIn, Global::gameCamera->getFadePosition(), &partVel, 0, 120, 0, 400, 0, true);
+		new Particle(ParticleResources::textureWhiteFadeOutAndIn, Global::gameCamera->getFadePosition1(), &partVel, 0, 120, 0, 400, 0, true);
 	}
 	else if (Global::finishStageTimer == 60)
 	{
@@ -2327,7 +2338,7 @@ void PlayerKnuckles::animate()
 	else if (Global::finishStageTimer == 400)
 	{
 		Vector3f partVel(0, 0, 0);
-		new Particle(ParticleResources::textureBlackFadeOutAndIn, Global::gameCamera->getFadePosition(), &partVel, 0, 120, 0, 400, 0, true);
+		new Particle(ParticleResources::textureBlackFadeOutAndIn, Global::gameCamera->getFadePosition1(), &partVel, 0, 120, 0, 400, 0, true);
 
 		AudioPlayer::play(25, getPosition());
 	}

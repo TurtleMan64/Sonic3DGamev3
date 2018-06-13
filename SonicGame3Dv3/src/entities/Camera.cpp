@@ -34,20 +34,23 @@ Camera::Camera()
 
 void Camera::refresh()
 {
-	float radius = 0.6f;
-	Vector3f newPos(
-		position.x - cosf(toRadians(yaw + 90))*(radius*(cosf(toRadians(pitch)))),
-		position.y + sinf(toRadians(pitch + 180))*radius,
-		position.z - sinf(toRadians(yaw + 90))*(radius*(cosf(toRadians(pitch)))));
+	Vector3f off(
+		-cosf(toRadians(yaw + 90))*((cosf(toRadians(pitch)))),
+		 sinf(toRadians(pitch + 180)),
+		-sinf(toRadians(yaw + 90))*((cosf(toRadians(pitch)))));
 
-	fadePosition.x = newPos.x;
-	fadePosition.y = newPos.y;
-	fadePosition.z = newPos.z;
+	fadePosition1.x = position.x + off.x*0.7f;
+	fadePosition1.y = position.y + off.y*0.7f;
+	fadePosition1.z = position.z + off.z*0.7f;
+
+	fadePosition2.x = position.x + off.x*0.55f;
+	fadePosition2.y = position.y + off.y*0.55f;
+	fadePosition2.z = position.z + off.z*0.55f;
 
 	if (position.y < 0)
 	{
 		Vector3f partVel(0, 0, 0);
-		new Particle(ParticleResources::textureInWater, &fadePosition, &partVel, 0, 10, 0, 400, 0, true);
+		new Particle(ParticleResources::textureInWater, &fadePosition1, &partVel, 0, 10, 0, 400, 0, true);
 	}
 }
 
@@ -105,7 +108,12 @@ void Camera::invertPitch()
 	pitch = -pitch;
 }
 
-Vector3f* Camera::getFadePosition()
+Vector3f* Camera::getFadePosition1()
 {
-	return &fadePosition;
+	return &fadePosition1;
+}
+
+Vector3f* Camera::getFadePosition2()
+{
+	return &fadePosition2;
 }

@@ -4,6 +4,9 @@
 #include <fstream>
 #include <AL/al.h>
 
+#include <chrono>
+#include <thread>
+
 #include "levelloader.h"
 #include "../engineTester/main.h"
 #include "../entities/stage.h"
@@ -131,14 +134,14 @@ void LevelLoader_loadLevel(std::string levelFilename)
 		return;
 	}
 
-	int stageFault = 1;
+	int stageFault = 0;
 
-	if (Global::levelName == fname)
+	if (Global::isNewLevel)
 	{
-		stageFault = 0;
+		stageFault = 1;
+		std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 	}
-
-	Global::levelName = fname;
+	Global::isNewLevel = false;
 
 	if (stageFault == 1)
 	{
@@ -478,7 +481,7 @@ void LevelLoader_loadLevel(std::string levelFilename)
 	Global::finishStageTimer = -1;
 
 	Vector3f partVel(0, 0, 0);
-	new Particle(ParticleResources::textureBlackFade, Global::gameCamera->getFadePosition(), &partVel, 0, 60, 0, 400, 0, true);
+	new Particle(ParticleResources::textureBlackFade, Global::gameCamera->getFadePosition1(), &partVel, 0, 60, 0, 400, 0, true);
 	
 	if (bgmHasLoop != 0)
 	{

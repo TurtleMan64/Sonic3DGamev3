@@ -56,7 +56,7 @@ void ParticleRenderer::render(std::unordered_map<ParticleTexture*, std::list<Par
 				{
 					if (particle->getPosition()->y < 0)
 					{
-						updateModelViewMatrix(particle->getPosition(), particle->getRotation(), particle->getScale(), &viewMatrix);
+						updateModelViewMatrix(particle->getPosition(), particle->getRotation(), particle->getScaleX(), particle->getScaleY(), &viewMatrix);
 						shader->loadTextureCoordInfo(particle->getTexOffset1(), particle->getTexOffset2(), (float)texture.first->getNumberOfRows(), particle->getBlend());
 						glDrawArrays(GL_TRIANGLE_STRIP, 0, quad->getVertexCount());
 					}
@@ -76,7 +76,7 @@ void ParticleRenderer::render(std::unordered_map<ParticleTexture*, std::list<Par
 				std::list<Particle*>* texturesList = &texture.second;
 				for (Particle* particle : (*texturesList))
 				{
-					updateModelViewMatrix(particle->getPosition(), particle->getRotation(), particle->getScale(), &viewMatrix);
+					updateModelViewMatrix(particle->getPosition(), particle->getRotation(), particle->getScaleX(), particle->getScaleY(), &viewMatrix);
 					shader->loadTextureCoordInfo(particle->getTexOffset1(), particle->getTexOffset2(), (float)texture.first->getNumberOfRows(), particle->getBlend());
 					glDrawArrays(GL_TRIANGLE_STRIP, 0, quad->getVertexCount());
 				}
@@ -96,7 +96,7 @@ void ParticleRenderer::render(std::unordered_map<ParticleTexture*, std::list<Par
 				{
 					if (particle->getPosition()->y >= 0)
 					{
-						updateModelViewMatrix(particle->getPosition(), particle->getRotation(), particle->getScale(), &viewMatrix);
+						updateModelViewMatrix(particle->getPosition(), particle->getRotation(), particle->getScaleX(), particle->getScaleY(), &viewMatrix);
 						shader->loadTextureCoordInfo(particle->getTexOffset1(), particle->getTexOffset2(), (float)texture.first->getNumberOfRows(), particle->getBlend());
 						glDrawArrays(GL_TRIANGLE_STRIP, 0, quad->getVertexCount());
 					}
@@ -116,7 +116,7 @@ void ParticleRenderer::cleanUp()
 	shader->cleanUp();
 }
 
-void ParticleRenderer::updateModelViewMatrix(Vector3f* position, float rotation, float scale, Matrix4f* viewMatrix)
+void ParticleRenderer::updateModelViewMatrix(Vector3f* position, float rotation, float scaleX, float scaleY, Matrix4f* viewMatrix)
 {
 	Matrix4f modelMatrix;
 	modelMatrix.translate(position);
@@ -131,7 +131,7 @@ void ParticleRenderer::updateModelViewMatrix(Vector3f* position, float rotation,
 	modelMatrix.m22 = viewMatrix->m22;
 	Vector3f axis(0, 0, 1);
 	modelMatrix.rotate(toRadians(rotation), &axis);
-	Vector3f scaleVec(scale, scale, scale);
+	Vector3f scaleVec(scaleX, scaleY, 1);
 	modelMatrix.scale(&scaleVec);
 	Matrix4f modelViewMatrix = Matrix4f(modelMatrix);
 	viewMatrix->multiply(&modelViewMatrix, &modelViewMatrix);

@@ -28,6 +28,8 @@ public:
 	static void addParticle(Particle* particle);
 
 	static void updateProjectionMatrix(Matrix4f* projectionMatrix);
+
+	static void deleteAllParticles();
 };
 
 #endif

@@ -115,11 +115,11 @@ void PlayerTails::step()
 	if (deadTimer == 59)
 	{
 		Vector3f partVel(0, 0, 0);
-		new Particle(ParticleResources::textureBlackFadeOut, Global::gameCamera->getFadePosition(), &partVel, 0, 66, 0, 400, 0, true);
+		new Particle(ParticleResources::textureBlackFadeOut, Global::gameCamera->getFadePosition1(), &partVel, 0, 66, 0, 400, 0, true);
 	}
 	else if (deadTimer == 0)
 	{
-		Global::shouldRestartLevel = true;
+		Global::shouldLoadLevel = true;
 	}
 
 	if (jumpInput)
@@ -1862,7 +1862,7 @@ void PlayerTails::animate()
 	if (Global::finishStageTimer == 1)
 	{
 		Vector3f partVel(0, 0, 0);
-		new Particle(ParticleResources::textureWhiteFadeOutAndIn, Global::gameCamera->getFadePosition(), &partVel, 0, 120, 0, 400, 0, true);
+		new Particle(ParticleResources::textureWhiteFadeOutAndIn, Global::gameCamera->getFadePosition1(), &partVel, 0, 120, 0, 400, 0, true);
 		isFlying = false;
 	}
 	else if (Global::finishStageTimer == 60)
@@ -1873,7 +1873,7 @@ void PlayerTails::animate()
 	else if (Global::finishStageTimer == 400)
 	{
 		Vector3f partVel(0, 0, 0);
-		new Particle(ParticleResources::textureBlackFadeOutAndIn, Global::gameCamera->getFadePosition(), &partVel, 0, 120, 0, 400, 0, true);
+		new Particle(ParticleResources::textureBlackFadeOutAndIn, Global::gameCamera->getFadePosition1(), &partVel, 0, 120, 0, 400, 0, true);
 
 		AudioPlayer::play(25, getPosition());
 	}

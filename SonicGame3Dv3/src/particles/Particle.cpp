@@ -26,8 +26,47 @@ Particle::Particle(ParticleTexture* texture, Vector3f* position, Vector3f* veloc
 	this->gravityEffect = gravityEffect;
 	this->lifeLength = lifeLength;
 	this->rotation = rotation;
-	this->scale = scale;
-	this->scaleChange = scaleChange;
+	this->scaleX = scale;
+	this->scaleXChange = scaleChange;
+	this->scaleY = scale;
+	this->scaleYChange = scaleChange;
+	if (Global::renderParticles)
+	{
+		ParticleMaster::addParticle(this);
+		Global::countNew++;
+	}
+	else
+	{
+		delete this;
+	}
+}
+
+Particle::Particle(ParticleTexture* texture, Vector3f* position, Vector3f* velocity, float gravityEffect,
+		int lifeLength, float rotation, float scaleX, float scaleXChange, float scaleY, float scaleYChange, 
+		bool posIsRef)
+{
+	this->texture = texture;
+	if (posIsRef)
+	{
+		this->positionRef = position;
+	}
+	else
+	{
+		this->positionRef = &this->position;
+	}
+	this->position.x = position->x;
+	this->position.y = position->y;
+	this->position.z = position->z;
+	this->velocity.x = velocity->x;
+	this->velocity.y = velocity->y;
+	this->velocity.z = velocity->z;
+	this->gravityEffect = gravityEffect;
+	this->lifeLength = lifeLength;
+	this->rotation = rotation;
+	this->scaleX = scaleX;
+	this->scaleXChange = scaleXChange;
+	this->scaleY = scaleY;
+	this->scaleYChange = scaleYChange;
 	if (Global::renderParticles)
 	{
 		ParticleMaster::addParticle(this);
@@ -79,9 +118,14 @@ float Particle::getRotation()
 	return rotation;
 }
 
-float Particle::getScale()
+float Particle::getScaleX()
 {
-	return scale;
+	return scaleX;
+}
+
+float Particle::getScaleY()
+{
+	return scaleY;
 }
 
 Vector2f* Particle::getTexOffset1()
@@ -102,7 +146,8 @@ float Particle::getBlend()
 bool Particle::update(Camera* camera)
 {
 	velocity.y -= gravityEffect;
-	scale = fmaxf(0, scale + scaleChange);
+	scaleX = fmaxf(0, scaleX + scaleXChange);
+	scaleY = fmaxf(0, scaleY + scaleYChange);
 
 	position.x += velocity.x;
 	position.y += velocity.y;

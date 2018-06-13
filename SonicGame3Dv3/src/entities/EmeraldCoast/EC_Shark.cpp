@@ -150,7 +150,7 @@ void EC_Shark::step()
 		increasePosition(xVel, yVel, zVel);
 		updateTransformationMatrix();
 
-		if (getX() > 5666)
+		if (getX() > 5500)
 		{
 			setVisible(false);
 			seeTimer = 0;

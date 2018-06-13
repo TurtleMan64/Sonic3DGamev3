@@ -103,11 +103,11 @@ void PlayerSonic::step()
 	if (deadTimer == 59)
 	{
 		Vector3f partVel(0, 0, 0);
-		new Particle(ParticleResources::textureBlackFadeOut, Global::gameCamera->getFadePosition(), &partVel, 0, 66, 0, 400, 0, true);
+		new Particle(ParticleResources::textureBlackFadeOut, Global::gameCamera->getFadePosition1(), &partVel, 0, 66, 0, 400, 0, true);
 	}
 	else if (deadTimer == 0)
 	{
-		Global::shouldRestartLevel = true;
+		Global::shouldLoadLevel = true;
 	}
 
 	if (jumpInput)
@@ -594,6 +594,7 @@ void PlayerSonic::step()
 		{
 			setPosition(colPos);
 			currNorm.set(&(triCol->normal));
+
 			increasePosition(currNorm.x * 1.0f, currNorm.y * 1.0f, currNorm.z * 1.0f);
 		}
 
@@ -657,7 +658,28 @@ void PlayerSonic::step()
 			{
 				setPosition(colPos);
 				currNorm.set(&(triCol->normal));
-				increasePosition(currNorm.x * 1.0f, currNorm.y * 1.0f, currNorm.z * 1.0f);
+				
+				std::fprintf(stdout, "currNorm.y = %f\n", currNorm.y);
+
+				if (currNorm.y > 0.97f)
+				{
+					Vector3f vec1(0, 1, 0);
+					Vector3f vec2(&currNorm);
+
+					vec1.scale(1);
+					vec2.scale(10);
+
+					Vector3f diff = vec1 + vec2;
+
+					diff.scale(1/11.0f);
+
+					//increasePosition(0, 1.0f, 0);
+					increasePosition(diff.x, diff.y, diff.z);
+				}
+				else
+				{
+					increasePosition(currNorm.x * 1.0f, currNorm.y * 1.0f, currNorm.z * 1.0f);
+				}
 			}
 			airTimer = 0;
 			onPlane = true;
@@ -2369,7 +2391,7 @@ void PlayerSonic::animate()
 	if (Global::finishStageTimer == 1)
 	{
 		Vector3f partVel(0, 0, 0);
-		new Particle(ParticleResources::textureWhiteFadeOutAndIn, Global::gameCamera->getFadePosition(), &partVel, 0, 120, 0, 400, 0, true);
+		new Particle(ParticleResources::textureWhiteFadeOutAndIn, Global::gameCamera->getFadePosition1(), &partVel, 0, 120, 0, 400, 0, true);
 	}
 	else if (Global::finishStageTimer == 60)
 	{
@@ -2379,7 +2401,7 @@ void PlayerSonic::animate()
 	else if (Global::finishStageTimer == 400)
 	{
 		Vector3f partVel(0, 0, 0);
-		new Particle(ParticleResources::textureBlackFadeOutAndIn, Global::gameCamera->getFadePosition(), &partVel, 0, 120, 0, 400, 0, true);
+		new Particle(ParticleResources::textureBlackFadeOutAndIn, Global::gameCamera->getFadePosition1(), &partVel, 0, 120, 0, 400, 0, true);
 
 		AudioPlayer::play(25, getPosition());
 	}

@@ -102,3 +102,37 @@ void ParticleMaster::updateProjectionMatrix(Matrix4f* projectionMatrix)
 		ParticleMaster::renderer->updateProjectionMatrix(projectionMatrix);
 	}
 }
+
+void ParticleMaster::deleteAllParticles()
+{
+	std::unordered_map<ParticleTexture*, std::list<Particle*>>::iterator mapIt = ParticleMaster::particles.begin();
+	bool deletedEntry = false;
+
+	while (mapIt != ParticleMaster::particles.end())
+	{
+		std::list<Particle*>* list = &mapIt->second;
+
+		std::list<Particle*>::iterator it = list->begin();
+
+		deletedEntry = false;
+
+		while (it != list->end())
+		{
+			Particle* p = *it;
+
+			delete p; Global::countDelete++;
+			it = list->erase(it);
+
+			if (list->size() == 0)
+			{
+				mapIt = ParticleMaster::particles.erase(mapIt);
+				deletedEntry = true;
+			}
+		}
+
+		if (deletedEntry == false)
+		{
+			mapIt++;
+		}
+	}
+}

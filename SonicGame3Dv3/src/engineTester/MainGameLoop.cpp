@@ -137,11 +137,16 @@ int Global::countDelete = 0;
 int Global::gameState = 0;
 int Global::levelID = 0;
 int Global::bufferTime = -1;
-bool Global::shouldRestartLevel = false;
+bool Global::shouldLoadLevel = false;
+bool Global::isNewLevel = false;
 std::string Global::levelName = "";
+std::string Global::levelNameDisplay = "";
 int Global::gameRingCount = 0;
 int Global::gameClock = 0;
 float Global::deathHeight = -100.0f;
+
+int Global::gameMissionNumber = 0;
+std::string Global::gameMissionDescription = "";
 
 bool Global::unlockedSonicDoll = true;
 bool Global::unlockedMechaSonic = true;
@@ -288,22 +293,6 @@ int main()
 		if (Global::bufferTime == 0)
 		{
 			GuiManager::startTimer();
-		}
-
-		if (Global::finishStageTimer >= 0)
-		{
-			Global::finishStageTimer++;
-
-			if (Global::finishStageTimer > 460)
-			{
-				LevelLoader_loadTitle();
-			}
-		}
-
-		if (Global::shouldRestartLevel)
-		{
-			Global::shouldRestartLevel = false;
-			LevelLoader_loadLevel(Global::levelName);
 		}
 
 
@@ -545,6 +534,23 @@ int main()
 
 		frameCount++;
 		seconds = glfwGetTime();
+
+
+		if (Global::finishStageTimer >= 0)
+		{
+			Global::finishStageTimer++;
+
+			if (Global::finishStageTimer > 460)
+			{
+				LevelLoader_loadTitle();
+			}
+		}
+
+		if (Global::shouldLoadLevel)
+		{
+			Global::shouldLoadLevel = false;
+			LevelLoader_loadLevel(Global::levelName);
+		}
 
 		if (seconds - previousTime >= 1.0)
 		{

@@ -43,10 +43,12 @@ void createTransformationMatrix(Matrix4f* matrix, Vector3f* translation, float r
 	matrix->scale(&vec);
 }
 
-void createTransformationMatrix(Matrix4f* result, Vector2f* translation, Vector2f* scale)
+void createTransformationMatrix(Matrix4f* result, Vector2f* translation, float rotation, Vector2f* scale)
 {
 	result->setIdentity();
 	result->translate(translation);
+	Vector3f axis(0, 0, 1);
+	result->rotate(toRadians(rotation), &axis);
 	result->scale(scale);
 }
 

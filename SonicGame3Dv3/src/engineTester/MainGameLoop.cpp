@@ -57,6 +57,7 @@
 #include "../postProcessing/fbo.h"
 #include "../guis/guirenderer.h"
 #include "../guis/guitextureresources.h"
+#include "../toolbox/mainmenu.h"
 
 #ifdef _WIN32
 #include <windows.h>
@@ -192,6 +193,8 @@ int main()
 
 	TextMaster::init();
 
+	MainMenu::init();
+
 	PauseScreen::init();
 
 	GuiManager::init();
@@ -266,7 +269,8 @@ int main()
 
 	int frameCount = 0;
 
-	PauseScreen::pause();
+	//PauseScreen::pause();
+	Global::gameState = STATE_TITLE;
 
 	while (Global::gameState != STATE_EXITING && displayWantsToClose() == 0)
 	{
@@ -333,6 +337,7 @@ int main()
 
 
 
+		MainMenu::step();
 		PauseScreen::step();
 
 		switch (Global::gameState)
@@ -365,6 +370,15 @@ int main()
 				{
 					Global::gameState = STATE_DEBUG;
 				}
+
+				if (Global::gameMissionNumber == 1)
+				{
+					if (Global::gameRingCount >= 100 && Global::finishStageTimer == -1)
+					{
+						Global::finishStageTimer = 0;
+						GuiManager::stopTimer();
+					}
+				}
 				break;
 			}
 
@@ -381,6 +395,10 @@ int main()
 
 			case STATE_TITLE:
 			{
+				if (Global::renderParticles)
+				{
+					ParticleMaster::update(Global::gameCamera);
+				}
 				break;
 			}
 
@@ -534,7 +552,6 @@ int main()
 
 		frameCount++;
 		seconds = glfwGetTime();
-
 
 		if (Global::finishStageTimer >= 0)
 		{

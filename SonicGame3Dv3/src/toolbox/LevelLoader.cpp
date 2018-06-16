@@ -88,6 +88,7 @@
 #include "../entities/NokiBay/nbpalmtree.h"
 #include "../entities/NokiBay/nbwaterplatform.h"
 #include "../entities/NokiBay/nbwaterplatformbounce.h"
+#include "mainmenu.h"
 
 float toFloat(char* input);
 int toInt(char* input);
@@ -122,7 +123,9 @@ void LevelLoader_loadTitle()
 	GuiManager::stopTimer();
 
 	GuiManager::clearGuisToRender();
-	//PauseScreen::pause();
+
+	MainMenu::loadResources();
+	Global::gameState = STATE_TITLE;
 }
 
 void LevelLoader_loadLevel(std::string levelFilename)

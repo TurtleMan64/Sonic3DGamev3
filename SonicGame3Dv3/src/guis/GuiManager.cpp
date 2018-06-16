@@ -48,32 +48,21 @@ std::list<GuiTexture*> GuiManager::guisToRender;
 void GuiManager::init()
 {
 	fontVip = PauseScreen::font;
-	textTimer = new GUIText("0", 1, fontVip, 0.01f, 0.01f, 1, false, false);
-	Global::countNew++;
-	textRings = new GUIText("0", 1, fontVip, 0.01f, 0.01f, 1, false, false);
-	Global::countNew++;
+	textTimer = new GUIText("0", 1, fontVip, 0.01f, 0.01f, 1, false, false); Global::countNew++;
+	textRings = new GUIText("0", 1, fontVip, 0.01f, 0.01f, 1, false, false); Global::countNew++;
 
 	//Player debug text
-	textHorVel = new GUIText("Hor Vel:" + std::to_string(horVel), 1, fontVip, 0.01f, 0.70f, 1, false, Global::debugDisplay);
-	Global::countNew++;
-	textVerVel = new GUIText("Ver Vel:" + std::to_string(verVel), 1, fontVip, 0.01f, 0.75f, 1, false, Global::debugDisplay);
-	Global::countNew++;
-	textTotalVel = new GUIText("Total Vel:" + std::to_string(horVel), 1, fontVip, 0.01f, 0.80f, 1, false, Global::debugDisplay);
-	Global::countNew++;
-	textHoverCount = new GUIText("Hover Count:" + std::to_string(hoverCount), 1, fontVip, 0.01f, 0.85f, 1, false, Global::debugDisplay);
-	Global::countNew++;
-	textStoredSpindashSpeed = new GUIText("SSS:" + std::to_string(storedSpindashSpeed), 1, fontVip, 0.01f, 0.90f, 1, false, Global::debugDisplay);
-	Global::countNew++;
+	textHorVel              = new GUIText("Hor Vel:"     + std::to_string(horVel),              1, fontVip, 0.01f, 0.70f, 1, false, Global::debugDisplay); Global::countNew++;
+	textVerVel              = new GUIText("Ver Vel:"     + std::to_string(verVel),              1, fontVip, 0.01f, 0.75f, 1, false, Global::debugDisplay); Global::countNew++;
+	textTotalVel            = new GUIText("Total Vel:"   + std::to_string(horVel),              1, fontVip, 0.01f, 0.80f, 1, false, Global::debugDisplay); Global::countNew++;
+	textHoverCount          = new GUIText("Hover Count:" + std::to_string(hoverCount),          1, fontVip, 0.01f, 0.85f, 1, false, Global::debugDisplay); Global::countNew++;
+	textStoredSpindashSpeed = new GUIText("SSS:"         + std::to_string(storedSpindashSpeed), 1, fontVip, 0.01f, 0.90f, 1, false, Global::debugDisplay); Global::countNew++;
 
 	//Input text
-	textA = new GUIText("A", 1, fontVip, 0.80f, 0.95f, 1, false, Global::debugDisplay);
-	Global::countNew++;
-	textB = new GUIText("B", 1, fontVip, 0.85f, 0.95f, 1, false, Global::debugDisplay);
-	Global::countNew++;
-	textX = new GUIText("X", 1, fontVip, 0.90f, 0.95f, 1, false, Global::debugDisplay);
-	Global::countNew++;
-	textY = new GUIText("Y", 1, fontVip, 0.95f, 0.95f, 1, false, Global::debugDisplay);
-	Global::countNew++;
+	textA = new GUIText("A", 1, fontVip, 0.80f, 0.95f, 1, false, Global::debugDisplay); Global::countNew++;
+	textB = new GUIText("B", 1, fontVip, 0.85f, 0.95f, 1, false, Global::debugDisplay); Global::countNew++;
+	textX = new GUIText("X", 1, fontVip, 0.90f, 0.95f, 1, false, Global::debugDisplay); Global::countNew++;
+	textY = new GUIText("Y", 1, fontVip, 0.95f, 0.95f, 1, false, Global::debugDisplay); Global::countNew++;
 
 	GuiRenderer::init();
 }
@@ -88,8 +77,7 @@ void GuiManager::refresh()
 
 
 	textTimer->deleteMe();
-	delete textTimer;
-	Global::countDelete++;
+	delete textTimer; Global::countDelete++;
 	textTimer = nullptr;
 
 	std::string partMin = std::to_string(minutes);
@@ -109,15 +97,12 @@ void GuiManager::refresh()
 	}
 	std::string timer = partMin + ":" + partSec + "." + partCen;
 
-	textTimer = new GUIText(timer, 1.5f, fontVip, 0+16*px, 0+16*py, 1, false, true);
-	Global::countNew++;
+	textTimer = new GUIText(timer, 1.5f, fontVip, 0+16*px, 0+16*py, 1, false, true); Global::countNew++;
 
 	textRings->deleteMe();
-	delete textRings;
-	Global::countDelete++;
+	delete textRings; Global::countDelete++;
 	textRings = nullptr;
-	textRings = new GUIText(std::to_string(Global::gameRingCount), 1.5f, fontVip, 0+48*px, 0+48*py, 1, false, true);
-	Global::countNew++;
+	textRings = new GUIText(std::to_string(Global::gameRingCount), 1.5f, fontVip, 0+48*px, 0+48*py, 1, false, true); Global::countNew++;
 
 	if (Global::debugDisplay)
 	{
@@ -231,6 +216,17 @@ void GuiManager::refresh()
 		textB->setVisibility(false);
 		textX->setVisibility(false);
 		textY->setVisibility(false);
+	}
+
+	if (Global::gameState != STATE_TITLE)
+	{
+		textTimer->setVisibility(true);
+		textRings->setVisibility(true);
+	}
+	else
+	{
+		textTimer->setVisibility(false);
+		textRings->setVisibility(false);
 	}
 
 	//Render images

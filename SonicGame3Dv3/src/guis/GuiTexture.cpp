@@ -3,7 +3,7 @@
 #include <glad/glad.h>
 #include "../toolbox/vector.h"
 
-GuiTexture::GuiTexture(GLuint textureID, Vector2f* position, Vector2f* size)
+GuiTexture::GuiTexture(GLuint textureID, Vector2f* position, Vector2f* size, float rotation)
 {
 	this->textureID = textureID;
 	this->position.x = (position->x*2.0f)-1;
@@ -12,9 +12,10 @@ GuiTexture::GuiTexture(GLuint textureID, Vector2f* position, Vector2f* size)
 	this->sizeScaled.set(size);
 	this->visible = true;
 	this->scale = 1;
+	this->rotation = rotation;
 }
 
-GuiTexture::GuiTexture(GLuint textureID, float posX, float posY, float sizeX, float sizeY)
+GuiTexture::GuiTexture(GLuint textureID, float posX, float posY, float sizeX, float sizeY, float rotation)
 {
 	this->textureID = textureID;
 	this->position.x = (posX*2.0f)-1;
@@ -25,6 +26,7 @@ GuiTexture::GuiTexture(GLuint textureID, float posX, float posY, float sizeX, fl
 	this->sizeScaled.y = sizeY;
 	this->visible = true;
 	this->scale = 1;
+	this->rotation = rotation;
 }
 
 GLuint GuiTexture::getTexture()
@@ -49,12 +51,12 @@ void GuiTexture::setTexture(GLuint newTextureID)
 
 void GuiTexture::setX(float newX)
 {
-	position.x = newX;
+	position.x = (newX*2.0f)-1;
 }
 
 void GuiTexture::setY(float newY)
 {
-	position.y = newY;
+	position.y = -((newY*2.0f)-1);
 }
 
 bool GuiTexture::getVisible()
@@ -82,4 +84,14 @@ void GuiTexture::setScale(float newScale)
 Vector2f* GuiTexture::getSizeScaled()
 {
 	return &sizeScaled;
+}
+
+float GuiTexture::getRotation()
+{
+	return rotation;
+}
+
+void GuiTexture::setRotation(float newRotation)
+{
+	rotation = newRotation;
 }

@@ -2226,7 +2226,7 @@ bool PlayerTails::isVulnerable()
 
 void PlayerTails::die()
 {
-	if (deadTimer == -1)
+	if (deadTimer == -1 && Global::finishStageTimer == -1)
 	{
 		AudioPlayer::play(9, getPosition());
 		deadTimer = 180;

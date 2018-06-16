@@ -21,7 +21,7 @@ float toDegrees(float);
 void createTransformationMatrix(Matrix4f*, Vector3f*, float, float, float, float, float);
 
 //For 2D GUI Images
-void createTransformationMatrix(Matrix4f* result, Vector2f* translation, Vector2f* scale);
+void createTransformationMatrix(Matrix4f* result, Vector2f* translation, float roation, Vector2f* scale);
 
 //Based on how sadx calculates rotations
 void createTransformationMatrixSADX(Matrix4f*, Vector3f*, float, float, float, float);

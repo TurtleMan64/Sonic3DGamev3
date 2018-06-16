@@ -44,7 +44,7 @@ void GuiRenderer::render(std::list<GuiTexture*>* guis)
 			glActiveTexture(GL_TEXTURE0);
 			glBindTexture(GL_TEXTURE_2D, gui->getTexture());
 			Matrix4f matrix;
-			createTransformationMatrix(&matrix, gui->getPosition(), gui->getSizeScaled());
+			createTransformationMatrix(&matrix, gui->getPosition(), gui->getRotation(), gui->getSizeScaled());
 			GuiRenderer::shader->loadTransformation(&matrix);
 			glDrawArrays(GL_TRIANGLE_STRIP, 0, GuiRenderer::quadModel.getVertexCount());
 		}

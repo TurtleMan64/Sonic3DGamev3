@@ -18,6 +18,8 @@
 #include "../particles/particletexture.h"
 #include "../entities/camera.h"
 #include "../particles/particlemaster.h"
+#include "../guis/guitextureresources.h"
+#include "../guis/guimanager.h"
 
 int PauseScreen::menuSelection = 0;
 int PauseScreen::menuSelectionMAX = 4;
@@ -137,6 +139,8 @@ void PauseScreen::step()
 				Global::countDelete++;
 				textTitleCardMissionDescription = nullptr;
 			}
+
+			GuiManager::removeGui(GuiTextureResources::textureBlueLine);
 		}
 
 		PauseScreen::titleCardTextTimer--;
@@ -425,7 +429,7 @@ void PauseScreen::step()
 					Global::levelID = LVL_MH;
 					Global::levelName = "MetalHarbor.lvl";
 					Global::levelNameDisplay = "Metal Harbor";
-					Global::gameMissionNumber = 0;
+					Global::gameMissionNumber = 1;
 					Global::gameMissionDescription = "Escape from the military base!";
 					Global::isNewLevel = true;
 					Global::shouldLoadLevel = true;
@@ -903,21 +907,21 @@ void PauseScreen::pause()
 	textCharSelect    = new GUIText("Character Select", size, font, 0.5f, 0.6f, 1.0f, false, true); Global::countNew++;
 	textQuit          = new GUIText("Quit Game",        size, font, 0.5f, 0.7f, 1.0f, false, true); Global::countNew++;
 
-	textEmeraldCoast  = new GUIText("Emerald Coast",   size, font, 0.5f, spacing * 0,  1.0f, false, false); Global::countNew++;
-	textSpeedHighway  = new GUIText("Speed Highway",   size, font, 0.5f, spacing * 1,  1.0f, false, false); Global::countNew++;
-	textGreenHillZone = new GUIText("Green Hill Zone", size, font, 0.5f, spacing * 2,  1.0f, false, false); Global::countNew++;
-	textWuhuIsland    = new GUIText("Wuhu Island",     size, font, 0.5f, spacing * 3,  1.0f, false, false); Global::countNew++;
-	textPeachCastle   = new GUIText("Peach's Castle",  size, font, 0.5f, spacing * 4,  1.0f, false, false); Global::countNew++;
-	textSandHill      = new GUIText("Sand Hill",       size, font, 0.5f, spacing * 5,  1.0f, false, false); Global::countNew++;
-	textKoopaBeach    = new GUIText("Koopa Beach",     size, font, 0.5f, spacing * 6,  1.0f, false, false); Global::countNew++;
-	textOutsetIsland  = new GUIText("Outset Island",   size, font, 0.5f, spacing * 7,  1.0f, false, false); Global::countNew++;
-	textWeaponsBed    = new GUIText("Weapons Bed",     size, font, 0.5f, spacing * 8,  1.0f, false, false); Global::countNew++;
-	textMetalHarbor   = new GUIText("Metal Harbor",    size, font, 0.5f, spacing * 9,  1.0f, false, false); Global::countNew++;
-	textBOB           = new GUIText("Bob-omb Btlfld",  size, font, 0.5f, spacing * 10, 1.0f, false, false); Global::countNew++;
-	textRainbowRoad   = new GUIText("Rainbow Road",    size, font, 0.5f, spacing * 11, 1.0f, false, false); Global::countNew++;
-	textSnowhead      = new GUIText("Snowhead",        size, font, 0.5f, spacing * 12, 1.0f, false, false); Global::countNew++;
-	textTwinklePark   = new GUIText("Twinkle Park",    size, font, 0.5f, spacing * 13, 1.0f, false, false); Global::countNew++;
-	textFireField     = new GUIText("Fire Field",      size, font, 0.5f, spacing * 14, 1.0f, false, false); Global::countNew++;
+	textEmeraldCoast  = new GUIText("Emerald Coast",       size, font, 0.5f, spacing * 0,  1.0f, false, false); Global::countNew++;
+	textSpeedHighway  = new GUIText("Speed Highway",       size, font, 0.5f, spacing * 1,  1.0f, false, false); Global::countNew++;
+	textGreenHillZone = new GUIText("Green Hill Zone",     size, font, 0.5f, spacing * 2,  1.0f, false, false); Global::countNew++;
+	textWuhuIsland    = new GUIText("Wuhu Island",         size, font, 0.5f, spacing * 3,  1.0f, false, false); Global::countNew++;
+	textPeachCastle   = new GUIText("Peach's Castle",      size, font, 0.5f, spacing * 4,  1.0f, false, false); Global::countNew++;
+	textSandHill      = new GUIText("Sand Hill",           size, font, 0.5f, spacing * 5,  1.0f, false, false); Global::countNew++;
+	textKoopaBeach    = new GUIText("Koopa Beach",         size, font, 0.5f, spacing * 6,  1.0f, false, false); Global::countNew++;
+	textOutsetIsland  = new GUIText("Outset Island",       size, font, 0.5f, spacing * 7,  1.0f, false, false); Global::countNew++;
+	textWeaponsBed    = new GUIText("Weapons Bed",         size, font, 0.5f, spacing * 8,  1.0f, false, false); Global::countNew++;
+	textMetalHarbor   = new GUIText("Metal Harbor",        size, font, 0.5f, spacing * 9,  1.0f, false, false); Global::countNew++;
+	textBOB           = new GUIText("Bob-omb Battlefield", size, font, 0.5f, spacing * 10, 1.0f, false, false); Global::countNew++; //Bob-omb Battlefield   Bob-omb Btlfld
+	textRainbowRoad   = new GUIText("Rainbow Road",        size, font, 0.5f, spacing * 11, 1.0f, false, false); Global::countNew++;
+	textSnowhead      = new GUIText("Snowhead",            size, font, 0.5f, spacing * 12, 1.0f, false, false); Global::countNew++;
+	textTwinklePark   = new GUIText("Twinkle Park",        size, font, 0.5f, spacing * 13, 1.0f, false, false); Global::countNew++;
+	textFireField     = new GUIText("Fire Field",          size, font, 0.5f, spacing * 14, 1.0f, false, false); Global::countNew++;
 
 	textClassicSonic  = new GUIText("Classic Sonic", size, font, 0.5f, 0.3f, 1.0f, false, false); Global::countNew++;
 	textDollSonic     = new GUIText("Sonic Doll",    size, font, 0.5f, 0.4f, 1.0f, false, false); Global::countNew++;
@@ -947,7 +951,9 @@ void PauseScreen::createTitleCard()
 
 	Vector3f vel(0,0,0);
 	new Particle(ParticleResources::textureBlackFade, Global::gameCamera->getFadePosition1(), &vel, 0, 60, 0.0f,  5.0f, 0, true);
-	new Particle(ParticleResources::textureBlueLine,  Global::gameCamera->getFadePosition2(), &vel, 0, 5,  45.0f, 0.1f,  0, 1.5f, 0, true);
+	//new Particle(ParticleResources::textureBlueLine,  Global::gameCamera->getFadePosition2(), &vel, 0, 5,  45.0f, 0.1f,  0, 1.5f, 0, true);
+	GuiManager::addGuiToRender(GuiTextureResources::textureBlueLine);
+
 
 	if (textTitleCardLevelName != nullptr)
 	{

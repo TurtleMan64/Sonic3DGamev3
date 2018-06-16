@@ -659,7 +659,7 @@ void PlayerSonic::step()
 				setPosition(colPos);
 				currNorm.set(&(triCol->normal));
 				
-				std::fprintf(stdout, "currNorm.y = %f\n", currNorm.y);
+				//std::fprintf(stdout, "currNorm.y = %f\n", currNorm.y);
 
 				if (currNorm.y > 0.97f)
 				{
@@ -1906,9 +1906,9 @@ void PlayerSonic::adjustCamera()
 			position.z + currNorm.z*headHeight);
 
 		Vector3f camPos(
-			headPos.x + (float)(cos(toRadians(cam->getYaw() + 90))*(cameraRadius*(cos(toRadians(cam->getPitch()))))),
-			headPos.y - (float)(sin(toRadians(cam->getPitch() + 180))*cameraRadius),
-			headPos.z + (float)(sin(toRadians(cam->getYaw() + 90))*(cameraRadius*(cos(toRadians(cam->getPitch()))))));
+			headPos.x + cosf(toRadians(cam->getYaw() + 90))*cameraRadius*cosf(toRadians(cam->getPitch())),
+			headPos.y - sinf(toRadians(cam->getPitch() + 180))*cameraRadius,
+			headPos.z + sinf(toRadians(cam->getYaw() + 90))*cameraRadius*cosf(toRadians(cam->getPitch())));
 
 
 		if (CollisionChecker::checkCollision(position.x, position.y, position.z, headPos.x, headPos.y, headPos.z) == true)
@@ -2794,7 +2794,7 @@ bool PlayerSonic::isVulnerable()
 
 void PlayerSonic::die()
 {
-	if (deadTimer == -1)
+	if (deadTimer == -1 && Global::finishStageTimer == -1)
 	{
 		AudioPlayer::play(9, getPosition());
 		deadTimer = 180;

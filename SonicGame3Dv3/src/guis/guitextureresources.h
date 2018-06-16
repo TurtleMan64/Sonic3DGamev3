@@ -9,6 +9,7 @@ class GuiTextureResources
 {
 public:
 	static GuiTexture* textureRing;
+	static GuiTexture* textureBlueLine;
 
 	static void loadGuiTextures();
 };

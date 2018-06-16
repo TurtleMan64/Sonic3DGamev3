@@ -92,9 +92,9 @@ EmeraldManager::EmeraldManager(int doHardMode)
 	float py = 1.0f/(SCR_HEIGHT); //1 pixel in y dimension
 
 	//Create Radar gui textures
-	EmeraldManager::radar1 = new GuiTexture(EmeraldManager::radarGreyID, 0.5f-48*px, 1-32*py, 32*px, 32*py); Global::countNew++;
-	EmeraldManager::radar2 = new GuiTexture(EmeraldManager::radarGreyID, 0.5f,       1-32*py, 32*px, 32*py); Global::countNew++;
-	EmeraldManager::radar3 = new GuiTexture(EmeraldManager::radarGreyID, 0.5f+48*px, 1-32*py, 32*px, 32*py); Global::countNew++;
+	EmeraldManager::radar1 = new GuiTexture(EmeraldManager::radarGreyID, 0.5f-48*px, 1-32*py, 32*px, 32*py, 0); Global::countNew++;
+	EmeraldManager::radar2 = new GuiTexture(EmeraldManager::radarGreyID, 0.5f,       1-32*py, 32*px, 32*py, 0); Global::countNew++;
+	EmeraldManager::radar3 = new GuiTexture(EmeraldManager::radarGreyID, 0.5f+48*px, 1-32*py, 32*px, 32*py, 0); Global::countNew++;
 	GuiManager::addGuiToRender(EmeraldManager::radar1);
 	GuiManager::addGuiToRender(EmeraldManager::radar2);
 	GuiManager::addGuiToRender(EmeraldManager::radar3);

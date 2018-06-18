@@ -169,6 +169,7 @@ void PlayerSonic::step()
 		isStomping = false;
 		isDropDashing = false;
 		justBounced = false;
+		justHomingAttacked = false;
 		homingAttackTimer = -1;
 		dropDashCharge = 0.0f;
 		float speed = sqrtf(xVelGround*xVelGround + zVelGround*zVelGround);
@@ -1708,6 +1709,7 @@ void PlayerSonic::homingAttack()
 	isBouncing = false;
 	isStomping = false;
 	justBounced = false;
+	justHomingAttacked = true;
 	AudioPlayer::play(11, getPosition());
 }
 
@@ -2743,8 +2745,7 @@ void PlayerSonic::rebound(Vector3f* source)
 {
 	if (onPlane == false)
 	{
-		if (true)
-		//if (characterID == 2) //Mecha Sonic
+		if (justHomingAttacked)
 		{
 			yVel = 2.1f;
 			xVelAir = 0;
@@ -2753,6 +2754,7 @@ void PlayerSonic::rebound(Vector3f* source)
 			setZ(source->z);
 			setY(source->y + 3.5f);
 			homingAttackTimer = -1;
+			justHomingAttacked = false;
 			hoverCount = hoverLimit / 2;
 		}
 		else

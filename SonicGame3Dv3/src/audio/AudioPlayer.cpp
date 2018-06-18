@@ -60,6 +60,9 @@ void AudioPlayer::loadSoundEffects()
 	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/Player/Punch.ogg"));                 //33
 	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/General/RadarPing.ogg"));            //34
 	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/General/1Up.ogg"));                  //35
+	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/General/MenuBleep.ogg"));            //36
+	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/General/MenuWoosh.ogg"));            //37
+	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/General/MenuAccept.ogg"));           //38
 }
 
 void AudioPlayer::loadBGM(char* fileName)

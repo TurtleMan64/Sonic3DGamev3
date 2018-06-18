@@ -88,6 +88,10 @@ TextMeshData* TextMeshCreator::createQuadVertices(GUIText* text, std::vector<Lin
 		{
 			curserX = (line.getMaxLength() - line.getLineLength()) / 2;
 		}
+		else if (text->isRightAligned())
+		{
+			curserX = (line.getMaxLength() - line.getLineLength());
+		}
 		for (Word word : (*line.getWords()))
 		{
 			for (Character letter : (*word.getCharacters()))

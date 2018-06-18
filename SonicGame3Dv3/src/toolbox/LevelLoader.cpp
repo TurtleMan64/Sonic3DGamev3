@@ -495,6 +495,8 @@ void LevelLoader_loadLevel(std::string levelFilename)
 	{
 		AudioPlayer::playBGM(0);
 	}
+
+	Global::gameState = STATE_RUNNING;
 }
 
 

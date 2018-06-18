@@ -3,16 +3,16 @@
 #include "../fontRendering/textmaster.h"
 
 GUIText::GUIText(std::string text, float fontSize, FontType* font, float x, float y, float maxLineLength,
-	bool centered, bool visible)
+	bool centered, bool rightAligned, bool visible)
 {
 	this->colour.set(1, 1, 1);
-	this->centerText = false;
 	this->textString.assign(text);
 	this->fontSize = fontSize;
 	this->font = font;
 	this->position.set(x, y);
 	this->lineMaxSize = maxLineLength;
 	this->centerText = centered;
+	this->rightAlign = rightAligned;
 	this->visible = visible;
 	TextMaster::loadText(this);
 }
@@ -100,6 +100,11 @@ void GUIText::setNumberOfLines(int number)
 bool GUIText::isCentered()
 {
 	return centerText;
+}
+
+bool GUIText::isRightAligned()
+{
+	return rightAlign;
 }
 
 float GUIText::getMaxLineSize()

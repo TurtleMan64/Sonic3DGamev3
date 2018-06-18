@@ -36,8 +36,6 @@ private:
 	static bool selectInputPrevious;
 	static bool backInputPrevious;
 
-	//static GUIText* textCursor;
-
 	static GUIText* textMission1;//textEmeraldCoast;
 	static GUIText* textMission2;//textGreenHillZone;
 	static GUIText* textMission3;//textSpeedHighway;
@@ -54,13 +52,6 @@ private:
 	static GUIText* textMission14;//textTwinklePark;
 	static GUIText* textMission15;//textFireField;
 
-	//static GUIText* textClassicSonic;
-	//static GUIText* textDollSonic;
-	//static GUIText* textMechaSonic;
-	//static GUIText* textDage4Aquatic;
-	//static GUIText* textManiaSonic;
-	//static GUIText* textAmy;
-
 	static GUIText* textTitleCardLevelName;
 	static GUIText* textTitleCardMission;
 	static GUIText* textTitleCardMissionDescription;
@@ -74,6 +65,13 @@ private:
 	static GLuint textureParallelogramBackdrop;
 	static GLuint textureParallelogramHalf;
 	static GLuint textureParallelogramHalfBackdrop;
+	static GLuint textureRankA;
+	static GLuint textureRankB;
+	static GLuint textureRankC;
+	static GLuint textureRankD;
+	static GLuint textureRankE;
+	static GLuint textureRankBlank;
+	static GLuint textureMissionSelect;
 
 	//Parallelograms for ROOT
 	static GuiTexture* item1;
@@ -116,6 +114,16 @@ private:
 	static GuiTexture* itemMissionBackdrop13;
 	static GuiTexture* itemMissionBackdrop14;
 	static GuiTexture* itemMissionBackdrop15;
+
+	static GuiTexture* itemRankDisplay;
+	static GuiTexture* itemRankDisplayBackdrop;
+
+	static GuiTexture* rankM1;
+	static GuiTexture* rankM2;
+	static GuiTexture* rankM3;
+	static GuiTexture* rankM4;
+
+	static GuiTexture* missionSelect;
 
 	static int titleCardTextTimer;
 

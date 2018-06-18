@@ -186,6 +186,7 @@ private:
 	bool isLightdashing = false;
 
 	bool justBounced = false; //Are we in the air after doing a bounce?
+	bool justHomingAttacked = false; //Are we in the air after doing a homing attack?
 
 	float headHeight = 7;
 	bool firstPerson = false;

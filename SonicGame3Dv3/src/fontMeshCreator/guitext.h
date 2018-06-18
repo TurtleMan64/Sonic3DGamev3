@@ -33,6 +33,7 @@ private:
 	FontType* font;
 
 	bool centerText;
+	bool rightAlign;
 
 public:
 	/**
@@ -61,7 +62,7 @@ public:
 	*            - whether the text should be centered or not.
 	*/
 	GUIText(std::string text, float fontSize, FontType* font, float x, float y, float maxLineLength,
-		bool centered, bool visible);
+		bool centered, bool rightAlign, bool visible);
 
 
 	/**
@@ -150,6 +151,8 @@ public:
 	* @return {@code true} if the text should be centered.
 	*/
 	bool isCentered();
+
+	bool isRightAligned();
 
 	/**
 	* @return The maximum length of a line of this text.

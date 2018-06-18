@@ -193,13 +193,13 @@ int main()
 
 	TextMaster::init();
 
-	MainMenu::init();
-
 	PauseScreen::init();
 
 	GuiManager::init();
 
 	AudioMaster::init();
+
+	MainMenu::init();
 
 	if (Global::renderParticles)
 	{
@@ -254,9 +254,9 @@ int main()
 
 	if (Global::renderBloom)
 	{
-		Global::gameMultisampleFbo = new Fbo(SCR_WIDTH, SCR_HEIGHT);
-		Global::gameOutputFbo = new Fbo(SCR_WIDTH, SCR_HEIGHT, Fbo::DEPTH_TEXTURE);
-		Global::gameOutputFbo2 = new Fbo(SCR_WIDTH, SCR_HEIGHT, Fbo::DEPTH_TEXTURE);
+		Global::gameMultisampleFbo = new Fbo(SCR_WIDTH, SCR_HEIGHT); Global::countNew++;
+		Global::gameOutputFbo = new Fbo(SCR_WIDTH, SCR_HEIGHT, Fbo::DEPTH_TEXTURE); Global::countNew++;
+		Global::gameOutputFbo2 = new Fbo(SCR_WIDTH, SCR_HEIGHT, Fbo::DEPTH_TEXTURE); Global::countNew++;
 		PostProcessing::init();
 	}
 
@@ -395,6 +395,7 @@ int main()
 
 			case STATE_TITLE:
 			{
+				Global::gameCamera->refresh();
 				if (Global::renderParticles)
 				{
 					ParticleMaster::update(Global::gameCamera);

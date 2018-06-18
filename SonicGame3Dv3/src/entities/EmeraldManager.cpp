@@ -79,11 +79,11 @@ EmeraldManager::~EmeraldManager()
 EmeraldManager::EmeraldManager(int doHardMode)
 {
 	//Load images of radar
-	EmeraldManager::radarGreyID   = Loader_loadTexture("res/Images/RadarGrey.png");
-	EmeraldManager::radarBlueID   = Loader_loadTexture("res/Images/RadarBlue.png");
-	EmeraldManager::radarGreenID  = Loader_loadTexture("res/Images/RadarGreen.png");
-	EmeraldManager::radarYellowID = Loader_loadTexture("res/Images/RadarYellow.png");
-	EmeraldManager::radarRedID    = Loader_loadTexture("res/Images/RadarRed.png");
+	EmeraldManager::radarGreyID   = Loader_loadTexture("res/Images/TreasureHunting/RadarGrey.png");
+	EmeraldManager::radarBlueID   = Loader_loadTexture("res/Images/TreasureHunting/RadarBlue.png");
+	EmeraldManager::radarGreenID  = Loader_loadTexture("res/Images/TreasureHunting/RadarGreen.png");
+	EmeraldManager::radarYellowID = Loader_loadTexture("res/Images/TreasureHunting/RadarYellow.png");
+	EmeraldManager::radarRedID    = Loader_loadTexture("res/Images/TreasureHunting/RadarRed.png");
 
 	extern unsigned int SCR_WIDTH;
 	extern unsigned int SCR_HEIGHT;

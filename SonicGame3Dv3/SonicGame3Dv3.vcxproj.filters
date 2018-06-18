@@ -94,6 +94,12 @@
     <Filter Include="Source Files\entities\WildCanyon">
       <UniqueIdentifier>{9aaf4645-b380-461f-b18b-910196c59655}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\entities\DelfinoPlaza">
+      <UniqueIdentifier>{bd3d6924-7c8d-490c-94d3-491948c859c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\entities\NokiBay">
+      <UniqueIdentifier>{bf7b82a5-6d4c-4fb7-9a34-6568e3bedeb9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\renderEngine\DisplayManager.cpp">
@@ -534,6 +540,24 @@
     <ClCompile Include="src\entities\GoalTrigger.cpp">
       <Filter>Source Files\entities</Filter>
     </ClCompile>
+    <ClCompile Include="src\entities\DelfinoPlaza\DP_Palmtree.cpp">
+      <Filter>Source Files\entities\DelfinoPlaza</Filter>
+    </ClCompile>
+    <ClCompile Include="src\entities\NokiBay\NB_Palmtree.cpp">
+      <Filter>Source Files\entities\NokiBay</Filter>
+    </ClCompile>
+    <ClCompile Include="src\entities\DelfinoPlaza\DP_Leaves.cpp">
+      <Filter>Source Files\entities\DelfinoPlaza</Filter>
+    </ClCompile>
+    <ClCompile Include="src\entities\NokiBay\NB_WaterPlatform.cpp">
+      <Filter>Source Files\entities\NokiBay</Filter>
+    </ClCompile>
+    <ClCompile Include="src\entities\NokiBay\NB_WaterPlatformBounce.cpp">
+      <Filter>Source Files\entities\NokiBay</Filter>
+    </ClCompile>
+    <ClCompile Include="src\toolbox\MainMenu.cpp">
+      <Filter>Source Files\toolbox</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\renderEngine\renderEngine.h">
@@ -955,6 +979,24 @@
     </ClInclude>
     <ClInclude Include="src\entities\goaltrigger.h">
       <Filter>Source Files\entities</Filter>
+    </ClInclude>
+    <ClInclude Include="src\entities\DelfinoPlaza\dppalmtree.h">
+      <Filter>Source Files\entities\DelfinoPlaza</Filter>
+    </ClInclude>
+    <ClInclude Include="src\entities\NokiBay\nbpalmtree.h">
+      <Filter>Source Files\entities\NokiBay</Filter>
+    </ClInclude>
+    <ClInclude Include="src\entities\DelfinoPlaza\dpleaves.h">
+      <Filter>Source Files\entities\DelfinoPlaza</Filter>
+    </ClInclude>
+    <ClInclude Include="src\entities\NokiBay\nbwaterplatform.h">
+      <Filter>Source Files\entities\NokiBay</Filter>
+    </ClInclude>
+    <ClInclude Include="src\entities\NokiBay\nbwaterplatformbounce.h">
+      <Filter>Source Files\entities\NokiBay</Filter>
+    </ClInclude>
+    <ClInclude Include="src\toolbox\mainmenu.h">
+      <Filter>Source Files\toolbox</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

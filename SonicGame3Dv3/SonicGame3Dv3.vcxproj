@@ -39,6 +39,8 @@
     <ClCompile Include="src\entities\CollideableObject.cpp" />
     <ClCompile Include="src\entities\ControllablePlayer.cpp" />
     <ClCompile Include="src\entities\Dashpad.cpp" />
+    <ClCompile Include="src\entities\DelfinoPlaza\DP_Leaves.cpp" />
+    <ClCompile Include="src\entities\DelfinoPlaza\DP_Palmtree.cpp" />
     <ClCompile Include="src\entities\EmeraldCoast\EC_BigRock.cpp" />
     <ClCompile Include="src\entities\EmeraldCoast\EC_Chair.cpp" />
     <ClCompile Include="src\entities\EmeraldCoast\EC_Dock.cpp" />
@@ -71,6 +73,9 @@
     <ClCompile Include="src\entities\ManiaKnucklesModel.cpp" />
     <ClCompile Include="src\entities\ManiaSonicModel.cpp" />
     <ClCompile Include="src\entities\ManiaTailsModel.cpp" />
+    <ClCompile Include="src\entities\NokiBay\NB_Palmtree.cpp" />
+    <ClCompile Include="src\entities\NokiBay\NB_WaterPlatform.cpp" />
+    <ClCompile Include="src\entities\NokiBay\NB_WaterPlatformBounce.cpp" />
     <ClCompile Include="src\entities\PlayerKnuckles.cpp" />
     <ClCompile Include="src\entities\PlayerSonic.cpp" />
     <ClCompile Include="src\entities\PlayerTails.cpp" />
@@ -156,6 +161,7 @@
     <ClCompile Include="src\textures\ModelTexture.cpp" />
     <ClCompile Include="src\toolbox\Input.cpp" />
     <ClCompile Include="src\toolbox\LevelLoader.cpp" />
+    <ClCompile Include="src\toolbox\MainMenu.cpp" />
     <ClCompile Include="src\toolbox\maths.cpp" />
     <ClCompile Include="src\toolbox\matrix.cpp" />
     <ClCompile Include="src\toolbox\PauseScreen.cpp" />
@@ -187,6 +193,8 @@
     <ClInclude Include="src\entities\collideableobject.h" />
     <ClInclude Include="src\entities\controllableplayer.h" />
     <ClInclude Include="src\entities\dashpad.h" />
+    <ClInclude Include="src\entities\DelfinoPlaza\dpleaves.h" />
+    <ClInclude Include="src\entities\DelfinoPlaza\dppalmtree.h" />
     <ClInclude Include="src\entities\EmeraldCoast\ecbigrock.h" />
     <ClInclude Include="src\entities\EmeraldCoast\ecchair.h" />
     <ClInclude Include="src\entities\EmeraldCoast\ecdock.h" />
@@ -219,6 +227,9 @@
     <ClInclude Include="src\entities\maniaknucklesmodel.h" />
     <ClInclude Include="src\entities\maniasonicmodel.h" />
     <ClInclude Include="src\entities\maniatailsmodel.h" />
+    <ClInclude Include="src\entities\NokiBay\nbpalmtree.h" />
+    <ClInclude Include="src\entities\NokiBay\nbwaterplatform.h" />
+    <ClInclude Include="src\entities\NokiBay\nbwaterplatformbounce.h" />
     <ClInclude Include="src\entities\playerknuckles.h" />
     <ClInclude Include="src\entities\playersonic.h" />
     <ClInclude Include="src\entities\playertails.h" />
@@ -298,6 +309,7 @@
     <ClInclude Include="src\textures\textures.h" />
     <ClInclude Include="src\toolbox\input.h" />
     <ClInclude Include="src\toolbox\levelloader.h" />
+    <ClInclude Include="src\toolbox\mainmenu.h" />
     <ClInclude Include="src\toolbox\maths.h" />
     <ClInclude Include="src\toolbox\matrix.h" />
     <ClInclude Include="src\toolbox\pausescreen.h" />

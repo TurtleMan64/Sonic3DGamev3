@@ -29,21 +29,26 @@ int MainMenu::moveYPrevious = 0;
 bool MainMenu::selectInputPrevious = false;
 bool MainMenu::backInputPrevious = false;
 
-GUIText* MainMenu::textMission1  = nullptr;//textEmeraldCoast;
-GUIText* MainMenu::textMission2  = nullptr;//textGreenHillZone;
-GUIText* MainMenu::textMission3  = nullptr;//textSpeedHighway;
-GUIText* MainMenu::textMission4  = nullptr;//textWuhuIsland;
-GUIText* MainMenu::textMission5  = nullptr;//textPeachCastle;
-GUIText* MainMenu::textMission6  = nullptr;//textSandHill;
-GUIText* MainMenu::textMission7  = nullptr;//textKoopaBeach;
-GUIText* MainMenu::textMission8  = nullptr;//textOutsetIsland;
-GUIText* MainMenu::textMission9  = nullptr;//textWeaponsBed;
-GUIText* MainMenu::textMission10 = nullptr;//textMetalHarbor;
-GUIText* MainMenu::textMission11 = nullptr;//textBOB;
-GUIText* MainMenu::textMission12 = nullptr;//textRainbowRoad;
-GUIText* MainMenu::textMission13 = nullptr;//textSnowhead;
-GUIText* MainMenu::textMission14 = nullptr;//textTwinklePark;
-GUIText* MainMenu::textMission15 = nullptr;//textFireField;
+GUIText* MainMenu::textMission1  = nullptr;//Emerald Coast;
+GUIText* MainMenu::textMission2  = nullptr;//Dry Lagoon;
+GUIText* MainMenu::textMission3  = nullptr;//Speed Highway;
+GUIText* MainMenu::textMission4  = nullptr;//Twinkle Park;
+GUIText* MainMenu::textMission5  = nullptr;//Wild Canyon;
+GUIText* MainMenu::textMission6  = nullptr;//Metal Harbor;
+GUIText* MainMenu::textMission7  = nullptr;//Delfino Plaza;
+GUIText* MainMenu::textMission8  = nullptr;//Green Hill Zone;
+GUIText* MainMenu::textMission9  = nullptr;//Noki Bay;
+GUIText* MainMenu::textMission10 = nullptr;//Weapons Bed;
+GUIText* MainMenu::textMission11 = nullptr;//Outset Island;
+GUIText* MainMenu::textMission12 = nullptr;//Wuhu Island;
+GUIText* MainMenu::textMission13 = nullptr;//Snowhead;
+GUIText* MainMenu::textMission14 = nullptr;//Sand Hill;
+GUIText* MainMenu::textMission15 = nullptr;//Rainbow Road;
+GUIText* MainMenu::textMission16 = nullptr;//Peach's Castle;
+GUIText* MainMenu::textMission17 = nullptr;//Koopa Beach;
+GUIText* MainMenu::textMission18 = nullptr;//Fire Field;
+GUIText* MainMenu::textMission19 = nullptr;//Bob-omb Battlefield;
+GUIText* MainMenu::textMission20 = nullptr;//Kingdom Valley;
 
 GUIText* MainMenu::textTitleCardLevelName          = nullptr;
 GUIText* MainMenu::textTitleCardMission            = nullptr;
@@ -90,6 +95,11 @@ GuiTexture* MainMenu::itemMission12 = nullptr;
 GuiTexture* MainMenu::itemMission13 = nullptr;
 GuiTexture* MainMenu::itemMission14 = nullptr;
 GuiTexture* MainMenu::itemMission15 = nullptr;
+GuiTexture* MainMenu::itemMission16 = nullptr;
+GuiTexture* MainMenu::itemMission17 = nullptr;
+GuiTexture* MainMenu::itemMission18 = nullptr;
+GuiTexture* MainMenu::itemMission19 = nullptr;
+GuiTexture* MainMenu::itemMission20 = nullptr;
 GuiTexture* MainMenu::itemMissionBackdrop1  = nullptr;
 GuiTexture* MainMenu::itemMissionBackdrop2  = nullptr;
 GuiTexture* MainMenu::itemMissionBackdrop3  = nullptr;
@@ -105,6 +115,11 @@ GuiTexture* MainMenu::itemMissionBackdrop12 = nullptr;
 GuiTexture* MainMenu::itemMissionBackdrop13 = nullptr;
 GuiTexture* MainMenu::itemMissionBackdrop14 = nullptr;
 GuiTexture* MainMenu::itemMissionBackdrop15 = nullptr;
+GuiTexture* MainMenu::itemMissionBackdrop16 = nullptr;
+GuiTexture* MainMenu::itemMissionBackdrop17 = nullptr;
+GuiTexture* MainMenu::itemMissionBackdrop18 = nullptr;
+GuiTexture* MainMenu::itemMissionBackdrop19 = nullptr;
+GuiTexture* MainMenu::itemMissionBackdrop20 = nullptr;
 
 GuiTexture* MainMenu::itemRankDisplay = nullptr;
 GuiTexture* MainMenu::itemRankDisplayBackdrop = nullptr;
@@ -196,6 +211,11 @@ void MainMenu::loadResources()
 	itemMission13 = new GuiTexture(textureParallelogramHalf, 0.0f, 0.0f, 1024*px, 64*py, 0); Global::countNew++;
 	itemMission14 = new GuiTexture(textureParallelogramHalf, 0.0f, 0.0f, 1024*px, 64*py, 0); Global::countNew++;
 	itemMission15 = new GuiTexture(textureParallelogramHalf, 0.0f, 0.0f, 1024*px, 64*py, 0); Global::countNew++;
+	itemMission16 = new GuiTexture(textureParallelogramHalf, 0.0f, 0.0f, 1024*px, 64*py, 0); Global::countNew++;
+	itemMission17 = new GuiTexture(textureParallelogramHalf, 0.0f, 0.0f, 1024*px, 64*py, 0); Global::countNew++;
+	itemMission18 = new GuiTexture(textureParallelogramHalf, 0.0f, 0.0f, 1024*px, 64*py, 0); Global::countNew++;
+	itemMission19 = new GuiTexture(textureParallelogramHalf, 0.0f, 0.0f, 1024*px, 64*py, 0); Global::countNew++;
+	itemMission20 = new GuiTexture(textureParallelogramHalf, 0.0f, 0.0f, 1024*px, 64*py, 0); Global::countNew++;
 	itemMissionBackdrop1  = new GuiTexture(textureParallelogramHalfBackdrop, 0.0f, 0.0f, 1024*px, 64*py, 0); Global::countNew++;
 	itemMissionBackdrop2  = new GuiTexture(textureParallelogramHalfBackdrop, 0.0f, 0.0f, 1024*px, 64*py, 0); Global::countNew++;
 	itemMissionBackdrop3  = new GuiTexture(textureParallelogramHalfBackdrop, 0.0f, 0.0f, 1024*px, 64*py, 0); Global::countNew++;
@@ -211,6 +231,11 @@ void MainMenu::loadResources()
 	itemMissionBackdrop13 = new GuiTexture(textureParallelogramHalfBackdrop, 0.0f, 0.0f, 1024*px, 64*py, 0); Global::countNew++;
 	itemMissionBackdrop14 = new GuiTexture(textureParallelogramHalfBackdrop, 0.0f, 0.0f, 1024*px, 64*py, 0); Global::countNew++;
 	itemMissionBackdrop15 = new GuiTexture(textureParallelogramHalfBackdrop, 0.0f, 0.0f, 1024*px, 64*py, 0); Global::countNew++;
+	itemMissionBackdrop16 = new GuiTexture(textureParallelogramHalfBackdrop, 0.0f, 0.0f, 1024*px, 64*py, 0); Global::countNew++;
+	itemMissionBackdrop17 = new GuiTexture(textureParallelogramHalfBackdrop, 0.0f, 0.0f, 1024*px, 64*py, 0); Global::countNew++;
+	itemMissionBackdrop18 = new GuiTexture(textureParallelogramHalfBackdrop, 0.0f, 0.0f, 1024*px, 64*py, 0); Global::countNew++;
+	itemMissionBackdrop19 = new GuiTexture(textureParallelogramHalfBackdrop, 0.0f, 0.0f, 1024*px, 64*py, 0); Global::countNew++;
+	itemMissionBackdrop20 = new GuiTexture(textureParallelogramHalfBackdrop, 0.0f, 0.0f, 1024*px, 64*py, 0); Global::countNew++;
 
 	itemRankDisplay = new GuiTexture(textureParallelogram, 0.75f, 0.5f, 512*px, 64*py, 0); Global::countNew++;
 	itemRankDisplayBackdrop = new GuiTexture(textureParallelogramBackdrop, 0.75f+8*px, 0.5f+6*py, 512*px, 64*py, 0); Global::countNew++;
@@ -223,20 +248,25 @@ void MainMenu::loadResources()
 	missionSelect = new GuiTexture(textureMissionSelect, 0.75f-83*px, 0.5f, 96*px, 96*py, 0); Global::countNew++; //change scale probably
 
 	textMission1  = new GUIText("EMERALD COAST",       2.0f, font, 0.0f, 0.0f, 0.5f-128*px, false, true, true); Global::countNew++;
-	textMission2  = new GUIText("GREEN HILL ZONE",     2.0f, font, 0.0f, 0.0f, 0.5f-128*px, false, true, true); Global::countNew++;
+	textMission2  = new GUIText("DRY LAGOON",          2.0f, font, 0.0f, 0.0f, 0.5f-128*px, false, true, true); Global::countNew++;
 	textMission3  = new GUIText("SPEED HIGHWAY",       2.0f, font, 0.0f, 0.0f, 0.5f-128*px, false, true, true); Global::countNew++;
-	textMission4  = new GUIText("WUHU ISLAND",         2.0f, font, 0.0f, 0.0f, 0.5f-128*px, false, true, true); Global::countNew++;
-	textMission5  = new GUIText("PEACH'S CASTLE",      2.0f, font, 0.0f, 0.0f, 0.5f-128*px, false, true, true); Global::countNew++;
-	textMission6  = new GUIText("SAND HILL",           2.0f, font, 0.0f, 0.0f, 0.5f-128*px, false, true, true); Global::countNew++;
-	textMission7  = new GUIText("KOOPA BEACH",         2.0f, font, 0.0f, 0.0f, 0.5f-128*px, false, true, true); Global::countNew++;
-	textMission8  = new GUIText("OUTSET ISLAND",       2.0f, font, 0.0f, 0.0f, 0.5f-128*px, false, true, true); Global::countNew++;
-	textMission9  = new GUIText("WEAPONS BED",         2.0f, font, 0.0f, 0.0f, 0.5f-128*px, false, true, true); Global::countNew++;
-	textMission10 = new GUIText("METAL HARBOR",        2.0f, font, 0.0f, 0.0f, 0.5f-128*px, false, true, true); Global::countNew++;
-	textMission11 = new GUIText("BOB-OMB BATTLEFIELD", 2.0f, font, 0.0f, 0.0f, 0.5f-128*px, false, true, true); Global::countNew++;
-	textMission12 = new GUIText("RAINBOW ROAD",        2.0f, font, 0.0f, 0.0f, 0.5f-128*px, false, true, true); Global::countNew++;
+	textMission4  = new GUIText("TWINKLE PARK",        2.0f, font, 0.0f, 0.0f, 0.5f-128*px, false, true, true); Global::countNew++;
+	textMission5  = new GUIText("WILD CANYON",         2.0f, font, 0.0f, 0.0f, 0.5f-128*px, false, true, true); Global::countNew++;
+	textMission6  = new GUIText("METAL HARBOR",        2.0f, font, 0.0f, 0.0f, 0.5f-128*px, false, true, true); Global::countNew++;
+	textMission7  = new GUIText("DELFINO PLAZA",       2.0f, font, 0.0f, 0.0f, 0.5f-128*px, false, true, true); Global::countNew++;
+	textMission8  = new GUIText("GREEN HILL ZONE",     2.0f, font, 0.0f, 0.0f, 0.5f-128*px, false, true, true); Global::countNew++;
+	textMission9  = new GUIText("NOKI BAY",            2.0f, font, 0.0f, 0.0f, 0.5f-128*px, false, true, true); Global::countNew++;
+	textMission10 = new GUIText("WEAPONS BED",         2.0f, font, 0.0f, 0.0f, 0.5f-128*px, false, true, true); Global::countNew++;
+	textMission11 = new GUIText("OUTSET ISLAND",       2.0f, font, 0.0f, 0.0f, 0.5f-128*px, false, true, true); Global::countNew++;
+	textMission12 = new GUIText("WUHU ISLAND",         2.0f, font, 0.0f, 0.0f, 0.5f-128*px, false, true, true); Global::countNew++;
 	textMission13 = new GUIText("SNOWHEAD",            2.0f, font, 0.0f, 0.0f, 0.5f-128*px, false, true, true); Global::countNew++;
-	textMission14 = new GUIText("TWINKLE PARK",        2.0f, font, 0.0f, 0.0f, 0.5f-128*px, false, true, true); Global::countNew++;
-	textMission15 = new GUIText("FIRE FIELD",          2.0f, font, 0.0f, 0.0f, 0.5f-128*px, false, true, true); Global::countNew++;
+	textMission14 = new GUIText("SAND HILL",           2.0f, font, 0.0f, 0.0f, 0.5f-128*px, false, true, true); Global::countNew++;
+	textMission15 = new GUIText("RAINBOW ROAD",        2.0f, font, 0.0f, 0.0f, 0.5f-128*px, false, true, true); Global::countNew++;
+	textMission16 = new GUIText("PEACH'S CASTLE",      2.0f, font, 0.0f, 0.0f, 0.5f-128*px, false, true, true); Global::countNew++;
+	textMission17 = new GUIText("KOOPA BEACH",         2.0f, font, 0.0f, 0.0f, 0.5f-128*px, false, true, true); Global::countNew++;
+	textMission18 = new GUIText("FIRE FIELD",          2.0f, font, 0.0f, 0.0f, 0.5f-128*px, false, true, true); Global::countNew++;
+	textMission19 = new GUIText("BOB-OMB BATTLEFIELD", 2.0f, font, 0.0f, 0.0f, 0.5f-128*px, false, true, true); Global::countNew++;
+	textMission20 = new GUIText("KINGDOM VALLEY",      2.0f, font, 0.0f, 0.0f, 0.5f-128*px, false, true, true); Global::countNew++;
 
 	MainMenu::selectMenuRoot(ROOT_STORY);
 }
@@ -269,6 +299,11 @@ void MainMenu::unloadResources()
 	textMission13->deleteMe(); delete textMission13; Global::countDelete++; textMission13 = nullptr;
 	textMission14->deleteMe(); delete textMission14; Global::countDelete++; textMission14 = nullptr;
 	textMission15->deleteMe(); delete textMission15; Global::countDelete++; textMission15 = nullptr;
+	textMission16->deleteMe(); delete textMission16; Global::countDelete++; textMission16 = nullptr;
+	textMission17->deleteMe(); delete textMission17; Global::countDelete++; textMission17 = nullptr;
+	textMission18->deleteMe(); delete textMission18; Global::countDelete++; textMission18 = nullptr;
+	textMission19->deleteMe(); delete textMission19; Global::countDelete++; textMission19 = nullptr;
+	textMission20->deleteMe(); delete textMission20; Global::countDelete++; textMission20 = nullptr;
 
 	GuiManager::clearGuisToRender();
 
@@ -296,6 +331,11 @@ void MainMenu::unloadResources()
 	delete itemMission13; Global::countDelete++; itemMission13 = nullptr;
 	delete itemMission14; Global::countDelete++; itemMission14 = nullptr;
 	delete itemMission15; Global::countDelete++; itemMission15 = nullptr;
+	delete itemMission16; Global::countDelete++; itemMission16 = nullptr;
+	delete itemMission17; Global::countDelete++; itemMission17 = nullptr;
+	delete itemMission18; Global::countDelete++; itemMission18 = nullptr;
+	delete itemMission19; Global::countDelete++; itemMission19 = nullptr;
+	delete itemMission20; Global::countDelete++; itemMission20 = nullptr;
 	delete itemMissionBackdrop1;  Global::countDelete++; itemMissionBackdrop1  = nullptr; 
 	delete itemMissionBackdrop2;  Global::countDelete++; itemMissionBackdrop2  = nullptr; 
 	delete itemMissionBackdrop3;  Global::countDelete++; itemMissionBackdrop3  = nullptr; 
@@ -311,6 +351,11 @@ void MainMenu::unloadResources()
 	delete itemMissionBackdrop13; Global::countDelete++; itemMissionBackdrop13 = nullptr;
 	delete itemMissionBackdrop14; Global::countDelete++; itemMissionBackdrop14 = nullptr;
 	delete itemMissionBackdrop15; Global::countDelete++; itemMissionBackdrop15 = nullptr;
+	delete itemMissionBackdrop16; Global::countDelete++; itemMissionBackdrop16 = nullptr;
+	delete itemMissionBackdrop17; Global::countDelete++; itemMissionBackdrop17 = nullptr;
+	delete itemMissionBackdrop18; Global::countDelete++; itemMissionBackdrop18 = nullptr;
+	delete itemMissionBackdrop19; Global::countDelete++; itemMissionBackdrop19 = nullptr;
+	delete itemMissionBackdrop20; Global::countDelete++; itemMissionBackdrop20 = nullptr;
 
 	delete itemRankDisplay; Global::countDelete++; itemRankDisplay = nullptr;
 	delete itemRankDisplayBackdrop; Global::countDelete++; itemRankDisplayBackdrop = nullptr;
@@ -349,7 +394,12 @@ void MainMenu::selectMenuMission(int newSelection)
 	itemMission12->setY(yPos+offsetY); yPos+=128*py;
 	itemMission13->setY(yPos+offsetY); yPos+=128*py;
 	itemMission14->setY(yPos+offsetY); yPos+=128*py;
-	itemMission15->setY(yPos+offsetY);
+	itemMission15->setY(yPos+offsetY); yPos+=128*py;
+	itemMission16->setY(yPos+offsetY); yPos+=128*py;
+	itemMission17->setY(yPos+offsetY); yPos+=128*py;
+	itemMission18->setY(yPos+offsetY); yPos+=128*py;
+	itemMission19->setY(yPos+offsetY); yPos+=128*py;
+	itemMission20->setY(yPos+offsetY);
 	yPos = 0.5f+6.0f*py;
 	itemMissionBackdrop1 ->setY(yPos+offsetY); yPos+=128*py;
 	itemMissionBackdrop2 ->setY(yPos+offsetY); yPos+=128*py;
@@ -365,7 +415,12 @@ void MainMenu::selectMenuMission(int newSelection)
 	itemMissionBackdrop12->setY(yPos+offsetY); yPos+=128*py;
 	itemMissionBackdrop13->setY(yPos+offsetY); yPos+=128*py;
 	itemMissionBackdrop14->setY(yPos+offsetY); yPos+=128*py;
-	itemMissionBackdrop15->setY(yPos+offsetY);
+	itemMissionBackdrop15->setY(yPos+offsetY); yPos+=128*py;
+	itemMissionBackdrop16->setY(yPos+offsetY); yPos+=128*py;
+	itemMissionBackdrop17->setY(yPos+offsetY); yPos+=128*py;
+	itemMissionBackdrop18->setY(yPos+offsetY); yPos+=128*py;
+	itemMissionBackdrop19->setY(yPos+offsetY); yPos+=128*py;
+	itemMissionBackdrop20->setY(yPos+offsetY);
 
 	itemMission1 ->setX(0.5f-512*px-64*px);
 	itemMission2 ->setX(0.5f-512*px-64*px);
@@ -382,6 +437,11 @@ void MainMenu::selectMenuMission(int newSelection)
 	itemMission13->setX(0.5f-512*px-64*px);
 	itemMission14->setX(0.5f-512*px-64*px);
 	itemMission15->setX(0.5f-512*px-64*px);
+	itemMission16->setX(0.5f-512*px-64*px);
+	itemMission17->setX(0.5f-512*px-64*px);
+	itemMission18->setX(0.5f-512*px-64*px);
+	itemMission19->setX(0.5f-512*px-64*px);
+	itemMission20->setX(0.5f-512*px-64*px);
 	itemMissionBackdrop1 ->setX(0.5f-512*px-64*px+8*px);
 	itemMissionBackdrop2 ->setX(0.5f-512*px-64*px+8*px);
 	itemMissionBackdrop3 ->setX(0.5f-512*px-64*px+8*px);
@@ -397,6 +457,11 @@ void MainMenu::selectMenuMission(int newSelection)
 	itemMissionBackdrop13->setX(0.5f-512*px-64*px+8*px);
 	itemMissionBackdrop14->setX(0.5f-512*px-64*px+8*px);
 	itemMissionBackdrop15->setX(0.5f-512*px-64*px+8*px);
+	itemMissionBackdrop16->setX(0.5f-512*px-64*px+8*px);
+	itemMissionBackdrop17->setX(0.5f-512*px-64*px+8*px);
+	itemMissionBackdrop18->setX(0.5f-512*px-64*px+8*px);
+	itemMissionBackdrop19->setX(0.5f-512*px-64*px+8*px);
+	itemMissionBackdrop20->setX(0.5f-512*px-64*px+8*px);
 
 	yPos = 0.5f-0.025f;
 	textMission1 ->getPosition()->y = yPos+offsetY; yPos+=128*py;
@@ -413,7 +478,12 @@ void MainMenu::selectMenuMission(int newSelection)
 	textMission12->getPosition()->y = yPos+offsetY; yPos+=128*py;
 	textMission13->getPosition()->y = yPos+offsetY; yPos+=128*py;
 	textMission14->getPosition()->y = yPos+offsetY; yPos+=128*py;
-	textMission15->getPosition()->y = yPos+offsetY;
+	textMission15->getPosition()->y = yPos+offsetY; yPos+=128*py;
+	textMission16->getPosition()->y = yPos+offsetY; yPos+=128*py;
+	textMission17->getPosition()->y = yPos+offsetY; yPos+=128*py;
+	textMission18->getPosition()->y = yPos+offsetY; yPos+=128*py;
+	textMission19->getPosition()->y = yPos+offsetY; yPos+=128*py;
+	textMission20->getPosition()->y = yPos+offsetY;
 	
 	textMission1 ->getPosition()->x = 0.0f;
 	textMission2 ->getPosition()->x = 0.0f;
@@ -430,6 +500,11 @@ void MainMenu::selectMenuMission(int newSelection)
 	textMission13->getPosition()->x = 0.0f;
 	textMission14->getPosition()->x = 0.0f;
 	textMission15->getPosition()->x = 0.0f;
+	textMission16->getPosition()->x = 0.0f;
+	textMission17->getPosition()->x = 0.0f;
+	textMission18->getPosition()->x = 0.0f;
+	textMission19->getPosition()->x = 0.0f;
+	textMission20->getPosition()->x = 0.0f;
 
 	GuiManager::addGuiToRender(itemMission1);
 	GuiManager::addGuiToRender(itemMission2);
@@ -446,6 +521,11 @@ void MainMenu::selectMenuMission(int newSelection)
 	GuiManager::addGuiToRender(itemMission13);
 	GuiManager::addGuiToRender(itemMission14);
 	GuiManager::addGuiToRender(itemMission15);
+	GuiManager::addGuiToRender(itemMission16);
+	GuiManager::addGuiToRender(itemMission17);
+	GuiManager::addGuiToRender(itemMission18);
+	GuiManager::addGuiToRender(itemMission19);
+	GuiManager::addGuiToRender(itemMission20);
 
 	GuiManager::addGuiToRender(itemRankDisplay);
 	GuiManager::addGuiToRender(itemRankDisplayBackdrop);
@@ -474,6 +554,11 @@ void MainMenu::selectMenuMission(int newSelection)
 		case MISSION_13: textMission13->getPosition()->x += 64*px; itemMission13->setX(0.5f-512*px); itemMissionBackdrop13->setX(0.5f-512*px+8*px); GuiManager::addGuiToRender(itemMissionBackdrop13); break;
 		case MISSION_14: textMission14->getPosition()->x += 64*px; itemMission14->setX(0.5f-512*px); itemMissionBackdrop14->setX(0.5f-512*px+8*px); GuiManager::addGuiToRender(itemMissionBackdrop14); break;
 		case MISSION_15: textMission15->getPosition()->x += 64*px; itemMission15->setX(0.5f-512*px); itemMissionBackdrop15->setX(0.5f-512*px+8*px); GuiManager::addGuiToRender(itemMissionBackdrop15); break;
+		case MISSION_16: textMission16->getPosition()->x += 64*px; itemMission16->setX(0.5f-512*px); itemMissionBackdrop16->setX(0.5f-512*px+8*px); GuiManager::addGuiToRender(itemMissionBackdrop16); break;
+		case MISSION_17: textMission17->getPosition()->x += 64*px; itemMission17->setX(0.5f-512*px); itemMissionBackdrop17->setX(0.5f-512*px+8*px); GuiManager::addGuiToRender(itemMissionBackdrop17); break;
+		case MISSION_18: textMission18->getPosition()->x += 64*px; itemMission18->setX(0.5f-512*px); itemMissionBackdrop18->setX(0.5f-512*px+8*px); GuiManager::addGuiToRender(itemMissionBackdrop18); break;
+		case MISSION_19: textMission19->getPosition()->x += 64*px; itemMission19->setX(0.5f-512*px); itemMissionBackdrop19->setX(0.5f-512*px+8*px); GuiManager::addGuiToRender(itemMissionBackdrop19); break;
+		case MISSION_20: textMission20->getPosition()->x += 64*px; itemMission20->setX(0.5f-512*px); itemMissionBackdrop20->setX(0.5f-512*px+8*px); GuiManager::addGuiToRender(itemMissionBackdrop20); break;
 		default: break;
 	}
 
@@ -499,6 +584,11 @@ void MainMenu::selectMenuMission(int newSelection)
 	textMission13->setVisibility(true);
 	textMission14->setVisibility(true);
 	textMission15->setVisibility(true);
+	textMission16->setVisibility(true);
+	textMission17->setVisibility(true);
+	textMission18->setVisibility(true);
+	textMission19->setVisibility(true);
+	textMission20->setVisibility(true);
 
 	AudioPlayer::play(36, Global::gameCamera->getFadePosition1());
 }
@@ -542,6 +632,11 @@ void MainMenu::selectMenuRoot(int newSelection)
 	textMission13->setVisibility(false);
 	textMission14->setVisibility(false);
 	textMission15->setVisibility(false);
+	textMission16->setVisibility(false);
+	textMission17->setVisibility(false);
+	textMission18->setVisibility(false);
+	textMission19->setVisibility(false);
+	textMission20->setVisibility(false);
 
 	AudioPlayer::play(36, Global::gameCamera->getFadePosition1());
 }
@@ -690,7 +785,7 @@ void MainMenu::step()
 				}
 			}
 		}
-		else if (menuSelectionID >= MISSION_1 && menuSelectionID <= MISSION_15)
+		else if (menuSelectionID >= MISSION_1 && menuSelectionID <= MISSION_MAX)
 		{
 			if (shouldGoUp)
 			{
@@ -703,7 +798,7 @@ void MainMenu::step()
 			}
 			else if (shouldGoDown)
 			{
-				if (menuSelectionID < MISSION_15)
+				if (menuSelectionID < MISSION_MAX)
 				{
 					MainMenu::selectMenuMission(menuSelectionID+1);
 					Global::gameMissionNumber = 0;
@@ -736,85 +831,84 @@ void MainMenu::step()
 						Global::levelID = LVL_EC;
 						Global::levelName = "EmeraldCoast.lvl";
 						Global::levelNameDisplay = "Emerald Coast";
-
 						Global::gameMissionDescription = "Destroy the capsule and rescue the animals!";
 						break;
 
 					case MISSION_2:
-						Global::levelID = LVL_SH;
-						Global::levelName = "NokiBay.lvl";
-						Global::levelNameDisplay = "Speed Highway";
-						Global::gameMissionDescription = "Destroy the capsule and rescue the animals!";
+						Global::levelID = LVL_DL;
+						Global::levelName = "DryLagoon.lvl";
+						Global::levelNameDisplay = "Dry Lagoon";
+						Global::gameMissionDescription = "Find the pieces of the Master Emerald!";
 						break;
 
 					case MISSION_3:
-						Global::levelID = LVL_GHZ;
-						Global::levelName = "DryLagoon.lvl";
-						Global::levelNameDisplay = "Green Hill Zone";
+						Global::levelID = LVL_SH;
+						Global::levelName = "SpeedHighway.lvl";
+						Global::levelNameDisplay = "Speed Highway";
 						Global::gameMissionDescription = "Placeholder";
 						break;
 
 					case MISSION_4:
-						Global::levelID = LVL_WI;
-						Global::levelName = "KingdomValley.lvl";
-						Global::levelNameDisplay = "Wuhu Island";
-						Global::gameMissionDescription = "Do a lap around the island";
-						break;
-
-					case MISSION_5:
-						Global::levelID = LVL_PC;
-						Global::levelName = "DelfinoPlaza.lvl";
-						Global::levelNameDisplay = "Peach's Castle";
-						Global::gameMissionDescription = "Reach the tip top of the castle";
-						break;
-
-					case MISSION_6:
-						Global::levelID = LVL_SHL;
-						Global::levelName = "SunsetIsles.lvl";
-						Global::levelNameDisplay = "Sand Hill";
-						Global::gameMissionDescription = "Go fast";
-						break;
-
-					case MISSION_7:
-						Global::levelID = LVL_KB;
-						Global::levelName = "WildCanyon.lvl";
-						Global::levelNameDisplay = "Koopa Beach";
-						Global::gameMissionDescription = "Do a lap around the island";
-						break;
-
-					case MISSION_8:
-						Global::levelID = LVL_OI;
-						Global::levelName = "OutsetIsland.lvl";
-						Global::levelNameDisplay = "Outset Island";
-						Global::gameMissionDescription = "Find all the pieces of the Master Emerald!";
-						break;
-
-					case MISSION_9:
-						Global::levelID = LVL_WB;
-						Global::levelName = "WeaponsBed.lvl";
-						Global::levelNameDisplay = "Weapons Bed";
+						Global::levelID = LVL_TP;
+						Global::levelName = "TwinklePark.lvl";
+						Global::levelNameDisplay = "Twinkle Park";
 						Global::gameMissionDescription = "Placeholder";
 						break;
 
-					case MISSION_10:
+					case MISSION_5:
+						Global::levelID = LVL_WC;
+						Global::levelName = "WildCanyon.lvl";
+						Global::levelNameDisplay = "Wild Canyon";
+						Global::gameMissionDescription = "Find the pieces of the Master Emerald!";
+						break;
+
+					case MISSION_6:
 						Global::levelID = LVL_MH;
 						Global::levelName = "MetalHarbor.lvl";
 						Global::levelNameDisplay = "Metal Harbor";
 						Global::gameMissionDescription = "Escape from the military base!";
 						break;
 
+					case MISSION_7:
+						Global::levelID = LVL_DP;
+						Global::levelName = "DelfinoPlaza.lvl";
+						Global::levelNameDisplay = "Delfino Plaza";
+						Global::gameMissionDescription = "Find the pieces of the Master Emerald!";
+						break;
+
+					case MISSION_8:
+						Global::levelID = LVL_GHZ;
+						Global::levelName = "GreenHillZone.lvl";
+						Global::levelNameDisplay = "Green Hill Zone";
+						Global::gameMissionDescription = "Placeholder";
+						break;
+
+					case MISSION_9:
+						Global::levelID = LVL_NB;
+						Global::levelName = "NokiBay.lvl";
+						Global::levelNameDisplay = "Noki Bay";
+						Global::gameMissionDescription = "Find the pieces of the Master Emerald!";
+						break;
+
+					case MISSION_10:
+						Global::levelID = LVL_WB;
+						Global::levelName = "WeaponsBed.lvl";
+						Global::levelNameDisplay = "Weapons Bed";
+						Global::gameMissionDescription = "Placeholder";
+						break;
+
 					case MISSION_11:
-						Global::levelID = LVL_BOB;
-						Global::levelName = "BobOmbBattlefield.lvl";
-						Global::levelNameDisplay = "Bob-omb Battlefield";
-						Global::gameMissionDescription = "Find all the pieces";
+						Global::levelID = LVL_OI;
+						Global::levelName = "OutsetIsland.lvl";
+						Global::levelNameDisplay = "Outset Island";
+						Global::gameMissionDescription = "Find all the pieces of the Master Emerald!";
 						break;
 
 					case MISSION_12:
-						Global::levelID = LVL_RR;
-						Global::levelName = "RainbowRoad.lvl";
-						Global::levelNameDisplay = "Rainbow Road";
-						Global::gameMissionDescription = "Go fast and don't hit walls";
+						Global::levelID = LVL_WI;
+						Global::levelName = "WuhuIsland.lvl";
+						Global::levelNameDisplay = "Wuhu Island";
+						Global::gameMissionDescription = "Do a lap around the island";
 						break;
 
 					case MISSION_13:
@@ -825,16 +919,51 @@ void MainMenu::step()
 						break;
 
 					case MISSION_14:
-						Global::levelID = LVL_TP;
-						Global::levelName = "TwinklePark.lvl";
-						Global::levelNameDisplay = "Twinkle Park";
-						Global::gameMissionDescription = "Destroy the capsule and rescue the animals!";
+						Global::levelID = LVL_SHL;
+						Global::levelName = "SandHill.lvl";
+						Global::levelNameDisplay = "Sand Hill";
+						Global::gameMissionDescription = "Go fast";
 						break;
 
 					case MISSION_15:
+						Global::levelID = LVL_RR;
+						Global::levelName = "RainbowRoad.lvl";
+						Global::levelNameDisplay = "Rainbow Road";
+						Global::gameMissionDescription = "Go fast and don't hit walls";
+						break;
+
+					case MISSION_16:
+						Global::levelID = LVL_PC;
+						Global::levelName = "PeachCastle.lvl";
+						Global::levelNameDisplay = "Peach's Castle";
+						Global::gameMissionDescription = "Reach the tip top of the castle";
+						break;
+
+					case MISSION_17:
+						Global::levelID = LVL_KB;
+						Global::levelName = "KoopaTroopaBeach.lvl";
+						Global::levelNameDisplay = "Koopa Beach";
+						Global::gameMissionDescription = "Do a lap around the island";
+						break;
+
+					case MISSION_18:
 						Global::levelID = LVL_FF;
 						Global::levelName = "FireField.lvl";
 						Global::levelNameDisplay = "Fire Field";
+						Global::gameMissionDescription = "Placeholder";
+						break;
+
+					case MISSION_19:
+						Global::levelID = LVL_BOB;
+						Global::levelName = "BobOmbBattlefield.lvl";
+						Global::levelNameDisplay = "Bob-omb Battlefield";
+						Global::gameMissionDescription = "Find all the pieces";
+						break;
+
+					case MISSION_20:
+						Global::levelID = LVL_KV;
+						Global::levelName = "KingdomValley.lvl";
+						Global::levelNameDisplay = "Kingdom Valley";
 						Global::gameMissionDescription = "Placeholder";
 						break;
 

@@ -30,27 +30,39 @@ private:
 	static const int MISSION_13   = 21;
 	static const int MISSION_14   = 22;
 	static const int MISSION_15   = 23;
+	static const int MISSION_16   = 24;
+	static const int MISSION_17   = 25;
+	static const int MISSION_18   = 26;
+	static const int MISSION_19   = 27;
+	static const int MISSION_20   = 28;
+
+	static const int MISSION_MAX = MISSION_20;
 
 	static int moveXPrevious;
 	static int moveYPrevious;
 	static bool selectInputPrevious;
 	static bool backInputPrevious;
 
-	static GUIText* textMission1;//textEmeraldCoast;
-	static GUIText* textMission2;//textGreenHillZone;
-	static GUIText* textMission3;//textSpeedHighway;
-	static GUIText* textMission4;//textWuhuIsland;
-	static GUIText* textMission5;//textPeachCastle;
-	static GUIText* textMission6;//textSandHill;
-	static GUIText* textMission7;//textKoopaBeach;
-	static GUIText* textMission8;//textOutsetIsland;
-	static GUIText* textMission9;//textWeaponsBed;
-	static GUIText* textMission10;//textMetalHarbor;
-	static GUIText* textMission11;//textBOB;
-	static GUIText* textMission12;//textRainbowRoad;
-	static GUIText* textMission13;//textSnowhead;
-	static GUIText* textMission14;//textTwinklePark;
-	static GUIText* textMission15;//textFireField;
+	static GUIText* textMission1; //Emerald Coast;
+	static GUIText* textMission2; //Dry Lagoon;
+	static GUIText* textMission3; //Speed Highway;
+	static GUIText* textMission4; //Twinkle Park;
+	static GUIText* textMission5; //Wild Canyon;
+	static GUIText* textMission6; //Metal Harbor;
+	static GUIText* textMission7; //Delfino Plaza;
+	static GUIText* textMission8; //Green Hill Zone;
+	static GUIText* textMission9; //Noki Bay;
+	static GUIText* textMission10;//Weapons Bed;
+	static GUIText* textMission11;//Outset Island;
+	static GUIText* textMission12;//Wuhu Island;
+	static GUIText* textMission13;//Snowhead;
+	static GUIText* textMission14;//Sand Hill;
+	static GUIText* textMission15;//Rainbow Road;
+	static GUIText* textMission16;//Peach's Castle;
+	static GUIText* textMission17;//Koopa Beach;
+	static GUIText* textMission18;//Fire Field;
+	static GUIText* textMission19;//Bob-omb Battlefield;
+	static GUIText* textMission20;//Kingdom Valley;
 
 	static GUIText* textTitleCardLevelName;
 	static GUIText* textTitleCardMission;
@@ -99,6 +111,11 @@ private:
 	static GuiTexture* itemMission13;
 	static GuiTexture* itemMission14;
 	static GuiTexture* itemMission15;
+	static GuiTexture* itemMission16;
+	static GuiTexture* itemMission17;
+	static GuiTexture* itemMission18;
+	static GuiTexture* itemMission19;
+	static GuiTexture* itemMission20;
 	static GuiTexture* itemMissionBackdrop1;
 	static GuiTexture* itemMissionBackdrop2;
 	static GuiTexture* itemMissionBackdrop3;
@@ -114,6 +131,11 @@ private:
 	static GuiTexture* itemMissionBackdrop13;
 	static GuiTexture* itemMissionBackdrop14;
 	static GuiTexture* itemMissionBackdrop15;
+	static GuiTexture* itemMissionBackdrop16;
+	static GuiTexture* itemMissionBackdrop17;
+	static GuiTexture* itemMissionBackdrop18;
+	static GuiTexture* itemMissionBackdrop19;
+	static GuiTexture* itemMissionBackdrop20;
 
 	static GuiTexture* itemRankDisplay;
 	static GuiTexture* itemRankDisplayBackdrop;

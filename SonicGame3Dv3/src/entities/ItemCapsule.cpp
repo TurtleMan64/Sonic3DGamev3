@@ -55,9 +55,8 @@ ItemCapsule::ItemCapsule(float x, float y, float z, float yRot, float zRot, int 
 	visible = true;
 	updateTransformationMatrix();
 
-	entityGlass = new Body(&ItemCapsule::modelsGlass);
+	entityGlass = new Body(&ItemCapsule::modelsGlass); Global::countNew++;
 	entityGlass->setVisible(true);
-	Global::countNew++;
 	Main_addTransparentEntity(entityGlass);
 	entityGlass->setPosition(&position);
 	entityGlass->setRotY(yRot);
@@ -66,44 +65,17 @@ ItemCapsule::ItemCapsule(float x, float y, float z, float yRot, float zRot, int 
 
 	switch (type)
 	{
-		case 0:
-			entityItem = new Body(&ItemCapsule::modelsItemSpeedUp);
-			break;
-
-		case 1:
-			entityItem = new Body(&ItemCapsule::modelsItemInvincible);
-			break;
-
-		case 2:
-			entityItem = new Body(&ItemCapsule::modelsItemRing5);
-			break;
-
-		case 3:
-			entityItem = new Body(&ItemCapsule::modelsItemRing10);
-			break;
-
-		case 4:
-			entityItem = new Body(&ItemCapsule::modelsItemRing20);
-			break;
-
-		case 5:
-			entityItem = new Body(&ItemCapsule::modelsItemBarrierG);
-			break;
-
-		case 6:
-			entityItem = new Body(&ItemCapsule::modelsItem1Up);
-			break;
-
-		case 7:
-			entityItem = new Body(&ItemCapsule::modelsItemBomb);
-			break;
-
-		default:
-			entityItem = new Body(&ItemCapsule::modelsItemBarrierB);
-			break;
+		case 0:  entityItem = new Body(&ItemCapsule::modelsItemSpeedUp);    Global::countNew++; break;
+		case 1:  entityItem = new Body(&ItemCapsule::modelsItemInvincible); Global::countNew++; break;
+		case 2:  entityItem = new Body(&ItemCapsule::modelsItemRing5);      Global::countNew++; break;
+		case 3:  entityItem = new Body(&ItemCapsule::modelsItemRing10);     Global::countNew++; break;
+		case 4:  entityItem = new Body(&ItemCapsule::modelsItemRing20);     Global::countNew++; break;
+		case 5:  entityItem = new Body(&ItemCapsule::modelsItemBarrierG);   Global::countNew++; break;
+		case 6:  entityItem = new Body(&ItemCapsule::modelsItem1Up);        Global::countNew++; break;
+		case 7:  entityItem = new Body(&ItemCapsule::modelsItemBomb);       Global::countNew++; break;
+		default: entityItem = new Body(&ItemCapsule::modelsItemBarrierB);   Global::countNew++; break;
 	}
 	entityItem->setVisible(true);
-	Global::countNew++;
 	Main_addEntity(entityItem);
 	entityItem->setPosition(&position);
 	entityItem->setRotY(yRot);
@@ -184,14 +156,17 @@ void ItemCapsule::die()
 
 		case 2:
 			//increase rings by 5
+			Global::gameRingCount += 5;
 			break;
 
 		case 3:
 			//increase rings by 10
+			Global::gameRingCount += 10;
 			break;
 
 		case 4:
 			//increase rings by 20
+			Global::gameRingCount += 20;
 			break;
 
 		case 5:
@@ -207,7 +182,7 @@ void ItemCapsule::die()
 			break;
 
 		default:
-			//electri shield
+			//electric shield
 			break;
 	}
 }

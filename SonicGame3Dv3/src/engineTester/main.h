@@ -18,6 +18,8 @@ class Fbo;
 #include <string>
 #include <random>
 #include <list>
+#include <unordered_map>
+#include "../toolbox/level.h"
 
 void Main_addEntity(Entity* entityToAdd);
 void Main_deleteEntity(Entity* entityToDelete);
@@ -38,26 +40,26 @@ void Main_deleteAllTransparentEntites();
 #define STATE_TITLE 4
 #define STATE_DEBUG 5
 
-#define LVL_EC 0
-#define LVL_SH 1
-#define LVL_GHZ 2
-#define LVL_WI 3
-#define LVL_PC 4
-#define LVL_SHL 5
-#define LVL_KB 6
-#define LVL_OI 7
-#define LVL_WB 8
-#define LVL_MH 9
-#define LVL_BOB 10
-#define LVL_RR 11
-#define LVL_SHD 12
-#define LVL_TP 13
-#define LVL_FF 14
-#define LVL_DL 15
-#define LVL_WC 16
-#define LVL_DP 17
-#define LVL_NB 18
-#define LVL_KV 19
+#define LVL_EMERALD_COAST  	    0
+#define LVL_DRY_LAGOON		    1
+#define LVL_SPEED_HIGHWAY	    2
+#define LVL_TWINKLE_PARK	    3
+#define LVL_WILD_CANYON		    4
+#define LVL_METAL_HARBOR	    5
+#define LVL_DELFINO_PLAZA	    6
+#define LVL_GREEN_HILL_ZONE	    7
+#define LVL_NOKI_BAY		    8
+#define LVL_WEAPONS_BED		    9
+#define LVL_OUTSET_ISLAND	   10
+#define LVL_WUHU_ISLAND		   11
+#define LVL_SNOWHEAD		   12
+#define LVL_SAND_HILL		   13
+#define LVL_RAINBOW_ROAD	   14
+#define LVL_PEACHS_CASTLE	   15
+#define LVL_KOOPA_BEACH		   16
+#define LVL_FIRE_FIELD		   17
+#define LVL_BOBOMB_BATTLEFIELD 18
+#define LVL_KINGDOM_VALLEY	   19
 
 #define ENTITY_RENDER_DIST 2000.0f
 #define ENTITY_RENDER_DIST_HIGH 5000.0f
@@ -81,6 +83,7 @@ public:
 	static bool shouldLoadLevel;
 	static bool isNewLevel;
 	static int gameRingCount;
+	static int gameScore;
 	static int gameClock;
 	static WaterRenderer* gameWaterRenderer;
 	static WaterFrameBuffers* gameWaterFBOs;
@@ -91,7 +94,15 @@ public:
 	static Fbo* gameOutputFbo2;
 	static float deathHeight;
 	static int gameMissionNumber;
+	static bool gameIsNormalMode;
+	static bool gameIsHardMode;
+	static bool gameIsChaoMode;
+	static bool gameIsRingMode;
 	static std::string gameMissionDescription;
+	static int gameRingTarget; //How many rings you have to collect to finish the stage in Ring mode
+
+	static std::vector<Level> gameLevelData;
+	static std::unordered_map<std::string, std::string> gameSaveData;
 
 	//Debug display
 	static bool debugDisplay;
@@ -129,5 +140,11 @@ public:
 	static std::normal_distribution<double>* distribution;
 
 	static void checkErrorAL(const char* description);
+
+	static void loadSaveData();
+
+	static void saveSaveData();
+
+	static void calculateRankAndUpdate();
 };
 #endif

@@ -11,30 +11,30 @@ class MainMenu
 {
 private:
 	static int menuSelectionID;
-	static const int ROOT_STORY   = 1;
-	static const int ROOT_MISSION = 2;
-	static const int ROOT_EXTRAS  = 3;
-	static const int ROOT_EXIT    = 4;
-	static const int MISSION_1    = 9;
-	static const int MISSION_2    = 10;
-	static const int MISSION_3    = 11;
-	static const int MISSION_4    = 12;
-	static const int MISSION_5    = 13;
-	static const int MISSION_6    = 14;
-	static const int MISSION_7    = 15;
-	static const int MISSION_8    = 16;
-	static const int MISSION_9    = 17;
-	static const int MISSION_10   = 18;
-	static const int MISSION_11   = 19;
-	static const int MISSION_12   = 20;
-	static const int MISSION_13   = 21;
-	static const int MISSION_14   = 22;
-	static const int MISSION_15   = 23;
-	static const int MISSION_16   = 24;
-	static const int MISSION_17   = 25;
-	static const int MISSION_18   = 26;
-	static const int MISSION_19   = 27;
-	static const int MISSION_20   = 28;
+	static const int MISSION_1    =  0;
+	static const int MISSION_2    =  1;
+	static const int MISSION_3    =  2;
+	static const int MISSION_4    =  3;
+	static const int MISSION_5    =  4;
+	static const int MISSION_6    =  5;
+	static const int MISSION_7    =  6;
+	static const int MISSION_8    =  7;
+	static const int MISSION_9    =  8;
+	static const int MISSION_10   =  9;
+	static const int MISSION_11   = 10;
+	static const int MISSION_12   = 11;
+	static const int MISSION_13   = 12;
+	static const int MISSION_14   = 13;
+	static const int MISSION_15   = 14;
+	static const int MISSION_16   = 15;
+	static const int MISSION_17   = 16;
+	static const int MISSION_18   = 17;
+	static const int MISSION_19   = 18;
+	static const int MISSION_20   = 19;
+	static const int ROOT_STORY   = 100000;
+	static const int ROOT_MISSION = 100001;
+	static const int ROOT_EXTRAS  = 100002;
+	static const int ROOT_EXIT    = 100003;
 
 	static const int MISSION_MAX = MISSION_20;
 

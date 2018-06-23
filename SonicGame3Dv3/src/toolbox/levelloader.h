@@ -5,4 +5,5 @@
 
 void LevelLoader_loadTitle();
 void LevelLoader_loadLevel(std::string levelFilename);
+void LevelLoader_loadLevelData();
 #endif

@@ -156,13 +156,13 @@ void MainMenu::init()
 	textureParallelogramBackdrop     = Loader_loadTextureNoInterpolation("res/Images/MainMenu/ParallelogramBackdrop.png");
 	textureParallelogramHalf         = Loader_loadTextureNoInterpolation("res/Images/MainMenu/ParallelogramHalf.png");
 	textureParallelogramHalfBackdrop = Loader_loadTextureNoInterpolation("res/Images/MainMenu/ParallelogramHalfBackdrop.png");
-	textureRankA					  = Loader_loadTextureNoInterpolation("res/Images/MainMenu/RankA.png");
-	textureRankB					  = Loader_loadTextureNoInterpolation("res/Images/MainMenu/RankB.png");
-	textureRankC					  = Loader_loadTextureNoInterpolation("res/Images/MainMenu/RankC.png");
-	textureRankD					  = Loader_loadTextureNoInterpolation("res/Images/MainMenu/RankD.png");
-	textureRankE					  = Loader_loadTextureNoInterpolation("res/Images/MainMenu/RankE.png");
-	textureRankBlank				  = Loader_loadTextureNoInterpolation("res/Images/MainMenu/NoRank.png");
-	textureMissionSelect			  = Loader_loadTextureNoInterpolation("res/Images/MainMenu/MissionSelect.png");
+	textureRankA					 = Loader_loadTextureNoInterpolation("res/Images/MainMenu/RankA.png");
+	textureRankB					 = Loader_loadTextureNoInterpolation("res/Images/MainMenu/RankB.png");
+	textureRankC					 = Loader_loadTextureNoInterpolation("res/Images/MainMenu/RankC.png");
+	textureRankD					 = Loader_loadTextureNoInterpolation("res/Images/MainMenu/RankD.png");
+	textureRankE					 = Loader_loadTextureNoInterpolation("res/Images/MainMenu/RankE.png");
+	textureRankBlank				 = Loader_loadTextureNoInterpolation("res/Images/MainMenu/NoRank.png");
+	textureMissionSelect			 = Loader_loadTextureNoInterpolation("res/Images/MainMenu/MissionSelect.png");
 
 	MainMenu::loadResources();
 
@@ -245,7 +245,7 @@ void MainMenu::loadResources()
 	rankM3 = new GuiTexture(textureRankC, 0.75f+27*px, 0.5f, 64*px, 64*py, 0); Global::countNew++;
 	rankM4 = new GuiTexture(textureRankD, 0.75f+82*px, 0.5f, 64*px, 64*py, 0); Global::countNew++;
 
-	missionSelect = new GuiTexture(textureMissionSelect, 0.75f-83*px, 0.5f, 96*px, 96*py, 0); Global::countNew++; //change scale probably
+	missionSelect = new GuiTexture(textureMissionSelect, 0.75f-83*px, 0.5f, 96*px, 96*py, 0); Global::countNew++;
 
 	textMission1  = new GUIText("EMERALD COAST",       2.0f, font, 0.0f, 0.0f, 0.5f-128*px, false, true, true); Global::countNew++;
 	textMission2  = new GUIText("DRY LAGOON",          2.0f, font, 0.0f, 0.0f, 0.5f-128*px, false, true, true); Global::countNew++;
@@ -530,24 +530,86 @@ void MainMenu::selectMenuMission(int newSelection)
 	GuiManager::addGuiToRender(itemRankDisplay);
 	GuiManager::addGuiToRender(itemRankDisplayBackdrop);
 
-	GuiManager::addGuiToRender(rankM1);
-	GuiManager::addGuiToRender(rankM2);
-	GuiManager::addGuiToRender(rankM3);
-	GuiManager::addGuiToRender(rankM4);
+	int numMissions = Global::gameLevelData[newSelection].numMissions;
+	switch (numMissions)
+	{
+		case 4: GuiManager::addGuiToRender(rankM4);
+		case 3: GuiManager::addGuiToRender(rankM3);
+		case 2: GuiManager::addGuiToRender(rankM2);
+		case 1: GuiManager::addGuiToRender(rankM1);
+		default: break;
+	}
+
+	if (numMissions >= 4)
+	{
+		std::string rank = "";
+		rankM4->setTexture(textureRankBlank);
+		if (Global::gameSaveData.find(Global::gameLevelData[newSelection].displayName+"_M4") != Global::gameSaveData.end())
+		{
+			rank = Global::gameSaveData[Global::gameLevelData[newSelection].displayName+"_M4"];
+			if (rank == "A") rankM4->setTexture(textureRankA);
+			if (rank == "B") rankM4->setTexture(textureRankB);
+			if (rank == "C") rankM4->setTexture(textureRankC);
+			if (rank == "D") rankM4->setTexture(textureRankD);
+			if (rank == "E") rankM4->setTexture(textureRankE);
+		}
+	}
+	if (numMissions >= 3)
+	{
+		std::string rank = "";
+		rankM3->setTexture(textureRankBlank);
+		if (Global::gameSaveData.find(Global::gameLevelData[newSelection].displayName+"_M3") != Global::gameSaveData.end())
+		{
+			rank = Global::gameSaveData[Global::gameLevelData[newSelection].displayName+"_M3"];
+			if (rank == "A") rankM3->setTexture(textureRankA);
+			if (rank == "B") rankM3->setTexture(textureRankB);
+			if (rank == "C") rankM3->setTexture(textureRankC);
+			if (rank == "D") rankM3->setTexture(textureRankD);
+			if (rank == "E") rankM3->setTexture(textureRankE);
+		}
+	}
+	if (numMissions >= 2)
+	{
+		std::string rank = "";
+		rankM2->setTexture(textureRankBlank);
+		if (Global::gameSaveData.find(Global::gameLevelData[newSelection].displayName+"_M2") != Global::gameSaveData.end())
+		{
+			rank = Global::gameSaveData[Global::gameLevelData[newSelection].displayName+"_M2"];
+			if (rank == "A") rankM2->setTexture(textureRankA);
+			if (rank == "B") rankM2->setTexture(textureRankB);
+			if (rank == "C") rankM2->setTexture(textureRankC);
+			if (rank == "D") rankM2->setTexture(textureRankD);
+			if (rank == "E") rankM2->setTexture(textureRankE);
+		}
+	}
+	if (numMissions >= 1)
+	{
+		std::string rank = "";
+		rankM1->setTexture(textureRankBlank);
+		if (Global::gameSaveData.find(Global::gameLevelData[newSelection].displayName+"_M1") != Global::gameSaveData.end())
+		{
+			rank = Global::gameSaveData[Global::gameLevelData[newSelection].displayName+"_M1"];
+			if (rank == "A") rankM1->setTexture(textureRankA);
+			if (rank == "B") rankM1->setTexture(textureRankB);
+			if (rank == "C") rankM1->setTexture(textureRankC);
+			if (rank == "D") rankM1->setTexture(textureRankD);
+			if (rank == "E") rankM1->setTexture(textureRankE);
+		}
+	}
 
 	GuiManager::addGuiToRender(missionSelect);
 
 	switch (newSelection)
 	{
-		case MISSION_1 : textMission1 ->getPosition()->x += 64*px; itemMission1 ->setX(0.5f-512*px); itemMissionBackdrop1 ->setX(0.5f-512*px+8*px); GuiManager::addGuiToRender(itemMissionBackdrop1); break;
-		case MISSION_2 : textMission2 ->getPosition()->x += 64*px; itemMission2 ->setX(0.5f-512*px); itemMissionBackdrop2 ->setX(0.5f-512*px+8*px); GuiManager::addGuiToRender(itemMissionBackdrop2); break;
-		case MISSION_3 : textMission3 ->getPosition()->x += 64*px; itemMission3 ->setX(0.5f-512*px); itemMissionBackdrop3 ->setX(0.5f-512*px+8*px); GuiManager::addGuiToRender(itemMissionBackdrop3); break;
-		case MISSION_4 : textMission4 ->getPosition()->x += 64*px; itemMission4 ->setX(0.5f-512*px); itemMissionBackdrop4 ->setX(0.5f-512*px+8*px); GuiManager::addGuiToRender(itemMissionBackdrop4); break;
-		case MISSION_5 : textMission5 ->getPosition()->x += 64*px; itemMission5 ->setX(0.5f-512*px); itemMissionBackdrop5 ->setX(0.5f-512*px+8*px); GuiManager::addGuiToRender(itemMissionBackdrop5); break;
-		case MISSION_6 : textMission6 ->getPosition()->x += 64*px; itemMission6 ->setX(0.5f-512*px); itemMissionBackdrop6 ->setX(0.5f-512*px+8*px); GuiManager::addGuiToRender(itemMissionBackdrop6); break;
-		case MISSION_7 : textMission7 ->getPosition()->x += 64*px; itemMission7 ->setX(0.5f-512*px); itemMissionBackdrop7 ->setX(0.5f-512*px+8*px); GuiManager::addGuiToRender(itemMissionBackdrop7); break;
-		case MISSION_8 : textMission8 ->getPosition()->x += 64*px; itemMission8 ->setX(0.5f-512*px); itemMissionBackdrop8 ->setX(0.5f-512*px+8*px); GuiManager::addGuiToRender(itemMissionBackdrop8); break;
-		case MISSION_9 : textMission9 ->getPosition()->x += 64*px; itemMission9 ->setX(0.5f-512*px); itemMissionBackdrop9 ->setX(0.5f-512*px+8*px); GuiManager::addGuiToRender(itemMissionBackdrop9); break;
+		case MISSION_1 : textMission1 ->getPosition()->x += 64*px; itemMission1 ->setX(0.5f-512*px); itemMissionBackdrop1 ->setX(0.5f-512*px+8*px); GuiManager::addGuiToRender(itemMissionBackdrop1);  break;
+		case MISSION_2 : textMission2 ->getPosition()->x += 64*px; itemMission2 ->setX(0.5f-512*px); itemMissionBackdrop2 ->setX(0.5f-512*px+8*px); GuiManager::addGuiToRender(itemMissionBackdrop2);  break;
+		case MISSION_3 : textMission3 ->getPosition()->x += 64*px; itemMission3 ->setX(0.5f-512*px); itemMissionBackdrop3 ->setX(0.5f-512*px+8*px); GuiManager::addGuiToRender(itemMissionBackdrop3);  break;
+		case MISSION_4 : textMission4 ->getPosition()->x += 64*px; itemMission4 ->setX(0.5f-512*px); itemMissionBackdrop4 ->setX(0.5f-512*px+8*px); GuiManager::addGuiToRender(itemMissionBackdrop4);  break;
+		case MISSION_5 : textMission5 ->getPosition()->x += 64*px; itemMission5 ->setX(0.5f-512*px); itemMissionBackdrop5 ->setX(0.5f-512*px+8*px); GuiManager::addGuiToRender(itemMissionBackdrop5);  break;
+		case MISSION_6 : textMission6 ->getPosition()->x += 64*px; itemMission6 ->setX(0.5f-512*px); itemMissionBackdrop6 ->setX(0.5f-512*px+8*px); GuiManager::addGuiToRender(itemMissionBackdrop6);  break;
+		case MISSION_7 : textMission7 ->getPosition()->x += 64*px; itemMission7 ->setX(0.5f-512*px); itemMissionBackdrop7 ->setX(0.5f-512*px+8*px); GuiManager::addGuiToRender(itemMissionBackdrop7);  break;
+		case MISSION_8 : textMission8 ->getPosition()->x += 64*px; itemMission8 ->setX(0.5f-512*px); itemMissionBackdrop8 ->setX(0.5f-512*px+8*px); GuiManager::addGuiToRender(itemMissionBackdrop8);  break;
+		case MISSION_9 : textMission9 ->getPosition()->x += 64*px; itemMission9 ->setX(0.5f-512*px); itemMissionBackdrop9 ->setX(0.5f-512*px+8*px); GuiManager::addGuiToRender(itemMissionBackdrop9);  break;
 		case MISSION_10: textMission10->getPosition()->x += 64*px; itemMission10->setX(0.5f-512*px); itemMissionBackdrop10->setX(0.5f-512*px+8*px); GuiManager::addGuiToRender(itemMissionBackdrop10); break;
 		case MISSION_11: textMission11->getPosition()->x += 64*px; itemMission11->setX(0.5f-512*px); itemMissionBackdrop11->setX(0.5f-512*px+8*px); GuiManager::addGuiToRender(itemMissionBackdrop11); break;
 		case MISSION_12: textMission12->getPosition()->x += 64*px; itemMission12->setX(0.5f-512*px); itemMissionBackdrop12->setX(0.5f-512*px+8*px); GuiManager::addGuiToRender(itemMissionBackdrop12); break;
@@ -758,28 +820,41 @@ void MainMenu::step()
 				switch (menuSelectionID)
 				{
 					case ROOT_STORY:
-						Global::levelID = LVL_EC;
-						Global::levelName = "EmeraldCoast.lvl";
-						Global::levelNameDisplay = "Emerald Coast";
+					{
+						Global::levelID = LVL_EMERALD_COAST;
 						Global::gameMissionNumber = 0;
-						Global::gameMissionDescription = "Destroy the capsule and rescue the animals!";
+
+						AudioPlayer::play(38, Global::gameCamera->getFadePosition1());
+
+						Level* currentLevel = &Global::gameLevelData[Global::levelID];
+						Global::levelName = currentLevel->fileName;
+						Global::levelNameDisplay = currentLevel->displayName;
+						Global::gameMissionDescription = (currentLevel->missionData[Global::gameMissionNumber])[(currentLevel->missionData[Global::gameMissionNumber]).size()-1];
+
 						Global::isNewLevel = true;
 						Global::shouldLoadLevel = true;
 						MainMenu::unloadResources();
 						MainMenu::createTitleCard();
 						Global::gameState = STATE_RUNNING;
 						break;
+					}
 
 					case ROOT_MISSION:
+					{
 						MainMenu::selectMenuMission(MISSION_1);
 						break;
+					}
 
 					case ROOT_EXTRAS:
+					{
 						break;
+					}
 
 					case ROOT_EXIT: 
+					{
 						Global::gameState = STATE_EXITING;
 						break;
+					}
 
 					default: break;
 				}
@@ -816,7 +891,8 @@ void MainMenu::step()
 			}
 			else if (shouldGoRight)
 			{
-				if (Global::gameMissionNumber < 3)
+				int maxMissionCount = Global::gameLevelData[menuSelectionID].numMissions;
+				if (Global::gameMissionNumber < maxMissionCount-1)
 				{
 					Global::gameMissionNumber++;
 					missionSelect->setX(0.75f-83*px+(Global::gameMissionNumber*55)*px);
@@ -827,163 +903,35 @@ void MainMenu::step()
 			{
 				switch (menuSelectionID)
 				{
-					case MISSION_1:
-						Global::levelID = LVL_EC;
-						Global::levelName = "EmeraldCoast.lvl";
-						Global::levelNameDisplay = "Emerald Coast";
-						Global::gameMissionDescription = "Destroy the capsule and rescue the animals!";
-						break;
-
-					case MISSION_2:
-						Global::levelID = LVL_DL;
-						Global::levelName = "DryLagoon.lvl";
-						Global::levelNameDisplay = "Dry Lagoon";
-						Global::gameMissionDescription = "Find the pieces of the Master Emerald!";
-						break;
-
-					case MISSION_3:
-						Global::levelID = LVL_SH;
-						Global::levelName = "SpeedHighway.lvl";
-						Global::levelNameDisplay = "Speed Highway";
-						Global::gameMissionDescription = "Placeholder";
-						break;
-
-					case MISSION_4:
-						Global::levelID = LVL_TP;
-						Global::levelName = "TwinklePark.lvl";
-						Global::levelNameDisplay = "Twinkle Park";
-						Global::gameMissionDescription = "Placeholder";
-						break;
-
-					case MISSION_5:
-						Global::levelID = LVL_WC;
-						Global::levelName = "WildCanyon.lvl";
-						Global::levelNameDisplay = "Wild Canyon";
-						Global::gameMissionDescription = "Find the pieces of the Master Emerald!";
-						break;
-
-					case MISSION_6:
-						Global::levelID = LVL_MH;
-						Global::levelName = "MetalHarbor.lvl";
-						Global::levelNameDisplay = "Metal Harbor";
-						Global::gameMissionDescription = "Escape from the military base!";
-						break;
-
-					case MISSION_7:
-						Global::levelID = LVL_DP;
-						Global::levelName = "DelfinoPlaza.lvl";
-						Global::levelNameDisplay = "Delfino Plaza";
-						Global::gameMissionDescription = "Find the pieces of the Master Emerald!";
-						break;
-
-					case MISSION_8:
-						Global::levelID = LVL_GHZ;
-						Global::levelName = "GreenHillZone.lvl";
-						Global::levelNameDisplay = "Green Hill Zone";
-						Global::gameMissionDescription = "Placeholder";
-						break;
-
-					case MISSION_9:
-						Global::levelID = LVL_NB;
-						Global::levelName = "NokiBay.lvl";
-						Global::levelNameDisplay = "Noki Bay";
-						Global::gameMissionDescription = "Find the pieces of the Master Emerald!";
-						break;
-
-					case MISSION_10:
-						Global::levelID = LVL_WB;
-						Global::levelName = "WeaponsBed.lvl";
-						Global::levelNameDisplay = "Weapons Bed";
-						Global::gameMissionDescription = "Placeholder";
-						break;
-
-					case MISSION_11:
-						Global::levelID = LVL_OI;
-						Global::levelName = "OutsetIsland.lvl";
-						Global::levelNameDisplay = "Outset Island";
-						Global::gameMissionDescription = "Find all the pieces of the Master Emerald!";
-						break;
-
-					case MISSION_12:
-						Global::levelID = LVL_WI;
-						Global::levelName = "WuhuIsland.lvl";
-						Global::levelNameDisplay = "Wuhu Island";
-						Global::gameMissionDescription = "Do a lap around the island";
-						break;
-
-					case MISSION_13:
-						Global::levelID = LVL_SHD;
-						Global::levelName = "Snowhead.lvl";
-						Global::levelNameDisplay = "Snowhead";
-						Global::gameMissionDescription = "Help the old goron dude find his son or something";
-						break;
-
-					case MISSION_14:
-						Global::levelID = LVL_SHL;
-						Global::levelName = "SandHill.lvl";
-						Global::levelNameDisplay = "Sand Hill";
-						Global::gameMissionDescription = "Go fast";
-						break;
-
-					case MISSION_15:
-						Global::levelID = LVL_RR;
-						Global::levelName = "RainbowRoad.lvl";
-						Global::levelNameDisplay = "Rainbow Road";
-						Global::gameMissionDescription = "Go fast and don't hit walls";
-						break;
-
-					case MISSION_16:
-						Global::levelID = LVL_PC;
-						Global::levelName = "PeachCastle.lvl";
-						Global::levelNameDisplay = "Peach's Castle";
-						Global::gameMissionDescription = "Reach the tip top of the castle";
-						break;
-
-					case MISSION_17:
-						Global::levelID = LVL_KB;
-						Global::levelName = "KoopaTroopaBeach.lvl";
-						Global::levelNameDisplay = "Koopa Beach";
-						Global::gameMissionDescription = "Do a lap around the island";
-						break;
-
-					case MISSION_18:
-						Global::levelID = LVL_FF;
-						Global::levelName = "FireField.lvl";
-						Global::levelNameDisplay = "Fire Field";
-						Global::gameMissionDescription = "Placeholder";
-						break;
-
-					case MISSION_19:
-						Global::levelID = LVL_BOB;
-						Global::levelName = "BobOmbBattlefield.lvl";
-						Global::levelNameDisplay = "Bob-omb Battlefield";
-						Global::gameMissionDescription = "Find all the pieces";
-						break;
-
-					case MISSION_20:
-						Global::levelID = LVL_KV;
-						Global::levelName = "KingdomValley.lvl";
-						Global::levelNameDisplay = "Kingdom Valley";
-						Global::gameMissionDescription = "Placeholder";
-						break;
-
-					default: break;
+					case MISSION_1:  Global::levelID = LVL_EMERALD_COAST;      break;
+					case MISSION_2:  Global::levelID = LVL_DRY_LAGOON;         break;
+					case MISSION_3:  Global::levelID = LVL_SPEED_HIGHWAY;      break;
+					case MISSION_4:  Global::levelID = LVL_TWINKLE_PARK;       break;
+					case MISSION_5:  Global::levelID = LVL_WILD_CANYON;        break;
+					case MISSION_6:  Global::levelID = LVL_METAL_HARBOR;       break;
+					case MISSION_7:  Global::levelID = LVL_DELFINO_PLAZA;      break;
+					case MISSION_8:  Global::levelID = LVL_GREEN_HILL_ZONE;    break;
+					case MISSION_9:  Global::levelID = LVL_NOKI_BAY;           break;
+					case MISSION_10: Global::levelID = LVL_WEAPONS_BED;        break;
+					case MISSION_11: Global::levelID = LVL_OUTSET_ISLAND;      break;
+					case MISSION_12: Global::levelID = LVL_WUHU_ISLAND;        break;
+					case MISSION_13: Global::levelID = LVL_SNOWHEAD;           break;
+					case MISSION_14: Global::levelID = LVL_SAND_HILL;          break;
+					case MISSION_15: Global::levelID = LVL_RAINBOW_ROAD;       break;
+					case MISSION_16: Global::levelID = LVL_PEACHS_CASTLE;      break;
+					case MISSION_17: Global::levelID = LVL_KOOPA_BEACH;        break;
+					case MISSION_18: Global::levelID = LVL_FIRE_FIELD;         break;
+					case MISSION_19: Global::levelID = LVL_BOBOMB_BATTLEFIELD; break;
+					case MISSION_20: Global::levelID = LVL_KINGDOM_VALLEY;     break;
+					default:                                                   break;
 				}
 
 				AudioPlayer::play(38, Global::gameCamera->getFadePosition1());
 
-				if (Global::gameMissionNumber == 1)
-				{
-					Global::gameMissionDescription = "Collect 100 rings!";
-				}
-				else if (Global::gameMissionNumber == 2)
-				{
-					Global::gameMissionDescription = "Placeholder";
-				}
-				else if (Global::gameMissionNumber == 3)
-				{
-					Global::gameMissionDescription = "Placeholder";
-				}
+				Level* currentLevel = &Global::gameLevelData[Global::levelID];
+				Global::levelName = currentLevel->fileName;
+				Global::levelNameDisplay = currentLevel->displayName;
+				Global::gameMissionDescription = (currentLevel->missionData[Global::gameMissionNumber])[(currentLevel->missionData[Global::gameMissionNumber]).size()-1];
 
 				Global::isNewLevel = true;
 				Global::shouldLoadLevel = true;

@@ -17,7 +17,6 @@ private:
 	static int pingTimer1;
 	static int pingTimer2;
 	static int pingTimer3;
-	static bool hardMode;
 
 	static GLuint radarGreyID;
 	static GLuint radarBlueID;
@@ -35,7 +34,6 @@ private:
 
 public:
 	EmeraldManager();
-	EmeraldManager(int hardMode);
 	~EmeraldManager();
 
 	void step();

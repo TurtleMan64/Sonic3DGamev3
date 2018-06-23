@@ -18,6 +18,7 @@ private:
 	static int minutes;
 
 	static GUIText* textRings;
+	static GUIText* textScore;
 
 	static std::list<GuiTexture*> guisToRender;
 
@@ -58,7 +59,10 @@ public:
 	static int getSeconds();
 
 	//Total time on timer in seconds
-	static float getTotalTimer();
+	static float getTotalTimerInSeconds();
+
+	//Total time on timer in frames
+	static int getTotalTimerInFrames();
 
 	static void addGuiToRender(GuiTexture* newImage);
 

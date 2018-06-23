@@ -684,7 +684,7 @@ void PlayerTails::step()
 	}
 	Global::gameSkySphere->setPosition(getX(), skyYVal, getZ());
 
-	if (Global::levelID == LVL_SH)
+	if (Global::levelID == LVL_SPEED_HIGHWAY)
 	{
 		Global::gameSkySphere->setPosition(getX(), 4550, getZ());
 	}
@@ -1830,7 +1830,7 @@ void PlayerTails::animate()
 
 	switch (Global::levelID)
 	{
-		case LVL_SHD:
+		case LVL_SNOWHEAD:
 		{
 			float radius2 = snowRadius * 2;
 			float radius = snowRadius;

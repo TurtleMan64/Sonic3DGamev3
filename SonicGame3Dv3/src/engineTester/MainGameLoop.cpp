@@ -6,6 +6,7 @@
 #include <GLFW/glfw3.h>
 
 #include <iostream>
+#include <fstream>
 
 #include <string>
 #include <cstring>
@@ -58,6 +59,7 @@
 #include "../guis/guirenderer.h"
 #include "../guis/guitextureresources.h"
 #include "../toolbox/mainmenu.h"
+#include "../toolbox/level.h"
 
 #ifdef _WIN32
 #include <windows.h>
@@ -143,11 +145,19 @@ bool Global::isNewLevel = false;
 std::string Global::levelName = "";
 std::string Global::levelNameDisplay = "";
 int Global::gameRingCount = 0;
+int Global::gameScore = 0;
 int Global::gameClock = 0;
 float Global::deathHeight = -100.0f;
 
 int Global::gameMissionNumber = 0;
 std::string Global::gameMissionDescription = "";
+bool Global::gameIsNormalMode = false;
+bool Global::gameIsHardMode = false;
+bool Global::gameIsChaoMode = false;
+bool Global::gameIsRingMode = false;
+int Global::gameRingTarget = 100;
+std::vector<Level> Global::gameLevelData;
+std::unordered_map<std::string, std::string> Global::gameSaveData;
 
 bool Global::unlockedSonicDoll = true;
 bool Global::unlockedMechaSonic = true;
@@ -179,6 +189,8 @@ int main()
 
 	createDisplay();
 
+	Global::loadSaveData();
+
 	#ifndef DEV_MODE
 	FreeConsole();
 	#endif
@@ -190,6 +202,8 @@ int main()
 	Global::gameCamera = &cam;
 
 	Master_init();
+
+	LevelLoader_loadLevelData();
 
 	TextMaster::init();
 
@@ -371,9 +385,9 @@ int main()
 					Global::gameState = STATE_DEBUG;
 				}
 
-				if (Global::gameMissionNumber == 1)
+				if (Global::gameIsRingMode)
 				{
-					if (Global::gameRingCount >= 100 && Global::finishStageTimer == -1)
+					if (Global::gameRingCount >= Global::gameRingTarget && Global::finishStageTimer == -1)
 					{
 						Global::finishStageTimer = 0;
 						GuiManager::stopTimer();
@@ -562,6 +576,11 @@ int main()
 			{
 				LevelLoader_loadTitle();
 			}
+
+			if (Global::finishStageTimer == 360)
+			{
+				Global::calculateRankAndUpdate();
+			}
 		}
 
 		if (Global::shouldLoadLevel)
@@ -580,6 +599,8 @@ int main()
 			previousTime = seconds;
 		}
 	}
+
+	Global::saveSaveData();
 
 	#ifdef DEV_MODE
 	listenThread.detach();
@@ -737,6 +758,214 @@ void Global::checkErrorAL(const char* description)
 	{
 		fprintf(stdout, "########  AL ERROR  ########\n");
 		fprintf(stdout, "%s     %d\n", description, erral);
+	}
+}
+
+void Global::loadSaveData()
+{
+	Global::gameSaveData.clear();
+
+	std::ifstream file("res/SaveData/SaveData.sav");
+	if (!file.is_open())
+	{
+		std::fprintf(stdout, "No save data found. Creating new save file...\n");
+		file.close();
+		Global::saveSaveData();
+	}
+	else
+	{
+		std::string line;
+		getline(file, line);
+
+		while (!file.eof())
+		{
+			char lineBuf[512];
+			memset(lineBuf, 0, 512);
+			memcpy(lineBuf, line.c_str(), line.size());
+
+			int splitLength = 0;
+			char** lineSplit = split(lineBuf, ';', &splitLength);
+
+			if (splitLength == 2)
+			{
+				Global::gameSaveData[lineSplit[0]] = lineSplit[1];
+			}
+
+			free(lineSplit);
+
+			getline(file, line);
+		}
+
+		file.close();
+	}
+}
+
+void Global::saveSaveData()
+{
+	std::ofstream file;
+	file.open("res/SaveData/SaveData.sav", std::ios::out | std::ios::trunc);
+
+	if (!file.is_open())
+	{
+		std::fprintf(stdout, "Error: Failed to create/access 'res/SaveData/SaveData.sav'\n");
+		file.close();
+	}
+	else
+	{
+		std::unordered_map<std::string, std::string>::iterator it = Global::gameSaveData.begin();
+ 
+		while (it != Global::gameSaveData.end())
+		{
+			file << it->first+";"+it->second+"\n";
+			
+			it++;
+		}
+
+		file.close();
+	}
+}
+
+void Global::calculateRankAndUpdate()
+{
+	Level* currentLevel = &Global::gameLevelData[Global::levelID];
+
+	if (Global::gameMissionNumber < currentLevel->numMissions)
+	{
+		std::string missionType = (currentLevel->missionData[Global::gameMissionNumber])[0];
+
+		if (missionType == "Normal" || missionType == "Hard")
+		{
+			int scoreForRankA = std::stoi((currentLevel->missionData[Global::gameMissionNumber])[1]);
+			int scoreForRankB = (3*scoreForRankA)/4;
+			int scoreForRankC = (2*scoreForRankA)/3;
+			int scoreForRankD = (1*scoreForRankA)/2;
+
+			int newRank = 0; //0 = E, 4 = A
+
+			if (Global::gameScore >= scoreForRankA)
+			{
+				newRank = 4;
+			}
+			else if (Global::gameScore >= scoreForRankB)
+			{
+				newRank = 3;
+			}
+			else if (Global::gameScore >= scoreForRankC)
+			{
+				newRank = 2;
+			}
+			else if (Global::gameScore >= scoreForRankD)
+			{
+				newRank = 1;
+			}
+
+			std::string missionString = "_M1";
+			switch (Global::gameMissionNumber)
+			{
+				case 0: missionString = "_M1"; break;
+				case 1: missionString = "_M2"; break;
+				case 2: missionString = "_M3"; break;
+				case 3: missionString = "_M4"; break;
+				default: break;
+			}
+
+			int savedRank = -1;
+
+			if (Global::gameSaveData.find(currentLevel->displayName+missionString) != Global::gameSaveData.end())
+			{
+				std::string savedRankString = Global::gameSaveData[currentLevel->displayName+missionString];
+				if (savedRankString == "A") savedRank = 4;
+				if (savedRankString == "B") savedRank = 3;
+				if (savedRankString == "C") savedRank = 2;
+				if (savedRankString == "D") savedRank = 1;
+				if (savedRankString == "E") savedRank = 0;
+			}
+
+			if (newRank > savedRank)
+			{
+				std::string newRankString = "E";
+				switch (newRank)
+				{
+					case 0: newRankString = "E"; break;
+					case 1: newRankString = "D"; break;
+					case 2: newRankString = "C"; break;
+					case 3: newRankString = "B"; break;
+					case 4: newRankString = "A"; break;
+					default: break;
+				}
+
+				Global::gameSaveData[currentLevel->displayName+missionString] = newRankString;
+
+				Global::saveSaveData();
+			}
+		}
+		else if (missionType == "Ring" || missionType == "Chao")
+		{
+			int timeForRankA = std::stoi((currentLevel->missionData[Global::gameMissionNumber])[1]);
+			int timeForRankB = (4*timeForRankA)/3;
+			int timeForRankC = (3*timeForRankA)/2;
+			int timeForRankD = (2*timeForRankA)/1;
+
+			int currentTime = GuiManager::getTotalTimerInFrames();
+			int newRank = 0; //0 = E, 4 = A
+
+			if (currentTime <= timeForRankA)
+			{
+				newRank = 4;
+			}
+			else if (currentTime <= timeForRankB)
+			{
+				newRank = 3;
+			}
+			else if (currentTime <= timeForRankC)
+			{
+				newRank = 2;
+			}
+			else if (currentTime <= timeForRankD)
+			{
+				newRank = 1;
+			}
+
+			std::string missionString = "_M1";
+			switch (Global::gameMissionNumber)
+			{
+				case 0: missionString = "_M1"; break;
+				case 1: missionString = "_M2"; break;
+				case 2: missionString = "_M3"; break;
+				case 3: missionString = "_M4"; break;
+				default: break;
+			}
+
+			int savedRank = -1;
+
+			if (Global::gameSaveData.find(currentLevel->displayName+missionString) != Global::gameSaveData.end())
+			{
+				std::string savedRankString = Global::gameSaveData[currentLevel->displayName+missionString];
+				if (savedRankString == "A") savedRank = 4;
+				if (savedRankString == "B") savedRank = 3;
+				if (savedRankString == "C") savedRank = 2;
+				if (savedRankString == "D") savedRank = 1;
+				if (savedRankString == "E") savedRank = 0;
+			}
+
+			if (newRank > savedRank)
+			{
+				std::string newRankString = "E";
+				switch (newRank)
+				{
+					case 0: newRankString = "E"; break;
+					case 1: newRankString = "D"; break;
+					case 2: newRankString = "C"; break;
+					case 3: newRankString = "B"; break;
+					case 4: newRankString = "A"; break;
+					default: break;
+				}
+
+				Global::gameSaveData[currentLevel->displayName+missionString] = newRankString;
+
+				Global::saveSaveData();
+			}
+		}
 	}
 }
 

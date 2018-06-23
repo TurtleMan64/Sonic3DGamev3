@@ -153,7 +153,7 @@ void PlayerSonic::step()
 	float inputX = xVelGround;
 	float inputY = zVelGround;
 	float mag = sqrtf(inputX*inputX + inputY*inputY);
-
+	
 	float inputDir = (atan2f(inputY, inputX));
 	Vector3f negNorm;
 	negNorm.set(-currNorm.x, -currNorm.y, -currNorm.z);
@@ -242,7 +242,7 @@ void PlayerSonic::step()
 		{
 			if (!isSpindashing)
 			{
-				storedSpindashSpeed = (float)sqrt(xVelGround*xVelGround + zVelGround*zVelGround);
+				storedSpindashSpeed = sqrtf(xVelGround*xVelGround + zVelGround*zVelGround);
 			}
 			isSpindashing = true;
 		}
@@ -273,6 +273,18 @@ void PlayerSonic::step()
 			if (spindashTimer > 0)
 			{
 				spindash(spindashTimer);
+
+				float inputX2 = xVelGround;
+				float inputY2 = zVelGround;
+				float mag2 = sqrtf(inputX2*inputX2 + inputY2*inputY2);
+	
+				float inputDir2 = (atan2f(inputY2, inputX2));
+				Vector3f negNorm2;
+				negNorm2.set(-currNorm.x, -currNorm.y, -currNorm.z);
+				Vector3f mapped2 = mapInputs3(inputDir2, mag2, &negNorm2);
+				xVel = mapped2.x;
+				yVel = mapped2.y;
+				zVel = mapped2.z;
 			}
 			spindashTimer = 0;
 			storedSpindashSpeed = 0;
@@ -823,7 +835,7 @@ void PlayerSonic::step()
 	}
 	Global::gameSkySphere->setPosition(getX(), skyYVal, getZ());
 
-	if (Global::levelID == LVL_SH)
+	if (Global::levelID == LVL_SPEED_HIGHWAY)
 	{
 		Global::gameSkySphere->setPosition(getX(), 4550, getZ());
 	}
@@ -1540,6 +1552,8 @@ void PlayerSonic::calcSpindashAngle()
 	{
 		spindashAngle = ((toRadians(getRotY())));
 	}
+
+	//fprintf(stdout, "orig spindashAngle = %f\n", spindashAngle);
 }
 
 void PlayerSonic::dropDash(float charge)
@@ -1568,7 +1582,9 @@ void PlayerSonic::dropDash(float charge)
 
 void PlayerSonic::spindash(int timer)
 {
-	float dx = cosf(spindashAngle);
+	//fprintf(stdout, "     spindashAngle = %f\n", spindashAngle);
+
+	float dx =  cosf(spindashAngle);
 	float dz = -sinf(spindashAngle);
 
 	float totalSpd = sqrtf(xVelGround*xVelGround + zVelGround*zVelGround);
@@ -1582,7 +1598,7 @@ void PlayerSonic::spindash(int timer)
 
 	if (totalSpd > 1 && newSpeed < storedSpindashSpeed)
 	{
-		xVelGround = cosf(spindashAngle)*storedSpindashSpeed;
+		xVelGround =  cosf(spindashAngle)*storedSpindashSpeed;
 		zVelGround = -sinf(spindashAngle)*storedSpindashSpeed;
 	}
 
@@ -2361,7 +2377,7 @@ void PlayerSonic::animate()
 
 	switch (Global::levelID)
 	{
-		case LVL_SHD:
+		case LVL_SNOWHEAD:
 		{
 			float radius2 = snowRadius * 2;
 			float radius = snowRadius;

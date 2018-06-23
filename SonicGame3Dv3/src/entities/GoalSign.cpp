@@ -33,6 +33,12 @@ GoalSign::GoalSign()
 
 GoalSign::GoalSign(float x, float y, float z)
 {
+	if (Global::gameIsChaoMode || Global::gameIsRingMode)
+	{
+		Main_deleteEntity(this);
+		return;
+	}
+
 	this->position.x = x;
 	this->position.y = y;
 	this->position.z = z;
@@ -72,7 +78,7 @@ void GoalSign::step()
 
 				if (Global::levelName == "EmeraldCoast.lvl")
 				{
-					if (GuiManager::getTotalTimer() < 90 &&
+					if (GuiManager::getTotalTimerInSeconds() < 90 &&
 						Global::gameRingCount >= 200)
 					{
 						if (Global::unlockedSonicDoll == false)
@@ -85,7 +91,7 @@ void GoalSign::step()
 				}
 				else if (Global::levelName == "GreenHillZone.lvl")
 				{
-					if (GuiManager::getTotalTimer() < 40)
+					if (GuiManager::getTotalTimerInSeconds() < 40)
 					{
 						if (Global::unlockedMechaSonic == false)
 						{
@@ -97,7 +103,7 @@ void GoalSign::step()
 				}
 				else if (Global::levelName == "MetalHarbor.lvl")
 				{
-					if (GuiManager::getTotalTimer() < 90)
+					if (GuiManager::getTotalTimerInSeconds() < 90)
 					{
 						if (Global::unlockedDage4 == false)
 						{

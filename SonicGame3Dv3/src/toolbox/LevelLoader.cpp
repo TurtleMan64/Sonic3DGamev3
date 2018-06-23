@@ -89,6 +89,7 @@
 #include "../entities/NokiBay/nbwaterplatform.h"
 #include "../entities/NokiBay/nbwaterplatformbounce.h"
 #include "mainmenu.h"
+#include "../entities/chao.h"
 
 float toFloat(char* input);
 int toInt(char* input);
@@ -126,6 +127,10 @@ void LevelLoader_loadTitle()
 
 	MainMenu::loadResources();
 	Global::gameState = STATE_TITLE;
+	Global::gameIsNormalMode = false;
+	Global::gameIsHardMode = false;
+	Global::gameIsChaoMode = false;
+	Global::gameIsRingMode = false;
 }
 
 void LevelLoader_loadLevel(std::string levelFilename)
@@ -438,6 +443,24 @@ void LevelLoader_loadLevel(std::string levelFilename)
 	Global::deathHeight = stof(deathHeightLine);
 
 	GuiManager::clearGuisToRender();
+
+	Global::gameIsNormalMode = false;
+	Global::gameIsHardMode = false;
+	Global::gameIsChaoMode = false;
+	Global::gameIsRingMode = false;
+
+	Level* currentLevel = &Global::gameLevelData[Global::levelID];
+	std::string missionType = (currentLevel->missionData[Global::gameMissionNumber])[0];
+
+	if (missionType == "Normal") Global::gameIsNormalMode = true;
+	if (missionType == "Ring")   Global::gameIsRingMode   = true;
+	if (missionType == "Chao")   Global::gameIsChaoMode   = true;
+	if (missionType == "Hard")   Global::gameIsHardMode   = true;
+
+	if (Global::gameIsRingMode)
+	{
+		Global::gameRingTarget = std::stoi((currentLevel->missionData[Global::gameMissionNumber])[2]);
+	}
 
 	//Now read through all the objects defined in the file
 
@@ -1220,7 +1243,7 @@ void processLine(char** dat)
 
 		case 74: //Emerald Manager
 		{
-			EmeraldManager* manager = new EmeraldManager(toInt(dat[1])); //hard mode
+			EmeraldManager* manager = new EmeraldManager;
 			Global::countNew++;
 			Main_addEntity(manager);
 			return;
@@ -1291,6 +1314,17 @@ void processLine(char** dat)
 			return;
 		}
 
+		case 81: //Lost Chao
+		{
+			Chao::loadStaticModels();
+			Chao* lostChao = new Chao(
+				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
+				toFloat(dat[4])); //rotation
+			Global::countNew++;
+			Main_addEntity(lostChao);
+			return;
+		}
+
 		default:
 		{
 			return;
@@ -1298,6 +1332,73 @@ void processLine(char** dat)
 	}
 }
 
+void LevelLoader_loadLevelData()
+{
+	Global::gameLevelData.clear();
+
+	std::ifstream file("res/Levels/LevelData.dat");
+	if (!file.is_open())
+	{
+		std::fprintf(stdout, "Error: Cannot load file 'res/Levels/LevelData.dat'\n");
+		file.close();
+	}
+	else
+	{
+		std::string line;
+		getline(file, line);
+
+		int levelCount = std::stoi(line.c_str());
+		getline(file, line);
+
+		while (levelCount > 0)
+		{
+			Level newLevel;
+
+			getline(file, line);
+			newLevel.fileName = line;
+
+			getline(file, line);
+			newLevel.displayName = line;
+
+			getline(file, line);
+			int missionCount = std::stoi(line);
+			newLevel.numMissions = missionCount;
+
+			while (missionCount > 0)
+			{
+				std::vector<std::string> missionData;
+
+				getline(file, line);
+
+				char lineBuf[256];
+				memset(lineBuf, 0, 256);
+				memcpy(lineBuf, line.c_str(), line.size());
+
+				int splitLength = 0;
+				char** lineSplit = split(lineBuf, ';', &splitLength);
+
+				for (int i = 0; i < splitLength; i++)
+				{
+					missionData.push_back(lineSplit[i]);
+				}
+
+				free(lineSplit);
+
+				newLevel.missionData.push_back(missionData);
+
+				missionCount--;
+			}
+
+			Global::gameLevelData.push_back(newLevel);
+
+			getline(file, line);
+
+			levelCount--;
+		}
+
+		file.close();
+	}
+}
 
 float toFloat(char* input)
 {
@@ -1367,4 +1468,5 @@ void freeAllStaticModels()
 	NB_Palmtree::deleteStaticModels();
 	NB_WaterPlatform::deleteStaticModels();
 	NB_WaterPlatformBounce::deleteStaticModels();
+	Chao::deleteStaticModels();
 }

@@ -558,6 +558,12 @@
     <ClCompile Include="src\toolbox\MainMenu.cpp">
       <Filter>Source Files\toolbox</Filter>
     </ClCompile>
+    <ClCompile Include="src\toolbox\Level.cpp">
+      <Filter>Source Files\toolbox</Filter>
+    </ClCompile>
+    <ClCompile Include="src\entities\Chao.cpp">
+      <Filter>Source Files\entities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\renderEngine\renderEngine.h">
@@ -997,6 +1003,12 @@
     </ClInclude>
     <ClInclude Include="src\toolbox\mainmenu.h">
       <Filter>Source Files\toolbox</Filter>
+    </ClInclude>
+    <ClInclude Include="src\toolbox\level.h">
+      <Filter>Source Files\toolbox</Filter>
+    </ClInclude>
+    <ClInclude Include="src\entities\chao.h">
+      <Filter>Source Files\entities</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

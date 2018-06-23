@@ -11,4 +11,4 @@ newmtl item
 	glow 1.0
 	d 0.000000
 	illum 2
-	map_Kd item_random.png
+	map_Kd item_ring20.png

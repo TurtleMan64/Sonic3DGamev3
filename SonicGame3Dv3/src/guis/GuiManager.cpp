@@ -23,6 +23,7 @@ int GuiManager::seconds = 0;
 int GuiManager::minutes = 0;
 
 GUIText* GuiManager::textRings = nullptr;
+GUIText* GuiManager::textScore = nullptr;
 
 GUIText* GuiManager::textHorVel = nullptr;
 GUIText* GuiManager::textVerVel = nullptr;
@@ -50,6 +51,7 @@ void GuiManager::init()
 	fontVip = PauseScreen::font;
 	textTimer = new GUIText("0", 1, fontVip, 0.01f, 0.01f, 1, false, false, false); Global::countNew++;
 	textRings = new GUIText("0", 1, fontVip, 0.01f, 0.01f, 1, false, false, false); Global::countNew++;
+	textScore = new GUIText("0", 1, fontVip, 0.01f, 0.01f, 1, false, false, false); Global::countNew++;
 
 	//Player debug text
 	textHorVel              = new GUIText("Hor Vel:"     + std::to_string(horVel),              1, fontVip, 0.01f, 0.70f, 1, false, false, Global::debugDisplay); Global::countNew++;
@@ -103,6 +105,11 @@ void GuiManager::refresh()
 	delete textRings; Global::countDelete++;
 	textRings = nullptr;
 	textRings = new GUIText(std::to_string(Global::gameRingCount), 1.5f, fontVip, 0+48*px, 0+48*py, 1, false, false, true); Global::countNew++;
+
+	textScore->deleteMe();
+	delete textScore; Global::countDelete++;
+	textScore = nullptr;
+	textScore = new GUIText(std::to_string(Global::gameScore), 1.5f, fontVip, 0+48*px, 0+80*py, 1, false, false, true); Global::countNew++;
 
 	if (Global::debugDisplay)
 	{
@@ -222,11 +229,13 @@ void GuiManager::refresh()
 	{
 		textTimer->setVisibility(true);
 		textRings->setVisibility(true);
+		textScore->setVisibility(true);
 	}
 	else
 	{
 		textTimer->setVisibility(false);
 		textRings->setVisibility(false);
+		textScore->setVisibility(false);
 	}
 
 	//Render images
@@ -282,9 +291,14 @@ int GuiManager::getSeconds()
 	return seconds;
 }
 
-float GuiManager::getTotalTimer()
+float GuiManager::getTotalTimerInSeconds()
 {
 	return minutes * 60 + seconds + centiseconds / 60.0f;
+}
+
+int GuiManager::getTotalTimerInFrames()
+{
+	return minutes * 3600 + seconds*60 + centiseconds;
 }
 
 void GuiManager::addGuiToRender(GuiTexture* newImage)

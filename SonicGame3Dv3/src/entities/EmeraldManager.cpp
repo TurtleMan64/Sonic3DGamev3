@@ -25,7 +25,6 @@ int EmeraldManager::piecesRemaining = 3;
 int EmeraldManager::pingTimer1 = 0;
 int EmeraldManager::pingTimer2 = 0;
 int EmeraldManager::pingTimer3 = 0;
-bool EmeraldManager::hardMode = false;
 
 GLuint EmeraldManager::radarGreyID   = 0;
 GLuint EmeraldManager::radarBlueID   = 0;
@@ -36,11 +35,6 @@ GLuint EmeraldManager::radarRedID    = 0;
 GuiTexture* EmeraldManager::radar1 = nullptr;
 GuiTexture* EmeraldManager::radar2 = nullptr;
 GuiTexture* EmeraldManager::radar3 = nullptr;
-
-EmeraldManager::EmeraldManager()
-{
-	
-}
 
 EmeraldManager::~EmeraldManager()
 {
@@ -76,7 +70,7 @@ EmeraldManager::~EmeraldManager()
 	EmeraldManager::radarRedID    = 0;
 }
 
-EmeraldManager::EmeraldManager(int doHardMode)
+EmeraldManager::EmeraldManager()
 {
 	//Load images of radar
 	EmeraldManager::radarGreyID   = Loader_loadTexture("res/Images/TreasureHunting/RadarGrey.png");
@@ -138,15 +132,12 @@ EmeraldManager::EmeraldManager(int doHardMode)
 		}
 	}
 
-	if (doHardMode != 0)
+	if (Global::gameIsHardMode)
 	{
 		EmeraldManager::piecesRemaining = totalPieces;
-		EmeraldManager::hardMode = true;
 	}
-	else
+	else if (Global::gameIsNormalMode)
 	{
-		EmeraldManager::hardMode = false;
-
 		//Pick a random p1
 		EmeraldManager::piece1 = piece1List[(int)(Maths::random()*piece1List.size())];
 		Vector3f p1Loc(EmeraldManager::piece1->getPosition());
@@ -238,6 +229,21 @@ EmeraldManager::EmeraldManager(int doHardMode)
 			}
 		}
 	}
+	else
+	{
+		for (Entity* e : gameEntitiesPass2ToAdd)
+		{
+			if (e->isEmeraldPiece()) 
+			{
+				EmeraldPiece* piece = (EmeraldPiece*)e;
+				Main_deleteEntityPass2(piece);
+			}
+		}
+
+		EmeraldManager::radar1->setVisible(false);
+		EmeraldManager::radar2->setVisible(false);
+		EmeraldManager::radar3->setVisible(false);
+	}
 }
 
 void EmeraldManager::updatePiece(EmeraldPiece* piece, int* pingTimer, GuiTexture* radar, EmeraldPiece* closestPiece)
@@ -308,6 +314,10 @@ void EmeraldManager::updatePiece(EmeraldPiece* piece, int* pingTimer, GuiTexture
 
 void EmeraldManager::step()
 {
+	if (Global::gameIsChaoMode || Global::gameIsRingMode)
+	{
+		return;
+	}
 	EmeraldPiece* closestPiece = EmeraldManager::getClosestPiece();
 	EmeraldManager::updatePiece(EmeraldManager::piece1, &EmeraldManager::pingTimer1, EmeraldManager::radar1, closestPiece);
 	EmeraldManager::updatePiece(EmeraldManager::piece2, &EmeraldManager::pingTimer2, EmeraldManager::radar2, closestPiece);

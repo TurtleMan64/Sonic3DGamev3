@@ -36,6 +36,7 @@
     <ClCompile Include="src\engineTester\MainGameLoop.cpp" />
     <ClCompile Include="src\entities\Camera.cpp" />
     <ClCompile Include="src\entities\Capsule.cpp" />
+    <ClCompile Include="src\entities\Chao.cpp" />
     <ClCompile Include="src\entities\CollideableObject.cpp" />
     <ClCompile Include="src\entities\ControllablePlayer.cpp" />
     <ClCompile Include="src\entities\Dashpad.cpp" />
@@ -160,6 +161,7 @@
     <ClCompile Include="src\shadows\ShadowShader.cpp" />
     <ClCompile Include="src\textures\ModelTexture.cpp" />
     <ClCompile Include="src\toolbox\Input.cpp" />
+    <ClCompile Include="src\toolbox\Level.cpp" />
     <ClCompile Include="src\toolbox\LevelLoader.cpp" />
     <ClCompile Include="src\toolbox\MainMenu.cpp" />
     <ClCompile Include="src\toolbox\maths.cpp" />
@@ -190,6 +192,7 @@
     <ClInclude Include="src\engineTester\main.h" />
     <ClInclude Include="src\entities\camera.h" />
     <ClInclude Include="src\entities\capsule.h" />
+    <ClInclude Include="src\entities\chao.h" />
     <ClInclude Include="src\entities\collideableobject.h" />
     <ClInclude Include="src\entities\controllableplayer.h" />
     <ClInclude Include="src\entities\dashpad.h" />
@@ -308,6 +311,7 @@
     <ClInclude Include="src\shadows\shadowshader.h" />
     <ClInclude Include="src\textures\textures.h" />
     <ClInclude Include="src\toolbox\input.h" />
+    <ClInclude Include="src\toolbox\level.h" />
     <ClInclude Include="src\toolbox\levelloader.h" />
     <ClInclude Include="src\toolbox\mainmenu.h" />
     <ClInclude Include="src\toolbox\maths.h" />

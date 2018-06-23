@@ -36,6 +36,12 @@ Capsule::Capsule()
 
 Capsule::Capsule(float x, float y, float z)
 {
+	if (Global::gameIsChaoMode || Global::gameIsRingMode)
+	{
+		Main_deleteEntity(this);
+		return;
+	}
+
 	position.x = x;
 	position.y = y;
 	position.z = z;

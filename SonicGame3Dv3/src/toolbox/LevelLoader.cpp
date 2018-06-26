@@ -99,6 +99,8 @@
 #include "../entities/GreenHillZone/ghgrass.h"
 #include "../entities/GreenHillZone/ghsunflower.h"
 #include "../entities/GreenHillZone/ghflower.h"
+#include "../entities/rhinotank.h"
+#include "../entities/motobug.h"
 
 float toFloat(char* input);
 int toInt(char* input);
@@ -728,6 +730,16 @@ void processLine(char** dat)
 			return;
 		}
 
+		case 11: //Rhino Tank
+		{
+			RhinoTank::loadStaticModels();
+			RhinoTank* rhino = new RhinoTank(
+				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3])); //position
+			Global::countNew++;
+			Main_addEntity(rhino);
+			return;
+		}
+
 		case 12: //Emerald Coast Sinking Platform
 		{
 			EC_SinkingPlatform::loadStaticModels();
@@ -755,6 +767,16 @@ void processLine(char** dat)
 			EC_FlatWater* water = new EC_FlatWater();
 			Global::countNew++;
 			Main_addTransparentEntity(water);
+			return;
+		}
+
+		case 15: //Moto Bug
+		{
+			MotoBug::loadStaticModels();
+			MotoBug* bug = new MotoBug(
+				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3])); //position
+			Global::countNew++;
+			Main_addEntity(bug);
 			return;
 		}
 
@@ -1588,4 +1610,6 @@ void freeAllStaticModels()
 	GH_Grass::deleteStaticModels();
 	GH_Sunflower::deleteStaticModels();
 	GH_Flower::deleteStaticModels();
+	RhinoTank::deleteStaticModels();
+	MotoBug::deleteStaticModels();
 }

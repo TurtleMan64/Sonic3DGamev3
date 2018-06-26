@@ -182,12 +182,13 @@ void ItemCapsule::die()
 			Global::gameScore += 100;
 			ShieldGreen* shield = new ShieldGreen; Global::countNew++;
 			Main_addTransparentEntity(shield);
+			Global::gamePlayer->setShieldGreen(shield);
 			break;
 		}
 
 		case 6:
 			//1 up
-			Global::gameScore += 200;
+			Global::gameScore += 300;
 			break;
 
 		case 7:

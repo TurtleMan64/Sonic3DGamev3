@@ -600,6 +600,12 @@
     <ClCompile Include="src\entities\GreenHillZone\GH_Flower.cpp">
       <Filter>Source Files\entities\GreenHillZone</Filter>
     </ClCompile>
+    <ClCompile Include="src\entities\RhinoTank.cpp">
+      <Filter>Source Files\entities</Filter>
+    </ClCompile>
+    <ClCompile Include="src\entities\MotoBug.cpp">
+      <Filter>Source Files\entities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\renderEngine\renderEngine.h">
@@ -1078,6 +1084,12 @@
     </ClInclude>
     <ClInclude Include="src\entities\GreenHillZone\ghflower.h">
       <Filter>Source Files\entities\GreenHillZone</Filter>
+    </ClInclude>
+    <ClInclude Include="src\entities\rhinotank.h">
+      <Filter>Source Files\entities</Filter>
+    </ClInclude>
+    <ClInclude Include="src\entities\motobug.h">
+      <Filter>Source Files\entities</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

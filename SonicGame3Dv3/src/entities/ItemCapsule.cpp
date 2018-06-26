@@ -14,6 +14,8 @@
 #include "../audio/audioplayer.h"
 #include "../particles/particleresources.h"
 #include "../particles/particle.h"
+#include "shieldmagnet.h"
+#include "shieldgreen.h"
 
 #include <list>
 #include <iostream>
@@ -148,42 +150,60 @@ void ItemCapsule::die()
 	{
 		case 0:
 			//speed shoes
+			Global::gameScore += 100;
 			break;
 
 		case 1:
 			//invincible
+			Global::gameScore += 100;
 			break;
 
 		case 2:
 			//increase rings by 5
 			Global::gameRingCount += 5;
+			Global::gameScore += 50;
 			break;
 
 		case 3:
 			//increase rings by 10
 			Global::gameRingCount += 10;
+			Global::gameScore += 100;
 			break;
 
 		case 4:
 			//increase rings by 20
 			Global::gameRingCount += 20;
+			Global::gameScore += 200;
 			break;
 
 		case 5:
+		{
 			//green shield
+			Global::gameScore += 100;
+			ShieldGreen* shield = new ShieldGreen; Global::countNew++;
+			Main_addTransparentEntity(shield);
 			break;
+		}
 
 		case 6:
 			//1 up
+			Global::gameScore += 200;
 			break;
 
 		case 7:
 			//bomb
+			Global::gameScore += 100;
 			break;
 
 		default:
+		{
 			//electric shield
+			Global::gameScore += 100;
+			ShieldMagnet* shield = new ShieldMagnet; Global::countNew++;
+			Main_addTransparentEntity(shield);
+			Global::gamePlayer->setShieldMagnet(shield);
 			break;
+		}
 	}
 }
 

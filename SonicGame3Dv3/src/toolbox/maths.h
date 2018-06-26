@@ -7,6 +7,8 @@ class Vector2f;
 class Camera;
 
 #include <math.h>
+#include<random>
+#include<chrono>
 
 #define M_PI 3.14159265358979323846
 
@@ -70,16 +72,29 @@ Vector3f calculatePlaneSpeed(float xspd, float yspd, float zspd, Vector3f* norma
 */
 Vector3f spherePositionFromAngles(float angH, float angV, float radius);
 
+//Generates a uniformly distributed random position on a sphere of radius 1
+Vector3f randomPointOnSphere();
+
 Vector3f projectOntoPlane(Vector3f* A, Vector3f* normal);
 
 class Maths
 {
+private:
+	static std::mt19937* generatorUniform;
+	static std::uniform_real_distribution<float>* distributionUniform;
+
+	static std::default_random_engine* generatorNormal;
+	static std::normal_distribution<float>* distributionNormal;
+
 public:
 	//returns uniform random float >= 0 and < 1
 	static float random();
 
 	//normal distribution mean = 0, std dev = 1
 	static float nextGaussian();
+
+	//returns uniform random float >= 0 and < 1
+	static float nextUniform();
 };
 
 #endif

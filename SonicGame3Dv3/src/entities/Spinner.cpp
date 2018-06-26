@@ -126,6 +126,8 @@ void Spinner::die()
 	
 	new Particle(ParticleResources::textureExplosion2, &pos, &vel,
 		0, 55, 0, 20, 0, false);
+
+	Global::gameScore += 100;
 }
 
 std::list<TexturedModel*>* Spinner::getModels()

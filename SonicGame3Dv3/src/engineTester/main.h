@@ -136,9 +136,6 @@ public:
 	static bool unlockedManiaSonic;
 	static bool unlockedAmy;
 
-	static std::default_random_engine* generator;
-	static std::normal_distribution<double>* distribution;
-
 	static void checkErrorAL(const char* description);
 
 	static void loadSaveData();

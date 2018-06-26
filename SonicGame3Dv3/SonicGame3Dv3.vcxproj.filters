@@ -100,6 +100,9 @@
     <Filter Include="Source Files\entities\NokiBay">
       <UniqueIdentifier>{bf7b82a5-6d4c-4fb7-9a34-6568e3bedeb9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\entities\GreenHillZone">
+      <UniqueIdentifier>{ebb9ac04-d2ba-4b21-bce3-0c20c216dbe0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\renderEngine\DisplayManager.cpp">
@@ -564,6 +567,39 @@
     <ClCompile Include="src\entities\Chao.cpp">
       <Filter>Source Files\entities</Filter>
     </ClCompile>
+    <ClCompile Include="src\entities\ShieldMagnet.cpp">
+      <Filter>Source Files\entities</Filter>
+    </ClCompile>
+    <ClCompile Include="src\entities\ShieldGreen.cpp">
+      <Filter>Source Files\entities</Filter>
+    </ClCompile>
+    <ClCompile Include="src\entities\GreenHillZone\GH_FloatingPlatform.cpp">
+      <Filter>Source Files\entities\GreenHillZone</Filter>
+    </ClCompile>
+    <ClCompile Include="src\entities\GreenHillZone\GH_FallingPlatform.cpp">
+      <Filter>Source Files\entities\GreenHillZone</Filter>
+    </ClCompile>
+    <ClCompile Include="src\entities\GreenHillZone\GH_Rock.cpp">
+      <Filter>Source Files\entities\GreenHillZone</Filter>
+    </ClCompile>
+    <ClCompile Include="src\entities\GreenHillZone\GH_Totem.cpp">
+      <Filter>Source Files\entities\GreenHillZone</Filter>
+    </ClCompile>
+    <ClCompile Include="src\entities\GreenHillZone\GH_TotemWings.cpp">
+      <Filter>Source Files\entities\GreenHillZone</Filter>
+    </ClCompile>
+    <ClCompile Include="src\entities\GreenHillZone\GH_Tree.cpp">
+      <Filter>Source Files\entities\GreenHillZone</Filter>
+    </ClCompile>
+    <ClCompile Include="src\entities\GreenHillZone\GH_Grass.cpp">
+      <Filter>Source Files\entities\GreenHillZone</Filter>
+    </ClCompile>
+    <ClCompile Include="src\entities\GreenHillZone\GH_Sunflower.cpp">
+      <Filter>Source Files\entities\GreenHillZone</Filter>
+    </ClCompile>
+    <ClCompile Include="src\entities\GreenHillZone\GH_Flower.cpp">
+      <Filter>Source Files\entities\GreenHillZone</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\renderEngine\renderEngine.h">
@@ -1009,6 +1045,39 @@
     </ClInclude>
     <ClInclude Include="src\entities\chao.h">
       <Filter>Source Files\entities</Filter>
+    </ClInclude>
+    <ClInclude Include="src\entities\shieldmagnet.h">
+      <Filter>Source Files\entities</Filter>
+    </ClInclude>
+    <ClInclude Include="src\entities\shieldgreen.h">
+      <Filter>Source Files\entities</Filter>
+    </ClInclude>
+    <ClInclude Include="src\entities\GreenHillZone\ghfloatingplatform.h">
+      <Filter>Source Files\entities\GreenHillZone</Filter>
+    </ClInclude>
+    <ClInclude Include="src\entities\GreenHillZone\ghfallingplatform.h">
+      <Filter>Source Files\entities\GreenHillZone</Filter>
+    </ClInclude>
+    <ClInclude Include="src\entities\GreenHillZone\ghrock.h">
+      <Filter>Source Files\entities\GreenHillZone</Filter>
+    </ClInclude>
+    <ClInclude Include="src\entities\GreenHillZone\ghtotem.h">
+      <Filter>Source Files\entities\GreenHillZone</Filter>
+    </ClInclude>
+    <ClInclude Include="src\entities\GreenHillZone\ghtotemwings.h">
+      <Filter>Source Files\entities\GreenHillZone</Filter>
+    </ClInclude>
+    <ClInclude Include="src\entities\GreenHillZone\ghtree.h">
+      <Filter>Source Files\entities\GreenHillZone</Filter>
+    </ClInclude>
+    <ClInclude Include="src\entities\GreenHillZone\ghgrass.h">
+      <Filter>Source Files\entities\GreenHillZone</Filter>
+    </ClInclude>
+    <ClInclude Include="src\entities\GreenHillZone\ghsunflower.h">
+      <Filter>Source Files\entities\GreenHillZone</Filter>
+    </ClInclude>
+    <ClInclude Include="src\entities\GreenHillZone\ghflower.h">
+      <Filter>Source Files\entities\GreenHillZone</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

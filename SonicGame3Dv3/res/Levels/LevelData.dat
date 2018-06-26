@@ -20,14 +20,14 @@ Speed Highway
 3
 Normal;16000;Destroy the capsule and rescue the animals!
 Ring;3600;150;Collect 150 Rings!
-Chao;3600;Find the lost chao!
+Chao;900;Find the lost chao!
 
 TwinklePark.lvl
 Twinkle Park
 3
 Normal;17000;Destroy the capsule and rescue the animals!
 Ring;3600;400;Collect 400 Rings!
-Chao;3600;Find the lost chao!
+Chao;4200;Find the lost chao!
 
 WildCanyon.lvl
 Wild Canyon
@@ -40,15 +40,15 @@ Hard;1600;Clear hard mode!
 MetalHarbor.lvl
 Metal Harbor
 3
-Normal;17000;Escape from the military base!
-Ring;3600;150;Collect 150 Rings!
-Chao;3600;Find the lost chao!
+Normal;14000;Escape from the military base!
+Ring;3900;150;Collect 150 Rings!
+Chao;2700;Find the lost chao!
 
 DelfinoPlaza.lvl
 Delfino Plaza
 3
 Normal;13000;Find the pieces of the Master Emerald!
-Chao;3600;Find the lost chao!
+Chao;1800;Find the lost chao!
 Hard;1600;Clear hard mode!
 
 GreenHillZone.lvl
@@ -56,13 +56,13 @@ Green Hill Zone
 3
 Normal;17000;Pursue Eggman
 Ring;3600;150;Collect 150 Rings!
-Chao;3600;Find the lost chao!
+Chao;1200;Find the lost chao!
 
 NokiBay.lvl
 Noki Bay
 3
 Normal;13000;Find the pieces of the Master Emerald!
-Chao;3600;Find the lost chao!
+Chao;600;Find the lost chao!
 Hard;1600;Clear hard mode!
 
 WeaponsBed.lvl
@@ -70,13 +70,13 @@ Weapons Bed
 3
 Normal;17000;Escape from the military base!
 Ring;3600;150;Collect 150 Rings!
-Chao;3600;Find the lost chao!
+Chao;1800;Find the lost chao!
 
 OutsetIsland.lvl
 Outset Island
 2
 Hard;13000;Find the pieces of the Master Emerald!
-Chao;3600;Find the lost chao!
+Chao;900;Find the lost chao!
 
 WuhuIsland.lvl
 Wuhu Island
@@ -88,31 +88,31 @@ Snowhead.lvl
 Snowhead
 2
 Normal;13000;Help the old goron dude find his son or something
-Chao;3600;Find the lost chao!
+Chao;1800;Find the lost chao!
 
 SandHill.lvl
 Sand Hill
 2
-Normal;13000;Go fast
-Chao;3600;Find the lost chao!
+Normal;11000;Go fast
+Chao;900;Find the lost chao!
 
 RainbowRoad.lvl
 Rainbow Road
 2
 Normal;13000;Go fast
-Chao;3600;Find the lost chao!
+Chao;900;Find the lost chao!
 
 PeachCastle.lvl
 Peach's Castle
 2
 Normal;13000;Reach the tip top of the castle
-Chao;3600;Find the lost chao!
+Chao;1800;Find the lost chao!
 
 KoopaTroopaBeach.lvl
 Koopa Beach
 2
 Normal;13000;Do a lap around the island
-Chao;3600;Find the lost chao!
+Chao;600;Find the lost chao!
 
 FireField.lvl
 Fire Field
@@ -123,10 +123,10 @@ BobOmbBattlefield.lvl
 Bob-omb Battlefield
 2
 Hard;13000;Find the pieces of the Master Emerald!
-Chao;3600;Find the lost chao!
+Chao;600;Find the lost chao!
 
 KingdomValley.lvl
 Kingdom Valley
 2
 Normal;13000;Go fast
-Chao;3600;Find the lost chao!
+Chao;1800;Find the lost chao!

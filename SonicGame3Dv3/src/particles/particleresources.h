@@ -17,6 +17,8 @@ public:
 	static ParticleTexture* textureSparkleGreen;
 	static ParticleTexture* textureSparkleRed;
 	static ParticleTexture* textureSparkleBlue;
+	static ParticleTexture* textureSparkleLightBlue;
+	static ParticleTexture* textureSparkleWhite;
 	static ParticleTexture* textureWaterDrop;
 	static ParticleTexture* textureLightBlueTrail;
 	static ParticleTexture* textureBlueTrail;

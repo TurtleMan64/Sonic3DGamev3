@@ -1,4 +1,6 @@
 #include <cmath>
+#include<random>
+#include<chrono>
 
 #include "matrix.h"
 #include "vector.h"
@@ -7,6 +9,12 @@
 #include "../engineTester/main.h"
 #include "../entities/ring.h"
 #include "../entities/playersonic.h"
+
+std::mt19937* Maths::generatorUniform = new std::mt19937(0);
+std::uniform_real_distribution<float>* Maths::distributionUniform = new std::uniform_real_distribution<float>(0.0f, 1.0f);
+
+std::default_random_engine* Maths::generatorNormal = new std::default_random_engine(0);
+std::normal_distribution<float>* Maths::distributionNormal = new std::normal_distribution<float>(0.0f, 1.0f);
 
 float toRadians(float degrees)
 {
@@ -324,6 +332,39 @@ Vector3f spherePositionFromAngles(float angH, float angV, float radius)
 	return Vector3f(x, y, z);
 }
 
+Vector3f randomPointOnSphere()
+{
+	//float u = Maths::nextUniform();
+	//float v = Maths::nextUniform();
+
+	//float lat = 2*((float)M_PI)*u;
+	//float lng = acosf(2*v - 1);
+
+	//return spherePositionFromAngles(lng, lat, 1);
+
+
+	float z   = Maths::nextUniform()*2 - 1;
+	float lng = Maths::nextUniform()*2*(float)M_PI;
+
+	float radius = sqrtf(1-(z)*(z));
+
+	float x = radius*cosf(lng);
+	float y = radius*sinf(lng);
+
+	return Vector3f(x, y, z);
+
+
+	//Makes a 3D Bernoulli Lemniscate for some reason???
+
+	//float theta = 2 * (float)M_PI * Maths::nextUniform();
+    //float phi = acosf(1 - 2 * Maths::nextUniform());
+    //float x = sinf(phi) * cosf(theta);
+    //float y = sinf(phi) * sinf(theta);
+    //float z = cosf(phi);
+
+	//return spherePositionFromAngles(x, y, z);
+}
+
 float Maths::random()
 {
 	return (rand() % RAND_MAX) / ((float)(RAND_MAX));
@@ -331,5 +372,10 @@ float Maths::random()
 
 float Maths::nextGaussian()
 {
-	return (float)(*Global::distribution)((*Global::generator));
+	return (*Maths::distributionNormal)(*Maths::generatorNormal);
+}
+
+float Maths::nextUniform()
+{
+	return (*Maths::distributionUniform)(*Maths::generatorUniform);
 }

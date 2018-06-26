@@ -19,10 +19,12 @@ private:
 	float zVel;
 	bool moves;
 	int grabTimer;
+	bool givesPoints;
+	bool trackingPlayer;
 
 public:
 	Ring();
-	Ring(float, float, float);
+	Ring(float x, float y, float z);
 	Ring(float x, float y, float z, float xVel, float yVel, float zVel);
 
 	void step();

@@ -90,6 +90,15 @@
 #include "../entities/NokiBay/nbwaterplatformbounce.h"
 #include "mainmenu.h"
 #include "../entities/chao.h"
+#include "../entities/GreenHillZone/ghfloatingplatform.h"
+#include "../entities/GreenHillZone/ghfallingplatform.h"
+#include "../entities/GreenHillZone/ghrock.h"
+#include "../entities/GreenHillZone/ghtotem.h"
+#include "../entities/GreenHillZone/ghtotemwings.h"
+#include "../entities/GreenHillZone/ghtree.h"
+#include "../entities/GreenHillZone/ghgrass.h"
+#include "../entities/GreenHillZone/ghsunflower.h"
+#include "../entities/GreenHillZone/ghflower.h"
 
 float toFloat(char* input);
 int toInt(char* input);
@@ -120,6 +129,7 @@ void LevelLoader_loadTitle()
 	Global::finishStageTimer = -1;
 
 	Global::gameRingCount = 0;
+	Global::gameScore = 0;
 	GuiManager::setTimer(0, 0, 0);
 	GuiManager::stopTimer();
 
@@ -499,6 +509,7 @@ void LevelLoader_loadLevel(std::string levelFilename)
 	}
 
 	Global::gameRingCount = 0;
+	Global::gameScore = 0;
 	GuiManager::setTimer(0, 0, 0);
 	GuiManager::stopTimer();
 
@@ -744,6 +755,105 @@ void processLine(char** dat)
 			EC_FlatWater* water = new EC_FlatWater();
 			Global::countNew++;
 			Main_addTransparentEntity(water);
+			return;
+		}
+
+		case 16: //Green Hill Rock
+		{
+			GH_Rock::loadStaticModels();
+			GH_Rock* rock = new GH_Rock(
+				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
+				toFloat(dat[4]), 1.0f); //yrot, scale
+			Global::countNew++;
+			Main_addEntity(rock);
+			return;
+		}
+
+		case 17: //Green Hill Tree
+		{
+			GH_Tree::loadStaticModels();
+			GH_Tree* tree = new GH_Tree(
+				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
+				toFloat(dat[4]), toFloat(dat[5])); //yrot, scale
+			Global::countNew++;
+			Main_addEntity(tree);
+			return;
+		}
+
+		case 18: //Green Hill Sunflower
+		{
+			GH_Sunflower::loadStaticModels();
+			GH_Sunflower* flower = new GH_Sunflower(
+				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
+				toFloat(dat[4]), 1.0f); //yrot, scale
+			Global::countNew++;
+			Main_addEntity(flower);
+			return;
+		}
+
+		case 19: //Green Hill Flower
+		{
+			GH_Flower::loadStaticModels();
+			GH_Flower* flower = new GH_Flower(
+				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
+				toFloat(dat[4]), 1.0f); //yrot, scale
+			Global::countNew++;
+			Main_addEntity(flower);
+			return;
+		}
+
+		case 20: //Green Hill Totem
+		{
+			GH_Totem::loadStaticModels();
+			GH_Totem* totem = new GH_Totem(
+				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
+				toFloat(dat[4]), 1.0f); //yrot, scale
+			Global::countNew++;
+			Main_addEntity(totem);
+			return;
+		}
+
+		case 21: //Green Hill Totem Wings
+		{
+			GH_TotemWings::loadStaticModels();
+			GH_TotemWings* totem = new GH_TotemWings(
+				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
+				toFloat(dat[4]), 1.0f); //yrot, scale
+			Global::countNew++;
+			Main_addEntity(totem);
+			return;
+		}
+
+		case 22: //Green Hill Grass
+		{
+			GH_Grass::loadStaticModels();
+			GH_Grass* grass = new GH_Grass(
+				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
+				toFloat(dat[4]), 1.0f); //yrot, scale
+			Global::countNew++;
+			Main_addEntity(grass);
+			return;
+		}
+
+		case 23: //Green Hill Falling Platform
+		{
+			GH_FallingPlatform::loadStaticModels();
+			GH_FallingPlatform* platform = new GH_FallingPlatform(
+				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
+				toFloat(dat[4]), 1.0f); //yrot, scale
+			Global::countNew++;
+			Main_addEntity(platform);
+			return;
+		}
+
+		case 24: //Green Hill Floating Platform
+		{
+			GH_FloatingPlatform::loadStaticModels();
+			GH_FloatingPlatform* platform = new GH_FloatingPlatform(
+				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
+				toFloat(dat[4]), 1.0f); //yrot, scale
+			Global::countNew++;
+			Main_addEntity(platform);
 			return;
 		}
 
@@ -1469,4 +1579,13 @@ void freeAllStaticModels()
 	NB_WaterPlatform::deleteStaticModels();
 	NB_WaterPlatformBounce::deleteStaticModels();
 	Chao::deleteStaticModels();
+	GH_FloatingPlatform::deleteStaticModels();
+	GH_FallingPlatform::deleteStaticModels();
+	GH_Rock::deleteStaticModels();
+	GH_Totem::deleteStaticModels();
+	GH_TotemWings::deleteStaticModels();
+	GH_Tree::deleteStaticModels();
+	GH_Grass::deleteStaticModels();
+	GH_Sunflower::deleteStaticModels();
+	GH_Flower::deleteStaticModels();
 }

@@ -7,6 +7,8 @@ class Limb;
 class Body;
 class ManiaTailsModel;
 class Source;
+class ShieldMagnet;
+class ShieldGreen;
 
 #include <list>
 
@@ -225,6 +227,9 @@ private:
 
 	Vector3f previousLightdashPosition;
 
+	ShieldMagnet* myShieldMagnet = nullptr;
+	ShieldGreen*  myShieldGreen  = nullptr;
+
 public:
 	PlayerTails(float, float, float);
 
@@ -333,6 +338,17 @@ public:
 
 	//Returns the normal of the triangle that the player has collided with
 	Vector3f* getCurrNorm();
+
+	//Returns the center position of where the player is being drawn.
+	Vector3f getCenterPosition();
+
+	ShieldMagnet* getShieldMagnet();
+
+	void setShieldMagnet(ShieldMagnet* newMagnet);
+
+	ShieldGreen* getShieldGreen();
+
+	void setShieldGreen(ShieldGreen* newGreen);
 
 private:
 	void adjustCamera();

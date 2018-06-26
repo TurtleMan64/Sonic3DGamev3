@@ -345,15 +345,15 @@ void Input_pollInputs()
 	{
 		float spoutSpd = 3.0f;
 		float anglH = (float)(M_PI * 2 * ((rand() % 1024) / 1024.0));
-		double randNumber = (*Global::distribution)((*Global::generator));
+		float randNumber = Maths::nextGaussian();
 		//std::fprintf(stdout, "%f\n", randNumber);
-		float anglV = (float)(toRadians((float)(randNumber * 36.0 + 90.0)));
+		float anglV = (toRadians((randNumber * 36 + 90)));
 
-		float yspd = (float)(spoutSpd*sin(anglV));
-		float hpt = (float)(spoutSpd*cos(anglV));
+		float yspd = spoutSpd*sinf(anglV);
+		float hpt  = spoutSpd*cosf(anglV);
 
-		float xspd = (float)(hpt*cos(anglH));
-		float zspd = (float)(hpt*sin(anglH));
+		float xspd = hpt*cosf(anglH);
+		float zspd = hpt*sinf(anglH);
 
 		Vector3f* spawnPoint = Global::gamePlayer->getPosition();
 		Ring* newRing = new Ring(spawnPoint->x, spawnPoint->y + 10, spawnPoint->z, xspd, yspd, zspd);

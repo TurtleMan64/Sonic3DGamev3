@@ -8,13 +8,14 @@
 #include "../objLoader/objLoader.h"
 #include "../engineTester/main.h"
 #include "../entities/camera.h"
-#include "../entities/playersonic.h"
+#include "../entities/controllableplayer.h"
 #include "../collision/collisionchecker.h"
 #include "../collision/triangle3d.h"
 #include "../toolbox/maths.h"
 #include "../audio/audioplayer.h"
 #include "../particles/particle.h"
 #include "../particles/particleresources.h"
+#include "shieldmagnet.h"
 
 #include <list>
 #include <iostream>
@@ -40,6 +41,8 @@ Ring::Ring(float x, float y, float z)
 	yVel = 0;
 	zVel = 0;
 	grabTimer = 0;
+	givesPoints = true;
+	trackingPlayer = false;
 }
 
 Ring::Ring(float x, float y, float z, float xVel, float yVel, float zVel)
@@ -52,6 +55,8 @@ Ring::Ring(float x, float y, float z, float xVel, float yVel, float zVel)
 	this->yVel = yVel;
 	this->zVel = zVel;
 	grabTimer = 60;
+	givesPoints = false;
+	trackingPlayer = false;
 }
 
 void Ring::step()
@@ -93,6 +98,11 @@ void Ring::step()
 				}
 
 				Global::gameRingCount++;
+
+				if (givesPoints)
+				{
+					Global::gameScore += 10;
+				}
 
 				Main_deleteEntity(this);
 				return;
@@ -141,6 +151,28 @@ void Ring::step()
 				if (getY() < -100)
 				{
 					Main_deleteEntity(this);
+				}
+			}
+			else
+			{
+				if (Global::gamePlayer->getShieldMagnet() != nullptr)
+				{
+					Vector3f diff = (*getPosition()) - Global::gamePlayer->getCenterPosition();
+
+					if (diff.lengthSquared() < 60*60)
+					{
+						trackingPlayer = true;
+					}
+
+					if (trackingPlayer)
+					{
+						diff.scale(-0.25f);
+						increasePosition(diff.x, diff.y, diff.z);
+					}
+				}
+				else
+				{
+					trackingPlayer = false;
 				}
 			}
 

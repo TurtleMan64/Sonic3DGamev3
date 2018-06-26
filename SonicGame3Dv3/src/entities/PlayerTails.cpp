@@ -26,6 +26,8 @@
 #include "../particles/particle.h"
 #include "../particles/particleresources.h"
 #include "stage.h"
+#include "shieldmagnet.h"
+#include "shieldgreen.h"
 
 std::list<TexturedModel*> PlayerTails::modelBody;
 std::list<TexturedModel*> PlayerTails::modelHead;
@@ -2156,35 +2158,52 @@ void PlayerTails::takeDamage(Vector3f* damageSource)
 		spindashReleaseTimer = 0;
 		spindashRestartDelay = 0;
 
-		int ringsToScatter = Global::gameRingCount;
-		Global::gameRingCount = 0;
-
-		if (ringsToScatter == 0)
+		if (myShieldGreen != nullptr || myShieldMagnet != nullptr)
 		{
-			die();
+			if (myShieldMagnet != nullptr)
+			{
+				Main_deleteTransparentEntity(myShieldMagnet);
+				myShieldMagnet = nullptr;
+			}
+			if (myShieldGreen != nullptr)
+			{
+				Main_deleteTransparentEntity(myShieldGreen);
+				myShieldGreen = nullptr;
+			}
 		}
 		else
 		{
-			AudioPlayer::play(10, getPosition());
-		}
-		while (ringsToScatter > 0)
-		{
-			float spoutSpd = 3.5f;
-			float anglH = (float)(M_PI * 2 * Maths::random());
-			float anglV = (toRadians(Maths::nextGaussian() * 42 + 90));
+			int ringsToScatter = Global::gameRingCount;
+			Global::gameRingCount = 0;
 
-			float yspd = (spoutSpd*sin(anglV));
-			float hpt = (spoutSpd*cos(anglV));
+			if (ringsToScatter == 0)
+			{
+				die();
+			}
+			else
+			{
+				AudioPlayer::play(10, getPosition());
+			}
 
-			float xspd = (hpt*cos(anglH));
-			float zspd = (hpt*sin(anglH));
+			while (ringsToScatter > 0)
+			{
+				float spoutSpd = 3.5f;
+				float anglH = (float)(M_PI * 2 * Maths::random());
+				float anglV = (toRadians(Maths::nextGaussian() * 42 + 90));
 
-			Ring* ring = new Ring(getX(), getY()+5, getZ(), xspd, yspd, zspd);
-			Global::countNew++;
+				float yspd = (spoutSpd*sin(anglV));
+				float hpt = (spoutSpd*cos(anglV));
 
-			Main_addEntity(ring);
+				float xspd = (hpt*cos(anglH));
+				float zspd = (hpt*sin(anglH));
 
-			ringsToScatter--;
+				Ring* ring = new Ring(getX(), getY()+5, getZ(), xspd, yspd, zspd);
+				Global::countNew++;
+
+				Main_addEntity(ring);
+
+				ringsToScatter--;
+			}
 		}
 	}
 }
@@ -2401,4 +2420,83 @@ bool PlayerTails::isOnGround()
 Vector3f* PlayerTails::getCurrNorm()
 {
 	return &currNorm;
+}
+
+Vector3f PlayerTails::getCenterPosition()
+{
+	float x = getX();
+	float y = getY();
+	float z = getZ();
+	const float r = 5;
+
+	float xrel = xVelGround + xVelAir;
+	float zrel = zVelGround + zVelAir;
+
+	float mySpeed = sqrtf(xrel*xrel + zrel*zrel);
+
+	if (onPlane)
+	{
+		if (mySpeed < 0.01f)
+		{
+			y += r;
+		}
+		else
+		{
+			x += currNorm.x*r;
+			y += currNorm.y*r;
+			z += currNorm.z*r;
+		}
+	}
+	else
+	{
+		if (!isBall &&
+			!isJumping &&
+			!isDropDashing &&
+			!isLightdashing)
+		{
+			y += r;
+		}
+	}
+
+	return Vector3f(x, y, z);
+}
+
+ShieldMagnet* PlayerTails::getShieldMagnet()
+{
+	return myShieldMagnet;
+}
+
+void PlayerTails::setShieldMagnet(ShieldMagnet* newMagnet)
+{
+	if (myShieldMagnet != nullptr)
+	{
+		Main_deleteTransparentEntity(myShieldMagnet);
+		myShieldMagnet = nullptr;
+	}
+	if (myShieldGreen != nullptr)
+	{
+		Main_deleteTransparentEntity(myShieldGreen);
+		myShieldGreen = nullptr;
+	}
+	myShieldMagnet = newMagnet;
+}
+
+ShieldGreen* PlayerTails::getShieldGreen()
+{
+	return myShieldGreen;
+}
+
+void PlayerTails::setShieldGreen(ShieldGreen* newGreen)
+{
+	if (myShieldMagnet != nullptr)
+	{
+		Main_deleteTransparentEntity(myShieldMagnet);
+		myShieldMagnet = nullptr;
+	}
+	if (myShieldGreen != nullptr)
+	{
+		Main_deleteTransparentEntity(myShieldGreen);
+		myShieldGreen = nullptr;
+	}
+	myShieldGreen = newGreen;
 }

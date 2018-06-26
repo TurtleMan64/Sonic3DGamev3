@@ -27,6 +27,8 @@
 #include "../particles/particle.h"
 #include "../particles/particleresources.h"
 #include "stage.h"
+#include "shieldmagnet.h"
+#include "shieldgreen.h"
 
 std::list<TexturedModel*> PlayerSonic::modelBody;
 std::list<TexturedModel*> PlayerSonic::modelHead;
@@ -2123,7 +2125,7 @@ void PlayerSonic::animate()
 		}
 	}
 
-	if (mySpeed > 0.01)
+	if (mySpeed > 0.01f)
 	{
 		if (myBody != nullptr) myBody->setBaseOrientation(&displayPos, diff, yawAngle, pitchAngle, 0);
 		if (PlayerSonic::maniaSonic != nullptr)
@@ -2724,35 +2726,52 @@ void PlayerSonic::takeDamage(Vector3f* damageSource)
 		spindashReleaseTimer = 0;
 		spindashRestartDelay = 0;
 
-		int ringsToScatter = Global::gameRingCount;
-		Global::gameRingCount = 0;
-
-		if (ringsToScatter == 0)
+		if (myShieldGreen != nullptr || myShieldMagnet != nullptr)
 		{
-			die();
+			if (myShieldMagnet != nullptr)
+			{
+				Main_deleteTransparentEntity(myShieldMagnet);
+				myShieldMagnet = nullptr;
+			}
+			if (myShieldGreen != nullptr)
+			{
+				Main_deleteTransparentEntity(myShieldGreen);
+				myShieldGreen = nullptr;
+			}
 		}
 		else
 		{
-			AudioPlayer::play(10, getPosition());
-		}
-		while (ringsToScatter > 0)
-		{
-			float spoutSpd = 3.5f;
-			float anglH = (float)(M_PI * 2 * Maths::random());
-			float anglV = (toRadians(Maths::nextGaussian() * 42 + 90));
+			int ringsToScatter = Global::gameRingCount;
+			Global::gameRingCount = 0;
 
-			float yspd = (spoutSpd*sin(anglV));
-			float hpt = (spoutSpd*cos(anglV));
+			if (ringsToScatter == 0)
+			{
+				die();
+			}
+			else
+			{
+				AudioPlayer::play(10, getPosition());
+			}
 
-			float xspd = (hpt*cos(anglH));
-			float zspd = (hpt*sin(anglH));
+			while (ringsToScatter > 0)
+			{
+				float spoutSpd = 3.5f;
+				float anglH = (float)(M_PI * 2 * Maths::random());
+				float anglV = (toRadians(Maths::nextGaussian() * 42 + 90));
 
-			Ring* ring = new Ring(getX(), getY()+5, getZ(), xspd, yspd, zspd);
-			Global::countNew++;
+				float yspd = (spoutSpd*sin(anglV));
+				float hpt = (spoutSpd*cos(anglV));
 
-			Main_addEntity(ring);
+				float xspd = (hpt*cos(anglH));
+				float zspd = (hpt*sin(anglH));
 
-			ringsToScatter--;
+				Ring* ring = new Ring(getX(), getY()+5, getZ(), xspd, yspd, zspd);
+				Global::countNew++;
+
+				Main_addEntity(ring);
+
+				ringsToScatter--;
+			}
 		}
 	}
 }
@@ -2781,7 +2800,7 @@ void PlayerSonic::rebound(Vector3f* source)
 			}
 			else if (jumpInput) //rebound
 			{
-				yVel = 0.2f + yVel*-1;
+				yVel = 0.2f + yVel*-0.5f;
 				if (yVel < 2)
 				{
 					yVel = 2;
@@ -2789,13 +2808,14 @@ void PlayerSonic::rebound(Vector3f* source)
 			}
 			else //rebound
 			{
-				yVel = yVel*-1;
+				yVel = yVel*-0.5f;
 				if (yVel > 1)
 				{
 					yVel = 1;
 				}
 			}
 			homingAttackTimer = -1;
+			hoverCount = hoverLimit / 2;
 		}
 	}
 }
@@ -2987,4 +3007,85 @@ bool PlayerSonic::isOnGround()
 Vector3f* PlayerSonic::getCurrNorm()
 {
 	return &currNorm;
+}
+
+Vector3f PlayerSonic::getCenterPosition()
+{
+	float x = getX();
+	float y = getY();
+	float z = getZ();
+	const float r = 5;
+
+	float xrel = xVelGround + xVelAir;
+	float zrel = zVelGround + zVelAir;
+
+	float mySpeed = sqrtf(xrel*xrel + zrel*zrel);
+
+	if (onPlane)
+	{
+		if (mySpeed < 0.01f)
+		{
+			y += r;
+		}
+		else
+		{
+			x += currNorm.x*r;
+			y += currNorm.y*r;
+			z += currNorm.z*r;
+		}
+	}
+	else
+	{
+		if (!isBall &&
+			!isJumping &&
+			!isDropDashing &&
+			!isBouncing &&
+			!isLightdashing &&
+			!isStomping)
+		{
+			y += r;
+		}
+	}
+
+	return Vector3f(x, y, z);
+}
+
+ShieldMagnet* PlayerSonic::getShieldMagnet()
+{
+	return myShieldMagnet;
+}
+
+void PlayerSonic::setShieldMagnet(ShieldMagnet* newMagnet)
+{
+	if (myShieldMagnet != nullptr)
+	{
+		Main_deleteTransparentEntity(myShieldMagnet);
+		myShieldMagnet = nullptr;
+	}
+	if (myShieldGreen != nullptr)
+	{
+		Main_deleteTransparentEntity(myShieldGreen);
+		myShieldGreen = nullptr;
+	}
+	myShieldMagnet = newMagnet;
+}
+
+ShieldGreen* PlayerSonic::getShieldGreen()
+{
+	return myShieldGreen;
+}
+
+void PlayerSonic::setShieldGreen(ShieldGreen* newGreen)
+{
+	if (myShieldMagnet != nullptr)
+	{
+		Main_deleteTransparentEntity(myShieldMagnet);
+		myShieldMagnet = nullptr;
+	}
+	if (myShieldGreen != nullptr)
+	{
+		Main_deleteTransparentEntity(myShieldGreen);
+		myShieldGreen = nullptr;
+	}
+	myShieldGreen = newGreen;
 }

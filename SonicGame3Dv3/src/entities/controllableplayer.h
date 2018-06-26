@@ -4,6 +4,9 @@
 #include "entities.h"
 #include "../toolbox/vector.h"
 
+class ShieldMagnet;
+class ShieldGreen;
+
 class ControllablePlayer : public Entity
 {
 	//Functions that every player must be able to handle in some way
@@ -102,5 +105,16 @@ public:
 
 	//Returns the normal of the triangle that the player has collided with
 	virtual Vector3f* getCurrNorm();
+
+	//Returns the center position of where the player is being drawn.
+	virtual Vector3f getCenterPosition();
+
+	virtual ShieldMagnet* getShieldMagnet();
+
+	virtual void setShieldMagnet(ShieldMagnet* newMagnet);
+
+	virtual ShieldGreen* getShieldGreen();
+
+	virtual void setShieldGreen(ShieldGreen* newGreen);
 };
 #endif

@@ -27,6 +27,8 @@
 #include "../particles/particle.h"
 #include "../particles/particleresources.h"
 #include "stage.h"
+#include "shieldmagnet.h"
+#include "shieldgreen.h"
 
 std::list<TexturedModel*> PlayerKnuckles::modelBody;
 std::list<TexturedModel*> PlayerKnuckles::modelHead;
@@ -597,6 +599,7 @@ void PlayerKnuckles::step()
 			{
 				thresholdToUse = smoothClimbTransitionThreshold;
 			}
+
 			if (dotProduct < thresholdToUse)
 			{
 				xVelGround = 0;
@@ -640,6 +643,20 @@ void PlayerKnuckles::step()
 					{
 						currNorm.set(0, 1, 0);
 					}
+				}
+			}
+			else
+			{
+				float speedBefore = sqrtf(xVelGround*xVelGround+zVelGround*zVelGround);
+				Vector3f directionOG(xVel, yVel, zVel);
+				Vector3f newDirection = projectOntoPlane(&directionOG, &(triCol->normal));
+				if (newDirection.lengthSquared() != 0)
+				{
+					newDirection.normalize();
+					newDirection.scale(speedBefore);
+					Vector3f newSpeeds = calculatePlaneSpeed(newDirection.x, newDirection.y, newDirection.z, &(triCol->normal));
+					xVelGround = newSpeeds.x;
+					zVelGround = newSpeeds.z;
 				}
 			}
 			onPlane = true;
@@ -2593,35 +2610,52 @@ void PlayerKnuckles::takeDamage(Vector3f* damageSource)
 		spindashReleaseTimer = 0;
 		spindashRestartDelay = 0;
 
-		int ringsToScatter = Global::gameRingCount;
-		Global::gameRingCount = 0;
-
-		if (ringsToScatter == 0)
+		if (myShieldGreen != nullptr || myShieldMagnet != nullptr)
 		{
-			die();
+			if (myShieldMagnet != nullptr)
+			{
+				Main_deleteTransparentEntity(myShieldMagnet);
+				myShieldMagnet = nullptr;
+			}
+			if (myShieldGreen != nullptr)
+			{
+				Main_deleteTransparentEntity(myShieldGreen);
+				myShieldGreen = nullptr;
+			}
 		}
 		else
 		{
-			AudioPlayer::play(10, getPosition());
-		}
-		while (ringsToScatter > 0)
-		{
-			float spoutSpd = 3.5f;
-			float anglH = (float)(M_PI * 2 * Maths::random());
-			float anglV = (toRadians(Maths::nextGaussian() * 42 + 90));
+			int ringsToScatter = Global::gameRingCount;
+			Global::gameRingCount = 0;
 
-			float yspd = spoutSpd*sinf(anglV);
-			float hpt =  spoutSpd*cosf(anglV);
+			if (ringsToScatter == 0)
+			{
+				die();
+			}
+			else
+			{
+				AudioPlayer::play(10, getPosition());
+			}
 
-			float xspd = hpt*cosf(anglH);
-			float zspd = hpt*sinf(anglH);
+			while (ringsToScatter > 0)
+			{
+				float spoutSpd = 3.5f;
+				float anglH = (float)(M_PI * 2 * Maths::random());
+				float anglV = (toRadians(Maths::nextGaussian() * 42 + 90));
 
-			Ring* ring = new Ring(getX(), getY()+5, getZ(), xspd, yspd, zspd);
-			Global::countNew++;
+				float yspd = (spoutSpd*sin(anglV));
+				float hpt = (spoutSpd*cos(anglV));
 
-			Main_addEntity(ring);
+				float xspd = (hpt*cos(anglH));
+				float zspd = (hpt*sin(anglH));
 
-			ringsToScatter--;
+				Ring* ring = new Ring(getX(), getY()+5, getZ(), xspd, yspd, zspd);
+				Global::countNew++;
+
+				Main_addEntity(ring);
+
+				ringsToScatter--;
+			}
 		}
 	}
 }
@@ -2829,4 +2863,85 @@ bool PlayerKnuckles::isOnGround()
 Vector3f* PlayerKnuckles::getCurrNorm()
 {
 	return &currNorm;
+}
+
+Vector3f PlayerKnuckles::getCenterPosition()
+{
+	float x = getX();
+	float y = getY();
+	float z = getZ();
+	const float r = 5;
+
+	float xrel = xVelGround + xVelAir;
+	float zrel = zVelGround + zVelAir;
+
+	float mySpeed = sqrtf(xrel*xrel + zrel*zrel);
+
+	if (onPlane)
+	{
+		if (mySpeed < 0.01f)
+		{
+			y += r;
+		}
+		else
+		{
+			x += currNorm.x*r;
+			y += currNorm.y*r;
+			z += currNorm.z*r;
+		}
+	}
+	else
+	{
+		if (!isBall &&
+			!isJumping &&
+			!isDropDashing &&
+			!isBouncing &&
+			!isLightdashing &&
+			!isStomping)
+		{
+			y += r;
+		}
+	}
+
+	return Vector3f(x, y, z);
+}
+
+ShieldMagnet* PlayerKnuckles::getShieldMagnet()
+{
+	return myShieldMagnet;
+}
+
+void PlayerKnuckles::setShieldMagnet(ShieldMagnet* newMagnet)
+{
+	if (myShieldMagnet != nullptr)
+	{
+		Main_deleteTransparentEntity(myShieldMagnet);
+		myShieldMagnet = nullptr;
+	}
+	if (myShieldGreen != nullptr)
+	{
+		Main_deleteTransparentEntity(myShieldGreen);
+		myShieldGreen = nullptr;
+	}
+	myShieldMagnet = newMagnet;
+}
+
+ShieldGreen* PlayerKnuckles::getShieldGreen()
+{
+	return myShieldGreen;
+}
+
+void PlayerKnuckles::setShieldGreen(ShieldGreen* newGreen)
+{
+	if (myShieldMagnet != nullptr)
+	{
+		Main_deleteTransparentEntity(myShieldMagnet);
+		myShieldMagnet = nullptr;
+	}
+	if (myShieldGreen != nullptr)
+	{
+		Main_deleteTransparentEntity(myShieldGreen);
+		myShieldGreen = nullptr;
+	}
+	myShieldGreen = newGreen;
 }

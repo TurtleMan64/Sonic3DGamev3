@@ -12,6 +12,8 @@ ParticleTexture* ParticleResources::textureSparkleYellow = nullptr;
 ParticleTexture* ParticleResources::textureSparkleGreen = nullptr;
 ParticleTexture* ParticleResources::textureSparkleRed = nullptr;
 ParticleTexture* ParticleResources::textureSparkleBlue = nullptr;
+ParticleTexture* ParticleResources::textureSparkleLightBlue = nullptr;
+ParticleTexture* ParticleResources::textureSparkleWhite = nullptr;
 ParticleTexture* ParticleResources::textureWaterDrop = nullptr;
 ParticleTexture* ParticleResources::textureLightBlueTrail = nullptr;
 ParticleTexture* ParticleResources::textureBlueTrail = nullptr;
@@ -44,6 +46,8 @@ void ParticleResources::loadParticles()
 	textureSparkleGreen      = new ParticleTexture(Loader_loadTexture("res/Models/Particle/SparkleGreen.png"), 1, 1.0f, 1);
 	textureSparkleRed        = new ParticleTexture(Loader_loadTexture("res/Models/Particle/SparkleRed.png"), 1, 1.0f, 1);
 	textureSparkleBlue       = new ParticleTexture(Loader_loadTexture("res/Models/Particle/SparkleBlue.png"), 1, 1.0f, 1);
+	textureSparkleLightBlue  = new ParticleTexture(Loader_loadTexture("res/Models/Particle/SparkleLightBlue.png"), 1, 1.0f, 1);
+	textureSparkleWhite      = new ParticleTexture(Loader_loadTexture("res/Models/Particle/SparkleWhite.png"), 1, 1.0f, 1);
 	textureWaterDrop         = new ParticleTexture(Loader_loadTexture("res/Models/Particle/WaterDrop.png"), 1, 1, 0);
 	textureLightBlueTrail    = new ParticleTexture(Loader_loadTexture("res/Models/Particle/SpTrailLightBlue.png"), 1, 0.1f, 1);
 	textureBlueTrail         = new ParticleTexture(Loader_loadTexture("res/Models/Particle/SpTrailBlue.png"), 1, 0.1f, 1);
@@ -66,5 +70,5 @@ void ParticleResources::loadParticles()
 	textureBlackFadeOutAndIn = new ParticleTexture(Loader_loadTexture("res/Models/Particle/BlackFadeOutAndInAtlas.png"), 2, 1.0f, 0);
 	textureInWater           = new ParticleTexture(Loader_loadTexture("res/Models/Particle/InWater.png"), 1, 0.1f, 1);
 	textureBlueLine          = new ParticleTexture(Loader_loadTexture("res/Models/Particle/BlueLine.png"), 1, 1.0f, 1);
-	Global::countNew += 30;
+	Global::countNew += 32;
 }

@@ -165,9 +165,6 @@ bool Global::unlockedDage4 = true;
 bool Global::unlockedManiaSonic = true;
 bool Global::unlockedAmy = true;
 
-std::default_random_engine* Global::generator = new std::default_random_engine;
-std::normal_distribution<double>* Global::distribution = new std::normal_distribution<double>(0.0, 1.0);
-
 void increaseProcessPriority();
 
 void doListenThread();
@@ -570,6 +567,12 @@ int main()
 
 		if (Global::finishStageTimer >= 0)
 		{
+			if (Global::finishStageTimer == 0)
+			{
+				//Add score based on timer
+				Global::gameScore += std::max(0, 11200 - 20*(GuiManager::getMinutes()*60 + GuiManager::getSeconds()));
+			}
+
 			Global::finishStageTimer++;
 
 			if (Global::finishStageTimer > 460)

@@ -101,10 +101,11 @@
 #include "../entities/GreenHillZone/ghflower.h"
 #include "../entities/rhinotank.h"
 #include "../entities/motobug.h"
+#include "../entities/npc.h"
 
 float toFloat(char* input);
 int toInt(char* input);
-void processLine(char** data);
+void processLine(char** data, int dataLength);
 void freeAllStaticModels();
 
 void LevelLoader_loadTitle()
@@ -493,7 +494,7 @@ void LevelLoader_loadLevel(std::string levelFilename)
 		{
 			Input_pollInputs();
 
-			processLine(lineSplit);
+			processLine(lineSplit, splitLength);
 		}
 		free(lineSplit);
 	}
@@ -536,7 +537,7 @@ void LevelLoader_loadLevel(std::string levelFilename)
 }
 
 
-void processLine(char** dat)
+void processLine(char** dat, int datLength)
 {
 	if (dat[0][0] == '#')
 	{
@@ -932,6 +933,25 @@ void processLine(char** dat)
 				toFloat(dat[6]), toInt(dat[7]));                   //power, time
 			Global::countNew++;
 			Main_addEntity(ramp);
+			return;
+		}
+
+		case 32: //NPC
+		{
+			NPC::loadStaticModels();
+
+			std::string message = "";
+			for (int i = 5; i < datLength-1; i++)
+			{
+				message = message + dat[i] + " ";
+			}
+			message = message + dat[datLength-1];
+
+			NPC* npc = new NPC(
+				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
+				toFloat(dat[4]), message);
+			Global::countNew++;
+			Main_addEntity(npc);
 			return;
 		}
 
@@ -1612,4 +1632,5 @@ void freeAllStaticModels()
 	GH_Flower::deleteStaticModels();
 	RhinoTank::deleteStaticModels();
 	MotoBug::deleteStaticModels();
+	NPC::deleteStaticModels();
 }

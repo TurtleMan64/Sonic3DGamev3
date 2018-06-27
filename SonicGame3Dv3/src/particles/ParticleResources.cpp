@@ -58,10 +58,10 @@ void ParticleResources::loadParticles()
 	textureOrangeTrail       = new ParticleTexture(Loader_loadTexture("res/Models/Particle/SpTrailOrange.png"), 1, 0.3f, 1);
 	textureRedTrail          = new ParticleTexture(Loader_loadTexture("res/Models/Particle/SpTrailRed.png"), 1, 0.3f, 1);
 	textureDust              = new ParticleTexture(Loader_loadTexture("res/Models/Particle/DustAtlas.png"), 4, 0.2f, 0);
-	textureSplash            = new ParticleTexture(Loader_loadTexture("res/Models/Particle/SplashAtlas.png"), 4, 0.6f, 0);
-	textureBubble            = new ParticleTexture(Loader_loadTexture("res/Models/Particle/BubbleInverseAtlas.png"), 4, 0.6f, 0);
-	textureExplosion1        = new ParticleTexture(Loader_loadTexture("res/Models/Particle/Explosion1Atlas.png"), 4, 0.8f, 0);
-	textureExplosion2        = new ParticleTexture(Loader_loadTexture("res/Models/Particle/Explosion2Atlas.png"), 4, 0.8f, 0);
+	textureSplash            = new ParticleTexture(Loader_loadTextureNoInterpolation("res/Models/Particle/SplashAtlas.png"), 4, 0.6f, 0);
+	textureBubble            = new ParticleTexture(Loader_loadTextureNoInterpolation("res/Models/Particle/BubbleInverseAtlas.png"), 4, 0.6f, 0);
+	textureExplosion1        = new ParticleTexture(Loader_loadTextureNoInterpolation("res/Models/Particle/Explosion1Atlas.png"), 4, 0.8f, 0);
+	textureExplosion2        = new ParticleTexture(Loader_loadTextureNoInterpolation("res/Models/Particle/Explosion2Atlas.png"), 4, 0.8f, 0);
 	textureBlackFade         = new ParticleTexture(Loader_loadTexture("res/Models/Particle/BlackFadeAtlas.png"), 2, 1.0f, 0);
 	textureBlackFadeOut      = new ParticleTexture(Loader_loadTexture("res/Models/Particle/BlackFadeOutAtlas.png"), 2, 1.0f, 0);
 	textureTear1             = new ParticleTexture(Loader_loadTexture("res/Models/Particle/Tear1.png"), 1, 1.0f, 0);

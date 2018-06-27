@@ -63,6 +63,10 @@ void AudioPlayer::loadSoundEffects()
 	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/General/MenuBleep.ogg"));            //36
 	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/General/MenuWoosh.ogg"));            //37
 	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/General/MenuAccept.ogg"));           //38
+	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/Snowhead/BabyGoron_Cry1.ogg"));      //39
+	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/Snowhead/BabyGoron_Cry2.ogg"));      //40
+	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/Snowhead/BabyGoron_Cry3.ogg"));      //41
+	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/Snowhead/BabyGoron_Doze.ogg"));      //42
 }
 
 void AudioPlayer::loadBGM(char* fileName)

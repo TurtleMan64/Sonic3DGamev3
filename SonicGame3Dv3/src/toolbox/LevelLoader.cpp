@@ -102,6 +102,8 @@
 #include "../entities/rhinotank.h"
 #include "../entities/motobug.h"
 #include "../entities/npc.h"
+#include "../entities/Snowhead/shdgoronelder.h"
+#include "../entities/Snowhead/shdgoronkid.h"
 
 float toFloat(char* input);
 int toInt(char* input);
@@ -965,6 +967,35 @@ void processLine(char** dat, int datLength)
 			return;
 		}
 
+		case 35: //Kid Goron
+		{
+			SHD_GoronKid::loadStaticModels();
+			SHD_GoronKid* goron = new SHD_GoronKid(
+				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3])); //position
+			Global::countNew++;
+			Main_addEntity(goron);
+			return;
+		}
+
+		case 36: //Elder Goron
+		{
+			SHD_GoronElder::loadStaticModels();
+
+			std::string message = "";
+			for (int i = 5; i < datLength-1; i++)
+			{
+				message = message + dat[i] + " ";
+			}
+			message = message + dat[datLength-1];
+
+			SHD_GoronElder* goron = new SHD_GoronElder(
+				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
+				toFloat(dat[4]), message);
+			Global::countNew++;
+			Main_addEntity(goron);
+			return;
+		}
+
 		case 37: //Low quality water
 		{
 			if (Global::useHighQualityWater == true)
@@ -1633,4 +1664,6 @@ void freeAllStaticModels()
 	RhinoTank::deleteStaticModels();
 	MotoBug::deleteStaticModels();
 	NPC::deleteStaticModels();
+	SHD_GoronElder::deleteStaticModels();
+	SHD_GoronKid::deleteStaticModels();
 }

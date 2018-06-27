@@ -60,6 +60,8 @@ NPC::NPC(float x, float y, float z, float rotY, std::string message)
 		myMessage2 = msg[1];
 	}
 
+	free(msg);
+
 	found = false;
 }
 

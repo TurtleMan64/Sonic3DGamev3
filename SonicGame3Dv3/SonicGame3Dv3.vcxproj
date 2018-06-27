@@ -97,6 +97,8 @@
     <ClCompile Include="src\entities\ShieldGreen.cpp" />
     <ClCompile Include="src\entities\ShieldMagnet.cpp" />
     <ClCompile Include="src\entities\SkySphere.cpp" />
+    <ClCompile Include="src\entities\Snowhead\SHD_GoronElder.cpp" />
+    <ClCompile Include="src\entities\Snowhead\SHD_GoronKid.cpp" />
     <ClCompile Include="src\entities\Snowhead\SHD_StageTransparent.cpp" />
     <ClCompile Include="src\entities\SoundEmitter.cpp" />
     <ClCompile Include="src\entities\SpeedHighway\SH_Cone.cpp" />
@@ -267,6 +269,8 @@
     <ClInclude Include="src\entities\shieldgreen.h" />
     <ClInclude Include="src\entities\shieldmagnet.h" />
     <ClInclude Include="src\entities\skysphere.h" />
+    <ClInclude Include="src\entities\Snowhead\shdgoronelder.h" />
+    <ClInclude Include="src\entities\Snowhead\shdgoronkid.h" />
     <ClInclude Include="src\entities\Snowhead\shdstagetransparent.h" />
     <ClInclude Include="src\entities\soundemitter.h" />
     <ClInclude Include="src\entities\SpeedHighway\shcone.h" />

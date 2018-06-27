@@ -66,8 +66,9 @@ bool MetaFile::processNextLine()
 			//std::fprintf(stdout, "'%s' '%s'\n", vp0.c_str(), vp1.c_str());
 			values[vp0] = vp1;
 		}
-
+		free(lineSplit2);
 	}
+	free(lineSplit1);
 
 	return true;
 }
@@ -95,6 +96,8 @@ std::vector<int> MetaFile::getValuesOfVariable(std::string variable)
 		std::string val = numbers[i];
 		actualValues.push_back(std::stoi(val));
 	}
+	free(numbers);
+
 	return actualValues;
 }
 

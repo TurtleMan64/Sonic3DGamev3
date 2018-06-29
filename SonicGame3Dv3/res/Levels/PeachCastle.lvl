@@ -28,3 +28,6 @@ Collision 8
 
 # Lost Chao
 81 4431.067 925.45 3536.79 0
+
+# Transparent
+72 res/Models/PeachCastleGalaxy/ Water.obj trans

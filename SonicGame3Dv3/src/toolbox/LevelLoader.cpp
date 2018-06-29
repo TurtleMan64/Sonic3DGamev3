@@ -943,7 +943,7 @@ void processLine(char** dat, int datLength)
 			NPC::loadStaticModels();
 
 			std::string message = "";
-			for (int i = 5; i < datLength-1; i++)
+			for (int i = 6; i < datLength-1; i++)
 			{
 				message = message + dat[i] + " ";
 			}
@@ -951,7 +951,7 @@ void processLine(char** dat, int datLength)
 
 			NPC* npc = new NPC(
 				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
-				toFloat(dat[4]), message);
+				toFloat(dat[4]), toInt(dat[5]), message);
 			Global::countNew++;
 			Main_addEntity(npc);
 			return;

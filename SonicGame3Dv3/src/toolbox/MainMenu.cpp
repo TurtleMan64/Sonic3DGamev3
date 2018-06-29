@@ -59,17 +59,19 @@ GUIText* MainMenu::textItem2 = nullptr;
 GUIText* MainMenu::textItem3 = nullptr;
 GUIText* MainMenu::textItem4 = nullptr;
 
-GLuint MainMenu::textureParallelogram             = (GLuint)-1;
-GLuint MainMenu::textureParallelogramBackdrop     = (GLuint)-1;
-GLuint MainMenu::textureParallelogramHalf         = (GLuint)-1;
-GLuint MainMenu::textureParallelogramHalfBackdrop = (GLuint)-1;
-GLuint MainMenu::textureRankA					  = (GLuint)-1;
-GLuint MainMenu::textureRankB					  = (GLuint)-1;
-GLuint MainMenu::textureRankC					  = (GLuint)-1;
-GLuint MainMenu::textureRankD					  = (GLuint)-1;
-GLuint MainMenu::textureRankE					  = (GLuint)-1;
-GLuint MainMenu::textureRankBlank				  = (GLuint)-1;
-GLuint MainMenu::textureMissionSelect			  = (GLuint)-1;
+GLuint MainMenu::textureParallelogram              = (GLuint)-1;
+GLuint MainMenu::textureParallelogramBackdrop      = (GLuint)-1;
+GLuint MainMenu::textureParallelogramHalf          = (GLuint)-1;
+GLuint MainMenu::textureParallelogramHalfBackdrop  = (GLuint)-1;
+GLuint MainMenu::textureParallelogramHalf2         = (GLuint)-1;
+GLuint MainMenu::textureParallelogramHalf2Backdrop = (GLuint)-1;
+GLuint MainMenu::textureRankA					   = (GLuint)-1;
+GLuint MainMenu::textureRankB					   = (GLuint)-1;
+GLuint MainMenu::textureRankC					   = (GLuint)-1;
+GLuint MainMenu::textureRankD					   = (GLuint)-1;
+GLuint MainMenu::textureRankE					   = (GLuint)-1;
+GLuint MainMenu::textureRankBlank				   = (GLuint)-1;
+GLuint MainMenu::textureMissionSelect			   = (GLuint)-1;
 
 GuiTexture* MainMenu::item1 = nullptr;
 GuiTexture* MainMenu::item2 = nullptr;
@@ -121,8 +123,15 @@ GuiTexture* MainMenu::itemMissionBackdrop18 = nullptr;
 GuiTexture* MainMenu::itemMissionBackdrop19 = nullptr;
 GuiTexture* MainMenu::itemMissionBackdrop20 = nullptr;
 
-GuiTexture* MainMenu::itemRankDisplay = nullptr;
-GuiTexture* MainMenu::itemRankDisplayBackdrop = nullptr;
+GuiTexture* MainMenu::itemRankDisplay          = nullptr;
+GuiTexture* MainMenu::itemRankDisplayBackdrop  = nullptr;
+GuiTexture* MainMenu::itemTimeDisplay          = nullptr;
+GuiTexture* MainMenu::itemTimeDisplayBackdrop  = nullptr;
+GuiTexture* MainMenu::itemScoreDisplay         = nullptr;
+GuiTexture* MainMenu::itemScoreDisplayBackdrop = nullptr;
+
+GUIText* MainMenu::textBestScore = nullptr;
+GUIText* MainMenu::textBestTime  = nullptr;
 
 GuiTexture* MainMenu::rankM1 = nullptr;
 GuiTexture* MainMenu::rankM2 = nullptr;
@@ -152,17 +161,19 @@ void MainMenu::init()
 
 	MainMenu::titleCardTextTimer = 0;
 
-	textureParallelogram             = Loader_loadTextureNoInterpolation("res/Images/MainMenu/Parallelogram.png");
-	textureParallelogramBackdrop     = Loader_loadTextureNoInterpolation("res/Images/MainMenu/ParallelogramBackdrop.png");
-	textureParallelogramHalf         = Loader_loadTextureNoInterpolation("res/Images/MainMenu/ParallelogramHalf.png");
-	textureParallelogramHalfBackdrop = Loader_loadTextureNoInterpolation("res/Images/MainMenu/ParallelogramHalfBackdrop.png");
-	textureRankA					 = Loader_loadTextureNoInterpolation("res/Images/MainMenu/RankA.png");
-	textureRankB					 = Loader_loadTextureNoInterpolation("res/Images/MainMenu/RankB.png");
-	textureRankC					 = Loader_loadTextureNoInterpolation("res/Images/MainMenu/RankC.png");
-	textureRankD					 = Loader_loadTextureNoInterpolation("res/Images/MainMenu/RankD.png");
-	textureRankE					 = Loader_loadTextureNoInterpolation("res/Images/MainMenu/RankE.png");
-	textureRankBlank				 = Loader_loadTextureNoInterpolation("res/Images/MainMenu/NoRank.png");
-	textureMissionSelect			 = Loader_loadTextureNoInterpolation("res/Images/MainMenu/MissionSelect.png");
+	textureParallelogram              = Loader_loadTextureNoInterpolation("res/Images/MainMenu/Parallelogram.png");
+	textureParallelogramBackdrop      = Loader_loadTextureNoInterpolation("res/Images/MainMenu/ParallelogramBackdrop.png");
+	textureParallelogramHalf          = Loader_loadTextureNoInterpolation("res/Images/MainMenu/ParallelogramHalf.png");
+	textureParallelogramHalfBackdrop  = Loader_loadTextureNoInterpolation("res/Images/MainMenu/ParallelogramHalfBackdrop.png");
+	textureParallelogramHalf2         = Loader_loadTextureNoInterpolation("res/Images/MainMenu/ParallelogramHalf2.png");
+	textureParallelogramHalf2Backdrop = Loader_loadTextureNoInterpolation("res/Images/MainMenu/ParallelogramHalf2Backdrop.png");
+	textureRankA					  = Loader_loadTextureNoInterpolation("res/Images/MainMenu/RankA.png");
+	textureRankB					  = Loader_loadTextureNoInterpolation("res/Images/MainMenu/RankB.png");
+	textureRankC					  = Loader_loadTextureNoInterpolation("res/Images/MainMenu/RankC.png");
+	textureRankD					  = Loader_loadTextureNoInterpolation("res/Images/MainMenu/RankD.png");
+	textureRankE					  = Loader_loadTextureNoInterpolation("res/Images/MainMenu/RankE.png");
+	textureRankBlank				  = Loader_loadTextureNoInterpolation("res/Images/MainMenu/NoRank.png");
+	textureMissionSelect			  = Loader_loadTextureNoInterpolation("res/Images/MainMenu/MissionSelect.png");
 
 	MainMenu::loadResources();
 
@@ -237,8 +248,15 @@ void MainMenu::loadResources()
 	itemMissionBackdrop19 = new GuiTexture(textureParallelogramHalfBackdrop, 0.0f, 0.0f, 1024*px, 64*py, 0); Global::countNew++;
 	itemMissionBackdrop20 = new GuiTexture(textureParallelogramHalfBackdrop, 0.0f, 0.0f, 1024*px, 64*py, 0); Global::countNew++;
 
-	itemRankDisplay = new GuiTexture(textureParallelogram, 0.75f, 0.5f, 512*px, 64*py, 0); Global::countNew++;
-	itemRankDisplayBackdrop = new GuiTexture(textureParallelogramBackdrop, 0.75f+8*px, 0.5f+6*py, 512*px, 64*py, 0); Global::countNew++;
+	itemRankDisplay          = new GuiTexture(textureParallelogram,              0.75f,             0.5f,        512*px,  64*py, 0); Global::countNew++;
+	itemRankDisplayBackdrop  = new GuiTexture(textureParallelogramBackdrop,      0.75f+8*px,        0.5f+6*py,   512*px,  64*py, 0); Global::countNew++;
+	itemTimeDisplay          = new GuiTexture(textureParallelogramHalf2,         0.75f+256*px,      0.5f+128*py, 1024*px, 64*py, 0); Global::countNew++;
+	itemTimeDisplayBackdrop  = new GuiTexture(textureParallelogramHalf2Backdrop, 0.75f+256*px+8*px, 0.5f+134*py, 1024*px, 64*py, 0); Global::countNew++;
+	itemScoreDisplay         = new GuiTexture(textureParallelogramHalf2,         0.75f+256*px,      0.5f+256*py, 1024*px, 64*py, 0); Global::countNew++;
+	itemScoreDisplayBackdrop = new GuiTexture(textureParallelogramHalf2Backdrop, 0.75f+256*px+8*px, 0.5f+262*py, 1024*px, 64*py, 0); Global::countNew++;
+
+	textBestScore = new GUIText("SCORE:",      2.0f, font, 0.75f-192*px, 0.5f+128*py-0.025f, 1-(0.75f-192*px), false, false, true); Global::countNew++;
+	textBestTime  = new GUIText("TIME:",       2.0f, font, 0.75f-192*px, 0.5f+256*py-0.025f, 1-(0.75f-192*px), false, false, true); Global::countNew++;
 
 	rankM1 = new GuiTexture(textureRankA, 0.75f-83*px, 0.5f, 64*px, 64*py, 0); Global::countNew++;
 	rankM2 = new GuiTexture(textureRankB, 0.75f-28*px, 0.5f, 64*px, 64*py, 0); Global::countNew++;
@@ -357,8 +375,15 @@ void MainMenu::unloadResources()
 	delete itemMissionBackdrop19; Global::countDelete++; itemMissionBackdrop19 = nullptr;
 	delete itemMissionBackdrop20; Global::countDelete++; itemMissionBackdrop20 = nullptr;
 
-	delete itemRankDisplay; Global::countDelete++; itemRankDisplay = nullptr;
-	delete itemRankDisplayBackdrop; Global::countDelete++; itemRankDisplayBackdrop = nullptr;
+	delete itemRankDisplay;          Global::countDelete++; itemRankDisplay          = nullptr;
+	delete itemRankDisplayBackdrop;  Global::countDelete++; itemRankDisplayBackdrop  = nullptr;
+	delete itemTimeDisplay;          Global::countDelete++; itemTimeDisplay          = nullptr;
+	delete itemTimeDisplayBackdrop;  Global::countDelete++; itemTimeDisplayBackdrop  = nullptr;
+	delete itemScoreDisplay;         Global::countDelete++; itemScoreDisplay         = nullptr;
+	delete itemScoreDisplayBackdrop; Global::countDelete++; itemScoreDisplayBackdrop = nullptr;
+
+	textBestScore->deleteMe(); delete textBestScore; Global::countDelete++; textBestScore = nullptr;
+	textBestTime ->deleteMe(); delete textBestTime;  Global::countDelete++; textBestTime  = nullptr;
 
 	delete rankM1; Global::countDelete++; rankM1 = nullptr;
 	delete rankM2; Global::countDelete++; rankM2 = nullptr;
@@ -529,6 +554,10 @@ void MainMenu::selectMenuMission(int newSelection)
 
 	GuiManager::addGuiToRender(itemRankDisplay);
 	GuiManager::addGuiToRender(itemRankDisplayBackdrop);
+	GuiManager::addGuiToRender(itemTimeDisplay);
+	GuiManager::addGuiToRender(itemTimeDisplayBackdrop);
+	GuiManager::addGuiToRender(itemScoreDisplay);
+	GuiManager::addGuiToRender(itemScoreDisplayBackdrop);
 
 	int numMissions = Global::gameLevelData[newSelection].numMissions;
 	switch (numMissions)
@@ -544,9 +573,9 @@ void MainMenu::selectMenuMission(int newSelection)
 	{
 		std::string rank = "";
 		rankM4->setTexture(textureRankBlank);
-		if (Global::gameSaveData.find(Global::gameLevelData[newSelection].displayName+"_M4") != Global::gameSaveData.end())
+		if (Global::gameSaveData.find(Global::gameLevelData[newSelection].displayName+"_M4_RANK") != Global::gameSaveData.end())
 		{
-			rank = Global::gameSaveData[Global::gameLevelData[newSelection].displayName+"_M4"];
+			rank = Global::gameSaveData[Global::gameLevelData[newSelection].displayName+"_M4_RANK"];
 			if (rank == "A") rankM4->setTexture(textureRankA);
 			if (rank == "B") rankM4->setTexture(textureRankB);
 			if (rank == "C") rankM4->setTexture(textureRankC);
@@ -558,9 +587,9 @@ void MainMenu::selectMenuMission(int newSelection)
 	{
 		std::string rank = "";
 		rankM3->setTexture(textureRankBlank);
-		if (Global::gameSaveData.find(Global::gameLevelData[newSelection].displayName+"_M3") != Global::gameSaveData.end())
+		if (Global::gameSaveData.find(Global::gameLevelData[newSelection].displayName+"_M3_RANK") != Global::gameSaveData.end())
 		{
-			rank = Global::gameSaveData[Global::gameLevelData[newSelection].displayName+"_M3"];
+			rank = Global::gameSaveData[Global::gameLevelData[newSelection].displayName+"_M3_RANK"];
 			if (rank == "A") rankM3->setTexture(textureRankA);
 			if (rank == "B") rankM3->setTexture(textureRankB);
 			if (rank == "C") rankM3->setTexture(textureRankC);
@@ -572,9 +601,9 @@ void MainMenu::selectMenuMission(int newSelection)
 	{
 		std::string rank = "";
 		rankM2->setTexture(textureRankBlank);
-		if (Global::gameSaveData.find(Global::gameLevelData[newSelection].displayName+"_M2") != Global::gameSaveData.end())
+		if (Global::gameSaveData.find(Global::gameLevelData[newSelection].displayName+"_M2_RANK") != Global::gameSaveData.end())
 		{
-			rank = Global::gameSaveData[Global::gameLevelData[newSelection].displayName+"_M2"];
+			rank = Global::gameSaveData[Global::gameLevelData[newSelection].displayName+"_M2_RANK"];
 			if (rank == "A") rankM2->setTexture(textureRankA);
 			if (rank == "B") rankM2->setTexture(textureRankB);
 			if (rank == "C") rankM2->setTexture(textureRankC);
@@ -586,9 +615,9 @@ void MainMenu::selectMenuMission(int newSelection)
 	{
 		std::string rank = "";
 		rankM1->setTexture(textureRankBlank);
-		if (Global::gameSaveData.find(Global::gameLevelData[newSelection].displayName+"_M1") != Global::gameSaveData.end())
+		if (Global::gameSaveData.find(Global::gameLevelData[newSelection].displayName+"_M1_RANK") != Global::gameSaveData.end())
 		{
-			rank = Global::gameSaveData[Global::gameLevelData[newSelection].displayName+"_M1"];
+			rank = Global::gameSaveData[Global::gameLevelData[newSelection].displayName+"_M1_RANK"];
 			if (rank == "A") rankM1->setTexture(textureRankA);
 			if (rank == "B") rankM1->setTexture(textureRankB);
 			if (rank == "C") rankM1->setTexture(textureRankC);
@@ -626,6 +655,8 @@ void MainMenu::selectMenuMission(int newSelection)
 
 	menuSelectionID = newSelection;
 
+	MainMenu::updateBestDisplay(newSelection);
+
 	textItem1->setVisibility(false);
 	textItem2->setVisibility(false);
 	textItem3->setVisibility(false);
@@ -651,6 +682,9 @@ void MainMenu::selectMenuMission(int newSelection)
 	textMission18->setVisibility(true);
 	textMission19->setVisibility(true);
 	textMission20->setVisibility(true);
+
+	textBestScore->setVisibility(true);
+	textBestTime ->setVisibility(true);
 
 	AudioPlayer::play(36, Global::gameCamera->getFadePosition1());
 }
@@ -699,6 +733,9 @@ void MainMenu::selectMenuRoot(int newSelection)
 	textMission18->setVisibility(false);
 	textMission19->setVisibility(false);
 	textMission20->setVisibility(false);
+
+	textBestScore->setVisibility(false);
+	textBestTime ->setVisibility(false);
 
 	AudioPlayer::play(36, Global::gameCamera->getFadePosition1());
 }
@@ -886,6 +923,7 @@ void MainMenu::step()
 				{
 					Global::gameMissionNumber--;
 					missionSelect->setX(0.75f-83*px+(Global::gameMissionNumber*55)*px);
+					MainMenu::updateBestDisplay(menuSelectionID);
 					AudioPlayer::play(37, Global::gameCamera->getFadePosition1());
 				}
 			}
@@ -896,6 +934,7 @@ void MainMenu::step()
 				{
 					Global::gameMissionNumber++;
 					missionSelect->setX(0.75f-83*px+(Global::gameMissionNumber*55)*px);
+					MainMenu::updateBestDisplay(menuSelectionID);
 					AudioPlayer::play(37, Global::gameCamera->getFadePosition1());
 				}
 			}
@@ -983,4 +1022,74 @@ void MainMenu::createTitleCard()
 	textTitleCardMissionDescription = new GUIText(Global::gameMissionDescription, 2.0f, font, 0.0f, 0.8f, 1.0f, true, false, true); Global::countNew++;
 
 	MainMenu::titleCardTextTimer = 3;
+}
+
+std::string MainMenu::convertFramesToTime(int frames)
+{
+	int min = frames/3600;
+	int sec = (frames/60) % 60;
+	int cen = frames % 60;
+
+	std::string partMin = std::to_string(min);
+	if (min < 10)
+	{
+		partMin = "0" + std::to_string(min);
+	}
+	std::string partSec = std::to_string(sec);
+	if (sec < 10)
+	{
+		partSec = "0" + std::to_string(sec);
+	}
+	std::string partCen = std::to_string(((cen * 100) / 60));
+	if ((cen * 100) / 60 < 10)
+	{
+		partCen = "0" + std::to_string(((cen * 100) / 60));
+	}
+	std::string timer = partMin + ":" + partSec + "." + partCen;
+
+	return timer;
+}
+
+void MainMenu::updateBestDisplay(int levelID)
+{
+	extern unsigned int SCR_WIDTH;
+	extern unsigned int SCR_HEIGHT;
+	float px = 1.0f/(SCR_WIDTH);  //1 pixel in x dimension
+	float py = 1.0f/(SCR_HEIGHT); //1 pixel in y dimension
+
+	std::string missionTimeString  = "ERROR";
+	std::string missionScoreString = "ERROR";
+	switch (Global::gameMissionNumber)
+	{
+		case 0: missionTimeString = "_M1_TIME"; missionScoreString = "_M1_SCORE"; break;
+		case 1: missionTimeString = "_M2_TIME"; missionScoreString = "_M2_SCORE"; break;
+		case 2: missionTimeString = "_M3_TIME"; missionScoreString = "_M3_SCORE"; break;
+		case 3: missionTimeString = "_M4_TIME"; missionScoreString = "_M4_SCORE"; break;
+		default: break;
+	}
+
+	if (Global::gameSaveData.find(Global::gameLevelData[levelID].displayName+missionTimeString) != Global::gameSaveData.end())
+	{
+		std::string time = Global::gameSaveData[Global::gameLevelData[levelID].displayName+missionTimeString];
+		time = MainMenu::convertFramesToTime(std::stoi(time));
+		textBestTime->deleteMe(); delete textBestTime; Global::countDelete++;
+		textBestTime  = new GUIText("TIME: "+time, 2.0f, font, 0.75f-192*px, 0.5f+256*py-0.025f, 1-(0.75f-192*px), false, false, true); Global::countNew++;
+	}
+	else
+	{
+		textBestTime->deleteMe(); delete textBestTime; Global::countDelete++;
+		textBestTime  = new GUIText("TIME: ", 2.0f, font, 0.75f-192*px, 0.5f+256*py-0.025f, 1-(0.75f-192*px), false, false, true); Global::countNew++;
+	}
+
+	if (Global::gameSaveData.find(Global::gameLevelData[levelID].displayName+missionScoreString) != Global::gameSaveData.end())
+	{
+		std::string score = Global::gameSaveData[Global::gameLevelData[levelID].displayName+missionScoreString];
+		textBestScore->deleteMe(); delete textBestScore; Global::countDelete++;
+		textBestScore = new GUIText("SCORE: "+score, 2.0f, font, 0.75f-192*px, 0.5f+128*py-0.025f, 1-(0.75f-192*px), false, false, true); Global::countNew++;
+	}
+	else
+	{
+		textBestScore->deleteMe(); delete textBestScore; Global::countDelete++;
+		textBestScore = new GUIText("SCORE: ", 2.0f, font, 0.75f-192*px, 0.5f+128*py-0.025f, 1-(0.75f-192*px), false, false, true); Global::countNew++;
+	}
 }

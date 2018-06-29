@@ -1,0 +1,15 @@
+# Blender MTL File: 'None'
+# Material Count: 1
+
+newmtl Wi_StadiumFence
+Ns 20
+Ka 0.200000 0.200000 0.200000
+Kd 0.800000 0.800000 0.800000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 0.02
+d 0.000000
+Tr 0
+illum 2
+map_Kd Gctrwi_StadiumFence.png
+map_Ka Gctrwi_StadiumFence.png

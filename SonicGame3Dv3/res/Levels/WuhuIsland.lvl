@@ -2,7 +2,7 @@ WuhuIsland
 WuhuIsland
 WuhuIsland
 1
-WuhuIsland 7
+Collision 7
 1.0 1.0 1.0
 0.0 0.0 0.0
 0.0 0.0 0.0
@@ -18,7 +18,7 @@ WuhuIsland 7
 0 0
 -100
 
-71 -1550 40 2696 #-1533 40 2676
+6 -1550 40 2696 #-1533 40 2676
 9 -1533 37 2641.6
 9 -1533 37 2658.8
 9 -1533 37 2676
@@ -26,11 +26,14 @@ WuhuIsland 7
 9 -1533 37 2710.4
 25 3161 210 -556 100
 25 -2616 400 -2463 100
-32 1453.3331 2960.0369 -1498.0073 0 Where is the hole?
-32 3623.077 431.25095 -4541.0356 -177 There's only one way out.
-32 -4616.3896 1099.3077 1035.662 12.8 Nice wall physics.
-32 -2159.6953 35.59068 -2000.8164 77.4 Welcome to the beach!
+32 1453.3331 2960.0369 -1498.0073 0 1 Where is the hole?
+32 3623.077 431.25095 -4541.0356 -177 2 There's only one way out
+32 -4616.3896 1099.3077 1035.662 12.8 3 Nice wall physics
+32 -2159.6953 35.59068 -2000.8164 77.4 4 Welcome to the beach!
 0 0 0 0
 
 # Lost Chao
 81 1583.577 1283.57 -4545.62 -147
+
+# Transparent
+72 res/Models/WuhuIsland/ Transparent.obj trans

@@ -3,7 +3,7 @@
 #include "../toolbox/vector.h"
 
 
-Triangle3D::Triangle3D(Vector3f* newP1, Vector3f* newP2, Vector3f* newP3, char type, int sound, char particle)
+Triangle3D::Triangle3D(Vector3f* newP1, Vector3f* newP2, Vector3f* newP3, char type, char sound, char particle)
 {
 	this->p1X = newP1->x;
 	this->p1Y = newP1->y;
@@ -38,7 +38,7 @@ void Triangle3D::generateValues()
 	C = cross.z;
 	D = -newD;
 
-	float mag = (float)(sqrt(A*A+B*B+C*C));
+	float mag = sqrtf(A*A + B*B + C*C);
 
 	if (mag != 0)
 	{
@@ -53,20 +53,20 @@ void Triangle3D::generateValues()
 		normal.z = 0;
 	}
 
-	maxX = (float)fmax(p1X, fmax(p2X, p3X));
-	minX = (float)fmin(p1X, fmin(p2X, p3X));
-	maxY = (float)fmax(p1Y, fmax(p2Y, p3Y));
-	minY = (float)fmin(p1Y, fmin(p2Y, p3Y));
-	maxZ = (float)fmax(p1Z, fmax(p2Z, p3Z));
-	minZ = (float)fmin(p1Z, fmin(p2Z, p3Z));
+	maxX = fmaxf(p1X, fmaxf(p2X, p3X));
+	minX = fminf(p1X, fminf(p2X, p3X));
+	maxY = fmaxf(p1Y, fmaxf(p2Y, p3Y));
+	minY = fminf(p1Y, fminf(p2Y, p3Y));
+	maxZ = fmaxf(p1Z, fmaxf(p2Z, p3Z));
+	minZ = fminf(p1Z, fminf(p2Z, p3Z));
 }
 
-int Triangle3D::isSlippery()
+bool Triangle3D::isSlippery()
 {
-	if (type == 1)
-	{
-		return 1;
-	}
+	return (type & 1);
+}
 
-	return 0;
+bool Triangle3D::isDiggable()
+{
+	return type == 2;//(type & (1 << 1));
 }

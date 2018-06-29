@@ -2,158 +2,157 @@
 # Material Count: 13
 
 newmtl Wi_CheckPtRoad
-Ns 20
+Ns 19.607843
 Ka 0.200000 0.200000 0.200000
 Kd 0.800000 0.800000 0.800000
 Ks 0.000000 0.000000 0.000000
 Ke 0.000000 0.000000 0.000000
-Ni 0.02
+Ni 1.000000
 d 1.000000
 illum 2
 map_Kd Gctrwi_CheckPtRoad.png
 map_Ka Gctrwi_CheckPtRoad.png
 
 newmtl Wi_Grass
-Ns 20
+Ns 19.607843
 Ka 0.200000 0.200000 0.200000
 Kd 0.800000 0.800000 0.800000
 Ks 0.000000 0.000000 0.000000
 Ke 0.000000 0.000000 0.000000
-Ni 0.02
+Ni 1.000000
 d 1.000000
 illum 2
 map_Kd Gctrwi_Grass.png
 map_Ka Gctrwi_Grass.png
 
 newmtl Wi_HouseBlue
-Ns 20
+Ns 19.607843
 Ka 0.200000 0.200000 0.200000
 Kd 0.800000 0.800000 0.800000
 Ks 0.000000 0.000000 0.000000
 Ke 0.000000 0.000000 0.000000
-Ni 0.02
+Ni 1.000000
 d 1.000000
 illum 2
 map_Kd Gctrwi_HouseBlue.png
 map_Ka Gctrwi_HouseBlue.png
 
 newmtl Wi_HouseGreen
-Ns 20
+Ns 19.607843
 Ka 0.200000 0.200000 0.200000
 Kd 0.800000 0.800000 0.800000
 Ks 0.000000 0.000000 0.000000
 Ke 0.000000 0.000000 0.000000
-Ni 0.02
+Ni 1.000000
 d 1.000000
 illum 2
 map_Kd Gctrwi_HouseGreen.png
 map_Ka Gctrwi_HouseGreen.png
 
 newmtl Wi_Road
-Ns 20
+Ns 19.607843
 Ka 0.200000 0.200000 0.200000
 Kd 0.800000 0.800000 0.800000
 Ks 0.000000 0.000000 0.000000
 Ke 0.000000 0.000000 0.000000
-Ni 0.02
+Ni 1.000000
 d 1.000000
 illum 2
 map_Kd Gctrwi_Road.png
 map_Ka Gctrwi_Road.png
 
 newmtl Wi_Roof
-Ns 20
+Ns 19.607843
 Ka 0.200000 0.200000 0.200000
 Kd 0.800000 0.800000 0.800000
 Ks 0.000000 0.000000 0.000000
 Ke 0.000000 0.000000 0.000000
-Ni 0.02
+Ni 1.000000
 d 1.000000
 illum 2
 map_Kd Gctrwi_Roof.png
 map_Ka Gctrwi_Roof.png
 
 newmtl Wi_Sand
-Ns 20
+Ns 19.607843
 Ka 0.200000 0.200000 0.200000
 Kd 0.800000 0.800000 0.800000
 Ks 0.000000 0.000000 0.000000
 Ke 0.000000 0.000000 0.000000
-Ni 0.02
+Ni 1.000000
 d 1.000000
 illum 2
 map_Kd Gctrwi_Sand.png
 map_Ka Gctrwi_Sand.png
 
 newmtl Wi_StadiumFence
-Ns 20
+Ns 19.607843
 Ka 0.200000 0.200000 0.200000
 Kd 0.800000 0.800000 0.800000
 Ks 0.000000 0.000000 0.000000
 Ke 0.000000 0.000000 0.000000
-Ni 0.02
+Ni 1.000000
 d 1.000000
 illum 2
 map_Kd Gctrwi_StadiumFence.png
 map_Ka Gctrwi_StadiumFence.png
 
 newmtl Wi_StartLineSigns
-Ns 20
+Ns 19.607843
 Ka 0.200000 0.200000 0.200000
 Kd 0.800000 0.800000 0.800000
 Ks 0.000000 0.000000 0.000000
 Ke 0.000000 0.000000 0.000000
-Ni 0.02
-d 0.000000
+Ni 1.000000
+d 1.000000
 illum 2
 map_Kd Gctrwi_StartLineSigns.png
 map_Ka Gctrwi_StartLineSigns.png
 
 newmtl Wi_StoneWall
-Ns 20
+Ns 19.607843
 Ka 0.200000 0.200000 0.200000
 Kd 0.800000 0.800000 0.800000
 Ks 0.000000 0.000000 0.000000
 Ke 0.000000 0.000000 0.000000
-Ni 0.02
+Ni 1.000000
 d 1.000000
 illum 2
 map_Kd Gctrwi_StoneWall.png
 map_Ka Gctrwi_StoneWall.png
 
 newmtl Wi_TanBrick
-Ns 20
+Ns 19.607843
 Ka 0.200000 0.200000 0.200000
 Kd 0.800000 0.800000 0.800000
 Ks 0.000000 0.000000 0.000000
 Ke 0.000000 0.000000 0.000000
-Ni 0.02
+Ni 1.000000
 d 1.000000
 illum 2
 map_Kd Gctrwi_TanBrick.png
 map_Ka Gctrwi_TanBrick.png
 
 newmtl Wi_WallBrick
-Ns 20
+Ns 19.607843
 Ka 0.200000 0.200000 0.200000
 Kd 0.800000 0.800000 0.800000
 Ks 0.000000 0.000000 0.000000
 Ke 0.000000 0.000000 0.000000
-Ni 0.02
+Ni 1.000000
 d 1.000000
 illum 2
 map_Kd Gctrwi_WallBrick.png
 map_Ka Gctrwi_WallBrick.png
 
 newmtl mt_water
-Ns 20
+Ns 19.607843
 Ka 0.200000 0.200000 0.200000
 Kd 0.800000 0.800000 0.800000
 Ks 0.000000 0.000000 0.000000
 Ke 0.000000 0.000000 0.000000
-Ni 0.02
+Ni 1.000000
 d 1.000000
-scrollY -1.0
 illum 2
-map_Kd kdv_waterfall01_dfxx_r.png
-map_Ka kdv_waterfall01_dfxx_r.png
+map_Kd mt_water_n.png
+map_Ka mt_water_n.png

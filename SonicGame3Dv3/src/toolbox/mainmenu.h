@@ -2,6 +2,7 @@
 #define MAINMENU_H
 
 #include <glad/glad.h>
+#include <string>
 
 class FontType;
 class GUIText;
@@ -77,6 +78,8 @@ private:
 	static GLuint textureParallelogramBackdrop;
 	static GLuint textureParallelogramHalf;
 	static GLuint textureParallelogramHalfBackdrop;
+	static GLuint textureParallelogramHalf2;
+	static GLuint textureParallelogramHalf2Backdrop;
 	static GLuint textureRankA;
 	static GLuint textureRankB;
 	static GLuint textureRankC;
@@ -139,6 +142,13 @@ private:
 
 	static GuiTexture* itemRankDisplay;
 	static GuiTexture* itemRankDisplayBackdrop;
+	static GuiTexture* itemTimeDisplay;
+	static GuiTexture* itemTimeDisplayBackdrop;
+	static GuiTexture* itemScoreDisplay;
+	static GuiTexture* itemScoreDisplayBackdrop;
+
+	static GUIText* textBestScore;
+	static GUIText* textBestTime;
 
 	static GuiTexture* rankM1;
 	static GuiTexture* rankM2;
@@ -156,6 +166,10 @@ private:
 	static void selectMenuMission(int newSelection);
 
 	static void unloadResources();
+
+	static std::string convertFramesToTime(int frames);
+
+	static void updateBestDisplay(int levelID);
 
 public:
 	static FontType* font;

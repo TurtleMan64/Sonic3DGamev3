@@ -9,6 +9,7 @@ class ParticleResources
 {
 public:
 	static ParticleTexture* textureDust;
+	static ParticleTexture* textureDirt;
 	static ParticleTexture* textureSnowDrop;
 	static ParticleTexture* textureDustCloud;
 	static ParticleTexture* textureSnowball;

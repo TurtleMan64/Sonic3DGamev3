@@ -150,6 +150,10 @@ private:
 	float punchGroundVelX = 0;
 	float punchGroundVelZ = 0;
 
+	//Digging
+	bool isDigging = false;
+	int diggingTimer = 0;
+	const int diggingTimerMax = 67;
 
 	//Climbing
 	bool isClimbing = false;

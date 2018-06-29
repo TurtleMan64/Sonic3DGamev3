@@ -29,3 +29,6 @@ KoopaTroopaBeach 7
 25 -398 0 2834 1600
 30
 81 -373.128 216.847 -1143.615 0
+
+# Transparent
+72 res/Models/KoopaTroopaBeach/ KoopaBeachWaterfall.obj trans

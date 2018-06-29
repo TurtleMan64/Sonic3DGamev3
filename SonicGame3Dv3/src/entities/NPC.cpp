@@ -28,7 +28,24 @@ NPC::NPC()
 	
 }
 
-NPC::NPC(float x, float y, float z, float rotY, std::string message)
+NPC::~NPC()
+{
+	if (messageGUI1 != nullptr && (*messageGUI1->getTextString()) == myMessage1)
+	{
+		messageGUI1->deleteMe();
+		delete messageGUI1; Global::countDelete++;
+		messageGUI1 = nullptr;
+	}
+			
+	if (messageGUI2 != nullptr && (*messageGUI2->getTextString()) == myMessage2)
+	{
+		messageGUI2->deleteMe();
+		delete messageGUI2; Global::countDelete++;
+		messageGUI2 = nullptr;
+	}
+}
+
+NPC::NPC(float x, float y, float z, float rotY, int id, std::string message)
 {
 	position.x = x;
 	position.y = y;
@@ -38,6 +55,7 @@ NPC::NPC(float x, float y, float z, float rotY, std::string message)
 	rotZ = 0;
 	scale = 1;
 	visible = true;
+	this->id = id;
 	updateTransformationMatrix();
 
 	char msgBuf[512];
@@ -62,7 +80,23 @@ NPC::NPC(float x, float y, float z, float rotY, std::string message)
 
 	free(msg);
 
+	std::string lookup = Global::levelNameDisplay+"_NPC_"+std::to_string(id);
+
 	found = false;
+	if (Global::gameSaveData.find(lookup) != Global::gameSaveData.end())
+	{
+		std::string isFound = Global::gameSaveData[lookup];
+		if (isFound == "true")
+		{
+			found = true;
+		}
+	}
+
+	if (found)
+	{
+		Main_deleteEntity(this);
+		return;
+	}
 }
 
 void NPC::step()
@@ -79,6 +113,10 @@ void NPC::step()
 		{
 			AudioPlayer::play(7, getPosition());
 			found = true;
+
+			std::string lookup = Global::levelNameDisplay+"_NPC_"+std::to_string(id);
+			Global::gameSaveData[lookup] = "true";
+			Global::saveSaveData();
 		}
 			
 		if (messageGUI1 == nullptr && myMessage1 != "")

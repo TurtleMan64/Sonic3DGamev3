@@ -971,7 +971,7 @@ CollisionModel* loadCollisionModel(std::string filePath, std::string fileName)
 	std::list<FakeTexture*> fakeTextures;
 
 	char currType = 0;
-	int currSound = 0;
+	char currSound = 0;
 	char currParticle = 0;
 
 	std::ifstream file("res/" + filePath + fileName + ".obj");
@@ -1040,8 +1040,8 @@ CollisionModel* loadCollisionModel(std::string filePath, std::string fileName)
 					if (dummy->name == lineSplit[1])
 					{
 						currType = dummy->type;
-						currType = (char)dummy->sound;
-						currType = dummy->particle;
+						currSound = dummy->sound;
+						currParticle = dummy->particle;
 					}
 				}
 			}
@@ -1073,7 +1073,7 @@ CollisionModel* loadCollisionModel(std::string filePath, std::string fileName)
 					{
 						if (strcmp(lineSplitMTL[0], "newmtl") == 0)
 						{
-							FakeTexture* fktex = new FakeTexture();
+							FakeTexture* fktex = new FakeTexture;
 							Global::countNew++;
 							fktex->name = lineSplitMTL[1];
 							fakeTextures.push_back(fktex);
@@ -1086,7 +1086,7 @@ CollisionModel* loadCollisionModel(std::string filePath, std::string fileName)
 						else if (strcmp(lineSplitMTL[0], "sound") == 0 ||
 								 strcmp(lineSplitMTL[0], "\tsound") == 0)
 						{
-							fakeTextures.back()->sound = (int)round(std::stof(lineSplitMTL[1]));
+							fakeTextures.back()->sound = (char)round(std::stof(lineSplitMTL[1]));
 						}
 						else if (strcmp(lineSplitMTL[0], "particle") == 0 ||
 								 strcmp(lineSplitMTL[0], "\tparticle") == 0)

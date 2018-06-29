@@ -108,6 +108,14 @@ void PlayerKnuckles::step()
 	punchingTimer = std::max(0, punchingTimer-1);
 	drillDiveAudioTimer = std::max(0, drillDiveAudioTimer-1);
 
+
+	if (diggingTimer == 1 && !isClimbing)
+	{
+		popOffWall();
+	}
+
+	diggingTimer = std::max(0, diggingTimer-1);
+
 	dropDashCharge = std::fmaxf(0, dropDashCharge-dropDashChargeDecrease);
 
 	if (deadTimer == 59)
@@ -123,6 +131,16 @@ void PlayerKnuckles::step()
 	if (punchingTimer == 1)
 	{
 		isPunching = false;
+	}
+
+	if (diggingTimer == 0)
+	{
+		isDigging = false;
+	}
+
+	if (diggingTimer % 8 == 1)
+	{
+		AudioPlayer::play(43, getPosition());
 	}
 
 	if (jumpInput)
@@ -192,6 +210,35 @@ void PlayerKnuckles::step()
 		zVelGround = climbSpeed*inputMag*sinf(toRadians(fakeCamYaw + movementAngle));
 
 		wallStickTimer = wallStickTimerMax;
+	}
+
+	if (isDigging)
+	{
+		xVelGround = 0;
+		zVelGround = 0;
+
+		wallStickTimer = wallStickTimerMax;
+
+		int dirtToMake = 5;
+		while (dirtToMake > 0)
+		{
+			float spoutSpd = 2.0f;
+			float anglH = (float)(M_PI * 2 * Maths::random());
+			float anglV = (toRadians(Maths::nextGaussian() * 42 + 90));
+
+			float yspd = spoutSpd*sinf(anglV);
+			float hpt  = spoutSpd*cosf(anglV);
+
+			float xspd = hpt*cosf(anglH);
+			float zspd = hpt*sinf(anglH);
+
+			
+			Vector3f pos(getX(), getY() + 1, getZ());
+			Vector3f vel(xspd, yspd, zspd);
+			new Particle(ParticleResources::textureDirt, &pos, &vel, 0.08f, 60, 0, 5*Maths::random()+1, 0, false);
+
+			dirtToMake--;
+		}
 	}
 
 	float inputX = xVelGround;
@@ -382,6 +429,18 @@ void PlayerKnuckles::step()
 				xVelGround = punchGroundVelX;
 				zVelGround = punchGroundVelZ;
 			}
+
+			if (isClimbing)
+			{
+				if (triCol->isDiggable())
+				{
+					isDigging = true;
+					diggingTimer = diggingTimerMax;
+					canMoveTimer = diggingTimerMax;
+					xVelGround = 0;
+					zVelGround = 0;
+				}
+			}
 		}
 	}
 	else //In the air
@@ -462,6 +521,8 @@ void PlayerKnuckles::step()
 		isSpindashing = false;
 		isPunching = false;
 		isClimbing = false;
+		isDigging = false;
+		diggingTimer = 0;
 		punchingTimer = 0;
 		canStartSpindash = false;
 		bufferedSpindashInput = false;
@@ -554,40 +615,54 @@ void PlayerKnuckles::step()
 				canStick = false;
 			}
 
-			if (canStick)
+			if (isDrillDiving && (actionInput || action2Input) && triCol->isDiggable() && !isDigging)
 			{
-				Vector3f speeds = calculatePlaneSpeed(xVel + xVelAir + xDisp, yVel + yDisp, zVel + zVelAir + zDisp, &(triCol->normal));
-				xVelGround = speeds.x;
-				zVelGround = speeds.z;
-				isBall = false;
-				onPlane = true;
+				isDigging = true;
+				diggingTimer = diggingTimerMax;
+				canMoveTimer = diggingTimerMax;
 
-				if (isDropDashing)
-				{
-					dropDash(dropDashCharge);
-				}
+				setPosition(colPos);
+				increasePosition(triCol->normal.x, triCol->normal.y, triCol->normal.z);
+				onPlane = true;
+				isDrillDiving = false;
 			}
 			else
 			{
-				if (isGliding)
+				if (canStick)
 				{
-					isGliding = false;
-					isClimbing = true;
+					Vector3f speeds = calculatePlaneSpeed(xVel + xVelAir + xDisp, yVel + yDisp, zVel + zVelAir + zDisp, &(triCol->normal));
+					xVelGround = speeds.x;
+					zVelGround = speeds.z;
+					isBall = false;
 					onPlane = true;
 
-					canMoveTimer = 16;
+					//if (isDropDashing)
+					{
+						//dropDash(dropDashCharge);
+					}
 				}
 				else
 				{
-					bounceOffGround(&(triCol->normal), cantStickBounceFactor, 18);
+					if (isGliding)
+					{
+						isGliding = false;
+						isClimbing = true;
+						onPlane = true;
 
-					setPosition(colPos);
-					increasePosition(triCol->normal.x * 1.5f, triCol->normal.y * 1.5f, triCol->normal.z * 1.5f);
+						canMoveTimer = 16;
+					}
+					else
+					{
+						bounceOffGround(&(triCol->normal), cantStickBounceFactor, 18);
 
-					//canMoveTimer = 8;
-					isBall = true;
-					isDropDashing = false;
-					bonked = true;
+						setPosition(colPos);
+						increasePosition(triCol->normal.x * 1.5f, triCol->normal.y * 1.5f, triCol->normal.z * 1.5f);
+
+						//canMoveTimer = 8;
+						isBall = true;
+						isDropDashing = false;
+						bonked = true;
+					}
 				}
 			}
 		}
@@ -1971,9 +2046,30 @@ void PlayerKnuckles::animate()
 		if (isBouncing ||
 			isBall ||
 			isSpindashing ||
-			spindashReleaseTimer > 0)
+			spindashReleaseTimer > 0 ||
+			isDigging)
 		{
-			dspOff.set(currNorm.x*2.5f, currNorm.y*2.5f, currNorm.z*2.5f);
+			if (isDigging)
+			{
+				float digDist = 0;
+				if (diggingTimer > diggingTimerMax/2)
+				{
+					digDist = -20*((float)(diggingTimerMax - diggingTimer))/diggingTimerMax;
+				}
+				else
+				{
+					digDist = -20*((float)diggingTimer)/diggingTimerMax;
+				}
+				dspOff.set(currNorm.x*digDist, currNorm.y*digDist, currNorm.z*digDist);
+				displayPos.set(
+					getX() + nX*digDist,
+					getY() + nY*digDist,
+					getZ() + nZ*digDist);
+			}
+			else
+			{
+				dspOff.set(currNorm.x*2.5f, currNorm.y*2.5f, currNorm.z*2.5f);
+			}
 		}
 		else
 		{
@@ -2073,6 +2169,12 @@ void PlayerKnuckles::animate()
 		if (PlayerKnuckles::maniaKnuckles != nullptr) { PlayerKnuckles::maniaKnuckles->setVisible(false); }
 		if (myBody != nullptr) myBody->setBaseOrientation(&displayPos, 0, getRotY(), 0, 0);
 		updateLimbs(19, 0);
+	}
+	else if (isDigging)
+	{
+		if (myBody != nullptr) myBody->setBaseOrientation(&displayPos, diff+diggingTimer*40, yawAngle, pitchAngle+180, 0);
+		if (PlayerKnuckles::maniaKnuckles != nullptr) { PlayerKnuckles::maniaKnuckles->setVisible(false); }
+		updateLimbs(20, 0);
 	}
 	else if (isGliding)
 	{
@@ -2677,13 +2779,15 @@ void PlayerKnuckles::rebound(Vector3f* source)
 
 bool PlayerKnuckles::isVulnerable()
 {
-	return !(homingAttackTimer > 0 ||
+	return !(
+		homingAttackTimer > 0 ||
 		isBouncing ||
 		isJumping ||
 		isBall ||
 		isSpindashing ||
 		isStomping ||
-		isPunching);
+		isPunching ||
+		isDigging);
 }
 
 void PlayerKnuckles::die()

@@ -43,9 +43,9 @@ res/Audio/BGM/highway1_loop.ogg
 # Lost Chao 
 81 4312.610840, 3662.796875, 3419.809814 90
 
-32 4851.5376 1755.5 6437.9 58.189 I swear this used to be an entrance to the city...
-32 10387 2455.5 11317.8 -103.6 I forgot how to get down from here.
-32 2443.74 3545 26 180 I saw you magically appear in that tunnel!
+32 4851.5376 1755.5 6437.9 58.189 1 I swear this used to be an entrance to the city...
+32 10387 2455.5 11317.8 -103.6 2 I forgot how to get down from here.
+32 2443.74 3545 26 180 3 I saw you magically appear in that tunnel!
 47 -946.995 13 1545.058 50 3
 
 60 3570.06 3724.33 1078.49 0        #crane platform 1 path point 1

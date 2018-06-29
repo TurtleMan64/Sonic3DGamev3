@@ -8,7 +8,7 @@ class FakeTexture
 public:
 	std::string name;
 	char type;
-	int sound;
+	char sound;
 	char particle;
 
 	FakeTexture();

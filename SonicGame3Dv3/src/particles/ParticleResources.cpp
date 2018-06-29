@@ -4,6 +4,7 @@
 #include "../engineTester/main.h"
 
 ParticleTexture* ParticleResources::textureDust = nullptr;
+ParticleTexture* ParticleResources::textureDirt = nullptr;
 ParticleTexture* ParticleResources::textureSnowDrop = nullptr;
 ParticleTexture* ParticleResources::textureDustCloud = nullptr;
 ParticleTexture* ParticleResources::textureSnowball = nullptr;
@@ -58,6 +59,7 @@ void ParticleResources::loadParticles()
 	textureOrangeTrail       = new ParticleTexture(Loader_loadTexture("res/Models/Particle/SpTrailOrange.png"), 1, 0.3f, 1);
 	textureRedTrail          = new ParticleTexture(Loader_loadTexture("res/Models/Particle/SpTrailRed.png"), 1, 0.3f, 1);
 	textureDust              = new ParticleTexture(Loader_loadTexture("res/Models/Particle/DustAtlas.png"), 4, 0.2f, 0);
+	textureDirt              = new ParticleTexture(Loader_loadTexture("res/Models/Particle/DirtAtlas.png"), 4, 0.75f, 0);
 	textureSplash            = new ParticleTexture(Loader_loadTextureNoInterpolation("res/Models/Particle/SplashAtlas.png"), 4, 0.6f, 0);
 	textureBubble            = new ParticleTexture(Loader_loadTextureNoInterpolation("res/Models/Particle/BubbleInverseAtlas.png"), 4, 0.6f, 0);
 	textureExplosion1        = new ParticleTexture(Loader_loadTextureNoInterpolation("res/Models/Particle/Explosion1Atlas.png"), 4, 0.8f, 0);
@@ -70,5 +72,5 @@ void ParticleResources::loadParticles()
 	textureBlackFadeOutAndIn = new ParticleTexture(Loader_loadTexture("res/Models/Particle/BlackFadeOutAndInAtlas.png"), 2, 1.0f, 0);
 	textureInWater           = new ParticleTexture(Loader_loadTexture("res/Models/Particle/InWater.png"), 1, 0.1f, 1);
 	textureBlueLine          = new ParticleTexture(Loader_loadTexture("res/Models/Particle/BlueLine.png"), 1, 1.0f, 1);
-	Global::countNew += 32;
+	Global::countNew += 33;
 }

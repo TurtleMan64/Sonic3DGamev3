@@ -27,9 +27,9 @@ public:
 	float C;
 	float D;
 
-	char type; //0 = normal, 1 = slippery
+	char type; //0 = normal, 1 = slippery, 2 = diggable
 
-	int sound; //footsetp sound
+	char sound; //footsetp sound
 
 	char particle; //0 = nothing, 1 = snowballs
 
@@ -40,11 +40,13 @@ public:
 	float maxZ;
 	float minZ;
 
-	Triangle3D(Vector3f* newP1, Vector3f* newP2, Vector3f* newP3, char type, int sound, char particle);
+	Triangle3D(Vector3f* newP1, Vector3f* newP2, Vector3f* newP3, char type, char sound, char particle);
 
 	void generateValues();
 
-	int isSlippery();
+	bool isSlippery();
+
+	bool isDiggable();
 };
 
 #endif

@@ -18,10 +18,12 @@ private:
 	std::string myMessage1;
 	std::string myMessage2;
 	bool found;
+	int id;
 
 public:
 	NPC();
-	NPC(float x, float y, float z, float rotY, std::string message);
+	~NPC();
+	NPC(float x, float y, float z, float rotY, int id, std::string message);
 
 	void step();
 

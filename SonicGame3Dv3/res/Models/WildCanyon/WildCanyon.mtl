@@ -9,6 +9,7 @@ Ks 0.000000 0.000000 0.000000
 Ke 0.000000 0.000000 0.000000
 Ni 0.02
 d 1.000000
+type 2
 illum 2
 map_Kd dz_balconymoji_tile.png
 
@@ -32,6 +33,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 0.02
 d 1.000000
 illum 2
+type 2
 map_Kd kd_nde_hasira3_vq.png
 
 newmtl LANDTX16_material_11
@@ -65,6 +67,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 0.02
 d 1.000000
 illum 2
+type 2
 map_Kd kd_nde_hasira6_vq.png
 
 newmtl LANDTX16_material_14
@@ -109,6 +112,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 0.02
 d 1.000000
 illum 2
+type 2
 map_Kd kd_nde_ido1.png
 
 newmtl LANDTX16_material_19
@@ -120,6 +124,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 0.02
 d 1.000000
 illum 2
+type 2
 map_Kd kd_nde_kabe2_vq.png
 
 newmtl LANDTX16_material_2
@@ -142,6 +147,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 0.02
 d 1.000000
 illum 2
+type 2
 map_Kd kd_nde_kabe4_vq.png
 
 newmtl LANDTX16_material_23
@@ -153,6 +159,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 0.02
 d 1.000000
 illum 2
+type 2
 map_Kd kd_nde_kabe8_vq.png
 
 newmtl LANDTX16_material_24
@@ -164,6 +171,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 0.02
 d 1.000000
 illum 2
+type 2
 map_Kd kd_nde_kabepic1_vq.png
 
 newmtl LANDTX16_material_25
@@ -175,6 +183,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 0.02
 d 1.000000
 illum 2
+type 2
 map_Kd kd_nde_kabepic2_vq.png
 
 newmtl LANDTX16_material_26
@@ -186,6 +195,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 0.02
 d 1.000000
 illum 2
+type 2
 map_Kd kd_nde_kabepic3_vq.png
 
 newmtl LANDTX16_material_27
@@ -197,6 +207,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 0.02
 d 1.000000
 illum 2
+type 2
 map_Kd kd_nde_yuka1.png
 
 newmtl LANDTX16_material_28_kd_nde_yuka2_vq.png
@@ -208,6 +219,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 0.02
 d 1.000000
 illum 2
+type 2
 map_Kd kd_nde_yuka2_vq.png
 
 newmtl LANDTX16_material_29
@@ -219,6 +231,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 0.02
 d 1.000000
 illum 2
+type 2
 map_Kd kd_sphinx_face1.png
 
 newmtl LANDTX16_material_3
@@ -241,6 +254,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 0.02
 d 1.000000
 illum 2
+type 2
 map_Kd kd_nde_kabepic4.png
 
 newmtl LANDTX16_material_4
@@ -285,6 +299,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 0.02
 d 1.000000
 illum 2
+type 2
 map_Kd dz_swallpaint.png
 
 newmtl LANDTX16_material_8
@@ -296,6 +311,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 0.02
 d 1.000000
 illum 2
+type 2
 map_Kd kd_nde_hasira1_vq.png
 
 newmtl LANDTX16_material_9
@@ -307,6 +323,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 0.02
 d 1.000000
 illum 2
+type 2
 map_Kd kd_nde_hasira2_vq.png
 
 newmtl LANDTX16_material_9_kd_nde_hasira9_vq.png

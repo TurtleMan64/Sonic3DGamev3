@@ -60,6 +60,7 @@ void Main_deleteAllTransparentEntites();
 #define LVL_FIRE_FIELD		   17
 #define LVL_BOBOMB_BATTLEFIELD 18
 #define LVL_KINGDOM_VALLEY	   19
+#define LVL_PUMPKIN_HILL       20
 
 #define ENTITY_RENDER_DIST 2000.0f
 #define ENTITY_RENDER_DIST_HIGH 5000.0f

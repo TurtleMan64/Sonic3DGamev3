@@ -222,20 +222,13 @@ void PlayerKnuckles::step()
 		int dirtToMake = 5;
 		while (dirtToMake > 0)
 		{
-			float spoutSpd = 2.0f;
-			float anglH = (float)(M_PI * 2 * Maths::random());
-			float anglV = (toRadians(Maths::nextGaussian() * 42 + 90));
+			Vector3f pos(getX()-currNorm.x, getY()-currNorm.y, getZ()-currNorm.z);
+			Vector3f vel(currNorm);
+			vel.x += (Maths::random()-0.5f);
+			vel.y += (Maths::random()-0.5f);
+			vel.z += (Maths::random()-0.5f);
 
-			float yspd = spoutSpd*sinf(anglV);
-			float hpt  = spoutSpd*cosf(anglV);
-
-			float xspd = hpt*cosf(anglH);
-			float zspd = hpt*sinf(anglH);
-
-			
-			Vector3f pos(getX(), getY() + 1, getZ());
-			Vector3f vel(xspd, yspd, zspd);
-			new Particle(ParticleResources::textureDirt, &pos, &vel, 0.08f, 60, 0, 5*Maths::random()+1, 0, false);
+			new Particle(ParticleResources::textureDirt, &pos, &vel, 0.08f, 60, 0, 2*Maths::random()+0.5f, 0, false);
 
 			dirtToMake--;
 		}
@@ -981,6 +974,11 @@ void PlayerKnuckles::step()
 	if (Global::levelID == LVL_SPEED_HIGHWAY)
 	{
 		Global::gameSkySphere->setPosition(getX(), 4550, getZ());
+	}
+
+	if (Global::levelID == LVL_PUMPKIN_HILL)
+	{
+		Global::gameSkySphere->setPosition(getX(), 2020, getZ());
 	}
 }
 
@@ -3048,4 +3046,9 @@ void PlayerKnuckles::setShieldGreen(ShieldGreen* newGreen)
 		myShieldGreen = nullptr;
 	}
 	myShieldGreen = newGreen;
+}
+
+int PlayerKnuckles::getDiggingTimer()
+{
+	return diggingTimer;
 }

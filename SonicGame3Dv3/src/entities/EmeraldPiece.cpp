@@ -29,12 +29,19 @@ EmeraldPiece::EmeraldPiece()
 
 }
 
-EmeraldPiece::EmeraldPiece(float x, float y, float z, int pieceNumber)
+EmeraldPiece::EmeraldPiece(
+	float x, float y, float z, 
+	int pieceNumber, int isDiggable, 
+	float digSizeX, float digSizeY, float digSizeZ)
 {
 	position.x = x;
 	position.y = y;
 	position.z = z;
 	this->pieceNumber = pieceNumber;
+	this->isDiggable = (isDiggable != 0);
+	this->digSizeX = digSizeX;
+	this->digSizeY = digSizeY;
+	this->digSizeZ = digSizeZ;
 	scale = 2.0f;
 }
 
@@ -56,9 +63,31 @@ void EmeraldPiece::step()
 		{
 			setVisible(true);
 
-			if (Global::gamePlayer->getX() > getX() - hitboxH - Global::gamePlayer->getHitboxHorizontal() && Global::gamePlayer->getX() < getX() + hitboxH + Global::gamePlayer->getHitboxHorizontal() &&
-				Global::gamePlayer->getZ() > getZ() - hitboxH - Global::gamePlayer->getHitboxHorizontal() && Global::gamePlayer->getZ() < getZ() + hitboxH + Global::gamePlayer->getHitboxHorizontal() &&
-				Global::gamePlayer->getY() > getY() - hitboxV - Global::gamePlayer->getHitboxVertical()   && Global::gamePlayer->getY() < getY() + hitboxV)
+			bool collected = false;
+
+			if (isDiggable)
+			{
+				if (Global::gamePlayer->getDiggingTimer() == 20)
+				{
+					float xDiff = Global::gamePlayer->getX() - getX();
+					float yDiff = Global::gamePlayer->getY() - getY();
+					float zDiff = Global::gamePlayer->getZ() - getZ();
+					float diff = xDiff*xDiff + yDiff*yDiff + zDiff*zDiff;
+
+					if (diff < 40*40)
+					{
+						collected = true;
+					}
+				}
+			}
+			else if (Global::gamePlayer->getX() > getX() - hitboxH - Global::gamePlayer->getHitboxHorizontal() && Global::gamePlayer->getX() < getX() + hitboxH + Global::gamePlayer->getHitboxHorizontal() &&
+					 Global::gamePlayer->getZ() > getZ() - hitboxH - Global::gamePlayer->getHitboxHorizontal() && Global::gamePlayer->getZ() < getZ() + hitboxH + Global::gamePlayer->getHitboxHorizontal() &&
+					 Global::gamePlayer->getY() > getY() - hitboxV - Global::gamePlayer->getHitboxVertical()   && Global::gamePlayer->getY() < getY() + hitboxV)
+			{
+				collected = true;
+			}
+
+			if (collected)
 			{
 				AudioPlayer::play(35, getPosition());
 

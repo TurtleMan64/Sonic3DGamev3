@@ -385,6 +385,8 @@ public:
 
 	void setShieldGreen(ShieldGreen* newGreen);
 
+	int getDiggingTimer();
+
 private:
 	void adjustCamera();
 

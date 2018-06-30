@@ -92,6 +92,7 @@
     <ClCompile Include="src\entities\PlayerSonic.cpp" />
     <ClCompile Include="src\entities\PlayerTails.cpp" />
     <ClCompile Include="src\entities\Point.cpp" />
+    <ClCompile Include="src\entities\PumpkinHill\PH_Clouds.cpp" />
     <ClCompile Include="src\entities\RhinoTank.cpp" />
     <ClCompile Include="src\entities\Ring.cpp" />
     <ClCompile Include="src\entities\ShieldGreen.cpp" />
@@ -264,6 +265,7 @@
     <ClInclude Include="src\entities\playersonic.h" />
     <ClInclude Include="src\entities\playertails.h" />
     <ClInclude Include="src\entities\point.h" />
+    <ClInclude Include="src\entities\PumpkinHill\phclouds.h" />
     <ClInclude Include="src\entities\rhinotank.h" />
     <ClInclude Include="src\entities\ring.h" />
     <ClInclude Include="src\entities\shieldgreen.h" />

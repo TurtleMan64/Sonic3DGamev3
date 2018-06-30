@@ -104,6 +104,7 @@
 #include "../entities/npc.h"
 #include "../entities/Snowhead/shdgoronelder.h"
 #include "../entities/Snowhead/shdgoronkid.h"
+#include "../entities/PumpkinHill/phclouds.h"
 
 float toFloat(char* input);
 int toInt(char* input);
@@ -1418,7 +1419,8 @@ void processLine(char** dat, int datLength)
 			EmeraldPiece::loadStaticModels();
 			EmeraldPiece* piece = new EmeraldPiece(
 				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
-				toInt(dat[4])); //piece number
+				toInt(dat[4]), toInt(dat[5]), //piece number, diggable,
+				toFloat(dat[6]), toFloat(dat[7]), toFloat(dat[8])); //dig volume
 			Global::countNew++;
 			Main_addEntityPass2(piece);
 			return;
@@ -1505,6 +1507,15 @@ void processLine(char** dat, int datLength)
 				toFloat(dat[4])); //rotation
 			Global::countNew++;
 			Main_addEntity(lostChao);
+			return;
+		}
+
+		case 82: //Pumpkin Hill Clouds
+		{
+			PH_Clouds::loadStaticModels();
+			PH_Clouds* clouds = new PH_Clouds(toFloat(dat[1]), toFloat(dat[2]));
+			Global::countNew++;
+			Main_addTransparentEntity(clouds);
 			return;
 		}
 
@@ -1666,4 +1677,5 @@ void freeAllStaticModels()
 	NPC::deleteStaticModels();
 	SHD_GoronElder::deleteStaticModels();
 	SHD_GoronKid::deleteStaticModels();
+	PH_Clouds::deleteStaticModels();
 }

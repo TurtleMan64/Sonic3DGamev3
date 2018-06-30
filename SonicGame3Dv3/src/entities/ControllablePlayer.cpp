@@ -65,3 +65,4 @@ ShieldMagnet* ControllablePlayer::getShieldMagnet()                   {return nu
 void          ControllablePlayer::setShieldMagnet(ShieldMagnet*)      {}
 ShieldGreen*  ControllablePlayer::getShieldGreen()                    {return nullptr;}
 void          ControllablePlayer::setShieldGreen(ShieldGreen*)        {}
+int           ControllablePlayer::getDiggingTimer()                   {return 0;}

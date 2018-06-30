@@ -16,9 +16,17 @@ private:
 	
 	int pieceNumber; //1, 2 or 3
 
+	bool isDiggable;
+	float digSizeX;
+	float digSizeY;
+	float digSizeZ;
+
 public:
 	EmeraldPiece();
-	EmeraldPiece(float x, float y, float z, int pieceNumber);
+	EmeraldPiece(
+		float x, float y, float z, 
+		int pieceNumber, int isDiggable, 
+		float digSizeX, float digSizeY, float digSizeZ);
 
 	void step();
 

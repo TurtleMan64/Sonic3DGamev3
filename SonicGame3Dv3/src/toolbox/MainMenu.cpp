@@ -49,6 +49,7 @@ GUIText* MainMenu::textMission17 = nullptr;//Koopa Beach;
 GUIText* MainMenu::textMission18 = nullptr;//Fire Field;
 GUIText* MainMenu::textMission19 = nullptr;//Bob-omb Battlefield;
 GUIText* MainMenu::textMission20 = nullptr;//Kingdom Valley;
+GUIText* MainMenu::textMission21 = nullptr;//Pumpkin Hill
 
 GUIText* MainMenu::textTitleCardLevelName          = nullptr;
 GUIText* MainMenu::textTitleCardMission            = nullptr;
@@ -102,6 +103,7 @@ GuiTexture* MainMenu::itemMission17 = nullptr;
 GuiTexture* MainMenu::itemMission18 = nullptr;
 GuiTexture* MainMenu::itemMission19 = nullptr;
 GuiTexture* MainMenu::itemMission20 = nullptr;
+GuiTexture* MainMenu::itemMission21 = nullptr;
 GuiTexture* MainMenu::itemMissionBackdrop1  = nullptr;
 GuiTexture* MainMenu::itemMissionBackdrop2  = nullptr;
 GuiTexture* MainMenu::itemMissionBackdrop3  = nullptr;
@@ -122,6 +124,7 @@ GuiTexture* MainMenu::itemMissionBackdrop17 = nullptr;
 GuiTexture* MainMenu::itemMissionBackdrop18 = nullptr;
 GuiTexture* MainMenu::itemMissionBackdrop19 = nullptr;
 GuiTexture* MainMenu::itemMissionBackdrop20 = nullptr;
+GuiTexture* MainMenu::itemMissionBackdrop21 = nullptr;
 
 GuiTexture* MainMenu::itemRankDisplay          = nullptr;
 GuiTexture* MainMenu::itemRankDisplayBackdrop  = nullptr;
@@ -227,6 +230,7 @@ void MainMenu::loadResources()
 	itemMission18 = new GuiTexture(textureParallelogramHalf, 0.0f, 0.0f, 1024*px, 64*py, 0); Global::countNew++;
 	itemMission19 = new GuiTexture(textureParallelogramHalf, 0.0f, 0.0f, 1024*px, 64*py, 0); Global::countNew++;
 	itemMission20 = new GuiTexture(textureParallelogramHalf, 0.0f, 0.0f, 1024*px, 64*py, 0); Global::countNew++;
+	itemMission21 = new GuiTexture(textureParallelogramHalf, 0.0f, 0.0f, 1024*px, 64*py, 0); Global::countNew++;
 	itemMissionBackdrop1  = new GuiTexture(textureParallelogramHalfBackdrop, 0.0f, 0.0f, 1024*px, 64*py, 0); Global::countNew++;
 	itemMissionBackdrop2  = new GuiTexture(textureParallelogramHalfBackdrop, 0.0f, 0.0f, 1024*px, 64*py, 0); Global::countNew++;
 	itemMissionBackdrop3  = new GuiTexture(textureParallelogramHalfBackdrop, 0.0f, 0.0f, 1024*px, 64*py, 0); Global::countNew++;
@@ -247,6 +251,7 @@ void MainMenu::loadResources()
 	itemMissionBackdrop18 = new GuiTexture(textureParallelogramHalfBackdrop, 0.0f, 0.0f, 1024*px, 64*py, 0); Global::countNew++;
 	itemMissionBackdrop19 = new GuiTexture(textureParallelogramHalfBackdrop, 0.0f, 0.0f, 1024*px, 64*py, 0); Global::countNew++;
 	itemMissionBackdrop20 = new GuiTexture(textureParallelogramHalfBackdrop, 0.0f, 0.0f, 1024*px, 64*py, 0); Global::countNew++;
+	itemMissionBackdrop21 = new GuiTexture(textureParallelogramHalfBackdrop, 0.0f, 0.0f, 1024*px, 64*py, 0); Global::countNew++;
 
 	itemRankDisplay          = new GuiTexture(textureParallelogram,              0.75f,             0.5f,        512*px,  64*py, 0); Global::countNew++;
 	itemRankDisplayBackdrop  = new GuiTexture(textureParallelogramBackdrop,      0.75f+8*px,        0.5f+6*py,   512*px,  64*py, 0); Global::countNew++;
@@ -285,6 +290,7 @@ void MainMenu::loadResources()
 	textMission18 = new GUIText("FIRE FIELD",          2.0f, font, 0.0f, 0.0f, 0.5f-128*px, false, true, true); Global::countNew++;
 	textMission19 = new GUIText("BOB-OMB BATTLEFIELD", 2.0f, font, 0.0f, 0.0f, 0.5f-128*px, false, true, true); Global::countNew++;
 	textMission20 = new GUIText("KINGDOM VALLEY",      2.0f, font, 0.0f, 0.0f, 0.5f-128*px, false, true, true); Global::countNew++;
+	textMission21 = new GUIText("PUMPKIN HILL",        2.0f, font, 0.0f, 0.0f, 0.5f-128*px, false, true, true); Global::countNew++;
 
 	MainMenu::selectMenuRoot(ROOT_STORY);
 }
@@ -322,6 +328,7 @@ void MainMenu::unloadResources()
 	textMission18->deleteMe(); delete textMission18; Global::countDelete++; textMission18 = nullptr;
 	textMission19->deleteMe(); delete textMission19; Global::countDelete++; textMission19 = nullptr;
 	textMission20->deleteMe(); delete textMission20; Global::countDelete++; textMission20 = nullptr;
+	textMission21->deleteMe(); delete textMission21; Global::countDelete++; textMission21 = nullptr;
 
 	GuiManager::clearGuisToRender();
 
@@ -354,6 +361,7 @@ void MainMenu::unloadResources()
 	delete itemMission18; Global::countDelete++; itemMission18 = nullptr;
 	delete itemMission19; Global::countDelete++; itemMission19 = nullptr;
 	delete itemMission20; Global::countDelete++; itemMission20 = nullptr;
+	delete itemMission21; Global::countDelete++; itemMission21 = nullptr;
 	delete itemMissionBackdrop1;  Global::countDelete++; itemMissionBackdrop1  = nullptr; 
 	delete itemMissionBackdrop2;  Global::countDelete++; itemMissionBackdrop2  = nullptr; 
 	delete itemMissionBackdrop3;  Global::countDelete++; itemMissionBackdrop3  = nullptr; 
@@ -374,6 +382,7 @@ void MainMenu::unloadResources()
 	delete itemMissionBackdrop18; Global::countDelete++; itemMissionBackdrop18 = nullptr;
 	delete itemMissionBackdrop19; Global::countDelete++; itemMissionBackdrop19 = nullptr;
 	delete itemMissionBackdrop20; Global::countDelete++; itemMissionBackdrop20 = nullptr;
+	delete itemMissionBackdrop21; Global::countDelete++; itemMissionBackdrop21 = nullptr;
 
 	delete itemRankDisplay;          Global::countDelete++; itemRankDisplay          = nullptr;
 	delete itemRankDisplayBackdrop;  Global::countDelete++; itemRankDisplayBackdrop  = nullptr;
@@ -424,7 +433,8 @@ void MainMenu::selectMenuMission(int newSelection)
 	itemMission17->setY(yPos+offsetY); yPos+=128*py;
 	itemMission18->setY(yPos+offsetY); yPos+=128*py;
 	itemMission19->setY(yPos+offsetY); yPos+=128*py;
-	itemMission20->setY(yPos+offsetY);
+	itemMission20->setY(yPos+offsetY); yPos+=128*py;
+	itemMission21->setY(yPos+offsetY);
 	yPos = 0.5f+6.0f*py;
 	itemMissionBackdrop1 ->setY(yPos+offsetY); yPos+=128*py;
 	itemMissionBackdrop2 ->setY(yPos+offsetY); yPos+=128*py;
@@ -445,7 +455,8 @@ void MainMenu::selectMenuMission(int newSelection)
 	itemMissionBackdrop17->setY(yPos+offsetY); yPos+=128*py;
 	itemMissionBackdrop18->setY(yPos+offsetY); yPos+=128*py;
 	itemMissionBackdrop19->setY(yPos+offsetY); yPos+=128*py;
-	itemMissionBackdrop20->setY(yPos+offsetY);
+	itemMissionBackdrop20->setY(yPos+offsetY); yPos+=128*py;
+	itemMissionBackdrop21->setY(yPos+offsetY);
 
 	itemMission1 ->setX(0.5f-512*px-64*px);
 	itemMission2 ->setX(0.5f-512*px-64*px);
@@ -467,6 +478,7 @@ void MainMenu::selectMenuMission(int newSelection)
 	itemMission18->setX(0.5f-512*px-64*px);
 	itemMission19->setX(0.5f-512*px-64*px);
 	itemMission20->setX(0.5f-512*px-64*px);
+	itemMission21->setX(0.5f-512*px-64*px);
 	itemMissionBackdrop1 ->setX(0.5f-512*px-64*px+8*px);
 	itemMissionBackdrop2 ->setX(0.5f-512*px-64*px+8*px);
 	itemMissionBackdrop3 ->setX(0.5f-512*px-64*px+8*px);
@@ -487,6 +499,7 @@ void MainMenu::selectMenuMission(int newSelection)
 	itemMissionBackdrop18->setX(0.5f-512*px-64*px+8*px);
 	itemMissionBackdrop19->setX(0.5f-512*px-64*px+8*px);
 	itemMissionBackdrop20->setX(0.5f-512*px-64*px+8*px);
+	itemMissionBackdrop21->setX(0.5f-512*px-64*px+8*px);
 
 	yPos = 0.5f-0.025f;
 	textMission1 ->getPosition()->y = yPos+offsetY; yPos+=128*py;
@@ -508,7 +521,8 @@ void MainMenu::selectMenuMission(int newSelection)
 	textMission17->getPosition()->y = yPos+offsetY; yPos+=128*py;
 	textMission18->getPosition()->y = yPos+offsetY; yPos+=128*py;
 	textMission19->getPosition()->y = yPos+offsetY; yPos+=128*py;
-	textMission20->getPosition()->y = yPos+offsetY;
+	textMission20->getPosition()->y = yPos+offsetY; yPos+=128*py;
+	textMission21->getPosition()->y = yPos+offsetY;
 	
 	textMission1 ->getPosition()->x = 0.0f;
 	textMission2 ->getPosition()->x = 0.0f;
@@ -530,6 +544,7 @@ void MainMenu::selectMenuMission(int newSelection)
 	textMission18->getPosition()->x = 0.0f;
 	textMission19->getPosition()->x = 0.0f;
 	textMission20->getPosition()->x = 0.0f;
+	textMission21->getPosition()->x = 0.0f;
 
 	GuiManager::addGuiToRender(itemMission1);
 	GuiManager::addGuiToRender(itemMission2);
@@ -551,6 +566,7 @@ void MainMenu::selectMenuMission(int newSelection)
 	GuiManager::addGuiToRender(itemMission18);
 	GuiManager::addGuiToRender(itemMission19);
 	GuiManager::addGuiToRender(itemMission20);
+	GuiManager::addGuiToRender(itemMission21);
 
 	GuiManager::addGuiToRender(itemRankDisplay);
 	GuiManager::addGuiToRender(itemRankDisplayBackdrop);
@@ -650,6 +666,7 @@ void MainMenu::selectMenuMission(int newSelection)
 		case MISSION_18: textMission18->getPosition()->x += 64*px; itemMission18->setX(0.5f-512*px); itemMissionBackdrop18->setX(0.5f-512*px+8*px); GuiManager::addGuiToRender(itemMissionBackdrop18); break;
 		case MISSION_19: textMission19->getPosition()->x += 64*px; itemMission19->setX(0.5f-512*px); itemMissionBackdrop19->setX(0.5f-512*px+8*px); GuiManager::addGuiToRender(itemMissionBackdrop19); break;
 		case MISSION_20: textMission20->getPosition()->x += 64*px; itemMission20->setX(0.5f-512*px); itemMissionBackdrop20->setX(0.5f-512*px+8*px); GuiManager::addGuiToRender(itemMissionBackdrop20); break;
+		case MISSION_21: textMission21->getPosition()->x += 64*px; itemMission21->setX(0.5f-512*px); itemMissionBackdrop21->setX(0.5f-512*px+8*px); GuiManager::addGuiToRender(itemMissionBackdrop21); break;
 		default: break;
 	}
 
@@ -682,6 +699,7 @@ void MainMenu::selectMenuMission(int newSelection)
 	textMission18->setVisibility(true);
 	textMission19->setVisibility(true);
 	textMission20->setVisibility(true);
+	textMission21->setVisibility(true);
 
 	textBestScore->setVisibility(true);
 	textBestTime ->setVisibility(true);
@@ -733,6 +751,7 @@ void MainMenu::selectMenuRoot(int newSelection)
 	textMission18->setVisibility(false);
 	textMission19->setVisibility(false);
 	textMission20->setVisibility(false);
+	textMission21->setVisibility(false);
 
 	textBestScore->setVisibility(false);
 	textBestTime ->setVisibility(false);
@@ -962,6 +981,7 @@ void MainMenu::step()
 					case MISSION_18: Global::levelID = LVL_FIRE_FIELD;         break;
 					case MISSION_19: Global::levelID = LVL_BOBOMB_BATTLEFIELD; break;
 					case MISSION_20: Global::levelID = LVL_KINGDOM_VALLEY;     break;
+					case MISSION_21: Global::levelID = LVL_PUMPKIN_HILL;       break;
 					default:                                                   break;
 				}
 

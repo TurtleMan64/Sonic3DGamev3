@@ -116,5 +116,7 @@ public:
 	virtual ShieldGreen* getShieldGreen();
 
 	virtual void setShieldGreen(ShieldGreen* newGreen);
+
+	virtual int getDiggingTimer();
 };
 #endif

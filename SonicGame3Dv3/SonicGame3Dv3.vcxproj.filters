@@ -103,6 +103,9 @@
     <Filter Include="Source Files\entities\GreenHillZone">
       <UniqueIdentifier>{ebb9ac04-d2ba-4b21-bce3-0c20c216dbe0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\entities\PumpkinHill">
+      <UniqueIdentifier>{a9f68b21-8a37-4a62-8e76-85d61d2f3d95}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\renderEngine\DisplayManager.cpp">
@@ -615,6 +618,9 @@
     <ClCompile Include="src\entities\Snowhead\SHD_GoronKid.cpp">
       <Filter>Source Files\entities\Snowhead</Filter>
     </ClCompile>
+    <ClCompile Include="src\entities\PumpkinHill\PH_Clouds.cpp">
+      <Filter>Source Files\entities\PumpkinHill</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\renderEngine\renderEngine.h">
@@ -1108,6 +1114,9 @@
     </ClInclude>
     <ClInclude Include="src\entities\Snowhead\shdgoronkid.h">
       <Filter>Source Files\entities\Snowhead</Filter>
+    </ClInclude>
+    <ClInclude Include="src\entities\PumpkinHill\phclouds.h">
+      <Filter>Source Files\entities\PumpkinHill</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

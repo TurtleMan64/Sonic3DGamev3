@@ -23,6 +23,7 @@ std::list<TexturedModel*> EmeraldPiece::models;
 
 float EmeraldPiece::hitboxH = 1.5f*2;
 float EmeraldPiece::hitboxV = 3.4f*2;
+float EmeraldPiece::baseScale = 2.0f;
 
 EmeraldPiece::EmeraldPiece()
 {
@@ -42,7 +43,8 @@ EmeraldPiece::EmeraldPiece(
 	this->digSizeX = digSizeX;
 	this->digSizeY = digSizeY;
 	this->digSizeZ = digSizeZ;
-	scale = 2.0f;
+	collectTimer = 0;
+	scale = EmeraldPiece::baseScale;
 }
 
 void EmeraldPiece::step()
@@ -63,50 +65,69 @@ void EmeraldPiece::step()
 		{
 			setVisible(true);
 
-			bool collected = false;
-
-			if (isDiggable)
+			if (collectTimer == 0)
 			{
-				if (Global::gamePlayer->getDiggingTimer() == 20)
-				{
-					float xDiff = Global::gamePlayer->getX() - getX();
-					float yDiff = Global::gamePlayer->getY() - getY();
-					float zDiff = Global::gamePlayer->getZ() - getZ();
-					float diff = xDiff*xDiff + yDiff*yDiff + zDiff*zDiff;
+				bool collected = false;
 
-					if (diff < 40*40)
+				if (isDiggable)
+				{
+					if (Global::gamePlayer->getDiggingTimer() == 20)
 					{
-						collected = true;
+						float xDiff = Global::gamePlayer->getX() - getX();
+						float yDiff = Global::gamePlayer->getY() - getY();
+						float zDiff = Global::gamePlayer->getZ() - getZ();
+						float diff = xDiff*xDiff + yDiff*yDiff + zDiff*zDiff;
+
+						if (diff < 40*40)
+						{
+							collected = true;
+						}
 					}
 				}
-			}
-			else if (Global::gamePlayer->getX() > getX() - hitboxH - Global::gamePlayer->getHitboxHorizontal() && Global::gamePlayer->getX() < getX() + hitboxH + Global::gamePlayer->getHitboxHorizontal() &&
-					 Global::gamePlayer->getZ() > getZ() - hitboxH - Global::gamePlayer->getHitboxHorizontal() && Global::gamePlayer->getZ() < getZ() + hitboxH + Global::gamePlayer->getHitboxHorizontal() &&
-					 Global::gamePlayer->getY() > getY() - hitboxV - Global::gamePlayer->getHitboxVertical()   && Global::gamePlayer->getY() < getY() + hitboxV)
-			{
-				collected = true;
-			}
-
-			if (collected)
-			{
-				AudioPlayer::play(35, getPosition());
-
-				for (int i = 0; i < 10; i++)
+				else if (Global::gamePlayer->getX() > getX() - hitboxH - Global::gamePlayer->getHitboxHorizontal() && Global::gamePlayer->getX() < getX() + hitboxH + Global::gamePlayer->getHitboxHorizontal() &&
+						 Global::gamePlayer->getZ() > getZ() - hitboxH - Global::gamePlayer->getHitboxHorizontal() && Global::gamePlayer->getZ() < getZ() + hitboxH + Global::gamePlayer->getHitboxHorizontal() &&
+						 Global::gamePlayer->getY() > getY() - hitboxV - Global::gamePlayer->getHitboxVertical()   && Global::gamePlayer->getY() < getY() + hitboxV)
 				{
-					Vector3f pos(
-						getX() + Maths::random() * 8 - 4,
-						getY() + Maths::random() * 8 - 4,
-						getZ() + Maths::random() * 8 - 4);
-
-					Vector3f vel(0, 0.4f, 0);
-
-					new Particle(ParticleResources::textureSparkleGreen, &pos, &vel,
-						0.025f, 30, 0, 7, -(7.0f / 30.0f), false);
+					collected = true;
 				}
 
-				EmeraldManager::collectPiece(this);
-				Main_deleteEntityPass2(this);
-				return;
+				if (collected)
+				{
+					AudioPlayer::play(35, getPosition());
+
+					for (int i = 0; i < 10; i++)
+					{
+						Vector3f pos(
+							getX() + Maths::random() * 8 - 4,
+							getY() + Maths::random() * 8 - 4,
+							getZ() + Maths::random() * 8 - 4);
+
+						Vector3f vel(0, 0.4f, 0);
+
+						new Particle(ParticleResources::textureSparkleGreen, &pos, &vel,
+							0.025f, 30, 0, 7, -(7.0f / 30.0f), false);
+					}
+
+					EmeraldManager::collectPiece(this);
+					collectTimer = collectTimerMax;
+				}
+			}
+			else
+			{
+				setPosition(Global::gamePlayer->getPosition());
+				position.y += 20;
+
+				if (collectTimer <= collectTimerMax/2)
+				{
+					scale = EmeraldPiece::baseScale - EmeraldPiece::baseScale*((float)((collectTimerMax/2)-collectTimer))/(collectTimerMax/2);
+				}
+
+				collectTimer--;
+				if (collectTimer <= 0)
+				{
+					Main_deleteEntityPass2(this);
+					return;
+				}
 			}
 
 			updateTransformationMatrix();

@@ -686,9 +686,11 @@ void PlayerTails::step()
 	}
 	Global::gameSkySphere->setPosition(getX(), skyYVal, getZ());
 
-	if (Global::levelID == LVL_SPEED_HIGHWAY)
+	switch (Global::levelID)
 	{
-		Global::gameSkySphere->setPosition(getX(), 4550, getZ());
+		case LVL_SPEED_HIGHWAY: Global::gameSkySphere->setPosition(getX(), 4550, getZ()); break;
+		case LVL_PUMPKIN_HILL:  Global::gameSkySphere->setPosition(getX(), 2020, getZ()); break;
+		default: break;
 	}
 }
 

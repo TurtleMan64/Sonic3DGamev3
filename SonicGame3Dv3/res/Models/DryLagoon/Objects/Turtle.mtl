@@ -1,0 +1,13 @@
+# Blender MTL File: 'None'
+# Material Count: 1
+
+newmtl Material.001
+Ns 19.607843
+Ka 1.000000 1.000000 1.000000
+Kd 1.000000 1.000000 1.000000
+Ks 0.900000 0.900000 0.900000
+Ke 0.000000 0.000000 0.000000
+Ni 0.2
+d 1.000000
+illum 2
+map_Kd Turtle.png

@@ -213,6 +213,7 @@ private:
 	Source* stompSource = nullptr;
 
 	Vector3f previousLightdashPosition;
+	int lightdashFrameEnd = 0;
 
 	ShieldMagnet* myShieldMagnet = nullptr;
 	ShieldGreen*  myShieldGreen  = nullptr;

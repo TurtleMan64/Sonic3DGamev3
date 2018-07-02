@@ -971,14 +971,11 @@ void PlayerKnuckles::step()
 	}
 	Global::gameSkySphere->setPosition(getX(), skyYVal, getZ());
 
-	if (Global::levelID == LVL_SPEED_HIGHWAY)
+	switch (Global::levelID)
 	{
-		Global::gameSkySphere->setPosition(getX(), 4550, getZ());
-	}
-
-	if (Global::levelID == LVL_PUMPKIN_HILL)
-	{
-		Global::gameSkySphere->setPosition(getX(), 2020, getZ());
+		case LVL_SPEED_HIGHWAY: Global::gameSkySphere->setPosition(getX(), 4550, getZ()); break;
+		case LVL_PUMPKIN_HILL:  Global::gameSkySphere->setPosition(getX(), 2020, getZ()); break;
+		default: break;
 	}
 }
 
@@ -2661,6 +2658,7 @@ void PlayerKnuckles::stopMoving()
 	zVelAir = 0;
 	xVelGround = 0;
 	zVelGround = 0;
+	isPunching = false;
 }
 
 void PlayerKnuckles::setInWater(float height)

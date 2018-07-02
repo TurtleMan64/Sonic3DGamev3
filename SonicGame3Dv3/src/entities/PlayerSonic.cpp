@@ -810,6 +810,7 @@ void PlayerSonic::step()
 
 	if (specialInput && !previousSpecialInput && !isLightdashing)
 	{
+		lightdashFrameEnd = Global::gameClock % 2;
 		isLightdashing = true;
 	}
 
@@ -837,9 +838,11 @@ void PlayerSonic::step()
 	}
 	Global::gameSkySphere->setPosition(getX(), skyYVal, getZ());
 
-	if (Global::levelID == LVL_SPEED_HIGHWAY)
+	switch (Global::levelID)
 	{
-		Global::gameSkySphere->setPosition(getX(), 4550, getZ());
+		case LVL_SPEED_HIGHWAY: Global::gameSkySphere->setPosition(getX(), 4550, getZ()); break;
+		case LVL_PUMPKIN_HILL:  Global::gameSkySphere->setPosition(getX(), 2020, getZ()); break;
+		default: break;
 	}
 
 	//std::fprintf(stdout, "ground speed = %f\n", sqrtf(xVelGround*xVelGround + zVelGround*zVelGround));
@@ -1799,16 +1802,27 @@ void PlayerSonic::bounceOffGround(Vector3f* surfaceNormal, float b, int s)
 //to false
 void PlayerSonic::attemptLightdash()
 {
-	if (Global::gameClock % 2 != 0)
+	if (Global::gameClock % 2 != lightdashFrameEnd)
 	{
 		return;
 	}
-	//find nearest ring
+	//find nearest ring in the direction sonic is traveling
 	Entity* closest = nullptr;
 	float dist = 2000; //distance squared
+	//find nearest ring
+	Entity* closestBackup = nullptr;
+	float distBackup = 2000; //distance squared
+
 	float myX = getX();
 	float myZ = getZ();
 	float myY = getY();
+
+	Vector3f myVel(xVel+xVelAir, yVel, zVel+zVelAir);
+	if (xVel*xVel + yVel*yVel + zVel*zVel == 0)
+	{
+		myVel.set(0, 1, 0);
+	}
+	myVel.normalize();
 
 	extern std::unordered_map<Entity*, Entity*> gameEntities;
 
@@ -1820,10 +1834,23 @@ void PlayerSonic::attemptLightdash()
 			float zDiff = e.first->getZ() - myZ;
 			float yDiff = e.first->getY() - myY;
 			float newDist = xDiff*xDiff + zDiff*zDiff + yDiff*yDiff;
-			if (newDist < dist)
+
+			if (newDist < distBackup)
 			{
-				dist = newDist;
-				closest = e.first;
+				distBackup = newDist;
+				closestBackup = e.first;
+			}
+
+			Vector3f toRing(xDiff, yDiff, zDiff);
+			toRing.normalize();
+
+			if (myVel.dot(&toRing) >= 0)
+			{
+				if (newDist < dist)
+				{
+					dist = newDist;
+					closest = e.first;
+				}
 			}
 		}
 	}
@@ -1831,8 +1858,18 @@ void PlayerSonic::attemptLightdash()
 
 	//check nearest distance
 	//System.out.println("dist = "+dist);
+
+	Entity* ringToUse = nullptr;
+	if (closest != nullptr)
+	{
+		ringToUse = closest;
+	}
+	else if (closestBackup != nullptr)
+	{
+		ringToUse = closestBackup;
+	}
 	//passes threshold?
-	if (dist < 2000)
+	if (ringToUse != nullptr)
 	{
 		onPlane = false;
 
@@ -1842,18 +1879,18 @@ void PlayerSonic::attemptLightdash()
 		zVelGround = 0;
 
 		//set xVelAir and zVelAir to the direction to the ring
-		Vector3f diff(closest->getX() - myX, closest->getY() - myY, closest->getZ() - myZ);
+		Vector3f diff(ringToUse->getX() - myX, ringToUse->getY() - myY, ringToUse->getZ() - myZ);
 		diff.normalize();
 
 		xVelAir = diff.x * 5;
 		zVelAir = diff.z * 5;
-		yVel = diff.y * 5;
+		yVel    = diff.y * 5;
 
 
 		Vector3f diffNew;
-		diffNew.x = closest->getX() - previousLightdashPosition.x;
-		diffNew.y = closest->getY() - previousLightdashPosition.y;
-		diffNew.z = closest->getZ() - previousLightdashPosition.z;
+		diffNew.x = ringToUse->getX() - previousLightdashPosition.x;
+		diffNew.y = ringToUse->getY() - previousLightdashPosition.y;
+		diffNew.z = ringToUse->getZ() - previousLightdashPosition.z;
 
 		Vector3f vel(0, 0.0f, 0);
 
@@ -1873,11 +1910,11 @@ void PlayerSonic::attemptLightdash()
 
 
 		//move to ring location
-		setX(closest->getX());
-		setY(closest->getY());
-		setZ(closest->getZ());
+		setX(ringToUse->getX());
+		setY(ringToUse->getY());
+		setZ(ringToUse->getZ());
 
-		previousLightdashPosition.set(closest->getPosition());
+		previousLightdashPosition.set(ringToUse->getPosition());
 	}
 	else
 	{

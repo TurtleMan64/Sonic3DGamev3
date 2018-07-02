@@ -105,6 +105,7 @@
 #include "../entities/Snowhead/shdgoronelder.h"
 #include "../entities/Snowhead/shdgoronkid.h"
 #include "../entities/PumpkinHill/phclouds.h"
+#include "../entities/DryLagoon/dlturtle.h"
 
 float toFloat(char* input);
 int toInt(char* input);
@@ -1519,6 +1520,17 @@ void processLine(char** dat, int datLength)
 			return;
 		}
 
+		case 83: //Dry Lagoon Turtle
+		{
+			DL_Turtle::loadStaticModels();
+			DL_Turtle* turtle = new DL_Turtle(
+				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), toFloat(dat[4]),  //position, y rotation
+				toFloat(dat[5]), toFloat(dat[6]), toFloat(dat[7]), toFloat(dat[8])); //target position, cam rotation
+			Global::countNew++;
+			Main_addEntity(turtle);
+			return;
+		}
+
 		default:
 		{
 			return;
@@ -1678,4 +1690,5 @@ void freeAllStaticModels()
 	SHD_GoronElder::deleteStaticModels();
 	SHD_GoronKid::deleteStaticModels();
 	PH_Clouds::deleteStaticModels();
+	DL_Turtle::deleteStaticModels();
 }

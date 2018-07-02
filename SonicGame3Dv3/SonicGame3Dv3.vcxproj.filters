@@ -106,6 +106,9 @@
     <Filter Include="Source Files\entities\PumpkinHill">
       <UniqueIdentifier>{a9f68b21-8a37-4a62-8e76-85d61d2f3d95}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\entities\DryLagoon">
+      <UniqueIdentifier>{c01f0c6d-a2e2-41df-b5ba-c657b305ebec}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\renderEngine\DisplayManager.cpp">
@@ -621,6 +624,9 @@
     <ClCompile Include="src\entities\PumpkinHill\PH_Clouds.cpp">
       <Filter>Source Files\entities\PumpkinHill</Filter>
     </ClCompile>
+    <ClCompile Include="src\entities\DryLagoon\DL_Turtle.cpp">
+      <Filter>Source Files\entities\DryLagoon</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\renderEngine\renderEngine.h">
@@ -1117,6 +1123,9 @@
     </ClInclude>
     <ClInclude Include="src\entities\PumpkinHill\phclouds.h">
       <Filter>Source Files\entities\PumpkinHill</Filter>
+    </ClInclude>
+    <ClInclude Include="src\entities\DryLagoon\dlturtle.h">
+      <Filter>Source Files\entities\DryLagoon</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

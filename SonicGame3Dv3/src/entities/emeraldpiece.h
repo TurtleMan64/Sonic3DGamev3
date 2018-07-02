@@ -13,8 +13,12 @@ private:
 
 	static float hitboxH;
 	static float hitboxV;
+	static float baseScale;
 	
 	int pieceNumber; //1, 2 or 3
+
+	int collectTimer;
+	const int collectTimerMax = 120;
 
 	bool isDiggable;
 	float digSizeX;

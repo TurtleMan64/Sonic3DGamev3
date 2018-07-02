@@ -42,6 +42,7 @@
     <ClCompile Include="src\entities\Dashpad.cpp" />
     <ClCompile Include="src\entities\DelfinoPlaza\DP_Leaves.cpp" />
     <ClCompile Include="src\entities\DelfinoPlaza\DP_Palmtree.cpp" />
+    <ClCompile Include="src\entities\DryLagoon\DL_Turtle.cpp" />
     <ClCompile Include="src\entities\EmeraldCoast\EC_BigRock.cpp" />
     <ClCompile Include="src\entities\EmeraldCoast\EC_Chair.cpp" />
     <ClCompile Include="src\entities\EmeraldCoast\EC_Dock.cpp" />
@@ -215,6 +216,7 @@
     <ClInclude Include="src\entities\dashpad.h" />
     <ClInclude Include="src\entities\DelfinoPlaza\dpleaves.h" />
     <ClInclude Include="src\entities\DelfinoPlaza\dppalmtree.h" />
+    <ClInclude Include="src\entities\DryLagoon\dlturtle.h" />
     <ClInclude Include="src\entities\EmeraldCoast\ecbigrock.h" />
     <ClInclude Include="src\entities\EmeraldCoast\ecchair.h" />
     <ClInclude Include="src\entities\EmeraldCoast\ecdock.h" />

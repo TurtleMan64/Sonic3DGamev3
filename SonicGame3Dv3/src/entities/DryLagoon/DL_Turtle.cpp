@@ -104,6 +104,7 @@ void DL_Turtle::step()
 		{
 			Global::gamePlayer->setPosition(xt, yt, zt);
 			Global::gamePlayer->setCameraTargetYaw(camYt);
+			Global::gamePlayer->setCameraTargetPitch(10);
 		}
 	}
 }

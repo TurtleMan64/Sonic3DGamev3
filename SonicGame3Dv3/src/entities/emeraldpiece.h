@@ -14,6 +14,8 @@ private:
 	static float hitboxH;
 	static float hitboxV;
 	static float baseScale;
+
+	static int lastPieceCollectedTimestamp;
 	
 	int pieceNumber; //1, 2 or 3
 

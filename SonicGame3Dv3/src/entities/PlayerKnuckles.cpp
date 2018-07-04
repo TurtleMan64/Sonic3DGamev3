@@ -2455,7 +2455,7 @@ void PlayerKnuckles::animate()
 		AudioPlayer::stopBGM();
 		AudioPlayer::play(24, getPosition());
 	}
-	else if (Global::finishStageTimer == 400)
+	else if (Global::finishStageTimer == 490)
 	{
 		Vector3f partVel(0, 0, 0);
 		new Particle(ParticleResources::textureBlackFadeOutAndIn, Global::gameCamera->getFadePosition1(), &partVel, 0, 120, 0, 400, 0, true);

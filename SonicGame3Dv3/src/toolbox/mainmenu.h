@@ -82,14 +82,17 @@ private:
 	static GLuint textureParallelogramHalfBackdrop;
 	static GLuint textureParallelogramHalf2;
 	static GLuint textureParallelogramHalf2Backdrop;
+	static GLuint textureRankBlank;
+	static GLuint textureMissionSelect;
+
+public:
 	static GLuint textureRankA;
 	static GLuint textureRankB;
 	static GLuint textureRankC;
 	static GLuint textureRankD;
 	static GLuint textureRankE;
-	static GLuint textureRankBlank;
-	static GLuint textureMissionSelect;
 
+private:
 	//Parallelograms for ROOT
 	static GuiTexture* item1;
 	static GuiTexture* item2;

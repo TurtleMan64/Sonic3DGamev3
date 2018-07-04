@@ -143,6 +143,6 @@ public:
 
 	static void saveSaveData();
 
-	static void calculateRankAndUpdate();
+	static int calculateRankAndUpdate();
 };
 #endif

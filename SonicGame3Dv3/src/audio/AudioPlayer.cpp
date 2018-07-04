@@ -68,6 +68,7 @@ void AudioPlayer::loadSoundEffects()
 	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/Snowhead/BabyGoron_Cry3.ogg"));      //41
 	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/Snowhead/BabyGoron_Doze.ogg"));      //42
 	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/General/Dig.ogg"));                  //43
+	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/General/RankShow.ogg"));             //44
 }
 
 void AudioPlayer::loadBGM(char* fileName)

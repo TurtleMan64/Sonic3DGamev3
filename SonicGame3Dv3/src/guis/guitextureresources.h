@@ -10,6 +10,7 @@ class GuiTextureResources
 public:
 	static GuiTexture* textureRing;
 	static GuiTexture* textureBlueLine;
+	static GuiTexture* textureRankDisplay;
 
 	static void loadGuiTextures();
 };

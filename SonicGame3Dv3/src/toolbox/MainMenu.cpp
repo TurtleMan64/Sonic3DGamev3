@@ -170,11 +170,11 @@ void MainMenu::init()
 	textureParallelogramHalfBackdrop  = Loader_loadTextureNoInterpolation("res/Images/MainMenu/ParallelogramHalfBackdrop.png");
 	textureParallelogramHalf2         = Loader_loadTextureNoInterpolation("res/Images/MainMenu/ParallelogramHalf2.png");
 	textureParallelogramHalf2Backdrop = Loader_loadTextureNoInterpolation("res/Images/MainMenu/ParallelogramHalf2Backdrop.png");
-	textureRankA					  = Loader_loadTextureNoInterpolation("res/Images/MainMenu/RankA.png");
-	textureRankB					  = Loader_loadTextureNoInterpolation("res/Images/MainMenu/RankB.png");
-	textureRankC					  = Loader_loadTextureNoInterpolation("res/Images/MainMenu/RankC.png");
-	textureRankD					  = Loader_loadTextureNoInterpolation("res/Images/MainMenu/RankD.png");
-	textureRankE					  = Loader_loadTextureNoInterpolation("res/Images/MainMenu/RankE.png");
+	textureRankA					  = Loader_loadTexture               ("res/Images/MainMenu/RankA.png");
+	textureRankB					  = Loader_loadTexture               ("res/Images/MainMenu/RankB.png");
+	textureRankC					  = Loader_loadTexture               ("res/Images/MainMenu/RankC.png");
+	textureRankD					  = Loader_loadTexture               ("res/Images/MainMenu/RankD.png");
+	textureRankE					  = Loader_loadTexture               ("res/Images/MainMenu/RankE.png");
 	textureRankBlank				  = Loader_loadTextureNoInterpolation("res/Images/MainMenu/NoRank.png");
 	textureMissionSelect			  = Loader_loadTextureNoInterpolation("res/Images/MainMenu/MissionSelect.png");
 

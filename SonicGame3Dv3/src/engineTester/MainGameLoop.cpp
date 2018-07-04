@@ -60,6 +60,7 @@
 #include "../guis/guitextureresources.h"
 #include "../toolbox/mainmenu.h"
 #include "../toolbox/level.h"
+#include "../guis/guitexture.h"
 
 #ifdef _WIN32
 #include <windows.h>
@@ -575,14 +576,25 @@ int main()
 
 			Global::finishStageTimer++;
 
-			if (Global::finishStageTimer > 460)
+			if (Global::finishStageTimer > 550)
 			{
 				LevelLoader_loadTitle();
 			}
 
-			if (Global::finishStageTimer == 360)
+			if (Global::finishStageTimer == 370)
 			{
-				Global::calculateRankAndUpdate();
+				int rank = Global::calculateRankAndUpdate();
+				switch (rank)
+				{
+					case 0: GuiTextureResources::textureRankDisplay->setTexture(MainMenu::textureRankE); break;
+					case 1: GuiTextureResources::textureRankDisplay->setTexture(MainMenu::textureRankD); break;
+					case 2: GuiTextureResources::textureRankDisplay->setTexture(MainMenu::textureRankC); break;
+					case 3: GuiTextureResources::textureRankDisplay->setTexture(MainMenu::textureRankB); break;
+					case 4: GuiTextureResources::textureRankDisplay->setTexture(MainMenu::textureRankA); break;
+					default: break;
+				}
+				GuiManager::addGuiToRender(GuiTextureResources::textureRankDisplay);
+				AudioPlayer::play(44, Global::gamePlayer->getPosition());
 			}
 		}
 
@@ -828,8 +840,10 @@ void Global::saveSaveData()
 	}
 }
 
-void Global::calculateRankAndUpdate()
+int Global::calculateRankAndUpdate()
 {
+	int newRank = 0; //0 = E, 4 = A
+
 	Level* currentLevel = &Global::gameLevelData[Global::levelID];
 
 	if (Global::gameMissionNumber < currentLevel->numMissions)
@@ -900,20 +914,18 @@ void Global::calculateRankAndUpdate()
 
 		if (missionType == "Normal" || missionType == "Hard")
 		{
+			int scoreForRankA = std::stoi((currentLevel->missionData[Global::gameMissionNumber])[1]);
+			int scoreForRankB = (3*scoreForRankA)/4;
+			int scoreForRankC = (2*scoreForRankA)/3;
+			int scoreForRankD = (1*scoreForRankA)/2;
+
+			if      (newScore >= scoreForRankA) newRank = 4;
+			else if (newScore >= scoreForRankB) newRank = 3;
+			else if (newScore >= scoreForRankC) newRank = 2;
+			else if (newScore >= scoreForRankD) newRank = 1;
+
 			if (newScore > savedScore)
 			{
-				int scoreForRankA = std::stoi((currentLevel->missionData[Global::gameMissionNumber])[1]);
-				int scoreForRankB = (3*scoreForRankA)/4;
-				int scoreForRankC = (2*scoreForRankA)/3;
-				int scoreForRankD = (1*scoreForRankA)/2;
-
-				int newRank = 0; //0 = E, 4 = A
-
-				if      (newScore >= scoreForRankA) newRank = 4;
-				else if (newScore >= scoreForRankB) newRank = 3;
-				else if (newScore >= scoreForRankC) newRank = 2;
-				else if (newScore >= scoreForRankD) newRank = 1;
-
 				std::string newRankString = "ERROR";
 				switch (newRank)
 				{
@@ -932,20 +944,18 @@ void Global::calculateRankAndUpdate()
 		}
 		else if (missionType == "Ring" || missionType == "Chao")
 		{
+			int timeForRankA = std::stoi((currentLevel->missionData[Global::gameMissionNumber])[1]);
+			int timeForRankB = (4*timeForRankA)/3;
+			int timeForRankC = (3*timeForRankA)/2;
+			int timeForRankD = (2*timeForRankA)/1;
+
+			if      (newTime <= timeForRankA) newRank = 4;
+			else if (newTime <= timeForRankB) newRank = 3;
+			else if (newTime <= timeForRankC) newRank = 2;
+			else if (newTime <= timeForRankD) newRank = 1;
+
 			if (newTime < savedTime)
 			{
-				int timeForRankA = std::stoi((currentLevel->missionData[Global::gameMissionNumber])[1]);
-				int timeForRankB = (4*timeForRankA)/3;
-				int timeForRankC = (3*timeForRankA)/2;
-				int timeForRankD = (2*timeForRankA)/1;
-
-				int newRank = 0; //0 = E, 4 = A
-
-				if      (newTime <= timeForRankA) newRank = 4;
-				else if (newTime <= timeForRankB) newRank = 3;
-				else if (newTime <= timeForRankC) newRank = 2;
-				else if (newTime <= timeForRankD) newRank = 1;
-
 				std::string newRankString = "ERROR";
 				switch (newRank)
 				{
@@ -963,6 +973,8 @@ void Global::calculateRankAndUpdate()
 			}
 		}
 	}
+
+	return newRank;
 }
 
 void doListenThread()

@@ -8,7 +8,7 @@
 #include "../objLoader/objLoader.h"
 #include "../engineTester/main.h"
 #include "../entities/camera.h"
-#include "../entities/playersonic.h"
+#include "../entities/controllableplayer.h"
 #include "../toolbox/maths.h"
 #include "../audio/audioplayer.h"
 #include "../particles/particle.h"
@@ -24,6 +24,7 @@ std::list<TexturedModel*> EmeraldPiece::models;
 float EmeraldPiece::hitboxH = 1.5f*2;
 float EmeraldPiece::hitboxV = 3.4f*2;
 float EmeraldPiece::baseScale = 2.0f;
+int   EmeraldPiece::lastPieceCollectedTimestamp = 0;
 
 EmeraldPiece::EmeraldPiece()
 {
@@ -45,6 +46,7 @@ EmeraldPiece::EmeraldPiece(
 	this->digSizeZ = digSizeZ;
 	collectTimer = 0;
 	scale = EmeraldPiece::baseScale;
+	EmeraldPiece::lastPieceCollectedTimestamp = Global::gameClock;
 }
 
 void EmeraldPiece::step()
@@ -110,6 +112,10 @@ void EmeraldPiece::step()
 
 					EmeraldManager::collectPiece(this);
 					collectTimer = collectTimerMax;
+
+					Global::gameScore += std::max(0, 2000 - 20*((Global::gameClock - EmeraldPiece::lastPieceCollectedTimestamp)/60));
+
+					EmeraldPiece::lastPieceCollectedTimestamp = Global::gameClock;
 				}
 			}
 			else

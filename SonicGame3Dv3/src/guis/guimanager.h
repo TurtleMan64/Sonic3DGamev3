@@ -10,7 +10,15 @@ class GuiTexture;
 class GuiManager
 {
 private:
-	static GUIText* textTimer;
+	//static GUIText* textTimer;
+	static GUIText* timerColon;
+	static GUIText* timerPeriod;
+	static GUIText* timerMin1[10];
+	static GUIText* timerMin2[10];
+	static GUIText* timerSec1[10];
+	static GUIText* timerSec2[10];
+	static GUIText* timerCen1[10];
+	static GUIText* timerCen2[10];
 
 	static bool timerIsRunning;
 	static int centiseconds;
@@ -19,6 +27,9 @@ private:
 
 	static GUIText* textRings;
 	static GUIText* textScore;
+
+	static int previousRings;
+	static int previousScore;
 
 	static std::list<GuiTexture*> guisToRender;
 
@@ -38,6 +49,8 @@ private:
 	static float totalVel;
 	static int hoverCount;
 	static float storedSpindashSpeed;
+
+	static void setTimerInvisible();
 
 public:
 	static FontType* fontVip;

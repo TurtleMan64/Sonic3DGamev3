@@ -275,6 +275,12 @@ void PlayerKnuckles::step()
 		zVelAir = 0;
 		hoverCount = hoverLimit;
 
+		if (combo > 1)
+		{
+			Global::gameScore += 100*(combo-1);
+		}
+		combo = 0;
+
 		if (wallStickTimer < 0)
 		{
 			popOffWall();
@@ -3049,4 +3055,9 @@ void PlayerKnuckles::setShieldGreen(ShieldGreen* newGreen)
 int PlayerKnuckles::getDiggingTimer()
 {
 	return diggingTimer;
+}
+
+void PlayerKnuckles::increaseCombo()
+{
+	combo+=1;
 }

@@ -594,7 +594,7 @@ int main()
 
 		if (seconds - previousTime >= 1.0)
 		{
-			std::fprintf(stdout, "fps: %f\n", frameCount / (seconds - previousTime));
+			//std::fprintf(stdout, "fps: %f\n", frameCount / (seconds - previousTime));
 			//std::fprintf(stdout, "diff: %d\n", Global::countNew - Global::countDelete);
 			//Loader_printInfo();
 			//std::fprintf(stdout, "entity counts: %d %d %d\n", gameEntities.size(), gameEntitiesPass2.size(), gameTransparentEntities.size());

@@ -55,15 +55,16 @@ void GoalSign::step()
 {
 	if (triggersRemaining <= 0)
 	{
-		float playerX = Global::gamePlayer->getX();
-		float playerY = Global::gamePlayer->getY();
-		float playerZ = Global::gamePlayer->getZ();
+		float playerX    = Global::gamePlayer->getX();
+		float playerY    = Global::gamePlayer->getY();
+		float playerZ    = Global::gamePlayer->getZ();
 		float playerHbox = Global::gamePlayer->getHitboxHorizontal();
 		float playerVbox = Global::gamePlayer->getHitboxVertical();
 
 		if (playerX > getX() - hitboxR - playerHbox && playerX < getX() + hitboxR + playerHbox &&
 			playerZ > getZ() - hitboxR - playerHbox && playerZ < getZ() + hitboxR + playerHbox &&
-			playerY > getY() - playerVbox && playerY < getY() + hitboxV)
+			playerY > getY() - playerVbox           && playerY < getY() + hitboxV &&
+			Global::finishStageTimer == -1)
 		{
 			if (rotateSpeed == 0)
 			{
@@ -76,6 +77,7 @@ void GoalSign::step()
 				float speed = Global::gamePlayer->getSpeed() * 2 + 3;
 				rotateSpeed = std::fmin(48.0f, speed);
 
+				/*
 				if (Global::levelName == "EmeraldCoast.lvl")
 				{
 					if (GuiManager::getTotalTimerInSeconds() < 90 &&
@@ -113,6 +115,7 @@ void GoalSign::step()
 						}
 					}
 				}
+				*/
 			}
 		}
 

@@ -98,6 +98,8 @@ void Spinner::die()
 {
 	AudioPlayer::play(3, getPosition());
 
+	Global::gamePlayer->increaseCombo();
+
 	Main_deleteEntity(this);
 	Main_deleteEntity(blades);
 

@@ -299,6 +299,8 @@ void MotoBug::die()
 {
 	AudioPlayer::play(3, getPosition());
 
+	Global::gamePlayer->increaseCombo();
+
 	Main_deleteEntity(this);
 
 	float height = 10.0f;

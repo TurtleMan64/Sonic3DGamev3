@@ -1,6 +1,6 @@
 21
 
-EmeraldCoast.lvl
+PyramidCave.lvl
 Emerald Coast
 3
 Normal;16000;Destroy the capsule and rescue the animals!
@@ -116,8 +116,9 @@ Chao;600;Find the lost chao!
 
 FireField.lvl
 Fire Field
-1
-Normal;13000;Go fast
+2
+Normal;10640;Go fast
+Chao;1500;Find the lost chao!
 
 BobOmbBattlefield.lvl
 Bob-omb Battlefield

@@ -54,9 +54,14 @@ res/Audio/BGM/highway1_loop.ogg
 1 7421.6 2240 11376 -21 60 18.5 260
 1 8612.28 3692.91 11833.06 -13 0 8 40
 
-32 4851.5376 1755.5 6437.9 58.189 1 I swear this used to be an entrance to the city...
-32 10387 2455.5 11317.8 -103.6 2 I forgot how to get down from here.
-32 2443.74 3545 26 180 3 I saw you magically appear in that tunnel!
+# New NPC
+32 -1067.89 5610.2 7.66 0 1 Nice
+32 11376.32 4170.98 12403.1 0 2 I forgot how to get down from here.
+32 5335.67 3400.99 7081.64 60 3 I swear this used to be an entrance to the city...
+
+# Old NPC
+# 32 2443.74 3545 26 180 3 I saw you magically appear in that tunnel!
+
 47 -946.995 13 1545.058 50 3
 
 60 3570.06 3724.33 1078.49 0        #crane platform 1 path point 1

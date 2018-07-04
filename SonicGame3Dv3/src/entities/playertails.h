@@ -230,6 +230,8 @@ private:
 	ShieldMagnet* myShieldMagnet = nullptr;
 	ShieldGreen*  myShieldGreen  = nullptr;
 
+	int combo;
+
 public:
 	PlayerTails(float, float, float);
 
@@ -349,6 +351,8 @@ public:
 	ShieldGreen* getShieldGreen();
 
 	void setShieldGreen(ShieldGreen* newGreen);
+
+	void increaseCombo();    
 
 private:
 	void adjustCamera();

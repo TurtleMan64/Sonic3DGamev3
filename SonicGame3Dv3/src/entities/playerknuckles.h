@@ -267,6 +267,8 @@ private:
 	ShieldMagnet* myShieldMagnet = nullptr;
 	ShieldGreen*  myShieldGreen  = nullptr;
 
+	int combo;
+
 public:
 	PlayerKnuckles(float x, float y, float z);
 
@@ -386,6 +388,8 @@ public:
 	void setShieldGreen(ShieldGreen* newGreen);
 
 	int getDiggingTimer();
+
+	void increaseCombo();
 
 private:
 	void adjustCamera();

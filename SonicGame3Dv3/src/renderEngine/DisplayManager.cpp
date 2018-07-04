@@ -57,7 +57,7 @@ int createDisplay()
 	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); // uncomment this statement to fix compilation on OS X
 	#endif
 
-	GLFWmonitor* monitor = NULL;
+	GLFWmonitor* monitor = nullptr;
 
 	glfwWindowHint(GLFW_SAMPLES, AA_SAMPLES);
 	glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
@@ -70,7 +70,7 @@ int createDisplay()
 		SCR_HEIGHT = F_HEIGHT;
 	}
 
-	unsigned int screenWidth = SCR_WIDTH;
+	unsigned int screenWidth  = SCR_WIDTH;
 	unsigned int screenHeight = SCR_HEIGHT;
 
 
@@ -84,8 +84,8 @@ int createDisplay()
 
 	// glfw window creation
 	// --------------------
-	window = glfwCreateWindow(screenWidth, screenHeight, "Version 0.0011", monitor, NULL);
-	if (window == NULL)
+	window = glfwCreateWindow(screenWidth, screenHeight, "Version 0.0012", monitor, nullptr);
+	if (window == nullptr)
 	{
 		std::cout << "Failed to create GLFW window" << std::endl;
 		glfwTerminate();
@@ -128,10 +128,10 @@ int createDisplay()
 		int monitorWidth = mode->width;
 		int monitorHeight = mode->height;
 
-		if ((int)SCR_WIDTH <= monitorWidth && 
+		if ((int)SCR_WIDTH  <= monitorWidth && 
 			(int)SCR_HEIGHT <= monitorHeight)
 		{
-			int xpos = monitorWidth/2 - ((int)SCR_WIDTH)/2;
+			int xpos = monitorWidth/2  - ((int)SCR_WIDTH)/2;
 			int ypos = monitorHeight/2 - ((int)SCR_HEIGHT)/2;
 
 			glfwSetWindowPos(window, xpos, ypos);

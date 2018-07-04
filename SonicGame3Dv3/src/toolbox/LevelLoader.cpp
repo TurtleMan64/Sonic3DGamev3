@@ -1137,7 +1137,7 @@ void processLine(char** dat, int datLength)
 		case 49: //Twinkle Park water
 		{
 			TP_FlatWater::loadStaticModels();
-			TP_FlatWater* water = new TP_FlatWater();
+			TP_FlatWater* water = new TP_FlatWater;
 			Global::countNew++;
 			Main_addTransparentEntity(water);
 			return;
@@ -1167,7 +1167,7 @@ void processLine(char** dat, int datLength)
 		case 52: //Fire field heal pad
 		{
 			FF_HealPads::loadStaticModels();
-			FF_HealPads* plat = new FF_HealPads();
+			FF_HealPads* plat = new FF_HealPads;
 			Global::countNew++;
 			Main_addEntity(plat);
 			return;
@@ -1176,7 +1176,7 @@ void processLine(char** dat, int datLength)
 		case 53: //Emerald Coast Transparent
 		{
 			EC_StageTransparent::loadStaticModels();
-			EC_StageTransparent* trans = new EC_StageTransparent();
+			EC_StageTransparent* trans = new EC_StageTransparent;
 			Global::countNew++;
 			Main_addEntityPass2(trans);
 			return;
@@ -1185,7 +1185,7 @@ void processLine(char** dat, int datLength)
 		case 54: //Snowhead Transparent
 		{
 			SHD_StageTransparent::loadStaticModels();
-			SHD_StageTransparent* trans = new SHD_StageTransparent();
+			SHD_StageTransparent* trans = new SHD_StageTransparent;
 			Global::countNew++;
 			Main_addEntityPass2(trans);
 			return;
@@ -1320,7 +1320,7 @@ void processLine(char** dat, int datLength)
 		case 65: //Speed Highway Transparent
 		{
 			SH_StageTransparent::loadStaticModels();
-			SH_StageTransparent* trans = new SH_StageTransparent();
+			SH_StageTransparent* trans = new SH_StageTransparent;
 			Global::countNew++;
 			Main_addEntityPass2(trans);
 			return;

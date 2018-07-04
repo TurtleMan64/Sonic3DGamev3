@@ -1,0 +1,28 @@
+PyramidCave
+PyramidCave
+PyramidCave
+1
+Collision 7
+1.0 .92 .84
+0.0 0.0 0.0
+0.0 0.0 0.0
+0.3 0.3 0.45
+0.0 0.0 0.0
+0.00 0.00 0.00
+0.00000000000000005 2.0
+83
+-310 11
+0
+0
+927 323.9218 -942
+88 6
+-200
+
+6 0 7000 0
+
+# Sky sphere
+#7 Sky SkyCylinderModel6Repeat MTL_PumpkinHill 4 0
+
+# Lost Chao
+#81 2120.42 0 154.64 0
+

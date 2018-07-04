@@ -72,7 +72,7 @@ void DL_Turtle::step()
 
 			if (collideModelTransformed->playerIsOn)
 			{
-				if (Global::gamePlayer->getY() >= position.y && Global::gamePlayer->getOverallVel().lengthSquared() < 1)
+				if (Global::gamePlayer->getY() >= position.y)
 				{
 					extern bool INPUT_ACTION;
 					extern bool INPUT_ACTION2;

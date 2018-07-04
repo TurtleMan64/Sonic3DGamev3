@@ -118,5 +118,7 @@ public:
 	virtual void setShieldGreen(ShieldGreen* newGreen);
 
 	virtual int getDiggingTimer();
+
+	virtual void increaseCombo();
 };
 #endif

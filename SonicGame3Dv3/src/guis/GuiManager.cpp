@@ -1,5 +1,7 @@
-#include "guimanager.h"
+//#include <glad/glad.h>
+//#include <GLFW/glfw3.h>
 
+#include "guimanager.h"
 #include "../engineTester/main.h"
 #include "../entities/playersonic.h"
 #include "../fontMeshCreator/guitext.h"
@@ -15,7 +17,16 @@ extern bool INPUT_ACTION;
 extern bool INPUT_ACTION2;
 extern bool INPUT_SPECIAL;
 
-GUIText* GuiManager::textTimer = nullptr;
+//GUIText* GuiManager::textTimer = nullptr;
+
+GUIText* GuiManager::timerColon  = nullptr;
+GUIText* GuiManager::timerPeriod = nullptr;
+GUIText* GuiManager::timerMin1[10];
+GUIText* GuiManager::timerMin2[10];
+GUIText* GuiManager::timerSec1[10];
+GUIText* GuiManager::timerSec2[10];
+GUIText* GuiManager::timerCen1[10];
+GUIText* GuiManager::timerCen2[10];
 
 bool GuiManager::timerIsRunning = false;
 int GuiManager::centiseconds = 0;
@@ -24,6 +35,9 @@ int GuiManager::minutes = 0;
 
 GUIText* GuiManager::textRings = nullptr;
 GUIText* GuiManager::textScore = nullptr;
+
+int GuiManager::previousRings = -1;
+int GuiManager::previousScore = -1;
 
 GUIText* GuiManager::textHorVel = nullptr;
 GUIText* GuiManager::textVerVel = nullptr;
@@ -49,7 +63,7 @@ std::list<GuiTexture*> GuiManager::guisToRender;
 void GuiManager::init()
 {
 	fontVip = PauseScreen::font;
-	textTimer = new GUIText("0", 1, fontVip, 0.01f, 0.01f, 1, false, false, false); Global::countNew++;
+	//textTimer = new GUIText("0", 1, fontVip, 0.01f, 0.01f, 1, false, false, false); Global::countNew++;
 	textRings = new GUIText("0", 1, fontVip, 0.01f, 0.01f, 1, false, false, false); Global::countNew++;
 	textScore = new GUIText("0", 1, fontVip, 0.01f, 0.01f, 1, false, false, false); Global::countNew++;
 
@@ -66,11 +80,88 @@ void GuiManager::init()
 	textX = new GUIText("X", 1, fontVip, 0.90f, 0.95f, 1, false, false, Global::debugDisplay); Global::countNew++;
 	textY = new GUIText("Y", 1, fontVip, 0.95f, 0.95f, 1, false, false, Global::debugDisplay); Global::countNew++;
 
+	const float w = 0.02f; //width of a single text character
+	const float s = 1.5f; //size of timer text
+
+	extern unsigned int SCR_WIDTH;
+	extern unsigned int SCR_HEIGHT;
+
+	float px = 1.0f/(SCR_WIDTH);  //1 pixel in x dimension
+	float py = 1.0f/(SCR_HEIGHT); //1 pixel in y dimension
+
+	GuiManager::timerColon   = new GUIText(":", s, fontVip, 2*w+16*px, 16*py, w, true, false, true); Global::countNew++;
+	GuiManager::timerPeriod  = new GUIText(".", s, fontVip, 5*w+16*px, 16*py, w, true, false, true); Global::countNew++;
+
+	GuiManager::timerMin1[0] = new GUIText("0", s, fontVip, 0*w+16*px, 16*py, w, true, false, true); Global::countNew++;
+	GuiManager::timerMin1[1] = new GUIText("1", s, fontVip, 0*w+16*px, 16*py, w, true, false, true); Global::countNew++;
+	GuiManager::timerMin1[2] = new GUIText("2", s, fontVip, 0*w+16*px, 16*py, w, true, false, true); Global::countNew++;
+	GuiManager::timerMin1[3] = new GUIText("3", s, fontVip, 0*w+16*px, 16*py, w, true, false, true); Global::countNew++;
+	GuiManager::timerMin1[4] = new GUIText("4", s, fontVip, 0*w+16*px, 16*py, w, true, false, true); Global::countNew++;
+	GuiManager::timerMin1[5] = new GUIText("5", s, fontVip, 0*w+16*px, 16*py, w, true, false, true); Global::countNew++;
+	GuiManager::timerMin1[6] = new GUIText("6", s, fontVip, 0*w+16*px, 16*py, w, true, false, true); Global::countNew++;
+	GuiManager::timerMin1[7] = new GUIText("7", s, fontVip, 0*w+16*px, 16*py, w, true, false, true); Global::countNew++;
+	GuiManager::timerMin1[8] = new GUIText("8", s, fontVip, 0*w+16*px, 16*py, w, true, false, true); Global::countNew++;
+	GuiManager::timerMin1[9] = new GUIText("9", s, fontVip, 0*w+16*px, 16*py, w, true, false, true); Global::countNew++;
+	GuiManager::timerMin2[0] = new GUIText("0", s, fontVip, 1*w+16*px, 16*py, w, true, false, true); Global::countNew++;
+	GuiManager::timerMin2[1] = new GUIText("1", s, fontVip, 1*w+16*px, 16*py, w, true, false, true); Global::countNew++;
+	GuiManager::timerMin2[2] = new GUIText("2", s, fontVip, 1*w+16*px, 16*py, w, true, false, true); Global::countNew++;
+	GuiManager::timerMin2[3] = new GUIText("3", s, fontVip, 1*w+16*px, 16*py, w, true, false, true); Global::countNew++;
+	GuiManager::timerMin2[4] = new GUIText("4", s, fontVip, 1*w+16*px, 16*py, w, true, false, true); Global::countNew++;
+	GuiManager::timerMin2[5] = new GUIText("5", s, fontVip, 1*w+16*px, 16*py, w, true, false, true); Global::countNew++;
+	GuiManager::timerMin2[6] = new GUIText("6", s, fontVip, 1*w+16*px, 16*py, w, true, false, true); Global::countNew++;
+	GuiManager::timerMin2[7] = new GUIText("7", s, fontVip, 1*w+16*px, 16*py, w, true, false, true); Global::countNew++;
+	GuiManager::timerMin2[8] = new GUIText("8", s, fontVip, 1*w+16*px, 16*py, w, true, false, true); Global::countNew++;
+	GuiManager::timerMin2[9] = new GUIText("9", s, fontVip, 1*w+16*px, 16*py, w, true, false, true); Global::countNew++;
+	GuiManager::timerSec1[0] = new GUIText("0", s, fontVip, 3*w+16*px, 16*py, w, true, false, true); Global::countNew++;
+	GuiManager::timerSec1[1] = new GUIText("1", s, fontVip, 3*w+16*px, 16*py, w, true, false, true); Global::countNew++;
+	GuiManager::timerSec1[2] = new GUIText("2", s, fontVip, 3*w+16*px, 16*py, w, true, false, true); Global::countNew++;
+	GuiManager::timerSec1[3] = new GUIText("3", s, fontVip, 3*w+16*px, 16*py, w, true, false, true); Global::countNew++;
+	GuiManager::timerSec1[4] = new GUIText("4", s, fontVip, 3*w+16*px, 16*py, w, true, false, true); Global::countNew++;
+	GuiManager::timerSec1[5] = new GUIText("5", s, fontVip, 3*w+16*px, 16*py, w, true, false, true); Global::countNew++;
+	GuiManager::timerSec1[6] = new GUIText("6", s, fontVip, 3*w+16*px, 16*py, w, true, false, true); Global::countNew++;
+	GuiManager::timerSec1[7] = new GUIText("7", s, fontVip, 3*w+16*px, 16*py, w, true, false, true); Global::countNew++;
+	GuiManager::timerSec1[8] = new GUIText("8", s, fontVip, 3*w+16*px, 16*py, w, true, false, true); Global::countNew++;
+	GuiManager::timerSec1[9] = new GUIText("9", s, fontVip, 3*w+16*px, 16*py, w, true, false, true); Global::countNew++;
+	GuiManager::timerSec2[0] = new GUIText("0", s, fontVip, 4*w+16*px, 16*py, w, true, false, true); Global::countNew++;
+	GuiManager::timerSec2[1] = new GUIText("1", s, fontVip, 4*w+16*px, 16*py, w, true, false, true); Global::countNew++;
+	GuiManager::timerSec2[2] = new GUIText("2", s, fontVip, 4*w+16*px, 16*py, w, true, false, true); Global::countNew++;
+	GuiManager::timerSec2[3] = new GUIText("3", s, fontVip, 4*w+16*px, 16*py, w, true, false, true); Global::countNew++;
+	GuiManager::timerSec2[4] = new GUIText("4", s, fontVip, 4*w+16*px, 16*py, w, true, false, true); Global::countNew++;
+	GuiManager::timerSec2[5] = new GUIText("5", s, fontVip, 4*w+16*px, 16*py, w, true, false, true); Global::countNew++;
+	GuiManager::timerSec2[6] = new GUIText("6", s, fontVip, 4*w+16*px, 16*py, w, true, false, true); Global::countNew++;
+	GuiManager::timerSec2[7] = new GUIText("7", s, fontVip, 4*w+16*px, 16*py, w, true, false, true); Global::countNew++;
+	GuiManager::timerSec2[8] = new GUIText("8", s, fontVip, 4*w+16*px, 16*py, w, true, false, true); Global::countNew++;
+	GuiManager::timerSec2[9] = new GUIText("9", s, fontVip, 4*w+16*px, 16*py, w, true, false, true); Global::countNew++;
+	GuiManager::timerCen1[0] = new GUIText("0", s, fontVip, 6*w+16*px, 16*py, w, true, false, true); Global::countNew++;
+	GuiManager::timerCen1[1] = new GUIText("1", s, fontVip, 6*w+16*px, 16*py, w, true, false, true); Global::countNew++;
+	GuiManager::timerCen1[2] = new GUIText("2", s, fontVip, 6*w+16*px, 16*py, w, true, false, true); Global::countNew++;
+	GuiManager::timerCen1[3] = new GUIText("3", s, fontVip, 6*w+16*px, 16*py, w, true, false, true); Global::countNew++;
+	GuiManager::timerCen1[4] = new GUIText("4", s, fontVip, 6*w+16*px, 16*py, w, true, false, true); Global::countNew++;
+	GuiManager::timerCen1[5] = new GUIText("5", s, fontVip, 6*w+16*px, 16*py, w, true, false, true); Global::countNew++;
+	GuiManager::timerCen1[6] = new GUIText("6", s, fontVip, 6*w+16*px, 16*py, w, true, false, true); Global::countNew++;
+	GuiManager::timerCen1[7] = new GUIText("7", s, fontVip, 6*w+16*px, 16*py, w, true, false, true); Global::countNew++;
+	GuiManager::timerCen1[8] = new GUIText("8", s, fontVip, 6*w+16*px, 16*py, w, true, false, true); Global::countNew++;
+	GuiManager::timerCen1[9] = new GUIText("9", s, fontVip, 6*w+16*px, 16*py, w, true, false, true); Global::countNew++;
+	GuiManager::timerCen2[0] = new GUIText("0", s, fontVip, 7*w+16*px, 16*py, w, true, false, true); Global::countNew++;
+	GuiManager::timerCen2[1] = new GUIText("1", s, fontVip, 7*w+16*px, 16*py, w, true, false, true); Global::countNew++;
+	GuiManager::timerCen2[2] = new GUIText("2", s, fontVip, 7*w+16*px, 16*py, w, true, false, true); Global::countNew++;
+	GuiManager::timerCen2[3] = new GUIText("3", s, fontVip, 7*w+16*px, 16*py, w, true, false, true); Global::countNew++;
+	GuiManager::timerCen2[4] = new GUIText("4", s, fontVip, 7*w+16*px, 16*py, w, true, false, true); Global::countNew++;
+	GuiManager::timerCen2[5] = new GUIText("5", s, fontVip, 7*w+16*px, 16*py, w, true, false, true); Global::countNew++;
+	GuiManager::timerCen2[6] = new GUIText("6", s, fontVip, 7*w+16*px, 16*py, w, true, false, true); Global::countNew++;
+	GuiManager::timerCen2[7] = new GUIText("7", s, fontVip, 7*w+16*px, 16*py, w, true, false, true); Global::countNew++;
+	GuiManager::timerCen2[8] = new GUIText("8", s, fontVip, 7*w+16*px, 16*py, w, true, false, true); Global::countNew++;
+	GuiManager::timerCen2[9] = new GUIText("9", s, fontVip, 7*w+16*px, 16*py, w, true, false, true); Global::countNew++;
+
+	GuiManager::setTimerInvisible();
+
 	GuiRenderer::init();
 }
 
 void GuiManager::refresh()
 {
+	//double start = glfwGetTime();
+
 	extern unsigned int SCR_WIDTH;
 	extern unsigned int SCR_HEIGHT;
 
@@ -78,38 +169,44 @@ void GuiManager::refresh()
 	float py = 1.0f/(SCR_HEIGHT); //1 pixel in y dimension
 
 
-	textTimer->deleteMe();
-	delete textTimer; Global::countDelete++;
-	textTimer = nullptr;
+	//textTimer->deleteMe();
+	//delete textTimer; Global::countDelete++;
+	//textTimer = nullptr;
+	//
+	//std::string partMin = std::to_string(minutes);
+	//if (minutes < 10)
+	//{
+	//	partMin = "0" + std::to_string(minutes);
+	//}
+	//std::string partSec = std::to_string(seconds);
+	//if (seconds < 10)
+	//{
+	//	partSec = "0" + std::to_string(seconds);
+	//}
+	//std::string partCen = std::to_string(((centiseconds * 100) / 60));
+	//if ((centiseconds * 100) / 60 < 10)
+	//{
+	//	partCen = "0" + std::to_string(((centiseconds * 100) / 60));
+	//}
+	//std::string timer = partMin + ":" + partSec + "." + partCen;
+	//
+	//textTimer = new GUIText(timer, 1.5f, fontVip, 0+16*px, 0+16*py, 1, false, false, true); Global::countNew++;
 
-	std::string partMin = std::to_string(minutes);
-	if (minutes < 10)
+	if (Global::gameRingCount != GuiManager::previousRings)
 	{
-		partMin = "0" + std::to_string(minutes);
+		textRings->deleteMe();
+		delete textRings; Global::countDelete++;
+		textRings = new GUIText(std::to_string(Global::gameRingCount), 1.5f, fontVip, 0+48*px, 0+48*py, 1, false, false, true); Global::countNew++;
+		GuiManager::previousRings = Global::gameRingCount;
 	}
-	std::string partSec = std::to_string(seconds);
-	if (seconds < 10)
+
+	if (Global::gameScore != GuiManager::previousScore)
 	{
-		partSec = "0" + std::to_string(seconds);
+		textScore->deleteMe();
+		delete textScore; Global::countDelete++;
+		textScore = new GUIText(std::to_string(Global::gameScore), 1.5f, fontVip, 0+48*px, 0+80*py, 1, false, false, true); Global::countNew++;
+		GuiManager::previousScore = Global::gameScore;
 	}
-	std::string partCen = std::to_string(((centiseconds * 100) / 60));
-	if ((centiseconds * 100) / 60 < 10)
-	{
-		partCen = "0" + std::to_string(((centiseconds * 100) / 60));
-	}
-	std::string timer = partMin + ":" + partSec + "." + partCen;
-
-	textTimer = new GUIText(timer, 1.5f, fontVip, 0+16*px, 0+16*py, 1, false, false, true); Global::countNew++;
-
-	textRings->deleteMe();
-	delete textRings; Global::countDelete++;
-	textRings = nullptr;
-	textRings = new GUIText(std::to_string(Global::gameRingCount), 1.5f, fontVip, 0+48*px, 0+48*py, 1, false, false, true); Global::countNew++;
-
-	textScore->deleteMe();
-	delete textScore; Global::countDelete++;
-	textScore = nullptr;
-	textScore = new GUIText(std::to_string(Global::gameScore), 1.5f, fontVip, 0+48*px, 0+80*py, 1, false, false, true); Global::countNew++;
 
 	if (Global::debugDisplay)
 	{
@@ -227,19 +324,101 @@ void GuiManager::refresh()
 
 	if (Global::gameState != STATE_TITLE)
 	{
-		textTimer->setVisibility(true);
+		//textTimer->setVisibility(true);
 		textRings->setVisibility(true);
 		textScore->setVisibility(true);
+
+		GuiManager::setTimerInvisible();
+		int partCen = (centiseconds * 100) / 60;
+		timerColon ->setVisibility(true);
+		timerPeriod->setVisibility(true);
+		timerMin1[minutes/10]->setVisibility(true);
+		timerMin2[minutes%10]->setVisibility(true);
+		timerSec1[seconds/10]->setVisibility(true);
+		timerSec2[seconds%10]->setVisibility(true);
+		timerCen1[partCen/10]->setVisibility(true);
+		timerCen2[partCen%10]->setVisibility(true);
 	}
 	else
 	{
-		textTimer->setVisibility(false);
+		//textTimer->setVisibility(false);
 		textRings->setVisibility(false);
 		textScore->setVisibility(false);
+
+		GuiManager::setTimerInvisible();
 	}
+
+	//double end = glfwGetTime();
+	//std::fprintf(stdout, "time diff = %.12f\n", end-start);
 
 	//Render images
 	GuiRenderer::render(&GuiManager::guisToRender);
+}
+
+void GuiManager::setTimerInvisible()
+{
+	GuiManager::timerColon  ->setVisibility(false);
+	GuiManager::timerPeriod ->setVisibility(false);
+	GuiManager::timerMin1[0]->setVisibility(false);
+	GuiManager::timerMin1[1]->setVisibility(false);
+	GuiManager::timerMin1[2]->setVisibility(false);
+	GuiManager::timerMin1[3]->setVisibility(false);
+	GuiManager::timerMin1[4]->setVisibility(false);
+	GuiManager::timerMin1[5]->setVisibility(false);
+	GuiManager::timerMin1[6]->setVisibility(false);
+	GuiManager::timerMin1[7]->setVisibility(false);
+	GuiManager::timerMin1[8]->setVisibility(false);
+	GuiManager::timerMin1[9]->setVisibility(false);
+	GuiManager::timerMin2[0]->setVisibility(false);
+	GuiManager::timerMin2[1]->setVisibility(false);
+	GuiManager::timerMin2[2]->setVisibility(false);
+	GuiManager::timerMin2[3]->setVisibility(false);
+	GuiManager::timerMin2[4]->setVisibility(false);
+	GuiManager::timerMin2[5]->setVisibility(false);
+	GuiManager::timerMin2[6]->setVisibility(false);
+	GuiManager::timerMin2[7]->setVisibility(false);
+	GuiManager::timerMin2[8]->setVisibility(false);
+	GuiManager::timerMin2[9]->setVisibility(false);
+	GuiManager::timerSec1[0]->setVisibility(false);
+	GuiManager::timerSec1[1]->setVisibility(false);
+	GuiManager::timerSec1[2]->setVisibility(false);
+	GuiManager::timerSec1[3]->setVisibility(false);
+	GuiManager::timerSec1[4]->setVisibility(false);
+	GuiManager::timerSec1[5]->setVisibility(false);
+	GuiManager::timerSec1[6]->setVisibility(false);
+	GuiManager::timerSec1[7]->setVisibility(false);
+	GuiManager::timerSec1[8]->setVisibility(false);
+	GuiManager::timerSec1[9]->setVisibility(false);
+	GuiManager::timerSec2[0]->setVisibility(false);
+	GuiManager::timerSec2[1]->setVisibility(false);
+	GuiManager::timerSec2[2]->setVisibility(false);
+	GuiManager::timerSec2[3]->setVisibility(false);
+	GuiManager::timerSec2[4]->setVisibility(false);
+	GuiManager::timerSec2[5]->setVisibility(false);
+	GuiManager::timerSec2[6]->setVisibility(false);
+	GuiManager::timerSec2[7]->setVisibility(false);
+	GuiManager::timerSec2[8]->setVisibility(false);
+	GuiManager::timerSec2[9]->setVisibility(false);
+	GuiManager::timerCen1[0]->setVisibility(false);
+	GuiManager::timerCen1[1]->setVisibility(false);
+	GuiManager::timerCen1[2]->setVisibility(false);
+	GuiManager::timerCen1[3]->setVisibility(false);
+	GuiManager::timerCen1[4]->setVisibility(false);
+	GuiManager::timerCen1[5]->setVisibility(false);
+	GuiManager::timerCen1[6]->setVisibility(false);
+	GuiManager::timerCen1[7]->setVisibility(false);
+	GuiManager::timerCen1[8]->setVisibility(false);
+	GuiManager::timerCen1[9]->setVisibility(false);
+	GuiManager::timerCen2[0]->setVisibility(false);
+	GuiManager::timerCen2[1]->setVisibility(false);
+	GuiManager::timerCen2[2]->setVisibility(false);
+	GuiManager::timerCen2[3]->setVisibility(false);
+	GuiManager::timerCen2[4]->setVisibility(false);
+	GuiManager::timerCen2[5]->setVisibility(false);
+	GuiManager::timerCen2[6]->setVisibility(false);
+	GuiManager::timerCen2[7]->setVisibility(false);
+	GuiManager::timerCen2[8]->setVisibility(false);
+	GuiManager::timerCen2[9]->setVisibility(false);
 }
 
 void GuiManager::increaseTimer()

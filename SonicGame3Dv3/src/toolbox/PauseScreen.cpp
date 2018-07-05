@@ -104,11 +104,14 @@ void PauseScreen::step()
 
 				case 1:
 				{
-					Global::shouldLoadLevel = true;
-					Vector3f vel(0,0,0);
-					new Particle(ParticleResources::textureBlackFade, Global::gameCamera->getFadePosition1(), &vel, 0, 60, 0.0f,  10.0f, 0, 1.0f, 0, true);
-					unpause(false);
-					Global::gameState = STATE_CUTSCENE;
+					if (Global::gameLives > 0)
+					{
+						Global::shouldLoadLevel = true;
+						Vector3f vel(0,0,0);
+						new Particle(ParticleResources::textureBlackFade, Global::gameCamera->getFadePosition1(), &vel, 0, 60, 0.0f,  10.0f, 0, 1.0f, 0, true);
+						unpause(false);
+						Global::gameState = STATE_CUTSCENE;
+					}
 					break;
 				}
 

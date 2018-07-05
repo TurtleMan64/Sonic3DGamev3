@@ -166,8 +166,10 @@ private:
 
 	static int titleCardTextTimer;
 
+public:
 	static void createTitleCard();
 
+private:
 	static void selectMenuRoot(int newSelection);
 
 	static void selectMenuMission(int newSelection);

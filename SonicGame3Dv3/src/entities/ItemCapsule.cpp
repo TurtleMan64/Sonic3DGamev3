@@ -151,11 +151,13 @@ void ItemCapsule::die()
 		case 0:
 			//speed shoes
 			Global::gameScore += 100;
+			Global::gamePlayer->setSpeedshoesTimer(1500);
 			break;
 
 		case 1:
 			//invincible
 			Global::gameScore += 100;
+			Global::gamePlayer->setInvincibleTimer(1500);
 			break;
 
 		case 2:
@@ -189,12 +191,38 @@ void ItemCapsule::die()
 		case 6:
 			//1 up
 			Global::gameScore += 300;
+			Global::gameLives++;
+			AudioPlayer::play(35, getPosition());
 			break;
 
 		case 7:
+		{
 			//bomb
 			Global::gameScore += 100;
+
+			float myX = getX();
+			float myZ = getZ();
+			float myY = getY();
+
+			extern std::unordered_map<Entity*, Entity*> gameEntities;
+
+			for (auto e : gameEntities)
+			{
+				if (e.first->isEnemy())
+				{
+					float xDiff = e.first->getX() - myX;
+					float zDiff = e.first->getZ() - myZ;
+					float yDiff = e.first->getY() - myY;
+					float dist = xDiff*xDiff + zDiff*zDiff + yDiff*yDiff;
+					if (dist < 300*300)
+					{
+						e.first->die();
+					}
+				}
+			}
+
 			break;
+		}
 
 		default:
 		{

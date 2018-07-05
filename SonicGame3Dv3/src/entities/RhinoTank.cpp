@@ -379,3 +379,8 @@ bool RhinoTank::canHomingAttackOn()
 {
 	return true;
 }
+
+bool RhinoTank::isEnemy()
+{
+	return true;
+}

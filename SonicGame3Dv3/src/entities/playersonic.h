@@ -218,7 +218,10 @@ private:
 	ShieldMagnet* myShieldMagnet = nullptr;
 	ShieldGreen*  myShieldGreen  = nullptr;
 
-	int combo;
+	int combo = 0;
+
+	int invincibleTimer = 0;
+	int speedShoesTimer = 0;
 
 public:
 	PlayerSonic(float, float, float);
@@ -338,7 +341,11 @@ public:
 
 	void setShieldGreen(ShieldGreen* newGreen);
 
-	void increaseCombo(); 
+	void increaseCombo();
+
+	void setInvincibleTimer(int newTimer);
+
+	void setSpeedshoesTimer(int newTimer);
 
 private:
 	void adjustCamera();

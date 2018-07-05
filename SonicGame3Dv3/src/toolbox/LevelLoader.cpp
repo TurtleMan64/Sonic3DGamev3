@@ -137,6 +137,7 @@ void LevelLoader_loadTitle()
 
 	Global::gameRingCount = 0;
 	Global::gameScore = 0;
+	Global::gameLives = 4;
 	GuiManager::setTimer(0, 0, 0);
 	GuiManager::stopTimer();
 
@@ -160,6 +161,17 @@ void LevelLoader_loadLevel(std::string levelFilename)
 	}
 
 	int stageFault = 0;
+
+	Global::gameLives--;
+
+	if (!Global::isNewLevel)
+	{
+		if (Global::gameLives < 0)
+		{
+			LevelLoader_loadTitle();
+			return;
+		}
+	}
 
 	if (Global::isNewLevel)
 	{

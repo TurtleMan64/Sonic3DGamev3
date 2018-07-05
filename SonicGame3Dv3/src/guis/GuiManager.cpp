@@ -35,9 +35,11 @@ int GuiManager::minutes = 0;
 
 GUIText* GuiManager::textRings = nullptr;
 GUIText* GuiManager::textScore = nullptr;
+GUIText* GuiManager::textLives = nullptr;
 
 int GuiManager::previousRings = -1;
 int GuiManager::previousScore = -1;
+int GuiManager::previousLives = -1;
 
 GUIText* GuiManager::textHorVel = nullptr;
 GUIText* GuiManager::textVerVel = nullptr;
@@ -66,6 +68,7 @@ void GuiManager::init()
 	//textTimer = new GUIText("0", 1, fontVip, 0.01f, 0.01f, 1, false, false, false); Global::countNew++;
 	textRings = new GUIText("0", 1, fontVip, 0.01f, 0.01f, 1, false, false, false); Global::countNew++;
 	textScore = new GUIText("0", 1, fontVip, 0.01f, 0.01f, 1, false, false, false); Global::countNew++;
+	textLives = new GUIText("0", 1, fontVip, 0.01f, 0.98f, 1, false, false, false); Global::countNew++;
 
 	//Player debug text
 	textHorVel              = new GUIText("Hor Vel:"     + std::to_string(horVel),              1, fontVip, 0.01f, 0.70f, 1, false, false, Global::debugDisplay); Global::countNew++;
@@ -208,6 +211,14 @@ void GuiManager::refresh()
 		GuiManager::previousScore = Global::gameScore;
 	}
 
+	if (Global::gameLives != GuiManager::previousLives)
+	{
+		textLives->deleteMe();
+		delete textLives; Global::countDelete++;
+		textLives = new GUIText(std::to_string(Global::gameLives), 1.5f, fontVip, 0+48*px, 1.0f-80*py, 1, false, false, true); Global::countNew++;
+		GuiManager::previousLives = Global::gameLives;
+	}
+
 	if (Global::debugDisplay)
 	{
 		//Check if player exists before trying to get values.
@@ -327,6 +338,7 @@ void GuiManager::refresh()
 		//textTimer->setVisibility(true);
 		textRings->setVisibility(true);
 		textScore->setVisibility(true);
+		textLives->setVisibility(true);
 
 		GuiManager::setTimerInvisible();
 		int partCen = (centiseconds * 100) / 60;
@@ -344,6 +356,7 @@ void GuiManager::refresh()
 		//textTimer->setVisibility(false);
 		textRings->setVisibility(false);
 		textScore->setVisibility(false);
+		textLives->setVisibility(false);
 
 		GuiManager::setTimerInvisible();
 	}

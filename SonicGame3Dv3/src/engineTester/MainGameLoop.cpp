@@ -61,6 +61,7 @@
 #include "../toolbox/mainmenu.h"
 #include "../toolbox/level.h"
 #include "../guis/guitexture.h"
+#include "../particles/particle.h"
 
 #ifdef _WIN32
 #include <windows.h>
@@ -147,6 +148,7 @@ std::string Global::levelName = "";
 std::string Global::levelNameDisplay = "";
 int Global::gameRingCount = 0;
 int Global::gameScore = 0;
+int Global::gameLives = 4;
 int Global::gameClock = 0;
 float Global::deathHeight = -100.0f;
 
@@ -156,7 +158,8 @@ bool Global::gameIsNormalMode = false;
 bool Global::gameIsHardMode = false;
 bool Global::gameIsChaoMode = false;
 bool Global::gameIsRingMode = false;
-int Global::gameRingTarget = 100;
+int  Global::gameRingTarget = 100;
+bool Global::gameIsArcadeMode = false;
 std::vector<Level> Global::gameLevelData;
 std::unordered_map<std::string, std::string> Global::gameSaveData;
 
@@ -566,6 +569,12 @@ int main()
 		frameCount++;
 		seconds = glfwGetTime();
 
+		if (Global::shouldLoadLevel)
+		{
+			Global::shouldLoadLevel = false;
+			LevelLoader_loadLevel(Global::levelName);
+		}
+
 		if (Global::finishStageTimer >= 0)
 		{
 			if (Global::finishStageTimer == 0)
@@ -574,11 +583,59 @@ int main()
 				Global::gameScore += std::max(0, 11200 - 20*(GuiManager::getMinutes()*60 + GuiManager::getSeconds()));
 			}
 
+			//Stage finished stuff
+			if (Global::finishStageTimer == 1)
+			{
+				Vector3f partVel(0, 0, 0);
+				new Particle(ParticleResources::textureWhiteFadeOutAndIn, Global::gameCamera->getFadePosition1(), &partVel, 0, 120, 0, 400, 0, true);
+			}
+			else if (Global::finishStageTimer == 60)
+			{
+				AudioPlayer::stopBGM();
+				AudioPlayer::play(24, Global::gamePlayer->getPosition());
+			}
+			else if (Global::finishStageTimer == 490)
+			{
+				Vector3f partVel(0, 0, 0);
+				new Particle(ParticleResources::textureBlackFadeOutAndIn, Global::gameCamera->getFadePosition1(), &partVel, 0, 120, 0, 400, 0, true);
+
+				AudioPlayer::play(25, Global::gamePlayer->getPosition());
+			}
+
+			if (Global::finishStageTimer >= 1 &&
+				Global::finishStageTimer < 60)
+			{
+				AudioPlayer::setBGMVolume((60-Global::finishStageTimer)/60.0f);
+			}
+
 			Global::finishStageTimer++;
 
-			if (Global::finishStageTimer > 550)
+			if (Global::finishStageTimer == 550)
 			{
-				LevelLoader_loadTitle();
+				if (Global::gameIsArcadeMode)
+				{
+					Global::levelID+=1;
+					Level* nextLevel = &Global::gameLevelData[Global::levelID];
+					Global::shouldLoadLevel = true;
+					Global::isNewLevel = true;
+					Global::levelName = nextLevel->fileName;
+					Global::levelNameDisplay = nextLevel->displayName;
+					Global::gameMissionDescription = (nextLevel->missionData[Global::gameMissionNumber])[(nextLevel->missionData[Global::gameMissionNumber]).size()-1];
+
+					MainMenu::createTitleCard();
+				}
+				else
+				{
+					LevelLoader_loadTitle();
+				}
+			}
+
+			if (Global::finishStageTimer == 548)
+			{
+				GuiManager::clearGuisToRender();
+				Global::gameScore = 0;
+				Global::gameRingCount = 0;
+				GuiManager::setTimer(0, 0, 0);
 			}
 
 			if (Global::finishStageTimer == 370)
@@ -596,12 +653,6 @@ int main()
 				GuiManager::addGuiToRender(GuiTextureResources::textureRankDisplay);
 				AudioPlayer::play(44, Global::gamePlayer->getPosition());
 			}
-		}
-
-		if (Global::shouldLoadLevel)
-		{
-			Global::shouldLoadLevel = false;
-			LevelLoader_loadLevel(Global::levelName);
 		}
 
 		if (seconds - previousTime >= 1.0)

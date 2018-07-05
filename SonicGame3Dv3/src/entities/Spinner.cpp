@@ -162,3 +162,8 @@ bool Spinner::canHomingAttackOn()
 {
 	return true;
 }
+
+bool Spinner::isEnemy()
+{
+	return true;
+}

@@ -120,5 +120,9 @@ public:
 	virtual int getDiggingTimer();
 
 	virtual void increaseCombo();
+
+	virtual void setInvincibleTimer(int newTimer);
+
+	virtual void setSpeedshoesTimer(int newTimer);
 };
 #endif

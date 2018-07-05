@@ -47,5 +47,7 @@ public:
 	static void deleteStaticModels();
 
 	bool canHomingAttackOn();
+
+	bool isEnemy();
 };
 #endif

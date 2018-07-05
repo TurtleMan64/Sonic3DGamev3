@@ -94,11 +94,13 @@ void PlayerSonic::step()
 	setMovementInputs();
 	adjustCamera();
 	checkSkid();
-
-	iFrame = std::max(0, iFrame-1);
-	hitTimer = std::max(0, hitTimer-1);
-	canMoveTimer = std::max(0, canMoveTimer - 1);
-	deadTimer = std::max(-1, deadTimer - 1);
+	
+	iFrame          = std::max(0,  iFrame-1);
+	hitTimer        = std::max(0,  hitTimer-1);
+	canMoveTimer    = std::max(0,  canMoveTimer - 1);
+	deadTimer       = std::max(-1, deadTimer - 1);
+	invincibleTimer = std::max(0,  invincibleTimer-1);
+	speedShoesTimer = std::max(0,  speedShoesTimer-1);
 
 	dropDashCharge = std::fmaxf(0, dropDashCharge-dropDashChargeDecrease);
 
@@ -110,6 +112,50 @@ void PlayerSonic::step()
 	else if (deadTimer == 0)
 	{
 		Global::shouldLoadLevel = true;
+	}
+
+	if (invincibleTimer != 0)
+	{
+		Vector3f center = Global::gamePlayer->getCenterPosition();
+
+		for (int i = 0; i < 2; i++)
+		{
+			Vector3f off = randomPointOnSphere();
+			off.scale(8);
+			Vector3f pos = center + off;
+			off.scale(1/16.0f);
+			new Particle(ParticleResources::textureSparkleYellow, &pos, &off,
+					0, 5, 0, 3, -(3.0f / 5.0f), false);
+			off.scale(-16.0f);
+			pos = center + off;
+			off.scale(1/16.0f);
+			new Particle(ParticleResources::textureSparkleGreen, &pos, &off,
+					0, 5, 0, 3, -(3.0f / 5.0f), false);
+
+			off = randomPointOnSphere();
+			off.scale(8);
+			pos = center + off;
+			off.scale(1/16.0f);
+			new Particle(ParticleResources::textureSparkleRed, &pos, &off,
+					0, 5, 0, 3, -(3.0f / 5.0f), false);
+			off.scale(-16.0f);
+			pos = center + off;
+			off.scale(1/16.0f);
+			new Particle(ParticleResources::textureSparkleBlue, &pos, &off,
+					0, 5, 0, 3, -(3.0f / 5.0f), false);
+
+			off = randomPointOnSphere();
+			off.scale(8);
+			pos = center + off;
+			off.scale(1/16.0f);
+			new Particle(ParticleResources::textureSparkleLightBlue, &pos, &off,
+					0, 5, 0, 3, -(3.0f / 5.0f), false);
+			off.scale(-16.0f);
+			pos = center + off;
+			off.scale(1/16.0f);
+			new Particle(ParticleResources::textureSparkleWhite, &pos, &off,
+					0, 5, 0, 3, -(3.0f / 5.0f), false);
+		}
 	}
 
 	if (jumpInput)
@@ -138,7 +184,14 @@ void PlayerSonic::step()
 		zVelAir = 0;
 		applyFriction(frictionGround);
 		moveMeGround();
-		limitMovementSpeed(normalSpeedLimit);
+		if (speedShoesTimer == 0)
+		{
+			limitMovementSpeed(normalSpeedLimit);
+		}
+		else
+		{
+			limitMovementSpeed(normalSpeedLimit*2);
+		}
 	}
 
 	if (isBall)
@@ -2451,29 +2504,29 @@ void PlayerSonic::animate()
 	}
 
 	//Stage finished stuff
-	if (Global::finishStageTimer == 1)
-	{
-		Vector3f partVel(0, 0, 0);
-		new Particle(ParticleResources::textureWhiteFadeOutAndIn, Global::gameCamera->getFadePosition1(), &partVel, 0, 120, 0, 400, 0, true);
-	}
-	else if (Global::finishStageTimer == 60)
-	{
-		AudioPlayer::stopBGM();
-		AudioPlayer::play(24, getPosition());
-	}
-	else if (Global::finishStageTimer == 490)
-	{
-		Vector3f partVel(0, 0, 0);
-		new Particle(ParticleResources::textureBlackFadeOutAndIn, Global::gameCamera->getFadePosition1(), &partVel, 0, 120, 0, 400, 0, true);
-
-		AudioPlayer::play(25, getPosition());
-	}
-
-	if (Global::finishStageTimer >= 1 &&
-		Global::finishStageTimer < 60)
-	{
-		AudioPlayer::setBGMVolume((60-Global::finishStageTimer)/60.0f);
-	}
+	//if (Global::finishStageTimer == 1)
+	//{
+	//	Vector3f partVel(0, 0, 0);
+	//	new Particle(ParticleResources::textureWhiteFadeOutAndIn, Global::gameCamera->getFadePosition1(), &partVel, 0, 120, 0, 400, 0, true);
+	//}
+	//else if (Global::finishStageTimer == 60)
+	//{
+	//	AudioPlayer::stopBGM();
+	//	AudioPlayer::play(24, getPosition());
+	//}
+	//else if (Global::finishStageTimer == 490)
+	//{
+	//	Vector3f partVel(0, 0, 0);
+	//	new Particle(ParticleResources::textureBlackFadeOutAndIn, Global::gameCamera->getFadePosition1(), &partVel, 0, 120, 0, 400, 0, true);
+	//
+	//	AudioPlayer::play(25, getPosition());
+	//}
+	//
+	//if (Global::finishStageTimer >= 1 &&
+	//	Global::finishStageTimer < 60)
+	//{
+	//	AudioPlayer::setBGMVolume((60-Global::finishStageTimer)/60.0f);
+	//}
 
 	if (Global::finishStageTimer >= 60)
 	{
@@ -2744,7 +2797,7 @@ float PlayerSonic::getSpeed()
 
 void PlayerSonic::takeDamage(Vector3f* damageSource)
 {
-	if (iFrame == 0)
+	if (iFrame == 0 && invincibleTimer == 0)
 	{
 		float xDiff = damageSource->x - getX();
 		float zDiff = damageSource->z - getZ();
@@ -2870,7 +2923,8 @@ bool PlayerSonic::isVulnerable()
 		isJumping ||
 		isBall ||
 		isSpindashing ||
-		isStomping);
+		isStomping ||
+		invincibleTimer != 0);
 }
 
 void PlayerSonic::die()
@@ -3136,4 +3190,14 @@ void PlayerSonic::setShieldGreen(ShieldGreen* newGreen)
 void PlayerSonic::increaseCombo()
 {
 	combo+=1;
+}
+
+void PlayerSonic::setInvincibleTimer(int newTimer)
+{
+	invincibleTimer = newTimer;
+}
+
+void PlayerSonic::setSpeedshoesTimer(int newTimer)
+{
+	speedShoesTimer = newTimer;
 }

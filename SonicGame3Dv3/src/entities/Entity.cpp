@@ -57,6 +57,16 @@ bool Entity::isEmeraldPiece()
 	return false;
 }
 
+bool Entity::isEnemy()
+{
+	return false;
+}
+
+void Entity::die()
+{
+	
+}
+
 void Entity::increasePosition(float dx, float dy, float dz)
 {
 	position.x += dx;

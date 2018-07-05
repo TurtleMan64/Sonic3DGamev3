@@ -85,6 +85,7 @@ public:
 	static bool isNewLevel;
 	static int gameRingCount;
 	static int gameScore;
+	static int gameLives;
 	static int gameClock;
 	static WaterRenderer* gameWaterRenderer;
 	static WaterFrameBuffers* gameWaterFBOs;
@@ -101,6 +102,7 @@ public:
 	static bool gameIsRingMode;
 	static std::string gameMissionDescription;
 	static int gameRingTarget; //How many rings you have to collect to finish the stage in Ring mode
+	static bool gameIsArcadeMode;
 
 	static std::vector<Level> gameLevelData;
 	static std::unordered_map<std::string, std::string> gameSaveData;

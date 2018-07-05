@@ -379,3 +379,8 @@ bool MotoBug::canHomingAttackOn()
 {
 	return true;
 }
+
+bool MotoBug::isEnemy()
+{
+	return true;
+}

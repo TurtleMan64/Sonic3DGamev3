@@ -27,9 +27,11 @@ private:
 
 	static GUIText* textRings;
 	static GUIText* textScore;
+	static GUIText* textLives;
 
 	static int previousRings;
 	static int previousScore;
+	static int previousLives;
 
 	static std::list<GuiTexture*> guisToRender;
 

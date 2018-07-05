@@ -267,7 +267,10 @@ private:
 	ShieldMagnet* myShieldMagnet = nullptr;
 	ShieldGreen*  myShieldGreen  = nullptr;
 
-	int combo;
+	int combo = 0;
+
+	int invincibleTimer = 0;
+	int speedShoesTimer = 0;
 
 public:
 	PlayerKnuckles(float x, float y, float z);
@@ -390,6 +393,10 @@ public:
 	int getDiggingTimer();
 
 	void increaseCombo();
+
+	void setInvincibleTimer(int newTimer);
+
+	void setSpeedshoesTimer(int newTimer);
 
 private:
 	void adjustCamera();

@@ -879,6 +879,7 @@ void MainMenu::step()
 					{
 						Global::levelID = LVL_EMERALD_COAST;
 						Global::gameMissionNumber = 0;
+						Global::gameIsArcadeMode = true;
 
 						AudioPlayer::play(38, Global::gameCamera->getFadePosition1());
 
@@ -898,6 +899,7 @@ void MainMenu::step()
 					case ROOT_MISSION:
 					{
 						MainMenu::selectMenuMission(MISSION_1);
+						Global::gameIsArcadeMode = false;
 						break;
 					}
 

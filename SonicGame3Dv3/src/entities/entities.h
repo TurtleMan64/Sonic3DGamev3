@@ -33,6 +33,8 @@ public:
 
 	virtual bool isEmeraldPiece();
 
+	virtual bool isEnemy();
+
 	void increasePosition(float, float, float);
 
 	void increaseRotation(float, float, float);
@@ -86,5 +88,7 @@ public:
 	virtual bool canHomingAttackOn();
 	
 	virtual bool isPoint();
+
+	virtual void die();
 };
 #endif

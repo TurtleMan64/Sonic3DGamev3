@@ -150,6 +150,7 @@ int Global::gameRingCount = 0;
 int Global::gameScore = 0;
 int Global::gameLives = 4;
 int Global::gameClock = 0;
+int Global::gameTotalPlaytime = 0;
 float Global::deathHeight = -100.0f;
 
 int Global::gameMissionNumber = 0;
@@ -168,6 +169,8 @@ bool Global::unlockedMechaSonic = true;
 bool Global::unlockedDage4 = true;
 bool Global::unlockedManiaSonic = true;
 bool Global::unlockedAmy = true;
+
+std::vector<std::string> Global::npcList;
 
 void increaseProcessPriority();
 
@@ -289,6 +292,8 @@ int main()
 
 	while (Global::gameState != STATE_EXITING && displayWantsToClose() == 0)
 	{
+		Global::gameTotalPlaytime++;
+
 		Input_pollInputs();
 
 		GLenum err = glGetError();
@@ -864,6 +869,11 @@ void Global::loadSaveData()
 
 		file.close();
 	}
+
+	if (Global::gameSaveData.find("PLAYTIME") != Global::gameSaveData.end())
+	{
+		Global::gameTotalPlaytime = std::stoi(Global::gameSaveData["PLAYTIME"]);
+	}
 }
 
 void Global::saveSaveData()
@@ -878,6 +888,8 @@ void Global::saveSaveData()
 	}
 	else
 	{
+		Global::gameSaveData["PLAYTIME"] = std::to_string(Global::gameTotalPlaytime);
+
 		std::unordered_map<std::string, std::string>::iterator it = Global::gameSaveData.begin();
  
 		while (it != Global::gameSaveData.end())

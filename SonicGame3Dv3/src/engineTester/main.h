@@ -103,6 +103,7 @@ public:
 	static std::string gameMissionDescription;
 	static int gameRingTarget; //How many rings you have to collect to finish the stage in Ring mode
 	static bool gameIsArcadeMode;
+	static int gameTotalPlaytime;
 
 	static std::vector<Level> gameLevelData;
 	static std::unordered_map<std::string, std::string> gameSaveData;
@@ -138,6 +139,8 @@ public:
 	static bool unlockedDage4;
 	static bool unlockedManiaSonic;
 	static bool unlockedAmy;
+
+	static std::vector<std::string> npcList;
 
 	static void checkErrorAL(const char* description);
 

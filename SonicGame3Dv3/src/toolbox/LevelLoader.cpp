@@ -162,14 +162,16 @@ void LevelLoader_loadLevel(std::string levelFilename)
 
 	int stageFault = 0;
 
-	Global::gameLives--;
-
 	if (!Global::isNewLevel)
 	{
-		if (Global::gameLives < 0)
+		if (Global::gameIsArcadeMode)
 		{
-			LevelLoader_loadTitle();
-			return;
+			Global::gameLives--;
+			if (Global::gameLives < 0)
+			{
+				LevelLoader_loadTitle();
+				return;
+			}
 		}
 	}
 

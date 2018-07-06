@@ -34,6 +34,10 @@ res/Audio/BGM/twnklpk2_loop.ogg
 # Magnetic Shield
 27 -2065.07 8749.5 -1080.1 0 90 8
 
+# NPC
+32 363.143829 1092.682983 -20158.402344 90 1 How did you get here? Are you trying to-break in to the castle? Not on my watch!
+32 -102.923569 1113.034912 -21088.144531 -64 2 That guy over there isn't a security guard.-I think he's trying to break in...
+
 #Item Capsules Act 1
 27 3294.22 5178.74 8926.81 117.42857 90.0 2
 27 -3051.1 7745.0 7214.05 87.46154 90.0 2

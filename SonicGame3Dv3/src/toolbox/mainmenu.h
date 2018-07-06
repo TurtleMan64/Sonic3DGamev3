@@ -37,6 +37,7 @@ private:
 	static const int ROOT_MISSION = 100001;
 	static const int ROOT_EXTRAS  = 100002;
 	static const int ROOT_EXIT    = 100003;
+	static const int EXTRAS       = 100004;
 
 	static const int MISSION_MAX = MISSION_21;
 
@@ -71,10 +72,17 @@ private:
 	static GUIText* textTitleCardMission;
 	static GUIText* textTitleCardMissionDescription;
 
-	static GUIText* textItem1; //STORY MODE
-	static GUIText* textItem2; //MISSION MODE
+	static GUIText* textItem1; //ARCADE
+	static GUIText* textItem2; //MISSIONS
 	static GUIText* textItem3; //EXTRAS
 	static GUIText* textItem4; //QUIT
+
+	static GUIText* textExtra1Title; //Number of A ranks
+	static GUIText* textExtra1Data;
+	static GUIText* textExtra2Title; //Number of NPC found
+	static GUIText* textExtra2Data;
+	static GUIText* textExtra3Title; //Total playtime
+	static GUIText* textExtra3Data;
 
 	static GLuint textureParallelogram;
 	static GLuint textureParallelogramBackdrop;
@@ -173,6 +181,8 @@ private:
 	static void selectMenuRoot(int newSelection);
 
 	static void selectMenuMission(int newSelection);
+
+	static void selectMenuExtra();
 
 	static void unloadResources();
 

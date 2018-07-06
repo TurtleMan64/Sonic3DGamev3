@@ -338,7 +338,12 @@ void GuiManager::refresh()
 		//textTimer->setVisibility(true);
 		textRings->setVisibility(true);
 		textScore->setVisibility(true);
-		textLives->setVisibility(true);
+		textLives->setVisibility(false);
+
+		if (Global::gameIsArcadeMode)
+		{
+			textLives->setVisibility(true);
+		}
 
 		GuiManager::setTimerInvisible();
 		int partCen = (centiseconds * 100) / 60;

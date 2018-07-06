@@ -60,6 +60,13 @@ GUIText* MainMenu::textItem2 = nullptr;
 GUIText* MainMenu::textItem3 = nullptr;
 GUIText* MainMenu::textItem4 = nullptr;
 
+GUIText* MainMenu::textExtra1Title = nullptr; //Number of A ranks
+GUIText* MainMenu::textExtra1Data  = nullptr;
+GUIText* MainMenu::textExtra2Title = nullptr; //Number of NPC found
+GUIText* MainMenu::textExtra2Data  = nullptr;
+GUIText* MainMenu::textExtra3Title = nullptr; //Total playtime
+GUIText* MainMenu::textExtra3Data  = nullptr;
+
 GLuint MainMenu::textureParallelogram              = (GLuint)-1;
 GLuint MainMenu::textureParallelogramBackdrop      = (GLuint)-1;
 GLuint MainMenu::textureParallelogramHalf          = (GLuint)-1;
@@ -178,6 +185,27 @@ void MainMenu::init()
 	textureRankBlank				  = Loader_loadTextureNoInterpolation("res/Images/MainMenu/NoRank.png");
 	textureMissionSelect			  = Loader_loadTextureNoInterpolation("res/Images/MainMenu/MissionSelect.png");
 
+	Global::npcList.push_back("Emerald Coast_NPC_1");
+	Global::npcList.push_back("Emerald Coast_NPC_2");
+	Global::npcList.push_back("Emerald Coast_NPC_3");
+	Global::npcList.push_back("Speed Highway_NPC_1");
+	Global::npcList.push_back("Speed Highway_NPC_2");
+	Global::npcList.push_back("Speed Highway_NPC_3");
+	Global::npcList.push_back("Twinkle Park_NPC_1");
+	Global::npcList.push_back("Twinkle Park_NPC_2");
+	Global::npcList.push_back("Metal Harbor_NPC_1");
+	Global::npcList.push_back("Outset Island_NPC_1");
+	Global::npcList.push_back("Wuhu Island_NPC_1");
+	Global::npcList.push_back("Wuhu Island_NPC_2");
+	Global::npcList.push_back("Wuhu Island_NPC_3");
+	Global::npcList.push_back("Wuhu Island_NPC_4");
+	Global::npcList.push_back("Snowhead_NPC_1");
+	Global::npcList.push_back("Snowhead_NPC_2");
+	Global::npcList.push_back("Snowhead_NPC_3");
+	Global::npcList.push_back("Snowhead_NPC_4");
+	Global::npcList.push_back("Snowhead_NPC_5");
+	Global::npcList.push_back("Snowhead_NPC_6");
+
 	MainMenu::loadResources();
 
 	MainMenu::selectMenuRoot(ROOT_STORY);
@@ -292,6 +320,64 @@ void MainMenu::loadResources()
 	textMission20 = new GUIText("KINGDOM VALLEY",      2.0f, font, 0.0f, 0.0f, 0.5f-128*px, false, true, true); Global::countNew++;
 	textMission21 = new GUIText("PUMPKIN HILL",        2.0f, font, 0.0f, 0.0f, 0.5f-128*px, false, true, true); Global::countNew++;
 
+	int totalRanks = 0;
+	int rankAs = 0;
+	for (unsigned int i = 0; i < Global::gameLevelData.size(); i++)
+	{
+		Level* level = &Global::gameLevelData[i];
+		int missionCount = level->numMissions;
+		totalRanks += missionCount;
+
+		std::string name = level->displayName;
+		auto end = Global::gameSaveData.end();
+
+		switch (missionCount)
+		{
+			case 4: if (Global::gameSaveData.find(name+"_M4_RANK") != end) if (Global::gameSaveData[name+"_M4_RANK"] == "A") rankAs++;
+			case 3: if (Global::gameSaveData.find(name+"_M3_RANK") != end) if (Global::gameSaveData[name+"_M3_RANK"] == "A") rankAs++;
+			case 2: if (Global::gameSaveData.find(name+"_M2_RANK") != end) if (Global::gameSaveData[name+"_M2_RANK"] == "A") rankAs++;
+			case 1: if (Global::gameSaveData.find(name+"_M1_RANK") != end) if (Global::gameSaveData[name+"_M1_RANK"] == "A") rankAs++;
+			default: break;
+		}
+	}
+
+	unsigned int totalNPC = Global::npcList.size();
+	int foundNPC = 0;
+	for (unsigned int i = 0; i < totalNPC; i++)
+	{
+		std::string npc = Global::npcList[i];
+		auto end = Global::gameSaveData.end();
+
+		if (Global::gameSaveData.find(npc) != end)
+		{
+			if (Global::gameSaveData[npc] == "true")
+			{
+				foundNPC++;
+			}
+		}
+	}
+
+	std::string playtime = "";
+	int hrs = (Global::gameTotalPlaytime         )/216000;
+	int min = (Global::gameTotalPlaytime % 216000)/3600;
+	int sec = (Global::gameTotalPlaytime % 3600  )/60;
+	int frm = (Global::gameTotalPlaytime % 60    )/1;
+	frm = (frm * 100) / 60;
+
+	playtime += std::to_string(hrs)+" HOURS, ";
+	playtime += std::to_string(min)+" MINUTES, ";
+	playtime += std::to_string(sec)+"."+std::to_string(frm)+" SECONDS";
+
+	const float yoff = -0.03f;
+
+	textExtra1Title = new GUIText("A RANK:",         2, font, 0, 0.25f+yoff, 1, true, false, false); Global::countNew++;
+	textExtra2Title = new GUIText("HIDDEN NPC:",     2, font, 0, 0.50f+yoff, 1, true, false, false); Global::countNew++;
+	textExtra3Title = new GUIText("TOTAL PLAYTIME:", 2, font, 0, 0.75f+yoff, 1, true, false, false); Global::countNew++;
+
+	textExtra1Data = new GUIText(std::to_string(rankAs)  +"/"+std::to_string(totalRanks), 2, font, 0, 0.25f+0.06f+yoff, 1, true, false, false); Global::countNew++; //Number of A ranks
+	textExtra2Data = new GUIText(std::to_string(foundNPC)+"/"+std::to_string(totalNPC),   2, font, 0, 0.50f+0.06f+yoff, 1, true, false, false); Global::countNew++; //Number of NPC found
+	textExtra3Data = new GUIText(playtime, 2, font, 0, 0.75f+0.06f+yoff, 1, true, false, false); Global::countNew++; //Total playtime
+
 	MainMenu::selectMenuRoot(ROOT_STORY);
 }
 
@@ -329,6 +415,13 @@ void MainMenu::unloadResources()
 	textMission19->deleteMe(); delete textMission19; Global::countDelete++; textMission19 = nullptr;
 	textMission20->deleteMe(); delete textMission20; Global::countDelete++; textMission20 = nullptr;
 	textMission21->deleteMe(); delete textMission21; Global::countDelete++; textMission21 = nullptr;
+
+	textExtra1Title->deleteMe(); delete textExtra1Title; Global::countDelete++; textExtra1Title = nullptr;
+	textExtra1Data ->deleteMe(); delete textExtra1Data;  Global::countDelete++; textExtra1Data  = nullptr;
+	textExtra2Title->deleteMe(); delete textExtra2Title; Global::countDelete++; textExtra2Title = nullptr;
+	textExtra2Data ->deleteMe(); delete textExtra2Data;  Global::countDelete++; textExtra2Data  = nullptr;
+	textExtra3Title->deleteMe(); delete textExtra3Title; Global::countDelete++; textExtra3Title = nullptr;
+	textExtra3Data ->deleteMe(); delete textExtra3Data;  Global::countDelete++; textExtra3Data  = nullptr;
 
 	GuiManager::clearGuisToRender();
 
@@ -704,6 +797,13 @@ void MainMenu::selectMenuMission(int newSelection)
 	textBestScore->setVisibility(true);
 	textBestTime ->setVisibility(true);
 
+	textExtra1Title->setVisibility(false);
+	textExtra1Data ->setVisibility(false);
+	textExtra2Title->setVisibility(false);
+	textExtra2Data ->setVisibility(false);
+	textExtra3Title->setVisibility(false);
+	textExtra3Data ->setVisibility(false);
+
 	AudioPlayer::play(36, Global::gameCamera->getFadePosition1());
 }
 
@@ -755,6 +855,59 @@ void MainMenu::selectMenuRoot(int newSelection)
 
 	textBestScore->setVisibility(false);
 	textBestTime ->setVisibility(false);
+
+	textExtra1Title->setVisibility(false);
+	textExtra1Data ->setVisibility(false);
+	textExtra2Title->setVisibility(false);
+	textExtra2Data ->setVisibility(false);
+	textExtra3Title->setVisibility(false);
+	textExtra3Data ->setVisibility(false);
+
+	AudioPlayer::play(36, Global::gameCamera->getFadePosition1());
+}
+
+void MainMenu::selectMenuExtra()
+{
+	GuiManager::clearGuisToRender();
+
+	menuSelectionID = EXTRAS;
+
+	textItem1->setVisibility(false);
+	textItem2->setVisibility(false);
+	textItem3->setVisibility(false);
+	textItem4->setVisibility(false);
+
+	textMission1 ->setVisibility(false);
+	textMission2 ->setVisibility(false);
+	textMission3 ->setVisibility(false);
+	textMission4 ->setVisibility(false);
+	textMission5 ->setVisibility(false);
+	textMission6 ->setVisibility(false);
+	textMission7 ->setVisibility(false);
+	textMission8 ->setVisibility(false);
+	textMission9 ->setVisibility(false);
+	textMission10->setVisibility(false);
+	textMission11->setVisibility(false);
+	textMission12->setVisibility(false);
+	textMission13->setVisibility(false);
+	textMission14->setVisibility(false);
+	textMission15->setVisibility(false);
+	textMission16->setVisibility(false);
+	textMission17->setVisibility(false);
+	textMission18->setVisibility(false);
+	textMission19->setVisibility(false);
+	textMission20->setVisibility(false);
+	textMission21->setVisibility(false);
+
+	textBestScore->setVisibility(false);
+	textBestTime ->setVisibility(false);
+
+	textExtra1Title->setVisibility(true);
+	textExtra1Data ->setVisibility(true);
+	textExtra2Title->setVisibility(true);
+	textExtra2Data ->setVisibility(true);
+	textExtra3Title->setVisibility(true);
+	textExtra3Data ->setVisibility(true);
 
 	AudioPlayer::play(36, Global::gameCamera->getFadePosition1());
 }
@@ -905,6 +1058,7 @@ void MainMenu::step()
 
 					case ROOT_EXTRAS:
 					{
+						MainMenu::selectMenuExtra();
 						break;
 					}
 
@@ -1003,6 +1157,13 @@ void MainMenu::step()
 			else if (pressedBack)
 			{
 				MainMenu::selectMenuRoot(ROOT_MISSION);
+			}
+		}
+		if (menuSelectionID == EXTRAS)
+		{
+			if (pressedBack)
+			{
+				MainMenu::selectMenuRoot(ROOT_EXTRAS);
 			}
 		}
 	}

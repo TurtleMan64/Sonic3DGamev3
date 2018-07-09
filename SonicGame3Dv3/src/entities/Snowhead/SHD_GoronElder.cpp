@@ -17,6 +17,7 @@
 
 #include <list>
 #include <iostream>
+#include <cstring>
 #include <string>
 
 std::list<TexturedModel*> SHD_GoronElder::models;

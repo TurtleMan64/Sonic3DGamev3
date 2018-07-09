@@ -65,6 +65,8 @@ ItemCapsule::ItemCapsule(float x, float y, float z, float yRot, float zRot, int 
 	entityGlass->setRotZ(zRot);
 	entityGlass->updateTransformationMatrix();
 
+	centerPos = position+spherePositionFromAngles(toRadians(yRot), toRadians(zRot), 7.5f);
+
 	switch (type)
 	{
 		case 0:  entityItem = new Body(&ItemCapsule::modelsItemSpeedUp);    Global::countNew++; break;
@@ -105,11 +107,22 @@ void ItemCapsule::step()
 			setVisible(true);
 			entityItem->setVisible(true);
 			entityGlass->setVisible(true);
-			if (Global::gamePlayer->getX() > getX() - colHorizontal - Global::gamePlayer->getHitboxHorizontal() && Global::gamePlayer->getX() < getX() + colHorizontal + Global::gamePlayer->getHitboxHorizontal() &&
-				Global::gamePlayer->getZ() > getZ() - colHorizontal - Global::gamePlayer->getHitboxHorizontal() && Global::gamePlayer->getZ() < getZ() + colHorizontal + Global::gamePlayer->getHitboxHorizontal() &&
-				Global::gamePlayer->getY() + Global::gamePlayer->getHitboxVertical() >= getY() && Global::gamePlayer->getY() <= getY() + colVertical)
+
+			if (abs(getX() - Global::gamePlayer->getPosition()->x) < 50 && 
+				abs(getZ() - Global::gamePlayer->getPosition()->z) < 50)
 			{
-				die();
+				if ((Global::gamePlayer->getCenterPosition()-centerPos).lengthSquared() < (7.5f*7.5f + 6.0f*6.0f))
+				{
+					die();
+				}
+
+
+				//if (Global::gamePlayer->getX() > getX() - colHorizontal - Global::gamePlayer->getHitboxHorizontal() && Global::gamePlayer->getX() < getX() + colHorizontal + Global::gamePlayer->getHitboxHorizontal() &&
+				//	Global::gamePlayer->getZ() > getZ() - colHorizontal - Global::gamePlayer->getHitboxHorizontal() && Global::gamePlayer->getZ() < getZ() + colHorizontal + Global::gamePlayer->getHitboxHorizontal() &&
+				//	Global::gamePlayer->getY() + Global::gamePlayer->getHitboxVertical() >= getY() && Global::gamePlayer->getY() <= getY() + colVertical)
+				//{
+					//die();
+				//}
 			}
 
 			entityItem->increaseRotation(5, 0, 0);
@@ -283,4 +296,9 @@ void ItemCapsule::deleteStaticModels()
 bool ItemCapsule::canHomingAttackOn()
 {
 	return true;
+}
+
+Vector3f ItemCapsule::getHomingCenter()
+{
+	return centerPos;
 }

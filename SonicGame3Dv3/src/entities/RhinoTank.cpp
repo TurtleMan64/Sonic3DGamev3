@@ -380,6 +380,11 @@ bool RhinoTank::canHomingAttackOn()
 	return true;
 }
 
+Vector3f RhinoTank::getHomingCenter()
+{
+	return Vector3f(getX(), getY()+7, getZ());
+}
+
 bool RhinoTank::isEnemy()
 {
 	return true;

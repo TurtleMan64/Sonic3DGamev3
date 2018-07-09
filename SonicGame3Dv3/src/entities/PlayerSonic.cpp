@@ -1716,9 +1716,10 @@ void PlayerSonic::homingAttack()
 		{
 			if (e.first->canHomingAttackOn())
 			{
-				float xDiff = e.first->getX() - myX;
-				float zDiff = e.first->getZ() - myZ;
-				float yDiff = myY - e.first->getY();
+				Vector3f eCenter = e.first->getHomingCenter();
+				float xDiff = eCenter.x - myX;
+				float zDiff = eCenter.z - myZ;
+				float yDiff = myY - eCenter.y;
 				float thisDist = xDiff*xDiff + zDiff*zDiff + yDiff*yDiff;
 
 				if (targetNearest)
@@ -1753,10 +1754,10 @@ void PlayerSonic::homingAttack()
 
 		if (closest != nullptr)
 		{
-			
-			float xDiff = -(myX - closest->getX());
-			float zDiff = -(myZ - closest->getZ());
-			float yDiff = -(myY - closest->getY());
+			Vector3f eCenter = closest->getHomingCenter();
+			float xDiff = -(myX - eCenter.x);
+			float zDiff = -(myZ - eCenter.z);
+			float yDiff = -(myY - eCenter.y);
 
 			Vector3f unitDir(xDiff, yDiff + 3.5f, zDiff);
 			unitDir.normalize();
@@ -1872,9 +1873,10 @@ void PlayerSonic::attemptLightdash()
 	Entity* closestBackup = nullptr;
 	float distBackup = 2000; //distance squared
 
-	float myX = getX();
-	float myZ = getZ();
-	float myY = getY();
+	Vector3f centerPos = getCenterPosition();
+	float myX = centerPos.x;
+	float myZ = centerPos.z;
+	float myY = centerPos.y;
 
 	Vector3f myVel(xVel+xVelAir, yVel, zVel+zVelAir);
 	if (xVel*xVel + yVel*yVel + zVel*zVel == 0)
@@ -2011,10 +2013,14 @@ void PlayerSonic::adjustCamera()
 		cameraYawTarget += cameraInputX;
 
 
+		//cameraYawReal = cameraYawReal + ((cameraYawTarget - cameraYawReal) / cameraLaziness);
+		//cameraPitchReal = cameraPitchReal + ((cameraPitchTarget - cameraPitchReal) / cameraLaziness);
+
 		cam->setYaw(cam->getYaw() + (cameraYawTarget - cam->getYaw()) / cameraLaziness);
 		cam->setPitch(cam->getPitch() + (cameraPitchTarget - cam->getPitch()) / cameraLaziness);
 
-
+		//cam->setYaw(cameraYawReal);
+		//cam->setPitch(cameraPitchReal);
 
 		Vector3f headPos(
 			position.x + currNorm.x*headHeight,

@@ -19,6 +19,7 @@ private:
 
 	static GUIText* textCursor;
 	static GUIText* textResume;
+	static GUIText* textCamera;
 	static GUIText* textRestart;
 	static GUIText* textQuit;
 

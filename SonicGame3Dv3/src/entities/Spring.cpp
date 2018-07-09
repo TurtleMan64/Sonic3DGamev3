@@ -117,3 +117,8 @@ bool Spring::canHomingAttackOn()
 {
 	return true;
 }
+
+Vector3f Spring::getHomingCenter()
+{
+	return Vector3f(getPosition());
+}

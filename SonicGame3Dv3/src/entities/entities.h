@@ -79,6 +79,8 @@ public:
 
 	void updateTransformationMatrix();
 
+	void updateTransformationMatrix(float scaleX, float scaleY, float scaleZ);
+
 	void updateTransformationMatrixSADX();
 
 	virtual std::string getName();
@@ -86,6 +88,8 @@ public:
 	virtual bool canLightdashOn();
 
 	virtual bool canHomingAttackOn();
+
+	virtual Vector3f getHomingCenter();
 	
 	virtual bool isPoint();
 

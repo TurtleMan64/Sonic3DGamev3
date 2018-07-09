@@ -83,6 +83,7 @@ public:
 	static int bufferTime;
 	static bool shouldLoadLevel;
 	static bool isNewLevel;
+	static bool isAutoCam;
 	static int gameRingCount;
 	static int gameScore;
 	static int gameLives;

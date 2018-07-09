@@ -34,6 +34,8 @@ public:
 
 	bool canHomingAttackOn();
 
+	Vector3f getHomingCenter();
+
 	bool isEnemy();
 };
 #endif

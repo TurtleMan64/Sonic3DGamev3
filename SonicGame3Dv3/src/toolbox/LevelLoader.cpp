@@ -106,6 +106,7 @@
 #include "../entities/Snowhead/shdgoronkid.h"
 #include "../entities/PumpkinHill/phclouds.h"
 #include "../entities/DryLagoon/dlturtle.h"
+#include "../entities/camerabox.h"
 
 float toFloat(char* input);
 int toInt(char* input);
@@ -1545,6 +1546,20 @@ void processLine(char** dat, int datLength)
 			return;
 		}
 
+		case 84: //Camera Box
+		{
+			CameraBox::loadStaticModels();
+			CameraBox* camBox = new CameraBox(
+				toFloat(dat[ 1]), toFloat(dat[ 2]),                    //y rotation, pan speed
+				toFloat(dat[ 3]), toFloat(dat[ 4]), toFloat(dat[5]),   //position
+				toFloat(dat[ 6]), toFloat(dat[ 7]), toFloat(dat[ 8]),  //point a
+				toFloat(dat[ 9]), toFloat(dat[10]), toFloat(dat[11]),  //point b
+				toFloat(dat[12]), toFloat(dat[13]), toFloat(dat[14])); //scale
+			Global::countNew++;
+			Main_addEntity(camBox);
+			return;
+		}
+
 		default:
 		{
 			return;
@@ -1705,4 +1720,5 @@ void freeAllStaticModels()
 	SHD_GoronKid::deleteStaticModels();
 	PH_Clouds::deleteStaticModels();
 	DL_Turtle::deleteStaticModels();
+	CameraBox::loadStaticModels();
 }

@@ -148,6 +148,8 @@ private:
 	const float cameraLaziness = 3;
 	const float cameraRadiusZoom = 40;
 	const float cameraRadiusZoomOut = 104;
+	float cameraYawReal = 0;
+	float cameraPitchReal = 0;
 	float cameraYawTarget = 0;
 	float cameraPitchTarget = 0;
 

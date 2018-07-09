@@ -39,6 +39,17 @@ GoalSign::GoalSign(float x, float y, float z)
 		return;
 	}
 
+	if (Global::levelID == LVL_FIRE_FIELD)
+	{
+		GoalSign::hitboxR = 30;
+		GoalSign::hitboxV = 20;
+	}
+	else
+	{
+		GoalSign::hitboxR = 6;
+		GoalSign::hitboxV = 12;
+	}
+
 	this->position.x = x;
 	this->position.y = y;
 	this->position.z = z;

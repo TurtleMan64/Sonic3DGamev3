@@ -35,6 +35,7 @@
     <ClCompile Include="src\collision\Triangle3D.cpp" />
     <ClCompile Include="src\engineTester\MainGameLoop.cpp" />
     <ClCompile Include="src\entities\Camera.cpp" />
+    <ClCompile Include="src\entities\CameraBox.cpp" />
     <ClCompile Include="src\entities\Capsule.cpp" />
     <ClCompile Include="src\entities\Chao.cpp" />
     <ClCompile Include="src\entities\CollideableObject.cpp" />
@@ -209,6 +210,7 @@
     <ClInclude Include="src\collision\triangle3d.h" />
     <ClInclude Include="src\engineTester\main.h" />
     <ClInclude Include="src\entities\camera.h" />
+    <ClInclude Include="src\entities\camerabox.h" />
     <ClInclude Include="src\entities\capsule.h" />
     <ClInclude Include="src\entities\chao.h" />
     <ClInclude Include="src\entities\collideableobject.h" />

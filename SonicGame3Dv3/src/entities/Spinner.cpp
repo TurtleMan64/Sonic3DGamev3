@@ -163,6 +163,11 @@ bool Spinner::canHomingAttackOn()
 	return true;
 }
 
+Vector3f Spinner::getHomingCenter()
+{
+	return Vector3f(getPosition());
+}
+
 bool Spinner::isEnemy()
 {
 	return true;

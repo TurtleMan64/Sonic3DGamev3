@@ -27,6 +27,8 @@ private:
 	static float colHorizontal;
 	static float colVertical;
 
+	Vector3f centerPos;
+
 	int itemType;
 	Body* entityGlass;
 	Body* entityItem;
@@ -46,5 +48,7 @@ public:
 	static void deleteStaticModels();
 
 	bool canHomingAttackOn();
+
+	Vector3f getHomingCenter();
 };
 #endif

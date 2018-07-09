@@ -27,6 +27,7 @@ Camera::Camera()
 	prevPos.x = 0;
 	prevPos.y = 20;
 	prevPos.z = 0;
+	//target.set(0,0,0);
 	pitch = 0;
 	yaw = 0;
 	roll = 0;
@@ -34,6 +35,14 @@ Camera::Camera()
 
 void Camera::refresh()
 {
+	//float xDiff = position.x - target.x;
+	//float zDiff = position.z - target.z;
+	//float yDiff = position.y - target.y;
+	//float hDist = sqrtf(xDiff*xDiff + zDiff*zDiff);
+
+	//yaw   = -toDegrees(atan2f(-zDiff, xDiff))-90;
+	//pitch =  toDegrees(atan2f(yDiff, hDist));
+
 	Vector3f off(
 		-cosf(toRadians(yaw + 90))*((cosf(toRadians(pitch)))),
 		 sinf(toRadians(pitch + 180)),
@@ -117,3 +126,13 @@ Vector3f* Camera::getFadePosition2()
 {
 	return &fadePosition2;
 }
+
+//void Camera::setTarget(float x, float y, float z)
+//{
+	//target.set(x, y, z);
+//}
+
+//void Camera::setTarget(Vector3f* newTarget)
+//{
+	//target.set(newTarget);
+//}

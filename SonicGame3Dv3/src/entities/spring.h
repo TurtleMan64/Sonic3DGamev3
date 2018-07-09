@@ -34,5 +34,7 @@ public:
 	std::string getName();
 
 	bool canHomingAttackOn();
+
+	Vector3f getHomingCenter();
 };
 #endif

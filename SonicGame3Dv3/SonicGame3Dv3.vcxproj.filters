@@ -627,6 +627,9 @@
     <ClCompile Include="src\entities\DryLagoon\DL_Turtle.cpp">
       <Filter>Source Files\entities\DryLagoon</Filter>
     </ClCompile>
+    <ClCompile Include="src\entities\CameraBox.cpp">
+      <Filter>Source Files\entities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\renderEngine\renderEngine.h">
@@ -1126,6 +1129,9 @@
     </ClInclude>
     <ClInclude Include="src\entities\DryLagoon\dlturtle.h">
       <Filter>Source Files\entities\DryLagoon</Filter>
+    </ClInclude>
+    <ClInclude Include="src\entities\camerabox.h">
+      <Filter>Source Files\entities</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

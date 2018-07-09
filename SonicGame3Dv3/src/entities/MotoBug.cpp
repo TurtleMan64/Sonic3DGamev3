@@ -153,7 +153,7 @@ void MotoBug::step()
 			if (mag < 500)
 			{
 				if (p->getX() > getX()-MotoBug::colHorizontal-p->getHitboxHorizontal() && p->getX() < getX()+MotoBug::colHorizontal+p->getHitboxHorizontal() &&
-						   p->getZ() > getZ()-MotoBug::colHorizontal-p->getHitboxHorizontal() && p->getZ() < getZ()+MotoBug::colHorizontal+p->getHitboxHorizontal())
+				    p->getZ() > getZ()-MotoBug::colHorizontal-p->getHitboxHorizontal() && p->getZ() < getZ()+MotoBug::colHorizontal+p->getHitboxHorizontal())
 				{
 					if (p->getY() > getY()-p->getHitboxVertical() && p->getY() < getY()+MotoBug::colVertical)
 					{
@@ -177,41 +177,53 @@ void MotoBug::step()
 				{
 					if (CollisionChecker::checkCollision(getX()+xVel, getY()+yVel, getZ()+zVel, getX()+xVel, getY()+yVel-1.0f, getZ()+zVel) == true)
 					{
-						inAir = false;
-						triCol = CollisionChecker::getCollideTriangle();
-						Vector3f* triColPosition = CollisionChecker::getCollidePosition();
-					
-						//yVel = 0;
-					
-						float colXNormal = triCol->normal.x;
-						float colYNormal = triCol->normal.y;
-						float colZNormal = triCol->normal.z;
-					
-						if (colYNormal >= 0.75f)
+						Triangle3D* savedTri = CollisionChecker::getCollideTriangle();
+						Vector3f triColPosition(CollisionChecker::getCollidePosition());
+
+						float xTest =  10*cosf(toRadians(getRotY()));
+						float zTest = -10*sinf(toRadians(getRotY()));
+						if (CollisionChecker::checkCollision(getX()+xTest, getY(), getZ()+zTest, getX()+xTest, getY()-10.0f, getZ()+zTest) == true)
 						{
-							setX(triColPosition->x);
-							setY(triColPosition->y+colYNormal*0.5f);
-							setZ(triColPosition->z);
-						}
-						else
-						{
-							if (colYNormal >= 0.5f)
+							inAir = false;
+							triCol = savedTri;
+							//Vector3f* triColPosition = CollisionChecker::getCollidePosition();
+					
+							//yVel = 0;
+					
+							float colXNormal = triCol->normal.x;
+							float colYNormal = triCol->normal.y;
+							float colZNormal = triCol->normal.z;
+					
+							if (colYNormal >= 0.75f)
 							{
-								setX(triColPosition->x);
-								setY(triColPosition->y+colYNormal*0.5f);
-								setZ(triColPosition->z);
-								xVel+=colXNormal*0.05f;
-								zVel+=colZNormal*0.05f;
+								setX(triColPosition.x);
+								setY(triColPosition.y+colYNormal*0.5f);
+								setZ(triColPosition.z);
 							}
 							else
 							{
-								setX(triColPosition->x+colXNormal*0.5f);
-								setY(triColPosition->y+colYNormal*0.5f);
-								setZ(triColPosition->z+colZNormal*0.5f);
-								xVel = 0;
-								zVel = 0;
-								setRotY(getRotY()+180);
+								if (colYNormal >= 0.5f)
+								{
+									setX(triColPosition.x);
+									setY(triColPosition.y+colYNormal*0.5f);
+									setZ(triColPosition.z);
+									xVel+=colXNormal*0.05f;
+									zVel+=colZNormal*0.05f;
+								}
+								else
+								{
+									setX(triColPosition.x+colXNormal*0.5f);
+									setY(triColPosition.y+colYNormal*0.5f);
+									setZ(triColPosition.z+colZNormal*0.5f);
+									xVel = 0;
+									zVel = 0;
+									setRotY(getRotY()+180);
+								}
 							}
+						}
+						else
+						{
+							setRotY(getRotY()+180);
 						}
 					}
 					else
@@ -378,6 +390,11 @@ void MotoBug::deleteStaticModels()
 bool MotoBug::canHomingAttackOn()
 {
 	return true;
+}
+
+Vector3f MotoBug::getHomingCenter()
+{
+	return Vector3f(getX(), getY()+7, getZ());
 }
 
 bool MotoBug::isEnemy()

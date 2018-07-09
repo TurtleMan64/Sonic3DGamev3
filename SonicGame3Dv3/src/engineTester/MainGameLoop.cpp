@@ -144,6 +144,7 @@ int Global::levelID = 0;
 int Global::bufferTime = -1;
 bool Global::shouldLoadLevel = false;
 bool Global::isNewLevel = false;
+bool Global::isAutoCam = true;
 std::string Global::levelName = "";
 std::string Global::levelNameDisplay = "";
 int Global::gameRingCount = 0;
@@ -366,6 +367,13 @@ int main()
 			{
 				//game logic
 				GuiManager::increaseTimer();
+				//if (Global::gamePlayer != nullptr)
+				//{
+					//Vector3f camTarget(Global::gamePlayer->getCurrNorm());
+					//camTarget.scale(12.0f);
+					//camTarget = camTarget + Global::gamePlayer->getPosition();
+					//Global::gameCamera->setTarget(&camTarget);
+				//}
 				for (auto e : gameEntities)
 				{
 					e.first->step();

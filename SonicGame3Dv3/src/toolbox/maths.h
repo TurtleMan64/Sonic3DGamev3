@@ -7,8 +7,8 @@ class Vector2f;
 class Camera;
 
 #include <math.h>
-#include<random>
-#include<chrono>
+#include <random>
+#include <chrono>
 
 #define M_PI 3.14159265358979323846
 
@@ -21,6 +21,8 @@ float toDegrees(float);
 ** Blank Matrix4f should have already been created. This function does not allocate any memory to matrix.
 */
 void createTransformationMatrix(Matrix4f*, Vector3f*, float, float, float, float, float);
+
+void createTransformationMatrix(Matrix4f*, Vector3f*, float, float, float, float, float, float, float);
 
 //For 2D GUI Images
 void createTransformationMatrix(Matrix4f* result, Vector2f* translation, float roation, Vector2f* scale);

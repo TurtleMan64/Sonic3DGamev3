@@ -51,6 +51,28 @@ void createTransformationMatrix(Matrix4f* matrix, Vector3f* translation, float r
 	matrix->scale(&vec);
 }
 
+void createTransformationMatrix(Matrix4f* matrix, Vector3f* translation, float rx, float ry, float rz, float rs, float scaleX, float scaleY, float scaleZ)
+{
+	matrix->setIdentity();
+	matrix->translate(translation);
+	Vector3f vec;
+
+	vec.set(0, 1, 0);
+	matrix->rotate(toRadians(ry), &vec);
+
+	vec.set(0, 0, 1);
+	matrix->rotate(toRadians(rz), &vec);
+
+	vec.set(1, 0, 0);
+	matrix->rotate(toRadians(rx), &vec);
+
+	vec.set(0, 0, 1);
+	matrix->rotate(toRadians(rs), &vec);
+
+	vec.set(scaleX, scaleY, scaleZ);
+	matrix->scale(&vec);
+}
+
 void createTransformationMatrix(Matrix4f* result, Vector2f* translation, float rotation, Vector2f* scale)
 {
 	result->setIdentity();

@@ -8,6 +8,7 @@ class Camera
 private:
 	Vector3f position;
 	Vector3f prevPos;
+	//Vector3f target;
 	float pitch;
 	float yaw;
 	float roll;
@@ -38,5 +39,9 @@ public:
 	Vector3f* getFadePosition1();
 
 	Vector3f* getFadePosition2();
+
+	//void setTarget(float x, float y, float z);
+
+	//void setTarget(Vector3f* newTarget);
 };
 #endif

@@ -22,7 +22,7 @@
 #include "../guis/guimanager.h"
 
 int PauseScreen::menuSelection = 0;
-int PauseScreen::menuSelectionMAX = 2;
+int PauseScreen::menuSelectionMAX = 3;
 int PauseScreen::menuDisplayID = 0;
 
 int PauseScreen::moveYPrevious = 0;
@@ -33,6 +33,7 @@ FontType* PauseScreen::font = nullptr;
 
 GUIText* PauseScreen::textCursor  = nullptr;
 GUIText* PauseScreen::textResume  = nullptr;
+GUIText* PauseScreen::textCamera  = nullptr;
 GUIText* PauseScreen::textRestart = nullptr;
 GUIText* PauseScreen::textQuit    = nullptr;
 
@@ -117,6 +118,23 @@ void PauseScreen::step()
 
 				case 2:
 				{
+					//switch cam, reload text
+					textCamera->deleteMe(); delete textCamera; Global::countDelete++; textCamera = nullptr;
+					if (Global::isAutoCam)
+					{
+						textCamera    = new GUIText("Free Cam",  2.5f, font, 0.5f, 0.55f, 1.0f, false, false, true); Global::countNew++;
+						Global::isAutoCam = false;
+					}
+					else
+					{
+						textCamera    = new GUIText("Auto Cam",  2.5f, font, 0.5f, 0.55f, 1.0f, false, false, true); Global::countNew++;
+						Global::isAutoCam = true;
+					}
+					break;
+				}
+
+				case 3:
+				{
 					Vector3f vel(0,0,0);
 					new Particle(ParticleResources::textureBlackFade, Global::gameCamera->getFadePosition1(), &vel, 0, 60, 0.0f,  10.0f, 0, 1.0f, 0, true);
 					unpause(false);
@@ -145,12 +163,10 @@ void PauseScreen::step()
 		case ROOT:
 			switch (menuSelection)
 			{
-				case 0: textCursor->getPosition()->y = 0.4f; break;
-
-				case 1: textCursor->getPosition()->y = 0.5f; break;
-
-				case 2: textCursor->getPosition()->y = 0.6f; break;
-
+				case 0: textCursor->getPosition()->y = 0.35f; break;
+				case 1: textCursor->getPosition()->y = 0.45f; break;
+				case 2: textCursor->getPosition()->y = 0.55f; break;
+				case 3: textCursor->getPosition()->y = 0.65f; break;
 				default: break;
 			}
 			break;
@@ -178,6 +194,10 @@ void PauseScreen::unpause(bool shouldResumeSFX)
 	if (textRestart != nullptr)
 	{
 		textRestart->deleteMe(); delete textRestart; Global::countDelete++; textRestart = nullptr;
+	}
+	if (textCamera != nullptr)
+	{
+		textCamera->deleteMe(); delete textCamera; Global::countDelete++; textCamera = nullptr;
 	}
 	if (textQuit != nullptr)
 	{
@@ -213,11 +233,19 @@ void PauseScreen::pause()
 	Global::gameState = STATE_PAUSED;
 	menuSelection = 0;
 	menuDisplayID = 0;
-	menuSelectionMAX = 2;
+	menuSelectionMAX = 3;
 	textCursor->setVisibility(true);
-	textResume        = new GUIText("Resume",  size, font, 0.5f, 0.4f, 1.0f, false, false, true); Global::countNew++;
-	textRestart       = new GUIText("Restart", size, font, 0.5f, 0.5f, 1.0f, false, false, true); Global::countNew++;
-	textQuit          = new GUIText("Quit",    size, font, 0.5f, 0.6f, 1.0f, false, false, true); Global::countNew++;
+	textResume        = new GUIText("Resume",    size, font, 0.5f, 0.35f, 1.0f, false, false, true); Global::countNew++;
+	textRestart       = new GUIText("Restart",   size, font, 0.5f, 0.45f, 1.0f, false, false, true); Global::countNew++;
+	if (Global::isAutoCam)
+	{
+		textCamera    = new GUIText("Auto Cam",  size, font, 0.5f, 0.55f, 1.0f, false, false, true); Global::countNew++;
+	}
+	else
+	{
+		textCamera    = new GUIText("Free Cam",  size, font, 0.5f, 0.55f, 1.0f, false, false, true); Global::countNew++;
+	}
+	textQuit          = new GUIText("Quit",      size, font, 0.5f, 0.65f, 1.0f, false, false, true); Global::countNew++;
 
 	//Pause all sound effects
 	for (int i = 0; i < 14; i++)

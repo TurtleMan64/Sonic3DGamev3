@@ -192,6 +192,11 @@ void Entity::updateTransformationMatrix()
 	createTransformationMatrix(&transformationMatrix, &position, rotX, rotY, rotZ, rotSpin, scale);
 }
 
+void Entity::updateTransformationMatrix(float scaleX, float scaleY, float scaleZ)
+{
+	createTransformationMatrix(&transformationMatrix, &position, rotX, rotY, rotZ, rotSpin, scaleX, scaleY, scaleZ);
+}
+
 void Entity::updateTransformationMatrixSADX()
 {
 	createTransformationMatrixSADX(&transformationMatrix, &position, rotX, rotY, rotZ, scale);
@@ -215,6 +220,11 @@ bool Entity::canLightdashOn()
 bool Entity::canHomingAttackOn()
 {
 	return false;
+}
+
+Vector3f Entity::getHomingCenter()
+{
+	return Vector3f(0,0,0);
 }
 
 bool Entity::isPoint()

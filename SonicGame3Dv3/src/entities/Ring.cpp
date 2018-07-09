@@ -77,35 +77,42 @@ void Ring::step()
 		{
 			setVisible(true);
 
-			if (grabTimer == 0 &&
-				Global::gamePlayer->getX() > getX() - hitboxH - Global::gamePlayer->getHitboxHorizontal() && Global::gamePlayer->getX() < getX() + hitboxH + Global::gamePlayer->getHitboxHorizontal() &&
-				Global::gamePlayer->getZ() > getZ() - hitboxH - Global::gamePlayer->getHitboxHorizontal() && Global::gamePlayer->getZ() < getZ() + hitboxH + Global::gamePlayer->getHitboxHorizontal() &&
-				Global::gamePlayer->getY() > getY() - hitboxV - Global::gamePlayer->getHitboxVertical()   && Global::gamePlayer->getY() < getY() + hitboxV)
+			if (abs(getX() - Global::gamePlayer->getPosition()->x) < 50 && 
+				abs(getZ() - Global::gamePlayer->getPosition()->z) < 50 &&
+				grabTimer == 0)
 			{
-				AudioPlayer::play(4, getPosition());
-
-				for (int i = 0; i < 10; i++)
+				if ((Global::gamePlayer->getCenterPosition()-getPosition()).lengthSquared() < (5.0f*5.0f + 6.0f*6.0f))
 				{
-					Vector3f pos(
-						getX() + Maths::random() * 8 - 4,
-						getY() + Maths::random() * 8 - 4,
-						getZ() + Maths::random() * 8 - 4);
+			//if (grabTimer == 0 &&
+			//	Global::gamePlayer->getX() > getX() - hitboxH - Global::gamePlayer->getHitboxHorizontal() && Global::gamePlayer->getX() < getX() + hitboxH + Global::gamePlayer->getHitboxHorizontal() &&
+			//	Global::gamePlayer->getZ() > getZ() - hitboxH - Global::gamePlayer->getHitboxHorizontal() && Global::gamePlayer->getZ() < getZ() + hitboxH + Global::gamePlayer->getHitboxHorizontal() &&
+			//	Global::gamePlayer->getY() > getY() - hitboxV - Global::gamePlayer->getHitboxVertical()   && Global::gamePlayer->getY() < getY() + hitboxV)
+			//{
+					AudioPlayer::play(4, getPosition());
 
-					Vector3f vel(0, 0.4f, 0);
+					for (int i = 0; i < 10; i++)
+					{
+						Vector3f pos(
+							getX() + Maths::random() * 8 - 4,
+							getY() + Maths::random() * 8 - 4,
+							getZ() + Maths::random() * 8 - 4);
 
-					new Particle(ParticleResources::textureSparkleYellow, &pos, &vel,
-						0.025f, 30, 0, 7, -(7.0f / 30.0f), false);
+						Vector3f vel(0, 0.4f, 0);
+
+						new Particle(ParticleResources::textureSparkleYellow, &pos, &vel,
+							0.025f, 30, 0, 7, -(7.0f / 30.0f), false);
+					}
+
+					Global::gameRingCount++;
+
+					if (givesPoints)
+					{
+						Global::gameScore += 10;
+					}
+
+					Main_deleteEntity(this);
+					return;
 				}
-
-				Global::gameRingCount++;
-
-				if (givesPoints)
-				{
-					Global::gameScore += 10;
-				}
-
-				Main_deleteEntity(this);
-				return;
 			}
 
 			if (moves)

@@ -10,7 +10,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 0.02
 d 1.000000
 illum 2
-map_Kd chao__child03.PNG
+map_Kd chao__child03.png
 
 newmtl mat10
 Ns 20
@@ -21,7 +21,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 0.02
 d 1.000000
 illum 2
-map_Kd chao_dot.PNG
+map_Kd chao_dot.png
 
 newmtl mat2
 Ns 20
@@ -32,7 +32,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 0.02
 d 1.000000
 illum 2
-map_Kd chao_child02.PNG
+map_Kd chao_child02.png
 
 newmtl mat3
 Ns 20
@@ -43,7 +43,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 0.02
 d 1.000000
 illum 2
-map_Kd chao_eyeA.PNG
+map_Kd chao_eyeA.png
 
 newmtl mat6
 Ns 20
@@ -54,7 +54,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 0.02
 d 1.000000
 illum 2
-map_Kd chao__child01.PNG
+map_Kd chao__child01.png
 
 newmtl mat7
 Ns 20
@@ -65,4 +65,4 @@ Ke 0.000000 0.000000 0.000000
 Ni 0.02
 d 1.000000
 illum 2
-map_Kd chao_mouthA.PNG
+map_Kd chao_mouthA.png

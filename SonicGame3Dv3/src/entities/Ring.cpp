@@ -77,11 +77,12 @@ void Ring::step()
 		{
 			setVisible(true);
 
-			if (abs(getX() - Global::gamePlayer->getPosition()->x) < 50 && 
-				abs(getZ() - Global::gamePlayer->getPosition()->z) < 50 &&
+			if (abs(getY() - Global::gamePlayer->getPosition()->y) < 40 &&
+				abs(getZ() - Global::gamePlayer->getPosition()->z) < 40 &&
+				abs(getX() - Global::gamePlayer->getPosition()->x) < 40 &&
 				grabTimer == 0)
 			{
-				if ((Global::gamePlayer->getCenterPosition()-getPosition()).lengthSquared() < (5.0f*5.0f + 6.0f*6.0f))
+				if ((Global::gamePlayer->getCenterPosition()-getPosition()).lengthSquared() < (5.0f*5.0f + 7.0f*7.0f))
 				{
 			//if (grabTimer == 0 &&
 			//	Global::gamePlayer->getX() > getX() - hitboxH - Global::gamePlayer->getHitboxHorizontal() && Global::gamePlayer->getX() < getX() + hitboxH + Global::gamePlayer->getHitboxHorizontal() &&

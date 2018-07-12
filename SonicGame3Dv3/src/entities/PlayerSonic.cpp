@@ -84,6 +84,7 @@ PlayerSonic::PlayerSonic(float x, float y, float z)
 	zDisp = 0;
 	setVisible(false); //Our limbs are what will be visible
 	PlayerSonic::maniaSonic = nullptr;
+
 	createLimbs();
 }
 
@@ -1182,6 +1183,39 @@ std::list<TexturedModel*>* PlayerSonic::getModels()
 
 void PlayerSonic::loadStaticModels()
 {
+	PlayerSonic::characterID = 4;
+
+	if (INPUT_SPECIAL || INPUT_SHOULDER)
+	{
+		unsigned int totalNPC = Global::npcList.size();
+		unsigned int foundNPC = 0;
+		for (unsigned int i = 0; i < totalNPC; i++)
+		{
+			std::string npc = Global::npcList[i];
+			auto end = Global::gameSaveData.end();
+
+			if (Global::gameSaveData.find(npc) != end)
+			{
+				if (Global::gameSaveData[npc] == "true")
+				{
+					foundNPC++;
+				}
+			}
+		}
+
+		if (foundNPC == totalNPC)
+		{
+			if (INPUT_SHOULDER)
+			{
+				PlayerSonic::characterID = 6;
+			}
+			else if (INPUT_SPECIAL)
+			{
+				PlayerSonic::characterID = 7;
+			}
+		}
+	}
+
 	if (PlayerSonic::characterID == 0)
 	{
 		loadObjModel(&PlayerSonic::modelBody,         "res/Models/Sonic/", "Body.obj");

@@ -32,3 +32,9 @@ KoopaTroopaBeach 7
 
 # Transparent
 72 res/Models/KoopaTroopaBeach/ KoopaBeachWaterfall.obj trans
+
+# Low Quality Water
+37 -4000  4000
+37 -4000 -4000
+37  4000  4000
+37  4000 -4000

@@ -35,5 +35,16 @@ Collision 7
 # Lost Chao
 81 1583.577 1283.57 -4545.62 -147
 
+# Low Quality Water
+37 -8000 -8000
+37 -8000  0
+37 -8000  8000
+37  0    -8000
+37  0     0
+37  0     8000
+37  8000 -8000
+37  8000  0
+37  8000  8000
+
 # Transparent
 72 res/Models/WuhuIsland/ Transparent.obj trans

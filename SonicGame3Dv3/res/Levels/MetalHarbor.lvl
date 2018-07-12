@@ -1,5 +1,5 @@
 MetalHarbor
-MHNew
+MetalHarbor
 MetalHarbor
 14
 Chunk1 4
@@ -26,9 +26,11 @@ Chunk14 4
 60
 0 80
 1
-2
+4
 res/Audio/BGM/m_harb1_intro.ogg
 res/Audio/BGM/m_harb1_loop.ogg
+res/Audio/BGM/m_harb2_intro.ogg
+res/Audio/BGM/m_harb2_loop.ogg
 11069 199 -12867
 16 5
 -100
@@ -54,6 +56,18 @@ res/Audio/BGM/m_harb1_loop.ogg
 # Rings to complete lightdash path
 0 2645.314941 206.933848 -2824.320313
 0 2675.752441 213.588821 -2824.320313
+
+# Low Quality Water
+37 -8000   0
+37 -8000  -8000
+37  0      0
+37  0     -8000
+37  0     -16000
+37  8000   0
+37  8000  -8000
+37  8000  -16000
+37  16000 -8000
+37  16000 -16000
 
 # Springs
 1 4159.24 130 -8867.53 0 83.1 6.4 25
@@ -87,7 +101,7 @@ res/Audio/BGM/m_harb1_loop.ogg
 2 4675 160.853378 -10906.61 45 90 0 8 90 15
 
 # Warp
-8 6333.6 685 -12768.84 6534.28 4629.35 -12763.41 1170 79.5 60 -1 -1
+8 6333.6 685 -12768.84 6534.28 4629.35 -12763.41 1170 79.5 60 2 3
 
 # Speed Ramps
 29 0 394.2 -713.2 90 8.3 10.0 90

@@ -12,8 +12,10 @@ Collision 7
 0.00000000000000005 2.0
 83
 -310 11
-0
-0
+1
+2
+res/Audio/BGM/p_hill_intro.ogg
+res/Audio/BGM/p_hill_loop.ogg
 -0.7454 1274.0020 -2142.245
 103 8
 -200

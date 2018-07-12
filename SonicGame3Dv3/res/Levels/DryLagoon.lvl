@@ -12,8 +12,10 @@ DryLagoon 7
 0.00005 2.0
 95
 -540 6
-0
-0
+1
+2
+res/Audio/BGM/d_lagoon_intro.ogg
+res/Audio/BGM/d_lagoon_loop.ogg
 555.397 210.997 1696.0581
 -9 16
 -500
@@ -27,6 +29,9 @@ DryLagoon 7
 
 # Lost Chao
 81 1949.43 0 -453.98 0
+
+# Low Quality Water
+37 0 0
 
 # Turtle
 83 240 3.4 -82  0 240 10 1850 0

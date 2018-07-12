@@ -1,8 +1,8 @@
 DelfinoPlaza
-DelfinoPlaza4
+DelfinoPlaza
 DelfinoPlaza
 1
-DelfinoPlaza4 7
+Collision 7
 1.0 1.0 1.0
 0.0 0.0 0.0
 0.0 0.0 0.0
@@ -26,6 +26,17 @@ DelfinoPlaza4 7
 
 # Lost Chao
 81 171.934 3265.815 -4026.53 -60
+
+# Low Quality Water
+37 -8000 -8000
+37 -8000  0
+37 -8000  8000
+37  0    -8000
+37  0     0
+37  0     8000
+37  8000 -8000
+37  8000  0
+37  8000  8000
 
 # Pieces
 73 -1.286870 554.323730 -760.024597     1   0 0 0 0

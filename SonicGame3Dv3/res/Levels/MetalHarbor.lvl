@@ -25,8 +25,10 @@ Chunk14 4
 0.00005 2.0
 60
 0 80
-0
-0
+1
+2
+res/Audio/BGM/m_harb1_intro.ogg
+res/Audio/BGM/m_harb1_loop.ogg
 11069 199 -12867
 16 5
 -100

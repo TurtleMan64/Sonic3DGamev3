@@ -258,15 +258,15 @@ int main()
 
 	if (Global::useHighQualityWater)
 	{
-		Global::gameWaterFBOs = new WaterFrameBuffers; Global::countNew++;
-		WaterShader* waterShader = new WaterShader; Global::countNew++;
+		Global::gameWaterFBOs     = new WaterFrameBuffers; Global::countNew++;
+		WaterShader* waterShader  = new WaterShader; Global::countNew++;
 		Global::gameWaterRenderer = new WaterRenderer(waterShader, Master_getProjectionMatrix(), Global::gameWaterFBOs, Master_getShadowRenderer()); Global::countNew++;
-		Global::gameWaterTiles = new std::list<WaterTile*>; Global::countNew++;
+		Global::gameWaterTiles    = new std::list<WaterTile*>; Global::countNew++;
 		for (int r = -6; r < 6; r++) //-9 , 9
 		{
 			for (int c = -8; c < 8; c++) //-12  12
 			{
-				Global::gameWaterTiles->push_back(new WaterTile(r * 3000.0f, c * 3000.0f, 0.0f)); Global::countNew++;
+				Global::gameWaterTiles->push_back(new WaterTile(r*WaterTile::TILE_SIZE*2, c*WaterTile::TILE_SIZE*2, 0.0f)); Global::countNew++;
 			}
 		}
 	}
@@ -274,8 +274,8 @@ int main()
 	if (Global::renderBloom)
 	{
 		Global::gameMultisampleFbo = new Fbo(SCR_WIDTH, SCR_HEIGHT); Global::countNew++;
-		Global::gameOutputFbo = new Fbo(SCR_WIDTH, SCR_HEIGHT, Fbo::DEPTH_TEXTURE); Global::countNew++;
-		Global::gameOutputFbo2 = new Fbo(SCR_WIDTH, SCR_HEIGHT, Fbo::DEPTH_TEXTURE); Global::countNew++;
+		Global::gameOutputFbo      = new Fbo(SCR_WIDTH, SCR_HEIGHT, Fbo::DEPTH_TEXTURE); Global::countNew++;
+		Global::gameOutputFbo2     = new Fbo(SCR_WIDTH, SCR_HEIGHT, Fbo::DEPTH_TEXTURE); Global::countNew++;
 		PostProcessing::init();
 	}
 
@@ -367,13 +367,6 @@ int main()
 			{
 				//game logic
 				GuiManager::increaseTimer();
-				//if (Global::gamePlayer != nullptr)
-				//{
-					//Vector3f camTarget(Global::gamePlayer->getCurrNorm());
-					//camTarget.scale(12.0f);
-					//camTarget = camTarget + Global::gamePlayer->getPosition();
-					//Global::gameCamera->setTarget(&camTarget);
-				//}
 				for (auto e : gameEntities)
 				{
 					e.first->step();

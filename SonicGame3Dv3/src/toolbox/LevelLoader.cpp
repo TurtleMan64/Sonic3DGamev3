@@ -732,7 +732,7 @@ void processLine(char** dat, int datLength)
 		case 9: //Goal Sign
 		{
 			GoalSign::loadStaticModels();
-			GoalSign* sign = new GoalSign(toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]));
+			GoalSign* sign = new GoalSign(toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), toInt(dat[4]));
 			Global::countNew++;
 			Main_addEntity(sign);
 			return;

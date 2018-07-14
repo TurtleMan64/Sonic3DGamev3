@@ -14,6 +14,7 @@
 #include "../toolbox/maths.h"
 #include "../guis/guimanager.h"
 #include "../audio/audioplayer.h"
+#include "goaltrigger.h"
 
 #include <list>
 #include <iostream>
@@ -22,6 +23,7 @@
 std::list<TexturedModel*> GoalSign::models;
 
 int GoalSign::triggersRemaining = 0;
+int GoalSign::lapsRemaining = 0;
 
 float GoalSign::hitboxR = 6;
 float GoalSign::hitboxV = 12;
@@ -31,7 +33,7 @@ GoalSign::GoalSign()
 
 }
 
-GoalSign::GoalSign(float x, float y, float z)
+GoalSign::GoalSign(float x, float y, float z, int lapCount)
 {
 	if (Global::gameIsChaoMode || Global::gameIsRingMode)
 	{
@@ -41,8 +43,8 @@ GoalSign::GoalSign(float x, float y, float z)
 
 	if (Global::levelID == LVL_FIRE_FIELD)
 	{
-		GoalSign::hitboxR = 30;
-		GoalSign::hitboxV = 20;
+		GoalSign::hitboxR = 40;
+		GoalSign::hitboxV = 30;
 	}
 	else
 	{
@@ -50,15 +52,16 @@ GoalSign::GoalSign(float x, float y, float z)
 		GoalSign::hitboxV = 12;
 	}
 
-	this->position.x = x;
-	this->position.y = y;
-	this->position.z = z;
-	this->scale = 1.5f;
-	this->rotX = 0;
-	this->rotY = 0;
-	this->rotZ = 0;
+	position.x = x;
+	position.y = y;
+	position.z = z;
+	scale = 1.5f;
+	rotX = 0;
+	rotY = 0;
+	rotZ = 0;
 	rotateSpeed = 0;
 	GoalSign::triggersRemaining = 0;
+	GoalSign::lapsRemaining = lapCount;
 }
 
 
@@ -75,7 +78,8 @@ void GoalSign::step()
 		if (playerX > getX() - hitboxR - playerHbox && playerX < getX() + hitboxR + playerHbox &&
 			playerZ > getZ() - hitboxR - playerHbox && playerZ < getZ() + hitboxR + playerHbox &&
 			playerY > getY() - playerVbox           && playerY < getY() + hitboxV &&
-			Global::finishStageTimer == -1)
+			Global::finishStageTimer == -1 &&
+			GoalSign::lapsRemaining == 0)
 		{
 			if (rotateSpeed == 0)
 			{
@@ -175,4 +179,37 @@ void GoalSign::addTrigger()
 void GoalSign::removeTrigger()
 {
 	GoalSign::triggersRemaining--;
+
+	if (GoalSign::triggersRemaining == 0)
+	{
+		GoalSign::lapsRemaining--;
+
+		//Change music in Fire Field
+		if (GoalSign::lapsRemaining == 1)
+		{
+			if (Global::levelID == LVL_FIRE_FIELD)
+			{
+				AudioPlayer::playBGM(2);
+			}
+		}
+
+		if (GoalSign::lapsRemaining != 0)
+		{
+			//respawn triggers
+			extern std::unordered_map<Entity*, Entity*> gameEntities;
+			std::unordered_map<Entity*, Entity*>::iterator it = gameEntities.begin();
+
+			while (it != gameEntities.end())
+			{
+				Entity* e = it->first;
+				if (e->isGoalTrigger()) 
+				{
+					GoalTrigger* trigger = (GoalTrigger*)e;
+					trigger->isActive = true;
+					GoalSign::triggersRemaining++;
+				}
+				it++;
+			}
+		}
+	}
 }

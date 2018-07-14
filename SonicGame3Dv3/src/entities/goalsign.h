@@ -13,6 +13,7 @@ private:
 	static std::list<TexturedModel*> models;
 
 	static int triggersRemaining;
+	static int lapsRemaining;
 
 	static float hitboxR;
 	static float hitboxV;
@@ -21,7 +22,7 @@ private:
 
 public:
 	GoalSign();
-	GoalSign(float x, float y, float z);
+	GoalSign(float x, float y, float z, int lapCount);
 
 	void step();
 

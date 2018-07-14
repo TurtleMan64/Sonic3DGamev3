@@ -22,16 +22,17 @@ GoalTrigger::GoalTrigger()
 
 GoalTrigger::GoalTrigger(float x, float y, float z, float scale)
 {
-	this->position.x = x;
-	this->position.y = y;
-	this->position.z = z;
+	position.x = x;
+	position.y = y;
+	position.z = z;
 	this->scale = scale;
-	this->rotX = 0;
-	this->rotY = 0;
-	this->rotZ = 0;
+	rotX = 0;
+	rotY = 0;
+	rotZ = 0;
     hitboxH = scale/2;
     hitboxV = scale/2;
-    this->visible = false;
+    visible = false;
+	isActive = true;
     GoalSign::addTrigger();
 	updateTransformationMatrix();
 }
@@ -47,11 +48,31 @@ void GoalTrigger::step()
     
 	if (playerX > getX()-hitboxH-playerHbox && playerX < getX()+hitboxH+playerHbox &&
 		playerZ > getZ()-hitboxH-playerHbox && playerZ < getZ()+hitboxH+playerHbox &&
-		playerY > getY()-hitboxV-playerVbox && playerY < getY()+hitboxV)
+		playerY > getY()-hitboxV-playerVbox && playerY < getY()+hitboxV &&
+		isActive)
     {
+		isActive = false;
         GoalSign::removeTrigger();
-        Main_deleteEntity(this);
+
+		if (isActive)
+		{
+			activeTimer = 240;
+			isActive = false;
+		}
     }
+
+	if (activeTimer == 1)
+	{
+		isActive = true;
+	}
+	activeTimer = std::max(activeTimer-1, 0);
+
+	//visible = isActive;
+}
+
+bool GoalTrigger::isGoalTrigger()
+{
+	return true;
 }
 
 std::list<TexturedModel*>* GoalTrigger::getModels()

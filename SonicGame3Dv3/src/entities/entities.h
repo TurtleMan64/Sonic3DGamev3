@@ -33,6 +33,8 @@ public:
 
 	virtual bool isEmeraldPiece();
 
+	virtual bool isGoalTrigger();
+
 	virtual bool isEnemy();
 
 	void increasePosition(float, float, float);

@@ -12,8 +12,10 @@ Collision 7
 0.00005 2.0
 104
 0 2
-0
-0
+1
+2
+res/Audio/BGM/delfino_plaza_intro.ogg
+res/Audio/BGM/delfino_plaza_loop.ogg
 0 31 749
 -90 6
 -100

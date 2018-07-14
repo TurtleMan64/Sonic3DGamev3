@@ -12,8 +12,10 @@ KingdomValleyCollision 7
 0.00005 2.0
 117
 176 22
-0
-0
+1
+2
+res/Audio/BGM/kingdom_valley_intro.ogg
+res/Audio/BGM/kingdom_valley_loop.ogg
 6843.700195 2358.780273 4532.264648
 -18.25 0
 -100

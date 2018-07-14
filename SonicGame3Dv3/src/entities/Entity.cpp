@@ -57,6 +57,11 @@ bool Entity::isEmeraldPiece()
 	return false;
 }
 
+bool Entity::isGoalTrigger()
+{
+	return false;
+}
+
 bool Entity::isEnemy()
 {
 	return false;

@@ -12,8 +12,10 @@ Collision 7
 0.00005 2.0
 56.5
 -247 22
-0
-0
+1
+2
+res/Audio/BGM/outset_intro.ogg
+res/Audio/BGM/outset_loop.ogg
 927 323.9218 -942
 88 6
 -500

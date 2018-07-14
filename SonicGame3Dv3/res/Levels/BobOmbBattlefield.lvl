@@ -12,8 +12,10 @@ Collision 5
 0.00005 2.0
 111
 379.24 8.5
-0
-0
+1
+2
+res/Audio/BGM/bob_intro.ogg
+res/Audio/BGM/bob_loop.ogg
 -120 667.66 -600
 -40 5
 -100

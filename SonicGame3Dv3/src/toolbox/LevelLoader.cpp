@@ -107,6 +107,7 @@
 #include "../entities/PumpkinHill/phclouds.h"
 #include "../entities/DryLagoon/dlturtle.h"
 #include "../entities/camerabox.h"
+#include "../entities/RadicalHighway/rhramp.h"
 
 float toFloat(char* input);
 int toInt(char* input);
@@ -135,6 +136,8 @@ void LevelLoader_loadTitle()
 	Global::gameSkySphere->setVisible(false);
 
 	Global::finishStageTimer = -1;
+
+	Global::stageUsesWater = true;
 
 	Global::gameRingCount = 0;
 	Global::gameScore = 0;
@@ -215,6 +218,19 @@ void LevelLoader_loadLevel(std::string levelFilename)
 		AudioPlayer::deleteBuffersBGM();
 	}
 
+	Global::stageUsesWater = true;
+	if (Global::levelID == LVL_RADICAL_HIGHWAY ||
+		Global::levelID == LVL_FIRE_FIELD ||
+		Global::levelID == LVL_BOBOMB_BATTLEFIELD ||
+		Global::levelID == LVL_PUMPKIN_HILL ||
+		Global::levelID == LVL_SAND_HILL ||
+		Global::levelID == LVL_SNOWHEAD ||
+		Global::levelID == LVL_SPEED_HIGHWAY ||
+		Global::levelID == LVL_WILD_CANYON ||
+		Global::levelID == LVL_TWINKLE_PARK)
+	{
+		Global::stageUsesWater = false;
+	}
 
 	//Run through the header content
 
@@ -1436,7 +1452,8 @@ void processLine(char** dat, int datLength)
 			EmeraldPiece* piece = new EmeraldPiece(
 				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
 				toInt(dat[4]), toInt(dat[5]), //piece number, diggable,
-				toFloat(dat[6]), toFloat(dat[7]), toFloat(dat[8])); //dig volume
+				toFloat(dat[6]), toFloat(dat[7]), toFloat(dat[8]), //dig volume
+				toInt(dat[9])); //is a hard mode piece
 			Global::countNew++;
 			Main_addEntityPass2(piece);
 			return;
@@ -1557,6 +1574,17 @@ void processLine(char** dat, int datLength)
 				toFloat(dat[12]), toFloat(dat[13]), toFloat(dat[14])); //scale
 			Global::countNew++;
 			Main_addEntity(camBox);
+			return;
+		}
+
+		case 85: //Radical Highawy Ramp
+		{
+			RH_Ramp::loadStaticModels();
+			RH_Ramp* ramp = new RH_Ramp(
+				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
+				toFloat(dat[4]), toFloat(dat[5]));                 //rotation
+			Global::countNew++;
+			Main_addEntity(ramp);
 			return;
 		}
 
@@ -1721,4 +1749,5 @@ void freeAllStaticModels()
 	PH_Clouds::deleteStaticModels();
 	DL_Turtle::deleteStaticModels();
 	CameraBox::loadStaticModels();
+	RH_Ramp::loadStaticModels();
 }

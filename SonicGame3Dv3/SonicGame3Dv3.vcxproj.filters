@@ -109,6 +109,9 @@
     <Filter Include="Source Files\entities\DryLagoon">
       <UniqueIdentifier>{c01f0c6d-a2e2-41df-b5ba-c657b305ebec}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\entities\RadicalHighway">
+      <UniqueIdentifier>{49e1f014-44e6-4cf0-a96c-7297e37cbde3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\renderEngine\DisplayManager.cpp">
@@ -630,6 +633,9 @@
     <ClCompile Include="src\entities\CameraBox.cpp">
       <Filter>Source Files\entities</Filter>
     </ClCompile>
+    <ClCompile Include="src\entities\RadicalHighway\RH_Ramp.cpp">
+      <Filter>Source Files\entities\RadicalHighway</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\renderEngine\renderEngine.h">
@@ -1132,6 +1138,9 @@
     </ClInclude>
     <ClInclude Include="src\entities\camerabox.h">
       <Filter>Source Files\entities</Filter>
+    </ClInclude>
+    <ClInclude Include="src\entities\RadicalHighway\rhramp.h">
+      <Filter>Source Files\entities\RadicalHighway</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

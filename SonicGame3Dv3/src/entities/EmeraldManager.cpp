@@ -114,20 +114,33 @@ EmeraldManager::EmeraldManager()
 		if (e->isEmeraldPiece()) 
 		{
 			EmeraldPiece* piece = (EmeraldPiece*)e;
-			totalPieces++;
-			switch (piece->getPieceNumber())
+			if (Global::gameIsNormalMode)
 			{
-			case 1:
-				piece1List.push_back(piece);
-				break;
-
-			case 2:
-				piece2List.push_back(piece);
-				break;
-
-			default:
-				piece3List.push_back(piece);
-				break;
+				if (piece->isHardModePiece())
+				{
+					Main_deleteEntityPass2(piece);
+				}
+				else
+				{
+					totalPieces++;
+					switch (piece->getPieceNumber())
+					{
+						case 1:  piece1List.push_back(piece); break;
+						case 2:  piece2List.push_back(piece); break;
+						default: piece3List.push_back(piece); break;
+					}
+				}
+			}
+			else if (Global::gameIsHardMode)
+			{
+				if (piece->isHardModePiece())
+				{
+					totalPieces++;
+				}
+				else
+				{
+					Main_deleteEntityPass2(piece);
+				}
 			}
 		}
 	}
@@ -135,6 +148,10 @@ EmeraldManager::EmeraldManager()
 	if (Global::gameIsHardMode)
 	{
 		EmeraldManager::piecesRemaining = totalPieces;
+
+		EmeraldManager::radar1->setVisible(false);
+		EmeraldManager::radar2->setVisible(false);
+		EmeraldManager::radar3->setVisible(false);
 	}
 	else if (Global::gameIsNormalMode)
 	{

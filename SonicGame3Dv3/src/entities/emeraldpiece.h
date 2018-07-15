@@ -19,6 +19,8 @@ private:
 	
 	int pieceNumber; //1, 2 or 3
 
+	bool hardModePiece;
+
 	int collectTimer;
 	const int collectTimerMax = 120;
 
@@ -32,7 +34,8 @@ public:
 	EmeraldPiece(
 		float x, float y, float z, 
 		int pieceNumber, int isDiggable, 
-		float digSizeX, float digSizeY, float digSizeZ);
+		float digSizeX, float digSizeY, float digSizeZ, 
+		int hardModePiece);
 
 	void step();
 
@@ -45,5 +48,7 @@ public:
 	static void deleteStaticModels();
 	
 	int getPieceNumber();
+
+	bool isHardModePiece();
 };
 #endif

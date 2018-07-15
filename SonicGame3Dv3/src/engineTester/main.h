@@ -61,6 +61,7 @@ void Main_deleteAllTransparentEntites();
 #define LVL_BOBOMB_BATTLEFIELD 18
 #define LVL_KINGDOM_VALLEY	   19
 #define LVL_PUMPKIN_HILL       20
+#define LVL_RADICAL_HIGHWAY    21
 
 #define ENTITY_RENDER_DIST 2000.0f
 #define ENTITY_RENDER_DIST_HIGH 5000.0f
@@ -105,6 +106,7 @@ public:
 	static int gameRingTarget; //How many rings you have to collect to finish the stage in Ring mode
 	static bool gameIsArcadeMode;
 	static int gameTotalPlaytime;
+	static bool stageUsesWater;
 
 	static std::vector<Level> gameLevelData;
 	static std::unordered_map<std::string, std::string> gameSaveData;

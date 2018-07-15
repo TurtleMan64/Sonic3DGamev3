@@ -82,7 +82,7 @@ void Ring::step()
 				abs(getX() - Global::gamePlayer->getPosition()->x) < 40 &&
 				grabTimer == 0)
 			{
-				if ((Global::gamePlayer->getCenterPosition()-getPosition()).lengthSquared() < (5.0f*5.0f + 7.0f*7.0f))
+				if ((Global::gamePlayer->getCenterPosition()-getPosition()).lengthSquared() < (5.0f*5.0f + 8.0f*8.0f))
 				{
 			//if (grabTimer == 0 &&
 			//	Global::gamePlayer->getX() > getX() - hitboxH - Global::gamePlayer->getHitboxHorizontal() && Global::gamePlayer->getX() < getX() + hitboxH + Global::gamePlayer->getHitboxHorizontal() &&

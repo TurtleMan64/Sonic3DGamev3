@@ -34,7 +34,8 @@ EmeraldPiece::EmeraldPiece()
 EmeraldPiece::EmeraldPiece(
 	float x, float y, float z, 
 	int pieceNumber, int isDiggable, 
-	float digSizeX, float digSizeY, float digSizeZ)
+	float digSizeX, float digSizeY, float digSizeZ,
+	int hardModePiece)
 {
 	position.x = x;
 	position.y = y;
@@ -44,6 +45,11 @@ EmeraldPiece::EmeraldPiece(
 	this->digSizeX = digSizeX;
 	this->digSizeY = digSizeY;
 	this->digSizeZ = digSizeZ;
+	this->hardModePiece = false;
+	if (hardModePiece != 0)
+	{
+		this->hardModePiece = hardModePiece;
+	}
 	collectTimer = 0;
 	scale = EmeraldPiece::baseScale;
 	EmeraldPiece::lastPieceCollectedTimestamp = Global::gameClock;
@@ -149,6 +155,11 @@ int EmeraldPiece::getPieceNumber()
 bool EmeraldPiece::isEmeraldPiece()
 {
 	return true;
+}
+
+bool EmeraldPiece::isHardModePiece()
+{
+	return hardModePiece;
 }
 
 std::list<TexturedModel*>* EmeraldPiece::getModels()

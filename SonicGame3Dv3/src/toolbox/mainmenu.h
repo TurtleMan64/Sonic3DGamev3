@@ -33,13 +33,14 @@ private:
 	static const int MISSION_19   = 18;
 	static const int MISSION_20   = 19;
 	static const int MISSION_21   = 20;
+	static const int MISSION_22   = 21;
 	static const int ROOT_STORY   = 100000;
 	static const int ROOT_MISSION = 100001;
 	static const int ROOT_EXTRAS  = 100002;
 	static const int ROOT_EXIT    = 100003;
 	static const int EXTRAS       = 100004;
 
-	static const int MISSION_MAX = MISSION_21;
+	static const int MISSION_MAX = MISSION_22;
 
 	static int moveXPrevious;
 	static int moveYPrevious;
@@ -67,6 +68,7 @@ private:
 	static GUIText* textMission19;//Bob-omb Battlefield;
 	static GUIText* textMission20;//Kingdom Valley;
 	static GUIText* textMission21;//Pumpkin Hill
+	static GUIText* textMission22;//Radical Highway
 
 	static GUIText* textTitleCardLevelName;
 	static GUIText* textTitleCardMission;
@@ -133,6 +135,7 @@ private:
 	static GuiTexture* itemMission19;
 	static GuiTexture* itemMission20;
 	static GuiTexture* itemMission21;
+	static GuiTexture* itemMission22;
 	static GuiTexture* itemMissionBackdrop1;
 	static GuiTexture* itemMissionBackdrop2;
 	static GuiTexture* itemMissionBackdrop3;
@@ -154,6 +157,7 @@ private:
 	static GuiTexture* itemMissionBackdrop19;
 	static GuiTexture* itemMissionBackdrop20;
 	static GuiTexture* itemMissionBackdrop21;
+	static GuiTexture* itemMissionBackdrop22;
 
 	static GuiTexture* itemRankDisplay;
 	static GuiTexture* itemRankDisplayBackdrop;
@@ -173,6 +177,9 @@ private:
 	static GuiTexture* missionSelect;
 
 	static int titleCardTextTimer;
+
+	static int holdUpTimer;
+	static int holdDownTimer;
 
 public:
 	static void createTitleCard();

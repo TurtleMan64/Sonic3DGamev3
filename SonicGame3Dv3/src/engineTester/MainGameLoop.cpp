@@ -164,6 +164,7 @@ int  Global::gameRingTarget = 100;
 bool Global::gameIsArcadeMode = false;
 std::vector<Level> Global::gameLevelData;
 std::unordered_map<std::string, std::string> Global::gameSaveData;
+bool Global::stageUsesWater = true;
 
 bool Global::unlockedSonicDoll = true;
 bool Global::unlockedMechaSonic = true;
@@ -471,7 +472,7 @@ int main()
 
 
 
-		if (Global::useHighQualityWater)
+		if (Global::useHighQualityWater && Global::stageUsesWater)
 		{
 			glEnable(GL_CLIP_DISTANCE0);
 			bool aboveWater = (cam.getPosition()->y > 0);
@@ -544,7 +545,7 @@ int main()
 
 		Master_render(&cam, 0, 1, 0, 1000);
 
-		if (Global::useHighQualityWater)
+		if (Global::useHighQualityWater && Global::stageUsesWater)
 		{
 			Global::gameWaterRenderer->render(Global::gameWaterTiles, &cam, &lightSun);
 		}

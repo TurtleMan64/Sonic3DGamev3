@@ -636,6 +636,12 @@
     <ClCompile Include="src\entities\RadicalHighway\RH_Ramp.cpp">
       <Filter>Source Files\entities\RadicalHighway</Filter>
     </ClCompile>
+    <ClCompile Include="src\entities\WildCanyon\WC_DigTeleport.cpp">
+      <Filter>Source Files\entities\WildCanyon</Filter>
+    </ClCompile>
+    <ClCompile Include="src\entities\Checkpoint.cpp">
+      <Filter>Source Files\entities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\renderEngine\renderEngine.h">
@@ -1141,6 +1147,12 @@
     </ClInclude>
     <ClInclude Include="src\entities\RadicalHighway\rhramp.h">
       <Filter>Source Files\entities\RadicalHighway</Filter>
+    </ClInclude>
+    <ClInclude Include="src\entities\WildCanyon\wcdigteleport.h">
+      <Filter>Source Files\entities\WildCanyon</Filter>
+    </ClInclude>
+    <ClInclude Include="src\entities\checkpoint.h">
+      <Filter>Source Files\entities</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

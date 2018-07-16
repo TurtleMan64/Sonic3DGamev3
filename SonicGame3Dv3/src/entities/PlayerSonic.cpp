@@ -900,8 +900,9 @@ void PlayerSonic::step()
 
 	switch (Global::levelID)
 	{
-		case LVL_SPEED_HIGHWAY: Global::gameSkySphere->setPosition(getX(), 4550, getZ()); break;
-		case LVL_PUMPKIN_HILL:  Global::gameSkySphere->setPosition(getX(), 2020, getZ()); break;
+		case LVL_SPEED_HIGHWAY:   Global::gameSkySphere->setPosition(getX(), 4550,         getZ()); break;
+		case LVL_PUMPKIN_HILL:    Global::gameSkySphere->setPosition(getX(), 2020,         getZ()); break;
+		case LVL_RADICAL_HIGHWAY: Global::gameSkySphere->setPosition(getX(), skyYVal-2000, getZ()); break;
 		default: break;
 	}
 

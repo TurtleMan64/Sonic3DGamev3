@@ -488,6 +488,11 @@ int GuiManager::getSeconds()
 	return seconds;
 }
 
+int GuiManager::getCentiseconds()
+{
+	return centiseconds;
+}
+
 float GuiManager::getTotalTimerInSeconds()
 {
 	return minutes * 60 + seconds + centiseconds / 60.0f;

@@ -73,6 +73,8 @@ public:
 
 	static int getSeconds();
 
+	static int getCentiseconds();
+
 	//Total time on timer in seconds
 	static float getTotalTimerInSeconds();
 

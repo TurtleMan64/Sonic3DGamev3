@@ -32,6 +32,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 0.02
 d 1.000000
 scrollY -4.0
+glow 1.0
 illum 2
 map_Kd 0600b66a.png
 

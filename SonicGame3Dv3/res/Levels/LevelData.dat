@@ -13,7 +13,7 @@ Dry Lagoon
 Normal;13000;Find the pieces of the Master Emerald!
 Ring;2700;100;Collect 100 Rings!
 Chao;1200;Find the lost chao!
-Hard;1600;Clear hard mode!
+Hard;15000;Clear hard mode!
 
 SpeedHighway.lvl
 Speed Highway
@@ -136,8 +136,8 @@ PumpkinHill.lvl
 Pumpkin Hill
 4
 Normal;13000;Find the pieces of the Master Emerald!
-Ring;2700;100;Collect 100 Rings!
-Chao;1200;Find the lost chao!
+Ring;3600;100;Collect 100 Rings!
+Chao;2700;Find the lost chao!
 Hard;15000;Clear hard mode!
 
 RadicalHighway.lvl

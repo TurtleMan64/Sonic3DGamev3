@@ -108,6 +108,8 @@
 #include "../entities/DryLagoon/dlturtle.h"
 #include "../entities/camerabox.h"
 #include "../entities/RadicalHighway/rhramp.h"
+#include "../entities/WildCanyon/wcdigteleport.h"
+#include "../entities/checkpoint.h"
 
 float toFloat(char* input);
 int toInt(char* input);
@@ -153,6 +155,17 @@ void LevelLoader_loadTitle()
 	Global::gameIsHardMode = false;
 	Global::gameIsChaoMode = false;
 	Global::gameIsRingMode = false;
+
+	Global::spawnAtCheckpoint  = false;
+	Global::checkpointX        = 0;
+	Global::checkpointY        = 0;
+	Global::checkpointZ        = 0;
+	Global::checkpointRotY     = 0;
+	Global::checkpointCamYaw   = 0;
+	Global::checkpointCamPitch = 0;
+	Global::checkpointTimeCen  = 0;
+	Global::checkpointTimeSec  = 0;
+	Global::checkpointTimeMin  = 0;
 }
 
 void LevelLoader_loadLevel(std::string levelFilename)
@@ -183,6 +196,17 @@ void LevelLoader_loadLevel(std::string levelFilename)
 	{
 		stageFault = 1;
 		std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+
+		Global::spawnAtCheckpoint  = false;
+		Global::checkpointX        = 0;
+		Global::checkpointY        = 0;
+		Global::checkpointZ        = 0;
+		Global::checkpointRotY     = 0;
+		Global::checkpointCamYaw   = 0;
+		Global::checkpointCamPitch = 0;
+		Global::checkpointTimeCen  = 0;
+		Global::checkpointTimeSec  = 0;
+		Global::checkpointTimeMin  = 0;
 	}
 	Global::isNewLevel = false;
 
@@ -551,6 +575,11 @@ void LevelLoader_loadLevel(std::string levelFilename)
 	GuiManager::setTimer(0, 0, 0);
 	GuiManager::stopTimer();
 
+	if (Global::spawnAtCheckpoint)
+	{
+		GuiManager::setTimer(Global::checkpointTimeMin, Global::checkpointTimeSec, Global::checkpointTimeCen);
+	}
+
 	GuiManager::addGuiToRender(GuiTextureResources::textureRing);
 
 	Global::finishStageTimer = -1;
@@ -720,6 +749,15 @@ void processLine(char** dat, int datLength)
 			SkyManager::setCenterObject(player);
 			player->setCameraAngles(Global::gameCamera->getYaw(), Global::gameCamera->getPitch());
 			Main_addEntity(player);
+
+			if (Global::spawnAtCheckpoint)
+			{
+				player->setPosition(Global::checkpointX, Global::checkpointY, Global::checkpointZ);
+				Global::gameCamera->setYaw(Global::checkpointCamYaw);
+				Global::gameCamera->setPitch(Global::checkpointCamPitch);
+				player->setCameraAngles(Global::checkpointCamYaw, Global::checkpointCamPitch);
+				player->setRotY(Global::checkpointRotY);
+			}
 
 			return;
 		}
@@ -1411,6 +1449,16 @@ void processLine(char** dat, int datLength)
 			SkyManager::setCenterObject(player);
 			player->setCameraAngles(Global::gameCamera->getYaw(), Global::gameCamera->getPitch());
 			Main_addEntity(player);
+
+			if (Global::spawnAtCheckpoint)
+			{
+				player->setPosition(Global::checkpointX, Global::checkpointY, Global::checkpointZ);
+				Global::gameCamera->setYaw(Global::checkpointCamYaw);
+				Global::gameCamera->setPitch(Global::checkpointCamPitch);
+				player->setCameraAngles(Global::checkpointCamYaw, Global::checkpointCamPitch);
+				player->setRotY(Global::checkpointRotY);
+			}
+
 			return;
 		}
 
@@ -1424,6 +1472,16 @@ void processLine(char** dat, int datLength)
 			SkyManager::setCenterObject(player);
 			player->setCameraAngles(Global::gameCamera->getYaw(), Global::gameCamera->getPitch());
 			Main_addEntity(player);
+
+			if (Global::spawnAtCheckpoint)
+			{
+				player->setPosition(Global::checkpointX, Global::checkpointY, Global::checkpointZ);
+				Global::gameCamera->setYaw(Global::checkpointCamYaw);
+				Global::gameCamera->setPitch(Global::checkpointCamPitch);
+				player->setCameraAngles(Global::checkpointCamYaw, Global::checkpointCamPitch);
+				player->setRotY(Global::checkpointRotY);
+			}
+
 			return;
 		}
 
@@ -1588,6 +1646,29 @@ void processLine(char** dat, int datLength)
 			return;
 		}
 
+		case 86: //Wild Canyon Teleport
+		{
+			WC_DigTeleport::loadStaticModels();
+			WC_DigTeleport* warp = new WC_DigTeleport(
+				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]),  //position
+				toFloat(dat[4]),                                    //y rotation
+				toFloat(dat[5]), toFloat(dat[6]), toFloat(dat[7])); //teleport position
+			Global::countNew++;
+			Main_addEntity(warp);
+			return;
+		}
+
+		case 87: //Checkpoint
+		{
+			Checkpoint::loadStaticModels();
+			Checkpoint* check = new Checkpoint(
+				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
+				toFloat(dat[4]));                                  //y rotation
+			Global::countNew++;
+			Main_addEntity(check);
+			return;
+		}
+
 		default:
 		{
 			return;
@@ -1748,6 +1829,8 @@ void freeAllStaticModels()
 	SHD_GoronKid::deleteStaticModels();
 	PH_Clouds::deleteStaticModels();
 	DL_Turtle::deleteStaticModels();
-	CameraBox::loadStaticModels();
-	RH_Ramp::loadStaticModels();
+	CameraBox::deleteStaticModels();
+	RH_Ramp::deleteStaticModels();
+	WC_DigTeleport::deleteStaticModels();
+	Checkpoint::deleteStaticModels();
 }

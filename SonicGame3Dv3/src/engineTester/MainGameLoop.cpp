@@ -166,6 +166,17 @@ std::vector<Level> Global::gameLevelData;
 std::unordered_map<std::string, std::string> Global::gameSaveData;
 bool Global::stageUsesWater = true;
 
+bool   Global::spawnAtCheckpoint  = false;
+float  Global::checkpointX        = 0;
+float  Global::checkpointY        = 0;
+float  Global::checkpointZ        = 0;
+float  Global::checkpointRotY     = 0;
+float  Global::checkpointCamYaw   = 0;
+float  Global::checkpointCamPitch = 0;
+int    Global::checkpointTimeCen  = 0;
+int    Global::checkpointTimeSec  = 0;
+int    Global::checkpointTimeMin  = 0;
+
 bool Global::unlockedSonicDoll = true;
 bool Global::unlockedMechaSonic = true;
 bool Global::unlockedDage4 = true;

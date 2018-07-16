@@ -108,6 +108,17 @@ public:
 	static int gameTotalPlaytime;
 	static bool stageUsesWater;
 
+	static bool  spawnAtCheckpoint;
+	static float checkpointX;
+	static float checkpointY;
+	static float checkpointZ;
+	static float checkpointRotY;
+	static float checkpointCamYaw;
+	static float checkpointCamPitch;
+	static int   checkpointTimeCen;
+	static int   checkpointTimeSec;
+	static int   checkpointTimeMin;
+
 	static std::vector<Level> gameLevelData;
 	static std::unordered_map<std::string, std::string> gameSaveData;
 

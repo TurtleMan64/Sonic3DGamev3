@@ -1,25 +1,21 @@
-# Blender MTL File: 'None'
 # Material Count: 2
 
-newmtl diggable
-Ns 92.156863
-Ka 1.000000 1.000000 1.000000
-Kd 0.640000 0.640000 0.640000
-Ks 0.500000 0.500000 0.500000
-Ke 0.000000 0.000000 0.000000
+newmtl nodig
+Ns 20
 Ni 1.000000
+Tr 1
+d 1.000000
+scrollX 0
+scrollY 0
+map_Kd nodig.png
+
+newmtl diggable
+Ns 20
+Ni 1.000000
+Tr 1
 d 1.000000
 type 2
-illum 2
+scrollX 0
+scrollY 0
 map_Kd diggable.png
 
-newmtl nodig
-Ns 92.156863
-Ka 1.000000 1.000000 1.000000
-Kd 0.640000 0.640000 0.640000
-Ks 0.500000 0.500000 0.500000
-Ke 0.000000 0.000000 0.000000
-Ni 1.000000
-d 1.000000
-illum 2
-map_Kd nodig.png

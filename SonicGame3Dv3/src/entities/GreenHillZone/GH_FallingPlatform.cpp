@@ -73,7 +73,7 @@ void GH_FallingPlatform::step()
 				
 			if (timer == 0)
 			{
-				AudioPlayer::play(31, getPosition());
+				AudioPlayer::play(0, getPosition());
 			}
 				
 			if (timer < 0)

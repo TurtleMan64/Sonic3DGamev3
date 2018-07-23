@@ -18,6 +18,11 @@ void CollideableObject::updateCollisionModel()
 	collideModelOriginal->transformModel(collideModelTransformed, getPosition(), -getRotY());
 }
 
+void CollideableObject::updateCollisionModelWithScale()
+{
+	collideModelOriginal->transformModelWithScale(collideModelTransformed, getPosition(), -getRotY(), getScale());
+}
+
 void CollideableObject::updateCollisionModelWithZ()
 {
 	collideModelOriginal->transformModel(collideModelTransformed, getPosition(), -getRotY(), getRotZ());

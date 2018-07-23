@@ -6,6 +6,7 @@ class Body;
 
 #include <list>
 #include "entities.h"
+#include <AL/al.h>
 
 
 class Checkpoint : public Entity
@@ -20,6 +21,9 @@ private:
 	static float colVertical;
 
 	bool isHit;
+
+	static ALuint savedBGMIntro;
+	static ALuint savedBGMLoop;
 
 public:
 	Checkpoint();

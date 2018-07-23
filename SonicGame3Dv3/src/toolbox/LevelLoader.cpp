@@ -110,6 +110,7 @@
 #include "../entities/RadicalHighway/rhramp.h"
 #include "../entities/WildCanyon/wcdigteleport.h"
 #include "../entities/checkpoint.h"
+#include "../entities/SpeedHighway/shfloatingplatform.h"
 
 float toFloat(char* input);
 int toInt(char* input);
@@ -579,6 +580,18 @@ void LevelLoader_loadLevel(std::string levelFilename)
 	{
 		GuiManager::setTimer(Global::checkpointTimeMin, Global::checkpointTimeSec, Global::checkpointTimeCen);
 	}
+	else
+	{
+		if (bgmHasLoop != 0)
+		{
+			//By default, first 2 buffers are the intro and loop, respectively
+			AudioPlayer::playBGMWithIntro(0, 1);
+		}
+		else
+		{
+			AudioPlayer::playBGM(0);
+		}
+	}
 
 	GuiManager::addGuiToRender(GuiTextureResources::textureRing);
 
@@ -586,16 +599,6 @@ void LevelLoader_loadLevel(std::string levelFilename)
 
 	Vector3f partVel(0, 0, 0);
 	new Particle(ParticleResources::textureBlackFade, Global::gameCamera->getFadePosition1(), &partVel, 0, 60, 0, 400, 0, true);
-	
-	if (bgmHasLoop != 0)
-	{
-		//By default, first 2 buffers are the intro and loop, respectively
-		AudioPlayer::playBGMWithIntro(0, 1);
-	}
-	else
-	{
-		AudioPlayer::playBGM(0);
-	}
 
 	Global::gameState = STATE_RUNNING;
 }
@@ -1022,7 +1025,7 @@ void processLine(char** dat, int datLength)
 
 			NPC* npc = new NPC(
 				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
-				toFloat(dat[4]), toInt(dat[5]), message);
+				toFloat(dat[4]), toInt(dat[5]), message); //yrot, id, message
 			Global::countNew++;
 			Main_addEntity(npc);
 			return;
@@ -1669,6 +1672,17 @@ void processLine(char** dat, int datLength)
 			return;
 		}
 
+		case 88: //Speed Highway Floating Platform
+		{
+			SH_FloatingPlatform::loadStaticModels();
+			SH_FloatingPlatform* plat = new SH_FloatingPlatform(
+				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
+				toFloat(dat[4]), toFloat(dat[5]));                 //y rotation, scale
+			Global::countNew++;
+			Main_addEntity(plat);
+			return;
+		}
+
 		default:
 		{
 			return;
@@ -1833,4 +1847,5 @@ void freeAllStaticModels()
 	RH_Ramp::deleteStaticModels();
 	WC_DigTeleport::deleteStaticModels();
 	Checkpoint::deleteStaticModels();
+	SH_FloatingPlatform::deleteStaticModels();
 }

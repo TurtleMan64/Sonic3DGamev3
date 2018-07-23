@@ -167,10 +167,10 @@ Vector3f mapInputs3(float angle, float mag, Vector3f* VecC)
 	float CDist = sqrtf(VecC->x*VecC->x + VecC->z*VecC->z);
 	float CPitch = (float)(M_PI / 2 + atan2(VecC->y, CDist));
 
-	double result[3] = { 0, 0, 0 }; //storage for the answer
+	float result[3] = { 0, 0, 0 }; //storage for the answer
 	rotatePoint(result, 0, 0, 0, Cx, 0, Cz, tempx, 0, tempz, CPitch);
 
-	Vector3f res((float)result[0], (float)result[1], (float)result[2]);
+	Vector3f res(result[0], result[1], result[2]);
 
 	return res;
 }
@@ -188,11 +188,11 @@ Vector3f mapCamera(float yaw, float pitch, float mag, Vector3f* VecC)
 
 	pitch = fmod(pitch, (float)(M_PI * 2));
 
-	double result2[3] = { 0, 0, 0 };
+	float result2[3] = { 0, 0, 0 };
 	rotatePoint(result2, 0, 0, 0, rotAxisX, 0, rotAxisZ, tempx, tempy, tempz, pitch);
-	tempx = (float)result2[0];
-	tempy = (float)result2[1];
-	tempz = (float)result2[2];
+	tempx = result2[0];
+	tempy = result2[1];
+	tempz = result2[2];
 
 
 	float CDir = atan2f(VecC->z, VecC->x);
@@ -203,10 +203,10 @@ Vector3f mapCamera(float yaw, float pitch, float mag, Vector3f* VecC)
 	float CDist = sqrtf(VecC->x*VecC->x + VecC->z*VecC->z);
 	float CPitch = (float)(M_PI / 2 + atan2f(VecC->y, CDist));
 
-	double result[3] = { 0, 0, 0 }; //storage for the answer
+	float result[3] = { 0, 0, 0 }; //storage for the answer
 	rotatePoint(result, 0, 0, 0, Cx, 0, Cz, tempx, tempy, tempz, CPitch);
 
-	Vector3f res((float)result[0], (float)result[1], (float)result[2]);
+	Vector3f res(result[0], result[1], result[2]);
 
 	return res;
 }
@@ -227,18 +227,18 @@ Vector3f calculatePlaneSpeed(float xspd, float yspd, float zspd, Vector3f* norma
 	Vector3f Blue = projectOntoPlane(&A, normal);
 
 	//Rotate normal along y axis 90 degrees
-	float CDir = (float)atan2(-normal->z, -normal->x);
+	float CDir = atan2f(-normal->z, -normal->x);
 	CDir += (float)(M_PI / 2);
-	float Cx = (float)cos(CDir);
-	float Cz = (float)sin(CDir);
+	float Cx = cosf(CDir);
+	float Cz = sinf(CDir);
 
-	float CDist = (float)sqrt(normal->x*normal->x + normal->z*normal->z);
-	float CPitch = (float)(M_PI / 2 + atan2(-normal->y, CDist));
+	float CDist = sqrtf(normal->x*normal->x + normal->z*normal->z);
+	float CPitch = ((float)(M_PI / 2) + atan2f(-normal->y, CDist));
 
-	double result[3] = { 0, 0, 0 }; //storage for the answer
+	float result[3] = { 0, 0, 0 }; //storage for the answer
 	rotatePoint(result, 0, 0, 0, Cx, 0, Cz, Blue.x, Blue.y, Blue.z, -CPitch);
 
-	return Vector3f((float)result[0], (float)result[1], (float)result[2]);
+	return Vector3f(result[0], result[1], result[2]);
 
 
 
@@ -277,22 +277,22 @@ Vector3f calculatePlaneSpeed(float xspd, float yspd, float zspd, Vector3f* norma
 //direction of axis,
 //point to rotate, 
 //angle of rotation
-void rotatePoint(double result[],
-	double a, double b, double c,
-	double u, double v, double w,
-	double x, double y, double z,
-	double theta)
+void rotatePoint(float result[],
+	float a, float b, float c,
+	float u, float v, float w,
+	float x, float y, float z,
+	float theta)
 {
-	double l = sqrt(u*u + v*v + w*w);
+	float l = sqrtf(u*u + v*v + w*w);
 
-	double l2 = l*l;
+	float l2 = l*l;
 
-	double u2 = u*u;
-	double v2 = v*v;
-	double w2 = w*w;
-	double cosT = cos(theta);
-	double oneMinusCosT = 1 - cosT;
-	double sinT = sin(theta);
+	float u2 = u*u;
+	float v2 = v*v;
+	float w2 = w*w;
+	float cosT = cosf(theta);
+	float oneMinusCosT = 1 - cosT;
+	float sinT = sinf(theta);
 
 	result[0] = ((a*(v2 + w2) - u*(b*v + c*w - u*x - v*y - w*z)) * oneMinusCosT
 		+ l2*x*cosT

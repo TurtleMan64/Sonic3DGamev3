@@ -39,11 +39,11 @@ float compareTwoAngles(float ang1, float ang2);
 int sign(float value);
 
 //result needs to be array of 3 doubles
-void rotatePoint(double result[],
-	double a, double b, double c,
-	double u, double v, double w,
-	double x, double y, double z,
-	double theta);
+void rotatePoint(float result[],
+	float a, float b, float c,
+	float u, float v, float w,
+	float x, float y, float z,
+	float theta);
 
 //angle in radians
 Vector3f mapInputs3(float angle, float mag, Vector3f* VecC);

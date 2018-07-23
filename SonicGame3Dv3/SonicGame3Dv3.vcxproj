@@ -111,6 +111,7 @@
     <ClCompile Include="src\entities\SpeedHighway\SH_CranePlatformPath.cpp" />
     <ClCompile Include="src\entities\SpeedHighway\SH_ElevatorPlatform.cpp" />
     <ClCompile Include="src\entities\SpeedHighway\SH_ElevatorPlatformPath.cpp" />
+    <ClCompile Include="src\entities\SpeedHighway\SH_FloatingPlatform.cpp" />
     <ClCompile Include="src\entities\SpeedHighway\SH_Lamppost.cpp" />
     <ClCompile Include="src\entities\SpeedHighway\SH_Spotlight.cpp" />
     <ClCompile Include="src\entities\SpeedHighway\SH_StageTransparent.cpp" />
@@ -289,6 +290,7 @@
     <ClInclude Include="src\entities\SpeedHighway\shcraneplatformpath.h" />
     <ClInclude Include="src\entities\SpeedHighway\shelevatorplatform.h" />
     <ClInclude Include="src\entities\SpeedHighway\shelevatorplatformpath.h" />
+    <ClInclude Include="src\entities\SpeedHighway\shfloatingplatform.h" />
     <ClInclude Include="src\entities\SpeedHighway\shlamppost.h" />
     <ClInclude Include="src\entities\SpeedHighway\shspotlight.h" />
     <ClInclude Include="src\entities\SpeedHighway\shstagetransparent.h" />

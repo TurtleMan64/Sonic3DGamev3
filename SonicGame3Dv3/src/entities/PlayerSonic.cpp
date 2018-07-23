@@ -29,6 +29,7 @@
 #include "stage.h"
 #include "shieldmagnet.h"
 #include "shieldgreen.h"
+#include "../toolbox/mainmenu.h"
 
 std::list<TexturedModel*> PlayerSonic::modelBody;
 std::list<TexturedModel*> PlayerSonic::modelHead;
@@ -1115,21 +1116,39 @@ void PlayerSonic::createLimbs()
 	}
 	else if (PlayerSonic::characterID == 5) //Amy
 	{
-		displayHeightOffset = -0.8f;
+		//classic
+		//displayHeightOffset = -0.8f;
+		//myBody =         new Body(&modelBody); Global::countNew++;
+		//myHead =         new Limb(&modelHead,         1.4f,   0,      0,    myBody,  nullptr);        Global::countNew++;
+		//myLeftHumerus =  new Limb(&modelLeftHumerus,  1.1f,   0,     -0.9f, myBody,  nullptr);        Global::countNew++;
+		//myLeftForearm =  new Limb(&modelLeftForearm,  0,     -1.3f,   0,    nullptr, myLeftHumerus);  Global::countNew++;
+		//myLeftHand =     new Limb(&modelLeftHand,     0,     -1.3f,   0,    nullptr, myLeftForearm);  Global::countNew++;
+		//myLeftThigh =    new Limb(&modelLeftThigh,   -0.9f,   0,     -0.3f, myBody,  nullptr);        Global::countNew++;
+		//myLeftShin =     new Limb(&modelLeftShin,     0,     -1.1f,   0,    nullptr, myLeftThigh);    Global::countNew++;
+		//myLeftFoot =     new Limb(&modelLeftFoot,     0,     -1.1f,   0,    nullptr, myLeftShin);     Global::countNew++;
+		//myRightHumerus = new Limb(&modelRightHumerus, 1.1f,   0,      0.9f, myBody,  nullptr);        Global::countNew++;
+		//myRightForearm = new Limb(&modelRightForearm, 0,     -1.3f,   0,    nullptr, myRightHumerus); Global::countNew++;
+		//myRightHand =    new Limb(&modelRightHand,    0,     -1.3f,   0,    nullptr, myRightForearm); Global::countNew++;
+		//myRightThigh =   new Limb(&modelRightThigh,  -0.9f,   0,      0.3f, myBody,  nullptr);        Global::countNew++;
+		//myRightShin =    new Limb(&modelRightShin,    0,     -1.1f,   0,    nullptr, myRightThigh);   Global::countNew++;
+		//myRightFoot =    new Limb(&modelRightFoot,    0,     -1.1f,   0,    nullptr, myRightShin);    Global::countNew++;
+
+		//modern
+		displayHeightOffset = 1.45f;
 		myBody =         new Body(&modelBody); Global::countNew++;
-		myHead =         new Limb(&modelHead,         1.4f,   0,      0,    myBody,  nullptr);        Global::countNew++;
-		myLeftHumerus =  new Limb(&modelLeftHumerus,  1.1f,   0,     -0.9f, myBody,  nullptr);        Global::countNew++;
-		myLeftForearm =  new Limb(&modelLeftForearm,  0,     -1.3f,   0,    nullptr, myLeftHumerus);  Global::countNew++;
-		myLeftHand =     new Limb(&modelLeftHand,     0,     -1.3f,   0,    nullptr, myLeftForearm);  Global::countNew++;
-		myLeftThigh =    new Limb(&modelLeftThigh,   -0.9f,   0,     -0.3f, myBody,  nullptr);        Global::countNew++;
-		myLeftShin =     new Limb(&modelLeftShin,     0,     -1.1f,   0,    nullptr, myLeftThigh);    Global::countNew++;
-		myLeftFoot =     new Limb(&modelLeftFoot,     0,     -1.1f,   0,    nullptr, myLeftShin);     Global::countNew++;
-		myRightHumerus = new Limb(&modelRightHumerus, 1.1f,   0,      0.9f, myBody,  nullptr);        Global::countNew++;
-		myRightForearm = new Limb(&modelRightForearm, 0,     -1.3f,   0,    nullptr, myRightHumerus); Global::countNew++;
-		myRightHand =    new Limb(&modelRightHand,    0,     -1.3f,   0,    nullptr, myRightForearm); Global::countNew++;
-		myRightThigh =   new Limb(&modelRightThigh,  -0.9f,   0,      0.3f, myBody,  nullptr);        Global::countNew++;
-		myRightShin =    new Limb(&modelRightShin,    0,     -1.1f,   0,    nullptr, myRightThigh);   Global::countNew++;
-		myRightFoot =    new Limb(&modelRightFoot,    0,     -1.1f,   0,    nullptr, myRightShin);    Global::countNew++;
+		myHead =         new Limb(&modelHead,         0.81f,  0,      0,     myBody,  nullptr);        Global::countNew++;
+		myLeftHumerus =  new Limb(&modelLeftHumerus,  0.8f,   0,     -1.05f, myBody,  nullptr);        Global::countNew++;
+		myLeftForearm =  new Limb(&modelLeftForearm,  0,     -1.51f,  0,     nullptr, myLeftHumerus);  Global::countNew++;
+		myLeftHand =     new Limb(&modelLeftHand,     0,     -1.7f,   0,     nullptr, myLeftForearm);  Global::countNew++;
+		myLeftThigh =    new Limb(&modelLeftThigh,   -1.06f,  0,     -0.55f, myBody,  nullptr);        Global::countNew++;
+		myLeftShin =     new Limb(&modelLeftShin,     0,     -1.85f,  0,     nullptr, myLeftThigh);    Global::countNew++;
+		myLeftFoot =     new Limb(&modelLeftFoot,     0,     -1.8f,   0,     nullptr, myLeftShin);     Global::countNew++;
+		myRightHumerus = new Limb(&modelRightHumerus, 0.8f,   0,      1.05f, myBody,  nullptr);        Global::countNew++;
+		myRightForearm = new Limb(&modelRightForearm, 0,     -1.51f,  0,     nullptr, myRightHumerus); Global::countNew++;
+		myRightHand =    new Limb(&modelRightHand,    0,     -1.7f,   0,     nullptr, myRightForearm); Global::countNew++;
+		myRightThigh =   new Limb(&modelRightThigh,  -1.06f,  0,      0.55f, myBody,  nullptr);        Global::countNew++;
+		myRightShin =    new Limb(&modelRightShin,    0,     -1.85f,  0,     nullptr, myRightThigh);   Global::countNew++;
+		myRightFoot =    new Limb(&modelRightFoot,    0,     -1.8f,   0,     nullptr, myRightShin);    Global::countNew++;
 	}
 	else if (PlayerSonic::characterID == 6) //WanamaDage
 	{
@@ -1167,6 +1186,24 @@ void PlayerSonic::createLimbs()
 		myRightShin    = new Limb(&modelRightShin,    0,      -1.0f*1.3f,    0,     nullptr, myRightThigh);   Global::countNew++;
 		myRightFoot    = new Limb(&modelRightFoot,    0,      -1.0f*1.3f,    0,     nullptr, myRightShin);    Global::countNew++;
 	}
+	else if (PlayerSonic::characterID == 8) //Metal Sonic
+	{
+		displayHeightOffset = 0.1f;
+		myBody =         new Body(&modelBody);
+		myHead =         new Limb(&modelHead,         1.2f,  -0.3f,   0,     myBody,   nullptr);        Global::countNew++;
+		myLeftHumerus =  new Limb(&modelLeftHumerus,  0.9f,	  0,     -0.9f,  myBody,   nullptr);        Global::countNew++;
+		myLeftForearm =  new Limb(&modelLeftForearm,  0,     -1.3f,   0,     nullptr,  myLeftHumerus);  Global::countNew++;
+		myLeftHand =     new Limb(&modelLeftHand,     0,	 -1.3f,   0,     nullptr,  myLeftForearm);  Global::countNew++;
+		myLeftThigh =    new Limb(&modelLeftThigh,   -0.9f,   0,     -0.3f,  myBody,   nullptr);        Global::countNew++;
+		myLeftShin =     new Limb(&modelLeftShin,     0,	 -1.3f,   0,     nullptr,  myLeftThigh);    Global::countNew++;
+		myLeftFoot =     new Limb(&modelLeftFoot,     0,	 -1.4f,   0,     nullptr,  myLeftShin);     Global::countNew++;
+		myRightHumerus = new Limb(&modelRightHumerus, 0.9f,   0,      0.9f,  myBody,   nullptr);        Global::countNew++;
+		myRightForearm = new Limb(&modelRightForearm, 0,	 -1.3f,   0,     nullptr,  myRightHumerus); Global::countNew++;
+		myRightHand =    new Limb(&modelRightHand,    0,	 -1.3f,   0,     nullptr,  myRightForearm); Global::countNew++;
+		myRightThigh =   new Limb(&modelRightThigh,  -0.9f,   0,      0.3f,  myBody,   nullptr);        Global::countNew++;
+		myRightShin =    new Limb(&modelRightShin,    0,	 -1.3f,   0,     nullptr,  myRightThigh);   Global::countNew++;
+		myRightFoot =    new Limb(&modelRightFoot,    0,	 -1.4f,   0,     nullptr,  myRightShin);    Global::countNew++;
+	}
 
 	AnimationResources::assignAnimationsHuman(myBody, myHead,
 		myLeftHumerus, myLeftForearm, myLeftHand,
@@ -1186,34 +1223,23 @@ void PlayerSonic::loadStaticModels()
 {
 	PlayerSonic::characterID = 4;
 
-	if (INPUT_SPECIAL || INPUT_SHOULDER)
+	if (MainMenu::unlockedCharacters.size() > 1)
 	{
-		unsigned int totalNPC = Global::npcList.size();
-		unsigned int foundNPC = 0;
-		for (unsigned int i = 0; i < totalNPC; i++)
+		if (MainMenu::unlockedCharacters[MainMenu::characterSelectIndex] == "AMY")
 		{
-			std::string npc = Global::npcList[i];
-			auto end = Global::gameSaveData.end();
-
-			if (Global::gameSaveData.find(npc) != end)
-			{
-				if (Global::gameSaveData[npc] == "true")
-				{
-					foundNPC++;
-				}
-			}
+			PlayerSonic::characterID = 5;
 		}
-
-		if (foundNPC == totalNPC)
+		else if (MainMenu::unlockedCharacters[MainMenu::characterSelectIndex] == "NPC")
 		{
-			if (INPUT_SHOULDER)
-			{
-				PlayerSonic::characterID = 6;
-			}
-			else if (INPUT_SPECIAL)
-			{
-				PlayerSonic::characterID = 7;
-			}
+			PlayerSonic::characterID = 6;
+		}
+		else if (MainMenu::unlockedCharacters[MainMenu::characterSelectIndex] == "PAC-MAN")
+		{
+			PlayerSonic::characterID = 7;
+		}
+		else if (MainMenu::unlockedCharacters[MainMenu::characterSelectIndex] == "METAL SONIC")
+		{
+			PlayerSonic::characterID = 8;
 		}
 	}
 
@@ -1306,20 +1332,35 @@ void PlayerSonic::loadStaticModels()
 	}
 	else if (PlayerSonic::characterID == 5) //Amy
 	{
-		loadObjModel(&PlayerSonic::modelBody,         "res/Models/Amy/", "Body.obj");
-		loadObjModel(&PlayerSonic::modelHead,         "res/Models/Amy/", "Head.obj");
-		loadObjModel(&PlayerSonic::modelLeftHumerus,  "res/Models/Amy/", "Humerus.obj");
-		loadObjModel(&PlayerSonic::modelLeftForearm,  "res/Models/Amy/", "Forearm.obj");
-		loadObjModel(&PlayerSonic::modelLeftHand,     "res/Models/Amy/", "LeftHand.obj");
-		loadObjModel(&PlayerSonic::modelLeftThigh,    "res/Models/Amy/", "Thigh.obj");
-		loadObjModel(&PlayerSonic::modelLeftShin,     "res/Models/Amy/", "Shin.obj");
-		loadObjModel(&PlayerSonic::modelLeftFoot,     "res/Models/Amy/", "Foot.obj");
-		loadObjModel(&PlayerSonic::modelRightHumerus, "res/Models/Amy/", "Humerus.obj");
-		loadObjModel(&PlayerSonic::modelRightForearm, "res/Models/Amy/", "Forearm.obj");
-		loadObjModel(&PlayerSonic::modelRightHand,    "res/Models/Amy/", "RightHand.obj");
-		loadObjModel(&PlayerSonic::modelRightThigh,   "res/Models/Amy/", "Thigh.obj");
-		loadObjModel(&PlayerSonic::modelRightShin,    "res/Models/Amy/", "Shin.obj");
-		loadObjModel(&PlayerSonic::modelRightFoot,    "res/Models/Amy/", "Foot.obj");
+		//loadObjModel(&PlayerSonic::modelBody,         "res/Models/Amy/", "Body.obj");
+		//loadObjModel(&PlayerSonic::modelHead,         "res/Models/Amy/", "Head.obj");
+		//loadObjModel(&PlayerSonic::modelLeftHumerus,  "res/Models/Amy/", "Humerus.obj");
+		//loadObjModel(&PlayerSonic::modelLeftForearm,  "res/Models/Amy/", "Forearm.obj");
+		//loadObjModel(&PlayerSonic::modelLeftHand,     "res/Models/Amy/", "LeftHand.obj");
+		//loadObjModel(&PlayerSonic::modelLeftThigh,    "res/Models/Amy/", "Thigh.obj");
+		//loadObjModel(&PlayerSonic::modelLeftShin,     "res/Models/Amy/", "Shin.obj");
+		//loadObjModel(&PlayerSonic::modelLeftFoot,     "res/Models/Amy/", "Foot.obj");
+		//loadObjModel(&PlayerSonic::modelRightHumerus, "res/Models/Amy/", "Humerus.obj");
+		//loadObjModel(&PlayerSonic::modelRightForearm, "res/Models/Amy/", "Forearm.obj");
+		//loadObjModel(&PlayerSonic::modelRightHand,    "res/Models/Amy/", "RightHand.obj");
+		//loadObjModel(&PlayerSonic::modelRightThigh,   "res/Models/Amy/", "Thigh.obj");
+		//loadObjModel(&PlayerSonic::modelRightShin,    "res/Models/Amy/", "Shin.obj");
+		//loadObjModel(&PlayerSonic::modelRightFoot,    "res/Models/Amy/", "Foot.obj");
+
+		loadObjModel(&PlayerSonic::modelBody,         "res/Models/AmyModern/", "Body.obj");
+		loadObjModel(&PlayerSonic::modelHead,         "res/Models/AmyModern/", "Head.obj");
+		loadObjModel(&PlayerSonic::modelLeftHumerus,  "res/Models/AmyModern/", "Humerus.obj");
+		loadObjModel(&PlayerSonic::modelLeftForearm,  "res/Models/AmyModern/", "Forearm.obj");
+		loadObjModel(&PlayerSonic::modelLeftHand,     "res/Models/AmyModern/", "HandLeft.obj");
+		loadObjModel(&PlayerSonic::modelLeftThigh,    "res/Models/AmyModern/", "Thigh.obj");
+		loadObjModel(&PlayerSonic::modelLeftShin,     "res/Models/AmyModern/", "Shin.obj");
+		loadObjModel(&PlayerSonic::modelLeftFoot,     "res/Models/AmyModern/", "ShoeLeft.obj");
+		loadObjModel(&PlayerSonic::modelRightHumerus, "res/Models/AmyModern/", "Humerus.obj");
+		loadObjModel(&PlayerSonic::modelRightForearm, "res/Models/AmyModern/", "Forearm.obj");
+		loadObjModel(&PlayerSonic::modelRightHand,    "res/Models/AmyModern/", "HandRight.obj");
+		loadObjModel(&PlayerSonic::modelRightThigh,   "res/Models/AmyModern/", "Thigh.obj");
+		loadObjModel(&PlayerSonic::modelRightShin,    "res/Models/AmyModern/", "Shin.obj");
+		loadObjModel(&PlayerSonic::modelRightFoot,    "res/Models/AmyModern/", "ShoeRight.obj");
 	}
 	else if (PlayerSonic::characterID == 6) //WanamaDage
 	{
@@ -1354,6 +1395,23 @@ void PlayerSonic::loadStaticModels()
 		loadObjModel(&PlayerSonic::modelRightThigh,   "res/Models/PacMan/", "Limb.obj");
 		loadObjModel(&PlayerSonic::modelRightShin,    "res/Models/PacMan/", "Limb.obj");
 		loadObjModel(&PlayerSonic::modelRightFoot,    "res/Models/PacMan/", "Shoe.obj");
+	}
+	else if (PlayerSonic::characterID == 8) //Metal Sonic
+	{
+		loadObjModel(&PlayerSonic::modelBody,         "res/Models/MetalSonic/", "Body.obj");
+		loadObjModel(&PlayerSonic::modelHead,         "res/Models/MetalSonic/", "Head.obj");
+		loadObjModel(&PlayerSonic::modelLeftHumerus,  "res/Models/MetalSonic/", "Humerus.obj");
+		loadObjModel(&PlayerSonic::modelLeftForearm,  "res/Models/MetalSonic/", "Forearm.obj");
+		loadObjModel(&PlayerSonic::modelLeftHand,     "res/Models/MetalSonic/", "HandLeft.obj");
+		loadObjModel(&PlayerSonic::modelLeftThigh,    "res/Models/MetalSonic/", "Humerus.obj");
+		loadObjModel(&PlayerSonic::modelLeftShin,     "res/Models/MetalSonic/", "Forearm.obj");
+		loadObjModel(&PlayerSonic::modelLeftFoot,     "res/Models/MetalSonic/", "Shoe.obj");
+		loadObjModel(&PlayerSonic::modelRightHumerus, "res/Models/MetalSonic/", "Humerus.obj");
+		loadObjModel(&PlayerSonic::modelRightForearm, "res/Models/MetalSonic/", "Forearm.obj");
+		loadObjModel(&PlayerSonic::modelRightHand,    "res/Models/MetalSonic/", "HandRight.obj");
+		loadObjModel(&PlayerSonic::modelRightThigh,   "res/Models/MetalSonic/", "Humerus.obj");
+		loadObjModel(&PlayerSonic::modelRightShin,    "res/Models/MetalSonic/", "Forearm.obj");
+		loadObjModel(&PlayerSonic::modelRightFoot,    "res/Models/MetalSonic/", "Shoe.obj");
 	}
 }
 

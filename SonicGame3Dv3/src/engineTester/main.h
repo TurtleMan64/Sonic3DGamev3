@@ -106,6 +106,7 @@ public:
 	static int gameRingTarget; //How many rings you have to collect to finish the stage in Ring mode
 	static bool gameIsArcadeMode;
 	static int gameTotalPlaytime;
+	static int gameArcadePlaytime;
 	static bool stageUsesWater;
 
 	static bool  spawnAtCheckpoint;

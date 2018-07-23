@@ -2,7 +2,7 @@ RadicalHighway
 RadicalHighway
 RadicalHighway
 1
-RadicalHighway 8
+Collision 9
 1.0 0.95 0.8 #0.5 0.7 1.0
 0.0 0.0 0.0
 0.0 0.0 0.0
@@ -75,6 +75,10 @@ res/Audio/BGM/r_hwy_loop.ogg
 
 # Lost Chao
 81 -8542.55 4925 -11966.513 -90
+
+# NPC
+32 -149.16188 11269.9375 2140.3332 130 1 I promise you...-REVENGE!
+32 -10093.668 4541.20996 -16140.85937 180 2 Radical!
 
 ######## Generated Objects ########
 

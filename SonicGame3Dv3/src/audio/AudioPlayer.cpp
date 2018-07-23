@@ -69,6 +69,7 @@ void AudioPlayer::loadSoundEffects()
 	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/Snowhead/BabyGoron_Doze.ogg"));      //42
 	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/General/Dig.ogg"));                  //43
 	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/General/RankShow.ogg"));             //44
+	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/General/Checkpoint.ogg"));           //45
 }
 
 void AudioPlayer::loadBGM(char* fileName)
@@ -174,26 +175,30 @@ Source* AudioPlayer::play(int buffer, Vector3f* pos, float pitch, bool loop, flo
 
 Source* AudioPlayer::playBGM(int bufferLoop)
 {
+	if (bufferLoop >= (int)AudioPlayer::buffersBGM.size() || bufferLoop < 0)
+	{
+		std::fprintf(stdout, "Error: Index out of bounds on BGM buffers\n");
+		return nullptr;
+	}
+
+	return AudioPlayer::playBGM(AudioPlayer::buffersBGM[bufferLoop]);
+}
+
+Source* AudioPlayer::playBGM(ALuint bufferLoop)
+{
 	AudioPlayer::bgmTimer = 0;
 
 	Source* src = AudioPlayer::sources[14];
 	src->stop();
 	src->setLooping(false);
-	//alGetError();
-	alSourcei(src->getSourceID(), AL_BUFFER, AL_NONE); Global::checkErrorAL("playBGM 154");
+
+	alSourcei(src->getSourceID(), AL_BUFFER, AL_NONE);
 
 	src->setLooping(true);
 	src->setVolume(AudioPlayer::soundLevelBGM);
 
-	//fprintf(stdout, "size = %d\n", (int)AudioPlayer::buffersBGM.size());
-
-	if (bufferLoop >= (int)AudioPlayer::buffersBGM.size() || bufferLoop < 0)
-	{
-		return src;
-	}
-
 	AudioPlayer::bgmIntro = AL_NONE;
-	AudioPlayer::bgmLoop = AudioPlayer::buffersBGM[bufferLoop];
+	AudioPlayer::bgmLoop = bufferLoop;
 
 	src->play(AudioPlayer::bgmLoop);
 
@@ -201,6 +206,20 @@ Source* AudioPlayer::playBGM(int bufferLoop)
 }
 
 Source* AudioPlayer::playBGMWithIntro(int bufferIntro, int bufferLoop)
+{
+	if (bufferIntro >= (int)AudioPlayer::buffersBGM.size() ||
+		bufferLoop  >= (int)AudioPlayer::buffersBGM.size() ||
+		bufferIntro < 0 ||
+		bufferLoop  < 0)
+	{
+		std::fprintf(stdout, "Error: Index out of bounds on BGM buffers\n");
+		return nullptr;
+	}
+
+	return AudioPlayer::playBGMWithIntro(AudioPlayer::buffersBGM[bufferIntro], AudioPlayer::buffersBGM[bufferLoop]);
+}
+
+Source* AudioPlayer::playBGMWithIntro(ALuint bufferIntro, ALuint bufferLoop)
 {
 	AudioPlayer::bgmTimer = 3000; //Intro must be less than 50 seconds, Loop must be at least 50 seconds
 
@@ -212,16 +231,8 @@ Source* AudioPlayer::playBGMWithIntro(int bufferIntro, int bufferLoop)
 	//alGetError();
 	alSourcei(src->getSourceID(), AL_BUFFER, AL_NONE); Global::checkErrorAL("playBGMWithIntro 184"); //Get rid of queued buffers 
 
-	if (bufferIntro >= (int)AudioPlayer::buffersBGM.size() ||
-		bufferLoop  >= (int)AudioPlayer::buffersBGM.size() ||
-		bufferIntro < 0 ||
-		bufferLoop  < 0)
-	{
-		return src;
-	}
-
-	AudioPlayer::bgmIntro = AudioPlayer::buffersBGM[bufferIntro];
-	AudioPlayer::bgmLoop  = AudioPlayer::buffersBGM[bufferLoop];
+	AudioPlayer::bgmIntro = bufferIntro;
+	AudioPlayer::bgmLoop  = bufferLoop;
 
 	//alGetError();
 	alSourceQueueBuffers(src->getSourceID(), 1, &AudioPlayer::bgmIntro); Global::checkErrorAL("playBGMWithIntro 198");

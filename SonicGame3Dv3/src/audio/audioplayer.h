@@ -16,6 +16,8 @@ private:
 	static std::vector<ALuint> buffersSE;
 	static std::vector<ALuint> buffersBGM;
 	static int bgmTimer;
+
+public:
 	static ALuint bgmIntro;
 	static ALuint bgmLoop;
 
@@ -48,7 +50,11 @@ public:
 
 	static Source* playBGMWithIntro(int bufferIntro, int bufferLoop);
 
+	static Source* playBGMWithIntro(ALuint bufferIntro, ALuint bufferLoop);
+
 	static Source* playBGM(int bufferLoop);
+
+	static Source* playBGM(ALuint bufferLoop);
 
 	static Source* getSource(int i);
 

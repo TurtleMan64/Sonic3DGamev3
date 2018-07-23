@@ -3,6 +3,7 @@
 
 #include <glad/glad.h>
 #include <string>
+#include <vector>
 
 class FontType;
 class GUIText;
@@ -39,6 +40,7 @@ private:
 	static const int ROOT_EXTRAS  = 100002;
 	static const int ROOT_EXIT    = 100003;
 	static const int EXTRAS       = 100004;
+	static const int ARCADE_CLEAR = 100005;
 
 	static const int MISSION_MAX = MISSION_22;
 
@@ -85,6 +87,13 @@ private:
 	static GUIText* textExtra2Data;
 	static GUIText* textExtra3Title; //Total playtime
 	static GUIText* textExtra3Data;
+	static GUIText* textExtra4Title; //Best Arcade clear time
+	static GUIText* textExtra4Data;
+	static GUIText* textExtra5Title; //Unlocked Character select
+	static GUIText* textExtra5Data;
+
+	static GUIText* textArcadeResultTitle; //Total time during arcade mode
+	static GUIText* textArcadeResultData;  //Total time during arcade mode
 
 	static GLuint textureParallelogram;
 	static GLuint textureParallelogramBackdrop;
@@ -176,6 +185,11 @@ private:
 
 	static GuiTexture* missionSelect;
 
+public:
+	static std::vector<std::string> unlockedCharacters;
+	static int characterSelectIndex;
+
+private:
 	static int titleCardTextTimer;
 
 	static int holdUpTimer;
@@ -183,6 +197,8 @@ private:
 
 public:
 	static void createTitleCard();
+
+	static void selectMenuArcadeClear();
 
 private:
 	static void selectMenuRoot(int newSelection);

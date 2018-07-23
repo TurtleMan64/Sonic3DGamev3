@@ -76,7 +76,7 @@ void SHD_GoronKid::step()
 
 		if (mag < 1000)
 		{
-			std::fprintf(stdout, "here2\n");
+			//std::fprintf(stdout, "here2\n");
 			ParticleTexture* tex = ParticleResources::textureTear1;
 			if (Maths::random() >= 0.5f)
 			{

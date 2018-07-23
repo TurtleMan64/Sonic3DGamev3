@@ -67,6 +67,13 @@ GUIText* MainMenu::textExtra2Title = nullptr; //Number of NPC found
 GUIText* MainMenu::textExtra2Data  = nullptr;
 GUIText* MainMenu::textExtra3Title = nullptr; //Total playtime
 GUIText* MainMenu::textExtra3Data  = nullptr;
+GUIText* MainMenu::textExtra4Title = nullptr; //Best Arcade Clear Time
+GUIText* MainMenu::textExtra4Data  = nullptr;
+GUIText* MainMenu::textExtra5Title = nullptr; //Character selection
+GUIText* MainMenu::textExtra5Data  = nullptr;
+
+GUIText* MainMenu::textArcadeResultTitle = nullptr; //Total time during arcade mode
+GUIText* MainMenu::textArcadeResultData  = nullptr; //Total time during arcade mode
 
 GLuint MainMenu::textureParallelogram              = (GLuint)-1;
 GLuint MainMenu::textureParallelogramBackdrop      = (GLuint)-1;
@@ -153,6 +160,9 @@ GuiTexture* MainMenu::rankM4 = nullptr;
 
 GuiTexture* MainMenu::missionSelect = nullptr;
 
+std::vector<std::string> MainMenu::unlockedCharacters;
+int MainMenu::characterSelectIndex = 0;
+
 int MainMenu::titleCardTextTimer = 0;
 
 int MainMenu::holdUpTimer = 0;
@@ -211,6 +221,9 @@ void MainMenu::init()
 	Global::npcList.push_back("Snowhead_NPC_4");
 	Global::npcList.push_back("Snowhead_NPC_5");
 	Global::npcList.push_back("Snowhead_NPC_6");
+	Global::npcList.push_back("Green Hill Zone_NPC_1");
+	Global::npcList.push_back("Radical Highway_NPC_1");
+	Global::npcList.push_back("Radical Highway_NPC_2");
 
 	MainMenu::loadResources();
 
@@ -351,7 +364,7 @@ void MainMenu::loadResources()
 	}
 
 	unsigned int totalNPC = Global::npcList.size();
-	int foundNPC = 0;
+	unsigned int foundNPC = 0;
 	for (unsigned int i = 0; i < totalNPC; i++)
 	{
 		std::string npc = Global::npcList[i];
@@ -366,6 +379,41 @@ void MainMenu::loadResources()
 		}
 	}
 
+	if (rankAs >= totalRanks/2)
+	{
+		if (Global::gameSaveData.find("UnlockedAmy") == Global::gameSaveData.end())
+		{
+			Global::gameSaveData["UnlockedAmy"] = "true";
+			Global::saveSaveData();
+		}
+	}
+	if (rankAs == totalRanks)
+	{
+		if (Global::gameSaveData.find("UnlockedPacman") == Global::gameSaveData.end())
+		{
+			Global::gameSaveData["UnlockedPacman"] = "true";
+			Global::saveSaveData();
+		}
+	}
+	if (foundNPC >= totalNPC/2)
+	{
+		if (Global::gameSaveData.find("UnlockedMetalSonic") == Global::gameSaveData.end())
+		{
+			Global::gameSaveData["UnlockedMetalSonic"] = "true";
+			Global::saveSaveData();
+		}
+	}
+	if (foundNPC == totalNPC)
+	{
+		if (Global::gameSaveData.find("UnlockedNPC") == Global::gameSaveData.end())
+		{
+			Global::gameSaveData["UnlockedNPC"] = "true";
+			Global::saveSaveData();
+		}
+	}
+
+
+
 	std::string playtime = "";
 	int hrs = (Global::gameTotalPlaytime         )/216000;
 	int min = (Global::gameTotalPlaytime % 216000)/3600;
@@ -379,13 +427,59 @@ void MainMenu::loadResources()
 
 	const float yoff = -0.03f;
 
-	textExtra1Title = new GUIText("A RANK:",         2, font, 0, 0.25f+yoff, 1, true, false, false); Global::countNew++;
-	textExtra2Title = new GUIText("HIDDEN NPC:",     2, font, 0, 0.50f+yoff, 1, true, false, false); Global::countNew++;
-	textExtra3Title = new GUIText("TOTAL PLAYTIME:", 2, font, 0, 0.75f+yoff, 1, true, false, false); Global::countNew++;
+	float divisor = 5.0f;
 
-	textExtra1Data = new GUIText(std::to_string(rankAs)  +"/"+std::to_string(totalRanks), 2, font, 0, 0.25f+0.06f+yoff, 1, true, false, false); Global::countNew++; //Number of A ranks
-	textExtra2Data = new GUIText(std::to_string(foundNPC)+"/"+std::to_string(totalNPC),   2, font, 0, 0.50f+0.06f+yoff, 1, true, false, false); Global::countNew++; //Number of NPC found
-	textExtra3Data = new GUIText(playtime, 2, font, 0, 0.75f+0.06f+yoff, 1, true, false, false); Global::countNew++; //Total playtime
+	unlockedCharacters.clear();
+	unlockedCharacters.push_back("SONIC");
+
+	if (Global::gameSaveData.find("UnlockedAmy")        != Global::gameSaveData.end() ||
+		Global::gameSaveData.find("UnlockedMetalSonic") != Global::gameSaveData.end() ||
+		Global::gameSaveData.find("UnlockedPacman")     != Global::gameSaveData.end() ||
+		Global::gameSaveData.find("UnlockedNPC")        != Global::gameSaveData.end())
+	{
+		divisor = 6.0f;
+
+		if (Global::gameSaveData.find("UnlockedAmy")        != Global::gameSaveData.end()) unlockedCharacters.push_back("AMY");
+		if (Global::gameSaveData.find("UnlockedMetalSonic") != Global::gameSaveData.end()) unlockedCharacters.push_back("METAL SONIC");
+		if (Global::gameSaveData.find("UnlockedPacman")     != Global::gameSaveData.end()) unlockedCharacters.push_back("PAC-MAN");
+		if (Global::gameSaveData.find("UnlockedNPC")        != Global::gameSaveData.end()) unlockedCharacters.push_back("NPC");
+	}
+
+	characterSelectIndex = std::max(0, characterSelectIndex);
+	characterSelectIndex = std::min(characterSelectIndex, (int)unlockedCharacters.size()-1);
+
+	textExtra1Title = new GUIText("A RANK:",         2, font, 0, (1/divisor)+yoff, 1, true, false, false); Global::countNew++;
+	textExtra2Title = new GUIText("HIDDEN NPC:",     2, font, 0, (2/divisor)+yoff, 1, true, false, false); Global::countNew++;
+	textExtra3Title = new GUIText("TOTAL PLAYTIME:", 2, font, 0, (3/divisor)+yoff, 1, true, false, false); Global::countNew++;
+
+	textExtra1Data = new GUIText(std::to_string(rankAs)  +"/"+std::to_string(totalRanks), 2, font, 0, (1/divisor)-yoff, 1, true, false, false); Global::countNew++; //Number of A ranks
+	textExtra2Data = new GUIText(std::to_string(foundNPC)+"/"+std::to_string(totalNPC),   2, font, 0, (2/divisor)-yoff, 1, true, false, false); Global::countNew++; //Number of NPC found
+	textExtra3Data = new GUIText(playtime, 2, font, 0, (3/divisor)-yoff, 1, true, false, false); Global::countNew++; //Total playtime
+
+	if (Global::gameSaveData.find("BestArcadeClearTime") == Global::gameSaveData.end())
+	{
+		textExtra4Title = new GUIText("BEST ARCADE CLEAR TIME:", 2, font, 0, (4/divisor)+yoff, 1, true, false, false); Global::countNew++;
+		textExtra4Data  = new GUIText("NONE", 2, font, 0, (4/divisor)-yoff, 1, true, false, false); Global::countNew++;
+	}
+	else
+	{
+		textExtra4Title = new GUIText("BEST ARCADE CLEAR TIME:", 2, font, 0, (4/divisor)+yoff, 1, true, false, false); Global::countNew++;
+		textExtra4Data  = new GUIText(MainMenu::convertFramesToTime(stoi(Global::gameSaveData["BestArcadeClearTime"])), 2, font, 0, (4/divisor)-yoff, 1, true, false, false); Global::countNew++;
+	}
+
+	if (divisor > 5.5f)
+	{
+		textExtra5Title = new GUIText("PLAY AS:", 2, font, 0, (5/divisor)+yoff, 1, true, false, false); Global::countNew++;
+		textExtra5Data  = new GUIText(unlockedCharacters[characterSelectIndex], 2, font, 0, (5/divisor)-yoff, 1, true, false, false); Global::countNew++;
+	}
+	else
+	{
+		textExtra5Title = new GUIText("", 2, font, 0, (5/divisor)+yoff, 1, true, false, false); Global::countNew++;
+		textExtra5Data  = new GUIText("", 2, font, 0, (5/divisor)-yoff, 1, true, false, false); Global::countNew++;
+	}
+
+	textArcadeResultTitle = new GUIText("ARCADE CLEAR TIME:", 3, font, 0, 0.5f-0.09f, 1, true, false, false); Global::countNew++;
+	textArcadeResultData  = new GUIText(MainMenu::convertFramesToTime(Global::gameArcadePlaytime), 3, font, 0, 0.5f, 1, true, false, false); Global::countNew++;
 
 	MainMenu::selectMenuRoot(ROOT_STORY);
 }
@@ -432,6 +526,13 @@ void MainMenu::unloadResources()
 	textExtra2Data ->deleteMe(); delete textExtra2Data;  Global::countDelete++; textExtra2Data  = nullptr;
 	textExtra3Title->deleteMe(); delete textExtra3Title; Global::countDelete++; textExtra3Title = nullptr;
 	textExtra3Data ->deleteMe(); delete textExtra3Data;  Global::countDelete++; textExtra3Data  = nullptr;
+	textExtra4Title->deleteMe(); delete textExtra4Title; Global::countDelete++; textExtra4Title = nullptr;
+	textExtra4Data ->deleteMe(); delete textExtra4Data;  Global::countDelete++; textExtra4Data  = nullptr;
+	textExtra5Title->deleteMe(); delete textExtra5Title; Global::countDelete++; textExtra5Title = nullptr;
+	textExtra5Data ->deleteMe(); delete textExtra5Data;  Global::countDelete++; textExtra5Data  = nullptr;
+
+	textArcadeResultTitle->deleteMe(); delete textArcadeResultTitle; Global::countDelete++; textArcadeResultTitle  = nullptr;
+	textArcadeResultData ->deleteMe(); delete textArcadeResultData;  Global::countDelete++; textArcadeResultData   = nullptr;
 
 	GuiManager::clearGuisToRender();
 
@@ -505,6 +606,58 @@ void MainMenu::unloadResources()
 	delete rankM4; Global::countDelete++; rankM4 = nullptr;
 
 	delete missionSelect; Global::countDelete++; missionSelect = nullptr;
+}
+
+void MainMenu::selectMenuArcadeClear()
+{
+	GuiManager::clearGuisToRender();
+
+	menuSelectionID = ARCADE_CLEAR;
+
+	textItem1->setVisibility(false);
+	textItem2->setVisibility(false);
+	textItem3->setVisibility(false);
+	textItem4->setVisibility(false);
+
+	textMission1 ->setVisibility(false);
+	textMission2 ->setVisibility(false);
+	textMission3 ->setVisibility(false);
+	textMission4 ->setVisibility(false);
+	textMission5 ->setVisibility(false);
+	textMission6 ->setVisibility(false);
+	textMission7 ->setVisibility(false);
+	textMission8 ->setVisibility(false);
+	textMission9 ->setVisibility(false);
+	textMission10->setVisibility(false);
+	textMission11->setVisibility(false);
+	textMission12->setVisibility(false);
+	textMission13->setVisibility(false);
+	textMission14->setVisibility(false);
+	textMission15->setVisibility(false);
+	textMission16->setVisibility(false);
+	textMission17->setVisibility(false);
+	textMission18->setVisibility(false);
+	textMission19->setVisibility(false);
+	textMission20->setVisibility(false);
+	textMission21->setVisibility(false);
+	textMission22->setVisibility(false);
+
+	textBestScore->setVisibility(false);
+	textBestTime ->setVisibility(false);
+
+	textExtra1Title->setVisibility(false);
+	textExtra1Data ->setVisibility(false);
+	textExtra2Title->setVisibility(false);
+	textExtra2Data ->setVisibility(false);
+	textExtra3Title->setVisibility(false);
+	textExtra3Data ->setVisibility(false);
+	textExtra4Title->setVisibility(false);
+	textExtra4Data ->setVisibility(false);
+	textExtra5Title->setVisibility(false);
+	textExtra5Data ->setVisibility(false);
+
+	textArcadeResultTitle->setVisibility(true);
+	textArcadeResultData ->setVisibility(true);
 }
 
 void MainMenu::selectMenuMission(int newSelection)
@@ -824,6 +977,13 @@ void MainMenu::selectMenuMission(int newSelection)
 	textExtra2Data ->setVisibility(false);
 	textExtra3Title->setVisibility(false);
 	textExtra3Data ->setVisibility(false);
+	textExtra4Title->setVisibility(false);
+	textExtra4Data ->setVisibility(false);
+	textExtra5Title->setVisibility(false);
+	textExtra5Data ->setVisibility(false);
+
+	textArcadeResultTitle->setVisibility(false);
+	textArcadeResultData ->setVisibility(false);
 
 	AudioPlayer::play(36, Global::gameCamera->getFadePosition1());
 }
@@ -884,6 +1044,13 @@ void MainMenu::selectMenuRoot(int newSelection)
 	textExtra2Data ->setVisibility(false);
 	textExtra3Title->setVisibility(false);
 	textExtra3Data ->setVisibility(false);
+	textExtra4Title->setVisibility(false);
+	textExtra4Data ->setVisibility(false);
+	textExtra5Title->setVisibility(false);
+	textExtra5Data ->setVisibility(false);
+
+	textArcadeResultTitle->setVisibility(false);
+	textArcadeResultData ->setVisibility(false);
 
 	AudioPlayer::play(36, Global::gameCamera->getFadePosition1());
 }
@@ -931,6 +1098,13 @@ void MainMenu::selectMenuExtra()
 	textExtra2Data ->setVisibility(true);
 	textExtra3Title->setVisibility(true);
 	textExtra3Data ->setVisibility(true);
+	textExtra4Title->setVisibility(true);
+	textExtra4Data ->setVisibility(true);
+	textExtra5Title->setVisibility(true);
+	textExtra5Data ->setVisibility(true);
+
+	textArcadeResultTitle->setVisibility(false);
+	textArcadeResultData ->setVisibility(false);
 
 	AudioPlayer::play(36, Global::gameCamera->getFadePosition1());
 }
@@ -1090,6 +1264,7 @@ void MainMenu::step()
 						Global::levelID = LVL_EMERALD_COAST;
 						Global::gameMissionNumber = 0;
 						Global::gameIsArcadeMode = true;
+						Global::gameArcadePlaytime = 0;
 
 						AudioPlayer::play(38, Global::gameCamera->getFadePosition1());
 
@@ -1219,9 +1394,51 @@ void MainMenu::step()
 		}
 		if (menuSelectionID == EXTRAS)
 		{
+			if (unlockedCharacters.size() > 1)
+			{
+				if (shouldGoLeft || shouldGoRight)
+				{
+					if (shouldGoLeft)
+					{
+						characterSelectIndex--;
+						if (characterSelectIndex < 0)
+						{
+							characterSelectIndex = ((int)unlockedCharacters.size())-1;
+						}
+					}
+					if (shouldGoRight)
+					{
+						characterSelectIndex++;
+						if (characterSelectIndex > ((int)unlockedCharacters.size())-1)
+						{
+							characterSelectIndex = 0;
+						}
+					}
+
+
+					characterSelectIndex = std::max(0, characterSelectIndex);
+					characterSelectIndex = std::min(characterSelectIndex, (int)unlockedCharacters.size()-1);
+
+					textExtra5Title->deleteMe(); delete textExtra5Title; Global::countDelete++; textExtra5Title = nullptr;
+					textExtra5Data ->deleteMe(); delete textExtra5Data;  Global::countDelete++; textExtra5Data  = nullptr;
+
+					const float yoff = -0.03f;
+					const float divisor = 6.0f;
+
+					textExtra5Title = new GUIText("PLAY AS:", 2, font, 0, (5/divisor)+yoff, 1, true, false, true); Global::countNew++;
+					textExtra5Data  = new GUIText(unlockedCharacters[characterSelectIndex], 2, font, 0, (5/divisor)-yoff, 1, true, false, true); Global::countNew++;
+				}
+			}
 			if (pressedBack)
 			{
 				MainMenu::selectMenuRoot(ROOT_EXTRAS);
+			}
+		}
+		else if (menuSelectionID == ARCADE_CLEAR)
+		{
+			if (pressedBack)
+			{
+				MainMenu::selectMenuRoot(ROOT_STORY);
 			}
 		}
 	}

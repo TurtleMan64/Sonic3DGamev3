@@ -25,7 +25,9 @@ std::list<TexturedModel*> Checkpoint::modelsBase;
 std::list<TexturedModel*> Checkpoint::modelsBall;
 
 float Checkpoint::colHorizontal = 9;
-float Checkpoint::colVertical = 9;
+float Checkpoint::colVertical   = 9;
+ALuint Checkpoint::savedBGMIntro = AL_NONE;
+ALuint Checkpoint::savedBGMLoop  = AL_NONE;
 
 Checkpoint::Checkpoint()
 {
@@ -54,6 +56,7 @@ Checkpoint::Checkpoint(float x, float y, float z, float rotY)
 		if (sqrtf(xDiff*xDiff + yDiff*yDiff + zDiff*zDiff) < 50)
 		{
 			isHit = true;
+			AudioPlayer::playBGMWithIntro(Checkpoint::savedBGMIntro, Checkpoint::savedBGMLoop);
 		}
 	}
 
@@ -122,8 +125,13 @@ void Checkpoint::step()
 			{
 				if (!isHit)
 				{
+					AudioPlayer::play(45, getPosition());
+
+					Checkpoint::savedBGMIntro = AudioPlayer::bgmIntro;
+					Checkpoint::savedBGMLoop  = AudioPlayer::bgmLoop;
+
 					isHit = true;
-					Global::spawnAtCheckpoint = true;
+					Global::spawnAtCheckpoint  = true;
 					Global::checkpointX        = Global::gamePlayer->getX();
 					Global::checkpointY        = Global::gamePlayer->getY();
 					Global::checkpointZ        = Global::gamePlayer->getZ();

@@ -37,14 +37,14 @@ void EC_FlatWater::step()
 	{
 		visible = true;
 
-		if (Global::gamePlayer->getX() > -721.26f && Global::gamePlayer->getX() < 378.71f &&
-			Global::gamePlayer->getZ() > 4567.68f && Global::gamePlayer->getZ() < 5667.667f &&
+		if (Global::gamePlayer->getX() > -721.26f  && Global::gamePlayer->getX() < 378.71f    &&
+			Global::gamePlayer->getZ() > 14567.68f && Global::gamePlayer->getZ() < 15667.667f &&
 			Global::gamePlayer->getY() < 576)
 		{
 			Global::gamePlayer->setInWater(581);
 		}
-		else if (Global::gamePlayer->getX() > 420.37f && Global::gamePlayer->getX() < 1212.35f &&
-				 Global::gamePlayer->getZ() > 5713.0f && Global::gamePlayer->getZ() < 6505.0f &&
+		else if (Global::gamePlayer->getX() > 420.37f  && Global::gamePlayer->getX() < 1212.35f &&
+				 Global::gamePlayer->getZ() > 15713.0f && Global::gamePlayer->getZ() < 16505.0f &&
 			     Global::gamePlayer->getY() < 586)
 		{
 			Global::gamePlayer->setInWater(590);

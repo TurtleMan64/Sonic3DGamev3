@@ -152,6 +152,7 @@ int Global::gameScore = 0;
 int Global::gameLives = 4;
 int Global::gameClock = 0;
 int Global::gameTotalPlaytime = 0;
+int Global::gameArcadePlaytime = 0;
 float Global::deathHeight = -100.0f;
 
 int Global::gameMissionNumber = 0;
@@ -306,6 +307,11 @@ int main()
 	while (Global::gameState != STATE_EXITING && displayWantsToClose() == 0)
 	{
 		Global::gameTotalPlaytime++;
+
+		if (Global::gameIsArcadeMode)
+		{
+			Global::gameArcadePlaytime++;
+		}
 
 		Input_pollInputs();
 
@@ -633,14 +639,39 @@ int main()
 				if (Global::gameIsArcadeMode)
 				{
 					Global::levelID+=1;
-					Level* nextLevel = &Global::gameLevelData[Global::levelID];
-					Global::shouldLoadLevel = true;
-					Global::isNewLevel = true;
-					Global::levelName = nextLevel->fileName;
-					Global::levelNameDisplay = nextLevel->displayName;
-					Global::gameMissionDescription = (nextLevel->missionData[Global::gameMissionNumber])[(nextLevel->missionData[Global::gameMissionNumber]).size()-1];
 
-					MainMenu::createTitleCard();
+					if (Global::levelID <= LVL_RADICAL_HIGHWAY)
+					{
+						Level* nextLevel = &Global::gameLevelData[Global::levelID];
+						Global::shouldLoadLevel = true;
+						Global::isNewLevel = true;
+						Global::levelName = nextLevel->fileName;
+						Global::levelNameDisplay = nextLevel->displayName;
+						Global::gameMissionDescription = (nextLevel->missionData[Global::gameMissionNumber])[(nextLevel->missionData[Global::gameMissionNumber]).size()-1];
+
+						MainMenu::createTitleCard();
+					}
+					else
+					{
+						if (Global::gameSaveData.find("BestArcadeClearTime") == Global::gameSaveData.end())
+						{
+							Global::gameSaveData["BestArcadeClearTime"] = std::to_string(Global::gameArcadePlaytime);
+							Global::saveSaveData();
+						}
+						else
+						{
+							int currentPB = std::stoi(Global::gameSaveData["BestArcadeClearTime"]);
+							if (Global::gameArcadePlaytime < currentPB)
+							{
+								Global::gameSaveData["BestArcadeClearTime"] = std::to_string(Global::gameArcadePlaytime);
+								Global::saveSaveData();
+							}
+						}
+
+						LevelLoader_loadTitle();
+						MainMenu::selectMenuArcadeClear();
+						Global::gameIsArcadeMode = false;
+					}
 				}
 				else
 				{

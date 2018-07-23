@@ -192,6 +192,41 @@ void CollisionModel::transformModel(CollisionModel* targetModel, Vector3f* trans
 	targetModel->generateMinMaxValues();
 }
 
+void CollisionModel::transformModelWithScale(CollisionModel* targetModel, Vector3f* translate, float yRot, float scale)
+{
+	float offX = translate->x;
+	float offY = translate->y;
+	float offZ = translate->z;
+
+	float angleRad = toRadians(yRot);
+	float cosAng = cosf(angleRad);
+	float sinAng = sinf(angleRad);
+
+	targetModel->deleteMe();
+
+	for (Triangle3D* tri : triangles)
+	{
+		float xDiff = tri->p1X*scale;
+		float zDiff = tri->p1Z*scale;
+		Vector3f newP1(offX + (xDiff*cosAng - zDiff*sinAng), offY + tri->p1Y*scale, offZ + (zDiff*cosAng + xDiff*sinAng));
+
+		xDiff = tri->p2X*scale;
+		zDiff = tri->p2Z*scale;
+		Vector3f newP2(offX + (xDiff*cosAng - zDiff*sinAng), offY + tri->p2Y*scale, offZ + (zDiff*cosAng + xDiff*sinAng));
+
+		xDiff = tri->p3X*scale;
+		zDiff = tri->p3Z*scale;
+		Vector3f newP3(offX + (xDiff*cosAng - zDiff*sinAng), offY + tri->p3Y*scale, offZ + (zDiff*cosAng + xDiff*sinAng));
+
+		Triangle3D* newTri = new Triangle3D(&newP1, &newP2, &newP3, tri->type, tri->sound, tri->particle);
+		Global::countNew++;
+
+		targetModel->triangles.push_back(newTri);
+	}
+
+	targetModel->generateMinMaxValues();
+}
+
 //makes a collision model be the transformed version of this collision model
 void CollisionModel::transformModel(CollisionModel* targetModel, Vector3f* translate)
 {

@@ -34,6 +34,12 @@
     <ClCompile Include="src\collision\QuadTreeNode.cpp" />
     <ClCompile Include="src\collision\Triangle3D.cpp" />
     <ClCompile Include="src\engineTester\MainGameLoop.cpp" />
+    <ClCompile Include="src\entities\Boss\B_Earth.cpp" />
+    <ClCompile Include="src\entities\Boss\B_Manager.cpp" />
+    <ClCompile Include="src\entities\Boss\B_MetalSonic.cpp" />
+    <ClCompile Include="src\entities\Boss\B_Meteor.cpp" />
+    <ClCompile Include="src\entities\Boss\B_Platform.cpp" />
+    <ClCompile Include="src\entities\Boss\B_Projectile.cpp" />
     <ClCompile Include="src\entities\Camera.cpp" />
     <ClCompile Include="src\entities\CameraBox.cpp" />
     <ClCompile Include="src\entities\Capsule.cpp" />
@@ -213,6 +219,12 @@
     <ClInclude Include="src\collision\quadtreenode.h" />
     <ClInclude Include="src\collision\triangle3d.h" />
     <ClInclude Include="src\engineTester\main.h" />
+    <ClInclude Include="src\entities\Boss\bearth.h" />
+    <ClInclude Include="src\entities\Boss\bmanager.h" />
+    <ClInclude Include="src\entities\Boss\bmetalsonic.h" />
+    <ClInclude Include="src\entities\Boss\bmeteor.h" />
+    <ClInclude Include="src\entities\Boss\bplatform.h" />
+    <ClInclude Include="src\entities\Boss\bprojectile.h" />
     <ClInclude Include="src\entities\camera.h" />
     <ClInclude Include="src\entities\camerabox.h" />
     <ClInclude Include="src\entities\capsule.h" />

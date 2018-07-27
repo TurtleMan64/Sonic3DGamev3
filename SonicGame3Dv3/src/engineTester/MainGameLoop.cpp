@@ -640,7 +640,7 @@ int main()
 				{
 					Global::levelID+=1;
 
-					if (Global::levelID <= LVL_RADICAL_HIGHWAY)
+					if (Global::levelID <= LVL_BOSS)
 					{
 						Level* nextLevel = &Global::gameLevelData[Global::levelID];
 						Global::shouldLoadLevel = true;

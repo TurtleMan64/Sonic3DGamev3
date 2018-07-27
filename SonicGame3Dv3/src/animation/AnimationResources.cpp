@@ -21,7 +21,7 @@ std::vector<Animation> AnimationResources::animsHumanRightFoot;
 
 void AnimationResources::createAnimations()
 {
-	unsigned int animCount = 24;
+	unsigned int animCount = 25;
 	while (animsHumanBody.size()         < animCount) { Animation filler; animsHumanBody.push_back(filler); }
 	while (animsHumanHead.size()         < animCount) { Animation filler; animsHumanHead.push_back(filler); }
 	while (animsHumanLeftHumerus.size()  < animCount) { Animation filler; animsHumanLeftHumerus.push_back(filler); }
@@ -85,7 +85,7 @@ void AnimationResources::createAnimations()
 	animsHumanBody[10].addKeyframe(0, 3.7f, 0, 0, 0, 0, 0, 0, 1);
 	animsHumanBody[10].addKeyframe(100, 3.7f, 0, 0, 0, 0, 0, 0, 1);
 
-	//long jump animation
+	//getting hit animation
 	animsHumanBody[11].addKeyframe(0, 1, 0, 0, 180, 0, 0, 0, 1);
 	animsHumanBody[11].addKeyframe(100, 1, 0, 0, 180, 0, 0, 0, 1);
 
@@ -136,6 +136,11 @@ void AnimationResources::createAnimations()
 	//climb
 	animsHumanBody[23].addKeyframe(0,   0, 2, 0, 0, 0, 0, 0, 1);
 	animsHumanBody[23].addKeyframe(100, 0, 2, 0, 0, 0, 0, 0, 1);
+
+	//metal sonic fly
+	animsHumanBody[24].addKeyframe(0,   2.5f, 2.5f, 0, 0, 0, 0, -45, 1);
+	animsHumanBody[24].addKeyframe(50,  3,    3,    0, 0, 0, 0, -50, 1);
+	animsHumanBody[24].addKeyframe(100, 2.5f, 2.5f, 0, 0, 0, 0, -45, 1);
 
 
 
@@ -195,6 +200,8 @@ void AnimationResources::createAnimations()
 	animsHumanHead[23].addKeyframe(0,   0, 0, 0, 0, 0, 0, 40, 1);
 	animsHumanHead[23].addKeyframe(50,  0, 0, 0, 0, 0, 0, 45, 1);
 	animsHumanHead[23].addKeyframe(100, 0, 0, 0, 0, 0, 0, 40, 1);
+	animsHumanHead[24].addKeyframe(0,   0, 0, 0, 0, 0, 0, 28.3f, 1);
+	animsHumanHead[24].addKeyframe(100, 0, 0, 0, 0, 0, 0, 28.3f, 1);
 
 	animsHumanLeftHumerus[0].addKeyframe(0, 0, 0, 0, 110, 0, 0, -25, 1);
 	animsHumanLeftHumerus[0].addKeyframe(50, 0, 0, 0, 100, 0, 0, -35, 1);
@@ -249,6 +256,8 @@ void AnimationResources::createAnimations()
 	animsHumanLeftHumerus[23].addKeyframe(0,   0, 0, 0, 49.6f, 0, 0, -30.6f, 1);
 	animsHumanLeftHumerus[23].addKeyframe(50,  0, 0, 0, 57.3f, 0, 0,  21.1f, 1); //right humerus, -xrot
 	animsHumanLeftHumerus[23].addKeyframe(100, 0, 0, 0, 49.6f, 0, 0, -30.6f, 1);
+	animsHumanLeftHumerus[24].addKeyframe(0,   0, 0, 0, 160, 0, 0, 64, 1);
+	animsHumanLeftHumerus[24].addKeyframe(100, 0, 0, 0, 160, 0, 0, 64, 1);
 
 	animsHumanLeftForearm[0].addKeyframe(0, 0, 0, 0, -120, 0, 0, -25, 1);
 	animsHumanLeftForearm[0].addKeyframe(50, 0, 0, 0, -120, 0, 0, 0, 1);
@@ -301,6 +310,8 @@ void AnimationResources::createAnimations()
 	animsHumanLeftForearm[23].addKeyframe(0,   0, 0, 0, -23.8f, 0, 0, -19.7f, 1);
 	animsHumanLeftForearm[23].addKeyframe(50,  0, 0, 0, -48.5f, 0, 0,  30.1f, 1); //right forearm, -xrot
 	animsHumanLeftForearm[23].addKeyframe(100, 0, 0, 0, -23.8f, 0, 0, -19.7f, 1);
+	animsHumanLeftForearm[24].addKeyframe(0,   0, 0, 0, -1.6f, 0, 0, -13.8f, 1);
+	animsHumanLeftForearm[24].addKeyframe(100, 0, 0, 0, -1.6f, 0, 0, -13.8f, 1);
 
 	animsHumanLeftHand[0].addKeyframe(0, 0, 0, 0, 0, 0, 0, 0, 1);
 	animsHumanLeftHand[0].addKeyframe(100, 0, 0, 0, 0, 0, 0, 0, 1);
@@ -351,6 +362,8 @@ void AnimationResources::createAnimations()
 	animsHumanLeftHand[23].addKeyframe(0,   0, 0, 0, 0, 0, 0, 0, 1);
 	animsHumanLeftHand[23].addKeyframe(50,  0, 0, 0, 0, 0, 0, 0, 1);
 	animsHumanLeftHand[23].addKeyframe(100, 0, 0, 0, 0, 0, 0, 0, 1);
+	animsHumanLeftHand[24].addKeyframe(0,   0, 0, 0, 0, 0, 0, 0, 1);
+	animsHumanLeftHand[24].addKeyframe(100, 0, 0, 0, 0, 0, 0, 0, 1);
 
 	animsHumanRightHumerus[0].addKeyframe(0, 0, 0, 0, -110, 0, 0, -25, 1);
 	animsHumanRightHumerus[0].addKeyframe(50, 0, 0, 0, -100, 0, 0, -35, 1);
@@ -405,6 +418,8 @@ void AnimationResources::createAnimations()
 	animsHumanRightHumerus[23].addKeyframe(0,   0, 0, 0, -57.3f, 0, 0,  21.2f, 1);
 	animsHumanRightHumerus[23].addKeyframe(50,  0, 0, 0, -49.6f, 0, 0, -30.6f, 1); //left humerus, -xrot
 	animsHumanRightHumerus[23].addKeyframe(100, 0, 0, 0, -57.3f, 0, 0,  21.2f, 1);
+	animsHumanRightHumerus[24].addKeyframe(0,   0, 0, 0, -160, 0, 0, 64, 1);
+	animsHumanRightHumerus[24].addKeyframe(100, 0, 0, 0, -160, 0, 0, 64, 1);
 
 	animsHumanRightForearm[0].addKeyframe(0, 0, 0, 0, 120, 0, 0, -25, 1);
 	animsHumanRightForearm[0].addKeyframe(50, 0, 0, 0, 120, 0, 0, 0, 1);
@@ -457,6 +472,8 @@ void AnimationResources::createAnimations()
 	animsHumanRightForearm[23].addKeyframe(0,   0, 0, 0, 48.5f, 0, 0,  30.1f, 1);
 	animsHumanRightForearm[23].addKeyframe(50,  0, 0, 0, 23.8f, 0, 0, -19.7f, 1); //left forearm, -xrot
 	animsHumanRightForearm[23].addKeyframe(100, 0, 0, 0, 48.5f, 0, 0,  30.1f, 1);
+	animsHumanRightForearm[24].addKeyframe(0,   0, 0, 0, 1.6f, 0, 0, -13.8f, 1);
+	animsHumanRightForearm[24].addKeyframe(100, 0, 0, 0, 1.6f, 0, 0, -13.8f, 1);
 
 	animsHumanRightHand[0].addKeyframe(0, 0, 0, 0, 0, 0, 0, 0, 1);
 	animsHumanRightHand[0].addKeyframe(100, 0, 0, 0, 0, 0, 0, 0, 1);
@@ -507,6 +524,8 @@ void AnimationResources::createAnimations()
 	animsHumanRightHand[23].addKeyframe(0,   0, 0, 0, 0, 0, 0, 0, 1);
 	animsHumanRightHand[23].addKeyframe(50,  0, 0, 0, 0, 0, 0, 0, 1);
 	animsHumanRightHand[23].addKeyframe(100, 0, 0, 0, 0, 0, 0, 0, 1);
+	animsHumanRightHand[24].addKeyframe(0,   0, 0, 0, 0, 0, 0, 0, 1);
+	animsHumanRightHand[24].addKeyframe(100, 0, 0, 0, 0, 0, 0, 0, 1);
 
 	animsHumanLeftThigh[0].addKeyframe(0, 0, 0, 0, 50, 0, 0, -55, 1);
 	animsHumanLeftThigh[0].addKeyframe(50, 0, 0, 0, 50, 0, 0, -70, 1);
@@ -580,6 +599,8 @@ void AnimationResources::createAnimations()
 	animsHumanLeftThigh[23].addKeyframe(0,   0, 0, 0, 1,     0, 0, -77.7f, 1);
 	animsHumanLeftThigh[23].addKeyframe(50,  0, 0, 0, 30.4f, 0, 0, -27,    1); //right thigh, -xrot
 	animsHumanLeftThigh[23].addKeyframe(100, 0, 0, 0, 1,     0, 0, -77.7f, 1);
+	animsHumanLeftThigh[24].addKeyframe(0,   0, 0, 0, -10,   0, 0, -95.9f, 1);
+	animsHumanLeftThigh[24].addKeyframe(100, 0, 0, 0, -10,   0, 0, -95.9f, 1);
 
 	animsHumanLeftShin[0].addKeyframe(0, 0, 0, 0, 0, 0, 0, -70, 1);
 	animsHumanLeftShin[0].addKeyframe(50, 0, 0, 0, 0, 0, 0, -40, 1);
@@ -651,6 +672,8 @@ void AnimationResources::createAnimations()
 	animsHumanLeftShin[23].addKeyframe(0,   0, 0, 0, 0, 0, 0, -18.6f, 1);
 	animsHumanLeftShin[23].addKeyframe(50,  0, 0, 0, 0, 0, 0, -120,   1); //right shin, -xrot
 	animsHumanLeftShin[23].addKeyframe(100, 0, 0, 0, 0, 0, 0, -18.6f, 1);
+	animsHumanLeftShin[24].addKeyframe(0,   0, 0, 0, 0, 0, 0, -19, 1);
+	animsHumanLeftShin[24].addKeyframe(100, 0, 0, 0, 0, 0, 0, -19, 1);
 
 	animsHumanLeftFoot[0].addKeyframe(0, 0, 0, 0, 0, 0, 0, 125, 1);
 	animsHumanLeftFoot[0].addKeyframe(50, 0, 0, 0, 0, 0, 0, 110, 1);
@@ -722,6 +745,8 @@ void AnimationResources::createAnimations()
 	animsHumanLeftFoot[23].addKeyframe(0,   0, 0, 0, 0, 0, 0, 48.4f, 1);
 	animsHumanLeftFoot[23].addKeyframe(50,  0, 0, 0, 0, 0, 0, 157,   1); //right foot, -xrot
 	animsHumanLeftFoot[23].addKeyframe(100, 0, 0, 0, 0, 0, 0, 48.4f, 1);
+	animsHumanLeftFoot[24].addKeyframe(0,   0, 0, 0, 0, 0, 0, 44.7f, 1);
+	animsHumanLeftFoot[24].addKeyframe(100, 0, 0, 0, 0, 0, 0, 44.7f, 1);
 
 	animsHumanRightThigh[0].addKeyframe(0, 0, 0, 0, -50, 0, 0, -55, 1);
 	animsHumanRightThigh[0].addKeyframe(50, 0, 0, 0, -50, 0, 0, -70, 1);
@@ -795,6 +820,8 @@ void AnimationResources::createAnimations()
 	animsHumanRightThigh[23].addKeyframe(0,   0, 0, 0, -30.4f, 0, 0, -27,    1);
 	animsHumanRightThigh[23].addKeyframe(50,  0, 0, 0, -1,     0, 0, -77.7f, 1); //left thigh, -xrot
 	animsHumanRightThigh[23].addKeyframe(100, 0, 0, 0, -30.4f, 0, 0, -27,    1);
+	animsHumanRightThigh[24].addKeyframe(0,   0, 0, 0,  10,   0, 0, -95.9f, 1);
+	animsHumanRightThigh[24].addKeyframe(100, 0, 0, 0,  10,   0, 0, -95.9f, 1);
 
 	animsHumanRightShin[0].addKeyframe(0, 0, 0, 0, 0, 0, 0, -70, 1);
 	animsHumanRightShin[0].addKeyframe(50, 0, 0, 0, 0, 0, 0, -40, 1);
@@ -866,6 +893,8 @@ void AnimationResources::createAnimations()
 	animsHumanRightShin[23].addKeyframe(0,   0, 0, 0, 0, 0, 0, -120,   1);
 	animsHumanRightShin[23].addKeyframe(50,  0, 0, 0, 0, 0, 0, -18.6f, 1); //left shin, -xrot
 	animsHumanRightShin[23].addKeyframe(100, 0, 0, 0, 0, 0, 0, -120,   1);
+	animsHumanRightShin[24].addKeyframe(0,   0, 0, 0, 0, 0, 0, -19, 1);
+	animsHumanRightShin[24].addKeyframe(100, 0, 0, 0, 0, 0, 0, -19, 1);
 
 	animsHumanRightFoot[0].addKeyframe(0, 0, 0, 0, 0, 0, 0, 125, 1);
 	animsHumanRightFoot[0].addKeyframe(50, 0, 0, 0, 0, 0, 0, 110, 1);
@@ -937,6 +966,8 @@ void AnimationResources::createAnimations()
 	animsHumanRightFoot[23].addKeyframe(0,   0, 0, 0, 0, 0, 0, 157,   1);
 	animsHumanRightFoot[23].addKeyframe(50,  0, 0, 0, 0, 0, 0, 48.4f, 1); //left foot -xrot
 	animsHumanRightFoot[23].addKeyframe(100, 0, 0, 0, 0, 0, 0, 157,   1);
+	animsHumanRightFoot[24].addKeyframe(0,   0, 0, 0, 0, 0, 0, 44.7f, 1);
+	animsHumanRightFoot[24].addKeyframe(100, 0, 0, 0, 0, 0, 0, 44.7f, 1);
 }
 
 void AnimationResources::assignAnimationsHuman(Body* body, Limb* head,

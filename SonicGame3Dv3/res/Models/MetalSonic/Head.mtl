@@ -1,8 +1,20 @@
 # Blender MTL File: 'None'
-# Material Count: 1
+# Material Count: 2
 
 newmtl Material.001
-Ns 19.607843
+Ns 20
+Ka 1.000000 1.000000 1.000000
+Kd 0.640000 0.640000 0.640000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 0.75
+d 1.000000
+glow 1.0
+illum 2
+map_Kd redGlow.png
+
+newmtl Material.001_metalsonicTex.png
+Ns 20
 Ka 1.000000 1.000000 1.000000
 Kd 0.640000 0.640000 0.640000
 Ks 0.500000 0.500000 0.500000

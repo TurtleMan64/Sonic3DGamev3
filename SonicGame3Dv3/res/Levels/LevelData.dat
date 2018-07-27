@@ -1,6 +1,6 @@
-22
+23
 
-EmeraldCoast.lvl
+Boss.lvl
 Emerald Coast
 3
 Normal;16000;Destroy the capsule and rescue the animals!
@@ -146,3 +146,8 @@ Radical Highway
 Normal;12500;Break through the besieging military!
 Ring;5400;150;Collect 150 Rings!
 Chao;5400;Find the lost chao!
+
+Boss.lvl
+Boss
+1
+Normal;0;Defeat Metal Sonic!

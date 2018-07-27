@@ -2551,7 +2551,21 @@ void PlayerSonic::animate()
 	{
 		if (myBody != nullptr) myBody->setBaseOrientation(&displayPos, diff, yawAngle, pitchAngle, 0);
 		float time = 10 * modelRunIndex * 0.5f;
-		updateLimbs(1, time);
+		if (characterID == 8) //special running animation for metal sonic
+		{
+			if (mySpeed < 3.9f)
+			{
+				updateLimbs(1, time);
+			}
+			else
+			{
+				updateLimbs(24, time);
+			}
+		}
+		else
+		{
+			updateLimbs(1, time);
+		}
 		if (PlayerSonic::maniaSonic != nullptr)
 		{
 			PlayerSonic::maniaSonic->setOrientation(dspX, dspY, dspZ, diff, yawAngle, pitchAngle, 0);

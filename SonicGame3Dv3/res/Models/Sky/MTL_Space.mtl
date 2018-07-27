@@ -1,0 +1,16 @@
+# 3ds Max Wavefront OBJ Exporter v0.97b - (c)2007 guruware
+# File Created: 28.06.2015 02:12:59
+
+newmtl Texture
+	Ns 20.0
+	Ka 1.000000 1.000000 1.000000
+	Kd 1.000000 1.000000 1.000000
+	Ks 0.000000 0.000000 0.000000
+	Ke 0.000000 0.000000 0.000000
+	Ni 0.00
+	d 0.000000
+	scrollX 0.1
+	glow 1.5
+	illum 2
+	map_Kd Space.png
+	

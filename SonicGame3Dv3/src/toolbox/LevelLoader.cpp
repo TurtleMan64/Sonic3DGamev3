@@ -111,6 +111,11 @@
 #include "../entities/WildCanyon/wcdigteleport.h"
 #include "../entities/checkpoint.h"
 #include "../entities/SpeedHighway/shfloatingplatform.h"
+#include "../entities/Boss/bmanager.h"
+#include "../entities/Boss/bplatform.h"
+#include "../entities/Boss/bmeteor.h"
+#include "../entities/Boss/bearth.h"
+#include "../entities/Boss/bmetalsonic.h"
 
 float toFloat(char* input);
 int toInt(char* input);
@@ -252,7 +257,9 @@ void LevelLoader_loadLevel(std::string levelFilename)
 		Global::levelID == LVL_SNOWHEAD ||
 		Global::levelID == LVL_SPEED_HIGHWAY ||
 		Global::levelID == LVL_WILD_CANYON ||
-		Global::levelID == LVL_TWINKLE_PARK)
+		Global::levelID == LVL_TWINKLE_PARK ||
+		Global::levelID == LVL_BOSS || 
+		Global::levelID == LVL_EMERALD_COAST) //for testing boss
 	{
 		Global::stageUsesWater = false;
 	}
@@ -1683,6 +1690,14 @@ void processLine(char** dat, int datLength)
 			return;
 		}
 
+		case 89: //Final boss manager
+		{
+			B_Manager* manager = new B_Manager;
+			Global::countNew++;
+			Main_addEntity(manager);
+			return;
+		}
+
 		default:
 		{
 			return;
@@ -1848,4 +1863,8 @@ void freeAllStaticModels()
 	WC_DigTeleport::deleteStaticModels();
 	Checkpoint::deleteStaticModels();
 	SH_FloatingPlatform::deleteStaticModels();
+	B_Platform::deleteStaticModels();
+	B_Meteor::deleteStaticModels();
+	B_Earth::deleteStaticModels();
+	B_MetalSonic::deleteStaticModels();
 }

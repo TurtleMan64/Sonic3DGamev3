@@ -2,7 +2,7 @@
 # File Created: 28.06.2015 02:12:59
 
 newmtl Texture
-	Ns 10.0000
+	Ns 20.0000
 	Ni 0.000
 	d 0.0000
 	Tr 1.0000

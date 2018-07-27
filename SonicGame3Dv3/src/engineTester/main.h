@@ -62,6 +62,7 @@ void Main_deleteAllTransparentEntites();
 #define LVL_KINGDOM_VALLEY	   19
 #define LVL_PUMPKIN_HILL       20
 #define LVL_RADICAL_HIGHWAY    21
+#define LVL_BOSS               22
 
 #define ENTITY_RENDER_DIST 2000.0f
 #define ENTITY_RENDER_DIST_HIGH 5000.0f

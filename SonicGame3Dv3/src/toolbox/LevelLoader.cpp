@@ -259,7 +259,7 @@ void LevelLoader_loadLevel(std::string levelFilename)
 		Global::levelID == LVL_WILD_CANYON ||
 		Global::levelID == LVL_TWINKLE_PARK ||
 		Global::levelID == LVL_BOSS || 
-		Global::levelID == LVL_EMERALD_COAST) //for testing boss
+		Global::levelID == LVL_BOSS) //for testing boss
 	{
 		Global::stageUsesWater = false;
 	}

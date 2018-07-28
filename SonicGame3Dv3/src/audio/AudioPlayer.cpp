@@ -70,6 +70,14 @@ void AudioPlayer::loadSoundEffects()
 	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/General/Dig.ogg"));                  //43
 	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/General/RankShow.ogg"));             //44
 	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/General/Checkpoint.ogg"));           //45
+	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/Boss/BreakDamage.ogg"));             //46
+	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/Boss/ChaosSpear.ogg"));              //47
+	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/Boss/Damage.ogg"));                  //48
+	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/Boss/Electric.ogg"));                //49
+	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/Boss/MetallicExplode.ogg"));         //50
+	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/Boss/RunFastLoop.ogg"));             //51
+	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/Boss/ChargeShot.ogg"));              //52
+	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/Boss/LaserLoop.ogg"));               //53
 }
 
 void AudioPlayer::loadBGM(char* fileName)

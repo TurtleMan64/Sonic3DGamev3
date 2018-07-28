@@ -4,6 +4,7 @@
 class TexturedModel;
 class Body;
 class Limb;
+class Source;
 
 #include <list>
 #include <vector>
@@ -48,6 +49,8 @@ private:
 	float yVel;
 	float zVel;
 
+	Source* mySource;
+
 	int timer;
 	int iFrames;
 	int hitTimer;
@@ -62,6 +65,9 @@ private:
 	int aheadOfSonicTimer;
 
 	int shootTimer;
+
+	int behindSonicTimer;
+	int spinTimer;
 
 	void createLimbs();
 

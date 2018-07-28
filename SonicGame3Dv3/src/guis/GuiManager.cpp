@@ -171,6 +171,10 @@ void GuiManager::refresh()
 	float px = 1.0f/(SCR_WIDTH);  //1 pixel in x dimension
 	float py = 1.0f/(SCR_HEIGHT); //1 pixel in y dimension
 
+	const float w = 0.02f;   //width of a single text character
+	const float o = 0.0008f; //horizontal offset to adjust for centered vs non centered
+	const float s = 1.5f;    //size of timer text
+
 
 	//textTimer->deleteMe();
 	//delete textTimer; Global::countDelete++;
@@ -199,7 +203,7 @@ void GuiManager::refresh()
 	{
 		textRings->deleteMe();
 		delete textRings; Global::countDelete++;
-		textRings = new GUIText(std::to_string(Global::gameRingCount), 1.5f, fontVip, 0+48*px, 0+48*py, 1, false, false, true); Global::countNew++;
+		textRings = new GUIText(std::to_string(Global::gameRingCount), 1.5f, fontVip, w+o+16*px, 0+48*py, 1, false, false, true); Global::countNew++;
 		GuiManager::previousRings = Global::gameRingCount;
 	}
 
@@ -207,7 +211,7 @@ void GuiManager::refresh()
 	{
 		textScore->deleteMe();
 		delete textScore; Global::countDelete++;
-		textScore = new GUIText(std::to_string(Global::gameScore), 1.5f, fontVip, 0+48*px, 0+80*py, 1, false, false, true); Global::countNew++;
+		textScore = new GUIText(std::to_string(Global::gameScore), 1.5f, fontVip, w+o+16*px, 0+80*py, 1, false, false, true); Global::countNew++;
 		GuiManager::previousScore = Global::gameScore;
 	}
 
@@ -215,7 +219,7 @@ void GuiManager::refresh()
 	{
 		textLives->deleteMe();
 		delete textLives; Global::countDelete++;
-		textLives = new GUIText(std::to_string(Global::gameLives), 1.5f, fontVip, 0+48*px, 1.0f-80*py, 1, false, false, true); Global::countNew++;
+		textLives = new GUIText(std::to_string(Global::gameLives), 1.5f, fontVip, o+16*px, 1.0f-80*py, 1, false, false, true); Global::countNew++;
 		GuiManager::previousLives = Global::gameLives;
 	}
 

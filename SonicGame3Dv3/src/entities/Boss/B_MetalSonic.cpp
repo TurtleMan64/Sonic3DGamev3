@@ -65,6 +65,9 @@ B_MetalSonic::B_MetalSonic()
 	chargeTimer = 0;
 	aheadOfSonicTimer = 0;
 	shootTimer = 0;
+	spinTimer = 0;
+	behindSonicTimer = 0;
+	mySource = nullptr;
 
 	createLimbs();
 	setLimbsVisibility(true);
@@ -79,6 +82,7 @@ void B_MetalSonic::step()
 	teleportingTimer = std::max(teleportingTimer-1, 0);
 	chargeTimer      = std::max(chargeTimer     -1, 0);
 	shootTimer       = std::max(shootTimer      -1, 0);
+	spinTimer        = std::max(spinTimer       -1, 0);
 
 	if (teleportingTimer == 0)
 	{
@@ -152,6 +156,11 @@ void B_MetalSonic::step()
 				{
 					shootTimer = 360;
 				}
+
+				if (behindSonicTimer > 60)
+				{
+					spinTimer = 100;
+				}
 			}
 			else
 			{
@@ -167,10 +176,12 @@ void B_MetalSonic::step()
 			if (xDiff > 0)
 			{
 				aheadOfSonicTimer++;
+				behindSonicTimer = 0;
 			}
 			else
 			{
 				aheadOfSonicTimer = 0;
+				behindSonicTimer++;
 			}
 		}
 
@@ -179,6 +190,7 @@ void B_MetalSonic::step()
 			shootTimer = 0;
 			chargeTimer = 0;
 			aheadOfSonicTimer = 0;
+			spinTimer = 0;
 
 			xVel = 0;
 
@@ -222,6 +234,7 @@ void B_MetalSonic::step()
 		if (chargeTimer > 1)
 		{
 			shootTimer = 0;
+			spinTimer = 0;
 			
 			int count = 24;
 
@@ -246,6 +259,7 @@ void B_MetalSonic::step()
 		}
 		else if (chargeTimer == 1)
 		{
+			AudioPlayer::play(47, getPosition());
 			aheadOfSonicTimer = 0;
 
 			int count = 48;
@@ -278,10 +292,16 @@ void B_MetalSonic::step()
 		if (hitTimer != 0)
 		{
 			shootTimer = 0;
+			spinTimer = 0;
 		}
 
 		if (shootTimer > 300)
 		{
+			if (shootTimer % 5 == 0)
+			{
+				AudioPlayer::play(52, getPosition());
+			}
+
 			float spoutSpd = 3.0f;
 			float anglH = (float)(M_PI * 2 * ((rand() % 1024) / 1024.0));
 			float randNumber = Maths::nextGaussian();
@@ -300,7 +320,11 @@ void B_MetalSonic::step()
 
 		if (diffSquared < 81) //9*9
 		{
-			if (iFrames == 0)
+			if (spinTimer != 0)
+			{
+				Global::gamePlayer->takeDamage(getPosition());
+			}
+			else if (iFrames == 0)
 			{
 				if (Global::gamePlayer->isVulnerable())
 				{
@@ -308,6 +332,10 @@ void B_MetalSonic::step()
 				}
 				else
 				{
+					int ra = (int)(3*Maths::random());
+					ra*=2;
+					AudioPlayer::play(46+ra, getPosition()); //46, 48, or 50
+
 					iFrames  = 180;
 					hitTimer = 100;
 					chargeTimer = 0;
@@ -321,6 +349,49 @@ void B_MetalSonic::step()
 					Global::gamePlayer->rebound(getPosition());
 					Global::gamePlayer->setGroundSpeed(Global::gamePlayer->getXVelGround()*0.5f, Global::gamePlayer->getZVelGround()*0.5f);
 				}
+			}
+		}
+
+		if (mySource == nullptr)
+		{
+			if (teleportingTimer != 0)
+			{
+				mySource = AudioPlayer::play(49, getPosition(), 1,true);
+			}
+			else if (spinTimer != 0)
+			{
+				mySource = AudioPlayer::play(51, getPosition(), 1,true);
+			}
+			else if (chargeTimer != 0)
+			{
+				mySource = AudioPlayer::play(53, getPosition(), 1,true);
+			}
+		}
+
+		if (mySource != nullptr)
+		{
+			if (mySource->isPlaying() == false)
+			{
+				mySource = nullptr;
+			}
+			else if (teleportingTimer == 0 && mySource->getLastPlayedBufferID() == AudioPlayer::getSEBuffer(49))
+			{
+				mySource->stop();
+				mySource = nullptr;
+			}
+			else if (spinTimer == 0 && mySource->getLastPlayedBufferID() == AudioPlayer::getSEBuffer(51))
+			{
+				mySource->stop();
+				mySource = nullptr;
+			}
+			else if (chargeTimer == 0 && mySource->getLastPlayedBufferID() == AudioPlayer::getSEBuffer(53))
+			{
+				mySource->stop();
+				mySource = nullptr;
+			}
+			else
+			{
+				mySource->setPosition(position.x, position.y, position.z);
 			}
 		}
 
@@ -355,8 +426,30 @@ void B_MetalSonic::animate()
 	}
 	else if (hitTimer > 0)
 	{
-		myBody->setBaseOrientation(&position, 0, getRotY(), 90, 0);
+		Vector3f upPos(getX(), getY()+1, getZ());
+		myBody->setBaseOrientation(&upPos, 0, getRotY(), 90, 0);
 		updateLimbs(11, 0);
+	}
+	else if (chargeTimer > 0)
+	{
+		rotY = toDegrees(atan2f(-zVel, xVel));
+
+		Vector3f upPos(getX(), getY()+2, getZ());
+		myBody->setBaseOrientation(&upPos, 0, getRotY(), 90, 0);
+		updateLimbs(12, 0);
+	}
+	else if (spinTimer > 0)
+	{
+		Vector3f upPos(getX(), getY()+5, getZ());
+		myBody->setBaseOrientation(&upPos, timer*40.0f, getRotY(), 0, 0);
+		updateLimbs(20, 0);
+	}
+	else if (shootTimer > 300)
+	{
+		rotY = toDegrees(atan2f(-zVel, xVel));
+
+		myBody->setBaseOrientation(&position, 0, getRotY(), 90, 0);
+		updateLimbs(17, 0);
 	}
 	else
 	{

@@ -668,6 +668,8 @@ int main()
 							}
 						}
 
+						AudioPlayer::play(7, Global::gameCamera->getFadePosition1());
+
 						LevelLoader_loadTitle();
 						MainMenu::selectMenuArcadeClear();
 						Global::gameIsArcadeMode = false;

@@ -85,6 +85,11 @@ void SkyManager::calculateValues()
 	Vector3f moonOffset  = spherePositionFromAngles(moonHangle, moonVangle, sunRadius);
 	//Vector3f modelOffset = spherePositionFromAngles(sunHangle, sunVangle, sunModelRadius);
 
+	if (Global::levelID == LVL_BOSS)
+	{
+		sunOffset.x = -sunOffset.x;
+	}
+
 	Global::gameLightSun->setPosition(center->x + sunOffset.x,
 									  sunOffset.y,
 									  center->z - sunOffset.z);

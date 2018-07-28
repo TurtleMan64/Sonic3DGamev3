@@ -1,8 +1,8 @@
 Boss
-Nothing
+End
 Boss
 1
-Nothing 1
+End 1
 0.7 0.9 1.0
 0.0 0.0 0.0
 0.0 0.0 0.0
@@ -16,8 +16,8 @@ Nothing 1
 2
 res/Audio/BGM/boss_intro.ogg
 res/Audio/BGM/boss_loop.ogg
-0 31 749
-0 6
+-900 2005.5 0
+255 6
 1700
 
 # Sonic
@@ -28,8 +28,6 @@ res/Audio/BGM/boss_loop.ogg
 
 # Sky Sphere
 7 Sky SkySphereModelHD MTL_Space 8 0
-
-9 0 0 0 0
 
 # Boss Manager
 89

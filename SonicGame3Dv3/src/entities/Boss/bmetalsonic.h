@@ -51,6 +51,9 @@ private:
 
 	Source* mySource;
 
+	int health;
+	int deathTimer;
+
 	int timer;
 	int iFrames;
 	int hitTimer;

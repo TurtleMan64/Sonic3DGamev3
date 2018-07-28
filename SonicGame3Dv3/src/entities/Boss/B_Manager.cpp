@@ -75,7 +75,7 @@ void B_Manager::step()
 		}
 	}
 
-	if (timer % 60 == 0)
+	if (timer % 60 == 0 && Global::finishStageTimer == -1)
 	{
 		Vector3f pos(2*(Maths::random()-0.5f), Maths::random(), 2*(Maths::random()-0.5f));
 
@@ -102,6 +102,11 @@ void B_Manager::step()
 		{
 			lookAtBoss = true;
 		}
+	}
+
+	if (Global::finishStageTimer > -1)
+	{
+		lookAtBoss = false;
 	}
 
 	if (lookAtBoss)

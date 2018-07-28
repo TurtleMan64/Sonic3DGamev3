@@ -19,6 +19,7 @@
 #include "../../audio/audioplayer.h"
 #include "../../audio/source.h"
 #include "bprojectile.h"
+#include "../../guis/guimanager.h"
 
 #include <list>
 #include <vector>
@@ -68,6 +69,8 @@ B_MetalSonic::B_MetalSonic()
 	spinTimer = 0;
 	behindSonicTimer = 0;
 	mySource = nullptr;
+	health = 5;
+	deathTimer = 0;
 
 	createLimbs();
 	setLimbsVisibility(true);
@@ -119,7 +122,7 @@ void B_MetalSonic::step()
 			setPosition(&diff);
 		}
 	}
-	else
+	else if (health > 0)
 	{
 		position.y = 2006;
 
@@ -336,6 +339,8 @@ void B_MetalSonic::step()
 					ra*=2;
 					AudioPlayer::play(46+ra, getPosition()); //46, 48, or 50
 
+					health--;
+
 					iFrames  = 180;
 					hitTimer = 100;
 					chargeTimer = 0;
@@ -398,6 +403,74 @@ void B_MetalSonic::step()
 		xVel = xVel*0.99f;
 		zVel = zVel*0.99f;
 	}
+	else
+	{
+		deathTimer++;
+
+		xVel = xVel*0.99f;
+		zVel = zVel*0.99f;
+
+		float mySpeed = xVel*xVel + zVel*zVel;
+
+		if (deathTimer == 1)
+		{
+			if (mySource != nullptr && mySource->isPlaying())
+			{
+				mySource->stop();
+				mySource = nullptr;
+			}
+		}
+
+		if (deathTimer % 10 == 1 && mySpeed > 1.0f)
+		{
+			int ran = (int)(3*Maths::random());
+			ran*=2;
+			AudioPlayer::play(46+ran, getPosition()); //46, 48, or 50
+
+			float height = 5.0f;
+			float spread = 25.0f;
+
+			for (int i = 7; i != 0; i--)
+			{
+				Vector3f pos(
+					getX() + spread*(Maths::random() - 0.5f),
+					getY() + spread*(Maths::random() - 0.5f) + height,
+					getZ() + spread*(Maths::random() - 0.5f));
+
+				Vector3f vel(0, 0, 0);
+
+				new Particle(ParticleResources::textureExplosion1, &pos, &vel,
+					0, 45, 0, 3 * Maths::random() + 6, 0, false);
+			}
+
+			Vector3f pos(
+				getX(),
+				getY() + height,
+				getZ());
+
+			Vector3f vel(0, 0, 0);
+	
+			new Particle(ParticleResources::textureExplosion2, &pos, &vel,
+				0, 55, 0, 20, 0, false);
+		}
+
+		if (mySpeed < 0.75f)
+		{
+			xVel = xVel*0.9f;
+			zVel = zVel*0.9f;
+		}
+
+		if (mySpeed < 0.05f && Global::finishStageTimer == -1)
+		{
+			GuiManager::stopTimer();
+			Global::finishStageTimer = 0;
+		}
+
+		if (Global::finishStageTimer > 60)
+		{
+			setPosition(-885, 2006, 10);
+		}
+	}
 
 	increasePosition(xVel, yVel, zVel);
 
@@ -419,6 +492,22 @@ void B_MetalSonic::animate()
 	{
 		myBody->setBaseOrientation(&position, 0, getRotY(), 90, 0);
 		updateLimbs(24, (float)((timer*5)%100));
+	}
+	else if (deathTimer != 0)
+	{
+		float mySpeed = xVel*xVel + zVel*zVel;
+		rotY = toDegrees(atan2f(-zVel, xVel));
+
+		if (mySpeed < 2.0f)
+		{
+			myBody->setBaseOrientation(&position, 0, getRotY(), 0, 0);
+			updateLimbs(19, 0);
+		}
+		else
+		{
+			myBody->setBaseOrientation(&position, 0, getRotY(), 90, 0);
+			updateLimbs(24, (float)((timer*2)%100));
+		}
 	}
 	else if (isTeleporting)
 	{

@@ -1638,7 +1638,8 @@ void processLine(char** dat, int datLength)
 				toFloat(dat[ 3]), toFloat(dat[ 4]), toFloat(dat[5]),   //position
 				toFloat(dat[ 6]), toFloat(dat[ 7]), toFloat(dat[ 8]),  //point a
 				toFloat(dat[ 9]), toFloat(dat[10]), toFloat(dat[11]),  //point b
-				toFloat(dat[12]), toFloat(dat[13]), toFloat(dat[14])); //scale
+				toFloat(dat[12]), toFloat(dat[13]), toFloat(dat[14]),  //scale
+				toInt  (dat[15]));                                     //flags
 			Global::countNew++;
 			Main_addEntity(camBox);
 			return;

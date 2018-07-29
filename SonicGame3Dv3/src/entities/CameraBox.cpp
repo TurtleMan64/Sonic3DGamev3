@@ -21,7 +21,8 @@ CameraBox::CameraBox(
 		float x, float y, float z,
 		float scaleX, float scaleY, float scaleZ,
 		float p1X, float p1Y, float p1Z,
-		float p2X, float p2Y, float p2Z)
+		float p2X, float p2Y, float p2Z,
+		int flags)
 {
 	position.x = x;
 	position.y = y;
@@ -36,6 +37,7 @@ CameraBox::CameraBox(
 	this->p2X    = p2X;
 	this->p2Y    = p2Y;
 	this->p2Z    = p2Z;
+	this->flags  = flags;
 	rotX = 0;
 	rotY = rotationY;
 	rotZ = 0;
@@ -57,7 +59,7 @@ CameraBox::CameraBox(
 
 void CameraBox::step()
 {
-	if (abs(Global::gamePlayer->getY()+6 - getY()) <= scaleY && Global::isAutoCam)
+	if (Global::isAutoCam && abs(Global::gamePlayer->getY()+6 - getY()) <= scaleY)
 	{
 		//Rotate player coords by negative yrot to get in box coordinate system
 		float xDiff = Global::gamePlayer->getX() - getX();
@@ -97,15 +99,20 @@ void CameraBox::step()
 
 			float xDiffCam = Global::gamePlayer->getPosition()->x - p1X;
 			float zDiffCam = Global::gamePlayer->getPosition()->z - p1Z;
-			//float yDiffCam = Global::gamePlayer->getPosition()->y - p1Y;
-			//float hDistCam = sqrtf(xDiffCam*xDiffCam + zDiffCam*zDiffCam);
 			float toTargetYaw   = -toDegrees(atan2f(-zDiffCam, xDiffCam))-90;
-			//float toTargetPitch =  toDegrees(atan2f(yDiffCam, hDistCam));
 			float diffYaw   = 0.125f*compareTwoAngles(toTargetYaw,   Global::gameCamera->getYaw());
-			//float diffPitch = 0.125f*compareTwoAngles(toTargetPitch, Global::gameCamera->getPitch());
 
 			Global::gamePlayer->setCameraTargetYaw(Global::gameCamera->getYaw() + diffYaw);
-			//Global::gamePlayer->setCameraTargetPitch(Global::gameCamera->getPitch() + diffPitch);
+
+			if (flags == 1)
+			{
+				float yDiffCam = Global::gamePlayer->getPosition()->y - p1Y + 60; //60 offset to look a bit more downward
+				float hDistCam = sqrtf(xDiffCam*xDiffCam + zDiffCam*zDiffCam);
+				float toTargetPitch =  toDegrees(atan2f(yDiffCam, hDistCam));
+				float diffPitch = 0.125f*compareTwoAngles(toTargetPitch, Global::gameCamera->getPitch());
+
+				Global::gamePlayer->setCameraTargetPitch(Global::gameCamera->getPitch() + diffPitch);
+			}
 		}
 	}
 }

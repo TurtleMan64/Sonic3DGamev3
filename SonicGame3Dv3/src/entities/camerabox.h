@@ -20,6 +20,8 @@ private:
 
 	float panSpeed;
 
+	int flags;
+
 	float camTargetYaw;
 	float camTargetPitch;
 
@@ -37,7 +39,8 @@ public:
 		float x, float y, float z,
 		float scaleX, float scaleY, float scaleZ,
 		float p1X, float p1Y, float p1Z,
-		float p2X, float p2Y, float p2Z);
+		float p2X, float p2Y, float p2Z,
+		int flags);
 
 	void step();
 

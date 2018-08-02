@@ -59,7 +59,7 @@ CameraBox::CameraBox(
 
 void CameraBox::step()
 {
-	if (Global::isAutoCam && abs(Global::gamePlayer->getY()+6 - getY()) <= scaleY)
+	if (Global::isAutoCam && Global::finishStageTimer == -1 && abs(Global::gamePlayer->getY()+6 - getY()) <= scaleY)
 	{
 		//Rotate player coords by negative yrot to get in box coordinate system
 		float xDiff = Global::gamePlayer->getX() - getX();
@@ -97,21 +97,72 @@ void CameraBox::step()
 
 
 
-			float xDiffCam = Global::gamePlayer->getPosition()->x - p1X;
-			float zDiffCam = Global::gamePlayer->getPosition()->z - p1Z;
-			float toTargetYaw   = -toDegrees(atan2f(-zDiffCam, xDiffCam))-90;
-			float diffYaw   = 0.125f*compareTwoAngles(toTargetYaw,   Global::gameCamera->getYaw());
+			//float xDiffCam = Global::gamePlayer->getPosition()->x - p1X;
+			//float zDiffCam = Global::gamePlayer->getPosition()->z - p1Z;
+			//float toTargetYaw   = -toDegrees(atan2f(-zDiffCam, xDiffCam))-90;
+			//float diffYaw   = 0.125f*compareTwoAngles(toTargetYaw,   Global::gameCamera->getYaw());
 
-			Global::gamePlayer->setCameraTargetYaw(Global::gameCamera->getYaw() + diffYaw);
+			//Global::gamePlayer->setCameraTargetYaw(Global::gameCamera->getYaw() + diffYaw);
 
-			if (flags == 1)
+
+			switch (flags)
 			{
-				float yDiffCam = Global::gamePlayer->getPosition()->y - p1Y + 60; //60 offset to look a bit more downward
-				float hDistCam = sqrtf(xDiffCam*xDiffCam + zDiffCam*zDiffCam);
-				float toTargetPitch =  toDegrees(atan2f(yDiffCam, hDistCam));
-				float diffPitch = 0.125f*compareTwoAngles(toTargetPitch, Global::gameCamera->getPitch());
+				case 0:
+				{
+					float xDiffCam = Global::gamePlayer->getPosition()->x - p1X;
+					float zDiffCam = Global::gamePlayer->getPosition()->z - p1Z;
+					float toTargetYaw   = -toDegrees(atan2f(-zDiffCam, xDiffCam))-90;
+					float diffYaw   = 0.125f*compareTwoAngles(toTargetYaw,   Global::gameCamera->getYaw());
 
-				Global::gamePlayer->setCameraTargetPitch(Global::gameCamera->getPitch() + diffPitch);
+					Global::gamePlayer->setCameraTargetYaw(Global::gameCamera->getYaw() + diffYaw);
+					break;
+				}
+
+				case 1:
+				{
+					float xDiffCam = Global::gamePlayer->getPosition()->x - p1X;
+					float zDiffCam = Global::gamePlayer->getPosition()->z - p1Z;
+					float toTargetYaw   = -toDegrees(atan2f(-zDiffCam, xDiffCam))-90;
+					float diffYaw   = 0.125f*compareTwoAngles(toTargetYaw,   Global::gameCamera->getYaw());
+
+					Global::gamePlayer->setCameraTargetYaw(Global::gameCamera->getYaw() + diffYaw);
+
+					float yDiffCam = Global::gamePlayer->getPosition()->y - p1Y + 60; //60 offset to look a bit more downward
+					float hDistCam = sqrtf(xDiffCam*xDiffCam + zDiffCam*zDiffCam);
+					float toTargetPitch =  toDegrees(atan2f(yDiffCam, hDistCam));
+					float diffPitch = 0.125f*compareTwoAngles(toTargetPitch, Global::gameCamera->getPitch());
+
+					Global::gamePlayer->setCameraTargetPitch(Global::gameCamera->getPitch() + diffPitch);
+					break;
+				}
+
+				case 2:
+				{
+					float xDiffCam = Global::gamePlayer->getPosition()->x - p1X;
+					float zDiffCam = Global::gamePlayer->getPosition()->z - p1Z;
+					float toTargetYaw   = -toDegrees(atan2f(-zDiffCam, xDiffCam));
+					float diffYaw   = 0.125f*compareTwoAngles(toTargetYaw,   Global::gameCamera->getYaw());
+
+					Global::gamePlayer->setCameraTargetYaw(Global::gameCamera->getYaw() + diffYaw);
+					break;
+				}
+
+				case 3:
+				{
+					float xDiffCam = Global::gamePlayer->getPosition()->x - p1X;
+					float zDiffCam = Global::gamePlayer->getPosition()->z - p1Z;
+					float toTargetYaw   = -toDegrees(atan2f(-zDiffCam, xDiffCam))-180;
+					float diffYaw   = 0.125f*compareTwoAngles(toTargetYaw,   Global::gameCamera->getYaw());
+
+					Global::gamePlayer->setCameraTargetYaw(Global::gameCamera->getYaw() + diffYaw);
+					break;
+				}
+
+				default:
+				{
+					
+				}
+						
 			}
 		}
 	}

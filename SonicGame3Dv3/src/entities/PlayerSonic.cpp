@@ -2962,6 +2962,8 @@ void PlayerSonic::takeDamage(Vector3f* damageSource)
 				AudioPlayer::play(10, getPosition());
 			}
 
+			ringsToScatter = std::min(ringsToScatter, 80);
+
 			while (ringsToScatter > 0)
 			{
 				float spoutSpd = 3.5f;

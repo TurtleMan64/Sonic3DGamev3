@@ -175,19 +175,19 @@ void ItemCapsule::die()
 
 		case 2:
 			//increase rings by 5
-			Global::gameRingCount += 5;
+			Global::increaseRingCount(5);
 			Global::gameScore += 50;
 			break;
 
 		case 3:
 			//increase rings by 10
-			Global::gameRingCount += 10;
+			Global::increaseRingCount(10);
 			Global::gameScore += 100;
 			break;
 
 		case 4:
 			//increase rings by 20
-			Global::gameRingCount += 20;
+			Global::increaseRingCount(20);
 			Global::gameScore += 200;
 			break;
 

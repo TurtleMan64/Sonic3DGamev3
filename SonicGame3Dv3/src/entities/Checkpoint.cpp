@@ -15,6 +15,7 @@
 #include "../particles/particleresources.h"
 #include "../particles/particle.h"
 #include "../guis/guimanager.h"
+#include "../collision/collisionchecker.h"
 
 #include <list>
 #include <iostream>
@@ -141,6 +142,15 @@ void Checkpoint::step()
 					Global::checkpointTimeCen  = GuiManager::getCentiseconds();
 					Global::checkpointTimeSec  = GuiManager::getSeconds();
 					Global::checkpointTimeMin  = GuiManager::getMinutes();
+
+					if (!CollisionChecker::checkCollision(
+						Global::checkpointX, Global::checkpointY,    Global::checkpointZ,
+						Global::checkpointX, Global::checkpointY-30, Global::checkpointZ))
+					{
+						Global::checkpointX = getX();
+						Global::checkpointY = getY()+5;
+						Global::checkpointZ = getZ();
+					}
 
 					ball1->setRotZ(90);
 					ball2->setRotZ(90);

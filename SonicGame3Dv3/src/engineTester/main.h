@@ -165,5 +165,7 @@ public:
 	static void saveSaveData();
 
 	static int calculateRankAndUpdate();
+
+	static void increaseRingCount(int rings);
 };
 #endif

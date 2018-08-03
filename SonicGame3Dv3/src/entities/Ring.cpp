@@ -104,7 +104,7 @@ void Ring::step()
 							0.025f, 30, 0, 7, -(7.0f / 30.0f), false);
 					}
 
-					Global::gameRingCount++;
+					Global::increaseRingCount(1);
 
 					if (givesPoints)
 					{

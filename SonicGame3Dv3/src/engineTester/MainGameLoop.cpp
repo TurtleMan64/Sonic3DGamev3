@@ -949,6 +949,19 @@ void Global::saveSaveData()
 	}
 }
 
+void Global::increaseRingCount(int rings)
+{
+	int before = Global::gameRingCount/100;
+	Global::gameRingCount += rings;
+	int after = Global::gameRingCount/100;
+
+	if (before != after)
+	{
+		Global::gameLives++;
+		AudioPlayer::play(35, Global::gameCamera->getFadePosition1());
+	}
+}
+
 int Global::calculateRankAndUpdate()
 {
 	int newRank = 0; //0 = E, 4 = A

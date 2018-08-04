@@ -924,6 +924,10 @@ void Global::loadSaveData()
 
 void Global::saveSaveData()
 {
+	#ifdef _WIN32
+	CreateDirectory("res/SaveData", nullptr);
+	#endif
+
 	std::ofstream file;
 	file.open("res/SaveData/SaveData.sav", std::ios::out | std::ios::trunc);
 

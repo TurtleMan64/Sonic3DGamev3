@@ -140,7 +140,7 @@ void CameraBox::step()
 				{
 					float xDiffCam = Global::gamePlayer->getPosition()->x - p1X;
 					float zDiffCam = Global::gamePlayer->getPosition()->z - p1Z;
-					float toTargetYaw   = -toDegrees(atan2f(-zDiffCam, xDiffCam));
+					float toTargetYaw   = -toDegrees(atan2f(-zDiffCam, xDiffCam)) + p2X;
 					float diffYaw   = 0.125f*compareTwoAngles(toTargetYaw,   Global::gameCamera->getYaw());
 
 					Global::gamePlayer->setCameraTargetYaw(Global::gameCamera->getYaw() + diffYaw);
@@ -151,7 +151,7 @@ void CameraBox::step()
 				{
 					float xDiffCam = Global::gamePlayer->getPosition()->x - p1X;
 					float zDiffCam = Global::gamePlayer->getPosition()->z - p1Z;
-					float toTargetYaw   = -toDegrees(atan2f(-zDiffCam, xDiffCam))-180;
+					float toTargetYaw   = -toDegrees(atan2f(-zDiffCam, xDiffCam))-180 + p2X;
 					float diffYaw   = 0.125f*compareTwoAngles(toTargetYaw,   Global::gameCamera->getYaw());
 
 					Global::gamePlayer->setCameraTargetYaw(Global::gameCamera->getYaw() + diffYaw);

@@ -242,6 +242,7 @@ void PlayerTails::step()
 		isDropDashing = false;
 		justBounced = false;
 		dropDashCharge = 0.0f;
+		storedDropdashSpeed = 0.0f;
 		isFlying = false;
 		float speed = sqrtf(xVelGround*xVelGround + zVelGround*zVelGround);
 		if (currNorm.y <= wallThreshold && speed < wallSpeedStickThreshold) //Arbitrary constants
@@ -413,6 +414,11 @@ void PlayerTails::step()
 
 		if (action2Input && !previousAction2Input && (isJumping || isBall) && !isFlying)
 		{
+			if (!isDropDashing)
+			{
+				storedDropdashSpeed = sqrtf(xVelAir*xVelAir + zVelAir*zVelAir);
+			}
+
 			isDropDashing = true;
 			dropDashCharge += dropDashChargeIncrease;
 			
@@ -1297,6 +1303,16 @@ void PlayerTails::dropDash(float charge)
 	xVelGround += dx*charge;
 	zVelGround += dz*charge;
 
+	float newSpeed = sqrtf(xVelGround*xVelGround + zVelGround*zVelGround);
+
+	if (totalSpd > 1 && newSpeed < storedDropdashSpeed)
+	{
+		xVelGround =  cosf(toRadians(getRotY()))*storedDropdashSpeed;
+		zVelGround = -sinf(toRadians(getRotY()))*storedDropdashSpeed;
+	}
+
+	storedDropdashSpeed = 0;
+
 	isBall = true;
 	isDropDashing = false;
 	AudioPlayer::play(15, getPosition());
@@ -1304,7 +1320,7 @@ void PlayerTails::dropDash(float charge)
 
 void PlayerTails::spindash(int timer)
 {
-	float dx = cosf(spindashAngle);
+	float dx =  cosf(spindashAngle);
 	float dz = -sinf(spindashAngle);
 
 	float totalSpd = sqrtf(xVelGround*xVelGround + zVelGround*zVelGround);
@@ -1318,7 +1334,7 @@ void PlayerTails::spindash(int timer)
 
 	if (totalSpd > 1 && newSpeed < storedSpindashSpeed)
 	{
-		xVelGround = cosf(spindashAngle)*storedSpindashSpeed;
+		xVelGround =  cosf(spindashAngle)*storedSpindashSpeed;
 		zVelGround = -sinf(spindashAngle)*storedSpindashSpeed;
 	}
 

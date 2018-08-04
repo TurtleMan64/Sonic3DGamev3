@@ -481,7 +481,22 @@ void MainMenu::loadResources()
 	textArcadeResultTitle = new GUIText("ARCADE CLEAR TIME:", 3, font, 0, 0.5f-0.09f, 1, true, false, false); Global::countNew++;
 	textArcadeResultData  = new GUIText(MainMenu::convertFramesToTime(Global::gameArcadePlaytime), 3, font, 0, 0.5f, 1, true, false, false); Global::countNew++;
 
-	MainMenu::selectMenuRoot(ROOT_STORY);
+	if (menuSelectionID <= MISSION_MAX)
+	{
+		MainMenu::selectMenuMission(menuSelectionID);
+	}
+	else if (menuSelectionID <= ROOT_EXIT)
+	{
+		MainMenu::selectMenuRoot(menuSelectionID);
+	}
+	else if (menuSelectionID == EXTRAS)
+	{
+		MainMenu::selectMenuExtra();
+	}
+	else if (menuSelectionID == ARCADE_CLEAR)
+	{
+		MainMenu::selectMenuArcadeClear();
+	}
 }
 
 void MainMenu::unloadResources()

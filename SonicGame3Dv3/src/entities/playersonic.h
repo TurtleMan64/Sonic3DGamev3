@@ -112,6 +112,7 @@ private:
 	const float dropDashChargeDecrease = 0.02f;
 	const float dropDashChargeMax = 3.5f;
 	const float dropDashChargeMin = 0.5f;
+	float storedDropdashSpeed = 0;
 
 	int homingAttackTimer = -1; // -1 = can start a homing attack
 	const int homingAttackTimerMax = 10;

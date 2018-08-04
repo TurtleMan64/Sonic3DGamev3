@@ -84,7 +84,7 @@ int createDisplay()
 
 	// glfw window creation
 	// --------------------
-	window = glfwCreateWindow(screenWidth, screenHeight, "Version 0.0181", monitor, nullptr);
+	window = glfwCreateWindow(screenWidth, screenHeight, "Version 0.0182", monitor, nullptr);
 	if (window == nullptr)
 	{
 		std::cout << "Failed to create GLFW window" << std::endl;

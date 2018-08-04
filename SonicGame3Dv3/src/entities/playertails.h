@@ -115,6 +115,7 @@ private:
 	const float dropDashChargeDecrease = 0.02f;
 	const float dropDashChargeMax = 3.5f;
 	const float dropDashChargeMin = 0.5f;
+	float storedDropdashSpeed = 0;
 
 	//Flying variables
 	bool isFlying = false;

@@ -229,6 +229,7 @@ void PlayerSonic::step()
 		justHomingAttacked = false;
 		homingAttackTimer = -1;
 		dropDashCharge = 0.0f;
+		storedDropdashSpeed = 0.0f;
 		float speed = sqrtf(xVelGround*xVelGround + zVelGround*zVelGround);
 		if (currNorm.y <= wallThreshold && speed < wallSpeedStickThreshold) //Arbitrary constants
 		{
@@ -396,6 +397,11 @@ void PlayerSonic::step()
 
 		if (action2Input && !previousAction2Input && (isJumping || isBall) && !isBouncing && homingAttackTimer == -1 && !isStomping)
 		{
+			if (!isDropDashing)
+			{
+				storedDropdashSpeed = sqrtf(xVelAir*xVelAir + zVelAir*zVelAir);
+			}
+
 			isDropDashing = true;
 			dropDashCharge += dropDashChargeIncrease;
 			
@@ -1731,6 +1737,16 @@ void PlayerSonic::dropDash(float charge)
 
 	xVelGround += dx*charge;
 	zVelGround += dz*charge;
+
+	float newSpeed = sqrtf(xVelGround*xVelGround + zVelGround*zVelGround);
+
+	if (totalSpd > 1 && newSpeed < storedDropdashSpeed)
+	{
+		xVelGround =  cosf(toRadians(getRotY()))*storedDropdashSpeed;
+		zVelGround = -sinf(toRadians(getRotY()))*storedDropdashSpeed;
+	}
+
+	storedDropdashSpeed = 0;
 
 	isBall = true;
 	isDropDashing = false;

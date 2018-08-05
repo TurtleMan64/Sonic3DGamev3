@@ -28,6 +28,7 @@ ParticleTexture* ParticleResources::textureSplash = nullptr;
 ParticleTexture* ParticleResources::textureBubble = nullptr;
 ParticleTexture* ParticleResources::textureExplosion1 = nullptr;
 ParticleTexture* ParticleResources::textureExplosion2 = nullptr;
+ParticleTexture* ParticleResources::textureExplosion3 = nullptr;
 ParticleTexture* ParticleResources::textureBlackFade = nullptr;
 ParticleTexture* ParticleResources::textureBlackFadeOut = nullptr;
 ParticleTexture* ParticleResources::textureTear1 = nullptr;
@@ -64,6 +65,7 @@ void ParticleResources::loadParticles()
 	textureBubble            = new ParticleTexture(Loader_loadTextureNoInterpolation("res/Models/Particle/BubbleInverseAtlas.png"), 4, 0.6f, 0);
 	textureExplosion1        = new ParticleTexture(Loader_loadTextureNoInterpolation("res/Models/Particle/Explosion1Atlas.png"), 4, 0.8f, 0);
 	textureExplosion2        = new ParticleTexture(Loader_loadTextureNoInterpolation("res/Models/Particle/Explosion2Atlas.png"), 4, 0.8f, 0);
+	textureExplosion3        = new ParticleTexture(Loader_loadTexture("res/Models/Particle/Explosion3Atlas.png"), 4, 0.8f, 0);
 	textureBlackFade         = new ParticleTexture(Loader_loadTexture("res/Models/Particle/BlackFadeAtlas.png"), 2, 1.0f, 0);
 	textureBlackFadeOut      = new ParticleTexture(Loader_loadTexture("res/Models/Particle/BlackFadeOutAtlas.png"), 2, 1.0f, 0);
 	textureTear1             = new ParticleTexture(Loader_loadTexture("res/Models/Particle/Tear1.png"), 1, 1.0f, 0);

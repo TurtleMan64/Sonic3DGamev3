@@ -2624,14 +2624,14 @@ void PlayerSonic::animate()
 		}
 		airSpinRotation = 0;
 	}
-	
-	float snowRadius = 110;
-	int snowDensity = 15;
 
 	switch (Global::levelID)
 	{
 		case LVL_SNOWHEAD:
 		{
+			float snowRadius = 110;
+			int snowDensity = 15;
+
 			float radius2 = snowRadius * 2;
 			float radius = snowRadius;
 			float basex = getX() - radius;
@@ -2652,36 +2652,34 @@ void PlayerSonic::animate()
 			break;
 		}
 
+		case LVL_FIRE_FIELD:
+		{
+			float radius = 600;
+			float radius2 = radius*2;
+			float basex = getX() - radius;
+			float basey = getY() - radius;
+			float basez = getZ() - radius;
+			int density = 16;
+			for (int i = 0; i < density; i++)
+			{
+				Vector3f pos(basex + radius2*Maths::random(),
+							 basey + radius *Maths::random(),
+							 basez + radius2*Maths::random());
+
+				Vector3f vel(0, 1+Maths::random(), 0);
+				vel.scale(2);
+
+				new Particle(ParticleResources::textureExplosion3, &pos, &vel, 
+					0.1f*Maths::random(), 60, 0, 12, 0, false);
+			}
+			break;
+		}
+
 		default:
 		{
 			break;
 		}
 	}
-
-	//Stage finished stuff
-	//if (Global::finishStageTimer == 1)
-	//{
-	//	Vector3f partVel(0, 0, 0);
-	//	new Particle(ParticleResources::textureWhiteFadeOutAndIn, Global::gameCamera->getFadePosition1(), &partVel, 0, 120, 0, 400, 0, true);
-	//}
-	//else if (Global::finishStageTimer == 60)
-	//{
-	//	AudioPlayer::stopBGM();
-	//	AudioPlayer::play(24, getPosition());
-	//}
-	//else if (Global::finishStageTimer == 490)
-	//{
-	//	Vector3f partVel(0, 0, 0);
-	//	new Particle(ParticleResources::textureBlackFadeOutAndIn, Global::gameCamera->getFadePosition1(), &partVel, 0, 120, 0, 400, 0, true);
-	//
-	//	AudioPlayer::play(25, getPosition());
-	//}
-	//
-	//if (Global::finishStageTimer >= 1 &&
-	//	Global::finishStageTimer < 60)
-	//{
-	//	AudioPlayer::setBGMVolume((60-Global::finishStageTimer)/60.0f);
-	//}
 
 	if (Global::finishStageTimer >= 60)
 	{

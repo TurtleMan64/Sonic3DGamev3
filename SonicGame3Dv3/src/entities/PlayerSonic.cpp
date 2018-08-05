@@ -1538,6 +1538,32 @@ void PlayerSonic::setMovementInputs()
 		moveSpeedCurrent = 0;
 		moveSpeedAirCurrent = 0;
 		movementAngle = 0;
+		inputMag = 0;
+	}
+
+	if (Global::isAutoCam && (!onPlane || (onPlane && triCol->normal.y > 0.1f)))
+	{
+		if (inputMag > 0.2f)
+		{
+			float diff = compareTwoAngles(movementAngle + Global::gameCamera->getYaw() + 90, Global::gameCamera->getYaw());
+
+			if (!onPlane)
+			{
+				if (fabsf(diff) < 60.0f)
+				{
+					diff = diff*0.03f;
+					cameraInputX += diff;
+				}
+			}
+			else 
+			{
+				if (fabsf(diff) < 150.0f)
+				{
+					diff = diff*0.03f;
+					cameraInputX += diff;
+				}
+			}
+		}
 	}
 }
 

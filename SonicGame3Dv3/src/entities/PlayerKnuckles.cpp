@@ -29,6 +29,7 @@
 #include "stage.h"
 #include "shieldmagnet.h"
 #include "shieldgreen.h"
+#include "../toolbox/mainmenu.h"
 
 std::list<TexturedModel*> PlayerKnuckles::modelBody;
 std::list<TexturedModel*> PlayerKnuckles::modelHead;
@@ -1187,6 +1188,79 @@ void PlayerKnuckles::createLimbs()
 		myRightShin->setScale(s);
 		myRightFoot->setScale(s);
 	}
+	else if (PlayerKnuckles::characterID == 5) //Amy
+	{
+		//modern
+		displayHeightOffset = 1.45f;
+		myBody =         new Body(&modelBody); Global::countNew++;
+		myHead =         new Limb(&modelHead,         0.81f,  0,      0,     myBody,  nullptr);        Global::countNew++;
+		myLeftHumerus =  new Limb(&modelLeftHumerus,  0.8f,   0,     -1.05f, myBody,  nullptr);        Global::countNew++;
+		myLeftForearm =  new Limb(&modelLeftForearm,  0,     -1.51f,  0,     nullptr, myLeftHumerus);  Global::countNew++;
+		myLeftHand =     new Limb(&modelLeftHand,     0,     -1.7f,   0,     nullptr, myLeftForearm);  Global::countNew++;
+		myLeftThigh =    new Limb(&modelLeftThigh,   -1.06f,  0,     -0.55f, myBody,  nullptr);        Global::countNew++;
+		myLeftShin =     new Limb(&modelLeftShin,     0,     -1.85f,  0,     nullptr, myLeftThigh);    Global::countNew++;
+		myLeftFoot =     new Limb(&modelLeftFoot,     0,     -1.8f,   0,     nullptr, myLeftShin);     Global::countNew++;
+		myRightHumerus = new Limb(&modelRightHumerus, 0.8f,   0,      1.05f, myBody,  nullptr);        Global::countNew++;
+		myRightForearm = new Limb(&modelRightForearm, 0,     -1.51f,  0,     nullptr, myRightHumerus); Global::countNew++;
+		myRightHand =    new Limb(&modelRightHand,    0,     -1.7f,   0,     nullptr, myRightForearm); Global::countNew++;
+		myRightThigh =   new Limb(&modelRightThigh,  -1.06f,  0,      0.55f, myBody,  nullptr);        Global::countNew++;
+		myRightShin =    new Limb(&modelRightShin,    0,     -1.85f,  0,     nullptr, myRightThigh);   Global::countNew++;
+		myRightFoot =    new Limb(&modelRightFoot,    0,     -1.8f,   0,     nullptr, myRightShin);    Global::countNew++;
+	}
+	else if (PlayerKnuckles::characterID == 6) //WanamaDage
+	{
+		displayHeightOffset = 7.7f;
+		myBody =         new Body(&modelBody); Global::countNew++;
+		myHead =         new Limb(&modelHead,         4.835f,  0.715f,  0.0f,  myBody,  nullptr);        Global::countNew++;
+		myLeftHumerus =  new Limb(&modelLeftHumerus,  3.963f,  0.28f,  -2.73f, myBody,  nullptr);        Global::countNew++;
+		myLeftForearm =  new Limb(&modelLeftForearm,  0,      -3.7f,    0,     nullptr, myLeftHumerus);  Global::countNew++;
+		myLeftHand =     new Limb(&modelLeftHand,     0,      -4.18f,   0,     nullptr, myLeftForearm);  Global::countNew++;
+		myLeftThigh =    new Limb(&modelLeftThigh,   -3.893f,  0.42f,  -1.92f, myBody,  nullptr);        Global::countNew++;
+		myLeftShin =     new Limb(&modelLeftShin,     0,      -4.42f,   0,     nullptr, myLeftThigh);    Global::countNew++;
+		myLeftFoot =     new Limb(&modelLeftFoot,     0,      -3.75f,   0,     nullptr, myLeftShin);     Global::countNew++;
+		myRightHumerus = new Limb(&modelRightHumerus, 3.963f,  0.28f,   2.73f, myBody,  nullptr);        Global::countNew++;
+		myRightForearm = new Limb(&modelRightForearm, 0,      -3.7f,    0,     nullptr, myRightHumerus); Global::countNew++;
+		myRightHand =    new Limb(&modelRightHand,    0,      -4.18f,   0,     nullptr, myRightForearm); Global::countNew++;
+		myRightThigh =   new Limb(&modelRightThigh,  -3.893f,  0.42f,   1.92f, myBody,  nullptr);        Global::countNew++;
+		myRightShin =    new Limb(&modelRightShin,    0,      -4.42f,   0,     nullptr, myRightThigh);   Global::countNew++;
+		myRightFoot =    new Limb(&modelRightFoot,    0,      -3.75f,   0,     nullptr, myRightShin);    Global::countNew++;
+	}
+	else if (PlayerKnuckles::characterID == 7) //Pac Man
+	{
+		displayHeightOffset = 1.95f*2.0f;
+		myBody         = new Body(&modelBody);                                                           Global::countNew++;
+		myHead         = new Limb(&modelHead,         0.0f,    0.0f,    0.0f,  myBody,  nullptr);        Global::countNew++;
+		myLeftHumerus  = new Limb(&modelLeftHumerus,  0.0f,   -0.2f*1.3f,   -2.85f*1.3f, myBody,  nullptr);        Global::countNew++;
+		myLeftForearm  = new Limb(&modelLeftForearm,  0,      -1.0f*1.3f,    0,     nullptr, myLeftHumerus);  Global::countNew++;
+		myLeftHand     = new Limb(&modelLeftHand,     0,      -1.0f*1.3f,    0,     nullptr, myLeftForearm);  Global::countNew++;
+		myLeftThigh    = new Limb(&modelLeftThigh,   -2.84f*1.3f,   0.0f,   -0.79f*1.3f, myBody,  nullptr);        Global::countNew++;
+		myLeftShin     = new Limb(&modelLeftShin,     0,      -1.0f*1.3f,    0,     nullptr, myLeftThigh);    Global::countNew++;
+		myLeftFoot     = new Limb(&modelLeftFoot,     0,      -1.0f*1.3f,    0,     nullptr, myLeftShin);     Global::countNew++;
+		myRightHumerus = new Limb(&modelRightHumerus, 0.0f,    0.2f*1.3f,    2.85f*1.3f, myBody,  nullptr);        Global::countNew++;
+		myRightForearm = new Limb(&modelRightForearm, 0,      -1.0f*1.3f,    0,     nullptr, myRightHumerus); Global::countNew++;
+		myRightHand    = new Limb(&modelRightHand,    0,      -1.0f*1.3f,    0,     nullptr, myRightForearm); Global::countNew++;
+		myRightThigh   = new Limb(&modelRightThigh,  -2.84f*1.3f,   0.0f,    0.79f*1.3f, myBody,  nullptr);        Global::countNew++;
+		myRightShin    = new Limb(&modelRightShin,    0,      -1.0f*1.3f,    0,     nullptr, myRightThigh);   Global::countNew++;
+		myRightFoot    = new Limb(&modelRightFoot,    0,      -1.0f*1.3f,    0,     nullptr, myRightShin);    Global::countNew++;
+	}
+	else if (PlayerKnuckles::characterID == 8) //Metal Sonic
+	{
+		displayHeightOffset = 0.1f;
+		myBody =         new Body(&modelBody);
+		myHead =         new Limb(&modelHead,         1.2f,  -0.3f,   0,     myBody,   nullptr);        Global::countNew++;
+		myLeftHumerus =  new Limb(&modelLeftHumerus,  0.9f,	  0,     -0.9f,  myBody,   nullptr);        Global::countNew++;
+		myLeftForearm =  new Limb(&modelLeftForearm,  0,     -1.3f,   0,     nullptr,  myLeftHumerus);  Global::countNew++;
+		myLeftHand =     new Limb(&modelLeftHand,     0,	 -1.3f,   0,     nullptr,  myLeftForearm);  Global::countNew++;
+		myLeftThigh =    new Limb(&modelLeftThigh,   -0.9f,   0,     -0.3f,  myBody,   nullptr);        Global::countNew++;
+		myLeftShin =     new Limb(&modelLeftShin,     0,	 -1.3f,   0,     nullptr,  myLeftThigh);    Global::countNew++;
+		myLeftFoot =     new Limb(&modelLeftFoot,     0,	 -1.4f,   0,     nullptr,  myLeftShin);     Global::countNew++;
+		myRightHumerus = new Limb(&modelRightHumerus, 0.9f,   0,      0.9f,  myBody,   nullptr);        Global::countNew++;
+		myRightForearm = new Limb(&modelRightForearm, 0,	 -1.3f,   0,     nullptr,  myRightHumerus); Global::countNew++;
+		myRightHand =    new Limb(&modelRightHand,    0,	 -1.3f,   0,     nullptr,  myRightForearm); Global::countNew++;
+		myRightThigh =   new Limb(&modelRightThigh,  -0.9f,   0,      0.3f,  myBody,   nullptr);        Global::countNew++;
+		myRightShin =    new Limb(&modelRightShin,    0,	 -1.3f,   0,     nullptr,  myRightThigh);   Global::countNew++;
+		myRightFoot =    new Limb(&modelRightFoot,    0,	 -1.4f,   0,     nullptr,  myRightShin);    Global::countNew++;
+	}
 
 	AnimationResources::assignAnimationsHuman(myBody, myHead,
 		myLeftHumerus, myLeftForearm, myLeftHand,
@@ -1204,6 +1278,28 @@ std::list<TexturedModel*>* PlayerKnuckles::getModels()
 
 void PlayerKnuckles::loadStaticModels()
 {
+	PlayerKnuckles::characterID = 4;
+
+	if (MainMenu::unlockedCharacters.size() > 1)
+	{
+		if (MainMenu::unlockedCharacters[MainMenu::characterSelectIndex] == "AMY")
+		{
+			PlayerKnuckles::characterID = 5;
+		}
+		else if (MainMenu::unlockedCharacters[MainMenu::characterSelectIndex] == "NPC")
+		{
+			PlayerKnuckles::characterID = 6;
+		}
+		else if (MainMenu::unlockedCharacters[MainMenu::characterSelectIndex] == "PAC-MAN")
+		{
+			PlayerKnuckles::characterID = 7;
+		}
+		else if (MainMenu::unlockedCharacters[MainMenu::characterSelectIndex] == "METAL SONIC")
+		{
+			PlayerKnuckles::characterID = 8;
+		}
+	}
+
 	if (PlayerKnuckles::characterID == 4) //Mania Sonic
 	{
 		ManiaKnucklesModel::loadStaticModels();
@@ -1222,6 +1318,74 @@ void PlayerKnuckles::loadStaticModels()
 		loadObjModel(&PlayerKnuckles::modelRightThigh,   "res/Models/ManiaKnuckles/", "Thigh.obj");
 		loadObjModel(&PlayerKnuckles::modelRightShin,    "res/Models/ManiaKnuckles/", "Shin.obj");
 		loadObjModel(&PlayerKnuckles::modelRightFoot,    "res/Models/ManiaKnuckles/", "FootRight.obj");
+	}
+	else if (PlayerKnuckles::characterID == 5) //Amy
+	{
+		loadObjModel(&PlayerKnuckles::modelBody,         "res/Models/AmyModern/", "Body.obj");
+		loadObjModel(&PlayerKnuckles::modelHead,         "res/Models/AmyModern/", "Head.obj");
+		loadObjModel(&PlayerKnuckles::modelLeftHumerus,  "res/Models/AmyModern/", "Humerus.obj");
+		loadObjModel(&PlayerKnuckles::modelLeftForearm,  "res/Models/AmyModern/", "Forearm.obj");
+		loadObjModel(&PlayerKnuckles::modelLeftHand,     "res/Models/AmyModern/", "HandLeft.obj");
+		loadObjModel(&PlayerKnuckles::modelLeftThigh,    "res/Models/AmyModern/", "Thigh.obj");
+		loadObjModel(&PlayerKnuckles::modelLeftShin,     "res/Models/AmyModern/", "Shin.obj");
+		loadObjModel(&PlayerKnuckles::modelLeftFoot,     "res/Models/AmyModern/", "ShoeLeft.obj");
+		loadObjModel(&PlayerKnuckles::modelRightHumerus, "res/Models/AmyModern/", "Humerus.obj");
+		loadObjModel(&PlayerKnuckles::modelRightForearm, "res/Models/AmyModern/", "Forearm.obj");
+		loadObjModel(&PlayerKnuckles::modelRightHand,    "res/Models/AmyModern/", "HandRight.obj");
+		loadObjModel(&PlayerKnuckles::modelRightThigh,   "res/Models/AmyModern/", "Thigh.obj");
+		loadObjModel(&PlayerKnuckles::modelRightShin,    "res/Models/AmyModern/", "Shin.obj");
+		loadObjModel(&PlayerKnuckles::modelRightFoot,    "res/Models/AmyModern/", "ShoeRight.obj");
+	}
+	else if (PlayerKnuckles::characterID == 6) //WanamaDage
+	{
+		loadObjModel(&PlayerKnuckles::modelBody,         "res/Models/WanamaDageLimbs/", "Body.obj");
+		loadObjModel(&PlayerKnuckles::modelHead,         "res/Models/WanamaDageLimbs/", "Head.obj");
+		loadObjModel(&PlayerKnuckles::modelLeftHumerus,  "res/Models/WanamaDageLimbs/", "HumerusLeft.obj");
+		loadObjModel(&PlayerKnuckles::modelLeftForearm,  "res/Models/WanamaDageLimbs/", "ForearmLeft.obj");
+		loadObjModel(&PlayerKnuckles::modelLeftHand,     "res/Models/WanamaDageLimbs/", "HandLeft.obj");
+		loadObjModel(&PlayerKnuckles::modelLeftThigh,    "res/Models/WanamaDageLimbs/", "ThighLeft.obj");
+		loadObjModel(&PlayerKnuckles::modelLeftShin,     "res/Models/WanamaDageLimbs/", "ShinLeft.obj");
+		loadObjModel(&PlayerKnuckles::modelLeftFoot,     "res/Models/WanamaDageLimbs/", "Shoe.obj");
+		loadObjModel(&PlayerKnuckles::modelRightHumerus, "res/Models/WanamaDageLimbs/", "HumerusRight.obj");
+		loadObjModel(&PlayerKnuckles::modelRightForearm, "res/Models/WanamaDageLimbs/", "ForearmRight.obj");
+		loadObjModel(&PlayerKnuckles::modelRightHand,    "res/Models/WanamaDageLimbs/", "HandRight.obj");
+		loadObjModel(&PlayerKnuckles::modelRightThigh,   "res/Models/WanamaDageLimbs/", "ThighRight.obj");
+		loadObjModel(&PlayerKnuckles::modelRightShin,    "res/Models/WanamaDageLimbs/", "ShinRight.obj");
+		loadObjModel(&PlayerKnuckles::modelRightFoot,    "res/Models/WanamaDageLimbs/", "Shoe.obj");
+	}
+	else if (PlayerKnuckles::characterID == 7) //Pac Man
+	{
+		loadObjModel(&PlayerKnuckles::modelBody,         "res/Models/PacMan/", "HeadBody.obj");
+		loadObjModel(&PlayerKnuckles::modelHead,         "res/Models/PacMan/", "Blank.obj");
+		loadObjModel(&PlayerKnuckles::modelLeftHumerus,  "res/Models/PacMan/", "Limb.obj");
+		loadObjModel(&PlayerKnuckles::modelLeftForearm,  "res/Models/PacMan/", "Limb.obj");
+		loadObjModel(&PlayerKnuckles::modelLeftHand,     "res/Models/PacMan/", "Hand.obj");
+		loadObjModel(&PlayerKnuckles::modelLeftThigh,    "res/Models/PacMan/", "Limb.obj");
+		loadObjModel(&PlayerKnuckles::modelLeftShin,     "res/Models/PacMan/", "Limb.obj");
+		loadObjModel(&PlayerKnuckles::modelLeftFoot,     "res/Models/PacMan/", "Shoe.obj");
+		loadObjModel(&PlayerKnuckles::modelRightHumerus, "res/Models/PacMan/", "Limb.obj");
+		loadObjModel(&PlayerKnuckles::modelRightForearm, "res/Models/PacMan/", "Limb.obj");
+		loadObjModel(&PlayerKnuckles::modelRightHand,    "res/Models/PacMan/", "Hand.obj");
+		loadObjModel(&PlayerKnuckles::modelRightThigh,   "res/Models/PacMan/", "Limb.obj");
+		loadObjModel(&PlayerKnuckles::modelRightShin,    "res/Models/PacMan/", "Limb.obj");
+		loadObjModel(&PlayerKnuckles::modelRightFoot,    "res/Models/PacMan/", "Shoe.obj");
+	}
+	else if (PlayerKnuckles::characterID == 8) //Metal Sonic
+	{
+		loadObjModel(&PlayerKnuckles::modelBody,         "res/Models/MetalSonic/", "Body.obj");
+		loadObjModel(&PlayerKnuckles::modelHead,         "res/Models/MetalSonic/", "Head.obj");
+		loadObjModel(&PlayerKnuckles::modelLeftHumerus,  "res/Models/MetalSonic/", "Humerus.obj");
+		loadObjModel(&PlayerKnuckles::modelLeftForearm,  "res/Models/MetalSonic/", "Forearm.obj");
+		loadObjModel(&PlayerKnuckles::modelLeftHand,     "res/Models/MetalSonic/", "HandLeft.obj");
+		loadObjModel(&PlayerKnuckles::modelLeftThigh,    "res/Models/MetalSonic/", "Humerus.obj");
+		loadObjModel(&PlayerKnuckles::modelLeftShin,     "res/Models/MetalSonic/", "Forearm.obj");
+		loadObjModel(&PlayerKnuckles::modelLeftFoot,     "res/Models/MetalSonic/", "Shoe.obj");
+		loadObjModel(&PlayerKnuckles::modelRightHumerus, "res/Models/MetalSonic/", "Humerus.obj");
+		loadObjModel(&PlayerKnuckles::modelRightForearm, "res/Models/MetalSonic/", "Forearm.obj");
+		loadObjModel(&PlayerKnuckles::modelRightHand,    "res/Models/MetalSonic/", "HandRight.obj");
+		loadObjModel(&PlayerKnuckles::modelRightThigh,   "res/Models/MetalSonic/", "Humerus.obj");
+		loadObjModel(&PlayerKnuckles::modelRightShin,    "res/Models/MetalSonic/", "Forearm.obj");
+		loadObjModel(&PlayerKnuckles::modelRightFoot,    "res/Models/MetalSonic/", "Shoe.obj");
 	}
 }
 
@@ -2250,7 +2414,14 @@ void PlayerKnuckles::animate()
 	}
 
 	//For punching animation
-	myRightHand->setScale(0.33f);
+	if (PlayerKnuckles::characterID == 4)
+	{
+		myRightHand->setScale(0.33f);
+	}
+	else
+	{
+		myRightHand->setScale(1.0f);
+	}
 
 	if (deadTimer >= 0)
 	{
@@ -2621,9 +2792,59 @@ void PlayerKnuckles::newSpindashTrail(Vector3f* trailPos, int life, int colourID
 void PlayerKnuckles::newSpindashTrail(Vector3f* trailPos, float trailXVel, float trailYVel, float trailZVel, float trailGravity, int life, float size, int /*colourID*/)
 {
 	Vector3f spd(trailXVel, trailYVel, trailZVel);
-	new Particle(ParticleResources::textureRedTrail,
-		trailPos, &spd,
-		trailGravity, life, 0, size, -(size / life), false);
+	switch (characterID)
+	{
+		case 0:
+			new Particle(ParticleResources::textureLightBlueTrail,
+				trailPos, &spd,
+				trailGravity, life, 0, size, -(size / life), false);
+			break;
+
+		case 1:
+			new Particle(ParticleResources::textureBlueTrail,
+				trailPos, &spd,
+				trailGravity, life, 0, size, -(size / life), false);
+			break;
+
+		case 2:
+			new Particle(ParticleResources::textureBlackTrail,
+				trailPos, &spd,
+				trailGravity, life, 0, size, -(size / life), false);
+			break;
+
+		case 3:
+			new Particle(ParticleResources::textureGrayTrail,
+				trailPos, &spd,
+				trailGravity, life, 0, size, -(size / life), false);
+			break;
+
+		case 4:
+			new Particle(ParticleResources::textureRedTrail,
+				trailPos, &spd,
+				trailGravity, life, 0, size, -(size / life), false);
+			break;
+
+		case 5:
+			new Particle(ParticleResources::texturePinkTrail,
+				trailPos, &spd,
+				trailGravity, life, 0, size, -(size / life), false);
+			break;
+
+		case 6:
+			new Particle(ParticleResources::textureDarkGreenTrail,
+				trailPos, &spd,
+				trailGravity, life, 0, size, -(size / life), false);
+			break;
+
+		case 7:
+			new Particle(ParticleResources::textureOrangeTrail,
+				trailPos, &spd,
+				trailGravity, life, 0, size, -(size / life), false);
+			break;
+
+		default:
+			break;
+	}
 }
 
 void PlayerKnuckles::createStompParticles()

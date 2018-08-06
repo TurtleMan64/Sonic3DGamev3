@@ -920,6 +920,18 @@ void Global::loadSaveData()
 	{
 		Global::gameTotalPlaytime = std::stoi(Global::gameSaveData["PLAYTIME"]);
 	}
+
+	if (Global::gameSaveData.find("CAMERA") != Global::gameSaveData.end())
+	{
+		if (Global::gameSaveData["CAMERA"] == "AUTO")
+		{
+			Global::isAutoCam = true;
+		}
+		else
+		{
+			Global::isAutoCam = false;
+		}
+	}
 }
 
 void Global::saveSaveData()
@@ -939,6 +951,15 @@ void Global::saveSaveData()
 	else
 	{
 		Global::gameSaveData["PLAYTIME"] = std::to_string(Global::gameTotalPlaytime);
+
+		if (Global::isAutoCam)
+		{
+			Global::gameSaveData["CAMERA"] = "AUTO";
+		}
+		else
+		{
+			Global::gameSaveData["CAMERA"] = "FREE";
+		}
 
 		std::unordered_map<std::string, std::string>::iterator it = Global::gameSaveData.begin();
  

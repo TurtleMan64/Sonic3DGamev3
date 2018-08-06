@@ -243,10 +243,17 @@ void MainMenu::loadResources()
 	float px = 1.0f/(SCR_WIDTH);  //1 pixel in x dimension
 	float py = 1.0f/(SCR_HEIGHT); //1 pixel in y dimension
 
-	textItem1 = new GUIText("ARCADE",   2.85f, font, 0.0f,   0.333f-0.04f, 0.666f, true, false, true); Global::countNew++;
-	textItem2 = new GUIText("MISSIONS", 2.85f, font, 0.333f, 0.333f-0.04f, 0.666f, true, false, true); Global::countNew++;
-	textItem3 = new GUIText("EXTRAS",   2.85f, font, 0.0f,   0.666f-0.04f, 0.666f, true, false, true); Global::countNew++;
-	textItem4 = new GUIText("EXIT",     2.85f, font, 0.333f, 0.666f-0.04f, 0.666f, true, false, true); Global::countNew++;
+	float fontScale = 2.85f;
+
+	if (SCR_HEIGHT > 900)
+	{
+		fontScale = 2.55f;
+	}
+
+	textItem1 = new GUIText("ARCADE",   fontScale, font, 0.0f,   0.333f-0.04f, 0.666f, true, false, true); Global::countNew++;
+	textItem2 = new GUIText("MISSIONS", fontScale, font, 0.333f, 0.333f-0.04f, 0.666f, true, false, true); Global::countNew++;
+	textItem3 = new GUIText("EXTRAS",   fontScale, font, 0.0f,   0.666f-0.04f, 0.666f, true, false, true); Global::countNew++;
+	textItem4 = new GUIText("EXIT",     fontScale, font, 0.333f, 0.666f-0.04f, 0.666f, true, false, true); Global::countNew++;
 
 	item1 = new GuiTexture(textureParallelogram, 0.333f, 0.333f, 512*px, 64*py, 0); Global::countNew++;
 	item2 = new GuiTexture(textureParallelogram, 0.666f, 0.333f, 512*px, 64*py, 0); Global::countNew++;
@@ -379,7 +386,7 @@ void MainMenu::loadResources()
 		}
 	}
 
-	if (rankAs >= totalRanks/2)
+	if (Global::gameSaveData.find("BestArcadeClearTime") != Global::gameSaveData.end())
 	{
 		if (Global::gameSaveData.find("UnlockedAmy") == Global::gameSaveData.end())
 		{
@@ -387,7 +394,7 @@ void MainMenu::loadResources()
 			Global::saveSaveData();
 		}
 	}
-	if (rankAs == totalRanks)
+	if (foundNPC >= totalNPC/2)
 	{
 		if (Global::gameSaveData.find("UnlockedPacman") == Global::gameSaveData.end())
 		{
@@ -395,7 +402,7 @@ void MainMenu::loadResources()
 			Global::saveSaveData();
 		}
 	}
-	if (foundNPC >= totalNPC/2)
+	if (rankAs == totalRanks)
 	{
 		if (Global::gameSaveData.find("UnlockedMetalSonic") == Global::gameSaveData.end())
 		{

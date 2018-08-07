@@ -1787,7 +1787,7 @@ void PlayerTails::animate()
 	{
 		if (myBody != nullptr) myBody->setBaseOrientation(&displayPos, 0, getRotY(), 75, 0);
 		if (PlayerTails::maniaTails != nullptr) { PlayerTails::maniaTails->setVisible(false); }
-		updateLimbs(21, 0);
+		updateLimbs(25, 0);
 	}
 	else if (isFlying)
 	{

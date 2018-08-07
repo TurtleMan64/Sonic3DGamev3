@@ -7,7 +7,7 @@
 #include "../renderEngine/renderEngine.h"
 #include "../objLoader/objLoader.h"
 #include "../engineTester/main.h"
-#include "../entities/playersonic.h"
+#include "../entities/controllableplayer.h"
 #include "../toolbox/maths.h"
 #include "../animation/body.h"
 #include "../entities/camera.h"
@@ -58,7 +58,7 @@ Rocket::Rocket(int point1ID, int point2ID)
 	position = pointPos1;
 	scale = 1;
 	visible = true;
-	storedSonicSpeed = 0;
+	//storedSonicSpeed = 0;
 	updateTransformationMatrix();
 
 	base = new Body(&Rocket::modelsBase);
@@ -75,14 +75,10 @@ Rocket::Rocket(int point1ID, int point2ID)
 	updateCollisionModel();
 
 	//rocket should be above the platform, now that the platform's position is set we can move it
-	position.y += 9;
+	position.y += 10;
 
 	timeOffset = 0;
 	startupTimer = 0;
-
-	speed = 15;
-	height = 15;
-	radius = 5;
 
 	canMove = true;
 	isMoving = false;
@@ -90,8 +86,8 @@ Rocket::Rocket(int point1ID, int point2ID)
 	rocketAppearSoundPlayed = false;
 
 	//used for rotation
-	float xDiff = (pointPos2.x - position.x);
-	float yDiff = (pointPos2.y - position.y);
+	float xDiff =  (pointPos2.x - position.x);
+	float yDiff =  (pointPos2.y - position.y);
 	float zDiff = -(pointPos2.z - position.z);
 
 	rotY = toDegrees(atan2(zDiff, xDiff));
@@ -119,26 +115,36 @@ void Rocket::step()
 			setVisible(false);
 			base->setVisible(false);
 		}
-		else if (isMoving || canMove)
+		else
 		{
 			setVisible(true);
 			base->setVisible(true);
 
 			Vector3f* playerPos = Global::gamePlayer->getPosition();
 
-			if (!rocketAppearSoundPlayed && fabs(pow(playerPos->x - position.x, 2) + pow(playerPos->z - position.z, 2)) <= pow(radius * 30, 2) && playerPos->y > (position.y - (height * 20 / 2)) && playerPos->y < (position.y + (height * 20 / 2)))
+			float xDiff    =       playerPos->x - position.x;
+			float yDiffAbs = fabsf(playerPos->y - position.y);
+			float zDiff    =       playerPos->z - position.z;
+			float diffSquared = xDiff*xDiff + zDiff*zDiff;
+
+			if (!rocketAppearSoundPlayed && 
+				 diffSquared <= 22500    &&  //pow(radius * 30, 2) 
+				 yDiffAbs    <  150)         //(height * 20 / 2)
 			{
 				rocketAppearSoundPlayed = true;
 				rocketSource = AudioPlayer::play(54, getPosition(), 1, false);
 			}
 
-			if (!(fabs(pow(playerPos->x - position.x, 2) + pow(playerPos->z - position.z, 2)) <= pow(radius * 150, 2) && playerPos->y >(position.y - (height * 100 / 2)) && playerPos->y < (position.y + (height * 100 / 2))))
+			if (!(diffSquared <= 562500 && //pow(radius * 150, 2)
+				  yDiffAbs    <  750))     //(height * 100 / 2)
 			{
 				rocketAppearSoundPlayed = false;
 				rocketSource = nullptr;
 			}
 			
-			if (!isMoving && canMove && fabs(pow(playerPos->x - position.x, 2) + pow(playerPos->z - position.z, 2)) <= pow(radius, 2) && playerPos->y > (position.y - (height / 2)) && playerPos->y < (position.y + (height / 2)))
+			if (!isMoving && canMove && 
+				diffSquared <= 25    &&  //pow(radius, 2)
+				yDiffAbs    <  11.0f)
 			{
 				//start moving
 				isMoving = true;
@@ -154,7 +160,7 @@ void Rocket::step()
 				Global::gamePlayer->setCanMoveTimer(0);
 
 				position = pointPos1;
-				position.y += 9;
+				position.y += 10;
 				canMove = true;
 				isMoving = false;
 				timeOffset = 0;
@@ -184,52 +190,57 @@ void Rocket::step()
 				}
 
 				int dirtToMake = 5;
+				float offset = 1;
+				if (startupTimer >= 30)
+				{
+					offset = speed;
+				}
 				while (dirtToMake > 0)
 				{
-					Vector3f pos(getX() - (pointDifferenceNormalized.x * 12), getY() - (pointDifferenceNormalized.y * 12), getZ() - (pointDifferenceNormalized.z * 12));
+					
+					Vector3f pos(getX() + (pointDifferenceNormalized.x * offset), getY() + (pointDifferenceNormalized.y * offset), getZ() + (pointDifferenceNormalized.z * offset));
 					Vector3f vel(pointDifferenceNormalized);
-					vel.x += (Maths::random() - 0.5f);
-					vel.y += (Maths::random() - 0.5f);
-					vel.z += (Maths::random() - 0.5f);
+					vel.scale(-3);
+					vel.x +=   (Maths::random() - 0.5f);
+					vel.y +=   (Maths::random() - 0.5f);
+					vel.z +=   (Maths::random() - 0.5f);
+					pos.x += 4*(Maths::random() - 0.5f);
+					pos.y += 4*(Maths::random() - 0.5f);
+					pos.z += 4*(Maths::random() - 0.5f);
 
-					new Particle(ParticleResources::textureDirt, &pos, &vel, 0.08f, 60, 0, 4 * Maths::random() + 0.5f, 0, false);
-					new Particle(ParticleResources::textureDirt, &pos, &vel, 0.08f, 60, 0, 4 * Maths::random() + 0.5f, 0, false);
+					new Particle(ParticleResources::textureDust, &pos, &vel, 0.08f, 60, 0, 4 * Maths::random() + 0.5f, 0, false);
+					new Particle(ParticleResources::textureDust, &pos, &vel, 0.08f, 60, 0, 4 * Maths::random() + 0.5f, 0, false);
 
 					dirtToMake--;
-					}
+				}
 
 				Global::gamePlayer->stopMoving();
 				Global::gamePlayer->setOnRocket(true);
 				Global::gamePlayer->setIsBall(false);
 				Global::gamePlayer->setRotY(rotY);
 				Global::gamePlayer->setCanMoveTimer(1000);
+				Global::gamePlayer->setOnPlane(false);
+				Global::gamePlayer->setOnPlanePrevious(false);
 
 				if (startupTimer < 30)
 				{
-					Global::gamePlayer->setPosition(position.x, position.y, position.z);
-					Global::gamePlayer->setDisplacement(pointDifferenceNormalized.x * -12, -12, pointDifferenceNormalized.z * -12);
+					Global::gamePlayer->setPosition(
+						position.x - 8.75f*pointDifferenceNormalized.x,
+						position.y - 10.65f,
+						position.z - 8.75f*pointDifferenceNormalized.z);
 
 					startupTimer += 1;
 				}
 				else
 				{
-					Vector3f moveDir;
-					moveDir.x = (position.x - oldPos.x);
-					moveDir.y = (position.y - oldPos.y);
-					moveDir.z = (position.z - oldPos.z);
-
-					oldPos.set(&position);
-
 					position.x = pointPos1.x + (pointDifference.x * timeOffset);
-					position.y = pointPos1.y + (pointDifference.y * timeOffset);
+					position.y = pointPos1.y + (pointDifference.y * timeOffset) + 10;
 					position.z = pointPos1.z + (pointDifference.z * timeOffset);
-
-					Vector3f displacement = new Vector3f();
-					displacement = position - oldPos;
 					
-					Global::gamePlayer->setPosition(position.x, position.y, position.z);
-					Global::gamePlayer->setDisplacement(moveDir.x, moveDir.y, moveDir.z);
-					Global::gamePlayer->setDisplacement(pointDifferenceNormalized.x, -12, pointDifferenceNormalized.z);
+					Global::gamePlayer->setPosition(
+						position.x + speed*pointDifferenceNormalized.x - 8.75f*pointDifferenceNormalized.x,
+						position.y - 9.75f,
+						position.z + speed*pointDifferenceNormalized.z - 8.75f*pointDifferenceNormalized.z);
 
 					timeOffset += speed / pointLength;
 				}
@@ -239,7 +250,6 @@ void Rocket::step()
 			updateTransformationMatrix();
 			base->updateTransformationMatrix();
 		}
-
 	}
 }
 

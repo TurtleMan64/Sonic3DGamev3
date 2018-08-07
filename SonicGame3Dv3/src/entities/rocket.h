@@ -22,16 +22,12 @@ private:
 	Vector3f pointPos1;
 	Vector3f pointPos2;
 
-	float storedSonicSpeed;
-
-	float speed;
+	const float speed = 15;
 	bool isMoving;
 	bool canMove;
 
-	float radius;
-	float height;
-
-	Vector3f oldPos;
+	const float radius = 5;
+	const float height = 15;
 
 	Vector3f pointDifference;
 	Vector3f pointDifferenceNormalized;
@@ -42,6 +38,7 @@ private:
 
 	bool rocketAppearSoundPlayed;
 	Source* rocketSource;
+
 public:
 	Rocket();
 	Rocket(int point1ID, int point2ID);

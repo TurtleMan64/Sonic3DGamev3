@@ -28,14 +28,14 @@ res/Audio/BGM/g_hill_loop.ogg
 -100
 
 
-# Player        original coords: 0 2350 0       debug coords: -1094.997681  1284.102539 -7444.205566
+# Player
 6 0 2350 0
 
 # Lost Chao
 81 -993.604675, 1194.696045, -7766.241211 45
 
 # NPC
-32 -1844.75 2513.099 -1971.39 0 1 Green Hill is looking more like
+32 -1844.75 2513.099 -1971.39 0 1 Well, you know what they say...
 
 # Objects
 7 Sky SkySphereModel2Repeat MTL_GreenHillBG 8 0

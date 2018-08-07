@@ -236,6 +236,8 @@ private:
 	int invincibleTimer = 0;
 	int speedShoesTimer = 0;
 
+	bool onRocket = false;
+
 public:
 	PlayerTails(float, float, float);
 
@@ -361,6 +363,8 @@ public:
 	void setInvincibleTimer(int newTimer);
 
 	void setSpeedshoesTimer(int newTimer);
+
+	void setOnRocket(bool onRocket);
 
 private:
 	void adjustCamera();

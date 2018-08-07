@@ -666,6 +666,9 @@
     <ClCompile Include="src\entities\Boss\B_Projectile.cpp">
       <Filter>Source Files\entities\Boss</Filter>
     </ClCompile>
+    <ClCompile Include="src\entities\Rocket.cpp">
+      <Filter>Source Files\entities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\renderEngine\renderEngine.h">
@@ -1198,6 +1201,9 @@
     </ClInclude>
     <ClInclude Include="src\entities\Boss\bprojectile.h">
       <Filter>Source Files\entities\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="src\entities\rocket.h">
+      <Filter>Source Files\entities</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

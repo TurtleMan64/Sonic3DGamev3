@@ -50,8 +50,8 @@ res/Audio/BGM/highway1_loop.ogg
 27 8852.331 3648.03 11888.479 0 90 0
 
 # Springs
-1 4634 3680 1974 -158 30 13 140
-1 2646 3650 3206.5 -90 45 13 170
+#1 4634 3680 1974 -158 30 13 140 #replaced by rocket
+#1 2646 3650 3206.5 -90 45 13 170 #replaced by rocket
 1 5968.4 2860 5976.9 -118 60 11.2 60
 1 5876.2 3184.1 6150.2 -35 0 11 65
 1 8881 2763 7918 -122 45 11 95
@@ -119,6 +119,13 @@ res/Audio/BGM/highway1_loop.ogg
 
 2 3971.979492 3741.756250 4984.339355 0 0 0 11 0 60
 2 3948.84 3752.3 4987.65 0 0 0 11 0 60
+
+60 4633.736 3677.7 1975.991 12				# helicopter rocket point 1
+60 3284.568 3750.202 2519.034 13 			# helicopter rocket point 2
+90 12 13									# helicopter rocket
+60 2648.073486, 3644.596680, 3158.043457 14	# right after helicopter rocket point 1
+60 2645.599365, 3965.141357, 4323.752930 15 # right after helicopter rocket point 2
+90 14 15									# right after helicopter rocket
 
 ######## Generated Objects ########
 

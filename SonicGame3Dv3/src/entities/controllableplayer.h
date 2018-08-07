@@ -124,5 +124,7 @@ public:
 	virtual void setInvincibleTimer(int newTimer);
 
 	virtual void setSpeedshoesTimer(int newTimer);
+
+	virtual void setOnRocket(bool onRocket);
 };
 #endif

@@ -116,6 +116,7 @@
 #include "../entities/Boss/bmeteor.h"
 #include "../entities/Boss/bearth.h"
 #include "../entities/Boss/bmetalsonic.h"
+#include "../entities/rocket.h"
 
 float toFloat(char* input);
 int toInt(char* input);
@@ -1698,6 +1699,14 @@ void processLine(char** dat, int datLength)
 			return;
 		}
 
+		case 90: //Rocket
+		{
+			Rocket::loadStaticModels();
+			Rocket* rocket = new Rocket(toInt(dat[1]), toInt(dat[2])); //Point IDs
+			Global::countNew++;
+			Main_addEntity(rocket);
+		}
+
 		default:
 		{
 			return;
@@ -1867,4 +1876,5 @@ void freeAllStaticModels()
 	B_Meteor::deleteStaticModels();
 	B_Earth::deleteStaticModels();
 	B_MetalSonic::deleteStaticModels();
+	Rocket::deleteStaticModels();
 }

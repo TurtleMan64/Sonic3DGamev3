@@ -2440,6 +2440,12 @@ void PlayerSonic::animate()
 		if (myBody != nullptr) myBody->setBaseOrientation(&displayPos, 0, getRotY(), 0, 0);
 		updateLimbs(19, 0);
 	}
+	else if (onRocket)
+	{
+		if (myBody != nullptr) myBody->setBaseOrientation(&displayPos, 0, getRotY(), 75, 0);
+		if (PlayerSonic::maniaSonic != nullptr) { PlayerSonic::maniaSonic->setVisible(false); }
+		updateLimbs(21, 0);
+	}
 	else if (isLightdashing)
 	{
 		float h = sqrtf(xVelAir*xVelAir + zVelAir*zVelAir);
@@ -3355,4 +3361,9 @@ void PlayerSonic::setInvincibleTimer(int newTimer)
 void PlayerSonic::setSpeedshoesTimer(int newTimer)
 {
 	speedShoesTimer = newTimer;
+}
+
+void PlayerSonic::setOnRocket(bool newOnRocket)
+{
+	onRocket = newOnRocket;
 }

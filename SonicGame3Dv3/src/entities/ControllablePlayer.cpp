@@ -69,3 +69,4 @@ int           ControllablePlayer::getDiggingTimer()                   {return 0;
 void          ControllablePlayer::increaseCombo()                     {}
 void          ControllablePlayer::setInvincibleTimer(int)             {}
 void          ControllablePlayer::setSpeedshoesTimer(int)             {}
+void		  ControllablePlayer::setOnRocket(bool)					  {}

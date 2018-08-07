@@ -2429,6 +2429,12 @@ void PlayerKnuckles::animate()
 		if (myBody != nullptr) myBody->setBaseOrientation(&displayPos, 0, getRotY(), 0, 0);
 		updateLimbs(19, 0);
 	}
+	else if (onRocket)
+	{
+		if (myBody != nullptr) myBody->setBaseOrientation(&displayPos, 0, getRotY(), 75, 0);
+		if (PlayerKnuckles::maniaKnuckles != nullptr) { PlayerKnuckles::maniaKnuckles->setVisible(false); }
+		updateLimbs(21, 0);
+	}
 	else if (isDigging)
 	{
 		if (myBody != nullptr) myBody->setBaseOrientation(&displayPos, diff+diggingTimer*40, yawAngle, pitchAngle+180, 0);
@@ -3381,4 +3387,9 @@ void PlayerKnuckles::setInvincibleTimer(int newTimer)
 void PlayerKnuckles::setSpeedshoesTimer(int newTimer)
 {
 	speedShoesTimer = newTimer;
+}
+
+void PlayerKnuckles::setOnRocket(bool newOnRocket)
+{
+	onRocket = newOnRocket;
 }

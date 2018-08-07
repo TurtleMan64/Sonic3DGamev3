@@ -78,6 +78,9 @@ void AudioPlayer::loadSoundEffects()
 	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/Boss/RunFastLoop.ogg"));             //51
 	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/Boss/ChargeShot.ogg"));              //52
 	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/Boss/LaserLoop.ogg"));               //53
+	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/General/RocketAppear.ogg"));         //54
+	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/General/RocketTakeOffStart.ogg"));   //55
+	AudioPlayer::buffersSE.push_back(AudioMaster::loadOGG("res/Audio/General/RocketTakeOffLoop.ogg"));    //56
 }
 
 void AudioPlayer::loadBGM(char* fileName)

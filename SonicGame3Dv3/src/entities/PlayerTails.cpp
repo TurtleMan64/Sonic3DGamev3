@@ -1783,6 +1783,12 @@ void PlayerTails::animate()
 		if (myBody != nullptr) myBody->setBaseOrientation(&displayPos, 0, getRotY(), 0, 0);
 		updateLimbs(19, 0);
 	}
+	else if (onRocket)
+	{
+		if (myBody != nullptr) myBody->setBaseOrientation(&displayPos, 0, getRotY(), 75, 0);
+		if (PlayerTails::maniaTails != nullptr) { PlayerTails::maniaTails->setVisible(false); }
+		updateLimbs(21, 0);
+	}
 	else if (isFlying)
 	{
 		if (PlayerTails::maniaTails != nullptr) { PlayerTails::maniaTails->setVisible(false); }
@@ -2628,4 +2634,9 @@ void PlayerTails::setInvincibleTimer(int newTimer)
 void PlayerTails::setSpeedshoesTimer(int newTimer)
 {
 	speedShoesTimer = newTimer;
+}
+
+void PlayerTails::setOnRocket(bool newOnRocket)
+{
+	onRocket = newOnRocket;
 }

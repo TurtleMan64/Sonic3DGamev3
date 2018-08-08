@@ -68,13 +68,6 @@
 #include <tchar.h>
 #endif
 
-#define DEV_MODE
-
-#ifdef DEV_MODE
-#include <thread>
-#endif
-
-
 std::unordered_map<Entity*, Entity*> gameEntities;
 std::list<Entity*> gameEntitiesToAdd;
 std::list<Entity*> gameEntitiesToDelete;
@@ -271,24 +264,24 @@ int main()
 
 	if (Global::useHighQualityWater)
 	{
-		Global::gameWaterFBOs     = new WaterFrameBuffers; Global::countNew++;
-		WaterShader* waterShader  = new WaterShader; Global::countNew++;
-		Global::gameWaterRenderer = new WaterRenderer(waterShader, Master_getProjectionMatrix(), Global::gameWaterFBOs, Master_getShadowRenderer()); Global::countNew++;
-		Global::gameWaterTiles    = new std::list<WaterTile*>; Global::countNew++;
+		Global::gameWaterFBOs     = new WaterFrameBuffers; INCR_NEW
+		WaterShader* waterShader  = new WaterShader; INCR_NEW
+		Global::gameWaterRenderer = new WaterRenderer(waterShader, Master_getProjectionMatrix(), Global::gameWaterFBOs, Master_getShadowRenderer()); INCR_NEW
+		Global::gameWaterTiles    = new std::list<WaterTile*>; INCR_NEW
 		for (int r = -6; r < 6; r++) //-9 , 9
 		{
 			for (int c = -8; c < 8; c++) //-12  12
 			{
-				Global::gameWaterTiles->push_back(new WaterTile(r*WaterTile::TILE_SIZE*2, c*WaterTile::TILE_SIZE*2, 0.0f)); Global::countNew++;
+				Global::gameWaterTiles->push_back(new WaterTile(r*WaterTile::TILE_SIZE*2, c*WaterTile::TILE_SIZE*2, 0.0f)); INCR_NEW
 			}
 		}
 	}
 
 	if (Global::renderBloom)
 	{
-		Global::gameMultisampleFbo = new Fbo(SCR_WIDTH, SCR_HEIGHT); Global::countNew++;
-		Global::gameOutputFbo      = new Fbo(SCR_WIDTH, SCR_HEIGHT, Fbo::DEPTH_TEXTURE); Global::countNew++;
-		Global::gameOutputFbo2     = new Fbo(SCR_WIDTH, SCR_HEIGHT, Fbo::DEPTH_TEXTURE); Global::countNew++;
+		Global::gameMultisampleFbo = new Fbo(SCR_WIDTH, SCR_HEIGHT); INCR_NEW
+		Global::gameOutputFbo      = new Fbo(SCR_WIDTH, SCR_HEIGHT, Fbo::DEPTH_TEXTURE); INCR_NEW
+		Global::gameOutputFbo2     = new Fbo(SCR_WIDTH, SCR_HEIGHT, Fbo::DEPTH_TEXTURE); INCR_NEW
 		PostProcessing::init();
 	}
 
@@ -354,7 +347,7 @@ int main()
 		{
 			gameEntities.erase(entityToDelete);
 			delete entityToDelete;
-			Global::countDelete++;
+			INCR_DEL
 		}
 		gameEntitiesToDelete.clear();
 
@@ -370,7 +363,7 @@ int main()
 		{
 			gameEntitiesPass2.erase(entityToDelete);
 			delete entityToDelete;
-			Global::countDelete++;
+			INCR_DEL
 		}
 		gameEntitiesPass2ToDelete.clear();
 
@@ -761,7 +754,7 @@ void Main_deleteAllEntites()
 	{
 		gameEntities.erase(entityToDelete);
 		delete entityToDelete;
-		Global::countDelete++;
+		INCR_DEL
 	}
 	gameEntitiesToDelete.clear();
 
@@ -770,7 +763,7 @@ void Main_deleteAllEntites()
 	for (auto entityToDelete : gameEntities)
 	{
 		delete entityToDelete.first;
-		Global::countDelete++;
+		INCR_DEL
 	}
 	gameEntities.clear();
 }
@@ -798,14 +791,14 @@ void Main_deleteAllEntitesPass2()
 	{
 		gameEntitiesPass2.erase(entityToDelete);
 		delete entityToDelete;
-		Global::countDelete++;
+		INCR_DEL
 	}
 	gameEntitiesPass2ToDelete.clear();
 
 	for (auto entityToDelete : gameEntitiesPass2)
 	{
 		delete entityToDelete.first;
-		Global::countDelete++;
+		INCR_DEL
 	}
 	gameEntitiesPass2.clear();
 }
@@ -820,7 +813,7 @@ void Main_deleteTransparentEntity(Entity* entityToDelete)
 {
 	gameTransparentEntities.erase(entityToDelete);
 	delete entityToDelete;
-	Global::countDelete++;
+	INCR_DEL
 }
 
 void Main_deleteAllTransparentEntites()
@@ -828,7 +821,7 @@ void Main_deleteAllTransparentEntites()
 	for (auto entityToDelete : gameTransparentEntities)
 	{
 		delete entityToDelete.first;
-		Global::countDelete++;
+		INCR_DEL
 	}
 	gameTransparentEntities.clear();
 }

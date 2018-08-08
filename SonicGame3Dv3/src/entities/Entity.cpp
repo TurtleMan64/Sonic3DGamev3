@@ -243,7 +243,7 @@ void Entity::deleteModels(std::list<TexturedModel*>* modelsToDelete)
 	{
 		model->deleteMe();
 		delete model;
-		Global::countDelete++;
+		INCR_DEL
 	}
 	modelsToDelete->clear();
 }
@@ -254,7 +254,7 @@ void Entity::deleteCollisionModel(CollisionModel** colModelToDelete)
 	{
 		(*colModelToDelete)->deleteMe();
 		delete (*colModelToDelete);
-		Global::countDelete++;
+		INCR_DEL
 		(*colModelToDelete) = nullptr;
 	}
 }

@@ -107,7 +107,7 @@ void loadObjModel(std::list<TexturedModel*>* models, std::string filePath, std::
 					std::string p3(lineSplit[3]);
 					Vector3f vertex(std::stof(p1, nullptr), std::stof(p2, nullptr), std::stof(p3, nullptr));
 					Vertex* newVertex = new Vertex(vertices.size(), &vertex);
-					Global::countNew++;
+					INCR_NEW
 					vertices.push_back(newVertex);
 					p1.clear();
 					p2.clear();
@@ -211,18 +211,18 @@ void loadObjModel(std::list<TexturedModel*>* models, std::string filePath, std::
 	rawModelsList.push_back(newRaw); //put a copy of the final model into rawModelsList
 
 	//go through rawModelsList and modelTextures to construct and add to the given TexturedModel list
-	Global::countNew++;
+	INCR_NEW
 	for (unsigned int i = 0; i < rawModelsList.size(); i++)
 	{
 		TexturedModel* tm = new TexturedModel(&rawModelsList[i], &modelTextures[i]);
-		Global::countNew++;
+		INCR_NEW
 		models->push_back(tm);
 	}
 
 	for (auto vertex : vertices)
 	{
 		delete vertex;
-		Global::countDelete++;
+		INCR_DEL
 	}
 
 	line.clear();
@@ -417,7 +417,7 @@ void loadObjModelWithMTL(std::list<TexturedModel*>* models, std::string filePath
 					std::string p3(lineSplit[3]);
 					Vector3f vertex(std::stof(p1, nullptr), std::stof(p2, nullptr), std::stof(p3, nullptr));
 					Vertex* newVertex = new Vertex(vertices.size(), &vertex);
-					Global::countNew++;
+					INCR_NEW
 					vertices.push_back(newVertex);
 					p1.clear();
 					p2.clear();
@@ -518,18 +518,18 @@ void loadObjModelWithMTL(std::list<TexturedModel*>* models, std::string filePath
 	rawModelsList.push_back(newRaw); //put a copy of the final model into rawModelsList
 
 	//go through rawModelsList and modelTextures to construct and add to the given TexturedModel list
-	Global::countNew++;
+	INCR_NEW
 	for (unsigned int i = 0; i < rawModelsList.size(); i++)
 	{
 		TexturedModel* tm = new TexturedModel(&rawModelsList[i], &modelTextures[i]);
-		Global::countNew++;
+		INCR_NEW
 		models->push_back(tm);
 	}
 
 	for (auto vertex : vertices)
 	{
 		delete vertex;
-		Global::countDelete++;
+		INCR_DEL
 	}
 
 	line.clear();
@@ -713,7 +713,7 @@ void dealWithAlreadyProcessedVertex(Vertex* previousVertex,
 		else
 		{
 			Vertex* duplicateVertex = new Vertex(vertices->size(), previousVertex->getPosition());
-			Global::countNew++;
+			INCR_NEW
 			duplicateVertex->setTextureIndex(newTextureIndex);
 			duplicateVertex->setNormalIndex(newNormalIndex);
 
@@ -967,7 +967,7 @@ void processVertexOLD(char** vertexData,
 CollisionModel* loadCollisionModel(std::string filePath, std::string fileName)
 {
 	CollisionModel* collisionModel = new CollisionModel;
-	Global::countNew++;
+	INCR_NEW
 	std::list<FakeTexture*> fakeTextures;
 
 	char currType = 0;
@@ -1021,7 +1021,7 @@ CollisionModel* loadCollisionModel(std::string filePath, std::string fileName)
 				Vector3f* vert3 = &vertices[std::stoi(vertex3[0]) - 1];
 
 				Triangle3D* tri = new Triangle3D(vert1, vert2, vert3, currType, currSound, currParticle);
-				Global::countNew++;
+				INCR_NEW
 
 				collisionModel->triangles.push_back(tri);
 
@@ -1074,7 +1074,7 @@ CollisionModel* loadCollisionModel(std::string filePath, std::string fileName)
 						if (strcmp(lineSplitMTL[0], "newmtl") == 0)
 						{
 							FakeTexture* fktex = new FakeTexture;
-							Global::countNew++;
+							INCR_NEW
 							fktex->name = lineSplitMTL[1];
 							fakeTextures.push_back(fktex);
 						}
@@ -1108,7 +1108,7 @@ CollisionModel* loadCollisionModel(std::string filePath, std::string fileName)
 	for (FakeTexture* dummy : fakeTextures)
 	{
 		delete dummy;
-		Global::countDelete++;
+		INCR_DEL
 	}
 
 	return collisionModel;

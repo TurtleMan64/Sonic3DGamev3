@@ -7,11 +7,11 @@
 
 HorizontalBlur::HorizontalBlur(int targetFboWidth, int targetFboHeight)
 {
-	shader = new HorizontalBlurShader("res/Shaders/gaussianBlur/horizontalBlurVertex.txt", "res/Shaders/gaussianBlur/blurFragment.txt"); Global::countNew++;
+	shader = new HorizontalBlurShader("res/Shaders/gaussianBlur/horizontalBlurVertex.txt", "res/Shaders/gaussianBlur/blurFragment.txt"); INCR_NEW
 	shader->start();
 	shader->loadTargetWidth((float)targetFboWidth);
 	shader->stop();
-	renderer = new ImageRenderer(targetFboWidth, targetFboHeight); Global::countNew++;
+	renderer = new ImageRenderer(targetFboWidth, targetFboHeight); INCR_NEW
 }
 
 void HorizontalBlur::render(GLuint texture)
@@ -32,6 +32,6 @@ void HorizontalBlur::cleanUp()
 {
 	renderer->cleanUp();
 	shader->cleanUp();
-	delete shader; Global::countDelete++;
-	delete renderer; Global::countDelete++;
+	delete shader; INCR_DEL
+	delete renderer; INCR_DEL
 }

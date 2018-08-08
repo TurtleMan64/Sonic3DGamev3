@@ -41,7 +41,7 @@ SH_TurnAsi::SH_TurnAsi(float x, float y, float z, float yRot)
 
 	bucket = new Body(&SH_TurnAsi::modelsBucket);
 	bucket->setVisible(true);
-	Global::countNew++;
+	INCR_NEW
 	Main_addEntity(bucket);
 	bucket->setPosition(&position);
 	bucket->setRotY(yRot + 180.0f);

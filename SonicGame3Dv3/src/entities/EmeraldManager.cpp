@@ -41,19 +41,19 @@ EmeraldManager::~EmeraldManager()
 	if (EmeraldManager::radar1 != nullptr)
 	{
 		GuiManager::removeGui(EmeraldManager::radar1);
-		delete EmeraldManager::radar1; Global::countDelete++;
+		delete EmeraldManager::radar1; INCR_DEL
 		EmeraldManager::radar1 = nullptr;
 	}
 	if (EmeraldManager::radar2 != nullptr)
 	{
 		GuiManager::removeGui(EmeraldManager::radar2);
-		delete EmeraldManager::radar2; Global::countDelete++;
+		delete EmeraldManager::radar2; INCR_DEL
 		EmeraldManager::radar2 = nullptr;
 	}
 	if (EmeraldManager::radar3 != nullptr)
 	{
 		GuiManager::removeGui(EmeraldManager::radar3);
-		delete EmeraldManager::radar3; Global::countDelete++;
+		delete EmeraldManager::radar3; INCR_DEL
 		EmeraldManager::radar3 = nullptr;
 	}
 
@@ -86,9 +86,9 @@ EmeraldManager::EmeraldManager()
 	float py = 1.0f/(SCR_HEIGHT); //1 pixel in y dimension
 
 	//Create Radar gui textures
-	EmeraldManager::radar1 = new GuiTexture(EmeraldManager::radarGreyID, 0.5f-48*px, 1-32*py, 32*px, 32*py, 0); Global::countNew++;
-	EmeraldManager::radar2 = new GuiTexture(EmeraldManager::radarGreyID, 0.5f,       1-32*py, 32*px, 32*py, 0); Global::countNew++;
-	EmeraldManager::radar3 = new GuiTexture(EmeraldManager::radarGreyID, 0.5f+48*px, 1-32*py, 32*px, 32*py, 0); Global::countNew++;
+	EmeraldManager::radar1 = new GuiTexture(EmeraldManager::radarGreyID, 0.5f-48*px, 1-32*py, 32*px, 32*py, 0); INCR_NEW
+	EmeraldManager::radar2 = new GuiTexture(EmeraldManager::radarGreyID, 0.5f,       1-32*py, 32*px, 32*py, 0); INCR_NEW
+	EmeraldManager::radar3 = new GuiTexture(EmeraldManager::radarGreyID, 0.5f+48*px, 1-32*py, 32*px, 32*py, 0); INCR_NEW
 	GuiManager::addGuiToRender(EmeraldManager::radar1);
 	GuiManager::addGuiToRender(EmeraldManager::radar2);
 	GuiManager::addGuiToRender(EmeraldManager::radar3);

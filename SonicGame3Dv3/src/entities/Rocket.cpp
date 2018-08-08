@@ -63,7 +63,7 @@ Rocket::Rocket(int point1ID, int point2ID)
 
 	base = new Body(&Rocket::modelsBase);
 	base->setVisible(true);
-	Global::countNew++;
+	INCR_NEW
 	Main_addEntity(base);
 	base->setPosition(&position);
 	//fix slight position disparity from the position given with q

@@ -7,11 +7,11 @@
 
 CombineFilter::CombineFilter()
 {
-	shader = new CombineShader("res/Shaders/bloom/simpleVertex.txt", "res/Shaders/bloom/combineFragment.txt"); Global::countNew++;
+	shader = new CombineShader("res/Shaders/bloom/simpleVertex.txt", "res/Shaders/bloom/combineFragment.txt"); INCR_NEW
 	shader->start();
 	shader->connectTextureUnits();
 	shader->stop();
-	renderer = new ImageRenderer; Global::countNew++;
+	renderer = new ImageRenderer; INCR_NEW
 }
 
 void CombineFilter::render(GLuint colourTexture, GLuint highlightTexture)
@@ -29,6 +29,6 @@ void CombineFilter::cleanUp()
 {
 	renderer->cleanUp();
 	shader->cleanUp();
-	delete shader; Global::countDelete++;
-	delete renderer; Global::countDelete++;
+	delete shader; INCR_DEL
+	delete renderer; INCR_DEL
 }

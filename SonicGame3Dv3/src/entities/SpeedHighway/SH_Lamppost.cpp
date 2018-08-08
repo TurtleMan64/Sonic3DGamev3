@@ -29,7 +29,7 @@ SH_Lamppost::SH_Lamppost(float x, float y, float z,
 
 	light = new Body(&SH_Lamppost::modelsLight);
 	light->setVisible(true);
-	Global::countNew++;
+	INCR_NEW
 	Main_addTransparentEntity(light);
 	light->setPosition(&position);
 	light->setRotX(xRot);

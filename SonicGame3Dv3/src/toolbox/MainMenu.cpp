@@ -183,7 +183,7 @@ extern float INPUT_Y;
 
 void MainMenu::init()
 {
-	font = new FontType(Loader_loadTexture("res/Fonts/vipnagorgialla.png"), "res/Fonts/vipnagorgialla.fnt"); Global::countNew++;
+	font = new FontType(Loader_loadTexture("res/Fonts/vipnagorgialla.png"), "res/Fonts/vipnagorgialla.fnt"); INCR_NEW
 
 	MainMenu::titleCardTextTimer = 0;
 
@@ -250,104 +250,104 @@ void MainMenu::loadResources()
 		fontScale = 2.55f;
 	}
 
-	textItem1 = new GUIText("ARCADE",   fontScale, font, 0.0f,   0.333f-0.04f, 0.666f, true, false, true); Global::countNew++;
-	textItem2 = new GUIText("MISSIONS", fontScale, font, 0.333f, 0.333f-0.04f, 0.666f, true, false, true); Global::countNew++;
-	textItem3 = new GUIText("EXTRAS",   fontScale, font, 0.0f,   0.666f-0.04f, 0.666f, true, false, true); Global::countNew++;
-	textItem4 = new GUIText("EXIT",     fontScale, font, 0.333f, 0.666f-0.04f, 0.666f, true, false, true); Global::countNew++;
+	textItem1 = new GUIText("ARCADE",   fontScale, font, 0.0f,   0.333f-0.04f, 0.666f, true, false, true); INCR_NEW
+	textItem2 = new GUIText("MISSIONS", fontScale, font, 0.333f, 0.333f-0.04f, 0.666f, true, false, true); INCR_NEW
+	textItem3 = new GUIText("EXTRAS",   fontScale, font, 0.0f,   0.666f-0.04f, 0.666f, true, false, true); INCR_NEW
+	textItem4 = new GUIText("EXIT",     fontScale, font, 0.333f, 0.666f-0.04f, 0.666f, true, false, true); INCR_NEW
 
-	item1 = new GuiTexture(textureParallelogram, 0.333f, 0.333f, 512*px, 64*py, 0); Global::countNew++;
-	item2 = new GuiTexture(textureParallelogram, 0.666f, 0.333f, 512*px, 64*py, 0); Global::countNew++;
-	item3 = new GuiTexture(textureParallelogram, 0.333f, 0.666f, 512*px, 64*py, 0); Global::countNew++;
-	item4 = new GuiTexture(textureParallelogram, 0.666f, 0.666f, 512*px, 64*py, 0); Global::countNew++;
-	itemBackdrop1 = new GuiTexture(textureParallelogramBackdrop, 0.333f+8*px, 0.333f+6*py, 512*px, 64*py, 0); Global::countNew++;
-	itemBackdrop2 = new GuiTexture(textureParallelogramBackdrop, 0.666f+8*px, 0.333f+6*py, 512*px, 64*py, 0); Global::countNew++;
-	itemBackdrop3 = new GuiTexture(textureParallelogramBackdrop, 0.333f+8*px, 0.666f+6*py, 512*px, 64*py, 0); Global::countNew++;
-	itemBackdrop4 = new GuiTexture(textureParallelogramBackdrop, 0.666f+8*px, 0.666f+6*py, 512*px, 64*py, 0); Global::countNew++;
+	item1 = new GuiTexture(textureParallelogram, 0.333f, 0.333f, 512*px, 64*py, 0); INCR_NEW
+	item2 = new GuiTexture(textureParallelogram, 0.666f, 0.333f, 512*px, 64*py, 0); INCR_NEW
+	item3 = new GuiTexture(textureParallelogram, 0.333f, 0.666f, 512*px, 64*py, 0); INCR_NEW
+	item4 = new GuiTexture(textureParallelogram, 0.666f, 0.666f, 512*px, 64*py, 0); INCR_NEW
+	itemBackdrop1 = new GuiTexture(textureParallelogramBackdrop, 0.333f+8*px, 0.333f+6*py, 512*px, 64*py, 0); INCR_NEW
+	itemBackdrop2 = new GuiTexture(textureParallelogramBackdrop, 0.666f+8*px, 0.333f+6*py, 512*px, 64*py, 0); INCR_NEW
+	itemBackdrop3 = new GuiTexture(textureParallelogramBackdrop, 0.333f+8*px, 0.666f+6*py, 512*px, 64*py, 0); INCR_NEW
+	itemBackdrop4 = new GuiTexture(textureParallelogramBackdrop, 0.666f+8*px, 0.666f+6*py, 512*px, 64*py, 0); INCR_NEW
 
-	itemMission1  = new GuiTexture(textureParallelogramHalf, 0.0f, 0.0f, 1024*px, 64*py, 0); Global::countNew++;
-	itemMission2  = new GuiTexture(textureParallelogramHalf, 0.0f, 0.0f, 1024*px, 64*py, 0); Global::countNew++;
-	itemMission3  = new GuiTexture(textureParallelogramHalf, 0.0f, 0.0f, 1024*px, 64*py, 0); Global::countNew++;
-	itemMission4  = new GuiTexture(textureParallelogramHalf, 0.0f, 0.0f, 1024*px, 64*py, 0); Global::countNew++;
-	itemMission5  = new GuiTexture(textureParallelogramHalf, 0.0f, 0.0f, 1024*px, 64*py, 0); Global::countNew++;
-	itemMission6  = new GuiTexture(textureParallelogramHalf, 0.0f, 0.0f, 1024*px, 64*py, 0); Global::countNew++;
-	itemMission7  = new GuiTexture(textureParallelogramHalf, 0.0f, 0.0f, 1024*px, 64*py, 0); Global::countNew++;
-	itemMission8  = new GuiTexture(textureParallelogramHalf, 0.0f, 0.0f, 1024*px, 64*py, 0); Global::countNew++;
-	itemMission9  = new GuiTexture(textureParallelogramHalf, 0.0f, 0.0f, 1024*px, 64*py, 0); Global::countNew++;
-	itemMission10 = new GuiTexture(textureParallelogramHalf, 0.0f, 0.0f, 1024*px, 64*py, 0); Global::countNew++;
-	itemMission11 = new GuiTexture(textureParallelogramHalf, 0.0f, 0.0f, 1024*px, 64*py, 0); Global::countNew++;
-	itemMission12 = new GuiTexture(textureParallelogramHalf, 0.0f, 0.0f, 1024*px, 64*py, 0); Global::countNew++;
-	itemMission13 = new GuiTexture(textureParallelogramHalf, 0.0f, 0.0f, 1024*px, 64*py, 0); Global::countNew++;
-	itemMission14 = new GuiTexture(textureParallelogramHalf, 0.0f, 0.0f, 1024*px, 64*py, 0); Global::countNew++;
-	itemMission15 = new GuiTexture(textureParallelogramHalf, 0.0f, 0.0f, 1024*px, 64*py, 0); Global::countNew++;
-	itemMission16 = new GuiTexture(textureParallelogramHalf, 0.0f, 0.0f, 1024*px, 64*py, 0); Global::countNew++;
-	itemMission17 = new GuiTexture(textureParallelogramHalf, 0.0f, 0.0f, 1024*px, 64*py, 0); Global::countNew++;
-	itemMission18 = new GuiTexture(textureParallelogramHalf, 0.0f, 0.0f, 1024*px, 64*py, 0); Global::countNew++;
-	itemMission19 = new GuiTexture(textureParallelogramHalf, 0.0f, 0.0f, 1024*px, 64*py, 0); Global::countNew++;
-	itemMission20 = new GuiTexture(textureParallelogramHalf, 0.0f, 0.0f, 1024*px, 64*py, 0); Global::countNew++;
-	itemMission21 = new GuiTexture(textureParallelogramHalf, 0.0f, 0.0f, 1024*px, 64*py, 0); Global::countNew++;
-	itemMission22 = new GuiTexture(textureParallelogramHalf, 0.0f, 0.0f, 1024*px, 64*py, 0); Global::countNew++;
-	itemMissionBackdrop1  = new GuiTexture(textureParallelogramHalfBackdrop, 0.0f, 0.0f, 1024*px, 64*py, 0); Global::countNew++;
-	itemMissionBackdrop2  = new GuiTexture(textureParallelogramHalfBackdrop, 0.0f, 0.0f, 1024*px, 64*py, 0); Global::countNew++;
-	itemMissionBackdrop3  = new GuiTexture(textureParallelogramHalfBackdrop, 0.0f, 0.0f, 1024*px, 64*py, 0); Global::countNew++;
-	itemMissionBackdrop4  = new GuiTexture(textureParallelogramHalfBackdrop, 0.0f, 0.0f, 1024*px, 64*py, 0); Global::countNew++;
-	itemMissionBackdrop5  = new GuiTexture(textureParallelogramHalfBackdrop, 0.0f, 0.0f, 1024*px, 64*py, 0); Global::countNew++;
-	itemMissionBackdrop6  = new GuiTexture(textureParallelogramHalfBackdrop, 0.0f, 0.0f, 1024*px, 64*py, 0); Global::countNew++;
-	itemMissionBackdrop7  = new GuiTexture(textureParallelogramHalfBackdrop, 0.0f, 0.0f, 1024*px, 64*py, 0); Global::countNew++;
-	itemMissionBackdrop8  = new GuiTexture(textureParallelogramHalfBackdrop, 0.0f, 0.0f, 1024*px, 64*py, 0); Global::countNew++;
-	itemMissionBackdrop9  = new GuiTexture(textureParallelogramHalfBackdrop, 0.0f, 0.0f, 1024*px, 64*py, 0); Global::countNew++;
-	itemMissionBackdrop10 = new GuiTexture(textureParallelogramHalfBackdrop, 0.0f, 0.0f, 1024*px, 64*py, 0); Global::countNew++;
-	itemMissionBackdrop11 = new GuiTexture(textureParallelogramHalfBackdrop, 0.0f, 0.0f, 1024*px, 64*py, 0); Global::countNew++;
-	itemMissionBackdrop12 = new GuiTexture(textureParallelogramHalfBackdrop, 0.0f, 0.0f, 1024*px, 64*py, 0); Global::countNew++;
-	itemMissionBackdrop13 = new GuiTexture(textureParallelogramHalfBackdrop, 0.0f, 0.0f, 1024*px, 64*py, 0); Global::countNew++;
-	itemMissionBackdrop14 = new GuiTexture(textureParallelogramHalfBackdrop, 0.0f, 0.0f, 1024*px, 64*py, 0); Global::countNew++;
-	itemMissionBackdrop15 = new GuiTexture(textureParallelogramHalfBackdrop, 0.0f, 0.0f, 1024*px, 64*py, 0); Global::countNew++;
-	itemMissionBackdrop16 = new GuiTexture(textureParallelogramHalfBackdrop, 0.0f, 0.0f, 1024*px, 64*py, 0); Global::countNew++;
-	itemMissionBackdrop17 = new GuiTexture(textureParallelogramHalfBackdrop, 0.0f, 0.0f, 1024*px, 64*py, 0); Global::countNew++;
-	itemMissionBackdrop18 = new GuiTexture(textureParallelogramHalfBackdrop, 0.0f, 0.0f, 1024*px, 64*py, 0); Global::countNew++;
-	itemMissionBackdrop19 = new GuiTexture(textureParallelogramHalfBackdrop, 0.0f, 0.0f, 1024*px, 64*py, 0); Global::countNew++;
-	itemMissionBackdrop20 = new GuiTexture(textureParallelogramHalfBackdrop, 0.0f, 0.0f, 1024*px, 64*py, 0); Global::countNew++;
-	itemMissionBackdrop21 = new GuiTexture(textureParallelogramHalfBackdrop, 0.0f, 0.0f, 1024*px, 64*py, 0); Global::countNew++;
-	itemMissionBackdrop22 = new GuiTexture(textureParallelogramHalfBackdrop, 0.0f, 0.0f, 1024*px, 64*py, 0); Global::countNew++;
+	itemMission1  = new GuiTexture(textureParallelogramHalf, 0.0f, 0.0f, 1024*px, 64*py, 0); INCR_NEW
+	itemMission2  = new GuiTexture(textureParallelogramHalf, 0.0f, 0.0f, 1024*px, 64*py, 0); INCR_NEW
+	itemMission3  = new GuiTexture(textureParallelogramHalf, 0.0f, 0.0f, 1024*px, 64*py, 0); INCR_NEW
+	itemMission4  = new GuiTexture(textureParallelogramHalf, 0.0f, 0.0f, 1024*px, 64*py, 0); INCR_NEW
+	itemMission5  = new GuiTexture(textureParallelogramHalf, 0.0f, 0.0f, 1024*px, 64*py, 0); INCR_NEW
+	itemMission6  = new GuiTexture(textureParallelogramHalf, 0.0f, 0.0f, 1024*px, 64*py, 0); INCR_NEW
+	itemMission7  = new GuiTexture(textureParallelogramHalf, 0.0f, 0.0f, 1024*px, 64*py, 0); INCR_NEW
+	itemMission8  = new GuiTexture(textureParallelogramHalf, 0.0f, 0.0f, 1024*px, 64*py, 0); INCR_NEW
+	itemMission9  = new GuiTexture(textureParallelogramHalf, 0.0f, 0.0f, 1024*px, 64*py, 0); INCR_NEW
+	itemMission10 = new GuiTexture(textureParallelogramHalf, 0.0f, 0.0f, 1024*px, 64*py, 0); INCR_NEW
+	itemMission11 = new GuiTexture(textureParallelogramHalf, 0.0f, 0.0f, 1024*px, 64*py, 0); INCR_NEW
+	itemMission12 = new GuiTexture(textureParallelogramHalf, 0.0f, 0.0f, 1024*px, 64*py, 0); INCR_NEW
+	itemMission13 = new GuiTexture(textureParallelogramHalf, 0.0f, 0.0f, 1024*px, 64*py, 0); INCR_NEW
+	itemMission14 = new GuiTexture(textureParallelogramHalf, 0.0f, 0.0f, 1024*px, 64*py, 0); INCR_NEW
+	itemMission15 = new GuiTexture(textureParallelogramHalf, 0.0f, 0.0f, 1024*px, 64*py, 0); INCR_NEW
+	itemMission16 = new GuiTexture(textureParallelogramHalf, 0.0f, 0.0f, 1024*px, 64*py, 0); INCR_NEW
+	itemMission17 = new GuiTexture(textureParallelogramHalf, 0.0f, 0.0f, 1024*px, 64*py, 0); INCR_NEW
+	itemMission18 = new GuiTexture(textureParallelogramHalf, 0.0f, 0.0f, 1024*px, 64*py, 0); INCR_NEW
+	itemMission19 = new GuiTexture(textureParallelogramHalf, 0.0f, 0.0f, 1024*px, 64*py, 0); INCR_NEW
+	itemMission20 = new GuiTexture(textureParallelogramHalf, 0.0f, 0.0f, 1024*px, 64*py, 0); INCR_NEW
+	itemMission21 = new GuiTexture(textureParallelogramHalf, 0.0f, 0.0f, 1024*px, 64*py, 0); INCR_NEW
+	itemMission22 = new GuiTexture(textureParallelogramHalf, 0.0f, 0.0f, 1024*px, 64*py, 0); INCR_NEW
+	itemMissionBackdrop1  = new GuiTexture(textureParallelogramHalfBackdrop, 0.0f, 0.0f, 1024*px, 64*py, 0); INCR_NEW
+	itemMissionBackdrop2  = new GuiTexture(textureParallelogramHalfBackdrop, 0.0f, 0.0f, 1024*px, 64*py, 0); INCR_NEW
+	itemMissionBackdrop3  = new GuiTexture(textureParallelogramHalfBackdrop, 0.0f, 0.0f, 1024*px, 64*py, 0); INCR_NEW
+	itemMissionBackdrop4  = new GuiTexture(textureParallelogramHalfBackdrop, 0.0f, 0.0f, 1024*px, 64*py, 0); INCR_NEW
+	itemMissionBackdrop5  = new GuiTexture(textureParallelogramHalfBackdrop, 0.0f, 0.0f, 1024*px, 64*py, 0); INCR_NEW
+	itemMissionBackdrop6  = new GuiTexture(textureParallelogramHalfBackdrop, 0.0f, 0.0f, 1024*px, 64*py, 0); INCR_NEW
+	itemMissionBackdrop7  = new GuiTexture(textureParallelogramHalfBackdrop, 0.0f, 0.0f, 1024*px, 64*py, 0); INCR_NEW
+	itemMissionBackdrop8  = new GuiTexture(textureParallelogramHalfBackdrop, 0.0f, 0.0f, 1024*px, 64*py, 0); INCR_NEW
+	itemMissionBackdrop9  = new GuiTexture(textureParallelogramHalfBackdrop, 0.0f, 0.0f, 1024*px, 64*py, 0); INCR_NEW
+	itemMissionBackdrop10 = new GuiTexture(textureParallelogramHalfBackdrop, 0.0f, 0.0f, 1024*px, 64*py, 0); INCR_NEW
+	itemMissionBackdrop11 = new GuiTexture(textureParallelogramHalfBackdrop, 0.0f, 0.0f, 1024*px, 64*py, 0); INCR_NEW
+	itemMissionBackdrop12 = new GuiTexture(textureParallelogramHalfBackdrop, 0.0f, 0.0f, 1024*px, 64*py, 0); INCR_NEW
+	itemMissionBackdrop13 = new GuiTexture(textureParallelogramHalfBackdrop, 0.0f, 0.0f, 1024*px, 64*py, 0); INCR_NEW
+	itemMissionBackdrop14 = new GuiTexture(textureParallelogramHalfBackdrop, 0.0f, 0.0f, 1024*px, 64*py, 0); INCR_NEW
+	itemMissionBackdrop15 = new GuiTexture(textureParallelogramHalfBackdrop, 0.0f, 0.0f, 1024*px, 64*py, 0); INCR_NEW
+	itemMissionBackdrop16 = new GuiTexture(textureParallelogramHalfBackdrop, 0.0f, 0.0f, 1024*px, 64*py, 0); INCR_NEW
+	itemMissionBackdrop17 = new GuiTexture(textureParallelogramHalfBackdrop, 0.0f, 0.0f, 1024*px, 64*py, 0); INCR_NEW
+	itemMissionBackdrop18 = new GuiTexture(textureParallelogramHalfBackdrop, 0.0f, 0.0f, 1024*px, 64*py, 0); INCR_NEW
+	itemMissionBackdrop19 = new GuiTexture(textureParallelogramHalfBackdrop, 0.0f, 0.0f, 1024*px, 64*py, 0); INCR_NEW
+	itemMissionBackdrop20 = new GuiTexture(textureParallelogramHalfBackdrop, 0.0f, 0.0f, 1024*px, 64*py, 0); INCR_NEW
+	itemMissionBackdrop21 = new GuiTexture(textureParallelogramHalfBackdrop, 0.0f, 0.0f, 1024*px, 64*py, 0); INCR_NEW
+	itemMissionBackdrop22 = new GuiTexture(textureParallelogramHalfBackdrop, 0.0f, 0.0f, 1024*px, 64*py, 0); INCR_NEW
 
-	itemRankDisplay          = new GuiTexture(textureParallelogram,              0.75f,             0.5f,        512*px,  64*py, 0); Global::countNew++;
-	itemRankDisplayBackdrop  = new GuiTexture(textureParallelogramBackdrop,      0.75f+8*px,        0.5f+6*py,   512*px,  64*py, 0); Global::countNew++;
-	itemTimeDisplay          = new GuiTexture(textureParallelogramHalf2,         0.75f+256*px,      0.5f+128*py, 1024*px, 64*py, 0); Global::countNew++;
-	itemTimeDisplayBackdrop  = new GuiTexture(textureParallelogramHalf2Backdrop, 0.75f+256*px+8*px, 0.5f+134*py, 1024*px, 64*py, 0); Global::countNew++;
-	itemScoreDisplay         = new GuiTexture(textureParallelogramHalf2,         0.75f+256*px,      0.5f+256*py, 1024*px, 64*py, 0); Global::countNew++;
-	itemScoreDisplayBackdrop = new GuiTexture(textureParallelogramHalf2Backdrop, 0.75f+256*px+8*px, 0.5f+262*py, 1024*px, 64*py, 0); Global::countNew++;
+	itemRankDisplay          = new GuiTexture(textureParallelogram,              0.75f,             0.5f,        512*px,  64*py, 0); INCR_NEW
+	itemRankDisplayBackdrop  = new GuiTexture(textureParallelogramBackdrop,      0.75f+8*px,        0.5f+6*py,   512*px,  64*py, 0); INCR_NEW
+	itemTimeDisplay          = new GuiTexture(textureParallelogramHalf2,         0.75f+256*px,      0.5f+128*py, 1024*px, 64*py, 0); INCR_NEW
+	itemTimeDisplayBackdrop  = new GuiTexture(textureParallelogramHalf2Backdrop, 0.75f+256*px+8*px, 0.5f+134*py, 1024*px, 64*py, 0); INCR_NEW
+	itemScoreDisplay         = new GuiTexture(textureParallelogramHalf2,         0.75f+256*px,      0.5f+256*py, 1024*px, 64*py, 0); INCR_NEW
+	itemScoreDisplayBackdrop = new GuiTexture(textureParallelogramHalf2Backdrop, 0.75f+256*px+8*px, 0.5f+262*py, 1024*px, 64*py, 0); INCR_NEW
 
-	textBestScore = new GUIText("SCORE:",      2.0f, font, 0.75f-192*px, 0.5f+128*py-0.025f, 1-(0.75f-192*px), false, false, true); Global::countNew++;
-	textBestTime  = new GUIText("TIME:",       2.0f, font, 0.75f-192*px, 0.5f+256*py-0.025f, 1-(0.75f-192*px), false, false, true); Global::countNew++;
+	textBestScore = new GUIText("SCORE:",      2.0f, font, 0.75f-192*px, 0.5f+128*py-0.025f, 1-(0.75f-192*px), false, false, true); INCR_NEW
+	textBestTime  = new GUIText("TIME:",       2.0f, font, 0.75f-192*px, 0.5f+256*py-0.025f, 1-(0.75f-192*px), false, false, true); INCR_NEW
 
-	rankM1 = new GuiTexture(textureRankA, 0.75f-83*px, 0.5f, 64*px, 64*py, 0); Global::countNew++;
-	rankM2 = new GuiTexture(textureRankB, 0.75f-28*px, 0.5f, 64*px, 64*py, 0); Global::countNew++;
-	rankM3 = new GuiTexture(textureRankC, 0.75f+27*px, 0.5f, 64*px, 64*py, 0); Global::countNew++;
-	rankM4 = new GuiTexture(textureRankD, 0.75f+82*px, 0.5f, 64*px, 64*py, 0); Global::countNew++;
+	rankM1 = new GuiTexture(textureRankA, 0.75f-83*px, 0.5f, 64*px, 64*py, 0); INCR_NEW
+	rankM2 = new GuiTexture(textureRankB, 0.75f-28*px, 0.5f, 64*px, 64*py, 0); INCR_NEW
+	rankM3 = new GuiTexture(textureRankC, 0.75f+27*px, 0.5f, 64*px, 64*py, 0); INCR_NEW
+	rankM4 = new GuiTexture(textureRankD, 0.75f+82*px, 0.5f, 64*px, 64*py, 0); INCR_NEW
 
-	missionSelect = new GuiTexture(textureMissionSelect, 0.75f-83*px, 0.5f, 96*px, 96*py, 0); Global::countNew++;
+	missionSelect = new GuiTexture(textureMissionSelect, 0.75f-83*px, 0.5f, 96*px, 96*py, 0); INCR_NEW
 
-	textMission1  = new GUIText("EMERALD COAST",       2.0f, font, 0.0f, 0.0f, 0.5f-128*px, false, true, true); Global::countNew++;
-	textMission2  = new GUIText("DRY LAGOON",          2.0f, font, 0.0f, 0.0f, 0.5f-128*px, false, true, true); Global::countNew++;
-	textMission3  = new GUIText("SPEED HIGHWAY",       2.0f, font, 0.0f, 0.0f, 0.5f-128*px, false, true, true); Global::countNew++;
-	textMission4  = new GUIText("TWINKLE PARK",        2.0f, font, 0.0f, 0.0f, 0.5f-128*px, false, true, true); Global::countNew++;
-	textMission5  = new GUIText("WILD CANYON",         2.0f, font, 0.0f, 0.0f, 0.5f-128*px, false, true, true); Global::countNew++;
-	textMission6  = new GUIText("METAL HARBOR",        2.0f, font, 0.0f, 0.0f, 0.5f-128*px, false, true, true); Global::countNew++;
-	textMission7  = new GUIText("DELFINO PLAZA",       2.0f, font, 0.0f, 0.0f, 0.5f-128*px, false, true, true); Global::countNew++;
-	textMission8  = new GUIText("GREEN HILL ZONE",     2.0f, font, 0.0f, 0.0f, 0.5f-128*px, false, true, true); Global::countNew++;
-	textMission9  = new GUIText("NOKI BAY",            2.0f, font, 0.0f, 0.0f, 0.5f-128*px, false, true, true); Global::countNew++;
-	textMission10 = new GUIText("WEAPONS BED",         2.0f, font, 0.0f, 0.0f, 0.5f-128*px, false, true, true); Global::countNew++;
-	textMission11 = new GUIText("OUTSET ISLAND",       2.0f, font, 0.0f, 0.0f, 0.5f-128*px, false, true, true); Global::countNew++;
-	textMission12 = new GUIText("WUHU ISLAND",         2.0f, font, 0.0f, 0.0f, 0.5f-128*px, false, true, true); Global::countNew++;
-	textMission13 = new GUIText("SNOWHEAD",            2.0f, font, 0.0f, 0.0f, 0.5f-128*px, false, true, true); Global::countNew++;
-	textMission14 = new GUIText("SAND HILL",           2.0f, font, 0.0f, 0.0f, 0.5f-128*px, false, true, true); Global::countNew++;
-	textMission15 = new GUIText("RAINBOW ROAD",        2.0f, font, 0.0f, 0.0f, 0.5f-128*px, false, true, true); Global::countNew++;
-	textMission16 = new GUIText("PEACH'S CASTLE",      2.0f, font, 0.0f, 0.0f, 0.5f-128*px, false, true, true); Global::countNew++;
-	textMission17 = new GUIText("KOOPA BEACH",         2.0f, font, 0.0f, 0.0f, 0.5f-128*px, false, true, true); Global::countNew++;
-	textMission18 = new GUIText("FIRE FIELD",          2.0f, font, 0.0f, 0.0f, 0.5f-128*px, false, true, true); Global::countNew++;
-	textMission19 = new GUIText("BOB-OMB BATTLEFIELD", 2.0f, font, 0.0f, 0.0f, 0.5f-128*px, false, true, true); Global::countNew++;
-	textMission20 = new GUIText("KINGDOM VALLEY",      2.0f, font, 0.0f, 0.0f, 0.5f-128*px, false, true, true); Global::countNew++;
-	textMission21 = new GUIText("PUMPKIN HILL",        2.0f, font, 0.0f, 0.0f, 0.5f-128*px, false, true, true); Global::countNew++;
-	textMission22 = new GUIText("RADICAL HIGHWAY",     2.0f, font, 0.0f, 0.0f, 0.5f-128*px, false, true, true); Global::countNew++;
+	textMission1  = new GUIText("EMERALD COAST",       2.0f, font, 0.0f, 0.0f, 0.5f-128*px, false, true, true); INCR_NEW
+	textMission2  = new GUIText("DRY LAGOON",          2.0f, font, 0.0f, 0.0f, 0.5f-128*px, false, true, true); INCR_NEW
+	textMission3  = new GUIText("SPEED HIGHWAY",       2.0f, font, 0.0f, 0.0f, 0.5f-128*px, false, true, true); INCR_NEW
+	textMission4  = new GUIText("TWINKLE PARK",        2.0f, font, 0.0f, 0.0f, 0.5f-128*px, false, true, true); INCR_NEW
+	textMission5  = new GUIText("WILD CANYON",         2.0f, font, 0.0f, 0.0f, 0.5f-128*px, false, true, true); INCR_NEW
+	textMission6  = new GUIText("METAL HARBOR",        2.0f, font, 0.0f, 0.0f, 0.5f-128*px, false, true, true); INCR_NEW
+	textMission7  = new GUIText("DELFINO PLAZA",       2.0f, font, 0.0f, 0.0f, 0.5f-128*px, false, true, true); INCR_NEW
+	textMission8  = new GUIText("GREEN HILL ZONE",     2.0f, font, 0.0f, 0.0f, 0.5f-128*px, false, true, true); INCR_NEW
+	textMission9  = new GUIText("NOKI BAY",            2.0f, font, 0.0f, 0.0f, 0.5f-128*px, false, true, true); INCR_NEW
+	textMission10 = new GUIText("WEAPONS BED",         2.0f, font, 0.0f, 0.0f, 0.5f-128*px, false, true, true); INCR_NEW
+	textMission11 = new GUIText("OUTSET ISLAND",       2.0f, font, 0.0f, 0.0f, 0.5f-128*px, false, true, true); INCR_NEW
+	textMission12 = new GUIText("WUHU ISLAND",         2.0f, font, 0.0f, 0.0f, 0.5f-128*px, false, true, true); INCR_NEW
+	textMission13 = new GUIText("SNOWHEAD",            2.0f, font, 0.0f, 0.0f, 0.5f-128*px, false, true, true); INCR_NEW
+	textMission14 = new GUIText("SAND HILL",           2.0f, font, 0.0f, 0.0f, 0.5f-128*px, false, true, true); INCR_NEW
+	textMission15 = new GUIText("RAINBOW ROAD",        2.0f, font, 0.0f, 0.0f, 0.5f-128*px, false, true, true); INCR_NEW
+	textMission16 = new GUIText("PEACH'S CASTLE",      2.0f, font, 0.0f, 0.0f, 0.5f-128*px, false, true, true); INCR_NEW
+	textMission17 = new GUIText("KOOPA BEACH",         2.0f, font, 0.0f, 0.0f, 0.5f-128*px, false, true, true); INCR_NEW
+	textMission18 = new GUIText("FIRE FIELD",          2.0f, font, 0.0f, 0.0f, 0.5f-128*px, false, true, true); INCR_NEW
+	textMission19 = new GUIText("BOB-OMB BATTLEFIELD", 2.0f, font, 0.0f, 0.0f, 0.5f-128*px, false, true, true); INCR_NEW
+	textMission20 = new GUIText("KINGDOM VALLEY",      2.0f, font, 0.0f, 0.0f, 0.5f-128*px, false, true, true); INCR_NEW
+	textMission21 = new GUIText("PUMPKIN HILL",        2.0f, font, 0.0f, 0.0f, 0.5f-128*px, false, true, true); INCR_NEW
+	textMission22 = new GUIText("RADICAL HIGHWAY",     2.0f, font, 0.0f, 0.0f, 0.5f-128*px, false, true, true); INCR_NEW
 
 	int totalRanks = 0;
 	int rankAs = 0;
@@ -455,38 +455,38 @@ void MainMenu::loadResources()
 	characterSelectIndex = std::max(0, characterSelectIndex);
 	characterSelectIndex = std::min(characterSelectIndex, (int)unlockedCharacters.size()-1);
 
-	textExtra1Title = new GUIText("A RANK:",         2, font, 0, (1/divisor)+yoff, 1, true, false, false); Global::countNew++;
-	textExtra2Title = new GUIText("HIDDEN NPC:",     2, font, 0, (2/divisor)+yoff, 1, true, false, false); Global::countNew++;
-	textExtra3Title = new GUIText("TOTAL PLAYTIME:", 2, font, 0, (3/divisor)+yoff, 1, true, false, false); Global::countNew++;
+	textExtra1Title = new GUIText("A RANK:",         2, font, 0, (1/divisor)+yoff, 1, true, false, false); INCR_NEW
+	textExtra2Title = new GUIText("HIDDEN NPC:",     2, font, 0, (2/divisor)+yoff, 1, true, false, false); INCR_NEW
+	textExtra3Title = new GUIText("TOTAL PLAYTIME:", 2, font, 0, (3/divisor)+yoff, 1, true, false, false); INCR_NEW
 
-	textExtra1Data = new GUIText(std::to_string(rankAs)  +"/"+std::to_string(totalRanks), 2, font, 0, (1/divisor)-yoff, 1, true, false, false); Global::countNew++; //Number of A ranks
-	textExtra2Data = new GUIText(std::to_string(foundNPC)+"/"+std::to_string(totalNPC),   2, font, 0, (2/divisor)-yoff, 1, true, false, false); Global::countNew++; //Number of NPC found
-	textExtra3Data = new GUIText(playtime, 2, font, 0, (3/divisor)-yoff, 1, true, false, false); Global::countNew++; //Total playtime
+	textExtra1Data = new GUIText(std::to_string(rankAs)  +"/"+std::to_string(totalRanks), 2, font, 0, (1/divisor)-yoff, 1, true, false, false); INCR_NEW //Number of A ranks
+	textExtra2Data = new GUIText(std::to_string(foundNPC)+"/"+std::to_string(totalNPC),   2, font, 0, (2/divisor)-yoff, 1, true, false, false); INCR_NEW //Number of NPC found
+	textExtra3Data = new GUIText(playtime, 2, font, 0, (3/divisor)-yoff, 1, true, false, false); INCR_NEW //Total playtime
 
 	if (Global::gameSaveData.find("BestArcadeClearTime") == Global::gameSaveData.end())
 	{
-		textExtra4Title = new GUIText("BEST ARCADE CLEAR TIME:", 2, font, 0, (4/divisor)+yoff, 1, true, false, false); Global::countNew++;
-		textExtra4Data  = new GUIText("NONE", 2, font, 0, (4/divisor)-yoff, 1, true, false, false); Global::countNew++;
+		textExtra4Title = new GUIText("BEST ARCADE CLEAR TIME:", 2, font, 0, (4/divisor)+yoff, 1, true, false, false); INCR_NEW
+		textExtra4Data  = new GUIText("NONE", 2, font, 0, (4/divisor)-yoff, 1, true, false, false); INCR_NEW
 	}
 	else
 	{
-		textExtra4Title = new GUIText("BEST ARCADE CLEAR TIME:", 2, font, 0, (4/divisor)+yoff, 1, true, false, false); Global::countNew++;
-		textExtra4Data  = new GUIText(MainMenu::convertFramesToTime(stoi(Global::gameSaveData["BestArcadeClearTime"])), 2, font, 0, (4/divisor)-yoff, 1, true, false, false); Global::countNew++;
+		textExtra4Title = new GUIText("BEST ARCADE CLEAR TIME:", 2, font, 0, (4/divisor)+yoff, 1, true, false, false); INCR_NEW
+		textExtra4Data  = new GUIText(MainMenu::convertFramesToTime(stoi(Global::gameSaveData["BestArcadeClearTime"])), 2, font, 0, (4/divisor)-yoff, 1, true, false, false); INCR_NEW
 	}
 
 	if (divisor > 5.5f)
 	{
-		textExtra5Title = new GUIText("PLAY AS:", 2, font, 0, (5/divisor)+yoff, 1, true, false, false); Global::countNew++;
-		textExtra5Data  = new GUIText(unlockedCharacters[characterSelectIndex], 2, font, 0, (5/divisor)-yoff, 1, true, false, false); Global::countNew++;
+		textExtra5Title = new GUIText("PLAY AS:", 2, font, 0, (5/divisor)+yoff, 1, true, false, false); INCR_NEW
+		textExtra5Data  = new GUIText(unlockedCharacters[characterSelectIndex], 2, font, 0, (5/divisor)-yoff, 1, true, false, false); INCR_NEW
 	}
 	else
 	{
-		textExtra5Title = new GUIText("", 2, font, 0, (5/divisor)+yoff, 1, true, false, false); Global::countNew++;
-		textExtra5Data  = new GUIText("", 2, font, 0, (5/divisor)-yoff, 1, true, false, false); Global::countNew++;
+		textExtra5Title = new GUIText("", 2, font, 0, (5/divisor)+yoff, 1, true, false, false); INCR_NEW
+		textExtra5Data  = new GUIText("", 2, font, 0, (5/divisor)-yoff, 1, true, false, false); INCR_NEW
 	}
 
-	textArcadeResultTitle = new GUIText("ARCADE CLEAR TIME:", 3, font, 0, 0.5f-0.09f, 1, true, false, false); Global::countNew++;
-	textArcadeResultData  = new GUIText(MainMenu::convertFramesToTime(Global::gameArcadePlaytime), 3, font, 0, 0.5f, 1, true, false, false); Global::countNew++;
+	textArcadeResultTitle = new GUIText("ARCADE CLEAR TIME:", 3, font, 0, 0.5f-0.09f, 1, true, false, false); INCR_NEW
+	textArcadeResultData  = new GUIText(MainMenu::convertFramesToTime(Global::gameArcadePlaytime), 3, font, 0, 0.5f, 1, true, false, false); INCR_NEW
 
 	if (menuSelectionID <= MISSION_MAX)
 	{
@@ -514,120 +514,120 @@ void MainMenu::unloadResources()
 		return;
 	}
 
-	textItem1->deleteMe(); delete textItem1; Global::countDelete++; textItem1 = nullptr;
-	textItem2->deleteMe(); delete textItem2; Global::countDelete++; textItem2 = nullptr;
-	textItem3->deleteMe(); delete textItem3; Global::countDelete++; textItem3 = nullptr;
-	textItem4->deleteMe(); delete textItem4; Global::countDelete++; textItem4 = nullptr;
+	textItem1->deleteMe(); delete textItem1; INCR_DEL textItem1 = nullptr;
+	textItem2->deleteMe(); delete textItem2; INCR_DEL textItem2 = nullptr;
+	textItem3->deleteMe(); delete textItem3; INCR_DEL textItem3 = nullptr;
+	textItem4->deleteMe(); delete textItem4; INCR_DEL textItem4 = nullptr;
 
-	textMission1 ->deleteMe(); delete textMission1;  Global::countDelete++; textMission1  = nullptr;
-	textMission2 ->deleteMe(); delete textMission2;  Global::countDelete++; textMission2  = nullptr;
-	textMission3 ->deleteMe(); delete textMission3;  Global::countDelete++; textMission3  = nullptr;
-	textMission4 ->deleteMe(); delete textMission4;  Global::countDelete++; textMission4  = nullptr;
-	textMission5 ->deleteMe(); delete textMission5;  Global::countDelete++; textMission5  = nullptr;
-	textMission6 ->deleteMe(); delete textMission6;  Global::countDelete++; textMission6  = nullptr;
-	textMission7 ->deleteMe(); delete textMission7;  Global::countDelete++; textMission7  = nullptr;
-	textMission8 ->deleteMe(); delete textMission8;  Global::countDelete++; textMission8  = nullptr;
-	textMission9 ->deleteMe(); delete textMission9;  Global::countDelete++; textMission9  = nullptr;
-	textMission10->deleteMe(); delete textMission10; Global::countDelete++; textMission10 = nullptr;
-	textMission11->deleteMe(); delete textMission11; Global::countDelete++; textMission11 = nullptr;
-	textMission12->deleteMe(); delete textMission12; Global::countDelete++; textMission12 = nullptr;
-	textMission13->deleteMe(); delete textMission13; Global::countDelete++; textMission13 = nullptr;
-	textMission14->deleteMe(); delete textMission14; Global::countDelete++; textMission14 = nullptr;
-	textMission15->deleteMe(); delete textMission15; Global::countDelete++; textMission15 = nullptr;
-	textMission16->deleteMe(); delete textMission16; Global::countDelete++; textMission16 = nullptr;
-	textMission17->deleteMe(); delete textMission17; Global::countDelete++; textMission17 = nullptr;
-	textMission18->deleteMe(); delete textMission18; Global::countDelete++; textMission18 = nullptr;
-	textMission19->deleteMe(); delete textMission19; Global::countDelete++; textMission19 = nullptr;
-	textMission20->deleteMe(); delete textMission20; Global::countDelete++; textMission20 = nullptr;
-	textMission21->deleteMe(); delete textMission21; Global::countDelete++; textMission21 = nullptr;
-	textMission22->deleteMe(); delete textMission22; Global::countDelete++; textMission22 = nullptr;
+	textMission1 ->deleteMe(); delete textMission1;  INCR_DEL textMission1  = nullptr;
+	textMission2 ->deleteMe(); delete textMission2;  INCR_DEL textMission2  = nullptr;
+	textMission3 ->deleteMe(); delete textMission3;  INCR_DEL textMission3  = nullptr;
+	textMission4 ->deleteMe(); delete textMission4;  INCR_DEL textMission4  = nullptr;
+	textMission5 ->deleteMe(); delete textMission5;  INCR_DEL textMission5  = nullptr;
+	textMission6 ->deleteMe(); delete textMission6;  INCR_DEL textMission6  = nullptr;
+	textMission7 ->deleteMe(); delete textMission7;  INCR_DEL textMission7  = nullptr;
+	textMission8 ->deleteMe(); delete textMission8;  INCR_DEL textMission8  = nullptr;
+	textMission9 ->deleteMe(); delete textMission9;  INCR_DEL textMission9  = nullptr;
+	textMission10->deleteMe(); delete textMission10; INCR_DEL textMission10 = nullptr;
+	textMission11->deleteMe(); delete textMission11; INCR_DEL textMission11 = nullptr;
+	textMission12->deleteMe(); delete textMission12; INCR_DEL textMission12 = nullptr;
+	textMission13->deleteMe(); delete textMission13; INCR_DEL textMission13 = nullptr;
+	textMission14->deleteMe(); delete textMission14; INCR_DEL textMission14 = nullptr;
+	textMission15->deleteMe(); delete textMission15; INCR_DEL textMission15 = nullptr;
+	textMission16->deleteMe(); delete textMission16; INCR_DEL textMission16 = nullptr;
+	textMission17->deleteMe(); delete textMission17; INCR_DEL textMission17 = nullptr;
+	textMission18->deleteMe(); delete textMission18; INCR_DEL textMission18 = nullptr;
+	textMission19->deleteMe(); delete textMission19; INCR_DEL textMission19 = nullptr;
+	textMission20->deleteMe(); delete textMission20; INCR_DEL textMission20 = nullptr;
+	textMission21->deleteMe(); delete textMission21; INCR_DEL textMission21 = nullptr;
+	textMission22->deleteMe(); delete textMission22; INCR_DEL textMission22 = nullptr;
 
-	textExtra1Title->deleteMe(); delete textExtra1Title; Global::countDelete++; textExtra1Title = nullptr;
-	textExtra1Data ->deleteMe(); delete textExtra1Data;  Global::countDelete++; textExtra1Data  = nullptr;
-	textExtra2Title->deleteMe(); delete textExtra2Title; Global::countDelete++; textExtra2Title = nullptr;
-	textExtra2Data ->deleteMe(); delete textExtra2Data;  Global::countDelete++; textExtra2Data  = nullptr;
-	textExtra3Title->deleteMe(); delete textExtra3Title; Global::countDelete++; textExtra3Title = nullptr;
-	textExtra3Data ->deleteMe(); delete textExtra3Data;  Global::countDelete++; textExtra3Data  = nullptr;
-	textExtra4Title->deleteMe(); delete textExtra4Title; Global::countDelete++; textExtra4Title = nullptr;
-	textExtra4Data ->deleteMe(); delete textExtra4Data;  Global::countDelete++; textExtra4Data  = nullptr;
-	textExtra5Title->deleteMe(); delete textExtra5Title; Global::countDelete++; textExtra5Title = nullptr;
-	textExtra5Data ->deleteMe(); delete textExtra5Data;  Global::countDelete++; textExtra5Data  = nullptr;
+	textExtra1Title->deleteMe(); delete textExtra1Title; INCR_DEL textExtra1Title = nullptr;
+	textExtra1Data ->deleteMe(); delete textExtra1Data;  INCR_DEL textExtra1Data  = nullptr;
+	textExtra2Title->deleteMe(); delete textExtra2Title; INCR_DEL textExtra2Title = nullptr;
+	textExtra2Data ->deleteMe(); delete textExtra2Data;  INCR_DEL textExtra2Data  = nullptr;
+	textExtra3Title->deleteMe(); delete textExtra3Title; INCR_DEL textExtra3Title = nullptr;
+	textExtra3Data ->deleteMe(); delete textExtra3Data;  INCR_DEL textExtra3Data  = nullptr;
+	textExtra4Title->deleteMe(); delete textExtra4Title; INCR_DEL textExtra4Title = nullptr;
+	textExtra4Data ->deleteMe(); delete textExtra4Data;  INCR_DEL textExtra4Data  = nullptr;
+	textExtra5Title->deleteMe(); delete textExtra5Title; INCR_DEL textExtra5Title = nullptr;
+	textExtra5Data ->deleteMe(); delete textExtra5Data;  INCR_DEL textExtra5Data  = nullptr;
 
-	textArcadeResultTitle->deleteMe(); delete textArcadeResultTitle; Global::countDelete++; textArcadeResultTitle  = nullptr;
-	textArcadeResultData ->deleteMe(); delete textArcadeResultData;  Global::countDelete++; textArcadeResultData   = nullptr;
+	textArcadeResultTitle->deleteMe(); delete textArcadeResultTitle; INCR_DEL textArcadeResultTitle  = nullptr;
+	textArcadeResultData ->deleteMe(); delete textArcadeResultData;  INCR_DEL textArcadeResultData   = nullptr;
 
 	GuiManager::clearGuisToRender();
 
-	delete item1; Global::countDelete++; item1 = nullptr;
-	delete item2; Global::countDelete++; item2 = nullptr;
-	delete item3; Global::countDelete++; item3 = nullptr;
-	delete item4; Global::countDelete++; item4 = nullptr;
-	delete itemBackdrop1; Global::countDelete++; itemBackdrop1 = nullptr;
-	delete itemBackdrop2; Global::countDelete++; itemBackdrop2 = nullptr;
-	delete itemBackdrop3; Global::countDelete++; itemBackdrop3 = nullptr;
-	delete itemBackdrop4; Global::countDelete++; itemBackdrop4 = nullptr;
+	delete item1; INCR_DEL item1 = nullptr;
+	delete item2; INCR_DEL item2 = nullptr;
+	delete item3; INCR_DEL item3 = nullptr;
+	delete item4; INCR_DEL item4 = nullptr;
+	delete itemBackdrop1; INCR_DEL itemBackdrop1 = nullptr;
+	delete itemBackdrop2; INCR_DEL itemBackdrop2 = nullptr;
+	delete itemBackdrop3; INCR_DEL itemBackdrop3 = nullptr;
+	delete itemBackdrop4; INCR_DEL itemBackdrop4 = nullptr;
 
-	delete itemMission1;  Global::countDelete++; itemMission1  = nullptr;
-	delete itemMission2;  Global::countDelete++; itemMission2  = nullptr;
-	delete itemMission3;  Global::countDelete++; itemMission3  = nullptr;
-	delete itemMission4;  Global::countDelete++; itemMission4  = nullptr;
-	delete itemMission5;  Global::countDelete++; itemMission5  = nullptr;
-	delete itemMission6;  Global::countDelete++; itemMission6  = nullptr;
-	delete itemMission7;  Global::countDelete++; itemMission7  = nullptr;
-	delete itemMission8;  Global::countDelete++; itemMission8  = nullptr;
-	delete itemMission9;  Global::countDelete++; itemMission9  = nullptr;
-	delete itemMission10; Global::countDelete++; itemMission10 = nullptr;
-	delete itemMission11; Global::countDelete++; itemMission11 = nullptr;
-	delete itemMission12; Global::countDelete++; itemMission12 = nullptr;
-	delete itemMission13; Global::countDelete++; itemMission13 = nullptr;
-	delete itemMission14; Global::countDelete++; itemMission14 = nullptr;
-	delete itemMission15; Global::countDelete++; itemMission15 = nullptr;
-	delete itemMission16; Global::countDelete++; itemMission16 = nullptr;
-	delete itemMission17; Global::countDelete++; itemMission17 = nullptr;
-	delete itemMission18; Global::countDelete++; itemMission18 = nullptr;
-	delete itemMission19; Global::countDelete++; itemMission19 = nullptr;
-	delete itemMission20; Global::countDelete++; itemMission20 = nullptr;
-	delete itemMission21; Global::countDelete++; itemMission21 = nullptr;
-	delete itemMission22; Global::countDelete++; itemMission22 = nullptr;
-	delete itemMissionBackdrop1;  Global::countDelete++; itemMissionBackdrop1  = nullptr; 
-	delete itemMissionBackdrop2;  Global::countDelete++; itemMissionBackdrop2  = nullptr; 
-	delete itemMissionBackdrop3;  Global::countDelete++; itemMissionBackdrop3  = nullptr; 
-	delete itemMissionBackdrop4;  Global::countDelete++; itemMissionBackdrop4  = nullptr; 
-	delete itemMissionBackdrop5;  Global::countDelete++; itemMissionBackdrop5  = nullptr; 
-	delete itemMissionBackdrop6;  Global::countDelete++; itemMissionBackdrop6  = nullptr; 
-	delete itemMissionBackdrop7;  Global::countDelete++; itemMissionBackdrop7  = nullptr; 
-	delete itemMissionBackdrop8;  Global::countDelete++; itemMissionBackdrop8  = nullptr; 
-	delete itemMissionBackdrop9;  Global::countDelete++; itemMissionBackdrop9  = nullptr; 
-	delete itemMissionBackdrop10; Global::countDelete++; itemMissionBackdrop10 = nullptr;
-	delete itemMissionBackdrop11; Global::countDelete++; itemMissionBackdrop11 = nullptr;
-	delete itemMissionBackdrop12; Global::countDelete++; itemMissionBackdrop12 = nullptr;
-	delete itemMissionBackdrop13; Global::countDelete++; itemMissionBackdrop13 = nullptr;
-	delete itemMissionBackdrop14; Global::countDelete++; itemMissionBackdrop14 = nullptr;
-	delete itemMissionBackdrop15; Global::countDelete++; itemMissionBackdrop15 = nullptr;
-	delete itemMissionBackdrop16; Global::countDelete++; itemMissionBackdrop16 = nullptr;
-	delete itemMissionBackdrop17; Global::countDelete++; itemMissionBackdrop17 = nullptr;
-	delete itemMissionBackdrop18; Global::countDelete++; itemMissionBackdrop18 = nullptr;
-	delete itemMissionBackdrop19; Global::countDelete++; itemMissionBackdrop19 = nullptr;
-	delete itemMissionBackdrop20; Global::countDelete++; itemMissionBackdrop20 = nullptr;
-	delete itemMissionBackdrop21; Global::countDelete++; itemMissionBackdrop21 = nullptr;
-	delete itemMissionBackdrop22; Global::countDelete++; itemMissionBackdrop22 = nullptr;
+	delete itemMission1;  INCR_DEL itemMission1  = nullptr;
+	delete itemMission2;  INCR_DEL itemMission2  = nullptr;
+	delete itemMission3;  INCR_DEL itemMission3  = nullptr;
+	delete itemMission4;  INCR_DEL itemMission4  = nullptr;
+	delete itemMission5;  INCR_DEL itemMission5  = nullptr;
+	delete itemMission6;  INCR_DEL itemMission6  = nullptr;
+	delete itemMission7;  INCR_DEL itemMission7  = nullptr;
+	delete itemMission8;  INCR_DEL itemMission8  = nullptr;
+	delete itemMission9;  INCR_DEL itemMission9  = nullptr;
+	delete itemMission10; INCR_DEL itemMission10 = nullptr;
+	delete itemMission11; INCR_DEL itemMission11 = nullptr;
+	delete itemMission12; INCR_DEL itemMission12 = nullptr;
+	delete itemMission13; INCR_DEL itemMission13 = nullptr;
+	delete itemMission14; INCR_DEL itemMission14 = nullptr;
+	delete itemMission15; INCR_DEL itemMission15 = nullptr;
+	delete itemMission16; INCR_DEL itemMission16 = nullptr;
+	delete itemMission17; INCR_DEL itemMission17 = nullptr;
+	delete itemMission18; INCR_DEL itemMission18 = nullptr;
+	delete itemMission19; INCR_DEL itemMission19 = nullptr;
+	delete itemMission20; INCR_DEL itemMission20 = nullptr;
+	delete itemMission21; INCR_DEL itemMission21 = nullptr;
+	delete itemMission22; INCR_DEL itemMission22 = nullptr;
+	delete itemMissionBackdrop1;  INCR_DEL itemMissionBackdrop1  = nullptr; 
+	delete itemMissionBackdrop2;  INCR_DEL itemMissionBackdrop2  = nullptr; 
+	delete itemMissionBackdrop3;  INCR_DEL itemMissionBackdrop3  = nullptr; 
+	delete itemMissionBackdrop4;  INCR_DEL itemMissionBackdrop4  = nullptr; 
+	delete itemMissionBackdrop5;  INCR_DEL itemMissionBackdrop5  = nullptr; 
+	delete itemMissionBackdrop6;  INCR_DEL itemMissionBackdrop6  = nullptr; 
+	delete itemMissionBackdrop7;  INCR_DEL itemMissionBackdrop7  = nullptr; 
+	delete itemMissionBackdrop8;  INCR_DEL itemMissionBackdrop8  = nullptr; 
+	delete itemMissionBackdrop9;  INCR_DEL itemMissionBackdrop9  = nullptr; 
+	delete itemMissionBackdrop10; INCR_DEL itemMissionBackdrop10 = nullptr;
+	delete itemMissionBackdrop11; INCR_DEL itemMissionBackdrop11 = nullptr;
+	delete itemMissionBackdrop12; INCR_DEL itemMissionBackdrop12 = nullptr;
+	delete itemMissionBackdrop13; INCR_DEL itemMissionBackdrop13 = nullptr;
+	delete itemMissionBackdrop14; INCR_DEL itemMissionBackdrop14 = nullptr;
+	delete itemMissionBackdrop15; INCR_DEL itemMissionBackdrop15 = nullptr;
+	delete itemMissionBackdrop16; INCR_DEL itemMissionBackdrop16 = nullptr;
+	delete itemMissionBackdrop17; INCR_DEL itemMissionBackdrop17 = nullptr;
+	delete itemMissionBackdrop18; INCR_DEL itemMissionBackdrop18 = nullptr;
+	delete itemMissionBackdrop19; INCR_DEL itemMissionBackdrop19 = nullptr;
+	delete itemMissionBackdrop20; INCR_DEL itemMissionBackdrop20 = nullptr;
+	delete itemMissionBackdrop21; INCR_DEL itemMissionBackdrop21 = nullptr;
+	delete itemMissionBackdrop22; INCR_DEL itemMissionBackdrop22 = nullptr;
 
-	delete itemRankDisplay;          Global::countDelete++; itemRankDisplay          = nullptr;
-	delete itemRankDisplayBackdrop;  Global::countDelete++; itemRankDisplayBackdrop  = nullptr;
-	delete itemTimeDisplay;          Global::countDelete++; itemTimeDisplay          = nullptr;
-	delete itemTimeDisplayBackdrop;  Global::countDelete++; itemTimeDisplayBackdrop  = nullptr;
-	delete itemScoreDisplay;         Global::countDelete++; itemScoreDisplay         = nullptr;
-	delete itemScoreDisplayBackdrop; Global::countDelete++; itemScoreDisplayBackdrop = nullptr;
+	delete itemRankDisplay;          INCR_DEL itemRankDisplay          = nullptr;
+	delete itemRankDisplayBackdrop;  INCR_DEL itemRankDisplayBackdrop  = nullptr;
+	delete itemTimeDisplay;          INCR_DEL itemTimeDisplay          = nullptr;
+	delete itemTimeDisplayBackdrop;  INCR_DEL itemTimeDisplayBackdrop  = nullptr;
+	delete itemScoreDisplay;         INCR_DEL itemScoreDisplay         = nullptr;
+	delete itemScoreDisplayBackdrop; INCR_DEL itemScoreDisplayBackdrop = nullptr;
 
-	textBestScore->deleteMe(); delete textBestScore; Global::countDelete++; textBestScore = nullptr;
-	textBestTime ->deleteMe(); delete textBestTime;  Global::countDelete++; textBestTime  = nullptr;
+	textBestScore->deleteMe(); delete textBestScore; INCR_DEL textBestScore = nullptr;
+	textBestTime ->deleteMe(); delete textBestTime;  INCR_DEL textBestTime  = nullptr;
 
-	delete rankM1; Global::countDelete++; rankM1 = nullptr;
-	delete rankM2; Global::countDelete++; rankM2 = nullptr;
-	delete rankM3; Global::countDelete++; rankM3 = nullptr;
-	delete rankM4; Global::countDelete++; rankM4 = nullptr;
+	delete rankM1; INCR_DEL rankM1 = nullptr;
+	delete rankM2; INCR_DEL rankM2 = nullptr;
+	delete rankM3; INCR_DEL rankM3 = nullptr;
+	delete rankM4; INCR_DEL rankM4 = nullptr;
 
-	delete missionSelect; Global::countDelete++; missionSelect = nullptr;
+	delete missionSelect; INCR_DEL missionSelect = nullptr;
 }
 
 void MainMenu::selectMenuArcadeClear()
@@ -1211,19 +1211,19 @@ void MainMenu::step()
 			if (textTitleCardLevelName != nullptr)
 			{
 				textTitleCardLevelName->deleteMe();
-				delete textTitleCardLevelName; Global::countDelete++;
+				delete textTitleCardLevelName; INCR_DEL
 				textTitleCardLevelName = nullptr;
 			}
 			if (textTitleCardMission != nullptr)
 			{
 				textTitleCardMission->deleteMe();
-				delete textTitleCardMission; Global::countDelete++;
+				delete textTitleCardMission; INCR_DEL
 				textTitleCardMission = nullptr;
 			}
 			if (textTitleCardMissionDescription != nullptr)
 			{
 				textTitleCardMissionDescription->deleteMe();
-				delete textTitleCardMissionDescription; Global::countDelete++;
+				delete textTitleCardMissionDescription; INCR_DEL
 				textTitleCardMissionDescription = nullptr;
 			}
 
@@ -1441,14 +1441,14 @@ void MainMenu::step()
 					characterSelectIndex = std::max(0, characterSelectIndex);
 					characterSelectIndex = std::min(characterSelectIndex, (int)unlockedCharacters.size()-1);
 
-					textExtra5Title->deleteMe(); delete textExtra5Title; Global::countDelete++; textExtra5Title = nullptr;
-					textExtra5Data ->deleteMe(); delete textExtra5Data;  Global::countDelete++; textExtra5Data  = nullptr;
+					textExtra5Title->deleteMe(); delete textExtra5Title; INCR_DEL textExtra5Title = nullptr;
+					textExtra5Data ->deleteMe(); delete textExtra5Data;  INCR_DEL textExtra5Data  = nullptr;
 
 					const float yoff = -0.03f;
 					const float divisor = 6.0f;
 
-					textExtra5Title = new GUIText("PLAY AS:", 2, font, 0, (5/divisor)+yoff, 1, true, false, true); Global::countNew++;
-					textExtra5Data  = new GUIText(unlockedCharacters[characterSelectIndex], 2, font, 0, (5/divisor)-yoff, 1, true, false, true); Global::countNew++;
+					textExtra5Title = new GUIText("PLAY AS:", 2, font, 0, (5/divisor)+yoff, 1, true, false, true); INCR_NEW
+					textExtra5Data  = new GUIText(unlockedCharacters[characterSelectIndex], 2, font, 0, (5/divisor)-yoff, 1, true, false, true); INCR_NEW
 				}
 			}
 			if (pressedBack)
@@ -1479,27 +1479,27 @@ void MainMenu::createTitleCard()
 	{
 		textTitleCardLevelName->deleteMe();
 		delete textTitleCardLevelName;
-		Global::countDelete++;
+		INCR_DEL
 		textTitleCardLevelName = nullptr;
 	}
 	if (textTitleCardMission != nullptr)
 	{
 		textTitleCardMission->deleteMe();
 		delete textTitleCardMission;
-		Global::countDelete++;
+		INCR_DEL
 		textTitleCardMission = nullptr;
 	}
 	if (textTitleCardMissionDescription != nullptr)
 	{
 		textTitleCardMissionDescription->deleteMe();
 		delete textTitleCardMissionDescription;
-		Global::countDelete++;
+		INCR_DEL
 		textTitleCardMissionDescription = nullptr;
 	}
 
-	textTitleCardLevelName          = new GUIText(Global::levelNameDisplay, 3.0f, font, 0.0f, 0.6f, 1.0f, true, false, true); Global::countNew++;
-	textTitleCardMission            = new GUIText("Mission "+std::to_string(Global::gameMissionNumber+1)+":", 2.5f, font, 0.0f, 0.7f, 1.0f, true, false, true); Global::countNew++;
-	textTitleCardMissionDescription = new GUIText(Global::gameMissionDescription, 2.0f, font, 0.0f, 0.8f, 1.0f, true, false, true); Global::countNew++;
+	textTitleCardLevelName          = new GUIText(Global::levelNameDisplay, 3.0f, font, 0.0f, 0.6f, 1.0f, true, false, true); INCR_NEW
+	textTitleCardMission            = new GUIText("Mission "+std::to_string(Global::gameMissionNumber+1)+":", 2.5f, font, 0.0f, 0.7f, 1.0f, true, false, true); INCR_NEW
+	textTitleCardMissionDescription = new GUIText(Global::gameMissionDescription, 2.0f, font, 0.0f, 0.8f, 1.0f, true, false, true); INCR_NEW
 
 	MainMenu::titleCardTextTimer = 3;
 }
@@ -1552,24 +1552,24 @@ void MainMenu::updateBestDisplay(int levelID)
 	{
 		std::string time = Global::gameSaveData[Global::gameLevelData[levelID].displayName+missionTimeString];
 		time = MainMenu::convertFramesToTime(std::stoi(time));
-		textBestTime->deleteMe(); delete textBestTime; Global::countDelete++;
-		textBestTime  = new GUIText("TIME: "+time, 2.0f, font, 0.75f-192*px, 0.5f+256*py-0.025f, 1-(0.75f-192*px), false, false, true); Global::countNew++;
+		textBestTime->deleteMe(); delete textBestTime; INCR_DEL
+		textBestTime  = new GUIText("TIME: "+time, 2.0f, font, 0.75f-192*px, 0.5f+256*py-0.025f, 1-(0.75f-192*px), false, false, true); INCR_NEW
 	}
 	else
 	{
-		textBestTime->deleteMe(); delete textBestTime; Global::countDelete++;
-		textBestTime  = new GUIText("TIME: ", 2.0f, font, 0.75f-192*px, 0.5f+256*py-0.025f, 1-(0.75f-192*px), false, false, true); Global::countNew++;
+		textBestTime->deleteMe(); delete textBestTime; INCR_DEL
+		textBestTime  = new GUIText("TIME: ", 2.0f, font, 0.75f-192*px, 0.5f+256*py-0.025f, 1-(0.75f-192*px), false, false, true); INCR_NEW
 	}
 
 	if (Global::gameSaveData.find(Global::gameLevelData[levelID].displayName+missionScoreString) != Global::gameSaveData.end())
 	{
 		std::string score = Global::gameSaveData[Global::gameLevelData[levelID].displayName+missionScoreString];
-		textBestScore->deleteMe(); delete textBestScore; Global::countDelete++;
-		textBestScore = new GUIText("SCORE: "+score, 2.0f, font, 0.75f-192*px, 0.5f+128*py-0.025f, 1-(0.75f-192*px), false, false, true); Global::countNew++;
+		textBestScore->deleteMe(); delete textBestScore; INCR_DEL
+		textBestScore = new GUIText("SCORE: "+score, 2.0f, font, 0.75f-192*px, 0.5f+128*py-0.025f, 1-(0.75f-192*px), false, false, true); INCR_NEW
 	}
 	else
 	{
-		textBestScore->deleteMe(); delete textBestScore; Global::countDelete++;
-		textBestScore = new GUIText("SCORE: ", 2.0f, font, 0.75f-192*px, 0.5f+128*py-0.025f, 1-(0.75f-192*px), false, false, true); Global::countNew++;
+		textBestScore->deleteMe(); delete textBestScore; INCR_DEL
+		textBestScore = new GUIText("SCORE: ", 2.0f, font, 0.75f-192*px, 0.5f+128*py-0.025f, 1-(0.75f-192*px), false, false, true); INCR_NEW
 	}
 }

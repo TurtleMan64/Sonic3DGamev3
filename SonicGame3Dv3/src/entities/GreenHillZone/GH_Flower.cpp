@@ -36,7 +36,7 @@ GH_Flower::GH_Flower(float x, float y, float z, float rotY, float scale)
 
 	petals = new Body(&GH_Flower::modelsTop);
 	petals->setVisible(true);
-	Global::countNew++;
+	INCR_NEW
 	Main_addEntity(petals);
 	petals->setPosition(&position);
 	petals->setRotY(rotY);

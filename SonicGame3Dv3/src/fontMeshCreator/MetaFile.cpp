@@ -105,20 +105,20 @@ void MetaFile::close()
 {
 	reader->close();
 	delete reader;
-	Global::countDelete++;
+	INCR_DEL
 	reader = nullptr;
 }
 
 void MetaFile::openFile(std::string filename)
 {
 	reader = new std::ifstream(filename);
-	Global::countNew++;
+	INCR_NEW
 	if (!reader->is_open())
 	{
 		std::fprintf(stdout, "Error: Cannot load file '%s'\n", (filename).c_str());
 		reader->close();
 		delete reader;
-		Global::countDelete++;
+		INCR_DEL
 		reader = nullptr;
 	}
 }
@@ -150,7 +150,7 @@ void MetaFile::loadCharacterData(int imageWidth)
 		{
 			metaData[c->getId()] = (*c); //Put a copy of the character into the hash map
 			delete c;
-			Global::countDelete++;
+			INCR_DEL
 		}
 	}
 }
@@ -175,6 +175,6 @@ Character* MetaFile::loadCharacter(int imageSize)
 	double yOff = (getValueOfVariable("yoffset") + (padding[PAD_TOP] - DESIRED_PADDING)) * verticalPerPixelSize;
 	double xAdvance = (getValueOfVariable("xadvance") - paddingWidth) * horizontalPerPixelSize;
 	//std::fprintf(stdout, "%d %f %f %f %f %f %f %f %f %f\n", id, xTex, yTex, xTexSize, yTexSize, xOff, yOff, quadWidth, quadHeight, xAdvance);
-	Global::countNew++;
+	INCR_NEW
 	return new Character(id, xTex, yTex, xTexSize, yTexSize, xOff, yOff, quadWidth, quadHeight, xAdvance);
 }

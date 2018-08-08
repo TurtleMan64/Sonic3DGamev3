@@ -66,25 +66,25 @@ QuadTreeNode::QuadTreeNode(float xBoundMin, float xBoundMax, float zBoundMin, fl
 		if (topLeftPool.size() != 0)
 		{
 			topLeft = new QuadTreeNode(xBoundMin, xMid, zMid, zBoundMax, topLeftPool, depth + 1, depthMax);
-			Global::countNew++;
+			INCR_NEW
 		}
 
 		if (topRightPool.size() != 0)
 		{
 			topRight = new QuadTreeNode(xMid, xBoundMax, zMid, zBoundMax, topRightPool, depth + 1, depthMax);
-			Global::countNew++;
+			INCR_NEW
 		}
 
 		if (botLeftPool.size() != 0)
 		{
 			botLeft = new QuadTreeNode(xBoundMin, xMid, zBoundMin, zMid, botLeftPool, depth + 1, depthMax);
-			Global::countNew++;
+			INCR_NEW
 		}
 
 		if (botRightPool.size() != 0)
 		{
 			botRight = new QuadTreeNode(xMid, xBoundMax, zBoundMin, zMid, botRightPool, depth + 1, depthMax);
-			Global::countNew++;
+			INCR_NEW
 		}
 	}
 }
@@ -95,7 +95,7 @@ void QuadTreeNode::deleteMe()
 	{
 		topLeft->deleteMe();
 		delete topLeft;
-		Global::countDelete++;
+		INCR_DEL
 		topLeft = nullptr;
 	}
 
@@ -103,7 +103,7 @@ void QuadTreeNode::deleteMe()
 	{
 		topRight->deleteMe();
 		delete topRight;
-		Global::countDelete++;
+		INCR_DEL
 		topRight = nullptr;
 	}
 
@@ -111,7 +111,7 @@ void QuadTreeNode::deleteMe()
 	{
 		botLeft->deleteMe();
 		delete botLeft;
-		Global::countDelete++;
+		INCR_DEL
 		botLeft = nullptr;
 	}
 
@@ -119,7 +119,7 @@ void QuadTreeNode::deleteMe()
 	{
 		botRight->deleteMe();
 		delete botRight;
-		Global::countDelete++;
+		INCR_DEL
 		botRight = nullptr;
 	}
 

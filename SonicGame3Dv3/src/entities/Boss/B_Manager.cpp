@@ -27,10 +27,10 @@ B_Manager::B_Manager()
 	B_Earth::loadStaticModels();
 	B_MetalSonic::loadStaticModels();
 
-	theEarth = new B_Earth; Global::countNew++;
+	theEarth = new B_Earth; INCR_NEW
 	Main_addEntity(theEarth);
 
-	theBoss = new B_MetalSonic; Global::countNew++;
+	theBoss = new B_MetalSonic; INCR_NEW
 	Main_addEntity(theBoss);
 }
 
@@ -53,7 +53,7 @@ void B_Manager::step()
 	{
 		float baseX = platformCount*300.0f;
 
-		B_Platform* p = new B_Platform(baseX, 2000.0f, 0.0f); Global::countNew++;
+		B_Platform* p = new B_Platform(baseX, 2000.0f, 0.0f); INCR_NEW
 		Main_addEntity(p);
 		platformCount++;
 
@@ -92,7 +92,7 @@ void B_Manager::step()
 
 		vel.scale(-10);
 
-		B_Meteor* p = new B_Meteor(pos.x, pos.y, pos.z, vel.x, vel.y, vel.z); Global::countNew++;
+		B_Meteor* p = new B_Meteor(pos.x, pos.y, pos.z, vel.x, vel.y, vel.z); INCR_NEW
 		Main_addEntity(p);
 	}
 

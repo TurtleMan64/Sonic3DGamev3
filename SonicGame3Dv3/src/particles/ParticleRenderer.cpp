@@ -27,8 +27,8 @@ ParticleRenderer::ParticleRenderer(Matrix4f* projectionMatrix)
 	vertices.push_back(0.5f);
 	vertices.push_back(-0.5f);
 
-	quad = new RawModel(Loader_loadToVAO(&vertices, 2)); Global::countNew++;
-	shader = new ParticleShader(); Global::countNew++;
+	quad = new RawModel(Loader_loadToVAO(&vertices, 2)); INCR_NEW
+	shader = new ParticleShader(); INCR_NEW
 	shader->start();
 	shader->loadProjectionMatrix(projectionMatrix);
 	shader->stop();

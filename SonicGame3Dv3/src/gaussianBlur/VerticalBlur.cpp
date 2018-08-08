@@ -7,11 +7,11 @@
 
 VerticalBlur::VerticalBlur(int targetFboWidth, int targetFboHeight)
 {
-	shader = new VerticalBlurShader("res/Shaders/gaussianBlur/verticalBlurVertex.txt", "res/Shaders/gaussianBlur/blurFragment.txt"); Global::countNew++;
+	shader = new VerticalBlurShader("res/Shaders/gaussianBlur/verticalBlurVertex.txt", "res/Shaders/gaussianBlur/blurFragment.txt"); INCR_NEW
 	shader->start();
 	shader->loadTargetHeight((float)targetFboHeight);
 	shader->stop();
-	renderer = new ImageRenderer(targetFboWidth, targetFboHeight); Global::countNew++;
+	renderer = new ImageRenderer(targetFboWidth, targetFboHeight); INCR_NEW
 }
 
 void VerticalBlur::render(GLuint texture)
@@ -32,6 +32,6 @@ void VerticalBlur::cleanUp()
 {
 	renderer->cleanUp();
 	shader->cleanUp();
-	delete shader; Global::countDelete++;
-	delete renderer; Global::countDelete++;
+	delete shader; INCR_DEL
+	delete renderer; INCR_DEL
 }

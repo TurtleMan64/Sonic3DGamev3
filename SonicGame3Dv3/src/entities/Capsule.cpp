@@ -56,7 +56,7 @@ Capsule::Capsule(float x, float y, float z)
 	
 	top = new Body(&Capsule::modelsTop);
 	top->setVisible(true);
-	Global::countNew++;
+	INCR_NEW
 	Main_addEntity(top);
 	top->setPosition(&position);
 	top->updateTransformationMatrix();

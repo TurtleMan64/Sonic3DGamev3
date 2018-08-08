@@ -67,6 +67,17 @@ void Main_deleteAllTransparentEntites();
 #define ENTITY_RENDER_DIST 2000.0f
 #define ENTITY_RENDER_DIST_HIGH 5000.0f
 
+#define DEV_MODE
+
+#ifdef DEV_MODE
+	#include <thread>
+	#define INCR_NEW Global::countNew++;
+	#define INCR_DEL Global::countDelete++;
+#else
+	#define INCR_NEW ;
+	#define INCR_DEL ;
+#endif
+
 class Global
 {
 public:

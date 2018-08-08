@@ -210,7 +210,7 @@ ALuint AudioMaster::loadWAV(const char* fileName)
 
 	fread(&dataSize, sizeof(DWORD), 1, fp);
 
-	unsigned char* buf = new unsigned char[dataSize]; Global::countNew++;
+	unsigned char* buf = new unsigned char[dataSize]; INCR_NEW
 	fread(buf, sizeof(BYTE), dataSize, fp);
 
 
@@ -262,7 +262,7 @@ ALuint AudioMaster::loadWAV(const char* fileName)
 
 	alBufferData(buffer, format, buf, dataSize, frequency);
 
-	delete[] buf; Global::countDelete++;
+	delete[] buf; INCR_DEL
 
 	fclose(fp);
 

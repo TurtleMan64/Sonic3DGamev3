@@ -50,7 +50,7 @@ void CollisionModel::generateQuadTree(int maxDepth)
 {
 	this->treeMaxDepth = maxDepth;
 	quadTreeRoot = new QuadTreeNode(minX, maxX, minZ, maxZ, triangles, 0, maxDepth);
-	Global::countNew++;
+	INCR_NEW
 }
 
 void CollisionModel::offsetModel(Vector3f* offset)
@@ -148,7 +148,7 @@ void CollisionModel::transformModel(CollisionModel* targetModel, Vector3f* trans
 
 
 		Triangle3D* newTri = new Triangle3D(&newP1, &newP2, &newP3, tri->type, tri->sound, tri->particle);
-		Global::countNew++;
+		INCR_NEW
 
 		targetModel->triangles.push_back(newTri);
 	}
@@ -184,7 +184,7 @@ void CollisionModel::transformModel(CollisionModel* targetModel, Vector3f* trans
 		Vector3f newP3(offX + (xDiff*cosAng - zDiff*sinAng), offY + tri->p3Y, offZ + (zDiff*cosAng + xDiff*sinAng));
 
 		Triangle3D* newTri = new Triangle3D(&newP1, &newP2, &newP3, tri->type, tri->sound, tri->particle);
-		Global::countNew++;
+		INCR_NEW
 
 		targetModel->triangles.push_back(newTri);
 	}
@@ -219,7 +219,7 @@ void CollisionModel::transformModelWithScale(CollisionModel* targetModel, Vector
 		Vector3f newP3(offX + (xDiff*cosAng - zDiff*sinAng), offY + tri->p3Y*scale, offZ + (zDiff*cosAng + xDiff*sinAng));
 
 		Triangle3D* newTri = new Triangle3D(&newP1, &newP2, &newP3, tri->type, tri->sound, tri->particle);
-		Global::countNew++;
+		INCR_NEW
 
 		targetModel->triangles.push_back(newTri);
 	}
@@ -243,7 +243,7 @@ void CollisionModel::transformModel(CollisionModel* targetModel, Vector3f* trans
 		Vector3f newP3(offX + tri->p3X, offY + tri->p3Y, offZ + tri->p3Z);
 
 		Triangle3D* newTri = new Triangle3D(&newP1, &newP2, &newP3, tri->type, tri->sound, tri->particle);
-		Global::countNew++;
+		INCR_NEW
 
 		targetModel->triangles.push_back(newTri);
 	}
@@ -257,7 +257,7 @@ void CollisionModel::deleteMe()
 	for (Triangle3D* tri : triangles)
 	{
 		delete tri;
-		Global::countDelete++;
+		INCR_DEL
 	}
 
 	triangles.clear();
@@ -267,7 +267,7 @@ void CollisionModel::deleteMe()
 	{
 		quadTreeRoot->deleteMe();
 		delete quadTreeRoot;
-		Global::countDelete++;
+		INCR_DEL
 		quadTreeRoot = nullptr;
 	}
 }

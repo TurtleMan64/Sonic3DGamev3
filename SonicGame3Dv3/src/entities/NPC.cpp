@@ -34,14 +34,14 @@ NPC::~NPC()
 	if (messageGUI1 != nullptr && (*messageGUI1->getTextString()) == myMessage1)
 	{
 		messageGUI1->deleteMe();
-		delete messageGUI1; Global::countDelete++;
+		delete messageGUI1; INCR_DEL
 		messageGUI1 = nullptr;
 	}
 			
 	if (messageGUI2 != nullptr && (*messageGUI2->getTextString()) == myMessage2)
 	{
 		messageGUI2->deleteMe();
-		delete messageGUI2; Global::countDelete++;
+		delete messageGUI2; INCR_DEL
 		messageGUI2 = nullptr;
 	}
 }
@@ -124,14 +124,14 @@ void NPC::step()
 		{
 			float size = 100.0f/myMessage1.length();
 			size = std::fminf(size, 3);
-			messageGUI1 = new GUIText(myMessage1, size, GuiManager::fontVip, 0, 0.8f, 1.0f, true, false, true); Global::countNew++;
+			messageGUI1 = new GUIText(myMessage1, size, GuiManager::fontVip, 0, 0.8f, 1.0f, true, false, true); INCR_NEW
 		}
 			
 		if (messageGUI2 == nullptr && myMessage2 != "")
 		{
 			float size = 100.0f/myMessage2.length();
 			size = std::fminf(size, 3);
-			messageGUI2 = new GUIText(myMessage2, size, GuiManager::fontVip, 0, 0.9f, 1.0f, true, false, true); Global::countNew++;
+			messageGUI2 = new GUIText(myMessage2, size, GuiManager::fontVip, 0, 0.9f, 1.0f, true, false, true); INCR_NEW
 		}
 	}
 	else
@@ -139,14 +139,14 @@ void NPC::step()
 		if (messageGUI1 != nullptr && (*messageGUI1->getTextString()) == myMessage1)
 		{
 			messageGUI1->deleteMe();
-			delete messageGUI1; Global::countDelete++;
+			delete messageGUI1; INCR_DEL
 			messageGUI1 = nullptr;
 		}
 			
 		if (messageGUI2 != nullptr && (*messageGUI2->getTextString()) == myMessage2)
 		{
 			messageGUI2->deleteMe();
-			delete messageGUI2; Global::countDelete++;
+			delete messageGUI2; INCR_DEL
 			messageGUI2 = nullptr;
 		}
 	}
@@ -178,14 +178,14 @@ void NPC::deleteStaticModels()
 	if (messageGUI1 != nullptr)
 	{
 		messageGUI1->deleteMe();
-		delete messageGUI1; Global::countDelete++;
+		delete messageGUI1; INCR_DEL
 		messageGUI1 = nullptr;
 	}
 
 	if (messageGUI2 != nullptr)
 	{
 		messageGUI2->deleteMe();
-		delete messageGUI2; Global::countDelete++;
+		delete messageGUI2; INCR_DEL
 		messageGUI2 = nullptr;
 	}
 }

@@ -54,8 +54,8 @@ extern int MENU_Y;
 
 void PauseScreen::init()
 {
-	font = new FontType(Loader_loadTexture("res/Fonts/vipnagorgialla.png"), "res/Fonts/vipnagorgialla.fnt"); Global::countNew++;
-	textCursor = new GUIText(">", 2.5f, font, 0.47f, 0.25f, 1.0f, false, false, false); Global::countNew++;
+	font = new FontType(Loader_loadTexture("res/Fonts/vipnagorgialla.png"), "res/Fonts/vipnagorgialla.fnt"); INCR_NEW
+	textCursor = new GUIText(">", 2.5f, font, 0.47f, 0.25f, 1.0f, false, false, false); INCR_NEW
 }
 
 void PauseScreen::step()
@@ -119,15 +119,15 @@ void PauseScreen::step()
 				case 2:
 				{
 					//switch cam, reload text
-					textCamera->deleteMe(); delete textCamera; Global::countDelete++; textCamera = nullptr;
+					textCamera->deleteMe(); delete textCamera; INCR_DEL textCamera = nullptr;
 					if (Global::isAutoCam)
 					{
-						textCamera    = new GUIText("Free Cam",  2.5f, font, 0.5f, 0.55f, 1.0f, false, false, true); Global::countNew++;
+						textCamera    = new GUIText("Free Cam",  2.5f, font, 0.5f, 0.55f, 1.0f, false, false, true); INCR_NEW
 						Global::isAutoCam = false;
 					}
 					else
 					{
-						textCamera    = new GUIText("Auto Cam",  2.5f, font, 0.5f, 0.55f, 1.0f, false, false, true); Global::countNew++;
+						textCamera    = new GUIText("Auto Cam",  2.5f, font, 0.5f, 0.55f, 1.0f, false, false, true); INCR_NEW
 						Global::isAutoCam = true;
 					}
 					break;
@@ -189,19 +189,19 @@ void PauseScreen::unpause(bool shouldResumeSFX)
 	}
 	if (textResume != nullptr)
 	{
-		textResume->deleteMe(); delete textResume; Global::countDelete++; textResume = nullptr;
+		textResume->deleteMe(); delete textResume; INCR_DEL textResume = nullptr;
 	}
 	if (textRestart != nullptr)
 	{
-		textRestart->deleteMe(); delete textRestart; Global::countDelete++; textRestart = nullptr;
+		textRestart->deleteMe(); delete textRestart; INCR_DEL textRestart = nullptr;
 	}
 	if (textCamera != nullptr)
 	{
-		textCamera->deleteMe(); delete textCamera; Global::countDelete++; textCamera = nullptr;
+		textCamera->deleteMe(); delete textCamera; INCR_DEL textCamera = nullptr;
 	}
 	if (textQuit != nullptr)
 	{
-		textQuit->deleteMe(); delete textQuit; Global::countDelete++; textQuit = nullptr;
+		textQuit->deleteMe(); delete textQuit; INCR_DEL textQuit = nullptr;
 	}
 
 	//Resume all sound effects that were paused
@@ -235,17 +235,17 @@ void PauseScreen::pause()
 	menuDisplayID = 0;
 	menuSelectionMAX = 3;
 	textCursor->setVisibility(true);
-	textResume        = new GUIText("Resume",    size, font, 0.5f, 0.35f, 1.0f, false, false, true); Global::countNew++;
-	textRestart       = new GUIText("Restart",   size, font, 0.5f, 0.45f, 1.0f, false, false, true); Global::countNew++;
+	textResume        = new GUIText("Resume",    size, font, 0.5f, 0.35f, 1.0f, false, false, true); INCR_NEW
+	textRestart       = new GUIText("Restart",   size, font, 0.5f, 0.45f, 1.0f, false, false, true); INCR_NEW
 	if (Global::isAutoCam)
 	{
-		textCamera    = new GUIText("Auto Cam",  size, font, 0.5f, 0.55f, 1.0f, false, false, true); Global::countNew++;
+		textCamera    = new GUIText("Auto Cam",  size, font, 0.5f, 0.55f, 1.0f, false, false, true); INCR_NEW
 	}
 	else
 	{
-		textCamera    = new GUIText("Free Cam",  size, font, 0.5f, 0.55f, 1.0f, false, false, true); Global::countNew++;
+		textCamera    = new GUIText("Free Cam",  size, font, 0.5f, 0.55f, 1.0f, false, false, true); INCR_NEW
 	}
-	textQuit          = new GUIText("Quit",      size, font, 0.5f, 0.65f, 1.0f, false, false, true); Global::countNew++;
+	textQuit          = new GUIText("Quit",      size, font, 0.5f, 0.65f, 1.0f, false, false, true); INCR_NEW
 
 	//Pause all sound effects
 	for (int i = 0; i < 14; i++)

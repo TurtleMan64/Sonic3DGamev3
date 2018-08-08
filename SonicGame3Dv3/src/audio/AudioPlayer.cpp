@@ -94,7 +94,7 @@ void AudioPlayer::deleteSources()
 	{
 		src->deleteMe();
 		delete src;
-		Global::countDelete++;
+		INCR_DEL
 	}
 	AudioPlayer::sources.clear();
 	AudioPlayer::sources.shrink_to_fit();
@@ -126,22 +126,22 @@ void AudioPlayer::deleteBuffersBGM()
 void AudioPlayer::createSources()
 {
 	//First 14 sources are for sound effects
-	sources.push_back(new Source(1, 100, 600)); Global::countNew++;
-	sources.push_back(new Source(1, 100, 600));	Global::countNew++;
-	sources.push_back(new Source(1, 100, 600));	Global::countNew++;
-	sources.push_back(new Source(1, 100, 600));	Global::countNew++;
-	sources.push_back(new Source(1, 100, 600));	Global::countNew++;
-	sources.push_back(new Source(1, 100, 600));	Global::countNew++;
-	sources.push_back(new Source(1, 100, 600));	Global::countNew++;
-	sources.push_back(new Source(1, 100, 600));	Global::countNew++;
-	sources.push_back(new Source(1, 100, 600));	Global::countNew++;
-	sources.push_back(new Source(1, 100, 600));	Global::countNew++;
-	sources.push_back(new Source(1, 100, 600));	Global::countNew++;
-	sources.push_back(new Source(1, 100, 600));	Global::countNew++;
-	sources.push_back(new Source(1, 100, 600));	Global::countNew++;
-	sources.push_back(new Source(1, 100, 600));	Global::countNew++;
+	sources.push_back(new Source(1, 100, 600)); INCR_NEW
+	sources.push_back(new Source(1, 100, 600));	INCR_NEW
+	sources.push_back(new Source(1, 100, 600));	INCR_NEW
+	sources.push_back(new Source(1, 100, 600));	INCR_NEW
+	sources.push_back(new Source(1, 100, 600));	INCR_NEW
+	sources.push_back(new Source(1, 100, 600));	INCR_NEW
+	sources.push_back(new Source(1, 100, 600));	INCR_NEW
+	sources.push_back(new Source(1, 100, 600));	INCR_NEW
+	sources.push_back(new Source(1, 100, 600));	INCR_NEW
+	sources.push_back(new Source(1, 100, 600));	INCR_NEW
+	sources.push_back(new Source(1, 100, 600));	INCR_NEW
+	sources.push_back(new Source(1, 100, 600));	INCR_NEW
+	sources.push_back(new Source(1, 100, 600));	INCR_NEW
+	sources.push_back(new Source(1, 100, 600));	INCR_NEW
 	//Last source is dedicated to background music
-	sources.push_back(new Source(0, 0, 0));     Global::countNew++;
+	sources.push_back(new Source(0, 0, 0));     INCR_NEW
 }
 
 //with position

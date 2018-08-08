@@ -325,14 +325,6 @@ void Input_pollInputs()
 		tabInput = true;
 	}
 
-	if (glfwGetKey(window, GLFW_KEY_4) == GLFW_PRESS)
-	{
-		Global::gameCamera->setRoll(Global::gameCamera->getRoll() + 4.0f);
-	}
-	if (glfwGetKey(window, GLFW_KEY_5) == GLFW_PRESS)
-	{
-		Global::gameCamera->setRoll(Global::gameCamera->getRoll() - 4.0f);
-	}
 	if (glfwGetKey(window, GLFW_KEY_0) == GLFW_PRESS)
 	{
 		SkyManager::increaseTimeOfDay(0.5f);
@@ -341,12 +333,21 @@ void Input_pollInputs()
 	{
 		SkyManager::increaseTimeOfDay(-0.5f);
 	}
+
+	#ifdef DEV_MODE
+	if (glfwGetKey(window, GLFW_KEY_4) == GLFW_PRESS)
+	{
+		Global::gameCamera->setRoll(Global::gameCamera->getRoll() + 4.0f);
+	}
+	if (glfwGetKey(window, GLFW_KEY_5) == GLFW_PRESS)
+	{
+		Global::gameCamera->setRoll(Global::gameCamera->getRoll() - 4.0f);
+	}
 	if (glfwGetKey(window, GLFW_KEY_8) == GLFW_PRESS)
 	{
 		float spoutSpd = 3.0f;
 		float anglH = (float)(M_PI * 2 * ((rand() % 1024) / 1024.0));
 		float randNumber = Maths::nextGaussian();
-		//std::fprintf(stdout, "%f\n", randNumber);
 		float anglV = (toRadians((randNumber * 36 + 90)));
 
 		float yspd = spoutSpd*sinf(anglV);
@@ -356,8 +357,7 @@ void Input_pollInputs()
 		float zspd = hpt*sinf(anglH);
 
 		Vector3f* spawnPoint = Global::gamePlayer->getPosition();
-		Ring* newRing = new Ring(spawnPoint->x, spawnPoint->y + 10, spawnPoint->z, xspd, yspd, zspd);
-		Global::countNew++;
+		Ring* newRing = new Ring(spawnPoint->x, spawnPoint->y + 10, spawnPoint->z, xspd, yspd, zspd); INCR_NEW
 		Main_addEntity(newRing);
 	}
 	if (glfwGetKey(window, GLFW_KEY_J) == GLFW_PRESS)
@@ -401,6 +401,7 @@ void Input_pollInputs()
 		}
 		INPUT_APOSTROPHE = true;
 	}
+	#endif
 
 	if (Global::gameState != STATE_DEBUG)
 	{
@@ -413,7 +414,7 @@ void Input_pollInputs()
 		INPUT_START = DEBUG_START;
 	}
 
-
+	#ifdef DEV_MODE
 	if (INPUT_SHOULDER && !INPUT_PREVIOUS_SHOULDER)
 	{
 		if (Global::gamePlayer != nullptr)
@@ -425,6 +426,7 @@ void Input_pollInputs()
 			std::fprintf(stdout, "\n");
 		}
 	}
+	#endif
 
 	if (tabInput && !tabInputPrevious)
 	{

@@ -93,14 +93,14 @@ void SHD_GoronElder::step()
 		{
 			float size = 100.0f/(*messageToUse1).length();
 			size = std::fminf(size, 3);
-			messageGUI1 = new GUIText((*messageToUse1), size, GuiManager::fontVip, 0, 0.8f, 1.0f, true, false, true); Global::countNew++;
+			messageGUI1 = new GUIText((*messageToUse1), size, GuiManager::fontVip, 0, 0.8f, 1.0f, true, false, true); INCR_NEW
 		}
 			
 		if (messageGUI2 == nullptr && (*messageToUse2) != "")
 		{
 			float size = 100.0f/(*messageToUse2).length();
 			size = std::fminf(size, 3);
-			messageGUI2 = new GUIText((*messageToUse2), size, GuiManager::fontVip, 0, 0.9f, 1.0f, true, false, true); Global::countNew++;
+			messageGUI2 = new GUIText((*messageToUse2), size, GuiManager::fontVip, 0, 0.9f, 1.0f, true, false, true); INCR_NEW
 		}
 	}
 	else
@@ -108,14 +108,14 @@ void SHD_GoronElder::step()
 		if (messageGUI1 != nullptr)
 		{
 			messageGUI1->deleteMe();
-			delete messageGUI1; Global::countDelete++;
+			delete messageGUI1; INCR_DEL
 			messageGUI1 = nullptr;
 		}
 			
 		if (messageGUI2 != nullptr)
 		{
 			messageGUI2->deleteMe();
-			delete messageGUI2; Global::countDelete++;
+			delete messageGUI2; INCR_DEL
 			messageGUI2 = nullptr;
 		}
 	}
@@ -147,14 +147,14 @@ void SHD_GoronElder::deleteStaticModels()
 	if (messageGUI1 != nullptr)
 	{
 		messageGUI1->deleteMe();
-		delete messageGUI1; Global::countDelete++;
+		delete messageGUI1; INCR_DEL
 		messageGUI1 = nullptr;
 	}
 
 	if (messageGUI2 != nullptr)
 	{
 		messageGUI2->deleteMe();
-		delete messageGUI2; Global::countDelete++;
+		delete messageGUI2; INCR_DEL
 		messageGUI2 = nullptr;
 	}
 }

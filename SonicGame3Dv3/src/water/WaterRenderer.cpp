@@ -79,7 +79,7 @@ void WaterRenderer::setUpVAO()
 	vertices.push_back(1);
 
 	quad = new RawModel(Loader_loadToVAO(&vertices, 2));
-	Global::countNew++;
+	INCR_NEW
 }
 
 void WaterRenderer::render(std::list<WaterTile*>* water, Camera* camera, Light* sun)

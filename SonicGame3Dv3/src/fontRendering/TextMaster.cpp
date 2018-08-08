@@ -15,7 +15,7 @@ FontRenderer* TextMaster::renderer;
 void TextMaster::init()
 {
 	renderer = new FontRenderer();
-	Global::countNew++;
+	INCR_NEW
 }
 
 void TextMaster::render()
@@ -35,7 +35,7 @@ void TextMaster::loadText(GUIText* text)
 	text->setMeshInfo(vao, &vbos, data->getVertexCount());
 
 	delete data;
-	Global::countDelete++;
+	INCR_DEL
 
 	std::list<GUIText*>* textBatch = &texts[font];
 	textBatch->push_back(text);

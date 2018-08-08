@@ -870,26 +870,26 @@ void PlayerTails::createLimbs()
 	if (PlayerTails::skinID == 4) //Mania Tails
 	{
 		PlayerTails::maniaTails = new ManiaTailsModel;
-		Global::countNew++;
+		INCR_NEW
 		Main_addEntity(PlayerTails::maniaTails);
 
 		float s = 0.71f;
 
 		displayHeightOffset = -1.0f;
 		myBody =         new Body(&modelBody);
-		myHead =         new Limb(&modelHead,         1.35f*s,-0.3f*s,  0,      myBody,   nullptr);        Global::countNew++;
-		myLeftHumerus =  new Limb(&modelLeftHumerus,  0.9f*s,  0,      -0.9f*s, myBody,   nullptr);        Global::countNew++;
-		myLeftForearm =  new Limb(&modelLeftForearm,  0,      -1.3f*s,  0,      nullptr,  myLeftHumerus);  Global::countNew++;
-		myLeftHand =     new Limb(&modelLeftHand,     0,	  -1.3f*s,  0,      nullptr,  myLeftForearm);  Global::countNew++;
-		myLeftThigh =    new Limb(&modelLeftThigh,   -0.9f*s,  0,      -0.3f*s, myBody,   nullptr);        Global::countNew++;
-		myLeftShin =     new Limb(&modelLeftShin,     0,	  -1.3f*s,  0,      nullptr,  myLeftThigh);    Global::countNew++;
-		myLeftFoot =     new Limb(&modelLeftFoot,     0,	  -1.5f*s,  0,      nullptr,  myLeftShin);     Global::countNew++;
-		myRightHumerus = new Limb(&modelRightHumerus, 0.9f*s,  0,       0.9f*s, myBody,   nullptr);        Global::countNew++;
-		myRightForearm = new Limb(&modelRightForearm, 0,	  -1.3f*s,  0,      nullptr,  myRightHumerus); Global::countNew++;
-		myRightHand =    new Limb(&modelRightHand,    0,	  -1.3f*s,  0,      nullptr,  myRightForearm); Global::countNew++;
-		myRightThigh =   new Limb(&modelRightThigh,  -0.9f*s,  0,       0.3f*s, myBody,   nullptr);        Global::countNew++;
-		myRightShin =    new Limb(&modelRightShin,    0,	  -1.3f*s,  0,      nullptr,  myRightThigh);   Global::countNew++;
-		myRightFoot =    new Limb(&modelRightFoot,    0,	  -1.5f*s,  0,      nullptr,  myRightShin);    Global::countNew++;
+		myHead =         new Limb(&modelHead,         1.35f*s,-0.3f*s,  0,      myBody,   nullptr);        INCR_NEW
+		myLeftHumerus =  new Limb(&modelLeftHumerus,  0.9f*s,  0,      -0.9f*s, myBody,   nullptr);        INCR_NEW
+		myLeftForearm =  new Limb(&modelLeftForearm,  0,      -1.3f*s,  0,      nullptr,  myLeftHumerus);  INCR_NEW
+		myLeftHand =     new Limb(&modelLeftHand,     0,	  -1.3f*s,  0,      nullptr,  myLeftForearm);  INCR_NEW
+		myLeftThigh =    new Limb(&modelLeftThigh,   -0.9f*s,  0,      -0.3f*s, myBody,   nullptr);        INCR_NEW
+		myLeftShin =     new Limb(&modelLeftShin,     0,	  -1.3f*s,  0,      nullptr,  myLeftThigh);    INCR_NEW
+		myLeftFoot =     new Limb(&modelLeftFoot,     0,	  -1.5f*s,  0,      nullptr,  myLeftShin);     INCR_NEW
+		myRightHumerus = new Limb(&modelRightHumerus, 0.9f*s,  0,       0.9f*s, myBody,   nullptr);        INCR_NEW
+		myRightForearm = new Limb(&modelRightForearm, 0,	  -1.3f*s,  0,      nullptr,  myRightHumerus); INCR_NEW
+		myRightHand =    new Limb(&modelRightHand,    0,	  -1.3f*s,  0,      nullptr,  myRightForearm); INCR_NEW
+		myRightThigh =   new Limb(&modelRightThigh,  -0.9f*s,  0,       0.3f*s, myBody,   nullptr);        INCR_NEW
+		myRightShin =    new Limb(&modelRightShin,    0,	  -1.3f*s,  0,      nullptr,  myRightThigh);   INCR_NEW
+		myRightFoot =    new Limb(&modelRightFoot,    0,	  -1.5f*s,  0,      nullptr,  myRightShin);    INCR_NEW
 
 
 		s = 0.355f;
@@ -911,13 +911,13 @@ void PlayerTails::createLimbs()
 
 		maniaTailsFlyTails = new Body(&PlayerTails::modelsManiaTailsFlyTails);
 		maniaTailsFlyTails->setVisible(false);
-		Global::countNew++;
+		INCR_NEW
 		Main_addEntity(maniaTailsFlyTails);
 		maniaTailsFlyTails->setScale(s);
 
 		maniaTailsFlyBody = new Body(&PlayerTails::modelsManiaTailsFlyBody);
 		maniaTailsFlyBody->setVisible(false);
-		Global::countNew++;
+		INCR_NEW
 		Main_addEntity(maniaTailsFlyBody);
 		maniaTailsFlyBody->setScale(s);
 	}
@@ -2317,7 +2317,7 @@ void PlayerTails::takeDamage(Vector3f* damageSource)
 				float zspd = (hpt*sin(anglH));
 
 				Ring* ring = new Ring(getX(), getY()+5, getZ(), xspd, yspd, zspd);
-				Global::countNew++;
+				INCR_NEW
 
 				Main_addEntity(ring);
 

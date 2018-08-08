@@ -45,7 +45,7 @@ Spinner::Spinner(float x, float y, float z)
 
 	blades = new Body(&Spinner::modelsBlades);
 	blades->setVisible(true);
-	Global::countNew++;
+	INCR_NEW
 	Main_addEntity(blades);
 	blades->setPosition(&position);
 }

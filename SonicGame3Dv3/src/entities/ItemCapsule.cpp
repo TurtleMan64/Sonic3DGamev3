@@ -57,7 +57,7 @@ ItemCapsule::ItemCapsule(float x, float y, float z, float yRot, float zRot, int 
 	visible = true;
 	updateTransformationMatrix();
 
-	entityGlass = new Body(&ItemCapsule::modelsGlass); Global::countNew++;
+	entityGlass = new Body(&ItemCapsule::modelsGlass); INCR_NEW
 	entityGlass->setVisible(true);
 	Main_addTransparentEntity(entityGlass);
 	entityGlass->setPosition(&position);
@@ -69,15 +69,15 @@ ItemCapsule::ItemCapsule(float x, float y, float z, float yRot, float zRot, int 
 
 	switch (type)
 	{
-		case 0:  entityItem = new Body(&ItemCapsule::modelsItemSpeedUp);    Global::countNew++; break;
-		case 1:  entityItem = new Body(&ItemCapsule::modelsItemInvincible); Global::countNew++; break;
-		case 2:  entityItem = new Body(&ItemCapsule::modelsItemRing5);      Global::countNew++; break;
-		case 3:  entityItem = new Body(&ItemCapsule::modelsItemRing10);     Global::countNew++; break;
-		case 4:  entityItem = new Body(&ItemCapsule::modelsItemRing20);     Global::countNew++; break;
-		case 5:  entityItem = new Body(&ItemCapsule::modelsItemBarrierG);   Global::countNew++; break;
-		case 6:  entityItem = new Body(&ItemCapsule::modelsItem1Up);        Global::countNew++; break;
-		case 7:  entityItem = new Body(&ItemCapsule::modelsItemBomb);       Global::countNew++; break;
-		default: entityItem = new Body(&ItemCapsule::modelsItemBarrierB);   Global::countNew++; break;
+		case 0:  entityItem = new Body(&ItemCapsule::modelsItemSpeedUp);    INCR_NEW break;
+		case 1:  entityItem = new Body(&ItemCapsule::modelsItemInvincible); INCR_NEW break;
+		case 2:  entityItem = new Body(&ItemCapsule::modelsItemRing5);      INCR_NEW break;
+		case 3:  entityItem = new Body(&ItemCapsule::modelsItemRing10);     INCR_NEW break;
+		case 4:  entityItem = new Body(&ItemCapsule::modelsItemRing20);     INCR_NEW break;
+		case 5:  entityItem = new Body(&ItemCapsule::modelsItemBarrierG);   INCR_NEW break;
+		case 6:  entityItem = new Body(&ItemCapsule::modelsItem1Up);        INCR_NEW break;
+		case 7:  entityItem = new Body(&ItemCapsule::modelsItemBomb);       INCR_NEW break;
+		default: entityItem = new Body(&ItemCapsule::modelsItemBarrierB);   INCR_NEW break;
 	}
 	entityItem->setVisible(true);
 	Main_addEntity(entityItem);
@@ -195,7 +195,7 @@ void ItemCapsule::die()
 		{
 			//green shield
 			Global::gameScore += 100;
-			ShieldGreen* shield = new ShieldGreen; Global::countNew++;
+			ShieldGreen* shield = new ShieldGreen; INCR_NEW
 			Main_addTransparentEntity(shield);
 			Global::gamePlayer->setShieldGreen(shield);
 			break;
@@ -241,7 +241,7 @@ void ItemCapsule::die()
 		{
 			//electric shield
 			Global::gameScore += 100;
-			ShieldMagnet* shield = new ShieldMagnet; Global::countNew++;
+			ShieldMagnet* shield = new ShieldMagnet; INCR_NEW
 			Main_addTransparentEntity(shield);
 			Global::gamePlayer->setShieldMagnet(shield);
 			break;

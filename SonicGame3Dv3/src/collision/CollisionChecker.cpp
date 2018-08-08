@@ -452,7 +452,7 @@ void CollisionChecker::deleteAllCollideModels()
 		CollisionChecker::collideModels.remove(cm);
 		cm->deleteMe();
 		delete cm;
-		Global::countDelete++;
+		INCR_DEL
 	}
 }
 
@@ -473,7 +473,7 @@ void CollisionChecker::deleteAllCollideModelsExceptQuadTrees()
 		CollisionChecker::collideModels.remove(cm);
 		cm->deleteMe();
 		delete cm;
-		Global::countDelete++;
+		INCR_DEL
 	}
 }
 
@@ -485,7 +485,7 @@ void CollisionChecker::deleteStageCollideModel()
 		CollisionChecker::stageCollideModel->deleteAllTriangles();
 		delete CollisionChecker::stageCollideModel;
 		CollisionChecker::stageCollideModel = nullptr;
-		Global::countDelete++;
+		INCR_DEL
 	}
 	else
 	{
@@ -499,7 +499,7 @@ void CollisionChecker::deleteCollideModel(CollisionModel* cm)
 	CollisionChecker::collideModels.remove(cm);
 	cm->deleteMe();
 	delete cm;
-	Global::countDelete++;
+	INCR_DEL
 }
 
 //The model added must be created with the new keyword, as it will be deleted

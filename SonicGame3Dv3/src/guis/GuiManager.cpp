@@ -65,23 +65,23 @@ std::list<GuiTexture*> GuiManager::guisToRender;
 void GuiManager::init()
 {
 	fontVip = PauseScreen::font;
-	//textTimer = new GUIText("0", 1, fontVip, 0.01f, 0.01f, 1, false, false, false); Global::countNew++;
-	textRings = new GUIText("0", 1, fontVip, 0.01f, 0.01f, 1, false, false, false); Global::countNew++;
-	textScore = new GUIText("0", 1, fontVip, 0.01f, 0.01f, 1, false, false, false); Global::countNew++;
-	textLives = new GUIText("0", 1, fontVip, 0.01f, 0.98f, 1, false, false, false); Global::countNew++;
+	//textTimer = new GUIText("0", 1, fontVip, 0.01f, 0.01f, 1, false, false, false); INCR_NEW
+	textRings = new GUIText("0", 1, fontVip, 0.01f, 0.01f, 1, false, false, false); INCR_NEW
+	textScore = new GUIText("0", 1, fontVip, 0.01f, 0.01f, 1, false, false, false); INCR_NEW
+	textLives = new GUIText("0", 1, fontVip, 0.01f, 0.98f, 1, false, false, false); INCR_NEW
 
 	//Player debug text
-	textHorVel              = new GUIText("Hor Vel:"     + std::to_string(horVel),              1, fontVip, 0.01f, 0.70f, 1, false, false, Global::debugDisplay); Global::countNew++;
-	textVerVel              = new GUIText("Ver Vel:"     + std::to_string(verVel),              1, fontVip, 0.01f, 0.75f, 1, false, false, Global::debugDisplay); Global::countNew++;
-	textTotalVel            = new GUIText("Total Vel:"   + std::to_string(horVel),              1, fontVip, 0.01f, 0.80f, 1, false, false, Global::debugDisplay); Global::countNew++;
-	textHoverCount          = new GUIText("Hover Count:" + std::to_string(hoverCount),          1, fontVip, 0.01f, 0.85f, 1, false, false, Global::debugDisplay); Global::countNew++;
-	textStoredSpindashSpeed = new GUIText("SSS:"         + std::to_string(storedSpindashSpeed), 1, fontVip, 0.01f, 0.90f, 1, false, false, Global::debugDisplay); Global::countNew++;
+	textHorVel              = new GUIText("Hor Vel:"     + std::to_string(horVel),              1, fontVip, 0.01f, 0.70f, 1, false, false, Global::debugDisplay); INCR_NEW
+	textVerVel              = new GUIText("Ver Vel:"     + std::to_string(verVel),              1, fontVip, 0.01f, 0.75f, 1, false, false, Global::debugDisplay); INCR_NEW
+	textTotalVel            = new GUIText("Total Vel:"   + std::to_string(horVel),              1, fontVip, 0.01f, 0.80f, 1, false, false, Global::debugDisplay); INCR_NEW
+	textHoverCount          = new GUIText("Hover Count:" + std::to_string(hoverCount),          1, fontVip, 0.01f, 0.85f, 1, false, false, Global::debugDisplay); INCR_NEW
+	textStoredSpindashSpeed = new GUIText("SSS:"         + std::to_string(storedSpindashSpeed), 1, fontVip, 0.01f, 0.90f, 1, false, false, Global::debugDisplay); INCR_NEW
 
 	//Input text
-	textA = new GUIText("A", 1, fontVip, 0.80f, 0.95f, 1, false, false, Global::debugDisplay); Global::countNew++;
-	textB = new GUIText("B", 1, fontVip, 0.85f, 0.95f, 1, false, false, Global::debugDisplay); Global::countNew++;
-	textX = new GUIText("X", 1, fontVip, 0.90f, 0.95f, 1, false, false, Global::debugDisplay); Global::countNew++;
-	textY = new GUIText("Y", 1, fontVip, 0.95f, 0.95f, 1, false, false, Global::debugDisplay); Global::countNew++;
+	textA = new GUIText("A", 1, fontVip, 0.80f, 0.95f, 1, false, false, Global::debugDisplay); INCR_NEW
+	textB = new GUIText("B", 1, fontVip, 0.85f, 0.95f, 1, false, false, Global::debugDisplay); INCR_NEW
+	textX = new GUIText("X", 1, fontVip, 0.90f, 0.95f, 1, false, false, Global::debugDisplay); INCR_NEW
+	textY = new GUIText("Y", 1, fontVip, 0.95f, 0.95f, 1, false, false, Global::debugDisplay); INCR_NEW
 
 	const float w = 0.02f; //width of a single text character
 	const float s = 1.5f; //size of timer text
@@ -92,69 +92,69 @@ void GuiManager::init()
 	float px = 1.0f/(SCR_WIDTH);  //1 pixel in x dimension
 	float py = 1.0f/(SCR_HEIGHT); //1 pixel in y dimension
 
-	GuiManager::timerColon   = new GUIText(":", s, fontVip, 2*w+16*px, 16*py, w, true, false, true); Global::countNew++;
-	GuiManager::timerPeriod  = new GUIText(".", s, fontVip, 5*w+16*px, 16*py, w, true, false, true); Global::countNew++;
+	GuiManager::timerColon   = new GUIText(":", s, fontVip, 2*w+16*px, 16*py, w, true, false, true); INCR_NEW
+	GuiManager::timerPeriod  = new GUIText(".", s, fontVip, 5*w+16*px, 16*py, w, true, false, true); INCR_NEW
 
-	GuiManager::timerMin1[0] = new GUIText("0", s, fontVip, 0*w+16*px, 16*py, w, true, false, true); Global::countNew++;
-	GuiManager::timerMin1[1] = new GUIText("1", s, fontVip, 0*w+16*px, 16*py, w, true, false, true); Global::countNew++;
-	GuiManager::timerMin1[2] = new GUIText("2", s, fontVip, 0*w+16*px, 16*py, w, true, false, true); Global::countNew++;
-	GuiManager::timerMin1[3] = new GUIText("3", s, fontVip, 0*w+16*px, 16*py, w, true, false, true); Global::countNew++;
-	GuiManager::timerMin1[4] = new GUIText("4", s, fontVip, 0*w+16*px, 16*py, w, true, false, true); Global::countNew++;
-	GuiManager::timerMin1[5] = new GUIText("5", s, fontVip, 0*w+16*px, 16*py, w, true, false, true); Global::countNew++;
-	GuiManager::timerMin1[6] = new GUIText("6", s, fontVip, 0*w+16*px, 16*py, w, true, false, true); Global::countNew++;
-	GuiManager::timerMin1[7] = new GUIText("7", s, fontVip, 0*w+16*px, 16*py, w, true, false, true); Global::countNew++;
-	GuiManager::timerMin1[8] = new GUIText("8", s, fontVip, 0*w+16*px, 16*py, w, true, false, true); Global::countNew++;
-	GuiManager::timerMin1[9] = new GUIText("9", s, fontVip, 0*w+16*px, 16*py, w, true, false, true); Global::countNew++;
-	GuiManager::timerMin2[0] = new GUIText("0", s, fontVip, 1*w+16*px, 16*py, w, true, false, true); Global::countNew++;
-	GuiManager::timerMin2[1] = new GUIText("1", s, fontVip, 1*w+16*px, 16*py, w, true, false, true); Global::countNew++;
-	GuiManager::timerMin2[2] = new GUIText("2", s, fontVip, 1*w+16*px, 16*py, w, true, false, true); Global::countNew++;
-	GuiManager::timerMin2[3] = new GUIText("3", s, fontVip, 1*w+16*px, 16*py, w, true, false, true); Global::countNew++;
-	GuiManager::timerMin2[4] = new GUIText("4", s, fontVip, 1*w+16*px, 16*py, w, true, false, true); Global::countNew++;
-	GuiManager::timerMin2[5] = new GUIText("5", s, fontVip, 1*w+16*px, 16*py, w, true, false, true); Global::countNew++;
-	GuiManager::timerMin2[6] = new GUIText("6", s, fontVip, 1*w+16*px, 16*py, w, true, false, true); Global::countNew++;
-	GuiManager::timerMin2[7] = new GUIText("7", s, fontVip, 1*w+16*px, 16*py, w, true, false, true); Global::countNew++;
-	GuiManager::timerMin2[8] = new GUIText("8", s, fontVip, 1*w+16*px, 16*py, w, true, false, true); Global::countNew++;
-	GuiManager::timerMin2[9] = new GUIText("9", s, fontVip, 1*w+16*px, 16*py, w, true, false, true); Global::countNew++;
-	GuiManager::timerSec1[0] = new GUIText("0", s, fontVip, 3*w+16*px, 16*py, w, true, false, true); Global::countNew++;
-	GuiManager::timerSec1[1] = new GUIText("1", s, fontVip, 3*w+16*px, 16*py, w, true, false, true); Global::countNew++;
-	GuiManager::timerSec1[2] = new GUIText("2", s, fontVip, 3*w+16*px, 16*py, w, true, false, true); Global::countNew++;
-	GuiManager::timerSec1[3] = new GUIText("3", s, fontVip, 3*w+16*px, 16*py, w, true, false, true); Global::countNew++;
-	GuiManager::timerSec1[4] = new GUIText("4", s, fontVip, 3*w+16*px, 16*py, w, true, false, true); Global::countNew++;
-	GuiManager::timerSec1[5] = new GUIText("5", s, fontVip, 3*w+16*px, 16*py, w, true, false, true); Global::countNew++;
-	GuiManager::timerSec1[6] = new GUIText("6", s, fontVip, 3*w+16*px, 16*py, w, true, false, true); Global::countNew++;
-	GuiManager::timerSec1[7] = new GUIText("7", s, fontVip, 3*w+16*px, 16*py, w, true, false, true); Global::countNew++;
-	GuiManager::timerSec1[8] = new GUIText("8", s, fontVip, 3*w+16*px, 16*py, w, true, false, true); Global::countNew++;
-	GuiManager::timerSec1[9] = new GUIText("9", s, fontVip, 3*w+16*px, 16*py, w, true, false, true); Global::countNew++;
-	GuiManager::timerSec2[0] = new GUIText("0", s, fontVip, 4*w+16*px, 16*py, w, true, false, true); Global::countNew++;
-	GuiManager::timerSec2[1] = new GUIText("1", s, fontVip, 4*w+16*px, 16*py, w, true, false, true); Global::countNew++;
-	GuiManager::timerSec2[2] = new GUIText("2", s, fontVip, 4*w+16*px, 16*py, w, true, false, true); Global::countNew++;
-	GuiManager::timerSec2[3] = new GUIText("3", s, fontVip, 4*w+16*px, 16*py, w, true, false, true); Global::countNew++;
-	GuiManager::timerSec2[4] = new GUIText("4", s, fontVip, 4*w+16*px, 16*py, w, true, false, true); Global::countNew++;
-	GuiManager::timerSec2[5] = new GUIText("5", s, fontVip, 4*w+16*px, 16*py, w, true, false, true); Global::countNew++;
-	GuiManager::timerSec2[6] = new GUIText("6", s, fontVip, 4*w+16*px, 16*py, w, true, false, true); Global::countNew++;
-	GuiManager::timerSec2[7] = new GUIText("7", s, fontVip, 4*w+16*px, 16*py, w, true, false, true); Global::countNew++;
-	GuiManager::timerSec2[8] = new GUIText("8", s, fontVip, 4*w+16*px, 16*py, w, true, false, true); Global::countNew++;
-	GuiManager::timerSec2[9] = new GUIText("9", s, fontVip, 4*w+16*px, 16*py, w, true, false, true); Global::countNew++;
-	GuiManager::timerCen1[0] = new GUIText("0", s, fontVip, 6*w+16*px, 16*py, w, true, false, true); Global::countNew++;
-	GuiManager::timerCen1[1] = new GUIText("1", s, fontVip, 6*w+16*px, 16*py, w, true, false, true); Global::countNew++;
-	GuiManager::timerCen1[2] = new GUIText("2", s, fontVip, 6*w+16*px, 16*py, w, true, false, true); Global::countNew++;
-	GuiManager::timerCen1[3] = new GUIText("3", s, fontVip, 6*w+16*px, 16*py, w, true, false, true); Global::countNew++;
-	GuiManager::timerCen1[4] = new GUIText("4", s, fontVip, 6*w+16*px, 16*py, w, true, false, true); Global::countNew++;
-	GuiManager::timerCen1[5] = new GUIText("5", s, fontVip, 6*w+16*px, 16*py, w, true, false, true); Global::countNew++;
-	GuiManager::timerCen1[6] = new GUIText("6", s, fontVip, 6*w+16*px, 16*py, w, true, false, true); Global::countNew++;
-	GuiManager::timerCen1[7] = new GUIText("7", s, fontVip, 6*w+16*px, 16*py, w, true, false, true); Global::countNew++;
-	GuiManager::timerCen1[8] = new GUIText("8", s, fontVip, 6*w+16*px, 16*py, w, true, false, true); Global::countNew++;
-	GuiManager::timerCen1[9] = new GUIText("9", s, fontVip, 6*w+16*px, 16*py, w, true, false, true); Global::countNew++;
-	GuiManager::timerCen2[0] = new GUIText("0", s, fontVip, 7*w+16*px, 16*py, w, true, false, true); Global::countNew++;
-	GuiManager::timerCen2[1] = new GUIText("1", s, fontVip, 7*w+16*px, 16*py, w, true, false, true); Global::countNew++;
-	GuiManager::timerCen2[2] = new GUIText("2", s, fontVip, 7*w+16*px, 16*py, w, true, false, true); Global::countNew++;
-	GuiManager::timerCen2[3] = new GUIText("3", s, fontVip, 7*w+16*px, 16*py, w, true, false, true); Global::countNew++;
-	GuiManager::timerCen2[4] = new GUIText("4", s, fontVip, 7*w+16*px, 16*py, w, true, false, true); Global::countNew++;
-	GuiManager::timerCen2[5] = new GUIText("5", s, fontVip, 7*w+16*px, 16*py, w, true, false, true); Global::countNew++;
-	GuiManager::timerCen2[6] = new GUIText("6", s, fontVip, 7*w+16*px, 16*py, w, true, false, true); Global::countNew++;
-	GuiManager::timerCen2[7] = new GUIText("7", s, fontVip, 7*w+16*px, 16*py, w, true, false, true); Global::countNew++;
-	GuiManager::timerCen2[8] = new GUIText("8", s, fontVip, 7*w+16*px, 16*py, w, true, false, true); Global::countNew++;
-	GuiManager::timerCen2[9] = new GUIText("9", s, fontVip, 7*w+16*px, 16*py, w, true, false, true); Global::countNew++;
+	GuiManager::timerMin1[0] = new GUIText("0", s, fontVip, 0*w+16*px, 16*py, w, true, false, true); INCR_NEW
+	GuiManager::timerMin1[1] = new GUIText("1", s, fontVip, 0*w+16*px, 16*py, w, true, false, true); INCR_NEW
+	GuiManager::timerMin1[2] = new GUIText("2", s, fontVip, 0*w+16*px, 16*py, w, true, false, true); INCR_NEW
+	GuiManager::timerMin1[3] = new GUIText("3", s, fontVip, 0*w+16*px, 16*py, w, true, false, true); INCR_NEW
+	GuiManager::timerMin1[4] = new GUIText("4", s, fontVip, 0*w+16*px, 16*py, w, true, false, true); INCR_NEW
+	GuiManager::timerMin1[5] = new GUIText("5", s, fontVip, 0*w+16*px, 16*py, w, true, false, true); INCR_NEW
+	GuiManager::timerMin1[6] = new GUIText("6", s, fontVip, 0*w+16*px, 16*py, w, true, false, true); INCR_NEW
+	GuiManager::timerMin1[7] = new GUIText("7", s, fontVip, 0*w+16*px, 16*py, w, true, false, true); INCR_NEW
+	GuiManager::timerMin1[8] = new GUIText("8", s, fontVip, 0*w+16*px, 16*py, w, true, false, true); INCR_NEW
+	GuiManager::timerMin1[9] = new GUIText("9", s, fontVip, 0*w+16*px, 16*py, w, true, false, true); INCR_NEW
+	GuiManager::timerMin2[0] = new GUIText("0", s, fontVip, 1*w+16*px, 16*py, w, true, false, true); INCR_NEW
+	GuiManager::timerMin2[1] = new GUIText("1", s, fontVip, 1*w+16*px, 16*py, w, true, false, true); INCR_NEW
+	GuiManager::timerMin2[2] = new GUIText("2", s, fontVip, 1*w+16*px, 16*py, w, true, false, true); INCR_NEW
+	GuiManager::timerMin2[3] = new GUIText("3", s, fontVip, 1*w+16*px, 16*py, w, true, false, true); INCR_NEW
+	GuiManager::timerMin2[4] = new GUIText("4", s, fontVip, 1*w+16*px, 16*py, w, true, false, true); INCR_NEW
+	GuiManager::timerMin2[5] = new GUIText("5", s, fontVip, 1*w+16*px, 16*py, w, true, false, true); INCR_NEW
+	GuiManager::timerMin2[6] = new GUIText("6", s, fontVip, 1*w+16*px, 16*py, w, true, false, true); INCR_NEW
+	GuiManager::timerMin2[7] = new GUIText("7", s, fontVip, 1*w+16*px, 16*py, w, true, false, true); INCR_NEW
+	GuiManager::timerMin2[8] = new GUIText("8", s, fontVip, 1*w+16*px, 16*py, w, true, false, true); INCR_NEW
+	GuiManager::timerMin2[9] = new GUIText("9", s, fontVip, 1*w+16*px, 16*py, w, true, false, true); INCR_NEW
+	GuiManager::timerSec1[0] = new GUIText("0", s, fontVip, 3*w+16*px, 16*py, w, true, false, true); INCR_NEW
+	GuiManager::timerSec1[1] = new GUIText("1", s, fontVip, 3*w+16*px, 16*py, w, true, false, true); INCR_NEW
+	GuiManager::timerSec1[2] = new GUIText("2", s, fontVip, 3*w+16*px, 16*py, w, true, false, true); INCR_NEW
+	GuiManager::timerSec1[3] = new GUIText("3", s, fontVip, 3*w+16*px, 16*py, w, true, false, true); INCR_NEW
+	GuiManager::timerSec1[4] = new GUIText("4", s, fontVip, 3*w+16*px, 16*py, w, true, false, true); INCR_NEW
+	GuiManager::timerSec1[5] = new GUIText("5", s, fontVip, 3*w+16*px, 16*py, w, true, false, true); INCR_NEW
+	GuiManager::timerSec1[6] = new GUIText("6", s, fontVip, 3*w+16*px, 16*py, w, true, false, true); INCR_NEW
+	GuiManager::timerSec1[7] = new GUIText("7", s, fontVip, 3*w+16*px, 16*py, w, true, false, true); INCR_NEW
+	GuiManager::timerSec1[8] = new GUIText("8", s, fontVip, 3*w+16*px, 16*py, w, true, false, true); INCR_NEW
+	GuiManager::timerSec1[9] = new GUIText("9", s, fontVip, 3*w+16*px, 16*py, w, true, false, true); INCR_NEW
+	GuiManager::timerSec2[0] = new GUIText("0", s, fontVip, 4*w+16*px, 16*py, w, true, false, true); INCR_NEW
+	GuiManager::timerSec2[1] = new GUIText("1", s, fontVip, 4*w+16*px, 16*py, w, true, false, true); INCR_NEW
+	GuiManager::timerSec2[2] = new GUIText("2", s, fontVip, 4*w+16*px, 16*py, w, true, false, true); INCR_NEW
+	GuiManager::timerSec2[3] = new GUIText("3", s, fontVip, 4*w+16*px, 16*py, w, true, false, true); INCR_NEW
+	GuiManager::timerSec2[4] = new GUIText("4", s, fontVip, 4*w+16*px, 16*py, w, true, false, true); INCR_NEW
+	GuiManager::timerSec2[5] = new GUIText("5", s, fontVip, 4*w+16*px, 16*py, w, true, false, true); INCR_NEW
+	GuiManager::timerSec2[6] = new GUIText("6", s, fontVip, 4*w+16*px, 16*py, w, true, false, true); INCR_NEW
+	GuiManager::timerSec2[7] = new GUIText("7", s, fontVip, 4*w+16*px, 16*py, w, true, false, true); INCR_NEW
+	GuiManager::timerSec2[8] = new GUIText("8", s, fontVip, 4*w+16*px, 16*py, w, true, false, true); INCR_NEW
+	GuiManager::timerSec2[9] = new GUIText("9", s, fontVip, 4*w+16*px, 16*py, w, true, false, true); INCR_NEW
+	GuiManager::timerCen1[0] = new GUIText("0", s, fontVip, 6*w+16*px, 16*py, w, true, false, true); INCR_NEW
+	GuiManager::timerCen1[1] = new GUIText("1", s, fontVip, 6*w+16*px, 16*py, w, true, false, true); INCR_NEW
+	GuiManager::timerCen1[2] = new GUIText("2", s, fontVip, 6*w+16*px, 16*py, w, true, false, true); INCR_NEW
+	GuiManager::timerCen1[3] = new GUIText("3", s, fontVip, 6*w+16*px, 16*py, w, true, false, true); INCR_NEW
+	GuiManager::timerCen1[4] = new GUIText("4", s, fontVip, 6*w+16*px, 16*py, w, true, false, true); INCR_NEW
+	GuiManager::timerCen1[5] = new GUIText("5", s, fontVip, 6*w+16*px, 16*py, w, true, false, true); INCR_NEW
+	GuiManager::timerCen1[6] = new GUIText("6", s, fontVip, 6*w+16*px, 16*py, w, true, false, true); INCR_NEW
+	GuiManager::timerCen1[7] = new GUIText("7", s, fontVip, 6*w+16*px, 16*py, w, true, false, true); INCR_NEW
+	GuiManager::timerCen1[8] = new GUIText("8", s, fontVip, 6*w+16*px, 16*py, w, true, false, true); INCR_NEW
+	GuiManager::timerCen1[9] = new GUIText("9", s, fontVip, 6*w+16*px, 16*py, w, true, false, true); INCR_NEW
+	GuiManager::timerCen2[0] = new GUIText("0", s, fontVip, 7*w+16*px, 16*py, w, true, false, true); INCR_NEW
+	GuiManager::timerCen2[1] = new GUIText("1", s, fontVip, 7*w+16*px, 16*py, w, true, false, true); INCR_NEW
+	GuiManager::timerCen2[2] = new GUIText("2", s, fontVip, 7*w+16*px, 16*py, w, true, false, true); INCR_NEW
+	GuiManager::timerCen2[3] = new GUIText("3", s, fontVip, 7*w+16*px, 16*py, w, true, false, true); INCR_NEW
+	GuiManager::timerCen2[4] = new GUIText("4", s, fontVip, 7*w+16*px, 16*py, w, true, false, true); INCR_NEW
+	GuiManager::timerCen2[5] = new GUIText("5", s, fontVip, 7*w+16*px, 16*py, w, true, false, true); INCR_NEW
+	GuiManager::timerCen2[6] = new GUIText("6", s, fontVip, 7*w+16*px, 16*py, w, true, false, true); INCR_NEW
+	GuiManager::timerCen2[7] = new GUIText("7", s, fontVip, 7*w+16*px, 16*py, w, true, false, true); INCR_NEW
+	GuiManager::timerCen2[8] = new GUIText("8", s, fontVip, 7*w+16*px, 16*py, w, true, false, true); INCR_NEW
+	GuiManager::timerCen2[9] = new GUIText("9", s, fontVip, 7*w+16*px, 16*py, w, true, false, true); INCR_NEW
 
 	GuiManager::setTimerInvisible();
 
@@ -177,7 +177,7 @@ void GuiManager::refresh()
 
 
 	//textTimer->deleteMe();
-	//delete textTimer; Global::countDelete++;
+	//delete textTimer; INCR_DEL
 	//textTimer = nullptr;
 	//
 	//std::string partMin = std::to_string(minutes);
@@ -197,29 +197,29 @@ void GuiManager::refresh()
 	//}
 	//std::string timer = partMin + ":" + partSec + "." + partCen;
 	//
-	//textTimer = new GUIText(timer, 1.5f, fontVip, 0+16*px, 0+16*py, 1, false, false, true); Global::countNew++;
+	//textTimer = new GUIText(timer, 1.5f, fontVip, 0+16*px, 0+16*py, 1, false, false, true); INCR_NEW
 
 	if (Global::gameRingCount != GuiManager::previousRings)
 	{
 		textRings->deleteMe();
-		delete textRings; Global::countDelete++;
-		textRings = new GUIText(std::to_string(Global::gameRingCount), 1.5f, fontVip, w+o+16*px, 0+48*py, 1, false, false, true); Global::countNew++;
+		delete textRings; INCR_DEL
+		textRings = new GUIText(std::to_string(Global::gameRingCount), 1.5f, fontVip, w+o+16*px, 0+48*py, 1, false, false, true); INCR_NEW
 		GuiManager::previousRings = Global::gameRingCount;
 	}
 
 	if (Global::gameScore != GuiManager::previousScore)
 	{
 		textScore->deleteMe();
-		delete textScore; Global::countDelete++;
-		textScore = new GUIText(std::to_string(Global::gameScore), 1.5f, fontVip, w+o+16*px, 0+80*py, 1, false, false, true); Global::countNew++;
+		delete textScore; INCR_DEL
+		textScore = new GUIText(std::to_string(Global::gameScore), 1.5f, fontVip, w+o+16*px, 0+80*py, 1, false, false, true); INCR_NEW
 		GuiManager::previousScore = Global::gameScore;
 	}
 
 	if (Global::gameLives != GuiManager::previousLives)
 	{
 		textLives->deleteMe();
-		delete textLives; Global::countDelete++;
-		textLives = new GUIText(std::to_string(Global::gameLives), 1.5f, fontVip, o+16*px, 1.0f-80*py, 1, false, false, true); Global::countNew++;
+		delete textLives; INCR_DEL
+		textLives = new GUIText(std::to_string(Global::gameLives), 1.5f, fontVip, o+16*px, 1.0f-80*py, 1, false, false, true); INCR_NEW
 		GuiManager::previousLives = Global::gameLives;
 	}
 
@@ -245,46 +245,46 @@ void GuiManager::refresh()
 		//Display debug text is debugDisplay is true.
 		textHorVel->deleteMe();
 		delete textHorVel;
-		Global::countDelete++;
+		INCR_DEL
 		textHorVel = nullptr;
 		textHorVel = new GUIText("Hor Vel:" + std::to_string(horVel), 1.0f, fontVip, 0.01f, 0.70f, 1, false, false, Global::debugDisplay);
-		Global::countNew++;
+		INCR_NEW
 
 		textVerVel->deleteMe();
 		delete textVerVel;
-		Global::countDelete++;
+		INCR_DEL
 		textVerVel = nullptr;
 		textVerVel = new GUIText("Ver Vel:" + std::to_string(verVel), 1.0f, fontVip, 0.01f, 0.75f, 1, false, false, Global::debugDisplay);
-		Global::countNew++;
+		INCR_NEW
 
 		textTotalVel->deleteMe();
 		delete textTotalVel;
-		Global::countDelete++;
+		INCR_DEL
 		textTotalVel = nullptr;
 		textTotalVel = new GUIText("Total Vel:" + std::to_string(totalVel), 1.0f, fontVip, 0.01f, 0.80f, 1, false, false, Global::debugDisplay);
-		Global::countNew++;
+		INCR_NEW
 
 		textHoverCount->deleteMe();
 		delete textHoverCount;
-		Global::countDelete++;
+		INCR_DEL
 		textHoverCount = nullptr;
 		textHoverCount = new GUIText("Hover Count:" + std::to_string(hoverCount), 1.0f, fontVip, 0.01f, 0.85f, 1, false, false, Global::debugDisplay);
-		Global::countNew++;
+		INCR_NEW
 
 		textStoredSpindashSpeed->deleteMe();
 		delete textStoredSpindashSpeed;
-		Global::countDelete++;
+		INCR_DEL
 		textStoredSpindashSpeed = nullptr;
 		textStoredSpindashSpeed = new GUIText("SSS:" + std::to_string(storedSpindashSpeed), 1.0f, fontVip, 0.01f, 0.90f, 1, false, false, Global::debugDisplay);
-		Global::countNew++;
+		INCR_NEW
 
 		//Input display
 		textA->deleteMe();
 		delete textA;
-		Global::countDelete++;
+		INCR_DEL
 		textA = nullptr;
 		textA = new GUIText("A", 1, fontVip, 0.80f, 0.95f, 1, false, false, Global::debugDisplay);
-		Global::countNew++;
+		INCR_NEW
 		if (!INPUT_JUMP)
 		{
 			textA->setColour(0.2f, 0.2f, 0.2f);
@@ -292,10 +292,10 @@ void GuiManager::refresh()
 
 		textB->deleteMe();
 		delete textB;
-		Global::countDelete++;
+		INCR_DEL
 		textB = nullptr;
 		textB = new GUIText("B", 1, fontVip, 0.85f, 0.95f, 1, false, false, Global::debugDisplay);
-		Global::countNew++;
+		INCR_NEW
 		if (!INPUT_ACTION)
 		{
 			textB->setColour(0.2f, 0.2f, 0.2f);
@@ -303,10 +303,10 @@ void GuiManager::refresh()
 
 		textX->deleteMe();
 		delete textX;
-		Global::countDelete++;
+		INCR_DEL
 		textX = nullptr;
 		textX = new GUIText("X", 1, fontVip, 0.90f, 0.95f, 1, false, false, Global::debugDisplay);
-		Global::countNew++;
+		INCR_NEW
 		if (!INPUT_ACTION2)
 		{
 			textX->setColour(0.2f, 0.2f, 0.2f);
@@ -314,10 +314,10 @@ void GuiManager::refresh()
 
 		textY->deleteMe();
 		delete textY;
-		Global::countDelete++;
+		INCR_DEL
 		textY = nullptr;
 		textY = new GUIText("Y", 1, fontVip, 0.95f, 0.95f, 1, false, false, Global::debugDisplay);
-		Global::countNew++;
+		INCR_NEW
 		if (!INPUT_SPECIAL)
 		{
 			textY->setColour(0.2f, 0.2f, 0.2f);

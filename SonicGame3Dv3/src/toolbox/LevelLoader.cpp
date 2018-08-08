@@ -626,7 +626,7 @@ void processLine(char** dat, int datLength)
 		{
 			Ring::loadStaticModels();
 			Ring* ring = new Ring(toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]));
-			Global::countNew++;
+			INCR_NEW
 			Main_addEntity(ring);
 			return;
 		}
@@ -638,7 +638,7 @@ void processLine(char** dat, int datLength)
 				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
 				toFloat(dat[4]), toFloat(dat[5]),                  //rotation
 				toFloat(dat[6]), toInt(dat[7]));                   //power, time
-			Global::countNew++;
+			INCR_NEW
 			Main_addEntity(spring);
 			return;
 		}
@@ -650,7 +650,7 @@ void processLine(char** dat, int datLength)
 				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
 				toFloat(dat[4]), toFloat(dat[5]), toFloat(dat[6]), //rotation
 				toFloat(dat[7]), toFloat(dat[8]), toInt(dat[9]));  //power, camYaw, time
-			Global::countNew++;
+			INCR_NEW
 			Main_addEntity(dashpad);
 			return;
 		}
@@ -673,14 +673,14 @@ void processLine(char** dat, int datLength)
 					Ring* ring = new Ring(pos1.x + i*(xDiff / (numRings - 1)), 
 										  pos1.y + i*(yDiff / (numRings - 1)),
 										  pos1.z + i*(zDiff / (numRings - 1)));
-					Global::countNew++;
+					INCR_NEW
 					Main_addEntity(ring);
 				}
 			}
 			else
 			{
 				Ring* ring = new Ring(pos1.x, pos1.y, pos1.z);
-				Global::countNew++;
+				INCR_NEW
 				Main_addEntity(ring);
 			}
 
@@ -704,14 +704,14 @@ void processLine(char** dat, int datLength)
 					newPoint.x = centerPos.x + ringRadius*cosf(toRadians(degreeSegment*i));
 					newPoint.z = centerPos.z + ringRadius*sinf(toRadians(degreeSegment*i));
 					Ring* ring = new Ring(newPoint.x, newPoint.y, newPoint.z);
-					Global::countNew++;
+					INCR_NEW
 					Main_addEntity(ring);
 				}
 			}
 			else
 			{
 				Ring* ring = new Ring(centerPos.x, centerPos.y, centerPos.z);
-				Global::countNew++;
+				INCR_NEW
 				Main_addEntity(ring);
 			}
 
@@ -735,14 +735,14 @@ void processLine(char** dat, int datLength)
 					newPoint.x = centerPos.x + ringRadius*cosf(toRadians(degreeSegment*i));
 					newPoint.z = centerPos.z + ringRadius*sinf(toRadians(degreeSegment*i));
 					Ring* ring = new Ring(newPoint.x, newPoint.y, newPoint.z);
-					Global::countNew++;
+					INCR_NEW
 					Main_addEntity(ring);
 				}
 			}
 			else
 			{
 				Ring* ring = new Ring(centerPos.x, centerPos.y, centerPos.z);
-				Global::countNew++;
+				INCR_NEW
 				Main_addEntity(ring);
 			}
 
@@ -754,7 +754,7 @@ void processLine(char** dat, int datLength)
 			PlayerSonic::deleteStaticModels();
 			PlayerSonic::loadStaticModels();
 			PlayerSonic* player = new PlayerSonic(toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]));
-			Global::countNew++;
+			INCR_NEW
 			Global::gamePlayer = player;
 			SkyManager::setCenterObject(player);
 			player->setCameraAngles(Global::gameCamera->getYaw(), Global::gameCamera->getPitch());
@@ -788,7 +788,7 @@ void processLine(char** dat, int datLength)
 				toFloat(dat[4]), toFloat(dat[5]), toFloat(dat[6]), //target pos
 				toFloat(dat[7]), toFloat(dat[8]), toFloat(dat[9]), //new yaw, new pitch, size (radius*2)
 				toInt(dat[10]), toInt(dat[11]));                   //new music to play intro and loop
-			Global::countNew++;
+			INCR_NEW
 			Main_addEntity(zone);
 			return;
 		}
@@ -797,7 +797,7 @@ void processLine(char** dat, int datLength)
 		{
 			GoalSign::loadStaticModels();
 			GoalSign* sign = new GoalSign(toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), toInt(dat[4]));
-			Global::countNew++;
+			INCR_NEW
 			Main_addEntity(sign);
 			return;
 		}
@@ -809,7 +809,7 @@ void processLine(char** dat, int datLength)
 				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
 				toFloat(dat[4]), toFloat(dat[5]), toFloat(dat[6]), //rotation
 				toFloat(dat[7]), 0);                               //scale, kind
-			Global::countNew++;
+			INCR_NEW
 			Main_addEntity(palmtree);
 			return;
 		}
@@ -819,7 +819,7 @@ void processLine(char** dat, int datLength)
 			RhinoTank::loadStaticModels();
 			RhinoTank* rhino = new RhinoTank(
 				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3])); //position
-			Global::countNew++;
+			INCR_NEW
 			Main_addEntity(rhino);
 			return;
 		}
@@ -829,7 +829,7 @@ void processLine(char** dat, int datLength)
 			EC_SinkingPlatform::loadStaticModels();
 			EC_SinkingPlatform* plat = new EC_SinkingPlatform(
 				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3])); //position
-			Global::countNew++;
+			INCR_NEW
 			Main_addEntity(plat);
 			return;
 		}
@@ -840,7 +840,7 @@ void processLine(char** dat, int datLength)
 			EC_Waterfall* waterfall = new EC_Waterfall(
 				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
 				toFloat(dat[4]), toFloat(dat[5]));                 //rotation, scale
-			Global::countNew++;
+			INCR_NEW
 			Main_addTransparentEntity(waterfall);
 			return;
 		}
@@ -849,7 +849,7 @@ void processLine(char** dat, int datLength)
 		{
 			EC_FlatWater::loadStaticModels();
 			EC_FlatWater* water = new EC_FlatWater();
-			Global::countNew++;
+			INCR_NEW
 			Main_addTransparentEntity(water);
 			return;
 		}
@@ -859,7 +859,7 @@ void processLine(char** dat, int datLength)
 			MotoBug::loadStaticModels();
 			MotoBug* bug = new MotoBug(
 				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3])); //position
-			Global::countNew++;
+			INCR_NEW
 			Main_addEntity(bug);
 			return;
 		}
@@ -870,7 +870,7 @@ void processLine(char** dat, int datLength)
 			GH_Rock* rock = new GH_Rock(
 				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
 				toFloat(dat[4]), 1.0f); //yrot, scale
-			Global::countNew++;
+			INCR_NEW
 			Main_addEntity(rock);
 			return;
 		}
@@ -881,7 +881,7 @@ void processLine(char** dat, int datLength)
 			GH_Tree* tree = new GH_Tree(
 				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
 				toFloat(dat[4]), toFloat(dat[5])); //yrot, scale
-			Global::countNew++;
+			INCR_NEW
 			Main_addEntity(tree);
 			return;
 		}
@@ -892,7 +892,7 @@ void processLine(char** dat, int datLength)
 			GH_Sunflower* flower = new GH_Sunflower(
 				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
 				toFloat(dat[4]), 1.0f); //yrot, scale
-			Global::countNew++;
+			INCR_NEW
 			Main_addEntity(flower);
 			return;
 		}
@@ -903,7 +903,7 @@ void processLine(char** dat, int datLength)
 			GH_Flower* flower = new GH_Flower(
 				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
 				toFloat(dat[4]), 1.0f); //yrot, scale
-			Global::countNew++;
+			INCR_NEW
 			Main_addEntity(flower);
 			return;
 		}
@@ -914,7 +914,7 @@ void processLine(char** dat, int datLength)
 			GH_Totem* totem = new GH_Totem(
 				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
 				toFloat(dat[4]), 1.0f); //yrot, scale
-			Global::countNew++;
+			INCR_NEW
 			Main_addEntity(totem);
 			return;
 		}
@@ -925,7 +925,7 @@ void processLine(char** dat, int datLength)
 			GH_TotemWings* totem = new GH_TotemWings(
 				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
 				toFloat(dat[4]), 1.0f); //yrot, scale
-			Global::countNew++;
+			INCR_NEW
 			Main_addEntity(totem);
 			return;
 		}
@@ -936,7 +936,7 @@ void processLine(char** dat, int datLength)
 			GH_Grass* grass = new GH_Grass(
 				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
 				toFloat(dat[4]), 1.0f); //yrot, scale
-			Global::countNew++;
+			INCR_NEW
 			Main_addEntity(grass);
 			return;
 		}
@@ -947,7 +947,7 @@ void processLine(char** dat, int datLength)
 			GH_FallingPlatform* platform = new GH_FallingPlatform(
 				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
 				toFloat(dat[4]), 1.0f); //yrot, scale
-			Global::countNew++;
+			INCR_NEW
 			Main_addEntity(platform);
 			return;
 		}
@@ -958,7 +958,7 @@ void processLine(char** dat, int datLength)
 			GH_FloatingPlatform* platform = new GH_FloatingPlatform(
 				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
 				toFloat(dat[4]), 1.0f); //yrot, scale
-			Global::countNew++;
+			INCR_NEW
 			Main_addEntity(platform);
 			return;
 		}
@@ -969,7 +969,7 @@ void processLine(char** dat, int datLength)
 			GoalTrigger* trigger = new GoalTrigger(
 				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
 				toFloat(dat[4])); //scale
-			Global::countNew++;
+			INCR_NEW
 			Main_addEntity(trigger);
 			return;
 		}
@@ -981,7 +981,7 @@ void processLine(char** dat, int datLength)
 				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
 				toFloat(dat[4]), toFloat(dat[5]), toFloat(dat[6]), //rotation
 				toFloat(dat[7]));                                  //type
-			Global::countNew++;
+			INCR_NEW
 			Main_addEntity(umbrella);
 			return;
 		}
@@ -993,7 +993,7 @@ void processLine(char** dat, int datLength)
 				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
 				toFloat(dat[4]), toFloat(dat[5]),                  //rotation
 				toInt(dat[6]));                                    //type
-			Global::countNew++;
+			INCR_NEW
 			Main_addEntity(capsule);
 			return;
 		}
@@ -1002,7 +1002,7 @@ void processLine(char** dat, int datLength)
 		{
 			Spinner::loadStaticModels();
 			Spinner* spinner = new Spinner(toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]));
-			Global::countNew++;
+			INCR_NEW
 			Main_addEntity(spinner);
 			return;
 		}
@@ -1014,7 +1014,7 @@ void processLine(char** dat, int datLength)
 				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
 				toFloat(dat[4]), toFloat(dat[5]),                  //rotation
 				toFloat(dat[6]), toInt(dat[7]));                   //power, time
-			Global::countNew++;
+			INCR_NEW
 			Main_addEntity(ramp);
 			return;
 		}
@@ -1033,7 +1033,7 @@ void processLine(char** dat, int datLength)
 			NPC* npc = new NPC(
 				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
 				toFloat(dat[4]), toInt(dat[5]), message); //yrot, id, message
-			Global::countNew++;
+			INCR_NEW
 			Main_addEntity(npc);
 			return;
 		}
@@ -1043,7 +1043,7 @@ void processLine(char** dat, int datLength)
 			KillBox* killbox = new KillBox(
 				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]),  //corner 1
 				toFloat(dat[4]), toFloat(dat[5]), toFloat(dat[6])); //corner 2
-			Global::countNew++;
+			INCR_NEW
 			Main_addEntity(killbox);
 			return;
 		}
@@ -1053,7 +1053,7 @@ void processLine(char** dat, int datLength)
 			SHD_GoronKid::loadStaticModels();
 			SHD_GoronKid* goron = new SHD_GoronKid(
 				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3])); //position
-			Global::countNew++;
+			INCR_NEW
 			Main_addEntity(goron);
 			return;
 		}
@@ -1072,7 +1072,7 @@ void processLine(char** dat, int datLength)
 			SHD_GoronElder* goron = new SHD_GoronElder(
 				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
 				toFloat(dat[4]), message);
-			Global::countNew++;
+			INCR_NEW
 			Main_addEntity(goron);
 			return;
 		}
@@ -1086,7 +1086,7 @@ void processLine(char** dat, int datLength)
 
 			LowQualityWater::loadStaticModels();
 			LowQualityWater* water = new LowQualityWater(toFloat(dat[1]), toFloat(dat[2]));
-			Global::countNew++;
+			INCR_NEW
 			Main_addTransparentEntity(water);
 			return;
 		}
@@ -1096,7 +1096,7 @@ void processLine(char** dat, int datLength)
 			EC_Chair::loadStaticModels();
 			EC_Chair* chair = new EC_Chair(toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
 										   toFloat(dat[4]), toFloat(dat[5]));                 //rotation
-			Global::countNew++;
+			INCR_NEW
 			Main_addEntity(chair);
 			return;
 		}
@@ -1107,7 +1107,7 @@ void processLine(char** dat, int datLength)
 			EC_StrawRoofHut* hut = new EC_StrawRoofHut(
 											toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
 										    toFloat(dat[4]));                                  //rotation
-			Global::countNew++;
+			INCR_NEW
 			Main_addEntity(hut);
 			return;
 		}
@@ -1118,7 +1118,7 @@ void processLine(char** dat, int datLength)
 			EC_Hut* hut = new EC_Hut(
 				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
 				toFloat(dat[4]));                                  //rotation
-			Global::countNew++;
+			INCR_NEW
 			Main_addEntity(hut);
 			return;
 		}
@@ -1129,7 +1129,7 @@ void processLine(char** dat, int datLength)
 			EC_Dock* dock = new EC_Dock(
 				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
 				toFloat(dat[4]));                                  //rotation
-			Global::countNew++;
+			INCR_NEW
 			Main_addEntity(dock);
 			return;
 		}
@@ -1140,7 +1140,7 @@ void processLine(char** dat, int datLength)
 			EC_Pole* pole = new EC_Pole(
 				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
 				toFloat(dat[4]));                                  //rotation
-			Global::countNew++;
+			INCR_NEW
 			Main_addEntity(pole);
 			return;
 		}
@@ -1151,7 +1151,7 @@ void processLine(char** dat, int datLength)
 			EC_DockCorner* dock = new EC_DockCorner(
 				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
 				toFloat(dat[4]));                                  //rotation
-			Global::countNew++;
+			INCR_NEW
 			Main_addEntity(dock);
 			return;
 		}
@@ -1162,7 +1162,7 @@ void processLine(char** dat, int datLength)
 			EC_RaftSmall* raft = new EC_RaftSmall(
 				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
 				toFloat(dat[4]));                                  //rotation
-			Global::countNew++;
+			INCR_NEW
 			Main_addEntity(raft);
 			return;
 		}
@@ -1173,7 +1173,7 @@ void processLine(char** dat, int datLength)
 			EC_Raft* raft = new EC_Raft(
 				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
 				toFloat(dat[4]));                                  //rotation
-			Global::countNew++;
+			INCR_NEW
 			Main_addEntity(raft);
 			return;
 		}
@@ -1183,7 +1183,7 @@ void processLine(char** dat, int datLength)
 			EC_Shark::loadStaticModels();
 			EC_Shark* shark = new EC_Shark(
 				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3])); //position
-			Global::countNew++;
+			INCR_NEW
 			Global::ecShark = shark;
 			Main_addEntity(shark);
 			return;
@@ -1195,7 +1195,7 @@ void processLine(char** dat, int datLength)
 			Spikeball* ball = new Spikeball(
 				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
 				toFloat(dat[4]), toFloat(dat[5]));                 //radius, angVel
-			Global::countNew++;
+			INCR_NEW
 			Main_addEntity(ball);
 			return;
 		}
@@ -1208,7 +1208,7 @@ void processLine(char** dat, int datLength)
 				toFloat(dat[4]), //rotY
 				toFloat(dat[5]), toFloat(dat[6]), toFloat(dat[7]), //trigger position
 				toFloat(dat[8])); //trigger radius
-			Global::countNew++;
+			INCR_NEW
 			Main_addEntity(dolphin);
 			return;
 		}
@@ -1217,7 +1217,7 @@ void processLine(char** dat, int datLength)
 		{
 			TP_FlatWater::loadStaticModels();
 			TP_FlatWater* water = new TP_FlatWater;
-			Global::countNew++;
+			INCR_NEW
 			Main_addTransparentEntity(water);
 			return;
 		}
@@ -1228,7 +1228,7 @@ void processLine(char** dat, int datLength)
 			TP_FloatingPad* pad = new TP_FloatingPad(
 				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
 				toFloat(dat[4])); //rotY
-			Global::countNew++;
+			INCR_NEW
 			Main_addEntity(pad);
 			return;
 		}
@@ -1238,7 +1238,7 @@ void processLine(char** dat, int datLength)
 			TP_SpinningFloor::loadStaticModels();
 			TP_SpinningFloor* plat = new TP_SpinningFloor(
 				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3])); //position
-			Global::countNew++;
+			INCR_NEW
 			Main_addEntity(plat);
 			return;
 		}
@@ -1247,7 +1247,7 @@ void processLine(char** dat, int datLength)
 		{
 			FF_HealPads::loadStaticModels();
 			FF_HealPads* plat = new FF_HealPads;
-			Global::countNew++;
+			INCR_NEW
 			Main_addEntity(plat);
 			return;
 		}
@@ -1256,7 +1256,7 @@ void processLine(char** dat, int datLength)
 		{
 			EC_StageTransparent::loadStaticModels();
 			EC_StageTransparent* trans = new EC_StageTransparent;
-			Global::countNew++;
+			INCR_NEW
 			Main_addEntityPass2(trans);
 			return;
 		}
@@ -1265,7 +1265,7 @@ void processLine(char** dat, int datLength)
 		{
 			SHD_StageTransparent::loadStaticModels();
 			SHD_StageTransparent* trans = new SHD_StageTransparent;
-			Global::countNew++;
+			INCR_NEW
 			Main_addEntityPass2(trans);
 			return;
 		}
@@ -1276,7 +1276,7 @@ void processLine(char** dat, int datLength)
 			SH_TurnAsi* turn = new SH_TurnAsi(
 				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
 				toFloat(dat[4]));                                  //rotation
-			Global::countNew++;
+			INCR_NEW
 			Main_addEntity(turn);
 			return;
 		}
@@ -1288,7 +1288,7 @@ void processLine(char** dat, int datLength)
 				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
 				toFloat(dat[4]), toFloat(dat[5]), toFloat(dat[6]), //rotation
 				toFloat(dat[7]), toInt(dat[8]));                   //type
-			Global::countNew++;
+			INCR_NEW
 			Main_addEntity(rock);
 			return;
 		}
@@ -1299,7 +1299,7 @@ void processLine(char** dat, int datLength)
 			EC_RockPlatform* rock = new EC_RockPlatform(
 				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
 				toFloat(dat[4]));                                  //rotation
-			Global::countNew++;
+			INCR_NEW
 			Main_addEntity(rock);
 			return;
 		}
@@ -1316,7 +1316,7 @@ void processLine(char** dat, int datLength)
 				toFloat(dat[8]),							       //radius delta
 				toFloat(dat[9]),						           //height amplitude
 				toFloat(dat[10]));							       //height delta
-			Global::countNew++;
+			INCR_NEW
 			Main_addEntity(rock);
 			return;
 		}
@@ -1330,7 +1330,7 @@ void processLine(char** dat, int datLength)
 				toFloat(dat[5]),				                   //speed
 				toInt(dat[6]), toInt(dat[7]));	                   //point ids
 
-			Global::countNew++;
+			INCR_NEW
 			Main_addEntity(cranePlat);
 			return;
 		}
@@ -1341,7 +1341,7 @@ void processLine(char** dat, int datLength)
 				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
 				toInt(dat[4])); //point id
 
-			Global::countNew++;
+			INCR_NEW
 			Main_addEntity(point);
 			return;
 		}
@@ -1353,7 +1353,7 @@ void processLine(char** dat, int datLength)
 				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
 				toFloat(dat[4])); //rotation
 
-			Global::countNew++;
+			INCR_NEW
 			Main_addEntity(cranePlatPath);
 			return;
 		}
@@ -1365,7 +1365,7 @@ void processLine(char** dat, int datLength)
 				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
 				toFloat(dat[4])); //rotation
 
-			Global::countNew++;
+			INCR_NEW
 			Main_addEntity(elevatorPlatPath);
 			return;
 		}
@@ -1380,7 +1380,7 @@ void processLine(char** dat, int datLength)
 				toInt(dat[6]), toInt(dat[7]), toInt(dat[8]), toInt(dat[9]), //point ids
 				toFloat(dat[10])); //timeOffset
 
-			Global::countNew++;
+			INCR_NEW
 			Main_addEntity(cranePlat);
 			return;
 		}
@@ -1391,7 +1391,7 @@ void processLine(char** dat, int datLength)
 					toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
 					toInt(dat[4])); //sound emitter id
 			
-			Global::countNew++;
+			INCR_NEW
 			Main_addEntity(emitter);
 			return;
 		}
@@ -1400,7 +1400,7 @@ void processLine(char** dat, int datLength)
 		{
 			SH_StageTransparent::loadStaticModels();
 			SH_StageTransparent* trans = new SH_StageTransparent;
-			Global::countNew++;
+			INCR_NEW
 			Main_addEntityPass2(trans);
 			return;
 		}
@@ -1411,7 +1411,7 @@ void processLine(char** dat, int datLength)
 			SH_Lamppost* post = new SH_Lamppost(
 				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]),  //position
 				toFloat(dat[4]), toFloat(dat[5]), toFloat(dat[6])); //rotation
-			Global::countNew++;
+			INCR_NEW
 			Main_addEntity(post);
 			return;
 		}
@@ -1423,7 +1423,7 @@ void processLine(char** dat, int datLength)
 				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
 				toFloat(dat[4]), toFloat(dat[5]), toFloat(dat[6]), //rotation
 				toInt(dat[7])); //cone kind
-			Global::countNew++;
+			INCR_NEW
 			Main_addEntity(cone);
 			return;
 		}
@@ -1434,7 +1434,7 @@ void processLine(char** dat, int datLength)
 			SH_Spotlight* spotlight = new SH_Spotlight(
 				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]),  //position
 				toFloat(dat[4]), toFloat(dat[5]), toFloat(dat[6])); //rotation
-			Global::countNew++;
+			INCR_NEW
 			Main_addEntity(spotlight);
 			return;
 		}
@@ -1444,7 +1444,7 @@ void processLine(char** dat, int datLength)
 			Capsule::loadStaticModels();
 			Capsule* cap = new Capsule(
 				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]));  //position
-			Global::countNew++;
+			INCR_NEW
 			Main_addEntity(cap);
 			return;
 		}
@@ -1454,7 +1454,7 @@ void processLine(char** dat, int datLength)
 			PlayerTails::deleteStaticModels();
 			PlayerTails::loadStaticModels();
 			PlayerTails* player = new PlayerTails(toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]));
-			Global::countNew++;
+			INCR_NEW
 			Global::gamePlayer = player;
 			SkyManager::setCenterObject(player);
 			player->setCameraAngles(Global::gameCamera->getYaw(), Global::gameCamera->getPitch());
@@ -1477,7 +1477,7 @@ void processLine(char** dat, int datLength)
 			PlayerKnuckles::deleteStaticModels();
 			PlayerKnuckles::loadStaticModels();
 			PlayerKnuckles* player = new PlayerKnuckles(toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]));
-			Global::countNew++;
+			INCR_NEW
 			Global::gamePlayer = player;
 			SkyManager::setCenterObject(player);
 			player->setCameraAngles(Global::gameCamera->getYaw(), Global::gameCamera->getPitch());
@@ -1498,7 +1498,7 @@ void processLine(char** dat, int datLength)
 		case 72: //Stage Transparent
 		{
 			StageTransparent* trans = new StageTransparent(dat[1], dat[2]);
-			Global::countNew++;
+			INCR_NEW
 			if (strcmp("trans", dat[3]) == 0)
 			{	
 				Main_addTransparentEntity(trans);
@@ -1522,7 +1522,7 @@ void processLine(char** dat, int datLength)
 				toInt(dat[4]), toInt(dat[5]), //piece number, diggable,
 				toFloat(dat[6]), toFloat(dat[7]), toFloat(dat[8]), //dig volume
 				toInt(dat[9])); //is a hard mode piece
-			Global::countNew++;
+			INCR_NEW
 			Main_addEntityPass2(piece);
 			return;
 		}
@@ -1530,7 +1530,7 @@ void processLine(char** dat, int datLength)
 		case 74: //Emerald Manager
 		{
 			EmeraldManager* manager = new EmeraldManager;
-			Global::countNew++;
+			INCR_NEW
 			Main_addEntity(manager);
 			return;
 		}
@@ -1540,7 +1540,7 @@ void processLine(char** dat, int datLength)
 			WC_Breeze* breeze = new WC_Breeze(
 				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
 				toFloat(dat[4]), toFloat(dat[5])); //radius, height
-			Global::countNew++;
+			INCR_NEW
 			Main_addEntity(breeze);
 			return;
 		}
@@ -1551,7 +1551,7 @@ void processLine(char** dat, int datLength)
 			DP_Palmtree* tree = new DP_Palmtree(
 				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
 				toFloat(dat[4])); //rotation
-			Global::countNew++;
+			INCR_NEW
 			Main_addEntity(tree);
 			return;
 		}
@@ -1562,7 +1562,7 @@ void processLine(char** dat, int datLength)
 			DP_Leaves* leaves = new DP_Leaves(
 				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
 				toFloat(dat[4])); //rotation
-			Global::countNew++;
+			INCR_NEW
 			Main_addEntity(leaves);
 			return;
 		}
@@ -1573,7 +1573,7 @@ void processLine(char** dat, int datLength)
 			NB_Palmtree* tree = new NB_Palmtree(
 				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
 				toFloat(dat[4])); //rotation
-			Global::countNew++;
+			INCR_NEW
 			Main_addEntity(tree);
 			return;
 		}
@@ -1584,7 +1584,7 @@ void processLine(char** dat, int datLength)
 			NB_WaterPlatform* platform = new NB_WaterPlatform(
 				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
 				toFloat(dat[4])); //rotation
-			Global::countNew++;
+			INCR_NEW
 			Main_addEntity(platform);
 			return;
 		}
@@ -1595,7 +1595,7 @@ void processLine(char** dat, int datLength)
 			NB_WaterPlatformBounce* platform = new NB_WaterPlatformBounce(
 				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
 				toFloat(dat[4])); //rotation
-			Global::countNew++;
+			INCR_NEW
 			Main_addEntity(platform);
 			return;
 		}
@@ -1606,7 +1606,7 @@ void processLine(char** dat, int datLength)
 			Chao* lostChao = new Chao(
 				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
 				toFloat(dat[4])); //rotation
-			Global::countNew++;
+			INCR_NEW
 			Main_addEntity(lostChao);
 			return;
 		}
@@ -1615,7 +1615,7 @@ void processLine(char** dat, int datLength)
 		{
 			PH_Clouds::loadStaticModels();
 			PH_Clouds* clouds = new PH_Clouds(toFloat(dat[1]), toFloat(dat[2]));
-			Global::countNew++;
+			INCR_NEW
 			Main_addTransparentEntity(clouds);
 			return;
 		}
@@ -1626,7 +1626,7 @@ void processLine(char** dat, int datLength)
 			DL_Turtle* turtle = new DL_Turtle(
 				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), toFloat(dat[4]),  //position, y rotation
 				toFloat(dat[5]), toFloat(dat[6]), toFloat(dat[7]), toFloat(dat[8])); //target position, cam rotation
-			Global::countNew++;
+			INCR_NEW
 			Main_addEntity(turtle);
 			return;
 		}
@@ -1641,7 +1641,7 @@ void processLine(char** dat, int datLength)
 				toFloat(dat[ 9]), toFloat(dat[10]), toFloat(dat[11]),  //point a
 				toFloat(dat[12]), toFloat(dat[13]), toFloat(dat[14]),  //point b
 				toInt  (dat[15]));                                     //flags
-			Global::countNew++;
+			INCR_NEW
 			Main_addEntity(camBox);
 			return;
 		}
@@ -1652,7 +1652,7 @@ void processLine(char** dat, int datLength)
 			RH_Ramp* ramp = new RH_Ramp(
 				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
 				toFloat(dat[4]), toFloat(dat[5]));                 //rotation
-			Global::countNew++;
+			INCR_NEW
 			Main_addEntity(ramp);
 			return;
 		}
@@ -1664,7 +1664,7 @@ void processLine(char** dat, int datLength)
 				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]),  //position
 				toFloat(dat[4]),                                    //y rotation
 				toFloat(dat[5]), toFloat(dat[6]), toFloat(dat[7])); //teleport position
-			Global::countNew++;
+			INCR_NEW
 			Main_addEntity(warp);
 			return;
 		}
@@ -1675,7 +1675,7 @@ void processLine(char** dat, int datLength)
 			Checkpoint* check = new Checkpoint(
 				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
 				toFloat(dat[4]));                                  //y rotation
-			Global::countNew++;
+			INCR_NEW
 			Main_addEntity(check);
 			return;
 		}
@@ -1686,7 +1686,7 @@ void processLine(char** dat, int datLength)
 			SH_FloatingPlatform* plat = new SH_FloatingPlatform(
 				toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
 				toFloat(dat[4]), toFloat(dat[5]));                 //y rotation, scale
-			Global::countNew++;
+			INCR_NEW
 			Main_addEntity(plat);
 			return;
 		}
@@ -1694,7 +1694,7 @@ void processLine(char** dat, int datLength)
 		case 89: //Final boss manager
 		{
 			B_Manager* manager = new B_Manager;
-			Global::countNew++;
+			INCR_NEW
 			Main_addEntity(manager);
 			return;
 		}
@@ -1703,7 +1703,7 @@ void processLine(char** dat, int datLength)
 		{
 			Rocket::loadStaticModels();
 			Rocket* rocket = new Rocket(toInt(dat[1]), toInt(dat[2])); //Point IDs
-			Global::countNew++;
+			INCR_NEW
 			Main_addEntity(rocket);
 		}
 

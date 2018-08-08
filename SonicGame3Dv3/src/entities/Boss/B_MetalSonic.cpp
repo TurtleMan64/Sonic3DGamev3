@@ -317,7 +317,7 @@ void B_MetalSonic::step()
 			float xspd = hpt*cosf(anglH);
 			float zspd = hpt*sinf(anglH);
 
-			B_Projectile* newProj = new B_Projectile(getX(), getY() + 10, getZ(), xspd, yspd, zspd); Global::countNew++;
+			B_Projectile* newProj = new B_Projectile(getX(), getY() + 10, getZ(), xspd, yspd, zspd); INCR_NEW
 			Main_addEntity(newProj);
 		}
 
@@ -686,19 +686,19 @@ void B_MetalSonic::createLimbs()
 	const float s = 1.1f;
 
 	myBody =         new Body(&modelBody);
-	myHead =         new Limb(&modelHead,        s* 1.2f, s* -0.3f, s*  0,     myBody,   nullptr);        Global::countNew++;
-	myLeftHumerus =  new Limb(&modelLeftHumerus, s* 0.9f, s*  0,    s* -0.9f,  myBody,   nullptr);        Global::countNew++;
-	myLeftForearm =  new Limb(&modelLeftForearm, s* 0,    s* -1.3f, s*  0,     nullptr,  myLeftHumerus);  Global::countNew++;
-	myLeftHand =     new Limb(&modelLeftHand,    s* 0,	  s* -1.3f, s*  0,     nullptr,  myLeftForearm);  Global::countNew++;
-	myLeftThigh =    new Limb(&modelLeftThigh,   s*-0.9f, s*  0,    s* -0.3f,  myBody,   nullptr);        Global::countNew++;
-	myLeftShin =     new Limb(&modelLeftShin,    s* 0,	  s* -1.3f, s*  0,     nullptr,  myLeftThigh);    Global::countNew++;
-	myLeftFoot =     new Limb(&modelLeftFoot,    s* 0,	  s* -1.4f, s*  0,     nullptr,  myLeftShin);     Global::countNew++;
-	myRightHumerus = new Limb(&modelRightHumerus,s* 0.9f, s*  0,    s*  0.9f,  myBody,   nullptr);        Global::countNew++;
-	myRightForearm = new Limb(&modelRightForearm,s* 0,	  s* -1.3f, s*  0,     nullptr,  myRightHumerus); Global::countNew++;
-	myRightHand =    new Limb(&modelRightHand,   s* 0,	  s* -1.3f, s*  0,     nullptr,  myRightForearm); Global::countNew++;
-	myRightThigh =   new Limb(&modelRightThigh,  s*-0.9f, s*  0,    s*  0.3f,  myBody,   nullptr);        Global::countNew++;
-	myRightShin =    new Limb(&modelRightShin,   s* 0,	  s* -1.3f, s*  0,     nullptr,  myRightThigh);   Global::countNew++;
-	myRightFoot =    new Limb(&modelRightFoot,   s* 0,	  s* -1.4f, s*  0,     nullptr,  myRightShin);    Global::countNew++;
+	myHead =         new Limb(&modelHead,        s* 1.2f, s* -0.3f, s*  0,     myBody,   nullptr);        INCR_NEW
+	myLeftHumerus =  new Limb(&modelLeftHumerus, s* 0.9f, s*  0,    s* -0.9f,  myBody,   nullptr);        INCR_NEW
+	myLeftForearm =  new Limb(&modelLeftForearm, s* 0,    s* -1.3f, s*  0,     nullptr,  myLeftHumerus);  INCR_NEW
+	myLeftHand =     new Limb(&modelLeftHand,    s* 0,	  s* -1.3f, s*  0,     nullptr,  myLeftForearm);  INCR_NEW
+	myLeftThigh =    new Limb(&modelLeftThigh,   s*-0.9f, s*  0,    s* -0.3f,  myBody,   nullptr);        INCR_NEW
+	myLeftShin =     new Limb(&modelLeftShin,    s* 0,	  s* -1.3f, s*  0,     nullptr,  myLeftThigh);    INCR_NEW
+	myLeftFoot =     new Limb(&modelLeftFoot,    s* 0,	  s* -1.4f, s*  0,     nullptr,  myLeftShin);     INCR_NEW
+	myRightHumerus = new Limb(&modelRightHumerus,s* 0.9f, s*  0,    s*  0.9f,  myBody,   nullptr);        INCR_NEW
+	myRightForearm = new Limb(&modelRightForearm,s* 0,	  s* -1.3f, s*  0,     nullptr,  myRightHumerus); INCR_NEW
+	myRightHand =    new Limb(&modelRightHand,   s* 0,	  s* -1.3f, s*  0,     nullptr,  myRightForearm); INCR_NEW
+	myRightThigh =   new Limb(&modelRightThigh,  s*-0.9f, s*  0,    s*  0.3f,  myBody,   nullptr);        INCR_NEW
+	myRightShin =    new Limb(&modelRightShin,   s* 0,	  s* -1.3f, s*  0,     nullptr,  myRightThigh);   INCR_NEW
+	myRightFoot =    new Limb(&modelRightFoot,   s* 0,	  s* -1.4f, s*  0,     nullptr,  myRightShin);    INCR_NEW
 
 	myBody        ->setScale(s);
 	myHead        ->setScale(s);

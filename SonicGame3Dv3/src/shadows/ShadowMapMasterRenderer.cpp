@@ -12,16 +12,16 @@
 
 ShadowMapMasterRenderer::ShadowMapMasterRenderer()
 {
-	projectionMatrix       = new Matrix4f; Global::countNew++;
-	lightViewMatrix        = new Matrix4f; Global::countNew++;
-	projectionViewMatrix   = new Matrix4f; Global::countNew++;
-	toShadowMapSpaceMatrix = new Matrix4f; Global::countNew++;
+	projectionMatrix       = new Matrix4f; INCR_NEW
+	lightViewMatrix        = new Matrix4f; INCR_NEW
+	projectionViewMatrix   = new Matrix4f; INCR_NEW
+	toShadowMapSpaceMatrix = new Matrix4f; INCR_NEW
 	createOffset();
 
-	shader = new ShadowShader("res/Shaders/shadows/shadowVertexShader.txt", "res/Shaders/shadows/shadowFragmentShader.txt"); Global::countNew++;
-	shadowBox = new ShadowBox(lightViewMatrix, Global::gameCamera); Global::countNew++;
-	shadowFbo = new ShadowFrameBuffer(SHADOW_MAP_SIZE, SHADOW_MAP_SIZE); Global::countNew++;
-	entityRenderer = new ShadowMapEntityRenderer(shader, projectionViewMatrix); Global::countNew++;
+	shader = new ShadowShader("res/Shaders/shadows/shadowVertexShader.txt", "res/Shaders/shadows/shadowFragmentShader.txt"); INCR_NEW
+	shadowBox = new ShadowBox(lightViewMatrix, Global::gameCamera); INCR_NEW
+	shadowFbo = new ShadowFrameBuffer(SHADOW_MAP_SIZE, SHADOW_MAP_SIZE); INCR_NEW
+	entityRenderer = new ShadowMapEntityRenderer(shader, projectionViewMatrix); INCR_NEW
 }
 
 void ShadowMapMasterRenderer::render(std::unordered_map<TexturedModel*, std::list<Entity*>>* entities, Light* sun)
@@ -111,7 +111,7 @@ void ShadowMapMasterRenderer::updateOrthoProjectionMatrix(float width, float hei
 
 void ShadowMapMasterRenderer::createOffset()
 {
-	offset = new Matrix4f; Global::countNew++;
+	offset = new Matrix4f; INCR_NEW
 	Vector3f trans(0.5f, 0.5f, 0.5f);
 	offset->translate(&trans);
 	offset->scale(&trans);

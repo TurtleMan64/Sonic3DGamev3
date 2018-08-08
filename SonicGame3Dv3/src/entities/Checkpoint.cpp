@@ -75,14 +75,14 @@ Checkpoint::Checkpoint(float x, float y, float z, float rotY)
 	Vector3f ball2Pos(newX, off.y, newZ);
 	ball2Pos = ball2Pos + position;
 
-	ball1 = new Body(&Checkpoint::modelsBall); Global::countNew++;
+	ball1 = new Body(&Checkpoint::modelsBall); INCR_NEW
 	Main_addEntity(ball1);
 	ball1->setVisible(true);
 	ball1->setPosition(&ball1Pos);
 	ball1->setRotY(rotY+90);
 	ball1->updateTransformationMatrix();
 
-	ball2 = new Body(&Checkpoint::modelsBall); Global::countNew++;
+	ball2 = new Body(&Checkpoint::modelsBall); INCR_NEW
 	Main_addEntity(ball2);
 	ball2->setVisible(true);
 	ball2->setPosition(&ball2Pos);

@@ -12,7 +12,7 @@ FontType::FontType(int textureAtlas, std::string fontFilename)
 {
 	this->textureAtlas = textureAtlas;
 	this->loader = new TextMeshCreator(fontFilename);
-	Global::countNew++;
+	INCR_NEW
 }
 
 int FontType::getTextureAtlas()

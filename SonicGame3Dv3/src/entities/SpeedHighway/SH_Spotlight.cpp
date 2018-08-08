@@ -33,7 +33,7 @@ SH_Spotlight::SH_Spotlight(float x, float y, float z,
 
 	light = new Body(&SH_Spotlight::modelsLight);
 	light->setVisible(true);
-	Global::countNew++;
+	INCR_NEW
 	Main_addTransparentEntity(light);
 	light->setPosition(&position);
 	light->setRotX(xRot);

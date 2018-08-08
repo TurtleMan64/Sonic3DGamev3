@@ -37,7 +37,7 @@ GH_Sunflower::GH_Sunflower(float x, float y, float z, float rotY, float scale)
 
 	petals = new Body(&GH_Sunflower::modelsTop);
 	petals->setVisible(true);
-	Global::countNew++;
+	INCR_NEW
 	Main_addEntity(petals);
 	petals->setPosition(&position);
 	petals->increasePosition(0, 25.0f, 0);

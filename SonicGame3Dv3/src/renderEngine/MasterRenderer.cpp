@@ -118,15 +118,15 @@ void Master_init()
 			}
 		}
 	}
-	Global::countNew++;
+	INCR_NEW
 	projectionMatrix = new Matrix4f;
-	Global::countNew++;
+	INCR_NEW
 	renderer = new EntityRenderer(shader, projectionMatrix);
 	Master_makeProjectionMatrix();
-	Global::countNew++;
+	INCR_NEW
 
-	shadowMapRenderer = new ShadowMapMasterRenderer; Global::countNew++;
-	shadowMapRenderer2 = new ShadowMapMasterRenderer2; Global::countNew++;
+	shadowMapRenderer = new ShadowMapMasterRenderer; INCR_NEW
+	shadowMapRenderer2 = new ShadowMapMasterRenderer2; INCR_NEW
 
 	randomMap = Loader_loadTextureNoInterpolation("res/randomMap.png");
 
@@ -266,19 +266,19 @@ void Master_cleanUp()
 {
 	shader->cleanUp();
 	delete shader;
-	Global::countDelete++;
+	INCR_DEL
 	delete renderer;
-	Global::countDelete++;
+	INCR_DEL
 	delete projectionMatrix;
-	Global::countDelete++;
+	INCR_DEL
 
 	shadowMapRenderer->cleanUp();
 	delete shadowMapRenderer;
-	Global::countDelete++;
+	INCR_DEL
 
 	shadowMapRenderer2->cleanUp();
 	delete shadowMapRenderer2;
-	Global::countDelete++;
+	INCR_DEL
 }
 
 void Master_enableCulling()

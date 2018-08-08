@@ -49,7 +49,7 @@ SH_ElevatorPlatform::SH_ElevatorPlatform(float x, float y, float z, float rotY, 
 
 	rotate = new Body(&SH_ElevatorPlatform::modelsRotate);
 	rotate->setVisible(true);
-	Global::countNew++;
+	INCR_NEW
 	Main_addEntity(rotate);
 	rotate->setPosition(&position);
 	rotate->setRotY(rotY);

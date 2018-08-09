@@ -44,6 +44,9 @@ res/Audio/BGM/m_harb2_loop.ogg
 # Skysphere
 7 Sky SkySphereModel MTL_WeaponsBed 8 0
 
+# Transparent
+72 res/Models/MetalHarbor/ExtraGeometry/ Extra.obj pass2
+
 # Goal
 9 11036.5 198 -12833.15 0
 

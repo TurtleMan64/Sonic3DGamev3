@@ -463,17 +463,6 @@ newmtl LANDTX10_material_49
 	illum 2
 	map_Kd pr128_29.png
 
-newmtl LANDTX10_material_4_NONE
-	Ns 19.607843
-	Ka 1.000000 1.000000 1.000000
-	Kd 1.000000 1.000000 1.000000
-	Ks 0.000000 0.000000 0.000000
-	Ke 0.000000 0.000000 0.000000
-	Ni 0.1
-	d 1.000000
-	illum 2
-	map_Kd pr128_17.png
-
 newmtl LANDTX10_material_5
 	Ns 19.607843
 	Ka 1.000000 1.000000 1.000000

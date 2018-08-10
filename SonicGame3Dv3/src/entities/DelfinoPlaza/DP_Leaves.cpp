@@ -75,7 +75,9 @@ void DP_Leaves::loadStaticModels()
 		return;
 	}
 
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Loading DP_Leaves static models...\n");
+	#endif
 
 	loadObjModel(&DP_Leaves::models, "res/Models/DelfinoPlaza/Leaves/", "Leaves.obj");
 
@@ -87,7 +89,9 @@ void DP_Leaves::loadStaticModels()
 
 void DP_Leaves::deleteStaticModels()
 {
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Deleting DP_Leaves static models...\n");
+	#endif
 
 	Entity::deleteModels(&DP_Leaves::models);
 	Entity::deleteCollisionModel(&DP_Leaves::cmOriginal);

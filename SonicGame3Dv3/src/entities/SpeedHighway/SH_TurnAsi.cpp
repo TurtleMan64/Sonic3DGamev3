@@ -169,7 +169,9 @@ void SH_TurnAsi::loadStaticModels()
 		return;
 	}
 
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Loading SH_TurnAsi static models...\n");
+	#endif
 
 	loadObjModel(&SH_TurnAsi::modelsFork, "res/Models/SpeedHighway/", "Fork.obj");
 	loadObjModel(&SH_TurnAsi::modelsBucket, "res/Models/SpeedHighway/", "Bucket.obj");
@@ -177,7 +179,9 @@ void SH_TurnAsi::loadStaticModels()
 
 void SH_TurnAsi::deleteStaticModels()
 {
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Deleting SH_TurnAsi static models...\n");
+	#endif
 
 	Entity::deleteModels(&SH_TurnAsi::modelsFork);
 	Entity::deleteModels(&SH_TurnAsi::modelsBucket);

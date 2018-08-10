@@ -174,7 +174,9 @@ void Checkpoint::loadStaticModels()
 		return;
 	}
 
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Loading Checkpoint static models...\n");
+	#endif
 
 	loadObjModel(&Checkpoint::modelsBase, "res/Models/Checkpoint/", "Base.obj");
 	loadObjModel(&Checkpoint::modelsBall, "res/Models/Checkpoint/", "Ball.obj");
@@ -182,7 +184,9 @@ void Checkpoint::loadStaticModels()
 
 void Checkpoint::deleteStaticModels()
 {
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Deleting Checkpoint static models...\n");
+	#endif
 
 	Entity::deleteModels(&Checkpoint::modelsBase);
 	Entity::deleteModels(&Checkpoint::modelsBall);

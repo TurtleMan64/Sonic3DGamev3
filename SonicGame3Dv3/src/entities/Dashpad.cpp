@@ -100,14 +100,18 @@ void Dashpad::loadStaticModels()
 		return;
 	}
 
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Loading Dashpad static models...\n");
+	#endif
 
 	loadObjModel(&Dashpad::models, "res/Models/Dashpad/", "Dashpad.obj");
 }
 
 void Dashpad::deleteStaticModels()
 {
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Deleting Dashpad static models...\n");
+	#endif
 
 	Entity::deleteModels(&Dashpad::models);
 }

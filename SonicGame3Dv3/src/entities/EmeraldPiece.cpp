@@ -174,14 +174,18 @@ void EmeraldPiece::loadStaticModels()
 		return;
 	}
 
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Loading EmeraldPiece static models...\n");
+	#endif
 
 	loadObjModel(&EmeraldPiece::models, "res/Models/EmeraldPiece/", "EmeraldPiece.obj");
 }
 
 void EmeraldPiece::deleteStaticModels()
 {
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Deleting EmeraldPiece static models...\n");
+	#endif
 
 	Entity::deleteModels(&EmeraldPiece::models);
 }

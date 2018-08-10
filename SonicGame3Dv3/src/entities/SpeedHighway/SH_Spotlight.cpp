@@ -83,7 +83,9 @@ void SH_Spotlight::loadStaticModels()
 		return;
 	}
 
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Loading SH_Spotlight static models...\n");
+	#endif
 
 	loadObjModel(&SH_Spotlight::models, "res/Models/SpeedHighway/", "Spotlight.obj");
 	loadObjModel(&SH_Spotlight::modelsLight, "res/Models/SpeedHighway/", "SpotlightLight.obj");
@@ -91,7 +93,9 @@ void SH_Spotlight::loadStaticModels()
 
 void SH_Spotlight::deleteStaticModels()
 {
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Deleting SH_Spotlight static models...\n");
+	#endif
 
 	Entity::deleteModels(&SH_Spotlight::models);
 	Entity::deleteModels(&SH_Spotlight::modelsLight);

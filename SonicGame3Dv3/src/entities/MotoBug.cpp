@@ -375,14 +375,18 @@ void MotoBug::loadStaticModels()
 		return;
 	}
 
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Loading MotoBug static models...\n");
+	#endif
 
 	loadObjModel(&MotoBug::models,   "res/Models/MotoBug/", "MotoBug.obj");
 }
 
 void MotoBug::deleteStaticModels()
 {
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Deleting MotoBug static models...\n");
+	#endif
 
 	Entity::deleteModels(&MotoBug::models);
 }

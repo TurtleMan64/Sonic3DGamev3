@@ -90,7 +90,9 @@ void GH_Sunflower::loadStaticModels()
 		return;
 	}
 
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Loading GH_Sunflower static models...\n");
+	#endif
 
 	loadObjModel(&GH_Sunflower::modelsBase, "res/Models/GreenHillZone/Objects/", "GreenHillSunflowerBase.obj");
 	loadObjModel(&GH_Sunflower::modelsTop,  "res/Models/GreenHillZone/Objects/", "GreenHillSunflowerTop.obj");
@@ -99,7 +101,9 @@ void GH_Sunflower::loadStaticModels()
 
 void GH_Sunflower::deleteStaticModels()
 {
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Deleting GH_Sunflower static models...\n");
+	#endif
 
 	Entity::deleteModels(&GH_Sunflower::modelsBase);
 	Entity::deleteModels(&GH_Sunflower::modelsTop);

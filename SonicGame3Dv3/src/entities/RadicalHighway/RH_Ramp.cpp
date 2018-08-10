@@ -76,7 +76,9 @@ void RH_Ramp::loadStaticModels()
 		return;
 	}
 
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Loading RH_Ramp static models...\n");
+	#endif
 
 	loadObjModel(&RH_Ramp::models, "res/Models/RadicalHighway/Objects/", "Ramp.obj");
 
@@ -88,7 +90,9 @@ void RH_Ramp::loadStaticModels()
 
 void RH_Ramp::deleteStaticModels()
 {
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Deleting RH_Ramp static models...\n");
+	#endif
 
 	Entity::deleteModels(&RH_Ramp::models);
 	Entity::deleteCollisionModel(&RH_Ramp::cmOriginal);

@@ -119,7 +119,9 @@ void EC_RaftSmall::loadStaticModels()
 		return;
 	}
 
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Loading EC_RaftSmall static models...\n");
+	#endif
 
 	loadObjModel(&EC_RaftSmall::models, "res/Models/EmeraldCoast/", "RaftSmall.obj");
 
@@ -131,7 +133,9 @@ void EC_RaftSmall::loadStaticModels()
 
 void EC_RaftSmall::deleteStaticModels()
 {
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Deleting EC_RaftSmall static models...\n");
+	#endif
 	
 	Entity::deleteModels(&EC_RaftSmall::models);
 	Entity::deleteCollisionModel(&EC_RaftSmall::cmOriginal);

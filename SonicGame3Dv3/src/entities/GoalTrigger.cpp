@@ -87,14 +87,18 @@ void GoalTrigger::loadStaticModels()
 		return;
 	}
 
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Loading GoalTrigger static models...\n");
+	#endif
 
 	loadObjModel(&GoalTrigger::models, "res/Models/Box/", "Box.obj");
 }
 
 void GoalTrigger::deleteStaticModels()
 {
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Deleting GoalTrigger static models...\n");
+	#endif
 
 	Entity::deleteModels(&GoalTrigger::models);
 }

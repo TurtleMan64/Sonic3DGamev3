@@ -75,7 +75,9 @@ void DP_Palmtree::loadStaticModels()
 		return;
 	}
 
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Loading DP_Palmtree static models...\n");
+	#endif
 
 	loadObjModel(&DP_Palmtree::models, "res/Models/DelfinoPlaza/Palmtree/", "Tree.obj");
 
@@ -87,7 +89,9 @@ void DP_Palmtree::loadStaticModels()
 
 void DP_Palmtree::deleteStaticModels()
 {
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Deleting DP_Palmtree static models...\n");
+	#endif
 
 	Entity::deleteModels(&DP_Palmtree::models);
 	Entity::deleteCollisionModel(&DP_Palmtree::cmOriginal);

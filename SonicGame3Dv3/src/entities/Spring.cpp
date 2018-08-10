@@ -96,14 +96,18 @@ void Spring::loadStaticModels()
 		return;
 	}
 
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Loading spring static models...\n");
+	#endif
 
 	loadObjModel(&Spring::models, "res/Models/Spring/", "Spring.obj");
 }
 
 void Spring::deleteStaticModels()
 {
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Deleting spring static models...\n");
+	#endif
 
 	Entity::deleteModels(&Spring::models);
 }

@@ -133,14 +133,18 @@ void SHD_GoronElder::loadStaticModels()
 		return;
 	}
 
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Loading SHD_GoronElder static models...\n");
+	#endif
 
 	loadObjModel(&SHD_GoronElder::models, "res/Models/Gorons/", "Elder.obj");
 }
 
 void SHD_GoronElder::deleteStaticModels()
 {
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Deleting SHD_GoronElder static models...\n");
+	#endif
 
 	Entity::deleteModels(&SHD_GoronElder::models);
 

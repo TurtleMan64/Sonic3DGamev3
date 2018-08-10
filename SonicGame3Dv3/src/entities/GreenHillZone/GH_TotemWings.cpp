@@ -74,7 +74,9 @@ void GH_TotemWings::loadStaticModels()
 		return;
 	}
 
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Loading GH_TotemWings static models...\n");
+	#endif
 
 	loadObjModel(&GH_TotemWings::models, "res/Models/GreenHillZone/Objects/", "GreenHillTotemWings.obj");
 
@@ -86,7 +88,9 @@ void GH_TotemWings::loadStaticModels()
 
 void GH_TotemWings::deleteStaticModels()
 {
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Deleting GH_TotemWings static models...\n");
+	#endif
 
 	Entity::deleteModels(&GH_TotemWings::models);
 	Entity::deleteCollisionModel(&GH_TotemWings::cmOriginal);

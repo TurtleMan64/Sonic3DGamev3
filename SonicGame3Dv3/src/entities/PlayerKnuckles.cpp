@@ -1391,7 +1391,9 @@ void PlayerKnuckles::loadStaticModels()
 
 void PlayerKnuckles::deleteStaticModels()
 {
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Deleting player knuckles models...\n");
+	#endif
 
 	Entity::deleteModels(&PlayerKnuckles::modelBody);
 	Entity::deleteModels(&PlayerKnuckles::modelHead);

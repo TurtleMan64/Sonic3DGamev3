@@ -81,7 +81,9 @@ void EC_BigRock::loadStaticModels()
 		return;
 	}
 
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Loading EC_BigRock static models...\n");
+	#endif
 
 	loadObjModel(&EC_BigRock::modelsA, "res/Models/EmeraldCoast/", "BigRockA.obj");
 	loadObjModel(&EC_BigRock::modelsB, "res/Models/EmeraldCoast/", "BigRockB.obj");
@@ -89,7 +91,9 @@ void EC_BigRock::loadStaticModels()
 
 void EC_BigRock::deleteStaticModels()
 {
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Deleting EC_BigRock static models...\n");
+	#endif
 
 	Entity::deleteModels(&EC_BigRock::modelsA);
 	Entity::deleteModels(&EC_BigRock::modelsB);

@@ -92,7 +92,9 @@ void EC_DockCorner::loadStaticModels()
 		return;
 	}
 
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Loading EC_DockCorner static models...\n");
+	#endif
 
 	loadObjModel(&EC_DockCorner::models, "res/Models/EmeraldCoast/", "DockCorner.obj");
 
@@ -104,7 +106,9 @@ void EC_DockCorner::loadStaticModels()
 
 void EC_DockCorner::deleteStaticModels()
 {
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Deleting EC_DockCorner static models...\n");
+	#endif
 
 	Entity::deleteModels(&EC_DockCorner::models);
 	Entity::deleteCollisionModel(&EC_DockCorner::cmOriginal);

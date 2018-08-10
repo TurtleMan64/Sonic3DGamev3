@@ -66,14 +66,18 @@ void EC_Waterfall::loadStaticModels()
 		return;
 	}
 
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Loading EC_Waterfall static models...\n");
+	#endif
 
 	loadObjModel(&EC_Waterfall::models, "res/Models/EmeraldCoast/", "WaterfallDouble.obj");
 }
 
 void EC_Waterfall::deleteStaticModels()
 {
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Deleting EC_Waterfall static models...\n");
+	#endif
 
 	Entity::deleteModels(&EC_Waterfall::models);
 }

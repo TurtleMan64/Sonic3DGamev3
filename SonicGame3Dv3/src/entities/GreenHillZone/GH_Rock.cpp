@@ -74,7 +74,9 @@ void GH_Rock::loadStaticModels()
 		return;
 	}
 
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Loading GH_Rock static models...\n");
+	#endif
 
 	loadObjModel(&GH_Rock::models, "res/Models/GreenHillZone/Objects/", "GreenHillRock.obj");
 
@@ -86,7 +88,9 @@ void GH_Rock::loadStaticModels()
 
 void GH_Rock::deleteStaticModels()
 {
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Deleting GH_Rock static models...\n");
+	#endif
 
 	Entity::deleteModels(&GH_Rock::models);
 	Entity::deleteCollisionModel(&GH_Rock::cmOriginal);

@@ -96,7 +96,9 @@ void EC_SinkingPlatform::loadStaticModels()
 		return;
 	}
 
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Loading EC_SinkingPlatform static models...\n");
+	#endif
 
 	loadObjModel(&EC_SinkingPlatform::models, "res/Models/EmeraldCoast/", "SinkingPlatform.obj");
 
@@ -108,7 +110,9 @@ void EC_SinkingPlatform::loadStaticModels()
 
 void EC_SinkingPlatform::deleteStaticModels()
 {
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Deleting EC_SinkingPlatform static models...\n");
+	#endif
 
 	Entity::deleteModels(&EC_SinkingPlatform::models);
 	Entity::deleteCollisionModel(&EC_SinkingPlatform::cmOriginal);

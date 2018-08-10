@@ -41,14 +41,18 @@ void SH_StageTransparent::loadStaticModels()
 		return;
 	}
 
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Loading SH_StageTransparent static models...\n");
+	#endif
 
 	loadObjModel(&SH_StageTransparent::models, "res/Models/SpeedHighway/", "SpeedHighwayTransparent.obj");
 }
 
 void SH_StageTransparent::deleteStaticModels()
 {
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Deleting SH_StageTransparent static models...\n");
+	#endif
 
 	Entity::deleteModels(&SH_StageTransparent::models);
 }

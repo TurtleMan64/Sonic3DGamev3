@@ -86,14 +86,18 @@ void Spikeball::loadStaticModels()
 		return;
 	}
 
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Loading Spikeball static models...\n");
+	#endif
 
 	loadObjModel(&Spikeball::models, "res/Models/Spikeball/", "Spikeball.obj");
 }
 
 void Spikeball::deleteStaticModels()
 {
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Deleting Spikeball static models...\n");
+	#endif
 
 	Entity::deleteModels(&Spikeball::models);
 }

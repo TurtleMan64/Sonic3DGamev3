@@ -59,7 +59,9 @@ void SkySphere::loadModels(char* folder, char* objname, char* mtlname)
 		return;
 	}
 
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Loading sky sphere models...\n");
+	#endif
 
 	std::string path = "res/Models/";
 	path = (path + folder) + "/";
@@ -75,7 +77,9 @@ void SkySphere::loadModels(char* folder, char* objname, char* mtlname)
 
 void SkySphere::deleteModels()
 {
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Deleting sky sphere models...\n");
+	#endif
 
 	Entity::deleteModels(&SkySphere::models);
 }

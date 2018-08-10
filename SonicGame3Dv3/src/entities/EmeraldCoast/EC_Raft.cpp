@@ -115,7 +115,9 @@ void EC_Raft::loadStaticModels()
 		return;
 	}
 
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Loading EC_Raft static models...\n");
+	#endif
 
 	loadObjModel(&EC_Raft::models, "res/Models/EmeraldCoast/", "Raft.obj");
 
@@ -127,7 +129,9 @@ void EC_Raft::loadStaticModels()
 
 void EC_Raft::deleteStaticModels()
 {
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Deleting EC_Raft static models...\n");
+	#endif
 	
 	Entity::deleteModels(&EC_Raft::models);
 	Entity::deleteCollisionModel(&EC_Raft::cmOriginal);

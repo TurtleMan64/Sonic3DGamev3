@@ -158,7 +158,9 @@ void ManiaKnucklesModel::loadStaticModels()
 		return;
 	}
 
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Loading mania knuckles static models...\n");
+	#endif
 
 	loadObjModel(&ManiaKnucklesModel::modelDash0 , "res/Models/ManiaKnuckles/", "KnuxDash0.obj");
 	loadObjModel(&ManiaKnucklesModel::modelDash1 , "res/Models/ManiaKnuckles/", "KnuxDash1.obj");
@@ -196,7 +198,9 @@ void ManiaKnucklesModel::loadStaticModels()
 
 void ManiaKnucklesModel::deleteStaticModels()
 {
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Deleting mania knuckles static models...\n");
+	#endif
 
 	Entity::deleteModels(&ManiaKnucklesModel::modelDash0);
 	Entity::deleteModels(&ManiaKnucklesModel::modelDash1);

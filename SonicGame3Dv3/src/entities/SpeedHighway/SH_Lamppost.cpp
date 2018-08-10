@@ -73,7 +73,9 @@ void SH_Lamppost::loadStaticModels()
 		return;
 	}
 
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Loading SH_Lamppost static models...\n");
+	#endif
 
 	loadObjModel(&SH_Lamppost::models, "res/Models/SpeedHighway/", "Lamppost.obj");
 	loadObjModel(&SH_Lamppost::modelsLight, "res/Models/SpeedHighway/", "LamppostLight.obj");
@@ -81,7 +83,9 @@ void SH_Lamppost::loadStaticModels()
 
 void SH_Lamppost::deleteStaticModels()
 {
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Deleting SH_Lamppost static models...\n");
+	#endif
 
 	Entity::deleteModels(&SH_Lamppost::models);
 	Entity::deleteModels(&SH_Lamppost::modelsLight);

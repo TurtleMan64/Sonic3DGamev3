@@ -375,14 +375,18 @@ void RhinoTank::loadStaticModels()
 		return;
 	}
 
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Loading RhinoTank static models...\n");
+	#endif
 
 	loadObjModel(&RhinoTank::models,   "res/Models/RhinoTank/", "RhinoTank.obj");
 }
 
 void RhinoTank::deleteStaticModels()
 {
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Deleting RhinoTank static models...\n");
+	#endif
 
 	Entity::deleteModels(&RhinoTank::models);
 }

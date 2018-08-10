@@ -965,7 +965,9 @@ void PlayerTails::loadStaticModels()
 
 void PlayerTails::deleteStaticModels()
 {
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Deleting player models...\n");
+	#endif
 
 	Entity::deleteModels(&PlayerTails::modelBody);
 	Entity::deleteModels(&PlayerTails::modelHead);

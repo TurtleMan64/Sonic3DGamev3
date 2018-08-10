@@ -84,14 +84,18 @@ void Chao::loadStaticModels()
 		return;
 	}
 
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Loading Chao static models...\n");
+	#endif
 
 	loadObjModel(&Chao::models, "res/Models/Chao/", "Chao.obj");
 }
 
 void Chao::deleteStaticModels()
 {
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Deleting Chao static models...\n");
+	#endif
 
 	Entity::deleteModels(&Chao::models);
 }

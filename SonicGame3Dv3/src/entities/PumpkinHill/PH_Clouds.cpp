@@ -67,14 +67,18 @@ void PH_Clouds::loadStaticModels()
 		return;
 	}
 
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Loading PH_Clouds static models...\n");
+	#endif
 
 	loadObjModel(&PH_Clouds::models, "res/Models/PumpkinHill/Objects/", "Clouds.obj");
 }
 
 void PH_Clouds::deleteStaticModels()
 {
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Deleting PH_Clouds static models...\n");
+	#endif
 
 	Entity::deleteModels(&PH_Clouds::models);
 }

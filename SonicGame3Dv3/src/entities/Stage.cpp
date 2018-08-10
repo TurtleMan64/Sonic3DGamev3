@@ -40,7 +40,9 @@ void Stage::loadModels(char* folder, char* name)
 		return;
 	}
 
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Loading stage models...\n");
+	#endif
 
 	std::string path = "res/Models/";
 	path = (path + folder) + "/";
@@ -53,7 +55,9 @@ void Stage::loadModels(char* folder, char* name)
 
 void Stage::deleteModels()
 {
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Deleting stage models...\n");
+	#endif
 
 	Entity::deleteModels(&Stage::models);
 }

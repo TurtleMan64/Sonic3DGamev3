@@ -47,14 +47,18 @@ void EC_StageTransparent::loadStaticModels()
 		return;
 	}
 
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Loading EC_StageTransparent static models...\n");
+	#endif
 
 	loadObjModel(&EC_StageTransparent::models, "res/Models/EmeraldCoast/", "EmeraldCoastTransparent.obj");
 }
 
 void EC_StageTransparent::deleteStaticModels()
 {
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Deleting EC_StageTransparent static models...\n");
+	#endif
 
 	Entity::deleteModels(&EC_StageTransparent::models);
 }

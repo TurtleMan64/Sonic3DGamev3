@@ -72,7 +72,9 @@ void WC_DigTeleport::loadStaticModels()
 		return;
 	}
 
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Loading WC_DigTeleport static models...\n");
+	#endif
 
 	loadObjModel(&WC_DigTeleport::models, "res/Models/WildCanyon/Objects/", "DigTeleport.obj");
 
@@ -84,7 +86,9 @@ void WC_DigTeleport::loadStaticModels()
 
 void WC_DigTeleport::deleteStaticModels()
 {
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Deleting WC_DigTeleport static models...\n");
+	#endif
 
 	Entity::deleteModels(&WC_DigTeleport::models);
 	Entity::deleteCollisionModel(&WC_DigTeleport::cmOriginal);

@@ -104,7 +104,9 @@ void GH_FallingPlatform::loadStaticModels()
 		return;
 	}
 
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Loading GH_FallingPlatform static models...\n");
+	#endif
 
 	loadObjModel(&GH_FallingPlatform::models, "res/Models/GreenHillZone/Objects/", "GreenHillFallingPlatform.obj");
 
@@ -116,7 +118,9 @@ void GH_FallingPlatform::loadStaticModels()
 
 void GH_FallingPlatform::deleteStaticModels()
 {
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Deleting GH_FallingPlatform static models...\n");
+	#endif
 
 	Entity::deleteModels(&GH_FallingPlatform::models);
 	Entity::deleteCollisionModel(&GH_FallingPlatform::cmOriginal);

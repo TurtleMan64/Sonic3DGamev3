@@ -180,14 +180,18 @@ void CameraBox::loadStaticModels()
 		return;
 	}
 
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Loading CameraBox static models...\n");
+	#endif
 
 	loadObjModel(&CameraBox::models, "res/Models/Box/", "CamBox.obj");
 }
 
 void CameraBox::deleteStaticModels()
 {
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Deleting CameraBox static models...\n");
+	#endif
 
 	Entity::deleteModels(&CameraBox::models);
 }

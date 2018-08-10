@@ -47,14 +47,18 @@ void SHD_StageTransparent::loadStaticModels()
 		return;
 	}
 
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Loading SHD_StageTransparent static models...\n");
+	#endif
 
 	loadObjModel(&SHD_StageTransparent::models, "res/Models/Snowhead/", "SnowheadTransparent.obj");
 }
 
 void SHD_StageTransparent::deleteStaticModels()
 {
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Deleting SHD_StageTransparent static models...\n");
+	#endif
 
 	Entity::deleteModels(&SHD_StageTransparent::models);
 }

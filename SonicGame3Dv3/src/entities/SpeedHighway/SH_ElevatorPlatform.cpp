@@ -166,7 +166,9 @@ void SH_ElevatorPlatform::loadStaticModels()
 		return;
 	}
 
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Loading SH_ElevatorPlatform static models...\n");
+	#endif
 
 	loadObjModel(&SH_ElevatorPlatform::modelsPlatform, "res/Models/SpeedHighway/", "ElevatorPlatform.obj");
 	loadObjModel(&SH_ElevatorPlatform::modelsRotate, "res/Models/SpeedHighway/", "ElevatorPlatformRotate.obj");
@@ -180,7 +182,9 @@ void SH_ElevatorPlatform::loadStaticModels()
 
 void SH_ElevatorPlatform::deleteStaticModels()
 {
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Deleting SH_ElevatorPlatform static models...\n");
+	#endif
 
 	Entity::deleteModels(&SH_ElevatorPlatform::modelsPlatform);
 	Entity::deleteModels(&SH_ElevatorPlatform::modelsRotate);

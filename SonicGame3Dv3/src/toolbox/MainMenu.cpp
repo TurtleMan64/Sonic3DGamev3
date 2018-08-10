@@ -210,6 +210,7 @@ void MainMenu::init()
 	Global::npcList.push_back("Twinkle Park_NPC_1");
 	Global::npcList.push_back("Twinkle Park_NPC_2");
 	Global::npcList.push_back("Metal Harbor_NPC_1");
+	Global::npcList.push_back("Metal Harbor_NPC_2");
 	Global::npcList.push_back("Outset Island_NPC_1");
 	Global::npcList.push_back("Wuhu Island_NPC_1");
 	Global::npcList.push_back("Wuhu Island_NPC_2");

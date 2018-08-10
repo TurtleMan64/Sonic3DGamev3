@@ -76,7 +76,9 @@ void EC_Chair::loadStaticModels()
 		return;
 	}
 
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Loading EC_Chair static models...\n");
+	#endif
 
 	loadObjModel(&EC_Chair::models, "res/Models/EmeraldCoast/", "Chair.obj");
 
@@ -88,7 +90,9 @@ void EC_Chair::loadStaticModels()
 
 void EC_Chair::deleteStaticModels()
 {
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Deleting EC_Chair static models...\n");
+	#endif
 
 	Entity::deleteModels(&EC_Chair::models);
 	Entity::deleteCollisionModel(&EC_Chair::cmOriginal);

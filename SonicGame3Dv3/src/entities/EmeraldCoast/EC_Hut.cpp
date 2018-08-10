@@ -76,7 +76,9 @@ void EC_Hut::loadStaticModels()
 		return;
 	}
 
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Loading EC_Hut static models...\n");
+	#endif
 
 	loadObjModel(&EC_Hut::models, "res/Models/EmeraldCoast/", "Hut.obj");
 
@@ -88,7 +90,9 @@ void EC_Hut::loadStaticModels()
 
 void EC_Hut::deleteStaticModels()
 {
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Deleting EC_Hut static models...\n");
+	#endif
 
 	Entity::deleteModels(&EC_Hut::models);
 	Entity::deleteCollisionModel(&EC_Hut::cmOriginal);

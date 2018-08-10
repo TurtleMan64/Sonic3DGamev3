@@ -144,7 +144,9 @@ void Spinner::loadStaticModels()
 		return;
 	}
 
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Loading Spinner static models...\n");
+	#endif
 
 	loadObjModel(&Spinner::modelsBody,   "res/Models/Spinner/", "Body.obj");
 	loadObjModel(&Spinner::modelsBlades, "res/Models/Spinner/", "Blades.obj");
@@ -152,7 +154,9 @@ void Spinner::loadStaticModels()
 
 void Spinner::deleteStaticModels()
 {
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Deleting Spinner static models...\n");
+	#endif
 
 	Entity::deleteModels(&Spinner::modelsBody);
 	Entity::deleteModels(&Spinner::modelsBlades);

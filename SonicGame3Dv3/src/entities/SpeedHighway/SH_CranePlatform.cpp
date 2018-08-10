@@ -182,7 +182,9 @@ void SH_CranePlatform::loadStaticModels()
 		return;
 	}
 
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Loading SH_CranePlatform static models...\n");
+	#endif
 
 	loadObjModel(&SH_CranePlatform::models, "res/Models/SpeedHighway/", "CranePlatform.obj");
 
@@ -199,7 +201,9 @@ void SH_CranePlatform::loadStaticModels()
 
 void SH_CranePlatform::deleteStaticModels()
 {
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Deleting SH_CranePlatform static models...\n");
+	#endif
 
 	Entity::deleteModels(&SH_CranePlatform::models);
 	Entity::deleteCollisionModel(&SH_CranePlatform::cmOriginal);

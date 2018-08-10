@@ -68,14 +68,18 @@ void EC_FlatWater::loadStaticModels()
 		return;
 	}
 
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Loading EC_FlatWater static models...\n");
+	#endif
 
 	loadObjModel(&EC_FlatWater::models, "res/Models/EmeraldCoast/", "FlatWater.obj");
 }
 
 void EC_FlatWater::deleteStaticModels()
 {
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Deleting EC_FlatWater static models...\n");
+	#endif
 
 	Entity::deleteModels(&EC_FlatWater::models);
 }

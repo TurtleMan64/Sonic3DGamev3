@@ -64,14 +64,18 @@ void GH_Tree::loadStaticModels()
 		return;
 	}
 
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Loading GH_Tree static models...\n");
+	#endif
 
 	loadObjModel(&GH_Tree::models, "res/Models/GreenHillZone/Objects/", "GreenHillTree.obj");
 }
 
 void GH_Tree::deleteStaticModels()
 {
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Deleting GH_Tree static models...\n");
+	#endif
 
 	Entity::deleteModels(&GH_Tree::models);
 }

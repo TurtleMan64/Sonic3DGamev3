@@ -64,14 +64,18 @@ void GH_Grass::loadStaticModels()
 		return;
 	}
 
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Loading GH_Grass static models...\n");
+	#endif
 
 	loadObjModel(&GH_Grass::models, "res/Models/GreenHillZone/Objects/", "GreenHillGrass.obj");
 }
 
 void GH_Grass::deleteStaticModels()
 {
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Deleting GH_Grass static models...\n");
+	#endif
 
 	Entity::deleteModels(&GH_Grass::models);
 }

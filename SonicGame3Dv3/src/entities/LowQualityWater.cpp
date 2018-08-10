@@ -49,14 +49,18 @@ void LowQualityWater::loadStaticModels()
 		return;
 	}
 
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Loading LowQualityWater static models...\n");
+	#endif
 
 	loadObjModel(&LowQualityWater::models, "res/Models/Water/", "LowQualityWater.obj");
 }
 
 void LowQualityWater::deleteStaticModels()
 {
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Deleting LowQualityWater models...\n");
+	#endif
 
 	Entity::deleteModels(&LowQualityWater::models);
 }

@@ -201,14 +201,18 @@ void Ring::loadStaticModels()
 		return;
 	}
 
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Loading ring static models...\n");
+	#endif
 
 	loadObjModel(&Ring::models, "res/Models/Ring/", "Ring.obj");
 }
 
 void Ring::deleteStaticModels()
 {
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Deleting ring static models...\n");
+	#endif
 
 	Entity::deleteModels(&Ring::models);
 }

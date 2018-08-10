@@ -100,7 +100,9 @@ void TP_SpinningFloor::loadStaticModels()
 		return;
 	}
 
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Loading TP_SpinningFloor static models...\n");
+	#endif
 
 	loadObjModel(&TP_SpinningFloor::models, "res/Models/TwinklePark/", "SpinningFloor.obj");
 
@@ -112,7 +114,9 @@ void TP_SpinningFloor::loadStaticModels()
 
 void TP_SpinningFloor::deleteStaticModels()
 {
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Deleting TP_SpinningFloor static models...\n");
+	#endif
 
 	Entity::deleteModels(&TP_SpinningFloor::models);
 	Entity::deleteCollisionModel(&TP_SpinningFloor::cmOriginal);

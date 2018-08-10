@@ -127,6 +127,10 @@ res/Audio/BGM/highway1_loop.ogg
 60 2645.599365, 3965.141357, 4323.752930 15 # right after helicopter rocket point 2
 90 14 15									# right after helicopter rocket
 
+60 9933.9 2580.712 12210.84 16
+60 11148.3 2599.51 13326.25 17
+90 16 17
+
 ######## Generated Objects ########
 
 28 5688.914 3169.0 2355.8499

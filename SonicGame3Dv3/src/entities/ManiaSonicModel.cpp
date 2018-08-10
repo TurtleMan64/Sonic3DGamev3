@@ -158,7 +158,9 @@ void ManiaSonicModel::loadStaticModels()
 		return;
 	}
 
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Loading mania sonic static models...\n");
+	#endif
 
 	loadObjModel(&ManiaSonicModel::modelDash0 , "res/Models/ManiaSonic/", "Dash0.obj");
 	loadObjModel(&ManiaSonicModel::modelDash1 , "res/Models/ManiaSonic/", "Dash1.obj");
@@ -196,7 +198,9 @@ void ManiaSonicModel::loadStaticModels()
 
 void ManiaSonicModel::deleteStaticModels()
 {
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Deleting mania sonic static models...\n");
+	#endif
 
 	Entity::deleteModels(&ManiaSonicModel::modelDash0);
 	Entity::deleteModels(&ManiaSonicModel::modelDash1);

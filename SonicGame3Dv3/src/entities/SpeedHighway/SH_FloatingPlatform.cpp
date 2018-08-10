@@ -74,7 +74,9 @@ void SH_FloatingPlatform::loadStaticModels()
 		return;
 	}
 
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Loading SH_FloatingPlatform static models...\n");
+	#endif
 
 	loadObjModel(&SH_FloatingPlatform::models, "res/Models/SpeedHighway/", "FloatingPlatform.obj");
 
@@ -86,7 +88,9 @@ void SH_FloatingPlatform::loadStaticModels()
 
 void SH_FloatingPlatform::deleteStaticModels()
 {
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Deleting SH_FloatingPlatform static models...\n");
+	#endif
 
 	Entity::deleteModels(&SH_FloatingPlatform::models);
 	Entity::deleteCollisionModel(&SH_FloatingPlatform::cmOriginal);

@@ -182,14 +182,18 @@ void EC_Shark::loadStaticModels()
 		return;
 	}
 
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Loading EC_Shark static models...\n");
+	#endif
 
 	loadObjModel(&EC_Shark::models, "res/Models/EmeraldCoast/", "Shark.obj");
 }
 
 void EC_Shark::deleteStaticModels()
 {
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Deleting EC_Shark static models...\n");
+	#endif
 	
 	Entity::deleteModels(&EC_Shark::models);
 }

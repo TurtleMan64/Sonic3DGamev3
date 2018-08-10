@@ -76,7 +76,9 @@ void EC_Pole::loadStaticModels()
 		return;
 	}
 
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Loading EC_Pole static models...\n");
+	#endif
 
 	loadObjModel(&EC_Pole::models, "res/Models/EmeraldCoast/", "Pole.obj");
 
@@ -88,7 +90,9 @@ void EC_Pole::loadStaticModels()
 
 void EC_Pole::deleteStaticModels()
 {
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Deleting EC_Pole static models...\n");
+	#endif
 	
 	Entity::deleteModels(&EC_Pole::models);
 	Entity::deleteCollisionModel(&EC_Pole::cmOriginal);

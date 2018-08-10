@@ -147,14 +147,18 @@ void EC_Dolphin::loadStaticModels()
 		return;
 	}
 
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Loading EC_Dolphin static models...\n");
+	#endif
 
 	loadObjModel(&EC_Dolphin::models, "res/Models/EmeraldCoast/", "Dolphin.obj");
 }
 
 void EC_Dolphin::deleteStaticModels()
 {
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Deleting EC_Dolphin static models...\n");
+	#endif
 
 	Entity::deleteModels(&EC_Dolphin::models);
 }

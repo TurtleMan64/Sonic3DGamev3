@@ -76,7 +76,9 @@ void EC_RockPlatform::loadStaticModels()
 		return;
 	}
 
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Loading EC_RockPlatform static models...\n");
+	#endif
 
 	loadObjModel(&EC_RockPlatform::models, "res/Models/EmeraldCoast/", "RockPlatform.obj");
 
@@ -88,7 +90,9 @@ void EC_RockPlatform::loadStaticModels()
 
 void EC_RockPlatform::deleteStaticModels()
 {
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Deleting EC_RockPlatform static models...\n");
+	#endif
 
 	Entity::deleteModels(&EC_RockPlatform::models);
 	Entity::deleteCollisionModel(&EC_RockPlatform::cmOriginal);

@@ -76,7 +76,9 @@ void SH_CranePlatformPath::loadStaticModels()
 		return;
 	}
 
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Loading SH_CranePlatformPath static models...\n");
+	#endif
 
 	loadObjModel(&SH_CranePlatformPath::models, "res/Models/SpeedHighway/", "CranePlatformPath.obj");
 
@@ -88,7 +90,9 @@ void SH_CranePlatformPath::loadStaticModels()
 
 void SH_CranePlatformPath::deleteStaticModels()
 {
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Deleting SH_CranePlatformPath static models...\n");
+	#endif
 
 	Entity::deleteModels(&SH_CranePlatformPath::models);
 	Entity::deleteCollisionModel(&SH_CranePlatformPath::cmOriginal);

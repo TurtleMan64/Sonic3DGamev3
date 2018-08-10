@@ -81,7 +81,9 @@ void EC_Umbrella::loadStaticModels()
 		return;
 	}
 
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Loading EC_Umbrella static models...\n");
+	#endif
 
 	loadObjModel(&EC_Umbrella::models1, "res/Models/EmeraldCoast/", "Umbrella.obj");
 	loadObjModel(&EC_Umbrella::models2, "res/Models/EmeraldCoast/", "Umbrella2.obj");
@@ -89,7 +91,9 @@ void EC_Umbrella::loadStaticModels()
 
 void EC_Umbrella::deleteStaticModels()
 {
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Deleting EC_Umbrella static models...\n");
+	#endif
 
 	Entity::deleteModels(&EC_Umbrella::models1);
 	Entity::deleteModels(&EC_Umbrella::models2);

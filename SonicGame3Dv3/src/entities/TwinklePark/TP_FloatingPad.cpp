@@ -77,7 +77,9 @@ void TP_FloatingPad::loadStaticModels()
 		return;
 	}
 
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Loading TP_FloatingPad static models...\n");
+	#endif
 
 	loadObjModel(&TP_FloatingPad::models, "res/Models/TwinklePark/", "FloatingPad.obj");
 
@@ -89,7 +91,9 @@ void TP_FloatingPad::loadStaticModels()
 
 void TP_FloatingPad::deleteStaticModels()
 {
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Deleting TP_FloatingPad static models...\n");
+	#endif
 
 	Entity::deleteModels(&TP_FloatingPad::models);
 	Entity::deleteCollisionModel(&TP_FloatingPad::cmOriginal);

@@ -159,14 +159,18 @@ void GoalSign::loadStaticModels()
 		return;
 	}
 
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Loading GoalSign static models...\n");
+	#endif
 
 	loadObjModel(&GoalSign::models, "res/Models/GoalSign/", "GoalSign.obj");
 }
 
 void GoalSign::deleteStaticModels()
 {
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Deleting GoalSign static models...\n");
+	#endif
 
 	Entity::deleteModels(&GoalSign::models);
 }

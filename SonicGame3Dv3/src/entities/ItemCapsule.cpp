@@ -261,7 +261,9 @@ void ItemCapsule::loadStaticModels()
 		return;
 	}
 
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Loading ItemCapsule static models...\n");
+	#endif
 
 	loadObjModel(&ItemCapsule::modelsSolid,          "res/Models/ItemCapsule/", "CapsuleSolid.obj");
 	loadObjModel(&ItemCapsule::modelsGlass, 		 "res/Models/ItemCapsule/", "CapsuleTransparent.obj");
@@ -278,7 +280,9 @@ void ItemCapsule::loadStaticModels()
 
 void ItemCapsule::deleteStaticModels()
 {
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Deleting ItemCapsule static models...\n");
+	#endif
 
 	Entity::deleteModels(&ItemCapsule::modelsSolid);
 	Entity::deleteModels(&ItemCapsule::modelsGlass);

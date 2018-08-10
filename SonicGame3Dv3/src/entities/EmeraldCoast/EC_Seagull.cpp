@@ -135,14 +135,18 @@ void EC_Seagull::loadStaticModels()
 		return;
 	}
 
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Loading EC_Seagull static models...\n");
+	#endif
 
 	loadObjModel(&EC_Seagull::models, "res/Models/EmeraldCoast/", "Seagull.obj");
 }
 
 void EC_Seagull::deleteStaticModels()
 {
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Deleting EC_Seagull static models...\n");
+	#endif
 
 	Entity::deleteModels(&EC_Seagull::models);
 }

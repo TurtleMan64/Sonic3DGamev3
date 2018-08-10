@@ -265,10 +265,12 @@ void Rocket::loadStaticModels()
 		return;
 	}
 
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Loading Rocket static models...\n");
+	#endif
 
 	loadObjModel(&Rocket::modelsRocket, "res/Models/Rocket/", "Rocket.obj");
-	loadObjModel(&Rocket::modelsBase, "res/Models/Rocket/", "RocketPlatform.obj");
+	loadObjModel(&Rocket::modelsBase,   "res/Models/Rocket/", "RocketPlatform.obj");
 
 	if (Rocket::cmBase == nullptr)
 	{
@@ -278,7 +280,9 @@ void Rocket::loadStaticModels()
 
 void Rocket::deleteStaticModels()
 {
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Deleting Rocket static models...\n");
+	#endif
 
 	Entity::deleteModels(&Rocket::modelsRocket);
 	Entity::deleteModels(&Rocket::modelsBase);

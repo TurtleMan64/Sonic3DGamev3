@@ -146,7 +146,9 @@ void Capsule::loadStaticModels()
 		return;
 	}
 
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Loading Capsule static models...\n");
+	#endif
 
 	loadObjModel(&Capsule::modelsBase,      "res/Models/Capsule/", "CapsuleBottom.obj");
 	loadObjModel(&Capsule::modelsBaseBroke, "res/Models/Capsule/", "CapsuleBroke.obj");
@@ -165,7 +167,9 @@ void Capsule::loadStaticModels()
 
 void Capsule::deleteStaticModels()
 {
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Deleting Capsule static models...\n");
+	#endif
 
 	Entity::deleteModels(&Capsule::modelsBase);
 	Entity::deleteModels(&Capsule::modelsBaseBroke);

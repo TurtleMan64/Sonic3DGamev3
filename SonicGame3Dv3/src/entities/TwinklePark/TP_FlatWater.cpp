@@ -100,14 +100,18 @@ void TP_FlatWater::loadStaticModels()
 		return;
 	}
 
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Loading TP_FlatWater static models...\n");
+	#endif
 
 	loadObjModel(&TP_FlatWater::models, "res/Models/TwinklePark/", "FlatWater.obj");
 }
 
 void TP_FlatWater::deleteStaticModels()
 {
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Deleting TP_FlatWater static models...\n");
+	#endif
 
 	Entity::deleteModels(&TP_FlatWater::models);
 }

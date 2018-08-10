@@ -1423,7 +1423,9 @@ void PlayerSonic::loadStaticModels()
 
 void PlayerSonic::deleteStaticModels()
 {
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Deleting player models...\n");
+	#endif
 
 	Entity::deleteModels(&PlayerSonic::modelBody);
 	Entity::deleteModels(&PlayerSonic::modelHead);

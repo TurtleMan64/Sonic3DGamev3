@@ -102,7 +102,9 @@ void SpeedRamp::loadStaticModels()
 		return;
 	}
 
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Loading SpeedRamp static models...\n");
+	#endif
 
 	loadObjModel(&SpeedRamp::models, "res/Models/SpeedRamp/", "SpeedRamp.obj");
 
@@ -114,7 +116,9 @@ void SpeedRamp::loadStaticModels()
 
 void SpeedRamp::deleteStaticModels()
 {
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Deleting SpeedRamp static models...\n");
+	#endif
 
 	Entity::deleteModels(&SpeedRamp::models);
 	Entity::deleteCollisionModel(&SpeedRamp::cmOriginal);

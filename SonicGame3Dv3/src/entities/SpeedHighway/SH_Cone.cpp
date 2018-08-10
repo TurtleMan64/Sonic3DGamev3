@@ -68,7 +68,9 @@ void SH_Cone::loadStaticModels()
 		return;
 	}
 
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Loading SH_Cone static models...\n");
+	#endif
 
 	loadObjModel(&SH_Cone::modelsA, "res/Models/SpeedHighway/", "ConeA.obj");
 	loadObjModel(&SH_Cone::modelsB, "res/Models/SpeedHighway/", "ConeB.obj");
@@ -76,7 +78,9 @@ void SH_Cone::loadStaticModels()
 
 void SH_Cone::deleteStaticModels()
 {
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Deleting SH_Cone static models...\n");
+	#endif
 
 	Entity::deleteModels(&SH_Cone::modelsA);
 	Entity::deleteModels(&SH_Cone::modelsB);

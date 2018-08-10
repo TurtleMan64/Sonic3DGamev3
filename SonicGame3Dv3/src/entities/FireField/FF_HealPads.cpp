@@ -60,7 +60,9 @@ void FF_HealPads::loadStaticModels()
 		return;
 	}
 
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Loading FF_HealPads static models...\n");
+	#endif
 
 	loadObjModel(&FF_HealPads::models, "res/Models/FireField/", "HealPanel.obj");
 
@@ -72,7 +74,9 @@ void FF_HealPads::loadStaticModels()
 
 void FF_HealPads::deleteStaticModels()
 {
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Deleting FF_HealPads static models...\n");
+	#endif
 
 	Entity::deleteModels(&FF_HealPads::models);
 	Entity::deleteCollisionModel(&FF_HealPads::cmOriginal);

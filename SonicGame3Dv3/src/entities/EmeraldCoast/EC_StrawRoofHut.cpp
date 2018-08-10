@@ -76,7 +76,9 @@ void EC_StrawRoofHut::loadStaticModels()
 		return;
 	}
 
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Loading EC_StrawRoofHut static models...\n");
+	#endif
 
 	loadObjModel(&EC_StrawRoofHut::models, "res/Models/EmeraldCoast/", "StrawRoofHut.obj");
 
@@ -88,7 +90,9 @@ void EC_StrawRoofHut::loadStaticModels()
 
 void EC_StrawRoofHut::deleteStaticModels()
 {
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Deleting EC_StrawRoofHut static models...\n");
+	#endif
 
 	Entity::deleteModels(&EC_StrawRoofHut::models);
 	Entity::deleteCollisionModel(&EC_StrawRoofHut::cmOriginal);

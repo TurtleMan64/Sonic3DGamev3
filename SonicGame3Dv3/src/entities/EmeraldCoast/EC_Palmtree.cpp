@@ -81,7 +81,9 @@ void EC_Palmtree::loadStaticModels()
 		return;
 	}
 
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Loading EC_Palmtree static models...\n");
+	#endif
 
 	loadObjModel(&EC_Palmtree::models1, "res/Models/EmeraldCoast/", "Palmtree.obj");
 	loadObjModel(&EC_Palmtree::models2, "res/Models/EmeraldCoast/", "Palmtree.obj");
@@ -91,7 +93,9 @@ void EC_Palmtree::loadStaticModels()
 
 void EC_Palmtree::deleteStaticModels()
 {
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Deleting EC_Palmtree static models...\n");
+	#endif
 
 	Entity::deleteModels(&EC_Palmtree::models1);
 	Entity::deleteModels(&EC_Palmtree::models2);

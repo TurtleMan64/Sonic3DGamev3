@@ -164,14 +164,18 @@ void NPC::loadStaticModels()
 		return;
 	}
 
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Loading NPC static models...\n");
+	#endif
 
 	loadObjModel(&NPC::models, "res/Models/WanamaDage/", "WanamaDage.obj");
 }
 
 void NPC::deleteStaticModels()
 {
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Deleting NPC static models...\n");
+	#endif
 
 	Entity::deleteModels(&NPC::models);
 

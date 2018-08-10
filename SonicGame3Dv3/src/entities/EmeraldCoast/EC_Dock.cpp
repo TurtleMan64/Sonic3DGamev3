@@ -92,7 +92,9 @@ void EC_Dock::loadStaticModels()
 		return;
 	}
 
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Loading EC_Dock static models...\n");
+	#endif
 
 	loadObjModel(&EC_Dock::models, "res/Models/EmeraldCoast/", "Dock.obj");
 
@@ -104,7 +106,9 @@ void EC_Dock::loadStaticModels()
 
 void EC_Dock::deleteStaticModels()
 {
+	#ifdef DEV_MODE
 	std::fprintf(stdout, "Deleting EC_Dock static models...\n");
+	#endif
 
 	Entity::deleteModels(&EC_Dock::models);
 	Entity::deleteCollisionModel(&EC_Dock::cmOriginal);

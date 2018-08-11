@@ -99,6 +99,9 @@ Rocket::Rocket(int point1ID, int point2ID)
 	pointDifferenceNormalized.normalize();
 
 	pointLength = pointDifference.length();
+
+	cmBase->transformModel(collideModelTransformed, base->getPosition());
+	base->updateTransformationMatrix();
 }
 
 void Rocket::step()
@@ -143,7 +146,7 @@ void Rocket::step()
 			}
 			
 			if (!isMoving && canMove && 
-				diffSquared <= 25    &&  //pow(radius, 2)
+				diffSquared <= 36    &&  //pow(radius, 2)
 				yDiffAbs    <  11.0f)
 			{
 				//start moving
@@ -159,7 +162,7 @@ void Rocket::step()
 				Global::gamePlayer->setOnRocket(false);
 				Global::gamePlayer->setCanMoveTimer(0);
 
-				position = pointPos1;
+				position.set(&pointPos1);
 				position.y += 10;
 				canMove = true;
 				isMoving = false;
@@ -229,6 +232,11 @@ void Rocket::step()
 						position.y - 10.65f,
 						position.z - 8.75f*pointDifferenceNormalized.z);
 
+					if (rotZ > 70)
+					{
+						Global::gamePlayer->increasePosition(0, 2, 0);
+					}
+
 					startupTimer += 1;
 				}
 				else
@@ -242,13 +250,16 @@ void Rocket::step()
 						position.y - 9.75f,
 						position.z + speed*pointDifferenceNormalized.z - 8.75f*pointDifferenceNormalized.z);
 
+					if (rotZ > 70)
+					{
+						Global::gamePlayer->increasePosition(0, 14, 0);
+					}
+
 					timeOffset += speed / pointLength;
 				}
 			}
 
-			cmBase->transformModel(collideModelTransformed, base->getPosition());
 			updateTransformationMatrix();
-			base->updateTransformationMatrix();
 		}
 	}
 }

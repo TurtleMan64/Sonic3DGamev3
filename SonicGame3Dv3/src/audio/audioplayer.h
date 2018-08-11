@@ -70,5 +70,8 @@ public:
 	//percent should be 0 ... 1
 	//this is then multiplied by soundLevelBGM
 	static void setBGMVolume(float percent);
+
+	//how many frames until the intro buffer is removed
+	static void setBGMTimer(int newTimer);
 };
 #endif

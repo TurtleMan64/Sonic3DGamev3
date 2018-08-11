@@ -115,6 +115,9 @@
     <Filter Include="Source Files\entities\Boss">
       <UniqueIdentifier>{ced98bd0-9e12-4bbb-b666-0c00fa11f685}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\entities\MetalHarbor">
+      <UniqueIdentifier>{5536fbbb-d5fc-4d30-bd92-9aaf02e20615}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\renderEngine\DisplayManager.cpp">
@@ -669,6 +672,9 @@
     <ClCompile Include="src\entities\Rocket.cpp">
       <Filter>Source Files\entities</Filter>
     </ClCompile>
+    <ClCompile Include="src\entities\MetalHarbor\MH_Manager.cpp">
+      <Filter>Source Files\entities\MetalHarbor</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\renderEngine\renderEngine.h">
@@ -1204,6 +1210,9 @@
     </ClInclude>
     <ClInclude Include="src\entities\rocket.h">
       <Filter>Source Files\entities</Filter>
+    </ClInclude>
+    <ClInclude Include="src\entities\MetalHarbor\mhmanager.h">
+      <Filter>Source Files\entities\MetalHarbor</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

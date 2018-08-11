@@ -230,6 +230,11 @@ Source* AudioPlayer::playBGMWithIntro(int bufferIntro, int bufferLoop)
 	return AudioPlayer::playBGMWithIntro(AudioPlayer::buffersBGM[bufferIntro], AudioPlayer::buffersBGM[bufferLoop]);
 }
 
+void AudioPlayer::setBGMTimer(int newTimer)
+{
+	AudioPlayer::bgmTimer = newTimer;
+}
+
 Source* AudioPlayer::playBGMWithIntro(ALuint bufferIntro, ALuint bufferLoop)
 {
 	AudioPlayer::bgmTimer = 3000; //Intro must be less than 50 seconds, Loop must be at least 50 seconds

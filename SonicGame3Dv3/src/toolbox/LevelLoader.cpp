@@ -117,6 +117,7 @@
 #include "../entities/Boss/bearth.h"
 #include "../entities/Boss/bmetalsonic.h"
 #include "../entities/rocket.h"
+#include "../entities/MetalHarbor/mhmanager.h"
 
 float toFloat(char* input);
 int toInt(char* input);
@@ -1705,6 +1706,13 @@ void processLine(char** dat, int datLength)
 			Rocket* rocket = new Rocket(toInt(dat[1]), toInt(dat[2])); //Point IDs
 			INCR_NEW
 			Main_addEntity(rocket);
+		}
+
+		case 91: //Metal Harbor
+		{
+			MH_Manager* mh = new MH_Manager;
+			INCR_NEW
+			Main_addEntity(mh);
 		}
 
 		default:

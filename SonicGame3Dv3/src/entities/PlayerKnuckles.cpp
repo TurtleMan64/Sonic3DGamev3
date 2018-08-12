@@ -2757,6 +2757,7 @@ void PlayerKnuckles::animate()
 		isBouncing = false;
 		isStomping = false;
 		isLightdashing = false;
+		isDrillDiving = false;
 
 		if (PlayerKnuckles::maniaKnuckles != nullptr) { PlayerKnuckles::maniaKnuckles->setVisible(false); }
 		if (myBody != nullptr) myBody->setBaseOrientation(&position, 0, getRotY(), 90, 0);

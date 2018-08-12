@@ -1706,6 +1706,7 @@ void processLine(char** dat, int datLength)
 			Rocket* rocket = new Rocket(toInt(dat[1]), toInt(dat[2])); //Point IDs
 			INCR_NEW
 			Main_addEntity(rocket);
+			return;
 		}
 
 		case 91: //Metal Harbor
@@ -1713,6 +1714,7 @@ void processLine(char** dat, int datLength)
 			MH_Manager* mh = new MH_Manager;
 			INCR_NEW
 			Main_addEntity(mh);
+			return;
 		}
 
 		default:

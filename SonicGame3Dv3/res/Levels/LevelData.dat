@@ -3,7 +3,7 @@
 EmeraldCoast.lvl
 Emerald Coast
 3
-Normal;16000;Destroy the capsule and rescue the animals!
+Normal;15000;Destroy the capsule and rescue the animals!
 Ring;3000;200;Collect 200 Rings!
 Chao;4200;Find the lost chao!
 
@@ -18,15 +18,15 @@ Hard;15000;Clear hard mode!
 SpeedHighway.lvl
 Speed Highway
 3
-Normal;16000;Destroy the capsule and rescue the animals!
+Normal;15000;Destroy the capsule and rescue the animals!
 Ring;3600;150;Collect 150 Rings!
-Chao;900;Find the lost chao!
+Chao;3600;Find the lost chao!
 
 TwinklePark.lvl
 Twinkle Park
 3
-Normal;17000;Destroy the capsule and rescue the animals!
-Ring;3600;400;Collect 400 Rings!
+Normal;14000;Destroy the capsule and rescue the animals!
+Ring;5400;400;Collect 400 Rings!
 Chao;4200;Find the lost chao!
 
 WildCanyon.lvl
@@ -41,7 +41,7 @@ MetalHarbor.lvl
 Metal Harbor
 3
 Normal;14000;Escape from the military base!
-Ring;3900;150;Collect 150 Rings!
+Ring;4800;150;Collect 150 Rings!
 Chao;2700;Find the lost chao!
 
 DelfinoPlaza.lvl
@@ -49,7 +49,7 @@ Delfino Plaza
 3
 Normal;13000;Find the pieces of the Master Emerald!
 Chao;1800;Find the lost chao!
-Hard;80000;Clear hard mode!
+Hard;14000;Clear hard mode!
 
 GreenHillZone.lvl
 Green Hill Zone
@@ -68,7 +68,7 @@ Hard;1600;Clear hard mode!
 WeaponsBed.lvl
 Weapons Bed
 3
-Normal;17000;Escape from the military base!
+Normal;12000;Escape from the military base!
 Ring;3600;150;Collect 150 Rings!
 Chao;1800;Find the lost chao!
 

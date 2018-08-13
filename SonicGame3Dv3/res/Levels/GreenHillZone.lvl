@@ -37,8 +37,11 @@ res/Audio/BGM/g_hill_loop.ogg
 # NPC
 32 -1844.75 2513.099 -1971.39 0 1 Well, you know what they say...
 
+# Water
+72 res/Models/GreenHillZone/Water/ Water.obj pass2
+
 # Objects
-7 Sky SkySphereModel2Repeat MTL_GreenHillBG 8 0
+7 Sky SkySphereModel2Repeat MTL_GreenHillBG 8 1
 69 -2953 201 -10545
 
 # Moto Bugs

@@ -493,6 +493,8 @@ void MainMenu::loadResources()
 	if (menuSelectionID <= MISSION_MAX)
 	{
 		MainMenu::selectMenuMission(menuSelectionID);
+		missionSelect->setX(0.75f-83*px+(Global::gameMissionNumber*55)*px);
+		MainMenu::updateBestDisplay(menuSelectionID);
 	}
 	else if (menuSelectionID <= ROOT_EXIT)
 	{
@@ -962,6 +964,7 @@ void MainMenu::selectMenuMission(int newSelection)
 
 	menuSelectionID = newSelection;
 
+	missionSelect->setX(0.75f-83*px+(Global::gameMissionNumber*55)*px);
 	MainMenu::updateBestDisplay(newSelection);
 
 	textItem1->setVisibility(false);
@@ -1075,6 +1078,8 @@ void MainMenu::selectMenuRoot(int newSelection)
 
 	textArcadeResultTitle->setVisibility(false);
 	textArcadeResultData ->setVisibility(false);
+
+	Global::gameMissionNumber = 0;
 
 	AudioPlayer::play(36, Global::gameCamera->getFadePosition1());
 }

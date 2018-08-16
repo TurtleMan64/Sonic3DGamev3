@@ -104,6 +104,8 @@ private:
 	static GLuint textureRankBlank;
 	static GLuint textureMissionSelect;
 
+	static GLuint textureNPCicon;
+
 public:
 	static GLuint textureRankA;
 	static GLuint textureRankB;
@@ -184,6 +186,8 @@ private:
 	static GuiTexture* rankM4;
 
 	static GuiTexture* missionSelect;
+
+	static GuiTexture* npcIcon;
 
 public:
 	static std::vector<std::string> unlockedCharacters;

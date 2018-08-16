@@ -89,6 +89,8 @@ GLuint MainMenu::textureRankE					   = (GLuint)-1;
 GLuint MainMenu::textureRankBlank				   = (GLuint)-1;
 GLuint MainMenu::textureMissionSelect			   = (GLuint)-1;
 
+GLuint MainMenu::textureNPCicon                    = (GLuint)-1;
+
 GuiTexture* MainMenu::item1 = nullptr;
 GuiTexture* MainMenu::item2 = nullptr;
 GuiTexture* MainMenu::item3 = nullptr;
@@ -160,6 +162,8 @@ GuiTexture* MainMenu::rankM4 = nullptr;
 
 GuiTexture* MainMenu::missionSelect = nullptr;
 
+GuiTexture* MainMenu::npcIcon = nullptr;
+
 std::vector<std::string> MainMenu::unlockedCharacters;
 int MainMenu::characterSelectIndex = 0;
 
@@ -200,6 +204,7 @@ void MainMenu::init()
 	textureRankE					  = Loader_loadTexture               ("res/Images/MainMenu/RankE.png");
 	textureRankBlank				  = Loader_loadTextureNoInterpolation("res/Images/MainMenu/NoRank.png");
 	textureMissionSelect			  = Loader_loadTextureNoInterpolation("res/Images/MainMenu/MissionSelect.png");
+	textureNPCicon                    = Loader_loadTexture               ("res/Images/MainMenu/NPCicon.png");
 
 	Global::npcList.push_back("Emerald Coast_NPC_1");
 	Global::npcList.push_back("Emerald Coast_NPC_2");
@@ -327,6 +332,8 @@ void MainMenu::loadResources()
 	rankM4 = new GuiTexture(textureRankD, 0.75f+82*px, 0.5f, 64*px, 64*py, 0); INCR_NEW
 
 	missionSelect = new GuiTexture(textureMissionSelect, 0.75f-83*px, 0.5f, 96*px, 96*py, 0); INCR_NEW
+
+	npcIcon = new GuiTexture(textureNPCicon, 0.75f + 320*px, 0.5f, 128*px, 128*py, 0); INCR_NEW
 
 	textMission1  = new GUIText("EMERALD COAST",       2.0f, font, 0.0f, 0.0f, 0.5f-128*px, false, true, true); INCR_NEW
 	textMission2  = new GUIText("DRY LAGOON",          2.0f, font, 0.0f, 0.0f, 0.5f-128*px, false, true, true); INCR_NEW
@@ -632,6 +639,8 @@ void MainMenu::unloadResources()
 	delete rankM4; INCR_DEL rankM4 = nullptr;
 
 	delete missionSelect; INCR_DEL missionSelect = nullptr;
+
+	delete npcIcon; INCR_DEL npcIcon = nullptr;
 }
 
 void MainMenu::selectMenuArcadeClear()
@@ -963,6 +972,41 @@ void MainMenu::selectMenuMission(int newSelection)
 	}
 
 	menuSelectionID = newSelection;
+
+	unsigned int totalNPC = Global::npcList.size();
+	auto end = Global::gameSaveData.end();
+	std::string base = Global::gameLevelData[newSelection].displayName+"_NPC_";
+	int npcInThisStageCount = 0;
+
+	for (unsigned int i = 0; i < totalNPC; i++)
+	{
+		std::string baseCheck = Global::npcList[i];
+		baseCheck.erase(baseCheck.length()-1, std::string::npos);
+		if (baseCheck == base)
+		{
+			npcInThisStageCount++;
+		}
+	}
+
+	int totalNPCWeFound = 0;
+
+	for (int i = 1; i <= npcInThisStageCount; i++)
+	{
+		std::string check = base + std::to_string(i);
+
+		if (Global::gameSaveData.find(check) != end)
+		{
+			if (Global::gameSaveData[check] == "true")
+			{
+				totalNPCWeFound++;
+			}
+		}
+	}
+
+	if (totalNPCWeFound != npcInThisStageCount)
+	{
+		GuiManager::addGuiToRender(npcIcon);
+	}
 
 	missionSelect->setX(0.75f-83*px+(Global::gameMissionNumber*55)*px);
 	MainMenu::updateBestDisplay(newSelection);

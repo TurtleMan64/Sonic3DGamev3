@@ -146,7 +146,7 @@ void Rocket::step()
 			}
 			
 			if (!isMoving && canMove && 
-				diffSquared <= 36    &&  //pow(radius, 2)
+				diffSquared <= 45    &&  //pow(radius, 2)
 				yDiffAbs    <  11.0f)
 			{
 				//start moving

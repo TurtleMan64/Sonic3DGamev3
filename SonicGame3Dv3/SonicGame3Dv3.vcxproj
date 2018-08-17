@@ -92,7 +92,13 @@
     <ClCompile Include="src\entities\ManiaKnucklesModel.cpp" />
     <ClCompile Include="src\entities\ManiaSonicModel.cpp" />
     <ClCompile Include="src\entities\ManiaTailsModel.cpp" />
+    <ClCompile Include="src\entities\MetalHarbor\MH_GiantRocket.cpp" />
     <ClCompile Include="src\entities\MetalHarbor\MH_Manager.cpp" />
+    <ClCompile Include="src\entities\MetalHarbor\MH_PathDiagonal.cpp" />
+    <ClCompile Include="src\entities\MetalHarbor\MH_PathFlat.cpp" />
+    <ClCompile Include="src\entities\MetalHarbor\MH_PathFlatSmall.cpp" />
+    <ClCompile Include="src\entities\MetalHarbor\MH_RocketBase.cpp" />
+    <ClCompile Include="src\entities\MetalHarbor\MH_Tank.cpp" />
     <ClCompile Include="src\entities\MotoBug.cpp" />
     <ClCompile Include="src\entities\NokiBay\NB_Palmtree.cpp" />
     <ClCompile Include="src\entities\NokiBay\NB_WaterPlatform.cpp" />
@@ -279,7 +285,13 @@
     <ClInclude Include="src\entities\maniaknucklesmodel.h" />
     <ClInclude Include="src\entities\maniasonicmodel.h" />
     <ClInclude Include="src\entities\maniatailsmodel.h" />
+    <ClInclude Include="src\entities\MetalHarbor\mhgiantrocket.h" />
     <ClInclude Include="src\entities\MetalHarbor\mhmanager.h" />
+    <ClInclude Include="src\entities\MetalHarbor\mhpathdiagonal.h" />
+    <ClInclude Include="src\entities\MetalHarbor\mhpathflat.h" />
+    <ClInclude Include="src\entities\MetalHarbor\mhpathflatsmall.h" />
+    <ClInclude Include="src\entities\MetalHarbor\mhrocketbase.h" />
+    <ClInclude Include="src\entities\MetalHarbor\mhtank.h" />
     <ClInclude Include="src\entities\motobug.h" />
     <ClInclude Include="src\entities\NokiBay\nbpalmtree.h" />
     <ClInclude Include="src\entities\NokiBay\nbwaterplatform.h" />
@@ -482,6 +494,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>

@@ -1766,7 +1766,7 @@ void processLine(char** dat, int datLength)
 			MH_PathFlatSmall* pathFlatSmall = new MH_PathFlatSmall(toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
 				toFloat(dat[4])); //y rotation
 			INCR_NEW
-				Main_addEntity(pathFlatSmall);
+			Main_addEntity(pathFlatSmall);
 			return;
 		}
 
@@ -1776,7 +1776,7 @@ void processLine(char** dat, int datLength)
 			MH_PathDiagonal* pathDiagonal = new MH_PathDiagonal(toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
 				toFloat(dat[4])); //y rotation
 			INCR_NEW
-				Main_addEntity(pathDiagonal);
+			Main_addEntity(pathDiagonal);
 			return;
 		}
 

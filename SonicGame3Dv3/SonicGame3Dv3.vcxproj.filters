@@ -675,6 +675,24 @@
     <ClCompile Include="src\entities\MetalHarbor\MH_Manager.cpp">
       <Filter>Source Files\entities\MetalHarbor</Filter>
     </ClCompile>
+    <ClCompile Include="src\entities\MetalHarbor\MH_Tank.cpp">
+      <Filter>Source Files\entities\MetalHarbor</Filter>
+    </ClCompile>
+    <ClCompile Include="src\entities\MetalHarbor\MH_GiantRocket.cpp">
+      <Filter>Source Files\entities\MetalHarbor</Filter>
+    </ClCompile>
+    <ClCompile Include="src\entities\MetalHarbor\MH_RocketBase.cpp">
+      <Filter>Source Files\entities\MetalHarbor</Filter>
+    </ClCompile>
+    <ClCompile Include="src\entities\MetalHarbor\MH_PathFlat.cpp">
+      <Filter>Source Files\entities\MetalHarbor</Filter>
+    </ClCompile>
+    <ClCompile Include="src\entities\MetalHarbor\MH_PathDiagonal.cpp">
+      <Filter>Source Files\entities\MetalHarbor</Filter>
+    </ClCompile>
+    <ClCompile Include="src\entities\MetalHarbor\MH_PathFlatSmall.cpp">
+      <Filter>Source Files\entities\MetalHarbor</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\renderEngine\renderEngine.h">
@@ -1212,6 +1230,24 @@
       <Filter>Source Files\entities</Filter>
     </ClInclude>
     <ClInclude Include="src\entities\MetalHarbor\mhmanager.h">
+      <Filter>Source Files\entities\MetalHarbor</Filter>
+    </ClInclude>
+    <ClInclude Include="src\entities\MetalHarbor\mhtank.h">
+      <Filter>Source Files\entities\MetalHarbor</Filter>
+    </ClInclude>
+    <ClInclude Include="src\entities\MetalHarbor\mhgiantrocket.h">
+      <Filter>Source Files\entities\MetalHarbor</Filter>
+    </ClInclude>
+    <ClInclude Include="src\entities\MetalHarbor\mhrocketbase.h">
+      <Filter>Source Files\entities\MetalHarbor</Filter>
+    </ClInclude>
+    <ClInclude Include="src\entities\MetalHarbor\mhpathflat.h">
+      <Filter>Source Files\entities\MetalHarbor</Filter>
+    </ClInclude>
+    <ClInclude Include="src\entities\MetalHarbor\mhpathdiagonal.h">
+      <Filter>Source Files\entities\MetalHarbor</Filter>
+    </ClInclude>
+    <ClInclude Include="src\entities\MetalHarbor\mhpathflatsmall.h">
       <Filter>Source Files\entities\MetalHarbor</Filter>
     </ClInclude>
   </ItemGroup>

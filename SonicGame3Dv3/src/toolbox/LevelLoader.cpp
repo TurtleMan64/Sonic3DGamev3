@@ -118,6 +118,12 @@
 #include "../entities/Boss/bmetalsonic.h"
 #include "../entities/rocket.h"
 #include "../entities/MetalHarbor/mhmanager.h"
+#include "../entities/MetalHarbor/mhtank.h"
+#include "../entities/MetalHarbor/mhgiantrocket.h"
+#include "../entities/MetalHarbor/mhrocketbase.h"
+#include "../entities/MetalHarbor/mhpathflat.h"
+#include "../entities/MetalHarbor/mhpathflatsmall.h"
+#include "../entities/MetalHarbor/mhpathdiagonal.h"
 
 float toFloat(char* input);
 int toInt(char* input);
@@ -1717,6 +1723,63 @@ void processLine(char** dat, int datLength)
 			return;
 		}
 
+		case 92: //Metal Harbor Tank
+		{
+			MH_Tank::loadStaticModels();
+			MH_Tank* tank = new MH_Tank(toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3])); //position
+			INCR_NEW
+			Main_addEntity(tank);
+			return;
+		}
+
+		case 93: //Metal Harbor Giant Rocket
+		{
+			MH_GiantRocket::loadStaticModels();
+			MH_GiantRocket* giantRocket = new MH_GiantRocket(toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3])); //position
+			INCR_NEW
+			Main_addEntity(giantRocket);
+			return;
+		}
+
+		case 94: //Metal Harbor Giant Rocket Base
+		{
+			MH_RocketBase::loadStaticModels();
+			MH_RocketBase* rocketBase = new MH_RocketBase(toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3])); //position
+			INCR_NEW
+			Main_addEntity(rocketBase);
+			return;
+		}
+
+		case 95: //Metal Harbor Flat Path
+		{
+			MH_PathFlat::loadStaticModels();
+			MH_PathFlat* pathFlat = new MH_PathFlat(toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
+				toFloat(dat[4])); //y rotation
+			INCR_NEW
+			Main_addEntity(pathFlat);
+			return;
+		}
+
+		case 96: //Metal Harbor Small Flat Path
+		{
+			MH_PathFlatSmall::loadStaticModels();
+			MH_PathFlatSmall* pathFlatSmall = new MH_PathFlatSmall(toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
+				toFloat(dat[4])); //y rotation
+			INCR_NEW
+				Main_addEntity(pathFlatSmall);
+			return;
+		}
+
+		case 97: //Metal Harbor Diagonal Path
+		{
+			MH_PathDiagonal::loadStaticModels();
+			MH_PathDiagonal* pathDiagonal = new MH_PathDiagonal(toFloat(dat[1]), toFloat(dat[2]), toFloat(dat[3]), //position
+				toFloat(dat[4])); //y rotation
+			INCR_NEW
+				Main_addEntity(pathDiagonal);
+			return;
+		}
+
 		default:
 		{
 			return;
@@ -1887,4 +1950,10 @@ void freeAllStaticModels()
 	B_Earth::deleteStaticModels();
 	B_MetalSonic::deleteStaticModels();
 	Rocket::deleteStaticModels();
+	MH_Tank::deleteStaticModels();
+	MH_GiantRocket::deleteStaticModels();
+	MH_RocketBase::deleteStaticModels();
+	MH_PathFlat::deleteStaticModels();
+	MH_PathFlatSmall::deleteStaticModels();
+	MH_PathDiagonal::deleteStaticModels();
 }

@@ -174,16 +174,7 @@ int MainMenu::holdDownTimer = 0;
 
 FontType* MainMenu::font = nullptr;
 
-extern bool INPUT_JUMP;
-extern bool INPUT_ACTION;
-extern bool INPUT_START;
-
-extern bool INPUT_PREVIOUS_JUMP;
-extern bool INPUT_PREVIOUS_ACTION;
-extern bool INPUT_PREVIOUS_START;
-
-extern float INPUT_X;
-extern float INPUT_Y;
+extern InputStruct Inputs;
 
 void MainMenu::init()
 {
@@ -1188,11 +1179,11 @@ void MainMenu::step()
 	bool shouldGoDown  = false;
 	bool shouldGoLeft  = false;
 	bool shouldGoRight = false;
-	bool pressedSelect = (INPUT_JUMP && !INPUT_PREVIOUS_JUMP) || (INPUT_START && !INPUT_PREVIOUS_START);
-	bool pressedBack   = (INPUT_ACTION && !INPUT_PREVIOUS_ACTION);
+	bool pressedSelect = (Inputs.INPUT_JUMP && !Inputs.INPUT_PREVIOUS_JUMP) || (Inputs.INPUT_START && !Inputs.INPUT_PREVIOUS_START);
+	bool pressedBack   = (Inputs.INPUT_ACTION && !Inputs.INPUT_PREVIOUS_ACTION);
 
-	int moveX = (int)round(INPUT_X);
-	int moveY = (int)round(INPUT_Y);
+	int moveX = (int)round(Inputs.INPUT_X);
+	int moveY = (int)round(Inputs.INPUT_Y);
 
 	if (moveX != moveXPrevious)
 	{

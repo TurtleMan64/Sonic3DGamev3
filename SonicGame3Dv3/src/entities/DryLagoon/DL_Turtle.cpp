@@ -14,6 +14,7 @@
 #include "../controllableplayer.h"
 #include "../../particles/particle.h"
 #include "../../particles/particleresources.h"
+#include "../../toolbox/input.h"
 
 #include <list>
 #include <iostream>
@@ -21,6 +22,8 @@
 
 std::list<TexturedModel*> DL_Turtle::models;
 CollisionModel* DL_Turtle::cmOriginal;
+
+extern InputStruct Inputs;
 
 DL_Turtle::DL_Turtle()
 {
@@ -74,13 +77,8 @@ void DL_Turtle::step()
 			{
 				if (Global::gamePlayer->getY() >= position.y)
 				{
-					extern bool INPUT_ACTION;
-					extern bool INPUT_ACTION2;
-					extern bool INPUT_PREVIOUS_ACTION;
-					extern bool INPUT_PREVIOUS_ACTION2;
-
-					if ((INPUT_ACTION  && !INPUT_PREVIOUS_ACTION) ||
-						(INPUT_ACTION2 && !INPUT_PREVIOUS_ACTION2))
+					if ((Inputs.INPUT_ACTION  && !Inputs.INPUT_PREVIOUS_ACTION) ||
+						(Inputs.INPUT_ACTION2 && !Inputs.INPUT_PREVIOUS_ACTION2))
 					{
 						warpTimer = warpTimerMax;
 						Global::gamePlayer->setCanMoveTimer(warpTimerMax*2+10);

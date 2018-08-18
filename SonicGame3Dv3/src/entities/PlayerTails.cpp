@@ -51,27 +51,7 @@ std::list<TexturedModel*> PlayerTails::modelsManiaTailsFlyBodyTired;
 
 int PlayerTails::skinID = 4;
 
-extern bool INPUT_JUMP;
-extern bool INPUT_ACTION;
-extern bool INPUT_ACTION2;
-extern bool INPUT_SHOULDER;
-extern bool INPUT_SELECT;
-extern bool INPUT_SPECIAL;
-extern bool INPUT_START;
-
-extern bool INPUT_PREVIOUS_JUMP;
-extern bool INPUT_PREVIOUS_ACTION;
-extern bool INPUT_PREVIOUS_ACTION2;
-extern bool INPUT_PREVIOUS_SHOULDER;
-extern bool INPUT_PREVIOUS_SELECT;
-extern bool INPUT_PREVIOUS_SPECIAL;
-extern bool INPUT_PREVIOUS_START;
-
-extern float INPUT_X;
-extern float INPUT_Y;
-extern float INPUT_X2;
-extern float INPUT_Y2;
-extern float INPUT_ZOOM;
+extern InputStruct Inputs;
 
 PlayerTails::PlayerTails(float x, float y, float z)
 {
@@ -1034,26 +1014,26 @@ void PlayerTails::moveMeGround()
 
 void PlayerTails::setMovementInputs()
 {
-	jumpInput = INPUT_JUMP;
-	actionInput = INPUT_ACTION;
-	action2Input = INPUT_ACTION2;
-	shoulderInput = INPUT_SHOULDER;
-	selectInput = INPUT_SELECT;
-	specialInput = INPUT_SPECIAL;
+	jumpInput     = Inputs.INPUT_JUMP;
+	actionInput   = Inputs.INPUT_ACTION;
+	action2Input  = Inputs.INPUT_ACTION2;
+	shoulderInput = Inputs.INPUT_SHOULDER;
+	selectInput   = Inputs.INPUT_SELECT;
+	specialInput  = Inputs.INPUT_SPECIAL;
 
-	previousJumpInput = INPUT_PREVIOUS_JUMP;
-	previousActionInput = INPUT_PREVIOUS_ACTION;
-	previousAction2Input = INPUT_PREVIOUS_ACTION2;
-	previousShoulderInput = INPUT_PREVIOUS_SHOULDER;
-	previousSelectInput = INPUT_PREVIOUS_SELECT;
-	previousSpecialInput = INPUT_PREVIOUS_SPECIAL;
+	previousJumpInput     = Inputs.INPUT_PREVIOUS_JUMP;
+	previousActionInput   = Inputs.INPUT_PREVIOUS_ACTION;
+	previousAction2Input  = Inputs.INPUT_PREVIOUS_ACTION2;
+	previousShoulderInput = Inputs.INPUT_PREVIOUS_SHOULDER;
+	previousSelectInput   = Inputs.INPUT_PREVIOUS_SELECT;
+	previousSpecialInput  = Inputs.INPUT_PREVIOUS_SPECIAL;
 
-	movementInputX = INPUT_X;
-	movementInputY = INPUT_Y;
-	cameraInputX = INPUT_X2;
-	cameraInputY = INPUT_Y2;
+	movementInputX = Inputs.INPUT_X;
+	movementInputY = Inputs.INPUT_Y;
+	cameraInputX   = Inputs.INPUT_X2;
+	cameraInputY   = Inputs.INPUT_Y2;
 
-	zoomInput = INPUT_ZOOM;
+	zoomInput = Inputs.INPUT_ZOOM;
 
 	float inputMag = sqrtf(movementInputX*movementInputX + movementInputY*movementInputY);
 	moveSpeedCurrent = moveAcceleration*inputMag;
@@ -2391,10 +2371,10 @@ float PlayerTails::getZVelGround()
 
 void PlayerTails::debugAdjustCamera()
 {
-	cameraInputX = INPUT_X2;
-	cameraInputY = INPUT_Y2;
+	cameraInputX = Inputs.INPUT_X2;
+	cameraInputY = Inputs.INPUT_Y2;
 
-	zoomInput = INPUT_ZOOM;
+	zoomInput = Inputs.INPUT_ZOOM;
 
 
 

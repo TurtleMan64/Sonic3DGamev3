@@ -21,29 +21,13 @@
 
 extern GLFWwindow* window;
 
+struct InputStruct Inputs{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 
-//vars to be used as input by other code
-bool INPUT_JUMP = false;
-bool INPUT_ACTION = false;
-bool INPUT_ACTION2 = false;
-bool INPUT_SHOULDER = false;
-bool INPUT_SELECT = false;
-bool INPUT_SPECIAL = false;
-bool INPUT_START = false;
-bool INPUT_GRAVE = false;
-bool INPUT_SEMICOLON = false;
-bool INPUT_APOSTROPHE = false;
+float input_zoom_buffer = 0; //set in callback
 
-bool INPUT_PREVIOUS_JUMP = false;
-bool INPUT_PREVIOUS_ACTION = false;
-bool INPUT_PREVIOUS_ACTION2 = false;
-bool INPUT_PREVIOUS_SHOULDER = false;
-bool INPUT_PREVIOUS_SELECT = false;
-bool INPUT_PREVIOUS_SPECIAL = false;
-bool INPUT_PREVIOUS_START = false;
-bool INPUT_PREVIOUS_GRAVE = false;
-bool INPUT_PREVIOUS_SEMICOLON = false;
-bool INPUT_PREVIOUS_APOSTROPHE = false;
+//vars for use by us
+double mousePreviousX = 0;
+double mousePreviousY = 0;
 
 bool DEBUG_JUMP = false;
 bool DEBUG_ACTION = false;
@@ -60,42 +44,6 @@ bool DEBUG_PREVIOUS_SHOULDER = false;
 bool DEBUG_PREVIOUS_SELECT = false;
 bool DEBUG_PREVIOUS_SPECIAL = false;
 bool DEBUG_PREVIOUS_START = false;
-
-float INPUT_X = 0;
-float INPUT_Y = 0;
-float INPUT_X2 = 0;
-float INPUT_Y2 = 0;
-
-int MENU_X = 0;
-int MENU_Y = 0;
-
-float INPUT_ZOOM = 0;
-float input_zoom_buffer = 0; //set in callback
-
-
-//vars for use by us
-double mousePreviousX = 0;
-double mousePreviousY = 0;
-
-bool tabInput = false;
-bool tabInputPrevious = false;
-
-//bool pressedA = false;
-//bool previousPressedA = false;
-//bool pressedB = false;
-//bool previousPressedB = false;
-//bool pressedX = false;
-//bool previousPressedX = false;
-//bool pressedY = false;
-//bool previousPressedY = false;
-//bool pressedStart = false;
-//bool previousPressedStart = false;
-
-int approxXLeft = 0;
-int approxXLeftPrevious = 0;
-int approxYLeft = 0;
-int approxYLeftPrevious = 0;
-
 
 //settings
 
@@ -153,26 +101,26 @@ void Input_pollInputs()
 {
 	glfwPollEvents();
 
-	tabInputPrevious = tabInput;
-	tabInput = false;
+	Inputs.tabInputPrevious = Inputs.tabInput;
+	Inputs.tabInput = false;
 
 	if (Global::gameState != STATE_DEBUG)
 	{
-		INPUT_PREVIOUS_JUMP = INPUT_JUMP;
-		INPUT_PREVIOUS_ACTION = INPUT_ACTION;
-		INPUT_PREVIOUS_ACTION2 = INPUT_ACTION2;
-		INPUT_PREVIOUS_SELECT = INPUT_SELECT;
-		INPUT_PREVIOUS_SHOULDER = INPUT_SHOULDER;
-		INPUT_PREVIOUS_SPECIAL = INPUT_SPECIAL;
-		INPUT_PREVIOUS_START = INPUT_START;
+		Inputs.INPUT_PREVIOUS_JUMP     = Inputs.INPUT_JUMP;
+		Inputs.INPUT_PREVIOUS_ACTION   = Inputs.INPUT_ACTION;
+		Inputs.INPUT_PREVIOUS_ACTION2  = Inputs.INPUT_ACTION2;
+		Inputs.INPUT_PREVIOUS_SELECT   = Inputs.INPUT_SELECT;
+		Inputs.INPUT_PREVIOUS_SHOULDER = Inputs.INPUT_SHOULDER;
+		Inputs.INPUT_PREVIOUS_SPECIAL  = Inputs.INPUT_SPECIAL;
+		Inputs.INPUT_PREVIOUS_START    = Inputs.INPUT_START;
 
-		INPUT_JUMP = false;
-		INPUT_ACTION = false;
-		INPUT_ACTION2 = false;
-		INPUT_SHOULDER = false;
-		INPUT_SELECT = false;
-		INPUT_SPECIAL = false;
-		INPUT_START = false;
+		Inputs.INPUT_JUMP = false;
+		Inputs.INPUT_ACTION = false;
+		Inputs.INPUT_ACTION2 = false;
+		Inputs.INPUT_SHOULDER = false;
+		Inputs.INPUT_SELECT = false;
+		Inputs.INPUT_SPECIAL = false;
+		Inputs.INPUT_START = false;
 	}
 
 	DEBUG_PREVIOUS_JUMP = DEBUG_JUMP;
@@ -192,21 +140,21 @@ void Input_pollInputs()
 	DEBUG_START = false;
 
 	//Keys used for debug/frozen
-	INPUT_PREVIOUS_GRAVE = INPUT_GRAVE;
-	INPUT_PREVIOUS_SEMICOLON = INPUT_SEMICOLON;
-	INPUT_PREVIOUS_APOSTROPHE = INPUT_APOSTROPHE;
+	Inputs.INPUT_PREVIOUS_GRAVE      = Inputs.INPUT_GRAVE;
+	Inputs.INPUT_PREVIOUS_SEMICOLON  = Inputs.INPUT_SEMICOLON;
+	Inputs.INPUT_PREVIOUS_APOSTROPHE = Inputs.INPUT_APOSTROPHE;
 
-	INPUT_GRAVE = false;
-	INPUT_SEMICOLON = false;
-	INPUT_APOSTROPHE = false;
+	Inputs.INPUT_GRAVE = false;
+	Inputs.INPUT_SEMICOLON = false;
+	Inputs.INPUT_APOSTROPHE = false;
 
 
-	INPUT_X = 0;
-	INPUT_Y = 0;
-	INPUT_X2 = 0;
-	INPUT_Y2 = 0;
+	Inputs.INPUT_X = 0;
+	Inputs.INPUT_Y = 0;
+	Inputs.INPUT_X2 = 0;
+	Inputs.INPUT_Y2 = 0;
 
-	INPUT_ZOOM = 0;
+	Inputs.INPUT_ZOOM = 0;
 
 
 
@@ -216,19 +164,19 @@ void Input_pollInputs()
 		int axesCount;
 		const float *axes = glfwGetJoystickAxes(CONTROLLER_ID, &axesCount);
 
-		INPUT_X = axes[STICK_LX] * STICK_LX_SCALE;
-		INPUT_Y = axes[STICK_LY] * STICK_LY_SCALE;
+		Inputs.INPUT_X = axes[STICK_LX] * STICK_LX_SCALE;
+		Inputs.INPUT_Y = axes[STICK_LY] * STICK_LY_SCALE;
 
-		INPUT_X2 = axes[STICK_RX] * STICK_RX_SCALE;
-		INPUT_Y2 = axes[STICK_RY] * STICK_RY_SCALE;
+		Inputs.INPUT_X2 = axes[STICK_RX] * STICK_RX_SCALE;
+		Inputs.INPUT_Y2 = axes[STICK_RY] * STICK_RY_SCALE;
 
-		if (abs(INPUT_X)  < STICK_LXDEADZONE) { INPUT_X  = 0; }
-		if (abs(INPUT_Y)  < STICK_LYDEADZONE) { INPUT_Y  = 0; }
-		if (abs(INPUT_X2) < STICK_RXDEADZONE) { INPUT_X2 = 0; }
-		if (abs(INPUT_Y2) < STICK_RYDEADZONE) { INPUT_Y2 = 0; }
+		if (abs(Inputs.INPUT_X)  < STICK_LXDEADZONE) { Inputs.INPUT_X  = 0; }
+		if (abs(Inputs.INPUT_Y)  < STICK_LYDEADZONE) { Inputs.INPUT_Y  = 0; }
+		if (abs(Inputs.INPUT_X2) < STICK_RXDEADZONE) { Inputs.INPUT_X2 = 0; }
+		if (abs(Inputs.INPUT_Y2) < STICK_RYDEADZONE) { Inputs.INPUT_Y2 = 0; }
 
-		INPUT_X2 = INPUT_X2 * stickSensitivityX;
-		INPUT_Y2 = INPUT_Y2 * stickSensitivityY;
+		Inputs.INPUT_X2 = Inputs.INPUT_X2 * stickSensitivityX;
+		Inputs.INPUT_Y2 = Inputs.INPUT_Y2 * stickSensitivityY;
 
 
 		float triggerLValue = 0;
@@ -242,7 +190,7 @@ void Input_pollInputs()
 		if (rawValue >= TRIGGER_DEADZONE) { triggerRValue = rawValue; }
 
 
-		INPUT_X2 += triggerSensitivity * (triggerLValue - triggerRValue);
+		Inputs.INPUT_X2 += triggerSensitivity * (triggerLValue - triggerRValue);
 
 
 		int buttonCount;
@@ -265,8 +213,8 @@ void Input_pollInputs()
 
 	if (freeMouse == false)
 	{
-		INPUT_X2 += (float)(mouseSensitivityX*(xpos - mousePreviousX));
-		INPUT_Y2 += (float)(mouseSensitivityY*(ypos - mousePreviousY));
+		Inputs.INPUT_X2 += (float)(mouseSensitivityX*(xpos - mousePreviousX));
+		Inputs.INPUT_Y2 += (float)(mouseSensitivityY*(ypos - mousePreviousY));
 	}
 	mousePreviousX = xpos;
 	mousePreviousY = ypos;
@@ -305,24 +253,24 @@ void Input_pollInputs()
 
 	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
 	{
-		INPUT_Y = -1;
+		Inputs.INPUT_Y = -1;
 	}
 	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
 	{
-		INPUT_Y = 1;
+		Inputs.INPUT_Y = 1;
 	}
 	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
 	{
-		INPUT_X = -1;
+		Inputs.INPUT_X = -1;
 	}
 	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
 	{
-		INPUT_X = 1;
+		Inputs.INPUT_X = 1;
 	}
 
 	if (glfwGetKey(window, GLFW_KEY_TAB) == GLFW_PRESS)
 	{
-		tabInput = true;
+		Inputs.tabInput = true;
 	}
 
 	if (glfwGetKey(window, GLFW_KEY_0) == GLFW_PRESS)
@@ -371,51 +319,51 @@ void Input_pollInputs()
 	// Debug
 	if (glfwGetKey(window, GLFW_KEY_GRAVE_ACCENT) == GLFW_PRESS)
 	{
-		if (!INPUT_PREVIOUS_GRAVE && Global::debugDisplay == false)
+		if (!Inputs.INPUT_PREVIOUS_GRAVE && Global::debugDisplay == false)
 		{
 			Global::debugDisplay = true;
 		}
-		else if (!INPUT_PREVIOUS_GRAVE)
+		else if (!Inputs.INPUT_PREVIOUS_GRAVE)
 		{
 			Global::debugDisplay = false;
 		}
-		INPUT_GRAVE = true;
+		Inputs.INPUT_GRAVE = true;
 	}
 	if (glfwGetKey(window, GLFW_KEY_SEMICOLON) == GLFW_PRESS)
 	{
-		if (!INPUT_PREVIOUS_SEMICOLON && Global::debugDisplay && Global::frozen == false)
+		if (!Inputs.INPUT_PREVIOUS_SEMICOLON && Global::debugDisplay && Global::frozen == false)
 		{
 			Global::frozen = true;
 		}
-		else if (!INPUT_PREVIOUS_SEMICOLON && Global::debugDisplay)
+		else if (!Inputs.INPUT_PREVIOUS_SEMICOLON && Global::debugDisplay)
 		{
 			Global::frozen = false;
 		}
-		INPUT_SEMICOLON = true;
+		Inputs.INPUT_SEMICOLON = true;
 	}
 	if (glfwGetKey(window, GLFW_KEY_APOSTROPHE) == GLFW_PRESS)
 	{
-		if (!INPUT_PREVIOUS_APOSTROPHE && Global::debugDisplay && Global::frozen)
+		if (!Inputs.INPUT_PREVIOUS_APOSTROPHE && Global::debugDisplay && Global::frozen)
 		{
 			Global::step = true;
 		}
-		INPUT_APOSTROPHE = true;
+		Inputs.INPUT_APOSTROPHE = true;
 	}
 	#endif
 
 	if (Global::gameState != STATE_DEBUG)
 	{
-		INPUT_JUMP = DEBUG_JUMP;
-		INPUT_ACTION = DEBUG_ACTION;
-		INPUT_ACTION2 = DEBUG_ACTION2;
-		INPUT_SHOULDER = DEBUG_SHOULDER;
-		INPUT_SELECT = DEBUG_SELECT;
-		INPUT_SPECIAL = DEBUG_SPECIAL;
-		INPUT_START = DEBUG_START;
+		Inputs.INPUT_JUMP     = DEBUG_JUMP;
+		Inputs.INPUT_ACTION   = DEBUG_ACTION;
+		Inputs.INPUT_ACTION2  = DEBUG_ACTION2;
+		Inputs.INPUT_SHOULDER = DEBUG_SHOULDER;
+		Inputs.INPUT_SELECT   = DEBUG_SELECT;
+		Inputs.INPUT_SPECIAL  = DEBUG_SPECIAL;
+		Inputs.INPUT_START    = DEBUG_START;
 	}
 
 	#ifdef DEV_MODE
-	if (INPUT_SHOULDER && !INPUT_PREVIOUS_SHOULDER)
+	if (Inputs.INPUT_SHOULDER && !Inputs.INPUT_PREVIOUS_SHOULDER)
 	{
 		if (Global::gamePlayer != nullptr)
 		{
@@ -428,7 +376,7 @@ void Input_pollInputs()
 	}
 	#endif
 
-	if (tabInput && !tabInputPrevious)
+	if (Inputs.tabInput && !Inputs.tabInputPrevious)
 	{
 		if (freeMouse)
 		{
@@ -442,37 +390,39 @@ void Input_pollInputs()
 		}
 	}
 
-	float mag = (float)sqrt(INPUT_X*INPUT_X + INPUT_Y*INPUT_Y);
+	float mag = sqrtf(Inputs.INPUT_X*Inputs.INPUT_X + Inputs.INPUT_Y*Inputs.INPUT_Y);
 	if (mag > 1)
 	{
-		INPUT_X = INPUT_X / mag;
-		INPUT_Y = INPUT_Y / mag;
+		Inputs.INPUT_X = Inputs.INPUT_X / mag;
+		Inputs.INPUT_Y = Inputs.INPUT_Y / mag;
 	}
 
 	if (input_zoom_buffer != 0)
 	{
-		INPUT_ZOOM = scrollSensitivity*input_zoom_buffer;
+		Inputs.INPUT_ZOOM = scrollSensitivity*input_zoom_buffer;
 		input_zoom_buffer = 0;
 	}
 
-	approxXLeftPrevious = approxXLeft;
-	approxXLeft = (int)round(INPUT_X);
-	approxYLeftPrevious = approxYLeft;
-	approxYLeft = (int)round(INPUT_Y);
+	Inputs.approxXLeftPrevious = Inputs.approxXLeft;
+	Inputs.approxXLeft = (int)round(Inputs.INPUT_X);
+	Inputs.approxYLeftPrevious = Inputs.approxYLeft;
+	Inputs.approxYLeft = (int)round(Inputs.INPUT_Y);
 
-	if (approxXLeft != 0)
+	if (Inputs.approxXLeft != 0)
 	{
-		MENU_X = approxXLeft - approxXLeftPrevious;
+		Inputs.MENU_X = Inputs.approxXLeft - Inputs.approxXLeftPrevious;
 	}
 
-	if (approxYLeft != 0)
+	if (Inputs.approxYLeft != 0)
 	{
-		MENU_Y = approxYLeft - approxYLeftPrevious;
+		Inputs.MENU_Y = Inputs.approxYLeft - Inputs.approxYLeftPrevious;
 	}
 }
 
 void Input_init()
 {
+	Inputs.uniqueVar = 1149650285; //Value that is very easy to find with a memory scan
+
 	//load sensitivity and button mappings from external file
 
 	std::ifstream file("Settings/CameraSensitivity.ini");

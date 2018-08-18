@@ -23,6 +23,7 @@ private:
 	static GUIText* textRestart;
 	static GUIText* textQuit;
 
+	static bool isPaused;
 	static bool shouldPause;
 
 	static bool pausedSounds[14];

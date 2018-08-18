@@ -8,14 +8,12 @@
 #include "../fontMeshCreator/fonttype.h"
 #include "../toolbox/pausescreen.h"
 #include "guirenderer.h"
+#include "../toolbox/input.h"
 
 #include <cmath>
 #include <string>
 
-extern bool INPUT_JUMP;
-extern bool INPUT_ACTION;
-extern bool INPUT_ACTION2;
-extern bool INPUT_SPECIAL;
+extern InputStruct Inputs;
 
 //GUIText* GuiManager::textTimer = nullptr;
 
@@ -285,7 +283,7 @@ void GuiManager::refresh()
 		textA = nullptr;
 		textA = new GUIText("A", 1, fontVip, 0.80f, 0.95f, 1, false, false, Global::debugDisplay);
 		INCR_NEW
-		if (!INPUT_JUMP)
+		if (!Inputs.INPUT_JUMP)
 		{
 			textA->setColour(0.2f, 0.2f, 0.2f);
 		}
@@ -296,7 +294,7 @@ void GuiManager::refresh()
 		textB = nullptr;
 		textB = new GUIText("B", 1, fontVip, 0.85f, 0.95f, 1, false, false, Global::debugDisplay);
 		INCR_NEW
-		if (!INPUT_ACTION)
+		if (!Inputs.INPUT_ACTION)
 		{
 			textB->setColour(0.2f, 0.2f, 0.2f);
 		}
@@ -307,7 +305,7 @@ void GuiManager::refresh()
 		textX = nullptr;
 		textX = new GUIText("X", 1, fontVip, 0.90f, 0.95f, 1, false, false, Global::debugDisplay);
 		INCR_NEW
-		if (!INPUT_ACTION2)
+		if (!Inputs.INPUT_ACTION2)
 		{
 			textX->setColour(0.2f, 0.2f, 0.2f);
 		}
@@ -318,7 +316,7 @@ void GuiManager::refresh()
 		textY = nullptr;
 		textY = new GUIText("Y", 1, fontVip, 0.95f, 0.95f, 1, false, false, Global::debugDisplay);
 		INCR_NEW
-		if (!INPUT_SPECIAL)
+		if (!Inputs.INPUT_SPECIAL)
 		{
 			textY->setColour(0.2f, 0.2f, 0.2f);
 		}

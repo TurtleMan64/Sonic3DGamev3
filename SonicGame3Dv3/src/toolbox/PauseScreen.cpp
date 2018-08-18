@@ -37,25 +37,17 @@ GUIText* PauseScreen::textCamera  = nullptr;
 GUIText* PauseScreen::textRestart = nullptr;
 GUIText* PauseScreen::textQuit    = nullptr;
 
+bool PauseScreen::isPaused = false;
 bool PauseScreen::shouldPause = false;
 bool PauseScreen::pausedSounds[14];
 
-extern bool INPUT_START;
-extern bool INPUT_PREVIOUS_START;
-
-extern bool INPUT_JUMP;
-extern bool INPUT_ACTION;
-
-extern bool INPUT_PREVIOUS_JUMP;
-extern bool INPUT_PREVIOUS_ACTION;
-
-extern int MENU_X;
-extern int MENU_Y;
+extern InputStruct Inputs;
 
 void PauseScreen::init()
 {
 	font = new FontType(Loader_loadTexture("res/Fonts/vipnagorgialla.png"), "res/Fonts/vipnagorgialla.fnt"); INCR_NEW
 	textCursor = new GUIText(">", 2.5f, font, 0.47f, 0.25f, 1.0f, false, false, false); INCR_NEW
+	isPaused = false;
 }
 
 void PauseScreen::step()
@@ -76,14 +68,14 @@ void PauseScreen::step()
 		}
 	}
 
-	if (INPUT_START && !INPUT_PREVIOUS_START)
+	if (Inputs.INPUT_START && !Inputs.INPUT_PREVIOUS_START)
 	{
 		shouldPause = true;
 	}
 
 	if (Global::gameState == STATE_PAUSED)
 	{
-		int moveY = MENU_Y;
+		int moveY = Inputs.MENU_Y;
 
 		if (moveYPrevious != moveY)
 		{
@@ -91,7 +83,7 @@ void PauseScreen::step()
 			menuSelection = std::max(0, std::min(menuSelectionMAX, menuSelection));
 		}
 
-		if (INPUT_JUMP && !INPUT_PREVIOUS_JUMP)
+		if (Inputs.INPUT_JUMP && !Inputs.INPUT_PREVIOUS_JUMP)
 		{
 			switch (menuDisplayID)
 			{
@@ -119,16 +111,19 @@ void PauseScreen::step()
 				case 2:
 				{
 					//switch cam, reload text
-					textCamera->deleteMe(); delete textCamera; INCR_DEL textCamera = nullptr;
-					if (Global::isAutoCam)
+					if (textCamera != nullptr)
 					{
-						textCamera    = new GUIText("Free Cam",  2.5f, font, 0.5f, 0.55f, 1.0f, false, false, true); INCR_NEW
-						Global::isAutoCam = false;
-					}
-					else
-					{
-						textCamera    = new GUIText("Auto Cam",  2.5f, font, 0.5f, 0.55f, 1.0f, false, false, true); INCR_NEW
-						Global::isAutoCam = true;
+						textCamera->deleteMe(); delete textCamera; INCR_DEL textCamera = nullptr;
+						if (Global::isAutoCam)
+						{
+							textCamera    = new GUIText("Free Cam",  2.5f, font, 0.5f, 0.55f, 1.0f, false, false, true); INCR_NEW
+							Global::isAutoCam = false;
+						}
+						else
+						{
+							textCamera    = new GUIText("Auto Cam",  2.5f, font, 0.5f, 0.55f, 1.0f, false, false, true); INCR_NEW
+							Global::isAutoCam = true;
+						}
 					}
 					break;
 				}
@@ -152,7 +147,7 @@ void PauseScreen::step()
 			}
 		}
 
-		if (INPUT_ACTION && !INPUT_PREVIOUS_ACTION)
+		if (Inputs.INPUT_ACTION && !Inputs.INPUT_PREVIOUS_ACTION)
 		{
 			shouldPause = true;
 			//unpause();
@@ -181,6 +176,11 @@ void PauseScreen::step()
 
 void PauseScreen::unpause(bool shouldResumeSFX)
 {
+	if (!isPaused)
+	{
+		return;
+	}
+
 	Global::gameState = STATE_RUNNING;
 
 	if (textCursor != nullptr)
@@ -219,10 +219,17 @@ void PauseScreen::unpause(bool shouldResumeSFX)
 	{
 		AudioPlayer::stopAllSFX();
 	}
+
+	isPaused = false;
 }
 
 void PauseScreen::pause()
 {
+	if (isPaused)
+	{
+		return;
+	}
+
 	if (Global::gamePlayer != nullptr && Global::gamePlayer->isDying() == true)
 	{
 		return;
@@ -235,17 +242,29 @@ void PauseScreen::pause()
 	menuDisplayID = 0;
 	menuSelectionMAX = 3;
 	textCursor->setVisibility(true);
-	textResume        = new GUIText("Resume",    size, font, 0.5f, 0.35f, 1.0f, false, false, true); INCR_NEW
-	textRestart       = new GUIText("Restart",   size, font, 0.5f, 0.45f, 1.0f, false, false, true); INCR_NEW
-	if (Global::isAutoCam)
+	if (textResume == nullptr)
 	{
-		textCamera    = new GUIText("Auto Cam",  size, font, 0.5f, 0.55f, 1.0f, false, false, true); INCR_NEW
+		textResume = new GUIText("Resume",    size, font, 0.5f, 0.35f, 1.0f, false, false, true); INCR_NEW
 	}
-	else
+	if (textRestart == nullptr)
 	{
-		textCamera    = new GUIText("Free Cam",  size, font, 0.5f, 0.55f, 1.0f, false, false, true); INCR_NEW
+		textRestart = new GUIText("Restart",   size, font, 0.5f, 0.45f, 1.0f, false, false, true); INCR_NEW
 	}
-	textQuit          = new GUIText("Quit",      size, font, 0.5f, 0.65f, 1.0f, false, false, true); INCR_NEW
+	if (textCamera == nullptr)
+	{
+		if (Global::isAutoCam)
+		{
+			textCamera = new GUIText("Auto Cam",  size, font, 0.5f, 0.55f, 1.0f, false, false, true); INCR_NEW
+		}
+		else
+		{
+			textCamera = new GUIText("Free Cam",  size, font, 0.5f, 0.55f, 1.0f, false, false, true); INCR_NEW
+		}
+	}
+	if (textQuit == nullptr)
+	{
+		textQuit = new GUIText("Quit",      size, font, 0.5f, 0.65f, 1.0f, false, false, true); INCR_NEW
+	}
 
 	//Pause all sound effects
 	for (int i = 0; i < 14; i++)
@@ -260,4 +279,6 @@ void PauseScreen::pause()
 			PauseScreen::pausedSounds[i] = false;
 		}
 	}
+
+	isPaused = true;
 }

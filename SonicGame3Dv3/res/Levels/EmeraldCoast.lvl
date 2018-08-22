@@ -1,18 +1,17 @@
 EmeraldCoast
 EmeraldCoast
 EmeraldCoast
-11
+10
 Chunk1 5
 Chunk2 5
 Chunk3 5
-Chunk4 6
-Chunk5 3
-Chunk6 6
-Chunk7 6
-Chunk8 6
-Chunk9 6
+Chunk4 5
+Chunk5 4
+Chunk6 5
+Chunk7 7
+Chunk8 5
+Chunk9 5
 Chunk10 5
-Chunk11 5
 1.0 1.0 1.0
 0.0 0.0 0.0
 0.0 0.0 0.0
@@ -909,6 +908,7 @@ res/Audio/BGM/ecoast2_loop.ogg
 29 1181.5 85 945.25 1.7 15 9.0 80
 29 5173.33 7.711 1862.1 90 5 7.5 80
 29 5583.7 7.711 1205.73 0 5 9.5 60
+29 2446.31 28.1875 396.811 0 15 7.5 80
 
 # Seagulls Act 1
 58 -467.72003 76.111 235.378 111.26373 0.10899061 275.93164 24.895567 0.06751534 24.630934 0.11591676

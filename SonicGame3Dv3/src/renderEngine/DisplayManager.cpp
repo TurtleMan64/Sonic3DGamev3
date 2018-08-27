@@ -50,6 +50,12 @@ int createDisplay()
 	//glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 	//glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
+	// Request an OpenGL 4.0 core context.
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
+    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+
 	loadDisplaySettings();
 	loadGraphicsSettings();
 
@@ -84,7 +90,7 @@ int createDisplay()
 
 	// glfw window creation
 	// --------------------
-	window = glfwCreateWindow(screenWidth, screenHeight, "Version 0.0193", monitor, nullptr);
+	window = glfwCreateWindow(screenWidth, screenHeight, "Version 0.0194", monitor, nullptr);
 	if (window == nullptr)
 	{
 		std::cout << "Failed to create GLFW window" << std::endl;

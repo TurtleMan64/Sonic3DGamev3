@@ -16,7 +16,12 @@
 #include <ctime>
 #include <random>
 
+#ifdef _WIN32
 #include <direct.h>
+#else
+#include <sys/stat.h>
+#include <unistd.h>
+#endif
 
 #include "main.h"
 #include "../renderEngine/renderEngine.h"
@@ -69,6 +74,7 @@
 #include <windows.h>
 #include <tchar.h>
 #endif
+
 
 std::unordered_map<Entity*, Entity*> gameEntities;
 std::list<Entity*> gameEntitiesToAdd;
@@ -204,7 +210,7 @@ int main()
 
 	Global::loadSaveData();
 
-	#ifndef DEV_MODE
+	#if !defined(DEV_MODE) && defined(_WIN32)
 	FreeConsole();
 	#endif
 
@@ -931,7 +937,11 @@ void Global::loadSaveData()
 
 void Global::saveSaveData()
 {
+	#ifdef _WIN32
 	_mkdir("res/SaveData");
+	#else
+	mkdir("res/SaveData", 0777);
+	#endif
 
 	std::ofstream file;
 	file.open("res/SaveData/SaveData.sav", std::ios::out | std::ios::trunc);

@@ -122,6 +122,36 @@ void createViewMatrix(Matrix4f* matrix, Camera* cam)
 }
 
 
+Matrix4f Maths::lookAtRH(Vector3f* eye, Vector3f* focus, Vector3f* up)
+{
+	Vector3f f(focus);
+	f = f-eye;
+	f.normalize();
+
+	Vector3f s = f.cross(up);
+	s.normalize();
+
+	Vector3f u = s.cross(&f);
+
+	Matrix4f result;
+
+	result.m00 =  s.x;
+	result.m10 =  s.y;
+	result.m20 =  s.z;
+	result.m01 =  u.x;
+	result.m11 =  u.y;
+	result.m21 =  u.z;
+	result.m02 = -f.x;
+	result.m12 = -f.y;
+	result.m22 = -f.z;
+	result.m30 = -s.dot(eye);
+	result.m31 = -u.dot(eye);
+	result.m32 =  f.dot(eye);
+
+	return result;
+}
+
+
 //Returns the difference between the two angles
 //ang1 and ang2 should be in degrees
 float compareTwoAngles(float origAng1, float origAng2)

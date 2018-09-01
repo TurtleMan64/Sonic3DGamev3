@@ -62,6 +62,8 @@ public:
 
 	void scale(Vector2f*);
 
+	void set(Matrix4f* other);
+
 	//angle in radians
 	void rotate(float, Vector3f*);
 

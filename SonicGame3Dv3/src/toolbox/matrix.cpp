@@ -116,6 +116,26 @@ void Matrix4f::store(float buf[])
 	buf[15] = m33;
 }
 
+void Matrix4f::set(Matrix4f* other)
+{
+	m00 = other->m00;
+	m01 = other->m01;
+	m02 = other->m02;
+	m03 = other->m03;
+	m10 = other->m10;
+	m11 = other->m11;
+	m12 = other->m12;
+	m13 = other->m13;
+	m20 = other->m20;
+	m21 = other->m21;
+	m22 = other->m22;
+	m23 = other->m23;
+	m30 = other->m30;
+	m31 = other->m31;
+	m32 = other->m32;
+	m33 = other->m33;
+}
+
 /**
 * Multiply the right matrix by this matrix and place the result in a dest matrix.
 * @param right The right source matrix

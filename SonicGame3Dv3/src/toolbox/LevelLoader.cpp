@@ -249,10 +249,10 @@ void LevelLoader_loadLevel(std::string levelFilename)
 		return;
 	}
 
+	AudioPlayer::stopBGM();
 	//Delete existing bgm if loading a new stage
 	if (stageFault == 1)
 	{
-		AudioPlayer::stopBGM();
 		AudioPlayer::deleteBuffersBGM();
 	}
 

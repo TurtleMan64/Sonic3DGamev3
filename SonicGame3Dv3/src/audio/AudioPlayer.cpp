@@ -121,6 +121,10 @@ void AudioPlayer::deleteBuffersBGM()
 	}
 	AudioPlayer::buffersBGM.clear();
 	AudioPlayer::buffersBGM.shrink_to_fit();
+	AudioPlayer::bgmIntro = AL_NONE;
+	AudioPlayer::bgmLoop  = AL_NONE;
+
+	std::fprintf(stdout, "deleting all BGM buffers \n");
 }
 
 void AudioPlayer::createSources()
@@ -244,18 +248,14 @@ Source* AudioPlayer::playBGMWithIntro(ALuint bufferIntro, ALuint bufferLoop)
 	src->setVolume(AudioPlayer::soundLevelBGM);
 	src->setLooping(false);
 
-	//alGetError();
 	alSourcei(src->getSourceID(), AL_BUFFER, AL_NONE); Global::checkErrorAL("playBGMWithIntro 184"); //Get rid of queued buffers 
 
 	AudioPlayer::bgmIntro = bufferIntro;
 	AudioPlayer::bgmLoop  = bufferLoop;
 
-	//alGetError();
 	alSourceQueueBuffers(src->getSourceID(), 1, &AudioPlayer::bgmIntro); Global::checkErrorAL("playBGMWithIntro 198");
-	//alGetError();
 	alSourceQueueBuffers(src->getSourceID(), 1, &AudioPlayer::bgmLoop);  Global::checkErrorAL("playBGMWithIntro 200");
 
-	//alGetError();
 	alSourcePlay(src->getSourceID()); Global::checkErrorAL("playBGMWithIntro 203");
 
 	//if (!src->isPlaying() || src->getLastPlayedBufferID() != AudioPlayer::buffersBGM[buffer])
@@ -277,19 +277,14 @@ void AudioPlayer::refreshBGM()
 
 		Source* src = AudioPlayer::sources[14];
 
-		if (AudioPlayer::bgmTimer == 0 && AudioPlayer::bgmIntro != AL_NONE)
+		if (AudioPlayer::bgmTimer == 1 && AudioPlayer::bgmIntro != AL_NONE)
 		{
-			//alGetError();
 			alSourceUnqueueBuffers(src->getSourceID(), 1, &AudioPlayer::bgmIntro); Global::checkErrorAL("refreshBGM 227");
-			AudioPlayer::bgmIntro = AL_NONE;
 			src->setLooping(true);
 		}
 
 		ALint num;
-		//alGetError();
 		alGetSourceiv(src->getSourceID(), AL_BUFFERS_QUEUED, &num); Global::checkErrorAL("refreshBGM 234");
-
-		//fprintf(stdout, "%d\n", num);
 	}
 }
 
@@ -300,11 +295,7 @@ void AudioPlayer::stopBGM()
 	src->stop();
 	src->setLooping(false);
 
-	//alGetError();
 	alSourcei(src->getSourceID(), AL_BUFFER, AL_NONE); Global::checkErrorAL("stopBGM 248"); //Get rid of queued buffers 
-
-	AudioPlayer::bgmIntro = AL_NONE;
-	AudioPlayer::bgmLoop = AL_NONE;
 }
 
 Source* AudioPlayer::getSource(int i)

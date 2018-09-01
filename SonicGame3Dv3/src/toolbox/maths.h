@@ -1,7 +1,6 @@
 #ifndef MATHS_H
 #define MATHS_H
 
-class Matrix4f;
 class Vector3f;
 class Vector2f;
 class Camera;
@@ -9,6 +8,7 @@ class Camera;
 #include <math.h>
 #include <random>
 #include <chrono>
+#include "matrix.h"
 
 #define M_PI 3.14159265358979323846
 
@@ -97,6 +97,8 @@ public:
 
 	//returns uniform random float >= 0 and < 1
 	static float nextUniform();
+
+	static Matrix4f lookAtRH(Vector3f* eye, Vector3f* focus, Vector3f* up);
 };
 
 #endif

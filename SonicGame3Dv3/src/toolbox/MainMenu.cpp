@@ -181,7 +181,7 @@ void MainMenu::init()
 	font = new FontType(Loader_loadTexture("res/Fonts/vipnagorgialla.png"), "res/Fonts/vipnagorgialla.fnt"); INCR_NEW
 
 	MainMenu::titleCardTextTimer = 0;
-
+	
 	textureParallelogram              = Loader_loadTextureNoInterpolation("res/Images/MainMenu/Parallelogram.png");
 	textureParallelogramBackdrop      = Loader_loadTextureNoInterpolation("res/Images/MainMenu/ParallelogramBackdrop.png");
 	textureParallelogramHalf          = Loader_loadTextureNoInterpolation("res/Images/MainMenu/ParallelogramHalf.png");
@@ -325,7 +325,7 @@ void MainMenu::loadResources()
 	missionSelect = new GuiTexture(textureMissionSelect, 0.75f-83*px, 0.5f, 96*px, 96*py, 0); INCR_NEW
 
 	npcIcon = new GuiTexture(textureNPCicon, 0.75f + 320*px, 0.5f, 128*px, 128*py, 0); INCR_NEW
-
+		//TODO: make these text load from the Global::gameLevelData
 	textMission1  = new GUIText("EMERALD COAST",       2.0f, font, 0.0f, 0.0f, 0.5f-128*px, false, true, true); INCR_NEW
 	textMission2  = new GUIText("DRY LAGOON",          2.0f, font, 0.0f, 0.0f, 0.5f-128*px, false, true, true); INCR_NEW
 	textMission3  = new GUIText("SPEED HIGHWAY",       2.0f, font, 0.0f, 0.0f, 0.5f-128*px, false, true, true); INCR_NEW

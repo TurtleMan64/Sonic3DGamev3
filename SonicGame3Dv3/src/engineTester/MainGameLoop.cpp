@@ -376,7 +376,6 @@ int main()
 		gameEntitiesPass2ToDelete.clear();
 
 
-
 		MainMenu::step();
 		PauseScreen::step();
 

@@ -3,4 +3,5 @@ Debug/
 .*
 !/.gitignore
 SonicGame3Dv3/build/
+SonicGame3Dv3/Release/
 SonicGame3Dv3/res/SaveData/

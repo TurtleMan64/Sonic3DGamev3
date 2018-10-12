@@ -1,0 +1,79 @@
+# Blender MTL File: 'None'
+# Material Count: 7
+
+newmtl material_113
+Ns 0.000000
+Ka 0.600000 0.600000 0.600000
+Kd 0.600000 0.600000 0.600000
+Ks 0.900000 0.900000 0.900000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd C:\Users\Anders\Documents\3DReaperDX\Textures\142c80ed.png
+
+newmtl material_114
+Ns 0.000000
+Ka 0.600000 0.600000 0.600000
+Kd 0.600000 0.600000 0.600000
+Ks 0.900000 0.900000 0.900000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd C:\Users\Anders\Documents\3DReaperDX\Textures\fe06a239.png
+
+newmtl material_115
+Ns 0.000000
+Ka 0.600000 0.600000 0.600000
+Kd 0.600000 0.600000 0.600000
+Ks 0.900000 0.900000 0.900000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd C:\Users\Anders\Documents\3DReaperDX\Textures\142c80ed.png
+
+newmtl material_116
+Ns 0.000000
+Ka 0.600000 0.600000 0.600000
+Kd 0.600000 0.600000 0.600000
+Ks 0.900000 0.900000 0.900000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd C:\Users\Anders\Documents\3DReaperDX\Textures\24e56040.png
+
+newmtl material_117
+Ns 0.000000
+Ka 0.600000 0.600000 0.600000
+Kd 0.600000 0.600000 0.600000
+Ks 0.900000 0.900000 0.900000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd C:\Users\Anders\Documents\3DReaperDX\Textures\f5d09e39.png
+
+newmtl material_118
+Ns 0.000000
+Ka 0.600000 0.600000 0.600000
+Kd 0.600000 0.600000 0.600000
+Ks 0.900000 0.900000 0.900000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd C:\Users\Anders\Documents\3DReaperDX\Textures\142c80ed.png
+
+newmtl material_119
+Ns 0.000000
+Ka 0.600000 0.600000 0.600000
+Kd 0.600000 0.600000 0.600000
+Ks 0.900000 0.900000 0.900000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd C:\Users\Anders\Documents\3DReaperDX\Textures\142c80ed.png

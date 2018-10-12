@@ -370,7 +370,7 @@ void MainMenu::loadResources()
 		}
 	}
 
-	unsigned int totalNPC = Global::npcList.size();
+	unsigned int totalNPC = (unsigned int)Global::npcList.size();
 	unsigned int foundNPC = 0;
 	for (unsigned int i = 0; i < totalNPC; i++)
 	{
@@ -964,7 +964,7 @@ void MainMenu::selectMenuMission(int newSelection)
 
 	menuSelectionID = newSelection;
 
-	unsigned int totalNPC = Global::npcList.size();
+	unsigned int totalNPC = (unsigned int)Global::npcList.size();
 	auto end = Global::gameSaveData.end();
 	std::string base = Global::gameLevelData[newSelection].displayName+"_NPC_";
 	int npcInThisStageCount = 0;

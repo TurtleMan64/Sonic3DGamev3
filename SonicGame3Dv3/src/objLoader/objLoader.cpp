@@ -106,12 +106,9 @@ void loadObjModel(std::list<TexturedModel*>* models, std::string filePath, std::
 					std::string p2(lineSplit[2]);
 					std::string p3(lineSplit[3]);
 					Vector3f vertex(std::stof(p1, nullptr), std::stof(p2, nullptr), std::stof(p3, nullptr));
-					Vertex* newVertex = new Vertex(vertices.size(), &vertex);
+					Vertex* newVertex = new Vertex((int)vertices.size(), &vertex);
 					INCR_NEW
 					vertices.push_back(newVertex);
-					p1.clear();
-					p2.clear();
-					p3.clear();
 				}
 				else if (strcmp(lineSplit[0], "vt") == 0)
 				{
@@ -119,8 +116,6 @@ void loadObjModel(std::list<TexturedModel*>* models, std::string filePath, std::
 					std::string t2(lineSplit[2]);
 					Vector2f texCoord(std::stof(t1, nullptr), std::stof(t2, nullptr));
 					textures.push_back(texCoord);
-					t1.clear();
-					t2.clear();
 				}
 				else if (strcmp(lineSplit[0], "vn") == 0)
 				{
@@ -129,9 +124,6 @@ void loadObjModel(std::list<TexturedModel*>* models, std::string filePath, std::
 					std::string n3(lineSplit[3]);
 					Vector3f normal(std::stof(n1, nullptr), std::stof(n2, nullptr), std::stof(n3, nullptr));
 					normals.push_back(normal);
-					n1.clear();
-					n2.clear();
-					n3.clear();
 				}
 				else if (strcmp(lineSplit[0], "usemtl") == 0) //first usetml found, before any faces entered
 				{
@@ -416,12 +408,9 @@ void loadObjModelWithMTL(std::list<TexturedModel*>* models, std::string filePath
 					std::string p2(lineSplit[2]);
 					std::string p3(lineSplit[3]);
 					Vector3f vertex(std::stof(p1, nullptr), std::stof(p2, nullptr), std::stof(p3, nullptr));
-					Vertex* newVertex = new Vertex(vertices.size(), &vertex);
+					Vertex* newVertex = new Vertex((int)vertices.size(), &vertex);
 					INCR_NEW
 					vertices.push_back(newVertex);
-					p1.clear();
-					p2.clear();
-					p3.clear();
 				}
 				else if (strcmp(lineSplit[0], "vt") == 0)
 				{
@@ -429,8 +418,6 @@ void loadObjModelWithMTL(std::list<TexturedModel*>* models, std::string filePath
 					std::string t2(lineSplit[2]);
 					Vector2f texCoord(std::stof(t1, nullptr), std::stof(t2, nullptr));
 					textures.push_back(texCoord);
-					t1.clear();
-					t2.clear();
 				}
 				else if (strcmp(lineSplit[0], "vn") == 0)
 				{
@@ -439,9 +426,6 @@ void loadObjModelWithMTL(std::list<TexturedModel*>* models, std::string filePath
 					std::string n3(lineSplit[3]);
 					Vector3f normal(std::stof(n1, nullptr), std::stof(n2, nullptr), std::stof(n3, nullptr));
 					normals.push_back(normal);
-					n1.clear();
-					n2.clear();
-					n3.clear();
 				}
 				else if (strcmp(lineSplit[0], "usemtl") == 0) //first usetml found, before any faces entered
 				{
@@ -712,7 +696,7 @@ void dealWithAlreadyProcessedVertex(Vertex* previousVertex,
 		}
 		else
 		{
-			Vertex* duplicateVertex = new Vertex(vertices->size(), previousVertex->getPosition());
+			Vertex* duplicateVertex = new Vertex((int)vertices->size(), previousVertex->getPosition());
 			INCR_NEW
 			duplicateVertex->setTextureIndex(newTextureIndex);
 			duplicateVertex->setNormalIndex(newNormalIndex);

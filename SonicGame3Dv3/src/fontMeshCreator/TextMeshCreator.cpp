@@ -25,7 +25,7 @@ TextMeshData* TextMeshCreator::createTextMesh(GUIText* text)
 std::vector<Line> TextMeshCreator::createStructure(GUIText* text)
 {
 	const char* chars = text->getTextString()->c_str();
-	int charsLength = text->getTextString()->size();
+	int charsLength = (int)text->getTextString()->size();
 	std::vector<Line> lines;
 	Line currentLine(metaData->getSpaceWidth(), text->getFontSize(), text->getMaxLineSize());
 	Word currentWord(text->getFontSize());
@@ -77,7 +77,7 @@ void TextMeshCreator::completeStructure(std::vector<Line> lines, Line currentLin
 
 TextMeshData* TextMeshCreator::createQuadVertices(GUIText* text, std::vector<Line>* lines)
 {
-	text->setNumberOfLines(lines->size());
+	text->setNumberOfLines((int)lines->size());
 	double curserX = 0.0;
 	double curserY = 0.0;
 	std::vector<float> vertices;

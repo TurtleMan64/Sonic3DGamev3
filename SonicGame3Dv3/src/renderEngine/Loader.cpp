@@ -25,8 +25,8 @@ GLuint createVAO();
 GLuint storeDataInAttributeList(int, int, std::vector<float>*);
 void unbindVAO();
 GLuint bindIndiciesBuffer(std::vector<int>*);
-float* storeDataInFloatBuffer(std::vector<float>*);
-int* storeDataInIntBuffer(std::vector<int>*);
+//float* storeDataInFloatBuffer(std::vector<float>*);
+//int* storeDataInIntBuffer(std::vector<int>*);
 
 RawModel Loader_loadToVAO(std::vector<float>* positions, std::vector<float>* textureCoords, std::vector<float>* normals, std::vector<int>* indicies)
 {
@@ -40,9 +40,7 @@ RawModel Loader_loadToVAO(std::vector<float>* positions, std::vector<float>* tex
 
 	unbindVAO();
 
-	RawModel model(vaoID, (*indicies).size(), &vboIDs);
-
-	return model;
+	return RawModel(vaoID, (int)indicies->size(), &vboIDs);
 }
 
 //for text
@@ -68,7 +66,7 @@ RawModel Loader_loadToVAO(std::vector<float>* positions, int dimensions)
 
 	unbindVAO();
 
-	return RawModel(vaoID, positions->size() / dimensions, &vboIDs);
+	return RawModel(vaoID, (int)positions->size() / dimensions, &vboIDs);
 }
 
 GLuint Loader_loadTexture(const char* fileName)
@@ -77,9 +75,6 @@ GLuint Loader_loadTexture(const char* fileName)
 	glGenTextures(1, &textureID);
 	texNumber++;
 	textures.push_back(textureID);
-	//std::fprintf(stdout, "	generated tex id #%d from %s\n", textureID, fileName);
-
-	//std::fprintf(stdout, "Loading image '%s'\n", fileName);
 
 	int width, height, channels;
 	unsigned char* image = SOIL_load_image(fileName, &width, &height, &channels, SOIL_LOAD_RGBA);
@@ -206,14 +201,9 @@ GLuint storeDataInAttributeList(int attributeNumber, int coordinateSize, std::ve
 	vbos.push_back(vboID);
 	glBindBuffer(GL_ARRAY_BUFFER, vboID);
 
-	//float buffer
-	float* buffer = storeDataInFloatBuffer(data);
-
-	glBufferData(GL_ARRAY_BUFFER, (*data).size() * sizeof(float), (GLvoid *)buffer, GL_STATIC_DRAW); //std::fprintf(stdout, "glBufferData(GL_ARRAY_BUFFER, data.size(), (GLvoid *)buffer, GL_STATIC_DRAW);\n"); //this might not work 
-	glVertexAttribPointer(attributeNumber, coordinateSize, GL_FLOAT, GL_FALSE, 0, 0); //std::fprintf(stdout, "glVertexAttribPointer(attributeNumber, 3, GL_FLOAT, false, 0, 0);\n");
-	glBindBuffer(GL_ARRAY_BUFFER, 0); //std::fprintf(stdout, "glBindBuffer(GL_ARRAY_BUFFER, 0);\n");
-
-	free(buffer);
+	glBufferData(GL_ARRAY_BUFFER, data->size()*sizeof(float), (GLvoid*)(&((*data)[0])), GL_STATIC_DRAW); 
+	glVertexAttribPointer(attributeNumber, coordinateSize, GL_FLOAT, GL_FALSE, 0, 0); 
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 	return vboID;
 }
@@ -287,14 +277,12 @@ GLuint bindIndiciesBuffer(std::vector<int>* indicies)
 	vboNumber++;
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vboID); //std::fprintf(stdout, "glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vboID);\n");
 
-	int* buffer = storeDataInIntBuffer(indicies);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, (*indicies).size() * sizeof(int), buffer, GL_STATIC_DRAW); //std::fprintf(stdout, "glBufferData(GL_ELEMENT_ARRAY_BUFFER, indicies.size(), buffer, GL_STATIC_DRAW);\n");
-
-	free(buffer);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indicies->size() * sizeof(int), (GLvoid*)(&((*indicies)[0])), GL_STATIC_DRAW);
 
 	return vboID;
 }
 
+/*
 float* storeDataInFloatBuffer(std::vector<float>* data)
 {
 	float* buffer = (float *)malloc(sizeof(float)*(*data).size());
@@ -316,12 +304,13 @@ int* storeDataInIntBuffer(std::vector<int>* data)
 
 	return buffer;
 }
+*/
 
 void Loader_printInfo()
 {
-	std::fprintf(stdout, "VAO Count = %d = %lu\n", vaoNumber, vaos.size());
-	std::fprintf(stdout, "VBO Count = %d = %lu\n", vboNumber, vbos.size());
-	std::fprintf(stdout, "TEX Count = %d = %lu\n", texNumber, textures.size());
+	std::fprintf(stdout, "VAO Count = %d = %llu\n", vaoNumber, vaos.size());
+	std::fprintf(stdout, "VBO Count = %d = %llu\n", vboNumber, vbos.size());
+	std::fprintf(stdout, "TEX Count = %d = %llu\n", texNumber, textures.size());
 
 	if (textures.size() == 3)
 	{

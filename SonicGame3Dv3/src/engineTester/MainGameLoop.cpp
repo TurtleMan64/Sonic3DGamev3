@@ -222,7 +222,7 @@ int main()
 
 	Master_init();
 
-	LevelLoader_loadLevelData();
+	LevelLoader::loadLevelData();
 
 	TextMaster::init();
 
@@ -596,7 +596,7 @@ int main()
 		if (Global::shouldLoadLevel)
 		{
 			Global::shouldLoadLevel = false;
-			LevelLoader_loadLevel(Global::levelName);
+			LevelLoader::loadLevel(Global::levelName);
 		}
 
 		if (Global::finishStageTimer >= 0)
@@ -670,14 +670,14 @@ int main()
 
 						AudioPlayer::play(7, Global::gameCamera->getFadePosition1());
 
-						LevelLoader_loadTitle();
+						LevelLoader::loadTitle();
 						MainMenu::selectMenuArcadeClear();
 						Global::gameIsArcadeMode = false;
 					}
 				}
 				else
 				{
-					LevelLoader_loadTitle();
+					LevelLoader::loadTitle();
 				}
 			}
 
@@ -710,7 +710,7 @@ int main()
 		{
 			//std::fprintf(stdout, "fps: %f\n", frameCount / (seconds - previousTime));
 			//std::fprintf(stdout, "diff: %d\n", Global::countNew - Global::countDelete);
-			//Loader_printInfo();
+			//Loader::printInfo();
 			//std::fprintf(stdout, "entity counts: %d %d %d\n", gameEntities.size(), gameEntitiesPass2.size(), gameTransparentEntities.size());
 			frameCount = 0;
 			previousTime = seconds;
@@ -724,7 +724,7 @@ int main()
 	#endif
 
 	Master_cleanUp();
-	Loader_cleanUp();
+	Loader::cleanUp();
 	TextMaster::cleanUp();
 	AudioMaster::cleanUp();
 	GuiRenderer::cleanUp();

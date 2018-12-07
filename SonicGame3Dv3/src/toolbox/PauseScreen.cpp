@@ -45,7 +45,7 @@ extern InputStruct Inputs;
 
 void PauseScreen::init()
 {
-	font = new FontType(Loader_loadTexture("res/Fonts/vipnagorgialla.png"), "res/Fonts/vipnagorgialla.fnt"); INCR_NEW
+	font = new FontType(Loader::loadTexture("res/Fonts/vipnagorgialla.png"), "res/Fonts/vipnagorgialla.fnt"); INCR_NEW
 	textCursor = new GUIText(">", 2.5f, font, 0.47f, 0.25f, 1.0f, false, false, false); INCR_NEW
 	isPaused = false;
 }
@@ -133,7 +133,7 @@ void PauseScreen::step()
 					Vector3f vel(0,0,0);
 					new Particle(ParticleResources::textureBlackFade, Global::gameCamera->getFadePosition1(), &vel, 0, 60, 0.0f,  10.0f, 0, 1.0f, 0, true);
 					unpause(false);
-					LevelLoader_loadTitle();
+					LevelLoader::loadTitle();
 					break;
 				}
 

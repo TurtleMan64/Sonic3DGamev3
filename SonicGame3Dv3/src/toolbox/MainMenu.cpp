@@ -178,24 +178,24 @@ extern InputStruct Inputs;
 
 void MainMenu::init()
 {
-	font = new FontType(Loader_loadTexture("res/Fonts/vipnagorgialla.png"), "res/Fonts/vipnagorgialla.fnt"); INCR_NEW
+	font = new FontType(Loader::loadTexture("res/Fonts/vipnagorgialla.png"), "res/Fonts/vipnagorgialla.fnt"); INCR_NEW
 
 	MainMenu::titleCardTextTimer = 0;
 	
-	textureParallelogram              = Loader_loadTextureNoInterpolation("res/Images/MainMenu/Parallelogram.png");
-	textureParallelogramBackdrop      = Loader_loadTextureNoInterpolation("res/Images/MainMenu/ParallelogramBackdrop.png");
-	textureParallelogramHalf          = Loader_loadTextureNoInterpolation("res/Images/MainMenu/ParallelogramHalf.png");
-	textureParallelogramHalfBackdrop  = Loader_loadTextureNoInterpolation("res/Images/MainMenu/ParallelogramHalfBackdrop.png");
-	textureParallelogramHalf2         = Loader_loadTextureNoInterpolation("res/Images/MainMenu/ParallelogramHalf2.png");
-	textureParallelogramHalf2Backdrop = Loader_loadTextureNoInterpolation("res/Images/MainMenu/ParallelogramHalf2Backdrop.png");
-	textureRankA					  = Loader_loadTexture               ("res/Images/MainMenu/RankA.png");
-	textureRankB					  = Loader_loadTexture               ("res/Images/MainMenu/RankB.png");
-	textureRankC					  = Loader_loadTexture               ("res/Images/MainMenu/RankC.png");
-	textureRankD					  = Loader_loadTexture               ("res/Images/MainMenu/RankD.png");
-	textureRankE					  = Loader_loadTexture               ("res/Images/MainMenu/RankE.png");
-	textureRankBlank				  = Loader_loadTextureNoInterpolation("res/Images/MainMenu/NoRank.png");
-	textureMissionSelect			  = Loader_loadTextureNoInterpolation("res/Images/MainMenu/MissionSelect.png");
-	textureNPCicon                    = Loader_loadTexture               ("res/Images/MainMenu/NPCicon.png");
+	textureParallelogram              = Loader::loadTextureNoInterpolation("res/Images/MainMenu/Parallelogram.png");
+	textureParallelogramBackdrop      = Loader::loadTextureNoInterpolation("res/Images/MainMenu/ParallelogramBackdrop.png");
+	textureParallelogramHalf          = Loader::loadTextureNoInterpolation("res/Images/MainMenu/ParallelogramHalf.png");
+	textureParallelogramHalfBackdrop  = Loader::loadTextureNoInterpolation("res/Images/MainMenu/ParallelogramHalfBackdrop.png");
+	textureParallelogramHalf2         = Loader::loadTextureNoInterpolation("res/Images/MainMenu/ParallelogramHalf2.png");
+	textureParallelogramHalf2Backdrop = Loader::loadTextureNoInterpolation("res/Images/MainMenu/ParallelogramHalf2Backdrop.png");
+	textureRankA					  = Loader::loadTexture               ("res/Images/MainMenu/RankA.png");
+	textureRankB					  = Loader::loadTexture               ("res/Images/MainMenu/RankB.png");
+	textureRankC					  = Loader::loadTexture               ("res/Images/MainMenu/RankC.png");
+	textureRankD					  = Loader::loadTexture               ("res/Images/MainMenu/RankD.png");
+	textureRankE					  = Loader::loadTexture               ("res/Images/MainMenu/RankE.png");
+	textureRankBlank				  = Loader::loadTextureNoInterpolation("res/Images/MainMenu/NoRank.png");
+	textureMissionSelect			  = Loader::loadTextureNoInterpolation("res/Images/MainMenu/MissionSelect.png");
+	textureNPCicon                    = Loader::loadTexture               ("res/Images/MainMenu/NPCicon.png");
 
 	Global::npcList.push_back("Emerald Coast_NPC_1");
 	Global::npcList.push_back("Emerald Coast_NPC_2");

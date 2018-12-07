@@ -13,8 +13,8 @@
 
 GuiShader::GuiShader(const char* vertexFile, const char* fragmentFile)
 {
-	vertexShaderID = Loader_loadShader(vertexFile, GL_VERTEX_SHADER);
-	fragmentShaderID = Loader_loadShader(fragmentFile, GL_FRAGMENT_SHADER);
+	vertexShaderID = Loader::loadShader(vertexFile, GL_VERTEX_SHADER);
+	fragmentShaderID = Loader::loadShader(fragmentFile, GL_FRAGMENT_SHADER);
 	programID = glCreateProgram();
 	glAttachShader(programID, vertexShaderID);
 	glAttachShader(programID, fragmentShaderID);

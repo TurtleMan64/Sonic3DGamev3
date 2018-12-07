@@ -125,12 +125,12 @@
 #include "../entities/MetalHarbor/mhpathflatsmall.h"
 #include "../entities/MetalHarbor/mhpathdiagonal.h"
 
-float toFloat(char* input);
-int toInt(char* input);
-void processLine(char** data, int dataLength);
-void freeAllStaticModels();
+//float toFloat(char* input);
+//int toInt(char* input);
+//void processLine(char** data, int dataLength);
+//void freeAllStaticModels();
 
-void LevelLoader_loadTitle()
+void LevelLoader::loadTitle()
 {
 	Stage::deleteModels();
 	Global::levelName = "";
@@ -182,7 +182,7 @@ void LevelLoader_loadTitle()
 	Global::checkpointTimeMin  = 0;
 }
 
-void LevelLoader_loadLevel(std::string levelFilename)
+void LevelLoader::loadLevel(std::string levelFilename)
 {
 	std::string fname = levelFilename;
 
@@ -200,7 +200,7 @@ void LevelLoader_loadLevel(std::string levelFilename)
 			Global::gameLives--;
 			if (Global::gameLives < 0)
 			{
-				LevelLoader_loadTitle();
+				LevelLoader::loadTitle();
 				return;
 			}
 		}
@@ -618,7 +618,7 @@ void LevelLoader_loadLevel(std::string levelFilename)
 }
 
 
-void processLine(char** dat, int datLength)
+void LevelLoader::processLine(char** dat, int datLength)
 {
 	if (dat[0][0] == '#')
 	{
@@ -1787,7 +1787,7 @@ void processLine(char** dat, int datLength)
 	}
 }
 
-void LevelLoader_loadLevelData()
+void LevelLoader::loadLevelData()
 {
 	Global::gameLevelData.clear();
 
@@ -1855,17 +1855,17 @@ void LevelLoader_loadLevelData()
 	}
 }
 
-float toFloat(char* input)
+float LevelLoader::toFloat(char* input)
 {
 	return std::stof(input);
 }
 
-int toInt(char* input)
+int LevelLoader::toInt(char* input)
 {
 	return std::stoi(input);
 }
 
-void freeAllStaticModels()
+void LevelLoader::freeAllStaticModels()
 {
 	Ring::deleteStaticModels();
 	PlayerSonic::deleteStaticModels();

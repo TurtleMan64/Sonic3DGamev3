@@ -18,8 +18,8 @@ WaterRenderer::WaterRenderer(WaterShader* shader, Matrix4f* projectionMatrix, Wa
 	this->shader = shader;
 	this->fbos = fbos;
 	this->shadowMapRenderer = shadowMapRenderer;
-	dudvTexture = Loader_loadTexture("res/Images/waterDUDV.png");
-	normalMap   = Loader_loadTexture("res/Images/normalMap.png");
+	dudvTexture = Loader::loadTexture("res/Images/waterDUDV.png");
+	normalMap   = Loader::loadTexture("res/Images/normalMap.png");
 	shader->start();
 	shader->connectTextureUnits();
 	shader->loadProjectionMatrix(projectionMatrix);
@@ -78,7 +78,7 @@ void WaterRenderer::setUpVAO()
 	vertices.push_back(1);
 	vertices.push_back(1);
 
-	quad = new RawModel(Loader_loadToVAO(&vertices, 2));
+	quad = new RawModel(Loader::loadToVAO(&vertices, 2));
 	INCR_NEW
 }
 

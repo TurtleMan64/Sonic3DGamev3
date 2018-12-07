@@ -57,11 +57,11 @@ EmeraldManager::~EmeraldManager()
 		EmeraldManager::radar3 = nullptr;
 	}
 
-	Loader_deleteTexture(EmeraldManager::radarGreyID);
-	Loader_deleteTexture(EmeraldManager::radarBlueID);
-	Loader_deleteTexture(EmeraldManager::radarGreenID);
-	Loader_deleteTexture(EmeraldManager::radarYellowID);
-	Loader_deleteTexture(EmeraldManager::radarRedID);
+	Loader::deleteTexture(EmeraldManager::radarGreyID);
+	Loader::deleteTexture(EmeraldManager::radarBlueID);
+	Loader::deleteTexture(EmeraldManager::radarGreenID);
+	Loader::deleteTexture(EmeraldManager::radarYellowID);
+	Loader::deleteTexture(EmeraldManager::radarRedID);
 	
 	EmeraldManager::radarGreyID   = 0;
 	EmeraldManager::radarBlueID   = 0;
@@ -73,11 +73,11 @@ EmeraldManager::~EmeraldManager()
 EmeraldManager::EmeraldManager()
 {
 	//Load images of radar
-	EmeraldManager::radarGreyID   = Loader_loadTexture("res/Images/TreasureHunting/RadarGrey.png");
-	EmeraldManager::radarBlueID   = Loader_loadTexture("res/Images/TreasureHunting/RadarBlue.png");
-	EmeraldManager::radarGreenID  = Loader_loadTexture("res/Images/TreasureHunting/RadarGreen.png");
-	EmeraldManager::radarYellowID = Loader_loadTexture("res/Images/TreasureHunting/RadarYellow.png");
-	EmeraldManager::radarRedID    = Loader_loadTexture("res/Images/TreasureHunting/RadarRed.png");
+	EmeraldManager::radarGreyID   = Loader::loadTexture("res/Images/TreasureHunting/RadarGrey.png");
+	EmeraldManager::radarBlueID   = Loader::loadTexture("res/Images/TreasureHunting/RadarBlue.png");
+	EmeraldManager::radarGreenID  = Loader::loadTexture("res/Images/TreasureHunting/RadarGreen.png");
+	EmeraldManager::radarYellowID = Loader::loadTexture("res/Images/TreasureHunting/RadarYellow.png");
+	EmeraldManager::radarRedID    = Loader::loadTexture("res/Images/TreasureHunting/RadarRed.png");
 
 	extern unsigned int SCR_WIDTH;
 	extern unsigned int SCR_HEIGHT;

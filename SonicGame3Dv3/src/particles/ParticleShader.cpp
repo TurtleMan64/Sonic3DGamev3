@@ -15,8 +15,8 @@
 
 ParticleShader::ParticleShader()
 {
-	vertexShaderID = Loader_loadShader("res/Shaders/particles/particleVShader.txt", GL_VERTEX_SHADER);
-	fragmentShaderID = Loader_loadShader("res/Shaders/particles/particleFShader.txt", GL_FRAGMENT_SHADER);
+	vertexShaderID = Loader::loadShader("res/Shaders/particles/particleVShader.txt", GL_VERTEX_SHADER);
+	fragmentShaderID = Loader::loadShader("res/Shaders/particles/particleFShader.txt", GL_FRAGMENT_SHADER);
 	programID = glCreateProgram();
 	glAttachShader(programID, vertexShaderID);
 	glAttachShader(programID, fragmentShaderID);

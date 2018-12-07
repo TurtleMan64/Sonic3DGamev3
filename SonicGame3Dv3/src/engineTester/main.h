@@ -67,7 +67,7 @@ void Main_deleteAllTransparentEntites();
 #define ENTITY_RENDER_DIST 2000.0f
 #define ENTITY_RENDER_DIST_HIGH 5000.0f
 
-//#define DEV_MODE
+#define DEV_MODE
 
 #ifdef DEV_MODE
 	#include <thread>

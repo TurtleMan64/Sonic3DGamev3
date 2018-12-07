@@ -34,7 +34,6 @@ void MH_Manager::step()
 		playedBGM = true;
 		AudioPlayer::stopBGM();
 		AudioPlayer::playBGMWithIntro(2, 3);
-		AudioPlayer::setBGMTimer(1200);
 	}
 }
 

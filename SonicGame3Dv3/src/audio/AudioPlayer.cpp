@@ -17,7 +17,6 @@ float AudioPlayer::soundLevelBGM = 0.4f;
 std::vector<Source*> AudioPlayer::sources;
 std::vector<ALuint> AudioPlayer::buffersSE;
 std::vector<ALuint> AudioPlayer::buffersBGM;
-int AudioPlayer::bgmTimer = 0;
 ALuint AudioPlayer::bgmIntro;
 ALuint AudioPlayer::bgmLoop;
 
@@ -123,8 +122,6 @@ void AudioPlayer::deleteBuffersBGM()
 	AudioPlayer::buffersBGM.shrink_to_fit();
 	AudioPlayer::bgmIntro = AL_NONE;
 	AudioPlayer::bgmLoop  = AL_NONE;
-
-	std::fprintf(stdout, "deleting all BGM buffers \n");
 }
 
 void AudioPlayer::createSources()
@@ -201,8 +198,6 @@ Source* AudioPlayer::playBGM(int bufferLoop)
 
 Source* AudioPlayer::playBGM(ALuint bufferLoop)
 {
-	AudioPlayer::bgmTimer = 0;
-
 	Source* src = AudioPlayer::sources[14];
 	src->stop();
 	src->setLooping(false);
@@ -234,36 +229,22 @@ Source* AudioPlayer::playBGMWithIntro(int bufferIntro, int bufferLoop)
 	return AudioPlayer::playBGMWithIntro(AudioPlayer::buffersBGM[bufferIntro], AudioPlayer::buffersBGM[bufferLoop]);
 }
 
-void AudioPlayer::setBGMTimer(int newTimer)
-{
-	AudioPlayer::bgmTimer = newTimer;
-}
-
 Source* AudioPlayer::playBGMWithIntro(ALuint bufferIntro, ALuint bufferLoop)
 {
-	AudioPlayer::bgmTimer = 3000; //Intro must be less than 50 seconds, Loop must be at least 50 seconds
-
 	Source* src = AudioPlayer::sources[14];
 	src->stop();
 	src->setVolume(AudioPlayer::soundLevelBGM);
 	src->setLooping(false);
 
-	alSourcei(src->getSourceID(), AL_BUFFER, AL_NONE); Global::checkErrorAL("playBGMWithIntro 184"); //Get rid of queued buffers 
+	alSourcei(src->getSourceID(), AL_BUFFER, AL_NONE); //Get rid of queued buffers 
 
 	AudioPlayer::bgmIntro = bufferIntro;
 	AudioPlayer::bgmLoop  = bufferLoop;
 
-	alSourceQueueBuffers(src->getSourceID(), 1, &AudioPlayer::bgmIntro); Global::checkErrorAL("playBGMWithIntro 198");
-	alSourceQueueBuffers(src->getSourceID(), 1, &AudioPlayer::bgmLoop);  Global::checkErrorAL("playBGMWithIntro 200");
+	alSourceQueueBuffers(src->getSourceID(), 1, &AudioPlayer::bgmIntro);
+	alSourceQueueBuffers(src->getSourceID(), 1, &AudioPlayer::bgmLoop);
 
-	alSourcePlay(src->getSourceID()); Global::checkErrorAL("playBGMWithIntro 203");
-
-	//if (!src->isPlaying() || src->getLastPlayedBufferID() != AudioPlayer::buffersBGM[buffer])
-	{
-		//src->setLooping(true);
-		//src->setVolume(AudioPlayer::soundLevelBGM);
-		//src->play(AudioPlayer::buffersBGM[buffer]);
-	}
+	alSourcePlay(src->getSourceID());
 
 	return src;
 }
@@ -271,31 +252,31 @@ Source* AudioPlayer::playBGMWithIntro(ALuint bufferIntro, ALuint bufferLoop)
 //Gets rid of the intro buffer, so that just the loop buffer loops
 void AudioPlayer::refreshBGM()
 {
-	if (AudioPlayer::bgmTimer > 0)
+	Source* src = AudioPlayer::sources[14];
+
+	if (AudioPlayer::bgmIntro != AL_NONE)
 	{
-		AudioPlayer::bgmTimer--;
-
-		Source* src = AudioPlayer::sources[14];
-
-		if (AudioPlayer::bgmTimer == 1 && AudioPlayer::bgmIntro != AL_NONE)
+		ALint currentBufferIndex;
+		alGetSourcei(src->getSourceID(), AL_BUFFERS_PROCESSED, &currentBufferIndex);
+		if (currentBufferIndex == 1)
 		{
-			alSourceUnqueueBuffers(src->getSourceID(), 1, &AudioPlayer::bgmIntro); Global::checkErrorAL("refreshBGM 227");
+			alSourceUnqueueBuffers(src->getSourceID(), 1, &AudioPlayer::bgmIntro);
+			AudioPlayer::bgmIntro = AL_NONE;
 			src->setLooping(true);
 		}
-
-		ALint num;
-		alGetSourceiv(src->getSourceID(), AL_BUFFERS_QUEUED, &num); Global::checkErrorAL("refreshBGM 234");
 	}
 }
 
 void AudioPlayer::stopBGM()
 {
-	AudioPlayer::bgmTimer = 0;
 	Source* src = AudioPlayer::sources[14];
 	src->stop();
 	src->setLooping(false);
 
 	alSourcei(src->getSourceID(), AL_BUFFER, AL_NONE); Global::checkErrorAL("stopBGM 248"); //Get rid of queued buffers 
+
+	AudioPlayer::bgmIntro = AL_NONE;
+	AudioPlayer::bgmLoop  = AL_NONE;
 }
 
 Source* AudioPlayer::getSource(int i)

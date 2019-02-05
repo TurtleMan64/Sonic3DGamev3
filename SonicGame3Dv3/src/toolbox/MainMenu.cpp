@@ -242,70 +242,75 @@ void MainMenu::loadResources()
 	float py = 1.0f/(SCR_HEIGHT); //1 pixel in y dimension
 
 	float fontScale = 2.85f;
-
+	/*
 	if (SCR_HEIGHT > 900)
 	{
 		fontScale = 2.55f;
 	}
+	*/
 
-	textItem1 = new GUIText("ARCADE",   fontScale, font, 0.0f,   0.333f-0.04f, 0.666f, true, false, true); INCR_NEW
-	textItem2 = new GUIText("MISSIONS", fontScale, font, 0.333f, 0.333f-0.04f, 0.666f, true, false, true); INCR_NEW
-	textItem3 = new GUIText("EXTRAS",   fontScale, font, 0.0f,   0.666f-0.04f, 0.666f, true, false, true); INCR_NEW
-	textItem4 = new GUIText("EXIT",     fontScale, font, 0.333f, 0.666f-0.04f, 0.666f, true, false, true); INCR_NEW
+	float parallelogramXScale = 0.43f;
+	float parallelogramYScale = 0.071f;
+	float menuOffset = (SCR_HEIGHT * (4.0f / 3.0f)) / SCR_WIDTH;
 
-	item1 = new GuiTexture(textureParallelogram, 0.333f, 0.333f, 512*px, 64*py, 0); INCR_NEW
-	item2 = new GuiTexture(textureParallelogram, 0.666f, 0.333f, 512*px, 64*py, 0); INCR_NEW
-	item3 = new GuiTexture(textureParallelogram, 0.333f, 0.666f, 512*px, 64*py, 0); INCR_NEW
-	item4 = new GuiTexture(textureParallelogram, 0.666f, 0.666f, 512*px, 64*py, 0); INCR_NEW
-	itemBackdrop1 = new GuiTexture(textureParallelogramBackdrop, 0.333f+8*px, 0.333f+6*py, 512*px, 64*py, 0); INCR_NEW
-	itemBackdrop2 = new GuiTexture(textureParallelogramBackdrop, 0.666f+8*px, 0.333f+6*py, 512*px, 64*py, 0); INCR_NEW
-	itemBackdrop3 = new GuiTexture(textureParallelogramBackdrop, 0.333f+8*px, 0.666f+6*py, 512*px, 64*py, 0); INCR_NEW
-	itemBackdrop4 = new GuiTexture(textureParallelogramBackdrop, 0.666f+8*px, 0.666f+6*py, 512*px, 64*py, 0); INCR_NEW
+	textItem1 = new GUIText("ARCADE",   fontScale, font, -0.25f*menuOffset,   0.333f-0.04f, 1.0f, true, false, true); INCR_NEW
+	textItem2 = new GUIText("MISSIONS", fontScale, font, 0.25f*menuOffset, 0.333f-0.04f, 1.0f, true, false, true); INCR_NEW
+	textItem3 = new GUIText("EXTRAS",   fontScale, font, -0.25f*menuOffset,   0.666f-0.04f, 1.0f, true, false, true); INCR_NEW
+	textItem4 = new GUIText("EXIT",     fontScale, font, 0.25f*menuOffset, 0.666f-0.04f, 1.0f, true, false, true); INCR_NEW
+
+	item1 = new GuiTexture(textureParallelogram, 0.5f - 0.25f*menuOffset, 0.333f, parallelogramXScale * menuOffset, parallelogramYScale, 0); INCR_NEW
+	item2 = new GuiTexture(textureParallelogram, 0.5f + 0.25f*menuOffset, 0.333f, parallelogramXScale * menuOffset, parallelogramYScale, 0); INCR_NEW
+	item3 = new GuiTexture(textureParallelogram, 0.5f - 0.25f*menuOffset, 0.666f, parallelogramXScale * menuOffset, parallelogramYScale, 0); INCR_NEW
+	item4 = new GuiTexture(textureParallelogram, 0.5f + 0.25f*menuOffset, 0.666f, parallelogramXScale * menuOffset, parallelogramYScale, 0); INCR_NEW
+	itemBackdrop1 = new GuiTexture(textureParallelogramBackdrop, 0.5f - 0.245f*menuOffset, 0.340f, parallelogramXScale * menuOffset, parallelogramYScale, 0); INCR_NEW
+	itemBackdrop2 = new GuiTexture(textureParallelogramBackdrop, 0.5f + 0.255f*menuOffset, 0.340f, parallelogramXScale * menuOffset, parallelogramYScale, 0); INCR_NEW
+	itemBackdrop3 = new GuiTexture(textureParallelogramBackdrop, 0.5f - 0.245f*menuOffset, 0.673f, parallelogramXScale * menuOffset, parallelogramYScale, 0); INCR_NEW
+	itemBackdrop4 = new GuiTexture(textureParallelogramBackdrop, 0.5f + 0.255f*menuOffset, 0.673f, parallelogramXScale * menuOffset, parallelogramYScale, 0); INCR_NEW
 
 	itemMission1  = new GuiTexture(textureParallelogramHalf, 0.0f, 0.0f, 1024*px, 64*py, 0); INCR_NEW
-	itemMission2  = new GuiTexture(textureParallelogramHalf, 0.0f, 0.0f, 1024*px, 64*py, 0); INCR_NEW
-	itemMission3  = new GuiTexture(textureParallelogramHalf, 0.0f, 0.0f, 1024*px, 64*py, 0); INCR_NEW
-	itemMission4  = new GuiTexture(textureParallelogramHalf, 0.0f, 0.0f, 1024*px, 64*py, 0); INCR_NEW
-	itemMission5  = new GuiTexture(textureParallelogramHalf, 0.0f, 0.0f, 1024*px, 64*py, 0); INCR_NEW
-	itemMission6  = new GuiTexture(textureParallelogramHalf, 0.0f, 0.0f, 1024*px, 64*py, 0); INCR_NEW
-	itemMission7  = new GuiTexture(textureParallelogramHalf, 0.0f, 0.0f, 1024*px, 64*py, 0); INCR_NEW
-	itemMission8  = new GuiTexture(textureParallelogramHalf, 0.0f, 0.0f, 1024*px, 64*py, 0); INCR_NEW
-	itemMission9  = new GuiTexture(textureParallelogramHalf, 0.0f, 0.0f, 1024*px, 64*py, 0); INCR_NEW
-	itemMission10 = new GuiTexture(textureParallelogramHalf, 0.0f, 0.0f, 1024*px, 64*py, 0); INCR_NEW
-	itemMission11 = new GuiTexture(textureParallelogramHalf, 0.0f, 0.0f, 1024*px, 64*py, 0); INCR_NEW
-	itemMission12 = new GuiTexture(textureParallelogramHalf, 0.0f, 0.0f, 1024*px, 64*py, 0); INCR_NEW
-	itemMission13 = new GuiTexture(textureParallelogramHalf, 0.0f, 0.0f, 1024*px, 64*py, 0); INCR_NEW
-	itemMission14 = new GuiTexture(textureParallelogramHalf, 0.0f, 0.0f, 1024*px, 64*py, 0); INCR_NEW
-	itemMission15 = new GuiTexture(textureParallelogramHalf, 0.0f, 0.0f, 1024*px, 64*py, 0); INCR_NEW
-	itemMission16 = new GuiTexture(textureParallelogramHalf, 0.0f, 0.0f, 1024*px, 64*py, 0); INCR_NEW
-	itemMission17 = new GuiTexture(textureParallelogramHalf, 0.0f, 0.0f, 1024*px, 64*py, 0); INCR_NEW
-	itemMission18 = new GuiTexture(textureParallelogramHalf, 0.0f, 0.0f, 1024*px, 64*py, 0); INCR_NEW
-	itemMission19 = new GuiTexture(textureParallelogramHalf, 0.0f, 0.0f, 1024*px, 64*py, 0); INCR_NEW
-	itemMission20 = new GuiTexture(textureParallelogramHalf, 0.0f, 0.0f, 1024*px, 64*py, 0); INCR_NEW
-	itemMission21 = new GuiTexture(textureParallelogramHalf, 0.0f, 0.0f, 1024*px, 64*py, 0); INCR_NEW
-	itemMission22 = new GuiTexture(textureParallelogramHalf, 0.0f, 0.0f, 1024*px, 64*py, 0); INCR_NEW
-	itemMissionBackdrop1  = new GuiTexture(textureParallelogramHalfBackdrop, 0.0f, 0.0f, 1024*px, 64*py, 0); INCR_NEW
-	itemMissionBackdrop2  = new GuiTexture(textureParallelogramHalfBackdrop, 0.0f, 0.0f, 1024*px, 64*py, 0); INCR_NEW
-	itemMissionBackdrop3  = new GuiTexture(textureParallelogramHalfBackdrop, 0.0f, 0.0f, 1024*px, 64*py, 0); INCR_NEW
-	itemMissionBackdrop4  = new GuiTexture(textureParallelogramHalfBackdrop, 0.0f, 0.0f, 1024*px, 64*py, 0); INCR_NEW
-	itemMissionBackdrop5  = new GuiTexture(textureParallelogramHalfBackdrop, 0.0f, 0.0f, 1024*px, 64*py, 0); INCR_NEW
-	itemMissionBackdrop6  = new GuiTexture(textureParallelogramHalfBackdrop, 0.0f, 0.0f, 1024*px, 64*py, 0); INCR_NEW
-	itemMissionBackdrop7  = new GuiTexture(textureParallelogramHalfBackdrop, 0.0f, 0.0f, 1024*px, 64*py, 0); INCR_NEW
-	itemMissionBackdrop8  = new GuiTexture(textureParallelogramHalfBackdrop, 0.0f, 0.0f, 1024*px, 64*py, 0); INCR_NEW
-	itemMissionBackdrop9  = new GuiTexture(textureParallelogramHalfBackdrop, 0.0f, 0.0f, 1024*px, 64*py, 0); INCR_NEW
-	itemMissionBackdrop10 = new GuiTexture(textureParallelogramHalfBackdrop, 0.0f, 0.0f, 1024*px, 64*py, 0); INCR_NEW
-	itemMissionBackdrop11 = new GuiTexture(textureParallelogramHalfBackdrop, 0.0f, 0.0f, 1024*px, 64*py, 0); INCR_NEW
-	itemMissionBackdrop12 = new GuiTexture(textureParallelogramHalfBackdrop, 0.0f, 0.0f, 1024*px, 64*py, 0); INCR_NEW
-	itemMissionBackdrop13 = new GuiTexture(textureParallelogramHalfBackdrop, 0.0f, 0.0f, 1024*px, 64*py, 0); INCR_NEW
-	itemMissionBackdrop14 = new GuiTexture(textureParallelogramHalfBackdrop, 0.0f, 0.0f, 1024*px, 64*py, 0); INCR_NEW
-	itemMissionBackdrop15 = new GuiTexture(textureParallelogramHalfBackdrop, 0.0f, 0.0f, 1024*px, 64*py, 0); INCR_NEW
-	itemMissionBackdrop16 = new GuiTexture(textureParallelogramHalfBackdrop, 0.0f, 0.0f, 1024*px, 64*py, 0); INCR_NEW
-	itemMissionBackdrop17 = new GuiTexture(textureParallelogramHalfBackdrop, 0.0f, 0.0f, 1024*px, 64*py, 0); INCR_NEW
-	itemMissionBackdrop18 = new GuiTexture(textureParallelogramHalfBackdrop, 0.0f, 0.0f, 1024*px, 64*py, 0); INCR_NEW
-	itemMissionBackdrop19 = new GuiTexture(textureParallelogramHalfBackdrop, 0.0f, 0.0f, 1024*px, 64*py, 0); INCR_NEW
-	itemMissionBackdrop20 = new GuiTexture(textureParallelogramHalfBackdrop, 0.0f, 0.0f, 1024*px, 64*py, 0); INCR_NEW
-	itemMissionBackdrop21 = new GuiTexture(textureParallelogramHalfBackdrop, 0.0f, 0.0f, 1024*px, 64*py, 0); INCR_NEW
-	itemMissionBackdrop22 = new GuiTexture(textureParallelogramHalfBackdrop, 0.0f, 0.0f, 1024*px, 64*py, 0); INCR_NEW
+	itemMission2  = new GuiTexture(textureParallelogramHalf, 0.0f, 0.0f, 1024 * px, 64 * py, 0); INCR_NEW
+	itemMission3  = new GuiTexture(textureParallelogramHalf, 0.0f, 0.0f, 1024 * px, 64 * py, 0); INCR_NEW
+	itemMission4  = new GuiTexture(textureParallelogramHalf, 0.0f, 0.0f, 1024 * px, 64 * py, 0); INCR_NEW
+	itemMission5  = new GuiTexture(textureParallelogramHalf, 0.0f, 0.0f, 1024 * px, 64 * py, 0); INCR_NEW
+	itemMission6  = new GuiTexture(textureParallelogramHalf, 0.0f, 0.0f, 1024 * px, 64 * py, 0); INCR_NEW
+	itemMission7  = new GuiTexture(textureParallelogramHalf, 0.0f, 0.0f, 1024 * px, 64 * py, 0); INCR_NEW
+	itemMission8  = new GuiTexture(textureParallelogramHalf, 0.0f, 0.0f, 1024 * px, 64 * py, 0); INCR_NEW
+	itemMission9  = new GuiTexture(textureParallelogramHalf, 0.0f, 0.0f, 1024 * px, 64 * py, 0); INCR_NEW
+	itemMission10 = new GuiTexture(textureParallelogramHalf, 0.0f, 0.0f, 1024 * px, 64 * py, 0); INCR_NEW
+	itemMission11 = new GuiTexture(textureParallelogramHalf, 0.0f, 0.0f, 1024 * px, 64 * py, 0); INCR_NEW
+	itemMission12 = new GuiTexture(textureParallelogramHalf, 0.0f, 0.0f, 1024 * px, 64 * py, 0); INCR_NEW
+	itemMission13 = new GuiTexture(textureParallelogramHalf, 0.0f, 0.0f, 1024 * px, 64 * py, 0); INCR_NEW
+	itemMission14 = new GuiTexture(textureParallelogramHalf, 0.0f, 0.0f, 1024 * px, 64 * py, 0); INCR_NEW
+	itemMission15 = new GuiTexture(textureParallelogramHalf, 0.0f, 0.0f, 1024 * px, 64 * py, 0); INCR_NEW
+	itemMission16 = new GuiTexture(textureParallelogramHalf, 0.0f, 0.0f, 1024 * px, 64 * py, 0); INCR_NEW
+	itemMission17 = new GuiTexture(textureParallelogramHalf, 0.0f, 0.0f, 1024 * px, 64 * py, 0); INCR_NEW
+	itemMission18 = new GuiTexture(textureParallelogramHalf, 0.0f, 0.0f, 1024 * px, 64 * py, 0); INCR_NEW
+	itemMission19 = new GuiTexture(textureParallelogramHalf, 0.0f, 0.0f, 1024 * px, 64 * py, 0); INCR_NEW
+	itemMission20 = new GuiTexture(textureParallelogramHalf, 0.0f, 0.0f, 1024 * px, 64 * py, 0); INCR_NEW
+	itemMission21 = new GuiTexture(textureParallelogramHalf, 0.0f, 0.0f, 1024 * px, 64 * py, 0); INCR_NEW
+	itemMission22 = new GuiTexture(textureParallelogramHalf, 0.0f, 0.0f, 1024 * px, 64 * py, 0); INCR_NEW
+	itemMissionBackdrop1  = new GuiTexture(textureParallelogramHalfBackdrop, 0.0f, 0.0f, 1024 * px, 64 * py, 0); INCR_NEW
+	itemMissionBackdrop2  = new GuiTexture(textureParallelogramHalfBackdrop, 0.0f, 0.0f, 1024 * px, 64 * py, 0); INCR_NEW
+	itemMissionBackdrop3  = new GuiTexture(textureParallelogramHalfBackdrop, 0.0f, 0.0f, 1024 * px, 64 * py, 0); INCR_NEW
+	itemMissionBackdrop4  = new GuiTexture(textureParallelogramHalfBackdrop, 0.0f, 0.0f, 1024 * px, 64 * py, 0); INCR_NEW
+	itemMissionBackdrop5  = new GuiTexture(textureParallelogramHalfBackdrop, 0.0f, 0.0f, 1024 * px, 64 * py, 0); INCR_NEW
+	itemMissionBackdrop6  = new GuiTexture(textureParallelogramHalfBackdrop, 0.0f, 0.0f, 1024 * px, 64 * py, 0); INCR_NEW
+	itemMissionBackdrop7  = new GuiTexture(textureParallelogramHalfBackdrop, 0.0f, 0.0f, 1024 * px, 64 * py, 0); INCR_NEW
+	itemMissionBackdrop8  = new GuiTexture(textureParallelogramHalfBackdrop, 0.0f, 0.0f, 1024 * px, 64 * py, 0); INCR_NEW
+	itemMissionBackdrop9  = new GuiTexture(textureParallelogramHalfBackdrop, 0.0f, 0.0f, 1024 * px, 64 * py, 0); INCR_NEW
+	itemMissionBackdrop10 = new GuiTexture(textureParallelogramHalfBackdrop, 0.0f, 0.0f, 1024 * px, 64 * py, 0); INCR_NEW
+	itemMissionBackdrop11 = new GuiTexture(textureParallelogramHalfBackdrop, 0.0f, 0.0f, 1024 * px, 64 * py, 0); INCR_NEW
+	itemMissionBackdrop12 = new GuiTexture(textureParallelogramHalfBackdrop, 0.0f, 0.0f, 1024 * px, 64 * py, 0); INCR_NEW
+	itemMissionBackdrop13 = new GuiTexture(textureParallelogramHalfBackdrop, 0.0f, 0.0f, 1024 * px, 64 * py, 0); INCR_NEW
+	itemMissionBackdrop14 = new GuiTexture(textureParallelogramHalfBackdrop, 0.0f, 0.0f, 1024 * px, 64 * py, 0); INCR_NEW
+	itemMissionBackdrop15 = new GuiTexture(textureParallelogramHalfBackdrop, 0.0f, 0.0f, 1024 * px, 64 * py, 0); INCR_NEW
+	itemMissionBackdrop16 = new GuiTexture(textureParallelogramHalfBackdrop, 0.0f, 0.0f, 1024 * px, 64 * py, 0); INCR_NEW
+	itemMissionBackdrop17 = new GuiTexture(textureParallelogramHalfBackdrop, 0.0f, 0.0f, 1024 * px, 64 * py, 0); INCR_NEW
+	itemMissionBackdrop18 = new GuiTexture(textureParallelogramHalfBackdrop, 0.0f, 0.0f, 1024 * px, 64 * py, 0); INCR_NEW
+	itemMissionBackdrop19 = new GuiTexture(textureParallelogramHalfBackdrop, 0.0f, 0.0f, 1024 * px, 64 * py, 0); INCR_NEW
+	itemMissionBackdrop20 = new GuiTexture(textureParallelogramHalfBackdrop, 0.0f, 0.0f, 1024 * px, 64 * py, 0); INCR_NEW
+	itemMissionBackdrop21 = new GuiTexture(textureParallelogramHalfBackdrop, 0.0f, 0.0f, 1024 * px, 64 * py, 0); INCR_NEW
+	itemMissionBackdrop22 = new GuiTexture(textureParallelogramHalfBackdrop, 0.0f, 0.0f, 1024 * px, 64 * py, 0); INCR_NEW
 
 	itemRankDisplay          = new GuiTexture(textureParallelogram,              0.75f,             0.5f,        512*px,  64*py, 0); INCR_NEW
 	itemRankDisplayBackdrop  = new GuiTexture(textureParallelogramBackdrop,      0.75f+8*px,        0.5f+6*py,   512*px,  64*py, 0); INCR_NEW
@@ -693,6 +698,8 @@ void MainMenu::selectMenuMission(int newSelection)
 	float px = 1.0f/(SCR_WIDTH);  //1 pixel in x dimension
 	float py = 1.0f/(SCR_HEIGHT); //1 pixel in y dimension
 
+	float menuOffset = (SCR_HEIGHT * (4.0f / 3.0f)) / SCR_WIDTH;
+
 	GuiManager::clearGuisToRender();
 
 	float offsetY = (MISSION_1 - newSelection)*128*py;
@@ -937,7 +944,7 @@ void MainMenu::selectMenuMission(int newSelection)
 
 	switch (newSelection)
 	{
-		case MISSION_1 : textMission1 ->getPosition()->x += 64*px; itemMission1 ->setX(0.5f-512*px); itemMissionBackdrop1 ->setX(0.5f-512*px+8*px); GuiManager::addGuiToRender(itemMissionBackdrop1);  break;
+		case MISSION_1 : textMission1->getPosition()->x += 64 * px; itemMission1->setX(0.5f-512*px); itemMissionBackdrop1 ->setX(0.5f-512*px+8*px); GuiManager::addGuiToRender(itemMissionBackdrop1);  break;
 		case MISSION_2 : textMission2 ->getPosition()->x += 64*px; itemMission2 ->setX(0.5f-512*px); itemMissionBackdrop2 ->setX(0.5f-512*px+8*px); GuiManager::addGuiToRender(itemMissionBackdrop2);  break;
 		case MISSION_3 : textMission3 ->getPosition()->x += 64*px; itemMission3 ->setX(0.5f-512*px); itemMissionBackdrop3 ->setX(0.5f-512*px+8*px); GuiManager::addGuiToRender(itemMissionBackdrop3);  break;
 		case MISSION_4 : textMission4 ->getPosition()->x += 64*px; itemMission4 ->setX(0.5f-512*px); itemMissionBackdrop4 ->setX(0.5f-512*px+8*px); GuiManager::addGuiToRender(itemMissionBackdrop4);  break;

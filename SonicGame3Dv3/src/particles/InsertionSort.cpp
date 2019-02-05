@@ -9,7 +9,7 @@
 
 void InsertionSort::sortHighToLow(std::list<Particle*>* list)
 {
-	int size = list->size();
+	int size = (int)list->size();
 	for (int i = 1; i < size; i++)
 	{
 		std::list<Particle*>::iterator it = list->begin();

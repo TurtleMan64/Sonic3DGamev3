@@ -3,7 +3,22 @@
 
 #include <string>
 
-void LevelLoader_loadTitle();
-void LevelLoader_loadLevel(std::string levelFilename);
-void LevelLoader_loadLevelData();
+class LevelLoader
+{
+private:
+	static float toFloat(char* input);
+
+	static int toInt(char* input);
+
+	static void processLine(char** data, int dataLength);
+
+	static void freeAllStaticModels();
+
+public:
+	static void loadTitle();
+
+	static void loadLevel(std::string levelFilename);
+
+	static void loadLevelData();
+};
 #endif

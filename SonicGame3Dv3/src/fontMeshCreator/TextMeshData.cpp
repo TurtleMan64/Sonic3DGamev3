@@ -27,5 +27,5 @@ std::vector<float>* TextMeshData::getTextureCoords()
 
 int TextMeshData::getVertexCount()
 {
-	return vertexPositions.size() / 2;
+	return (int)(vertexPositions.size() / 2);
 }

@@ -21,14 +21,11 @@
 
 void parseMtl(std::string filePath, std::string fileName);
 
-//void processVertexOLD(char**, 
-//	std::vector<int>*, 
-//	std::vector<Vector2f>*, 
-//	std::vector<Vector3f>*, 
-//	float*, 
-//	float*);
-
 void processVertex(char** vertex,
+	std::vector<Vertex*>* vertices,
+	std::vector<int>* indices);
+
+void processVertexBinary(int, int, int,
 	std::vector<Vertex*>* vertices,
 	std::vector<int>* indices);
 
@@ -40,7 +37,7 @@ void dealWithAlreadyProcessedVertex(Vertex*,
 
 void removeUnusedVertices(std::vector<Vertex*>* vertices);
 
-float convertDataToArrays(std::vector<Vertex*>* vertices, std::vector<Vector2f>* textures,
+void convertDataToArrays(std::vector<Vertex*>* vertices, std::vector<Vector2f>* textures,
 	std::vector<Vector3f>* normals, std::vector<float>* verticesArray, std::vector<float>* texturesArray,
 	std::vector<float>* normalsArray);
 
@@ -49,19 +46,194 @@ std::vector<ModelTexture> modelTextures;
 std::vector<ModelTexture> modelTexturesList;
 std::vector<std::string> textureNamesList;
 
-void loadObjModel(std::list<TexturedModel*>* models, std::string filePath, std::string fileName)
+
+int loadModel(std::list<TexturedModel*>* models, std::string filePath, std::string fileName)
+{
+	int attemptBinary = loadBinaryModel(models, filePath, fileName+".binobj");
+	
+	if (attemptBinary == -1)
+	{
+		int attemptOBJ = loadObjModel(models, filePath, fileName+".obj");
+
+		if (attemptOBJ == -1)
+		{
+			std::fprintf(stderr, "Error: Cannot load file '%s'\n", ((filePath + fileName) + ".binobj/.obj").c_str());
+		}
+
+		return attemptOBJ;
+	}
+
+	return attemptBinary;
+}
+
+//Each TexturedModel contained within 'models' must be deleted later.
+int loadBinaryModel(std::list<TexturedModel*>* models, std::string filePath, std::string fileName)
 {
 	if (models->size() > 0)
 	{
-		return;
+		return 1;
+	}
+
+	FILE* file = nullptr;
+	int err = fopen_s(&file, (filePath+fileName).c_str(), "rb");
+    if (file == nullptr || err != 0)
+	{
+        //std::fprintf(stderr, "Error: Cannot load file '%s'\n", (filePath + fileName).c_str());
+		//std::fprintf(stderr, "fopen_s error code: '%d'\n", err);
+		return -1;
+    }
+
+	char fileType[4];
+	fread(fileType, sizeof(char), 4, file);
+	if (fileType[0] != 'o' || 
+		fileType[1] != 'b' ||
+		fileType[2] != 'j' ||
+		fileType[3] != 0)
+	{
+		std::fprintf(stdout, "Error: File '%s' is not a valid .binobj file\n", (filePath+fileName).c_str());
+		return -2;
+	}
+
+	std::string line;
+
+	std::string mtlname = "";
+	std::vector<Vertex*>  vertices;
+	std::vector<Vector2f> textures;
+	std::vector<Vector3f> normals;
+	std::vector<std::string> indiceMaterials;
+	std::vector<RawModel> rawModelsList;
+
+	int mtllibLength;
+	fread(&mtllibLength, sizeof(int), 1, file);
+	for (int i = 0; i < mtllibLength; i++)
+	{
+		char nextChar;
+		fread(&nextChar, sizeof(char), 1, file);
+		mtlname = mtlname + nextChar;
+	}
+	parseMtl(filePath, mtlname);
+
+
+	int numVertices;
+	fread(&numVertices, sizeof(int), 1, file);
+	for (int i = 0; i < numVertices; i++)
+	{
+		float t[3];
+		fread(t, sizeof(float), 3, file);
+
+		Vector3f vertex(t[0], t[1], t[2]);
+		Vertex* newVertex = new Vertex((int)vertices.size(), &vertex); INCR_NEW
+		vertices.push_back(newVertex);
+	}
+
+	int numTexCoords;
+	fread(&numTexCoords, sizeof(int), 1, file);
+	for (int i = 0; i < numTexCoords; i++)
+	{
+		float t[2];
+		fread(t, sizeof(float), 2, file);
+
+		Vector2f texCoord(t[0], t[1]);
+		textures.push_back(texCoord);
+	}
+
+	int numNormals;
+	fread(&numNormals, sizeof(int), 1, file);
+	for (int i = 0; i < numNormals; i++)
+	{
+		float t[3];
+		fread(t, sizeof(float), 3, file);
+
+		Vector3f normal(t[0], t[1], t[2]);
+		normals.push_back(normal);
+	}
+
+	int numMaterials;
+	fread(&numMaterials, sizeof(int), 1, file);
+	for (int m = 0; m < numMaterials; m++)
+	{
+		int matnameLength;
+		fread(&matnameLength, sizeof(int), 1, file);
+		std::string matname = "";
+		for (int c = 0; c < matnameLength; c++)
+		{
+			char nextChar;
+			fread(&nextChar, sizeof(char), 1, file);
+			matname = matname + nextChar;
+		}
+		indiceMaterials.push_back(matname);
+
+		for (unsigned int i = 0; i < textureNamesList.size(); i++) //search for the right texture to use based off its name
+		{
+			std::string testName = textureNamesList[i];
+			if (testName == matname) //we've found the right texture!
+			{
+				modelTextures.push_back(modelTexturesList[i]); //put a copy of the texture into modelTextures
+			}
+		}
+
+		std::vector<int> indices;
+		int numFaces;
+		fread(&numFaces, sizeof(int), 1, file);
+		for (int i = 0; i < numFaces; i++)
+		{
+			int f[9];
+
+			fread(&f[0], sizeof(int), 9, file);
+
+			processVertexBinary(f[0], f[1], f[2], &vertices, &indices);
+			processVertexBinary(f[3], f[4], f[5], &vertices, &indices);
+			processVertexBinary(f[6], f[7], f[8], &vertices, &indices);
+		}
+
+		//save the model we've been building so far...
+		removeUnusedVertices(&vertices);
+
+		std::vector<float> verticesArray;
+		std::vector<float> texturesArray;
+		std::vector<float> normalsArray;
+		convertDataToArrays(&vertices, &textures, &normals, &verticesArray, &texturesArray, &normalsArray);
+		rawModelsList.push_back(Loader::loadToVAO(&verticesArray, &texturesArray, &normalsArray, &indices));
+	}
+
+	fclose(file);
+
+	//go through rawModelsList and modelTextures to construct and add to the given TexturedModel list
+	for (unsigned int i = 0; i < rawModelsList.size(); i++)
+	{
+		TexturedModel* tm = new TexturedModel(&rawModelsList[i], &modelTextures[i]); INCR_NEW
+		models->push_back(tm);
+	}
+
+	for (auto vertex : vertices)
+	{
+		delete vertex; INCR_DEL
+	}
+
+	modelTextures.clear();
+	modelTexturesList.clear();
+	textureNamesList.clear();
+
+	modelTextures.shrink_to_fit();
+	modelTexturesList.shrink_to_fit();
+	textureNamesList.shrink_to_fit();
+
+	return 0;
+}
+
+int loadObjModel(std::list<TexturedModel*>* models, std::string filePath, std::string fileName)
+{
+	if (models->size() > 0)
+	{
+		return 1;
 	}
 
 	std::ifstream file(filePath+fileName);
 	if (!file.is_open())
 	{
-		std::fprintf(stdout, "Error: Cannot load file '%s'\n", (filePath + fileName).c_str());
+		//std::fprintf(stdout, "Error: Cannot load file '%s'\n", (filePath + fileName).c_str());
 		file.close();
-		return;
+		return -1;
 	}
 
 	std::string line;
@@ -84,9 +256,8 @@ void loadObjModel(std::list<TexturedModel*>* models, std::string filePath, std::
 	{
 		getline(file, line);
 
-		char lineBuf[256]; //Buffer to copy line into
-		memset(lineBuf, 0, 256);
-		memcpy(lineBuf, line.c_str(), line.size());
+		char lineBuf[256];
+		memcpy(lineBuf, line.c_str(), line.size()+1);
 
 		int splitLength = 0;
 		char** lineSplit = split(lineBuf, ' ', &splitLength);
@@ -106,12 +277,8 @@ void loadObjModel(std::list<TexturedModel*>* models, std::string filePath, std::
 					std::string p2(lineSplit[2]);
 					std::string p3(lineSplit[3]);
 					Vector3f vertex(std::stof(p1, nullptr), std::stof(p2, nullptr), std::stof(p3, nullptr));
-					Vertex* newVertex = new Vertex(vertices.size(), &vertex);
-					INCR_NEW
+					Vertex* newVertex = new Vertex((int)vertices.size(), &vertex); INCR_NEW
 					vertices.push_back(newVertex);
-					p1.clear();
-					p2.clear();
-					p3.clear();
 				}
 				else if (strcmp(lineSplit[0], "vt") == 0)
 				{
@@ -119,8 +286,6 @@ void loadObjModel(std::list<TexturedModel*>* models, std::string filePath, std::
 					std::string t2(lineSplit[2]);
 					Vector2f texCoord(std::stof(t1, nullptr), std::stof(t2, nullptr));
 					textures.push_back(texCoord);
-					t1.clear();
-					t2.clear();
 				}
 				else if (strcmp(lineSplit[0], "vn") == 0)
 				{
@@ -129,9 +294,6 @@ void loadObjModel(std::list<TexturedModel*>* models, std::string filePath, std::
 					std::string n3(lineSplit[3]);
 					Vector3f normal(std::stof(n1, nullptr), std::stof(n2, nullptr), std::stof(n3, nullptr));
 					normals.push_back(normal);
-					n1.clear();
-					n2.clear();
-					n3.clear();
 				}
 				else if (strcmp(lineSplit[0], "usemtl") == 0) //first usetml found, before any faces entered
 				{
@@ -185,9 +347,8 @@ void loadObjModel(std::list<TexturedModel*>* models, std::string filePath, std::
 					std::vector<float> normalsArray;
 
 					convertDataToArrays(&vertices, &textures, &normals, &verticesArray, &texturesArray, &normalsArray);
-					RawModel newRaw = Loader_loadToVAO(&verticesArray, &texturesArray, &normalsArray, &indices);
+					rawModelsList.push_back(Loader::loadToVAO(&verticesArray, &texturesArray, &normalsArray, &indices));
 
-					rawModelsList.push_back(newRaw); //put a copy of the model into rawModelsList
 					indices.clear();
 				}
 			}
@@ -206,46 +367,29 @@ void loadObjModel(std::list<TexturedModel*>* models, std::string filePath, std::
 	std::vector<float> normalsArray;
 
 	convertDataToArrays(&vertices, &textures, &normals, &verticesArray, &texturesArray, &normalsArray);
-	RawModel newRaw = Loader_loadToVAO(&verticesArray, &texturesArray, &normalsArray, &indices);
-
-	rawModelsList.push_back(newRaw); //put a copy of the final model into rawModelsList
+	rawModelsList.push_back(Loader::loadToVAO(&verticesArray, &texturesArray, &normalsArray, &indices));
 
 	//go through rawModelsList and modelTextures to construct and add to the given TexturedModel list
-	INCR_NEW
 	for (unsigned int i = 0; i < rawModelsList.size(); i++)
 	{
-		TexturedModel* tm = new TexturedModel(&rawModelsList[i], &modelTextures[i]);
-		INCR_NEW
+		TexturedModel* tm = new TexturedModel(&rawModelsList[i], &modelTextures[i]); INCR_NEW
 		models->push_back(tm);
 	}
 
 	for (auto vertex : vertices)
 	{
-		delete vertex;
-		INCR_DEL
+		delete vertex; INCR_DEL
 	}
 
-	line.clear();
-
-	vertices.clear();
-	textures.clear();
-	normals.clear();
-	indices.clear();
-
-	rawModelsList.clear();
 	modelTextures.clear();
 	modelTexturesList.clear();
 	textureNamesList.clear();
 
-	vertices.shrink_to_fit();
-	textures.shrink_to_fit();
-	normals.shrink_to_fit();
-	indices.shrink_to_fit();
-
-	rawModelsList.shrink_to_fit();
 	modelTextures.shrink_to_fit();
 	modelTexturesList.shrink_to_fit();
 	textureNamesList.shrink_to_fit();
+
+	return 0;
 }
 
 void parseMtl(std::string filePath, std::string fileName)
@@ -260,7 +404,7 @@ void parseMtl(std::string filePath, std::string fileName)
 	std::ifstream file(filePath+fileName);
 	if (!file.is_open())
 	{
-		std::fprintf(stdout, "Error: Cannot load file '%s'\n", (filePath + fileName).c_str());
+		std::fprintf(stderr, "Error: Cannot load file '%s'\n", (filePath + fileName).c_str());
 		file.close();
 		return;
 	}
@@ -284,9 +428,8 @@ void parseMtl(std::string filePath, std::string fileName)
 	{
 		getline(file, line);
 
-		char lineBuf[256]; //Buffer to copy line into
-		memset(lineBuf, 0, 256);
-		memcpy(lineBuf, line.c_str(), line.size());
+		char lineBuf[256];
+		memcpy(lineBuf, line.c_str(), line.size()+1);
 
 		int splitLength = 0;
 		char** lineSplit = split(lineBuf, ' ', &splitLength);
@@ -308,7 +451,7 @@ void parseMtl(std::string filePath, std::string fileName)
 			{
 				std::string imageFilenameString = filePath+lineSplit[1];
 				char* fname = (char*)imageFilenameString.c_str();
-				ModelTexture newTexture(Loader_loadTexture(fname)); //generate new texture
+				ModelTexture newTexture(Loader::loadTexture(fname)); //generate new texture
 				newTexture.setShineDamper(currentShineDamperValue);
 				newTexture.setReflectivity(currentReflectivityValue);
 				newTexture.setHasTransparency(1);
@@ -367,19 +510,19 @@ void parseMtl(std::string filePath, std::string fileName)
 
 
 
-void loadObjModelWithMTL(std::list<TexturedModel*>* models, std::string filePath, std::string fileNameOBJ, std::string fileNameMTL)
+int loadObjModelWithMTL(std::list<TexturedModel*>* models, std::string filePath, std::string fileNameOBJ, std::string fileNameMTL)
 {
 	if (models->size() > 0)
 	{
-		return;
+		return 1;
 	}
 
 	std::ifstream file(filePath + fileNameOBJ);
 	if (!file.is_open())
 	{
-		std::fprintf(stdout, "Error: Cannot load file '%s'\n", (filePath + fileNameOBJ).c_str());
+		std::fprintf(stderr, "Error: Cannot load file '%s'\n", (filePath + fileNameOBJ).c_str());
 		file.close();
-		return;
+		return -1;
 	}
 
 	std::string line;
@@ -399,9 +542,8 @@ void loadObjModelWithMTL(std::list<TexturedModel*>* models, std::string filePath
 	{
 		getline(file, line);
 
-		char lineBuf[256]; //Buffer to copy line into
-		memset(lineBuf, 0, 256);
-		memcpy(lineBuf, line.c_str(), line.size());
+		char lineBuf[256];
+		memcpy(lineBuf, line.c_str(), line.size()+1);
 
 		int splitLength = 0;
 		char** lineSplit = split(lineBuf, ' ', &splitLength);
@@ -416,12 +558,9 @@ void loadObjModelWithMTL(std::list<TexturedModel*>* models, std::string filePath
 					std::string p2(lineSplit[2]);
 					std::string p3(lineSplit[3]);
 					Vector3f vertex(std::stof(p1, nullptr), std::stof(p2, nullptr), std::stof(p3, nullptr));
-					Vertex* newVertex = new Vertex(vertices.size(), &vertex);
+					Vertex* newVertex = new Vertex((int)vertices.size(), &vertex);
 					INCR_NEW
 					vertices.push_back(newVertex);
-					p1.clear();
-					p2.clear();
-					p3.clear();
 				}
 				else if (strcmp(lineSplit[0], "vt") == 0)
 				{
@@ -429,8 +568,6 @@ void loadObjModelWithMTL(std::list<TexturedModel*>* models, std::string filePath
 					std::string t2(lineSplit[2]);
 					Vector2f texCoord(std::stof(t1, nullptr), std::stof(t2, nullptr));
 					textures.push_back(texCoord);
-					t1.clear();
-					t2.clear();
 				}
 				else if (strcmp(lineSplit[0], "vn") == 0)
 				{
@@ -439,9 +576,6 @@ void loadObjModelWithMTL(std::list<TexturedModel*>* models, std::string filePath
 					std::string n3(lineSplit[3]);
 					Vector3f normal(std::stof(n1, nullptr), std::stof(n2, nullptr), std::stof(n3, nullptr));
 					normals.push_back(normal);
-					n1.clear();
-					n2.clear();
-					n3.clear();
 				}
 				else if (strcmp(lineSplit[0], "usemtl") == 0) //first usetml found, before any faces entered
 				{
@@ -495,9 +629,8 @@ void loadObjModelWithMTL(std::list<TexturedModel*>* models, std::string filePath
 					std::vector<float> normalsArray;
 
 					convertDataToArrays(&vertices, &textures, &normals, &verticesArray, &texturesArray, &normalsArray);
-					RawModel newRaw = Loader_loadToVAO(&verticesArray, &texturesArray, &normalsArray, &indices);
+					rawModelsList.push_back(Loader::loadToVAO(&verticesArray, &texturesArray, &normalsArray, &indices));
 
-					rawModelsList.push_back(newRaw); //put a copy of the model into rawModelsList
 					indices.clear();
 				}
 			}
@@ -507,168 +640,189 @@ void loadObjModelWithMTL(std::list<TexturedModel*>* models, std::string filePath
 	file.close();
 
 	removeUnusedVertices(&vertices);
-
 	std::vector<float> verticesArray;
 	std::vector<float> texturesArray;
 	std::vector<float> normalsArray;
 
 	convertDataToArrays(&vertices, &textures, &normals, &verticesArray, &texturesArray, &normalsArray);
-	RawModel newRaw = Loader_loadToVAO(&verticesArray, &texturesArray, &normalsArray, &indices);
-
-	rawModelsList.push_back(newRaw); //put a copy of the final model into rawModelsList
+	rawModelsList.push_back(Loader::loadToVAO(&verticesArray, &texturesArray, &normalsArray, &indices)); //put a copy of the final model into rawModelsList
 
 	//go through rawModelsList and modelTextures to construct and add to the given TexturedModel list
-	INCR_NEW
 	for (unsigned int i = 0; i < rawModelsList.size(); i++)
 	{
-		TexturedModel* tm = new TexturedModel(&rawModelsList[i], &modelTextures[i]);
-		INCR_NEW
+		TexturedModel* tm = new TexturedModel(&rawModelsList[i], &modelTextures[i]); INCR_NEW
 		models->push_back(tm);
 	}
 
 	for (auto vertex : vertices)
 	{
-		delete vertex;
-		INCR_DEL
+		delete vertex; INCR_DEL
 	}
 
-	line.clear();
-
-	vertices.clear();
-	textures.clear();
-	normals.clear();
-	indices.clear();
-
-	rawModelsList.clear();
 	modelTextures.clear();
 	modelTexturesList.clear();
 	textureNamesList.clear();
 
-	vertices.shrink_to_fit();
-	textures.shrink_to_fit();
-	normals.shrink_to_fit();
-	indices.shrink_to_fit();
-
-	rawModelsList.shrink_to_fit();
 	modelTextures.shrink_to_fit();
 	modelTexturesList.shrink_to_fit();
 	textureNamesList.shrink_to_fit();
+
+	return 0;
 }
 
-/*
-RawModel loadObjModelOG(char* fileName)
+int loadBinaryModelWithMTL(std::list<TexturedModel*>* models, std::string filePath, std::string fileNameBin, std::string fileNameMTL)
 {
-	std::ifstream file(fileName);
-	if (!file.is_open())
+	if (models->size() > 0)
 	{
-		std::fprintf(stdout, "Error: Cannot load file '%s'\n", fileName);
-		file.close();
-		//ModelData temp(nullptr, nullptr, nullptr, nullptr, 0);
-		RawModel temp;
-		return temp;
+		return 1;
+	}
+
+	FILE* file = nullptr;
+	int err = fopen_s(&file, (filePath+fileNameBin).c_str(), "rb");
+    if (file == nullptr || err != 0)
+	{
+        std::fprintf(stderr, "Error: Cannot load file '%s'\n", (filePath + fileNameBin).c_str());
+		//std::fprintf(stderr, "fopen_s error code: '%d'\n", err);
+		return -1;
+    }
+
+	char fileType[4];
+	fread(fileType, sizeof(char), 4, file);
+	if (fileType[0] != 'o' || 
+		fileType[1] != 'b' ||
+		fileType[2] != 'j' ||
+		fileType[3] != 0)
+	{
+		std::fprintf(stdout, "Error: File '%s' is not a valid .binobj file\n", (filePath+fileNameBin).c_str());
+		return -2;
 	}
 
 	std::string line;
 
-	std::vector<Vertex*> vertices;
+	std::string mtlname = "";
+	std::vector<Vertex*>  vertices;
 	std::vector<Vector2f> textures;
 	std::vector<Vector3f> normals;
-	std::vector<int> indices;
+	std::vector<std::string> indiceMaterials;
+	std::vector<RawModel> rawModelsList;
 
-	int foundFaces = 0;
-
-	while (!file.eof())
+	int mtllibLength;
+	fread(&mtllibLength, sizeof(int), 1, file);
+	for (int i = 0; i < mtllibLength; i++)
 	{
-		getline(file, line);
+		char nextChar;
+		fread(&nextChar, sizeof(char), 1, file);
+		mtlname = mtlname + nextChar;
+	}
+	parseMtl(filePath, fileNameMTL);
 
-		char lineBuf[256]; //Buffer to copy line into
-		memset(lineBuf, 0, 256);
-		memcpy(lineBuf, line.c_str(), line.size());
-		char** lineSplit = split(lineBuf, ' ');
 
-		if (splitLength > 0)
+	int numVertices;
+	fread(&numVertices, sizeof(int), 1, file);
+	for (int i = 0; i < numVertices; i++)
+	{
+		float t[3];
+		fread(t, sizeof(float), 3, file);
+
+		Vector3f vertex(t[0], t[1], t[2]);
+		Vertex* newVertex = new Vertex((int)vertices.size(), &vertex); INCR_NEW
+		vertices.push_back(newVertex);
+	}
+
+	int numTexCoords;
+	fread(&numTexCoords, sizeof(int), 1, file);
+	for (int i = 0; i < numTexCoords; i++)
+	{
+		float t[2];
+		fread(t, sizeof(float), 2, file);
+
+		Vector2f texCoord(t[0], t[1]);
+		textures.push_back(texCoord);
+	}
+
+	int numNormals;
+	fread(&numNormals, sizeof(int), 1, file);
+	for (int i = 0; i < numNormals; i++)
+	{
+		float t[3];
+		fread(t, sizeof(float), 3, file);
+
+		Vector3f normal(t[0], t[1], t[2]);
+		normals.push_back(normal);
+	}
+
+	int numMaterials;
+	fread(&numMaterials, sizeof(int), 1, file);
+	for (int m = 0; m < numMaterials; m++)
+	{
+		int matnameLength;
+		fread(&matnameLength, sizeof(int), 1, file);
+		std::string matname = "";
+		for (int c = 0; c < matnameLength; c++)
 		{
-			if (foundFaces == 0)
+			char nextChar;
+			fread(&nextChar, sizeof(char), 1, file);
+			matname = matname + nextChar;
+		}
+		indiceMaterials.push_back(matname);
+
+		for (unsigned int i = 0; i < textureNamesList.size(); i++) //search for the right texture to use based off its name
+		{
+			std::string testName = textureNamesList[i];
+			if (testName == matname) //we've found the right texture!
 			{
-				if (strcmp(lineSplit[0], "v") == 0)
-				{
-					std::string p1(lineSplit[1]);
-					std::string p2(lineSplit[2]);
-					std::string p3(lineSplit[3]);
-					Vector3f vertex(std::stof(p1, nullptr), std::stof(p2, nullptr), std::stof(p3, nullptr));
-					Vertex* newVertex = new Vertex(vertices.size(), &vertex);
-					vertices.push_back(newVertex);
-					p1.clear();
-					p2.clear();
-					p3.clear();
-				}
-				else if (strcmp(lineSplit[0], "vt") == 0)
-				{
-					std::string t1(lineSplit[1]);
-					std::string t2(lineSplit[2]);
-					Vector2f texCoord(std::stof(t1, nullptr), std::stof(t2, nullptr));
-					textures.push_back(texCoord);
-					t1.clear();
-					t2.clear();
-				}
-				else if (strcmp(lineSplit[0], "vn") == 0)
-				{
-					std::string n1(lineSplit[1]);
-					std::string n2(lineSplit[2]);
-					std::string n3(lineSplit[3]);
-					Vector3f normal(std::stof(n1, nullptr), std::stof(n2, nullptr), std::stof(n3, nullptr));
-					normals.push_back(normal);
-					n1.clear();
-					n2.clear();
-					n3.clear();
-				}
-				else if (strcmp(lineSplit[0], "f") == 0)
-				{
-					foundFaces = 1;
-				}
-			}
-
-			if (foundFaces == 1)
-			{
-				//std::fprintf(stdout, "'%s'\n", lineSplit[1]);
-				if (strcmp(lineSplit[0], "f") == 0)
-				{
-					char** vertex1 = split(lineSplit[1], '/');
-					char** vertex2 = split(lineSplit[2], '/');
-					char** vertex3 = split(lineSplit[3], '/');
-
-					processVertex(vertex1, &vertices, &indices);
-					processVertex(vertex2, &vertices, &indices);
-					processVertex(vertex3, &vertices, &indices);
-
-					free(vertex1);
-					free(vertex2);
-					free(vertex3);
-				}
+				modelTextures.push_back(modelTexturesList[i]); //put a copy of the texture into modelTextures
 			}
 		}
-		free(lineSplit);
+
+		std::vector<int> indices;
+		int numFaces;
+		fread(&numFaces, sizeof(int), 1, file);
+		for (int i = 0; i < numFaces; i++)
+		{
+			int f[9];
+
+			fread(&f[0], sizeof(int), 9, file);
+
+			processVertexBinary(f[0], f[1], f[2], &vertices, &indices);
+			processVertexBinary(f[3], f[4], f[5], &vertices, &indices);
+			processVertexBinary(f[6], f[7], f[8], &vertices, &indices);
+		}
+
+		//save the model we've been building so far...
+		removeUnusedVertices(&vertices);
+
+		std::vector<float> verticesArray;
+		std::vector<float> texturesArray;
+		std::vector<float> normalsArray;
+		convertDataToArrays(&vertices, &textures, &normals, &verticesArray, &texturesArray, &normalsArray);
+		rawModelsList.push_back(Loader::loadToVAO(&verticesArray, &texturesArray, &normalsArray, &indices));
 	}
-	file.close();
 
-	removeUnusedVertices(&vertices);
+	fclose(file);
 
-	std::vector<float> verticesArray;
-	std::vector<float> texturesArray;
-	std::vector<float> normalsArray;
-
-	float furthest = convertDataToArrays(&vertices, &textures, &normals, &verticesArray, &texturesArray, &normalsArray);
-	//ModelData data(&verticesArray, &texturesArray, &normalsArray, &indices, furthest);
-	RawModel raaaw = Loader_loadToVAO(&verticesArray, &texturesArray, &normalsArray, &indices);
+	//go through rawModelsList and modelTextures to construct and add to the given TexturedModel list
+	for (unsigned int i = 0; i < rawModelsList.size(); i++)
+	{
+		TexturedModel* tm = new TexturedModel(&rawModelsList[i], &modelTextures[i]); INCR_NEW
+		models->push_back(tm);
+	}
 
 	for (auto vertex : vertices)
 	{
-		delete vertex;
+		delete vertex; INCR_DEL
 	}
 
-	return raaaw;
+	modelTextures.clear();
+	modelTexturesList.clear();
+	textureNamesList.clear();
+
+	modelTextures.shrink_to_fit();
+	modelTexturesList.shrink_to_fit();
+	textureNamesList.shrink_to_fit();
+
+	return 0;
 }
-*/
 
 void processVertex(char** vertex,
 	std::vector<Vertex*>* vertices,
@@ -691,9 +845,29 @@ void processVertex(char** vertex,
 	}
 }
 
+void processVertexBinary(int vIndex, int tIndex, int nIndex,
+	std::vector<Vertex*>* vertices,
+	std::vector<int>* indices)
+{
+	vIndex--;
+	tIndex--;
+	nIndex--;
 
+	Vertex* currentVertex = (*vertices)[vIndex]; //check bounds on this?
+	if (currentVertex->isSet() == 0)
+	{
+		currentVertex->setTextureIndex(tIndex);
+		currentVertex->setNormalIndex(nIndex);
+		indices->push_back(vIndex);
+	}
+	else
+	{
+		dealWithAlreadyProcessedVertex(currentVertex, tIndex, nIndex, indices, vertices);
+	}
+}
 
-void dealWithAlreadyProcessedVertex(Vertex* previousVertex,
+void dealWithAlreadyProcessedVertex(
+	Vertex* previousVertex,
 	int newTextureIndex,
 	int newNormalIndex,
 	std::vector<int>* indices,
@@ -712,8 +886,8 @@ void dealWithAlreadyProcessedVertex(Vertex* previousVertex,
 		}
 		else
 		{
-			Vertex* duplicateVertex = new Vertex(vertices->size(), previousVertex->getPosition());
-			INCR_NEW
+			Vertex* duplicateVertex = new Vertex((int)vertices->size(), previousVertex->getPosition()); INCR_NEW
+
 			duplicateVertex->setTextureIndex(newTextureIndex);
 			duplicateVertex->setNormalIndex(newNormalIndex);
 
@@ -725,18 +899,16 @@ void dealWithAlreadyProcessedVertex(Vertex* previousVertex,
 }
 
 
-float convertDataToArrays(std::vector<Vertex*>* vertices, std::vector<Vector2f>* textures,
-	std::vector<Vector3f>* normals, std::vector<float>* verticesArray, std::vector<float>* texturesArray,
+void convertDataToArrays(
+	std::vector<Vertex*>* vertices, 
+	std::vector<Vector2f>* textures,
+	std::vector<Vector3f>* normals, 
+	std::vector<float>* verticesArray, 
+	std::vector<float>* texturesArray,
 	std::vector<float>* normalsArray)
 {
-	float furthestPoint = 0;
 	for (auto currentVertex : (*vertices))
 	{
-		//Vertex currentVertex = (*vertices)[i];
-		if (currentVertex->getLength() > furthestPoint)
-		{
-			furthestPoint = currentVertex->getLength();
-		}
 		Vector3f* position = currentVertex->getPosition();
 		Vector2f* textureCoord = &(*textures)[currentVertex->getTextureIndex()];
 		Vector3f* normalVector = &(*normals)[currentVertex->getNormalIndex()];
@@ -749,226 +921,25 @@ float convertDataToArrays(std::vector<Vertex*>* vertices, std::vector<Vector2f>*
 		normalsArray->push_back(normalVector->y);
 		normalsArray->push_back(normalVector->z);
 	}
-	return furthestPoint;
 }
-
-
-/*
-RawModel loadObjModelOLD(char* fileName)
-{
-	std::ifstream file(fileName);
-	if (!file.is_open())
-	{
-		std::fprintf(stdout, "Error: Cannot load file '%s'\n", fileName);
-		file.close();
-		RawModel temp;
-		return temp;
-	}
-
-	std::string line;
-
-	std::vector<Vector3f> vertices;
-	std::vector<Vector2f> textures;
-	std::vector<Vector3f> normals;
-	std::vector<int> indices;
-
-	//float* vArray;
-	float* nArray;
-	float* tArray;
-	//int* iArray;
-
-	int foundFaces = 0;
-
-	while (!file.eof())
-	{
-		getline(file, line);
-
-		char lineBuf[128]; //Buffer to copy line into
-		memset(lineBuf, 0, 128);
-		memcpy(lineBuf, line.c_str(), line.size());
-		char** lineSplit = split(lineBuf, ' ');
-
-		if (splitLength > 0)
-		{
-			if (foundFaces == 0)
-			{
-				if (strcmp(lineSplit[0], "v") == 0)
-				{
-					std::string p1(lineSplit[1]);
-					std::string p2(lineSplit[2]);
-					std::string p3(lineSplit[3]);
-					Vector3f vertex(std::stof(p1, nullptr), std::stof(p2, nullptr), std::stof(p3, nullptr));
-					vertices.push_back(vertex);
-					p1.clear();
-					p2.clear();
-					p3.clear();
-				}
-				else if (strcmp(lineSplit[0], "vt") == 0)
-				{
-					std::string t1(lineSplit[1]);
-					std::string t2(lineSplit[2]);
-					Vector2f texCoord(std::stof(t1, nullptr), std::stof(t2, nullptr));
-					textures.push_back(texCoord);
-					t1.clear();
-					t2.clear();
-				}
-				else if (strcmp(lineSplit[0], "vn") == 0)
-				{
-					std::string n1(lineSplit[1]);
-					std::string n2(lineSplit[2]);
-					std::string n3(lineSplit[3]);
-					Vector3f normal(std::stof(n1, nullptr), std::stof(n2, nullptr), std::stof(n3, nullptr));
-					normals.push_back(normal);
-					n1.clear();
-					n2.clear();
-					n3.clear();
-				}
-				else if (strcmp(lineSplit[0], "f") == 0)
-				{
-					tArray = (float*)malloc(sizeof(float)*(vertices.size()*2));
-					nArray = (float*)malloc(sizeof(float)*(vertices.size()*3));
-
-					tArraySize = vertices.size() * 2;
-					nArraySize = vertices.size() * 3;
-
-					foundFaces = 1;
-
-					char** vertex1 = split(lineSplit[1], '/');
-					char** vertex2 = split(lineSplit[2], '/');
-					char** vertex3 = split(lineSplit[3], '/');
-
-					processVertexOLD(vertex1, &indices, &textures, &normals, tArray, nArray);
-					processVertexOLD(vertex2, &indices, &textures, &normals, tArray, nArray);
-					processVertexOLD(vertex3, &indices, &textures, &normals, tArray, nArray);
-
-					free(vertex1);
-					free(vertex2);
-					free(vertex3);
-				}
-			}
-			else
-			{
-				if (strcmp(lineSplit[0], "f") == 0)
-				{
-					char** vertex1 = split(lineSplit[1], '/');
-					char** vertex2 = split(lineSplit[2], '/');
-					char** vertex3 = split(lineSplit[3], '/');
-
-					processVertexOLD(vertex1, &indices, &textures, &normals, tArray, nArray);
-					processVertexOLD(vertex2, &indices, &textures, &normals, tArray, nArray);
-					processVertexOLD(vertex3, &indices, &textures, &normals, tArray, nArray);
-
-					free(vertex1);
-					free(vertex2);
-					free(vertex3);
-				}
-			}
-		}
-
-		free(lineSplit);
-	}
-
-	file.close();
-
-	//vArray = (float*)malloc(sizeof(float)*(vertices.size()*3));
-	//iArray = (int*)malloc(sizeof(int)*(indices.size()));
-	std::vector<float> vectorVertex;
-	int vSize = vertices.size();
-	for (int vertexPointer = 0; vertexPointer < vSize; vertexPointer++)
-	{
-		//vArray[vertexPointer*3]   = vertices[vertexPointer].x;
-		//vArray[vertexPointer*3+1] = vertices[vertexPointer].y;
-		//vArray[vertexPointer*3+2] = vertices[vertexPointer].z;
-		vectorVertex.push_back(vertices[vertexPointer].x);
-		vectorVertex.push_back(vertices[vertexPointer].y);
-		vectorVertex.push_back(vertices[vertexPointer].z);
-	}
-
-	//for (int i = 0; i < indices.size(); i++)
-	{
-		//iArray[i] = indices[i];
-	}
-
-	std::vector<float> vectorTexture;
-	int tSize = vertices.size() * 2;
-	for (int i = 0; i < tSize; i++)
-	{
-		vectorTexture.push_back(tArray[i]);
-	}
-
-	std::vector<float> vectorNormal;
-	int nSize = vertices.size() * 3;
-	for (int i = 0; i < nSize; i++)
-	{
-		vectorNormal.push_back(nArray[i]);
-	}
-
-	free(tArray);
-	free(nArray);
-
-	RawModel model = Loader_loadToVAO(&vectorVertex, &vectorTexture, &vectorNormal, &indices);
-
-	vertices.clear();
-	vertices.shrink_to_fit();
-	textures.clear();
-	textures.shrink_to_fit();
-	normals.clear();
-	normals.shrink_to_fit();
-	indices.clear();
-	indices.shrink_to_fit();
-
-	return model;
-}
-*/
-
-
-
 
 void removeUnusedVertices(std::vector<Vertex*>* vertices)
 {
 	for (auto vertex : (*vertices))
 	{
-		if ((*vertex).isSet() == 0)
+		if (vertex->isSet() == 0)
 		{
-			(*vertex).setTextureIndex(0);
-			(*vertex).setNormalIndex(0);
+			vertex->setTextureIndex(0);
+			vertex->setNormalIndex(0);
 		}
 	}
 }
 
-
-/*
-void processVertexOLD(char** vertexData, 
-	std::vector<int>* indices, 
-	std::vector<Vector2f>* textures, 
-	std::vector<Vector3f>* normals, 
-	float* textureArray, 
-	float* normalsArray)
-{
-	int vd0 = atoi(vertexData[0]) - 1;
-	int vd1 = atoi(vertexData[1]) - 1;
-	int vd2 = atoi(vertexData[2]) - 1;
-
-	int currentVertexPointer = vd0;
-	(*indices).push_back(currentVertexPointer);
-
-	Vector2f currentTex = (*textures)[vd1];
-	textureArray[currentVertexPointer*2]     =     currentTex.x;
-	textureArray[currentVertexPointer*2 + 1] = 1 - currentTex.y;
-
-	Vector3f currentNorm = (*normals)[vd2];
-	normalsArray[currentVertexPointer*3]     = currentNorm.x;
-	normalsArray[currentVertexPointer*3 + 1] = currentNorm.y;
-	normalsArray[currentVertexPointer*3 + 2] = currentNorm.z;
-}
-*/
-
-
 CollisionModel* loadCollisionModel(std::string filePath, std::string fileName)
 {
-	CollisionModel* collisionModel = new CollisionModel;
-	INCR_NEW
-	std::list<FakeTexture*> fakeTextures;
+	CollisionModel* collisionModel = new CollisionModel; INCR_NEW
+
+	std::list<FakeTexture> fakeTextures;
 
 	char currType = 0;
 	char currSound = 0;
@@ -992,9 +963,8 @@ CollisionModel* loadCollisionModel(std::string filePath, std::string fileName)
 	{
 		getline(file, line);
 
-		char lineBuf[256]; //Buffer to copy line into
-		memset(lineBuf, 0, 256);
-		memcpy(lineBuf, line.c_str(), line.size());
+		char lineBuf[256];
+		memcpy(lineBuf, line.c_str(), line.size()+1);
 
 		int splitLength = 0;
 		char** lineSplit = split(lineBuf, ' ', &splitLength);
@@ -1020,8 +990,7 @@ CollisionModel* loadCollisionModel(std::string filePath, std::string fileName)
 				Vector3f* vert2 = &vertices[std::stoi(vertex2[0]) - 1];
 				Vector3f* vert3 = &vertices[std::stoi(vertex3[0]) - 1];
 
-				Triangle3D* tri = new Triangle3D(vert1, vert2, vert3, currType, currSound, currParticle);
-				INCR_NEW
+				Triangle3D* tri = new Triangle3D(vert1, vert2, vert3, currType, currSound, currParticle); INCR_NEW
 
 				collisionModel->triangles.push_back(tri);
 
@@ -1035,13 +1004,13 @@ CollisionModel* loadCollisionModel(std::string filePath, std::string fileName)
 				currSound = -1;
 				currParticle = 0;
 
-				for (FakeTexture* dummy : fakeTextures)
+				for (FakeTexture dummy : fakeTextures)
 				{
-					if (dummy->name == lineSplit[1])
+					if (dummy.name == lineSplit[1])
 					{
-						currType = dummy->type;
-						currSound = dummy->sound;
-						currParticle = dummy->particle;
+						currType = dummy.type;
+						currSound = dummy.sound;
+						currParticle = dummy.particle;
 					}
 				}
 			}
@@ -1062,36 +1031,54 @@ CollisionModel* loadCollisionModel(std::string filePath, std::string fileName)
 				{
 					getline(fileMTL, lineMTL);
 
-					char lineBufMTL[256]; //Buffer to copy line into
-					memset(lineBufMTL, 0, 256);
-					memcpy(lineBufMTL, lineMTL.c_str(), lineMTL.size());
+					char lineBufMTL[256];
+					memcpy(lineBufMTL, lineMTL.c_str(), lineMTL.size()+1);
 
 					int splitLengthMTL = 0;
 					char** lineSplitMTL = split(lineBufMTL, ' ', &splitLengthMTL);
 
-					if (splitLengthMTL > 0)
+					if (splitLengthMTL > 1)
 					{
 						if (strcmp(lineSplitMTL[0], "newmtl") == 0)
 						{
-							FakeTexture* fktex = new FakeTexture;
-							INCR_NEW
-							fktex->name = lineSplitMTL[1];
+							FakeTexture fktex;
+
+							fktex.name = lineSplitMTL[1];
 							fakeTextures.push_back(fktex);
 						}
 						else if (strcmp(lineSplitMTL[0], "type") == 0 ||
 								 strcmp(lineSplitMTL[0], "\ttype") == 0)
 						{
-							fakeTextures.back()->type = (char)round(std::stof(lineSplitMTL[1]));
+							if (strcmp(lineSplitMTL[1], "heal") == 0)
+							{
+								fakeTextures.back().type = 1;
+							}
+							else if (strcmp(lineSplitMTL[1], "slip") == 0)
+							{
+								fakeTextures.back().type = 2;
+							}
+							else if (strcmp(lineSplitMTL[1], "brake") == 0)
+							{
+								fakeTextures.back().type = 3;
+							}
+							else if (strcmp(lineSplitMTL[1], "boost") == 0)
+							{
+								fakeTextures.back().type = 4;
+							}
+							else if (strcmp(lineSplitMTL[1], "wall") == 0)
+							{
+								fakeTextures.back().type = 5;
+							}
 						}
 						else if (strcmp(lineSplitMTL[0], "sound") == 0 ||
 								 strcmp(lineSplitMTL[0], "\tsound") == 0)
 						{
-							fakeTextures.back()->sound = (char)round(std::stof(lineSplitMTL[1]));
+							fakeTextures.back().sound = (char)round(std::stof(lineSplitMTL[1]));
 						}
 						else if (strcmp(lineSplitMTL[0], "particle") == 0 ||
 								 strcmp(lineSplitMTL[0], "\tparticle") == 0)
 						{
-							fakeTextures.back()->particle = (char)round(std::stof(lineSplitMTL[1]));
+							fakeTextures.back().particle = (char)round(std::stof(lineSplitMTL[1]));
 						}
 					}
 					free(lineSplitMTL);
@@ -1105,11 +1092,185 @@ CollisionModel* loadCollisionModel(std::string filePath, std::string fileName)
 
 	collisionModel->generateMinMaxValues();
 
-	for (FakeTexture* dummy : fakeTextures)
+	return collisionModel;
+}
+
+CollisionModel* loadBinaryCollisionModel(std::string filePath, std::string fileName)
+{
+	CollisionModel* collisionModel = new CollisionModel; INCR_NEW
+
+	std::list<FakeTexture> fakeTextures;
+	std::vector<Vector3f> vertices;
+
+	char currType = 0;
+	char currSound = 0;
+	char currParticle = 0;
+
+	FILE* file = nullptr;
+	int err = fopen_s(&file, ("res/" + filePath+fileName+".bincol").c_str(), "rb");
+    if (file == nullptr || err != 0)
 	{
-		delete dummy;
-		INCR_DEL
+		std::fprintf(stdout, "Error: Cannot load file '%s'\n", ("res/" + filePath+fileName+".bincol").c_str());
+		return collisionModel;
+    }
+
+	char fileType[4];
+	fread(fileType, sizeof(char), 4, file);
+	if (fileType[0] != 'c' || 
+		fileType[1] != 'o' ||
+		fileType[2] != 'l' ||
+		fileType[3] != 0)
+	{
+		std::fprintf(stdout, "Error: File '%s' is not a valid .bincol file\n", ("res/" + filePath+fileName+".bincol").c_str());
+		return collisionModel;
 	}
+
+	std::string mtlname = "";
+	int mtllibLength;
+	fread(&mtllibLength, sizeof(int), 1, file);
+	for (int i = 0; i < mtllibLength; i++)
+	{
+		char nextChar;
+		fread(&nextChar, sizeof(char), 1, file);
+		mtlname = mtlname + nextChar;
+	}
+
+	{
+		std::ifstream fileMTL("res/" + filePath + mtlname);
+		if (!fileMTL.is_open())
+		{
+			std::fprintf(stdout, "Error: Cannot load file '%s'\n", ("res/" + filePath + mtlname).c_str());
+			fileMTL.close();
+			fclose(file);
+			return collisionModel;
+		}
+
+		std::string lineMTL;
+
+		while (!fileMTL.eof())
+		{
+			getline(fileMTL, lineMTL);
+
+			char lineBufMTL[256];
+			memcpy(lineBufMTL, lineMTL.c_str(), lineMTL.size()+1);
+
+			int splitLengthMTL = 0;
+			char** lineSplitMTL = split(lineBufMTL, ' ', &splitLengthMTL);
+
+			if (splitLengthMTL > 1)
+			{
+				if (strcmp(lineSplitMTL[0], "newmtl") == 0)
+				{
+					FakeTexture fktex;
+
+					fktex.name = lineSplitMTL[1];
+					fakeTextures.push_back(fktex);
+				}
+				else if (strcmp(lineSplitMTL[0], "type") == 0 ||
+						 strcmp(lineSplitMTL[0], "\ttype") == 0)
+				{
+					if (strcmp(lineSplitMTL[1], "heal") == 0)
+					{
+						fakeTextures.back().type = 1;
+					}
+					else if (strcmp(lineSplitMTL[1], "slip") == 0)
+					{
+						fakeTextures.back().type = 2;
+					}
+					else if (strcmp(lineSplitMTL[1], "brake") == 0)
+					{
+						fakeTextures.back().type = 3;
+					}
+					else if (strcmp(lineSplitMTL[1], "boost") == 0)
+					{
+						fakeTextures.back().type = 4;
+					}
+					else if (strcmp(lineSplitMTL[1], "wall") == 0)
+					{
+						fakeTextures.back().type = 5;
+					}
+				}
+				else if (strcmp(lineSplitMTL[0], "sound") == 0 ||
+						 strcmp(lineSplitMTL[0], "\tsound") == 0)
+				{
+					fakeTextures.back().sound = (char)round(std::stof(lineSplitMTL[1]));
+				}
+				else if (strcmp(lineSplitMTL[0], "particle") == 0 ||
+						 strcmp(lineSplitMTL[0], "\tparticle") == 0)
+				{
+					fakeTextures.back().particle = (char)round(std::stof(lineSplitMTL[1]));
+				}
+			}
+			free(lineSplitMTL);
+		}
+		fileMTL.close();
+	}
+
+
+	int numVertices;
+	fread(&numVertices, sizeof(int), 1, file);
+	for (int i = 0; i < numVertices; i++)
+	{
+		float t[3];
+		fread(t, sizeof(float), 3, file);
+
+		Vector3f vertex(t[0], t[1], t[2]);
+		vertices.push_back(vertex);
+	}
+
+	int numMaterials;
+	fread(&numMaterials, sizeof(int), 1, file);
+	for (int m = 0; m < numMaterials; m++)
+	{
+		int matnameLength;
+		fread(&matnameLength, sizeof(int), 1, file);
+		std::string matname = "";
+		for (int c = 0; c < matnameLength; c++)
+		{
+			char nextChar;
+			fread(&nextChar, sizeof(char), 1, file);
+			matname = matname + nextChar;
+		}
+
+		currType = 0;
+		currSound = -1;
+		currParticle = 0;
+
+		for (FakeTexture dummy : fakeTextures)
+		{
+			if (dummy.name == matname)
+			{
+				currType = dummy.type;
+				currSound = dummy.sound;
+				currParticle = dummy.particle;
+			}
+		}
+
+		std::vector<int> indices;
+		int numFaces;
+		fread(&numFaces, sizeof(int), 1, file);
+		for (int i = 0; i < numFaces; i++)
+		{
+			int f[3];
+
+			fread(&f[0], sizeof(int), 3, file);
+
+			Triangle3D* tri = new Triangle3D(&vertices[f[0]-1], &vertices[f[1]-1], &vertices[f[2]-1], currType, currSound, currParticle); INCR_NEW
+
+			collisionModel->triangles.push_back(tri);
+		}
+	}
+	fclose(file);
+
+	modelTextures.clear();
+	modelTexturesList.clear();
+	textureNamesList.clear();
+
+	modelTextures.shrink_to_fit();
+	modelTexturesList.shrink_to_fit();
+	textureNamesList.shrink_to_fit();
+
+	collisionModel->generateMinMaxValues();
 
 	return collisionModel;
 }

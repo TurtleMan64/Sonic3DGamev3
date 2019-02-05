@@ -27,7 +27,7 @@ void TextMaster::loadText(GUIText* text)
 {
 	FontType* font = text->getFont();
 	TextMeshData* data = font->loadText(text);
-	std::vector<int> vertexObjects = Loader_loadToVAO(data->getVertexPositions(), data->getTextureCoords());
+	std::vector<int> vertexObjects = Loader::loadToVAO(data->getVertexPositions(), data->getTextureCoords());
 	int vao = vertexObjects[0];
 	std::vector<int> vbos;
 	vbos.push_back(vertexObjects[1]);

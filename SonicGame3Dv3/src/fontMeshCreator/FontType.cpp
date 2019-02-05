@@ -22,7 +22,7 @@ int FontType::getTextureAtlas()
 
 void FontType::deleteMe()
 {
-	Loader_deleteTexture(textureAtlas);
+	Loader::deleteTexture(textureAtlas);
 	textureAtlas = -1;
 }
 

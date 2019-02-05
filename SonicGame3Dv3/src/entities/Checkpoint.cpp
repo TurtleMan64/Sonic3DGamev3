@@ -57,7 +57,14 @@ Checkpoint::Checkpoint(float x, float y, float z, float rotY)
 		if (sqrtf(xDiff*xDiff + yDiff*yDiff + zDiff*zDiff) < 50)
 		{
 			isHit = true;
-			AudioPlayer::playBGMWithIntro(Checkpoint::savedBGMIntro, Checkpoint::savedBGMLoop);
+			if (Checkpoint::savedBGMIntro != AL_NONE)
+			{
+				AudioPlayer::playBGMWithIntro(Checkpoint::savedBGMIntro, Checkpoint::savedBGMLoop);
+			}
+			else
+			{
+				AudioPlayer::playBGM(Checkpoint::savedBGMLoop);
+			}
 		}
 	}
 

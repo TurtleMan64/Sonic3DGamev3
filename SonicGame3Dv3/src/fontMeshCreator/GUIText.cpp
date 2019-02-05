@@ -22,9 +22,9 @@ void GUIText::deleteMe()
 	TextMaster::removeText(this);
 	for (int vboID : textMeshVbos)
 	{
-		Loader_deleteVBO(vboID);
+		Loader::deleteVBO(vboID);
 	}
-	Loader_deleteVAO(textMeshVao);
+	Loader::deleteVAO(textMeshVao);
 }
 
 FontType* GUIText::getFont()

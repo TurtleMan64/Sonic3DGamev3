@@ -128,7 +128,7 @@ void Master_init()
 	shadowMapRenderer = new ShadowMapMasterRenderer; INCR_NEW
 	shadowMapRenderer2 = new ShadowMapMasterRenderer2; INCR_NEW
 
-	randomMap = Loader_loadTextureNoInterpolation("res/Images/randomMap.png");
+	randomMap = Loader::loadTextureNoInterpolation("res/Images/randomMap.png");
 
 	Master_disableCulling();
 }

@@ -127,7 +127,7 @@ ALuint AudioMaster::loadOGG(const char* fileName)
 
 	ALuint buffer;
 	alGenBuffers(1, &buffer);
-	alBufferData(buffer, format, &buf[0], buf.size(), frequency);
+	alBufferData(buffer, format, &buf[0], (ALsizei)buf.size(), frequency);
 
 	buf.clear();
 	buf.shrink_to_fit();

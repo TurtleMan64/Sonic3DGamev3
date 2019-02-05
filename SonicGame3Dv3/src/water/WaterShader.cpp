@@ -18,13 +18,13 @@ WaterShader::WaterShader()
 {
 	if (Global::renderShadowsFar)
 	{
-		vertexShaderID = Loader_loadShader("res/Shaders/water/waterVertexWithShadows.txt", GL_VERTEX_SHADER);
-		fragmentShaderID = Loader_loadShader("res/Shaders/water/waterFragmentWithShadows.txt", GL_FRAGMENT_SHADER);
+		vertexShaderID = Loader::loadShader("res/Shaders/water/waterVertexWithShadows.txt", GL_VERTEX_SHADER);
+		fragmentShaderID = Loader::loadShader("res/Shaders/water/waterFragmentWithShadows.txt", GL_FRAGMENT_SHADER);
 	}
 	else
 	{
-		vertexShaderID = Loader_loadShader("res/Shaders/water/waterVertex.txt", GL_VERTEX_SHADER);
-		fragmentShaderID = Loader_loadShader("res/Shaders/water/waterFragment.txt", GL_FRAGMENT_SHADER);
+		vertexShaderID = Loader::loadShader("res/Shaders/water/waterVertex.txt", GL_VERTEX_SHADER);
+		fragmentShaderID = Loader::loadShader("res/Shaders/water/waterFragment.txt", GL_FRAGMENT_SHADER);
 	}
 	programID = glCreateProgram();
 	glAttachShader(programID, vertexShaderID);

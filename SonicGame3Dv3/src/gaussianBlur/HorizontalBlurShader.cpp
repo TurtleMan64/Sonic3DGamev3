@@ -5,8 +5,8 @@
 
 HorizontalBlurShader::HorizontalBlurShader(const char* vFile, const char* fFile)
 {
-	vertexShaderID = Loader_loadShader(vFile, GL_VERTEX_SHADER);
-	fragmentShaderID = Loader_loadShader(fFile, GL_FRAGMENT_SHADER);
+	vertexShaderID = Loader::loadShader(vFile, GL_VERTEX_SHADER);
+	fragmentShaderID = Loader::loadShader(fFile, GL_FRAGMENT_SHADER);
 	programID = glCreateProgram();
 	glAttachShader(programID, vertexShaderID);
 	glAttachShader(programID, fragmentShaderID);

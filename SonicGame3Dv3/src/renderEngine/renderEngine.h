@@ -28,22 +28,56 @@ GLFWwindow* getWindow();
 
 
 //Loader
-RawModel Loader_loadToVAO(std::vector<float>* positions, std::vector<float>* textureCoords, std::vector<float>* normals, std::vector<int>* indices);
-//for text
-//returns a std::vector<int> where the first entry is the vao and the rest are vbos
-std::vector<int> Loader_loadToVAO(std::vector<float>* positions, std::vector<float>* textureCoords);
-//for water
-RawModel Loader_loadToVAO(std::vector<float>* positions, int dimensions);
-GLuint Loader_loadTexture(const char* filename);
-GLuint Loader_loadTextureNoInterpolation(const char* fileName);
-GLuint Loader_loadTextureWORKS(char* filename);
-void Loader_cleanUp();
-void Loader_deleteVAO(GLuint vaoID);
-void Loader_deleteVBO(GLuint vboID);
-void Loader_deleteTexture(GLuint texID);
-void Loader_deleteTexturedModels(std::list<TexturedModel*>* tm);
-void Loader_printInfo();
-GLuint Loader_loadShader(const char* file, int shaderType);
+class Loader
+{
+private:
+	static std::list<GLuint> vaos;
+	static std::list<GLuint> vbos;
+	static std::list<GLuint> textures;
+
+	static int vaoNumber;
+	static int vboNumber;
+	static int texNumber;
+
+	static GLuint createVAO();
+
+	static GLuint storeDataInAttributeList(int, int, std::vector<float>*);
+
+	static void unbindVAO();
+
+	static GLuint bindIndiciesBuffer(std::vector<int>*);
+
+public:
+	//For 3D Models
+	static RawModel loadToVAO(std::vector<float>* positions, std::vector<float>* textureCoords, std::vector<float>* normals, std::vector<int>* indices);
+
+	//for text
+	//returns a std::vector<int> where the first entry is the vao and the rest are vbos
+	static std::vector<int> loadToVAO(std::vector<float>* positions, std::vector<float>* textureCoords);
+
+	//for water
+	static RawModel loadToVAO(std::vector<float>* positions, int dimensions);
+
+	//Loads a texture into GPU memory, returns the GLuint id
+	static GLuint loadTexture(const char* filename);
+
+	//Loads a texture without any interpolation
+	static GLuint loadTextureNoInterpolation(const char* fileName);
+
+	static void cleanUp();
+
+	static void deleteVAO(GLuint vaoID);
+
+	static void deleteVBO(GLuint vboID);
+
+	static void deleteTexture(GLuint texID);
+
+	static void deleteTexturedModels(std::list<TexturedModel*>* tm);
+
+	static void printInfo();
+
+	static GLuint loadShader(const char* file, int shaderType);
+};
 
 //Master Renderer
 void Master_render(Camera* camera, float clipX, float clipY, float clipZ, float clipW);

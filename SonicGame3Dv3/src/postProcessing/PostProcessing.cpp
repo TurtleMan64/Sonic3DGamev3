@@ -30,7 +30,7 @@ void PostProcessing::init()
 	PostProcessing::POSITIONS.push_back(1);
 	PostProcessing::POSITIONS.push_back(-1);
 	
-	PostProcessing::quadModel = Loader_loadToVAO(&PostProcessing::POSITIONS, 2);
+	PostProcessing::quadModel = Loader::loadToVAO(&PostProcessing::POSITIONS, 2);
 	
 	PostProcessing::hBlur  = new HorizontalBlur(SCR_WIDTH/16, SCR_HEIGHT/16);
 	PostProcessing::vBlur  = new VerticalBlur  (SCR_WIDTH/16, SCR_HEIGHT/16);

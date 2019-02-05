@@ -86,6 +86,7 @@ void PlayerSonic::step()
 
 	dropDashCharge = std::fmaxf(0, dropDashCharge-dropDashChargeDecrease);
 
+
 	if (deadTimer == 59)
 	{
 		Vector3f partVel(0, 0, 0);

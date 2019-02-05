@@ -48,10 +48,10 @@ std::list<GLuint>* RawModel::getVboIDs()
 
 void RawModel::deleteMe()
 {
-	Loader_deleteVAO(vaoID);
+	Loader::deleteVAO(vaoID);
 	for (auto vbo : vboIDs)
 	{
-		Loader_deleteVBO(vbo);
+		Loader::deleteVBO(vbo);
 	}
 	vboIDs.clear();
 }

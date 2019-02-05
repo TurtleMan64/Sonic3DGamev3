@@ -97,5 +97,5 @@ float ModelTexture::getScrollY()
 
 void ModelTexture::deleteMe()
 {
-	Loader_deleteTexture(texID);
+	Loader::deleteTexture(texID);
 }

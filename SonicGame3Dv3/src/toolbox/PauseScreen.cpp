@@ -43,10 +43,14 @@ bool PauseScreen::pausedSounds[14];
 
 extern InputStruct Inputs;
 
+extern unsigned int SCR_HEIGHT;
+extern unsigned int SCR_WIDTH;
+
 void PauseScreen::init()
 {
+
 	font = new FontType(Loader::loadTexture("res/Fonts/vipnagorgialla.png"), "res/Fonts/vipnagorgialla.fnt"); INCR_NEW
-	textCursor = new GUIText(">", 2.5f, font, 0.47f, 0.25f, 1.0f, false, false, false); INCR_NEW
+	textCursor = new GUIText(">", 2.5f, font, 0.5f - ((float) SCR_HEIGHT / (float) SCR_WIDTH * 0.05f), 0.25f, 1.0f, false, false, false); INCR_NEW
 	isPaused = false;
 }
 
